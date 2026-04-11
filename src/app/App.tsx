@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useConversation } from "@elevenlabs/react";
+import { useConversation, ConversationProvider } from "@elevenlabs/react";
 import { toast, Toaster } from "sonner";
 import { BrowserRouter, Routes, Route } from "react-router";
 import { Navbar } from "./components/Navbar";
@@ -18,13 +18,17 @@ import { StateOfAI } from "./pages/StateOfAI";
 import { VideoAskWidget } from "./components/VideoAskWidget";
 
 // Configuration
-// Public Key for client-side operations (Web Calls)
 const VAPI_PUBLIC_KEY = "5dfc26c6-90a6-4efe-907b-7bd0d690dc6e";
 
-// Agent ID for the primary agent (Medicaid Redetermination)
-const HERO_AGENT_ID = "4224af64-f52d-449b-883c-8fc07a09d669";
-
 export default function App() {
+  return (
+    <ConversationProvider>
+      <AppContent />
+    </ConversationProvider>
+  );
+}
+
+function AppContent() {
   const [activeAgentId, setActiveAgentId] = useState<string | null>(null);
   const [webCallStatus, setWebCallStatus] = useState<"idle" | "connecting" | "active">("idle");
   const vapiRef = useRef<any>(null);
@@ -74,7 +78,6 @@ export default function App() {
         vapiRef.current = new VapiClass(VAPI_PUBLIC_KEY);
         vapiLoadedRef.current = true;
 
-        // Attach event listeners
         vapiRef.current.on("call-start", () => {
           setWebCallStatus("active");
           toast.success("Call Connected", { description: "You are now speaking with the agent." });
@@ -110,7 +113,6 @@ export default function App() {
   }, []);
 
   const handleStartWebCall = async (agentId: string, assistantId: string) => {
-    // Detect if this is an ElevenLabs agent (starts with "agent_") or Vapi
     const isElevenLabs = assistantId.startsWith("agent_");
 
     if (isElevenLabs) {
@@ -137,7 +139,7 @@ export default function App() {
       }
 
       try {
-        await elevenLabsConversation.startSession({
+        elevenLabsConversation.startSession({
           agentId: assistantId,
           connectionType: "websocket",
         });
@@ -149,19 +151,16 @@ export default function App() {
         });
       }
     } else {
-      // Use Vapi SDK
       if (!vapiRef.current) {
         toast.error("Voice SDK not loaded", { description: "Please wait a moment and try again." });
         return;
       }
 
-      // If another agent is active, don't allow
       if (activeAgentId && activeAgentId !== agentId) return;
 
       setActiveAgentId(agentId);
       setWebCallStatus("connecting");
 
-      // Check for microphone permission before starting
       try {
         await navigator.mediaDevices.getUserMedia({ audio: true });
       } catch (err: any) {
