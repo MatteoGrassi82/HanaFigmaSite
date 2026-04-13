@@ -236,8 +236,8 @@ app.post("/make-server-77ada9a1/leads", async (c) => {
       return c.json({ error: "Invalid request" }, 403);
     }
 
-    if (!phone) {
-      return c.json({ error: "Phone number is required" }, 400);
+    if (!phone && !email) {
+      return c.json({ error: "Phone number or email is required" }, 400);
     }
 
     // Check rate limit with both IP and email
@@ -255,10 +255,11 @@ app.post("/make-server-77ada9a1/leads", async (c) => {
     console.log(`Lead request from IP: ${ip}, email: ${email} (${rateLimit.remaining} remaining)`);
 
     const timestamp = Date.now();
-    const key = `lead:${timestamp}:${phone}`;
+    const identifier = phone || email?.toLowerCase().replace(/[^a-z0-9]/g, "") || `anon-${timestamp}`;
+    const key = `lead:${timestamp}:${identifier}`;
     const leadData = {
       name: name || null,
-      phone,
+      phone: phone || null,
       email: email || null,
       region: region || null,
       agent: agent || null,
