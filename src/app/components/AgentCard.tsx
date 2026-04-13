@@ -26,36 +26,45 @@ export function AgentCard({
   onStartWebCall: (agentId: string, assistantId: string) => void;
   onEndWebCall: () => void;
 }) {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<{ name?: string; email?: string }>({});
 
   const handleWebCallClick = async () => {
-    // Capture email if provided
-    if (email && email.trim()) {
-      try {
-        await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-77ada9a1/leads`, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${publicAnonKey}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            email: email,
-            agent: workflow || title,
-            workflow: workflow || null,
-            page: "use-cases-web-call"
-          })
-        });
-      } catch (err) {
-        console.error("Failed to capture email:", err);
-      }
-    }
-
     if (webCallStatus === "active") {
       onEndWebCall();
-    } else {
-      // Use the Vapi assistantId that's passed as a prop
-      onStartWebCall(title, assistantId);
+      return;
     }
+
+    const errors: { name?: string; email?: string } = {};
+    if (!name.trim()) errors.name = "Name is required";
+    if (!email.trim()) errors.email = "Email is required";
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
+    setFieldErrors({});
+
+    try {
+      await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-77ada9a1/leads`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${publicAnonKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          agent: workflow || title,
+          workflow: workflow || null,
+          page: "use-cases-web-call"
+        })
+      });
+    } catch (err) {
+      console.error("Failed to capture lead:", err);
+    }
+
+    onStartWebCall(title, assistantId);
   };
 
   const containerVariants = {
@@ -111,17 +120,44 @@ export function AgentCard({
 
         {/* Interactive Form Section */}
         <div className="mt-auto relative z-10 space-y-4">
-          {/* Email Input */}
-          <motion.div variants={itemVariants}>
-            <label className="block text-xs text-slate-500 dark:text-slate-400 mb-1.5 ml-1 tracking-wide">Email (Optional)</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@company.com"
-              className="w-full bg-slate-50 dark:bg-[#132B4A] border border-slate-200 dark:border-slate-700/50 rounded-xl px-4 py-3.5 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-1 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all"
-              disabled={webCallStatus === "active" || isOtherAgentActive}
-            />
+          {/* Name + Email Inputs */}
+          <motion.div variants={itemVariants} className="space-y-3">
+            <div>
+              <label className="block text-xs text-slate-500 dark:text-slate-400 mb-1.5 ml-1 tracking-wide">
+                Name <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => { setName(e.target.value); setFieldErrors(p => ({ ...p, name: undefined })); }}
+                placeholder="Your name"
+                className={`w-full bg-slate-50 dark:bg-[#132B4A] border rounded-xl px-4 py-3.5 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 transition-all ${
+                  fieldErrors.name
+                    ? "border-red-400 focus:border-red-400 focus:ring-red-400"
+                    : "border-slate-200 dark:border-slate-700/50 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-blue-500 dark:focus:ring-blue-400"
+                }`}
+                disabled={webCallStatus === "active" || isOtherAgentActive}
+              />
+              {fieldErrors.name && <p className="mt-1 text-xs text-red-500 ml-1">{fieldErrors.name}</p>}
+            </div>
+            <div>
+              <label className="block text-xs text-slate-500 dark:text-slate-400 mb-1.5 ml-1 tracking-wide">
+                Email <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => { setEmail(e.target.value); setFieldErrors(p => ({ ...p, email: undefined })); }}
+                placeholder="you@company.com"
+                className={`w-full bg-slate-50 dark:bg-[#132B4A] border rounded-xl px-4 py-3.5 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-1 transition-all ${
+                  fieldErrors.email
+                    ? "border-red-400 focus:border-red-400 focus:ring-red-400"
+                    : "border-slate-200 dark:border-slate-700/50 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-blue-500 dark:focus:ring-blue-400"
+                }`}
+                disabled={webCallStatus === "active" || isOtherAgentActive}
+              />
+              {fieldErrors.email && <p className="mt-1 text-xs text-red-500 ml-1">{fieldErrors.email}</p>}
+            </div>
           </motion.div>
 
           <motion.div variants={itemVariants}>

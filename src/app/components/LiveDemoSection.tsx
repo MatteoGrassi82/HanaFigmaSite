@@ -136,7 +136,9 @@ export function LiveDemoSection({
 }: LiveDemoSectionProps) {
   const [step, setStep] = useState(1);
   const [selectedAgent, setSelectedAgent] = useState("Monitoring");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<{ name?: string; email?: string }>({});
 
   const handleNext = () => {
     if (selectedAgent) setStep(2);
@@ -147,25 +149,32 @@ export function LiveDemoSection({
   };
 
   const handleWebCallClick = async () => {
-    // Optional: Capture email if provided
-    if (email && email.trim()) {
-      try {
-        await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-77ada9a1/leads`, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${publicAnonKey}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            email: email,
-            agent: selectedAgent,
-            workflow: selectedAgent,
-            page: "live-demo-web-call"
-          })
-        });
-      } catch (err) {
-        console.error("Failed to capture email:", err);
-      }
+    const errors: { name?: string; email?: string } = {};
+    if (!name.trim()) errors.name = "Name is required";
+    if (!email.trim()) errors.email = "Email is required";
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
+    setFieldErrors({});
+
+    try {
+      await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-77ada9a1/leads`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${publicAnonKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          agent: selectedAgent,
+          workflow: selectedAgent,
+          page: "live-demo-web-call"
+        })
+      });
+    } catch (err) {
+      console.error("Failed to capture lead:", err);
     }
 
     const agentId = ELEVENLABS_AGENT_IDS[selectedAgent];
@@ -373,18 +382,44 @@ export function LiveDemoSection({
                           </p>
                         </div>
 
-                        {/* Email Input */}
-                        <div>
-                          <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
-                            Email (Optional)
-                          </label>
-                          <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="you@company.com"
-                            className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
-                          />
+                        {/* Name + Email inputs */}
+                        <div className="space-y-3">
+                          <div>
+                            <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
+                              Name <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                              type="text"
+                              value={name}
+                              onChange={(e) => { setName(e.target.value); setFieldErrors(p => ({ ...p, name: undefined })); }}
+                              placeholder="Your name"
+                              className={cn(
+                                "w-full px-4 py-3 bg-white border rounded-lg text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 transition-all",
+                                fieldErrors.name
+                                  ? "border-red-400 focus:border-red-400 focus:ring-red-400"
+                                  : "border-slate-200 focus:border-blue-500 focus:ring-blue-500"
+                              )}
+                            />
+                            {fieldErrors.name && <p className="mt-1 text-xs text-red-500">{fieldErrors.name}</p>}
+                          </div>
+                          <div>
+                            <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
+                              Email <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                              type="email"
+                              value={email}
+                              onChange={(e) => { setEmail(e.target.value); setFieldErrors(p => ({ ...p, email: undefined })); }}
+                              placeholder="you@company.com"
+                              className={cn(
+                                "w-full px-4 py-3 bg-white border rounded-lg text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 transition-all",
+                                fieldErrors.email
+                                  ? "border-red-400 focus:border-red-400 focus:ring-red-400"
+                                  : "border-slate-200 focus:border-blue-500 focus:ring-blue-500"
+                              )}
+                            />
+                            {fieldErrors.email && <p className="mt-1 text-xs text-red-500">{fieldErrors.email}</p>}
+                          </div>
                         </div>
 
                         <div className="grid md:grid-cols-2 gap-4">
