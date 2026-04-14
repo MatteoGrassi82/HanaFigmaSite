@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Plus, Minus, ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { Footer } from "../components/Footer";
@@ -107,9 +107,9 @@ function SlideTypeSelect({ value, onChange, onNext }: {
 }) {
   return (
     <div className="w-full max-w-[560px]">
-      <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3">1 of 5</div>
-      <h2 className="font-['Instrument_Serif'] text-3xl md:text-4xl text-slate-900 mb-2">What kind of practice are you?</h2>
-      <p className="text-sm text-slate-500 font-light mb-8 leading-relaxed">This helps us show you the most relevant outcome benchmarks.</p>
+      <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3 text-center">1 of 5</div>
+      <h2 className="font-['Instrument_Serif'] text-3xl md:text-4xl text-slate-900 mb-2 text-center">What kind of practice are you?</h2>
+      <p className="text-sm text-slate-500 font-light mb-8 leading-relaxed text-center">This helps us show you the most relevant outcome benchmarks.</p>
       <div className="grid grid-cols-2 gap-3 mb-8">
         {PRACTICE_TYPES.map((t) => (
           <button
@@ -146,9 +146,9 @@ function SlideProviders({ value, onChange, onNext, onBack }: {
 }) {
   return (
     <div className="w-full max-w-[560px]">
-      <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3">2 of 5</div>
-      <h2 className="font-['Instrument_Serif'] text-3xl md:text-4xl text-slate-900 mb-2">How many providers do you have?</h2>
-      <p className="text-sm text-slate-500 font-light mb-10 leading-relaxed">Count all clinicians who see patients — doctors, nurses, therapists.</p>
+      <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3 text-center">2 of 5</div>
+      <h2 className="font-['Instrument_Serif'] text-3xl md:text-4xl text-slate-900 mb-2 text-center">How many providers do you have?</h2>
+      <p className="text-sm text-slate-500 font-light mb-10 leading-relaxed text-center">Count all clinicians who see patients — doctors, nurses, therapists.</p>
       <div className="flex items-center justify-center gap-8 mb-3">
         <button onClick={() => onChange(Math.max(1, value - 1))} className="w-11 h-11 rounded-full border border-slate-200 bg-white flex items-center justify-center hover:border-blue-500 hover:text-blue-500 transition-colors">
           <Minus className="w-4 h-4" />
@@ -180,9 +180,9 @@ function SlideWorkflows({ value, onChange, onNext, onBack }: {
   };
   return (
     <div className="w-full max-w-[560px]">
-      <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3">3 of 5</div>
-      <h2 className="font-['Instrument_Serif'] text-3xl md:text-4xl text-slate-900 mb-2">What do you want HANA to do?</h2>
-      <p className="text-sm text-slate-500 font-light mb-8 leading-relaxed">Select everything that applies. We'll calculate the saving for each.</p>
+      <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3 text-center">3 of 5</div>
+      <h2 className="font-['Instrument_Serif'] text-3xl md:text-4xl text-slate-900 mb-2 text-center">What do you want HANA to do?</h2>
+      <p className="text-sm text-slate-500 font-light mb-8 leading-relaxed text-center">Select everything that applies. We'll calculate the saving for each.</p>
       <div className="grid grid-cols-2 gap-3 mb-8">
         {WORKFLOWS.map((w) => {
           const sel = value.includes(w.id);
@@ -228,9 +228,9 @@ function SlideVolumes({ workflows, volumes, onChange, onNext, onBack }: {
 }) {
   return (
     <div className="w-full max-w-[560px]">
-      <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3">4 of 5</div>
-      <h2 className="font-['Instrument_Serif'] text-3xl md:text-4xl text-slate-900 mb-2">Roughly how many per month?</h2>
-      <p className="text-sm text-slate-500 font-light mb-8 leading-relaxed">Estimates are fine. We confirm exact numbers on the discovery call.</p>
+      <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3 text-center">4 of 5</div>
+      <h2 className="font-['Instrument_Serif'] text-3xl md:text-4xl text-slate-900 mb-2 text-center">Roughly how many per month?</h2>
+      <p className="text-sm text-slate-500 font-light mb-8 leading-relaxed text-center">Estimates are fine. We confirm exact numbers on the discovery call.</p>
       <div className="mb-8">
         {workflows.map((id) => {
           const c = VOL_CONFIG[id];
@@ -365,6 +365,8 @@ export function Pricing() {
   const [providers, setProviders] = useState(3);
   const [workflows, setWorkflows] = useState<string[]>([]);
   const [volumes, setVolumes] = useState<Record<string, number>>({});
+
+  useEffect(() => { window.scrollTo(0, 0); }, []);
 
   const initVolumes = (wfs: string[]) => {
     const v: Record<string, number> = {};
