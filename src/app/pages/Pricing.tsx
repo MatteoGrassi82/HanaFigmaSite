@@ -411,7 +411,7 @@ export function Pricing() {
         <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-4">
           Outcome-based pricing
         </div>
-        <h1 className="font-['Instrument_Serif'] text-4xl md:text-5xl lg:text-6xl text-slate-900 leading-[1.1] mb-4">
+        <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl tracking-tight text-slate-900 leading-[0.95] mb-4">
           Pricing aligned with{" "}
           <em className="italic text-blue-500">your savings</em>
         </h1>
