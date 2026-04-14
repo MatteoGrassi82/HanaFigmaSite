@@ -15,6 +15,7 @@ import { Contact } from "./pages/Contact";
 import { TestWebhook } from "./components/TestWebhook";
 import { Terms } from "./pages/Terms";
 import { StateOfAI } from "./pages/StateOfAI";
+import { Pricing } from "./pages/Pricing";
 import { VideoAskWidget } from "./components/VideoAskWidget";
 
 // Configuration
@@ -233,6 +234,7 @@ function AppContent() {
               <Route path="/test-webhook" element={<TestWebhook />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/state-of-ai" element={<StateOfAI />} />
+              <Route path="/pricing" element={<Pricing />} />
             </Routes>
           </main>
         </div>
