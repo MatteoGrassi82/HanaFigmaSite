@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Plus, Minus, X, ArrowLeft, ArrowRight, Check } from "lucide-react";
-import { Navbar } from "../components/Navbar";
+import { Plus, Minus, ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { Footer } from "../components/Footer";
 import { SEO } from "../components/SEO";
 import { cn } from "../../lib/utils";
@@ -355,11 +354,11 @@ function SlideResult({ providers, workflows, volumes, onBack }: {
   );
 }
 
-// ─── Wizard ────────────────────────────────────────────────────────────────────
+// ─── Page ──────────────────────────────────────────────────────────────────────
 
 const TOTAL_SLIDES = 5;
 
-function Wizard({ onClose }: { onClose: () => void }) {
+export function Pricing() {
   const [slide, setSlide] = useState(0);
   const [direction, setDirection] = useState(1);
   const [practiceType, setPracticeType] = useState<string | null>(null);
@@ -397,24 +396,25 @@ function Wizard({ onClose }: { onClose: () => void }) {
   ];
 
   return (
-    <div className="fixed inset-0 bg-slate-50 z-[300] flex flex-col">
-      {/* Wizard nav */}
-      <div className="flex items-center justify-between px-6 md:px-12 py-5 border-b border-slate-200 flex-shrink-0">
-        <span className="font-['Instrument_Serif'] text-xl text-slate-900">hana</span>
-        <div className="flex gap-1.5 items-center">
-          {Array.from({ length: TOTAL_SLIDES }).map((_, i) => (
-            <div key={i} className={cn("h-0.5 w-8 rounded-full transition-all duration-300",
-              i < slide ? "bg-blue-500" : i === slide ? "bg-blue-400/50" : "bg-slate-200"
-            )} />
-          ))}
-        </div>
-        <button onClick={onClose} className="text-slate-400 hover:text-slate-700 transition-colors p-1">
-          <X className="w-5 h-5" />
-        </button>
+    <>
+      <SEO
+        title="Pricing | Hana Voice AI"
+        description="Outcome-based pricing aligned with your savings. Calculate exactly what Hana costs and what you save compared to human staff."
+        path="/pricing"
+        useExactTitle
+      />
+
+      {/* Progress bar */}
+      <div className="pt-28 pb-4 flex justify-center gap-1.5">
+        {Array.from({ length: TOTAL_SLIDES }).map((_, i) => (
+          <div key={i} className={cn("h-0.5 w-8 rounded-full transition-all duration-300",
+            i < slide ? "bg-blue-500" : i === slide ? "bg-blue-400/50" : "bg-slate-200"
+          )} />
+        ))}
       </div>
 
       {/* Slide area */}
-      <div className="flex-1 overflow-y-auto flex items-center justify-center px-4 py-8 relative">
+      <div className="min-h-[70vh] flex items-center justify-center px-4 py-8 relative">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={slide}
@@ -430,72 +430,17 @@ function Wizard({ onClose }: { onClose: () => void }) {
           </motion.div>
         </AnimatePresence>
       </div>
-    </div>
-  );
-}
 
-// ─── Page ──────────────────────────────────────────────────────────────────────
+      {/* FAQ */}
+      <section className="max-w-xl mx-auto px-4 pb-20">
+        <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium text-center mb-2">Common questions</div>
+        <h2 className="font-['Instrument_Serif'] text-2xl md:text-3xl text-slate-900 text-center mb-8">How does this work?</h2>
+        {FAQS.map((f) => (
+          <FaqItem key={f.q} q={f.q} a={f.a} />
+        ))}
+      </section>
 
-export function Pricing() {
-  const [wizardOpen, setWizardOpen] = useState(false);
-
-  return (
-    <>
-      <SEO
-        title="Pricing | Hana Voice AI"
-        description="Outcome-based pricing aligned with your savings. Calculate exactly what Hana costs and what you save compared to human staff."
-        path="/pricing"
-        useExactTitle
-      />
-
-      <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
-        <Navbar />
-
-        {/* Hero */}
-        <section className="pt-36 pb-16 px-4 text-center max-w-2xl mx-auto">
-          <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-4">
-            Outcome-based pricing
-          </div>
-          <h1 className="font-['Instrument_Serif'] text-4xl md:text-5xl lg:text-6xl text-slate-900 leading-[1.1] mb-4">
-            Pricing aligned with{" "}
-            <em className="italic text-blue-500">your savings</em>
-          </h1>
-          <p className="text-base text-slate-500 leading-relaxed font-light mb-8 max-w-md mx-auto">
-            Answer five quick questions about your practice. We'll show you exactly what HANA costs — and what you save compared to human staff doing the same work.
-          </p>
-          <button
-            onClick={() => setWizardOpen(true)}
-            className="inline-block bg-[#00122F] text-white rounded-lg px-9 py-4 text-sm font-medium hover:bg-slate-800 transition-colors"
-          >
-            Calculate my savings
-          </button>
-          <p className="text-xs text-slate-400 mt-3 font-light">Takes 90 seconds · No sign-up required</p>
-        </section>
-
-        {/* FAQ */}
-        <section className="max-w-xl mx-auto px-4 pb-20">
-          <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium text-center mb-2">Common questions</div>
-          <h2 className="font-['Instrument_Serif'] text-2xl md:text-3xl text-slate-900 text-center mb-8">How does this work?</h2>
-          {FAQS.map((f) => (
-            <FaqItem key={f.q} q={f.q} a={f.a} />
-          ))}
-        </section>
-
-        <Footer />
-      </div>
-
-      <AnimatePresence>
-        {wizardOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <Wizard onClose={() => setWizardOpen(false)} />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <Footer />
     </>
   );
 }
