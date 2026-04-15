@@ -24,7 +24,7 @@ const SLIDES = [
     id: "monitoring",
     label: "Remote Monitoring",
     icon: Activity,
-    title: "The Intelligence Behind the Call",
+    title: "Inside a HANA Conversation",
     description: "How the AI monitors, reasons, and reports across a patient conversation.",
     videoId: "hf22mhjxbe",
     features: ["Adherence & vitals tracking", "Motivational interviewing", "Multi channel engagement"]
