@@ -6,6 +6,7 @@ import { AgenticFrameworkCarousel } from "../components/AgenticFrameworkCarousel
 import { RadialOrbitalTimelineDemo } from "./Timeline";
 import { ComplianceSection } from "../components/ComplianceSection";
 import { CaseStudiesSection } from "../components/CaseStudiesSection";
+import { HowHanaWorks } from "../components/HowHanaWorks";
 import { IntegrationsSection } from "../components/IntegrationsSection";
 import { ReadyToUseSection } from "../components/ReadyToUseSection";
 import { Footer } from "../components/Footer";
@@ -64,6 +65,9 @@ export function Home({
 
       {/* 5. TESTIMONIALS — reordered */}
       <CaseStudiesSection />
+
+      {/* HOW HANA WORKS — video carousel */}
+      <HowHanaWorks />
 
        {/* 8. LIVE DEMO */}
       <LiveDemoSection
