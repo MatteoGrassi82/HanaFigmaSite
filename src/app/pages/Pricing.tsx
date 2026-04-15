@@ -151,7 +151,7 @@ function SlideTypeSelect({ value, onChange, onNext }: {
     <div className="w-full max-w-[600px]">
       <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3 text-center">1 of 5</div>
       <h2 className="font-['Instrument_Serif'] text-3xl md:text-4xl text-slate-900 mb-2 text-center">What kind of practice are you?</h2>
-      <p className="text-sm text-slate-500 font-light mb-8 leading-relaxed text-center">This pre-selects the most relevant workflows for your setting.</p>
+      <p className="text-sm text-slate-600 font-light mb-8 leading-relaxed text-center">This pre-selects the most relevant workflows for your setting.</p>
       <div className="grid grid-cols-2 gap-2.5 mb-8">
         {PRACTICE_TYPES.map(t => (
           <button key={t.id} onClick={() => onChange(t.id)}
@@ -180,7 +180,7 @@ function SlideProviders({ value, onChange, onNext, onBack }: {
     <div className="w-full max-w-[560px]">
       <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3 text-center">2 of 5</div>
       <h2 className="font-['Instrument_Serif'] text-3xl md:text-4xl text-slate-900 mb-2 text-center">How many providers do you have?</h2>
-      <p className="text-sm text-slate-500 font-light mb-10 leading-relaxed text-center">Count all clinicians who see patients — doctors, nurses, therapists, PAs.</p>
+      <p className="text-sm text-slate-600 font-light mb-10 leading-relaxed text-center">Count all clinicians who see patients — doctors, nurses, therapists, PAs.</p>
       <div className="flex items-center justify-center gap-8 mb-3">
         <button onClick={() => onChange(Math.max(1, value - 1))} className="w-11 h-11 rounded-full border border-slate-200 bg-white flex items-center justify-center hover:border-blue-500 hover:text-blue-500 transition-colors">
           <Minus className="w-4 h-4" />
@@ -215,7 +215,7 @@ function SlideMods({ mods, wfs, onChange, onNext, onBack }: {
     <div className="w-full max-w-[560px]">
       <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3 text-center">3 of 5</div>
       <h2 className="font-['Instrument_Serif'] text-3xl md:text-4xl text-slate-900 mb-2 text-center">Which modules do you want?</h2>
-      <p className="text-sm text-slate-500 font-light mb-8 leading-relaxed text-center">Pre-selected based on your practice type. Adjust as needed.</p>
+      <p className="text-sm text-slate-600 font-light mb-8 leading-relaxed text-center">Select the categories relevant to your practice.</p>
       <div className="grid grid-cols-2 gap-2.5 mb-8">
         {MODULES.map(m => {
           const sel = !!mods[m.id];
@@ -276,7 +276,7 @@ function SlideWorkflows({ mods, wfs, onChange, onNext, onBack }: {
     <div className="w-full max-w-[600px]">
       <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3 text-center">4 of 5</div>
       <h2 className="font-['Instrument_Serif'] text-3xl md:text-4xl text-slate-900 mb-2 text-center">Select your workflows</h2>
-      <p className="text-sm text-slate-500 font-light mb-8 leading-relaxed text-center">Pre-selected for your practice type. Toggle any on or off.</p>
+      <p className="text-sm text-slate-600 font-light mb-8 leading-relaxed text-center">Select the workflows you want to automate. Toggle any on or off.</p>
 
       <div className="mb-8 space-y-2">
         {activeMods.map(m => {
@@ -346,7 +346,7 @@ function SlideVolumes({ mods, wfs, vols, onChange, onNext, onBack }: {
     <div className="w-full max-w-[560px]">
       <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3 text-center">5 of 5</div>
       <h2 className="font-['Instrument_Serif'] text-3xl md:text-4xl text-slate-900 mb-2 text-center">Roughly how many per month?</h2>
-      <p className="text-sm text-slate-500 font-light mb-8 leading-relaxed text-center">Estimates are fine. We confirm exact numbers on the discovery call.</p>
+      <p className="text-sm text-slate-600 font-light mb-8 leading-relaxed text-center">Estimates are fine. We confirm exact numbers on the discovery call.</p>
 
       <div className="mb-8">
         {MODULES.map(m => {
@@ -371,7 +371,16 @@ function SlideVolumes({ mods, wfs, vols, onChange, onNext, onBack }: {
                         className="w-8 h-8 rounded-full border border-slate-200 bg-slate-50 flex items-center justify-center hover:border-blue-400 hover:text-blue-500 transition-colors">
                         <Minus className="w-3 h-3" />
                       </button>
-                      <span className="font-['Instrument_Serif'] text-xl font-medium text-slate-900 min-w-[52px] text-center">{val}</span>
+                      <input
+                        type="number"
+                        value={val}
+                        min={w.min ?? 0}
+                        onChange={e => {
+                          const n = parseInt(e.target.value, 10);
+                          if (!isNaN(n) && n >= (w.min ?? 0)) onChange(id, n);
+                        }}
+                        className="font-['Instrument_Serif'] text-xl font-medium text-slate-900 w-16 text-center border border-slate-200 rounded-lg py-1 focus:outline-none focus:border-blue-400 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      />
                       <button onClick={() => onChange(id, val + (w.step ?? 1))}
                         className="w-8 h-8 rounded-full border border-slate-200 bg-slate-50 flex items-center justify-center hover:border-blue-400 hover:text-blue-500 transition-colors">
                         <Plus className="w-3 h-3" />
@@ -497,12 +506,8 @@ export function Pricing() {
 
   const selectPracticeType = (id: string) => {
     setPracticeType(id);
-    const newMods: Record<string, boolean> = {};
-    MODULES.forEach(m => { newMods[m.id] = true; });
-    setMods(newMods);
-    const newWfs: Record<string, boolean> = {};
-    (PT_WF[id] || []).forEach(w => { newWfs[w] = true; });
-    setWfs(newWfs);
+    setMods({});
+    setWfs({});
   };
 
   const toggleMod = (id: string, checked: boolean) => {
@@ -511,12 +516,6 @@ export function Pricing() {
       setWfs(prev => {
         const next = { ...prev };
         Object.keys(WORKFLOWS).forEach(w => { if (WORKFLOWS[w].mod === id) next[w] = false; });
-        return next;
-      });
-    } else if (practiceType) {
-      setWfs(prev => {
-        const next = { ...prev };
-        (PT_WF[practiceType] || []).forEach(w => { if (WORKFLOWS[w]?.mod === id) next[w] = true; });
         return next;
       });
     }
@@ -559,8 +558,8 @@ export function Pricing() {
         <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl tracking-tight text-slate-900 leading-[0.95] mb-4">
           See what this currently <em className="italic text-blue-500">costs your practice</em>
         </h1>
-        <p className="text-base text-slate-500 leading-relaxed font-light max-w-md mx-auto">
-          Answer a few questions about your practice. We'll show you exactly what HANA costs — and what you save across every workflow you choose to automate.
+        <p className="text-base text-slate-600 leading-relaxed font-light max-w-md mx-auto">
+          Answer a few questions about your practice. We'll show you exactly what HANA costs — and what you save across every workflow you automate.
         </p>
       </section>
 
