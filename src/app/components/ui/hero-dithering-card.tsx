@@ -82,15 +82,15 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
              </p>
 
              {/* CTAs */}
-             <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-                <a href="https://calendly.com/matteowastaken/discoverycall" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-white text-slate-900 rounded-full font-medium text-lg hover:bg-slate-50 transition-all duration-300 w-full sm:w-auto shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border border-slate-200 text-center">
+             <div className="flex flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto">
+                <a href="https://calendly.com/matteowastaken/discoverycall" target="_blank" rel="noopener noreferrer" className="px-6 sm:px-8 py-4 bg-white text-slate-900 rounded-full font-medium text-base sm:text-lg hover:bg-slate-50 transition-all duration-300 flex-1 sm:flex-none shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border border-slate-200 text-center whitespace-nowrap">
                     Book a Demo
                 </a>
 
                 <button
                    onClick={handleDemoClick}
                    disabled={isConnecting || disabled}
-                   className="group relative flex items-center gap-3 bg-[#01122F]/90 hover:bg-[#01122F] backdrop-blur-xl border border-white/10 rounded-full p-2 pr-6 transition-all duration-300 w-full sm:w-auto shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                   className="group relative flex items-center gap-3 bg-[#01122F]/90 hover:bg-[#01122F] backdrop-blur-xl border border-white/10 rounded-full p-2 pr-6 transition-all duration-300 flex-1 sm:flex-none shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
                 >
                    <div className="relative w-12 h-12 rounded-full overflow-hidden shadow-inner ring-1 ring-white/10 group-hover:ring-white/20 transition-all bg-[#00122F] shrink-0">
                       <img 
