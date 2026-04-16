@@ -18,10 +18,10 @@ export function IntegrationsSection() {
               Integrations
             </div>
             <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-normal leading-[1.1] text-[#1e2a3a] mb-5 tracking-tight">
-              One integration. <em className="italic text-blue-600">Every system.</em>
+              Reads the chart. Engages the patient. <em className="italic text-blue-600">Writes back.</em>
             </h2>
             <p className="text-lg leading-[1.65] text-[#718096] max-w-2xl mx-auto font-normal">
-              Hana connects to your clinical systems, reaches patients on any channel, and works with whatever tech stack you have or don't have.
+              Direct integrations with major EHRs. Or connect through Redox and Catagon to reach 95+ systems. Voice, SMS, WhatsApp, iMessage. No app. No portal. No login. Just a conversation that continues from where it left off.
             </p>
           </div>
 

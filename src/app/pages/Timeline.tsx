@@ -79,8 +79,8 @@ export function RadialOrbitalTimelineDemo() {
       <RadialOrbitalTimeline 
         timelineData={timelineData} 
         label="Hana Reasoning Engine"
-        title="How Hana thinks. Not what it says."
-        description="Five layers of reasoning. Not a chatbot with a script."
+        title="The only voice AI that remembers your patients."
+        description="Hana remembers what your patient said last time. Every conversation builds on the last one. Reported barriers, preferences, interaction history — all of it compounds into intelligence your team can act on."
       />
     </>
   );

@@ -56,8 +56,11 @@ export function ComplianceSection() {
             </div>
             
             <h2 className="text-4xl md:text-5xl font-serif font-medium text-slate-900 dark:text-white leading-[1.1]">
-              Enterprise compliance. Every deployment.
+              Healthcare compliance isn't an add-on. It's the foundation.
             </h2>
+            <p className="text-base text-slate-500 dark:text-slate-400 leading-relaxed">
+              Built for healthcare from day one. HIPAA, GDPR, SOC 2, EU AI Act — across the US, UK, Ireland, and Italy. Every deployment. Every country.
+            </p>
           </div>
 
           {/* Right Grid */}

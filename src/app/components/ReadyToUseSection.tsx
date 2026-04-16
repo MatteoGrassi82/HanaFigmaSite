@@ -19,10 +19,10 @@ export function ReadyToUseSection() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-5xl md:text-6xl font-light text-white mb-6 tracking-tight">
-            Ready to build on Hana?
+            Most teams go live in a week. Start today.
           </h2>
           <p className="text-xl md:text-2xl text-slate-300 font-light mb-12 max-w-2xl mx-auto leading-relaxed">
-            Join the teams using Hana to automate patient engagement across 450+ workflows already built and connected.
+            Book a demo. We'll show you a workflow built for how you work — not a generic product tour.
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">

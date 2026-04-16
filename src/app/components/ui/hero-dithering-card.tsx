@@ -73,12 +73,12 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
           <div className="flex flex-col items-center text-center z-20 pointer-events-auto max-w-5xl mx-auto mt-[-50px]">
              {/* Headline */}
              <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-slate-900 mb-8 leading-[0.95]">
-               Voice AI infrastructure for patient <br className="hidden md:block"/><span className="text-blue-600">engagement</span>.
+               The voice AI infrastructure healthcare teams <br className="hidden md:block"/><span className="text-blue-600">actually build on</span>.
              </h1>
 
              {/* Subheadline */}
              <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto mb-10 leading-relaxed font-normal">
-               AI agents that call, text, and engage your patients, your way, on our infrastructure.
+               Hana remembers every patient conversation and builds on it. Most teams go live in a week.
              </p>
 
              {/* CTAs */}

@@ -11,24 +11,27 @@ export function InlineImageHeader() {
         {/* Header */}
         <div className="text-center mb-[72px]">
           <h2 className="font-serif text-[36px] md:text-[56px] leading-[1.1] tracking-[-0.025em] text-white max-w-[720px] mx-auto mb-5">
-            Show us the
+            Built around your
             <span className="inline-flex items-center align-middle relative -top-[3px] mx-[2px]">
-              <img 
-                src={image_604a2f01ad9c55649c86d210ffa7add1143256c8} 
-                alt="Workflow" 
-                className="w-[48px] h-[48px] md:w-[64px] md:h-[64px] rounded-full object-cover shadow-[0_2px_10px_rgba(0,0,0,0.08)]" 
+              <img
+                src={image_604a2f01ad9c55649c86d210ffa7add1143256c8}
+                alt="Workflow"
+                className="w-[48px] h-[48px] md:w-[64px] md:h-[64px] rounded-full object-cover shadow-[0_2px_10px_rgba(0,0,0,0.08)]"
               />
             </span>
-            workflow. We build the
+            workflow. Not
             <span className="inline-flex items-center align-middle relative -top-[3px] mx-[2px]">
-              <img 
-                src={image_902cc6fcb4c48eee244e5db0e40dfc456537e85f} 
-                alt="AI Integration" 
-                className="w-[48px] h-[48px] md:w-[64px] md:h-[64px] rounded-full object-cover shadow-[0_2px_10px_rgba(0,0,0,0.08)] z-10" 
+              <img
+                src={image_902cc6fcb4c48eee244e5db0e40dfc456537e85f}
+                alt="AI Integration"
+                className="w-[48px] h-[48px] md:w-[64px] md:h-[64px] rounded-full object-cover shadow-[0_2px_10px_rgba(0,0,0,0.08)] z-10"
               />
             </span>
-            infrastructure.
+            ours.
           </h2>
+          <p className="text-[16px] leading-[1.7] text-slate-400 max-w-[520px] mx-auto">
+            Tell us how you work. We build around it. Most teams are live in a week.
+          </p>
         </div>
 
         {/* Steps */}
