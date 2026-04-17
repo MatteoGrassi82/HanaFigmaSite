@@ -16,6 +16,7 @@ import { TestWebhook } from "./components/TestWebhook";
 import { Terms } from "./pages/Terms";
 import { StateOfAI } from "./pages/StateOfAI";
 import { Pricing } from "./pages/Pricing";
+import { CaseStudies } from "./pages/CaseStudies";
 import { VideoAskWidget } from "./components/VideoAskWidget";
 
 // Configuration
@@ -235,6 +236,14 @@ function AppContent() {
               <Route path="/terms" element={<Terms />} />
               <Route path="/state-of-ai" element={<StateOfAI />} />
               <Route path="/pricing" element={<Pricing />} />
+              <Route path="/case-studies" element={
+                <CaseStudies
+                  activeAgentId={activeAgentId}
+                  webCallStatus={webCallStatus}
+                  handleStartWebCall={handleStartWebCall}
+                  handleEndWebCall={handleEndWebCall}
+                />
+              } />
             </Routes>
           </main>
         </div>
