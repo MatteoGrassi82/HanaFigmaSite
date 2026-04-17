@@ -31,7 +31,7 @@ const Stats = () => {
           <p className="text-base text-slate-500 dark:text-slate-400 mb-3">
             Your team knows who needs follow-up. They just can't reach them all.
           </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-slate-900 dark:text-white mb-6 font-serif">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-normal text-slate-900 dark:text-white mb-6 font-serif">
              This is why engagement <br />
              <span className="italic">numbers are so low.</span>
           </h2>

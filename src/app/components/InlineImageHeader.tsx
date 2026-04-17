@@ -10,7 +10,7 @@ export function InlineImageHeader() {
         
         {/* Header */}
         <div className="text-center mb-[72px]">
-          <h2 className="font-serif text-[36px] md:text-[56px] leading-[1.35] tracking-[-0.025em] text-white max-w-[720px] mx-auto mb-5">
+          <h2 className="font-serif text-[36px] md:text-[56px] leading-[1.1] tracking-normal text-white max-w-[720px] mx-auto mb-5">
             Built around your
             <span className="inline-flex items-center align-middle relative -top-[3px] mx-[2px]">
               <img
@@ -55,7 +55,7 @@ export function InlineImageHeader() {
                 <rect x="14" y="14" width="7" height="7" rx="1.5"/>
               </svg>
             </div>
-            <h3 className="font-serif text-[26px] text-white mb-3 tracking-[-0.01em]">Pick your workflow.</h3>
+            <h3 className="font-serif text-[26px] text-white mb-3 tracking-normal">Pick your workflow.</h3>
             <p className="text-[15px] leading-[1.7] text-slate-400 max-w-[280px] mx-auto">
               Choose from pre-built clinical templates or we build one together — designed around how your organization actually operates.
             </p>
@@ -76,7 +76,7 @@ export function InlineImageHeader() {
                 <path d="M16.24 7.76l2.83-2.83"/>
               </svg>
             </div>
-            <h3 className="font-serif text-[26px] text-white mb-3 tracking-[-0.01em]">Connect it.</h3>
+            <h3 className="font-serif text-[26px] text-white mb-3 tracking-normal">Connect it.</h3>
             <p className="text-[15px] leading-[1.7] text-slate-400 max-w-[280px] mx-auto">
               Whether it's your EHR, website, phone system, or app — we connect it wherever your patients are.
             </p>
@@ -90,7 +90,7 @@ export function InlineImageHeader() {
                 <polyline points="20 6 9 17 4 12"/>
               </svg>
             </div>
-            <h3 className="font-serif text-[26px] text-white mb-3 tracking-[-0.01em]">Live.</h3>
+            <h3 className="font-serif text-[26px] text-white mb-3 tracking-normal">Live.</h3>
             <p className="text-[15px] leading-[1.7] text-slate-400 max-w-[280px] mx-auto">
               Your agent is live. Handling calls, messages, and follow-ups so your team doesn't have to.
             </p>

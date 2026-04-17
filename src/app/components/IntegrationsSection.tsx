@@ -17,7 +17,7 @@ export function IntegrationsSection() {
             ">
               Integrations
             </div>
-            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-normal leading-[1.35] text-[#1e2a3a] mb-5 tracking-tight">
+            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-normal leading-[1.1] text-[#1e2a3a] mb-5 tracking-normal">
               Reads the chart. Engages the patient. <em className="italic text-blue-600">Writes back.</em>
             </h2>
             <p className="text-lg leading-[1.65] text-[#718096] max-w-2xl mx-auto font-normal">
@@ -36,7 +36,7 @@ export function IntegrationsSection() {
                    </svg>
                 </div>
                 
-                <h3 className="text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-[-0.01em]">EHR integrations</h3>
+                <h3 className="text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">EHR integrations</h3>
                 <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">Reads the chart. Engages the patient. Writes back.</p>
                 <p className="text-[15px] leading-[1.7] text-[#718096] mb-8 font-normal">
                   Direct integrations with major EHRs. Or connect through Redox and Catagon to reach 95+ systems. Hana reads the chart, engages the patient, and writes structured notes back.
@@ -61,7 +61,7 @@ export function IntegrationsSection() {
                    </svg>
                 </div>
                 
-                <h3 className="text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-[-0.01em]">Patient channels</h3>
+                <h3 className="text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">Patient channels</h3>
                 <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">Voice, SMS, WhatsApp, iMessage. 3+ languages. No app, no portal.</p>
                 <p className="text-[15px] leading-[1.7] text-[#718096] mb-8 font-normal">
                   Hana picks the right channel, time, and tone for each patient. No app. No portal. No login. Just a conversation.
@@ -86,7 +86,7 @@ export function IntegrationsSection() {
                    </svg>
                 </div>
                 
-                <h3 className="text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-[-0.01em]">No EHR? No problem.</h3>
+                <h3 className="text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">No EHR? No problem.</h3>
                 <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">Works with what you have.</p>
                 <p className="text-[15px] leading-[1.7] text-[#718096] mb-8 font-normal">
                   No EHR integration? No problem. We build custom dashboards, standalone agent controls, or work alongside whatever you're using today. You don't need to be "tech-ready" to start.
@@ -109,7 +109,7 @@ export function IntegrationsSection() {
                    <Code2 className="w-6 h-6" />
                 </div>
                 
-                <h3 className="text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-[-0.01em]">SDK & White-Label</h3>
+                <h3 className="text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">SDK & White-Label</h3>
                 <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">Building a platform? Embed Hana via SDK and white-label it as your own.</p>
                 <p className="text-[15px] leading-[1.7] text-[#718096] mb-8 font-normal">
                   Full API access. Custom dashboards. Your branding. Our reasoning engine.

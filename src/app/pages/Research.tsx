@@ -167,7 +167,7 @@ export function Research() {
         
         <div className="max-w-4xl mx-auto text-center relative z-10">
            <FadeIn>
-              <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-slate-900 mb-8 leading-[1.35]">
+              <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-normal text-slate-900 mb-8 leading-[1.1]">
                  Advancing Conversational AI <br/> in Healthcare
               </h1>
            </FadeIn>
@@ -188,7 +188,7 @@ export function Research() {
       <section className="py-24 bg-white border-y border-slate-200/60">
          <div className="max-w-3xl mx-auto px-6 text-center">
              <FadeIn>
-               <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-6 tracking-tight">
+               <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-6 tracking-normal">
                   The Adaptive Engagement Engine
                </h2>
              </FadeIn>

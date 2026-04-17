@@ -8,7 +8,7 @@ export function Terms() {
         <section className="bg-[#00122F] text-white py-20 px-4">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-blue-400 text-sm font-semibold tracking-widest uppercase mb-4">HANA Health</p>
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl tracking-tight mb-6 leading-[1.35]">
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl tracking-normal mb-6 leading-[1.1]">
               Terms of Service<br />& Security Policy
             </h1>
             <p className="text-slate-400 text-base">
