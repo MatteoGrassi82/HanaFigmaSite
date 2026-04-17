@@ -552,19 +552,8 @@ export function Pricing() {
         useExactTitle
       />
 
-      {/* Hero */}
-      <section className="pt-36 pb-10 px-4 text-center max-w-2xl mx-auto">
-        <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-4">Outcome-based pricing</div>
-        <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl tracking-tight text-slate-900 leading-[0.95] mb-4">
-          See what this currently <em className="italic text-blue-500">costs your practice</em>
-        </h1>
-        <p className="text-base text-slate-600 leading-relaxed font-light max-w-md mx-auto">
-          Answer a few questions about your practice. We'll show you exactly what HANA costs — and what you save across every workflow you automate.
-        </p>
-      </section>
-
       {/* Progress bar */}
-      <div className="pb-4 flex justify-center gap-1.5">
+      <div className="pt-28 pb-4 flex justify-center gap-1.5">
         {Array.from({ length: TOTAL_SLIDES }).map((_, i) => (
           <div key={i} className={cn("h-0.5 w-8 rounded-full transition-all duration-300",
             i < slide ? "bg-blue-500" : i === slide ? "bg-blue-400/50" : "bg-slate-200"
