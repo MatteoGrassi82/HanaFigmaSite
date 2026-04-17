@@ -357,7 +357,7 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
         <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-4">
           Case studies
         </div>
-        <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl tracking-tight text-slate-900 leading-[0.95] mb-4">
+        <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl tracking-tight text-slate-900 leading-[1.05] mb-4">
           What happens when <em className="italic text-blue-500">infrastructure works</em>
         </h1>
         <p className="text-base text-slate-600 leading-relaxed font-light max-w-xl mx-auto">
@@ -511,7 +511,7 @@ function DetailView({
           >
             {c.tag}
           </span>
-          <h1 className="font-serif text-[clamp(22px,3.5vw,34px)] font-normal leading-[1.1] tracking-tight mb-1">
+          <h1 className="font-serif text-[clamp(22px,3.5vw,34px)] font-normal leading-[1.2] tracking-tight mb-1">
             {c.title}
           </h1>
           <p className="text-sm text-slate-600 leading-[1.6]">{c.sub}</p>

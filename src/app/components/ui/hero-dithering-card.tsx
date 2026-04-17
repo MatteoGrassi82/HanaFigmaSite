@@ -72,7 +72,7 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
           
           <div className="flex flex-col items-center text-center z-20 pointer-events-auto max-w-5xl mx-auto mt-[-50px]">
              {/* Headline */}
-             <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-slate-900 mb-8 leading-[0.95]">
+             <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-slate-900 mb-8 leading-[1.05]">
                The voice AI infrastructure healthcare teams <br className="hidden md:block"/><span className="text-blue-600">actually build on</span>.
              </h1>
 

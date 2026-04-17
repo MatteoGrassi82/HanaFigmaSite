@@ -167,7 +167,7 @@ export function Research() {
         
         <div className="max-w-4xl mx-auto text-center relative z-10">
            <FadeIn>
-              <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-slate-900 mb-8 leading-[0.95]">
+              <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-slate-900 mb-8 leading-[1.05]">
                  Advancing Conversational AI <br/> in Healthcare
               </h1>
            </FadeIn>
