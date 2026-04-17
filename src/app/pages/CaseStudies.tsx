@@ -357,7 +357,7 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
         <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-4">
           Case studies
         </div>
-        <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl tracking-tight text-slate-900 leading-[1.2] mb-4">
+        <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl tracking-tight text-slate-900 leading-[1.35] mb-4">
           What happens when <em className="italic text-blue-500">infrastructure works</em>
         </h1>
         <p className="text-base text-slate-600 leading-relaxed font-light max-w-xl mx-auto">
@@ -406,7 +406,7 @@ function CardHeader({ c }: { c: CaseStudy }) {
       >
         {c.tag}
       </span>
-      <div className="font-serif text-[19px] leading-[1.2] mb-1 text-slate-900">{c.title}</div>
+      <div className="font-serif text-[19px] leading-[1.35] mb-1 text-slate-900">{c.title}</div>
       <div className="text-xs text-slate-600 mb-4 leading-[1.4]">{c.sub}</div>
       <div className="h-px bg-slate-200 mb-4" />
       <div className="flex flex-col gap-[6px] mb-4">
@@ -451,7 +451,7 @@ function BottomCTA() {
   return (
     <div className="mt-12 p-6 border border-slate-200 flex items-center justify-between gap-6 flex-wrap">
       <div>
-        <div className="font-serif text-[20px] leading-[1.2] mb-1">
+        <div className="font-serif text-[20px] leading-[1.35] mb-1">
           Every workflow is different.
           <br />
           That's the point.
@@ -511,7 +511,7 @@ function DetailView({
           >
             {c.tag}
           </span>
-          <h1 className="font-serif text-[clamp(22px,3.5vw,34px)] font-normal leading-[1.2] tracking-tight mb-1">
+          <h1 className="font-serif text-[clamp(22px,3.5vw,34px)] font-normal leading-[1.35] tracking-tight mb-1">
             {c.title}
           </h1>
           <p className="text-sm text-slate-600 leading-[1.6]">{c.sub}</p>
@@ -565,7 +565,7 @@ function DetailView({
 
       <div className="mt-12 p-6 border border-slate-200 flex items-center justify-between gap-6 flex-wrap">
         <div>
-          <div className="font-serif text-[20px] leading-[1.2] mb-1">See this workflow in action.</div>
+          <div className="font-serif text-[20px] leading-[1.35] mb-1">See this workflow in action.</div>
           <div className="text-[13px] text-slate-600">
             Book a demo. We'll build it around how you work.
           </div>

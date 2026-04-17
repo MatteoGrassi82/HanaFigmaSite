@@ -10,7 +10,7 @@ export function InlineImageHeader() {
         
         {/* Header */}
         <div className="text-center mb-[72px]">
-          <h2 className="font-serif text-[36px] md:text-[56px] leading-[1.25] tracking-[-0.025em] text-white max-w-[720px] mx-auto mb-5">
+          <h2 className="font-serif text-[36px] md:text-[56px] leading-[1.35] tracking-[-0.025em] text-white max-w-[720px] mx-auto mb-5">
             Built around your
             <span className="inline-flex items-center align-middle relative -top-[3px] mx-[2px]">
               <img

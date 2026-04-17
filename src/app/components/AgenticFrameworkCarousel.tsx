@@ -81,7 +81,7 @@ export function AgenticFrameworkCarousel() {
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 mb-16">
-          <h2 className="text-3xl md:text-5xl font-serif font-normal tracking-tight text-slate-900 dark:text-white max-w-2xl leading-[1.25]">
+          <h2 className="text-3xl md:text-5xl font-serif font-normal tracking-tight text-slate-900 dark:text-white max-w-2xl leading-[1.35]">
             Voice AI infrastructure for clinical workflows.
           </h2>
           <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-3xl leading-relaxed md:mt-4 font-sans">

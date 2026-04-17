@@ -17,7 +17,7 @@ export function IntegrationsSection() {
             ">
               Integrations
             </div>
-            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-normal leading-[1.25] text-[#1e2a3a] mb-5 tracking-tight">
+            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-normal leading-[1.35] text-[#1e2a3a] mb-5 tracking-tight">
               Reads the chart. Engages the patient. <em className="italic text-blue-600">Writes back.</em>
             </h2>
             <p className="text-lg leading-[1.65] text-[#718096] max-w-2xl mx-auto font-normal">

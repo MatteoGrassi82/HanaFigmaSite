@@ -145,7 +145,7 @@ export function HowHanaWorks() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
           <div className="max-w-2xl">
-            <h2 className="text-3xl md:text-5xl font-serif text-slate-900 dark:text-white leading-[1.25]">
+            <h2 className="text-3xl md:text-5xl font-serif text-slate-900 dark:text-white leading-[1.35]">
               Watch HANA in <span className="text-blue-600 italic">Action</span>
             </h2>
           </div>

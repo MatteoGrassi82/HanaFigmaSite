@@ -55,7 +55,7 @@ export function ComplianceSection() {
               Enterprise Compliance
             </div>
             
-            <h2 className="text-4xl md:text-5xl font-serif font-medium text-slate-900 dark:text-white leading-[1.25]">
+            <h2 className="text-4xl md:text-5xl font-serif font-medium text-slate-900 dark:text-white leading-[1.35]">
               Healthcare compliance isn't an add-on. It's the foundation.
             </h2>
             <p className="text-base text-slate-500 dark:text-slate-400 leading-relaxed">
