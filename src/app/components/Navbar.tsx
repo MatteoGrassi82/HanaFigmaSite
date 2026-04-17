@@ -44,8 +44,8 @@ export const NavbarDefaults: Props = {
   },
   navLinks: [
     {
-      url: "/use-cases",
-      title: "Use Cases",
+      url: "/case-studies",
+      title: "Case Studies",
     },
     {
       url: "https://docs.hana.health/getting-started/overview",

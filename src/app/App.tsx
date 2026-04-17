@@ -1,13 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { useConversation, ConversationProvider } from "@elevenlabs/react";
 import { toast, Toaster } from "sonner";
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import { Navbar } from "./components/Navbar";
 import { AnnouncementBar } from "./components/AnnouncementBar";
 import { SEO } from "./components/SEO";
 import { GoogleTagManager } from "./components/GoogleTagManager";
 import { Home } from "./pages/Home";
-import { UseCases } from "./components/UseCases";
 import { Research } from "./pages/Research";
 import { About } from "./pages/About";
 import { RadialOrbitalTimelineDemo } from "./pages/Timeline";
@@ -220,14 +219,7 @@ function AppContent() {
                   handleEndWebCall={handleEndWebCall}
                 />
               } />
-              <Route path="/use-cases" element={
-                <UseCases
-                  activeAgentId={activeAgentId}
-                  webCallStatus={webCallStatus}
-                  handleStartWebCall={handleStartWebCall}
-                  handleEndWebCall={handleEndWebCall}
-                />
-              } />
+              <Route path="/use-cases" element={<Navigate to="/case-studies" replace />} />
               <Route path="/timeline" element={<RadialOrbitalTimelineDemo />} />
               <Route path="/research" element={<Research />} />
               <Route path="/about" element={<About />} />
