@@ -29,14 +29,14 @@ const Stats = () => {
       <div className="container mx-auto">
         <div className="mx-auto max-w-2xl text-center mb-16">
           <p className="text-base text-slate-500 dark:text-slate-400 mb-3">
-            Your team knows who needs follow-up. They just can't reach them all.
+            Engaging patients takes time your team doesn't have.
           </p>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-normal text-slate-900 dark:text-white mb-6 font-serif">
-             This is why engagement <br />
-             <span className="italic">numbers are so low.</span>
+            What 2 million patient interactions <br />
+            <span className="italic">taught us.</span>
           </h2>
           <p className="text-lg text-slate-500 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
-            Portals. Apps. SMS. All cap out at 15–35%. Teams on Hana hit 85%. The infrastructure is why.
+            When the infrastructure adapts to each patient's channel, language, and response pattern, engagement stops being a problem you manage and starts being a system that runs.
           </p>
         </div>
         <div className="relative mx-auto mt-20 flex h-[300px] md:h-[500px] max-w-4xl items-center justify-center gap-2 md:gap-8">

@@ -1,33 +1,15 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
-import image_902cc6fcb4c48eee244e5db0e40dfc456537e85f from 'figma:asset/902cc6fcb4c48eee244e5db0e40dfc456537e85f.png';
-import image_604a2f01ad9c55649c86d210ffa7add1143256c8 from 'figma:asset/604a2f01ad9c55649c86d210ffa7add1143256c8.png';
 
 export function InlineImageHeader() {
   return (
     <section className="py-[100px] px-6 md:px-10 bg-[#00122F] text-white font-['DM_Sans']">
       <div className="max-w-[1200px] mx-auto">
-        
+
         {/* Header */}
         <div className="text-center mb-[72px]">
           <h2 className="font-serif text-[36px] md:text-[56px] leading-[1.1] tracking-normal text-white max-w-[720px] mx-auto mb-5">
-            Built around your
-            <span className="inline-flex items-center align-middle relative -top-[3px] mx-[2px]">
-              <img
-                src={image_604a2f01ad9c55649c86d210ffa7add1143256c8}
-                alt="Workflow"
-                className="w-[48px] h-[48px] md:w-[64px] md:h-[64px] rounded-full object-cover shadow-[0_2px_10px_rgba(0,0,0,0.08)]"
-              />
-            </span>
-            workflow. Not
-            <span className="inline-flex items-center align-middle relative -top-[3px] mx-[2px]">
-              <img
-                src={image_902cc6fcb4c48eee244e5db0e40dfc456537e85f}
-                alt="AI Integration"
-                className="w-[48px] h-[48px] md:w-[64px] md:h-[64px] rounded-full object-cover shadow-[0_2px_10px_rgba(0,0,0,0.08)] z-10"
-              />
-            </span>
-            ours.
+            Designed for patient journeys. Built around your workflow.
           </h2>
           <p className="text-[16px] leading-[1.7] text-slate-400 max-w-[520px] mx-auto">
             Tell us how you work. We build around it. Most teams are live in a week.
@@ -37,7 +19,7 @@ export function InlineImageHeader() {
         {/* Steps */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-0 relative">
           {/* Dashed Connecting Line (Desktop Only) */}
-          <div 
+          <div
             className="hidden md:block absolute top-[52px] left-[calc(16.66%+24px)] right-[calc(16.66%+24px)] h-[2px] z-0"
             style={{
               background: 'repeating-linear-gradient(90deg, rgba(255,255,255,0.25) 0px, rgba(255,255,255,0.25) 6px, transparent 6px, transparent 14px)'
@@ -57,7 +39,7 @@ export function InlineImageHeader() {
             </div>
             <h3 className="font-serif text-[26px] text-white mb-3 tracking-normal">Pick your workflow.</h3>
             <p className="text-[15px] leading-[1.7] text-slate-400 max-w-[280px] mx-auto">
-              Choose from pre-built clinical templates or we build one together — designed around how your organization actually operates.
+              Intake. Outreach. Monitoring. Coordination. Pre-op. Post-op. Choose from pre-built templates or we build one together — designed around how your team actually operates.
             </p>
           </div>
 
@@ -76,9 +58,9 @@ export function InlineImageHeader() {
                 <path d="M16.24 7.76l2.83-2.83"/>
               </svg>
             </div>
-            <h3 className="font-serif text-[26px] text-white mb-3 tracking-normal">Connect it.</h3>
+            <h3 className="font-serif text-[26px] text-white mb-3 tracking-normal">Connect your EHR.</h3>
             <p className="text-[15px] leading-[1.7] text-slate-400 max-w-[280px] mx-auto">
-              Whether it's your EHR, website, phone system, or app — we connect it wherever your patients are.
+              Direct integrations with major EHRs. Or connect through Redox and Catagon to reach 95+ systems. We read the chart first so patients aren't asked what you already know.
             </p>
           </div>
 

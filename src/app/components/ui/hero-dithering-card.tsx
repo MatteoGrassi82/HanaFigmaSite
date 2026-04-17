@@ -78,7 +78,7 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
 
              {/* Subheadline */}
              <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto mb-10 leading-relaxed font-normal">
-               Hana remembers every patient conversation and builds on it. Most teams go live in a week.
+               Voice, SMS, and chat that follows your patients across the care journey. Reads the chart. Engages between visits. Writes back.
              </p>
 
              {/* CTAs */}
