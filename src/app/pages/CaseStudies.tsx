@@ -357,10 +357,10 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
         <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-4">
           Case studies
         </div>
-        <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl tracking-normal text-slate-900 leading-[1.1] mb-4">
-          What happens when <em className="italic text-blue-500">infrastructure works</em>
+        <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-normal text-slate-900 leading-[1.1] mb-4">
+          What happens when <span className="text-blue-600">infrastructure works</span>
         </h1>
-        <p className="text-base text-slate-600 leading-relaxed font-light max-w-xl mx-auto">
+        <p className="text-xl md:text-2xl text-slate-600 leading-relaxed font-normal max-w-xl mx-auto">
           Real deployments. Real workflows. Real results — with live voice agents you can try right now.
         </p>
       </section>
@@ -461,12 +461,6 @@ function BottomCTA() {
         </div>
       </div>
       <div className="flex gap-2 flex-wrap">
-        <a
-          href="/use-cases"
-          className="text-[13px] font-medium px-[15px] py-2 border border-slate-900 text-slate-900 rounded-[2px] hover:bg-slate-900 hover:text-white transition-colors"
-        >
-          Explore agent catalogue →
-        </a>
         <a
           href="https://calendly.com/matteowastaken/discoverycall"
           target="_blank"
@@ -571,12 +565,6 @@ function DetailView({
           </div>
         </div>
         <div className="flex gap-2 flex-wrap">
-          <a
-            href="/use-cases"
-            className="text-[13px] font-medium px-[15px] py-2 border border-slate-900 text-slate-900 rounded-[2px] hover:bg-slate-900 hover:text-white transition-colors"
-          >
-            Explore agent catalogue →
-          </a>
           <a
             href="https://calendly.com/matteowastaken/discoverycall"
             target="_blank"
