@@ -294,15 +294,6 @@ const CASES: CaseStudy[] = [
   },
 ];
 
-const FILTERS: { key: FilterKey; label: string }[] = [
-  { key: "all", label: "All" },
-  { key: "b", label: "Behavioral health" },
-  { key: "c", label: "Chronic care" },
-  { key: "s", label: "Surgical" },
-  { key: "d", label: "Digital health" },
-  { key: "p", label: "Platform" },
-];
-
 const TAG_COLORS: Record<string, string> = {
   tb: "bg-emerald-50 text-emerald-800",
   tc: "bg-blue-50 text-blue-800",
@@ -317,14 +308,12 @@ export function CaseStudies({
   handleStartWebCall,
   handleEndWebCall,
 }: CaseStudiesProps) {
-  const [filter, setFilter] = useState<FilterKey>("all");
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [selectedIdx]);
 
-  const filtered = CASES.filter((c) => filter === "all" || c.cat === filter);
   const selected = selectedIdx !== null ? CASES[selectedIdx] : null;
 
   return (
@@ -338,7 +327,7 @@ export function CaseStudies({
           { name: "Case Studies", url: "https://hanavoice.ai/case-studies" },
         ])}
       />
-      <div className="min-h-screen bg-white font-sans pt-28 pb-16">
+      <div className="min-h-screen bg-white font-sans pb-16">
         {selected ? (
           <DetailView
             c={selected}
@@ -349,12 +338,7 @@ export function CaseStudies({
             onEndCall={handleEndWebCall}
           />
         ) : (
-          <IndexView
-            filter={filter}
-            setFilter={setFilter}
-            cases={filtered}
-            onOpen={(idx) => setSelectedIdx(CASES.indexOf(filtered[idx]))}
-          />
+          <IndexView onOpen={(idx) => setSelectedIdx(idx)} />
         )}
       </div>
       <Footer />
@@ -362,105 +346,54 @@ export function CaseStudies({
   );
 }
 
-function IndexView({
-  filter,
-  setFilter,
-  cases,
-  onOpen,
-}: {
-  filter: FilterKey;
-  setFilter: (f: FilterKey) => void;
-  cases: CaseStudy[];
-  onOpen: (idx: number) => void;
-}) {
+function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
+  const topRow = CASES.slice(0, 2);
+  const bottomRow = CASES.slice(2);
+
   return (
-    <div className="max-w-5xl mx-auto px-6">
-      <p className="text-[11px] font-medium tracking-[0.12em] uppercase text-slate-400 mb-3">
-        Case studies
-      </p>
-      <h1 className="font-serif text-[clamp(26px,4vw,42px)] font-normal leading-[1.1] tracking-tight text-slate-900 mb-2">
-        What happens when
-        <br />
-        <em className="italic">infrastructure works.</em>
-      </h1>
-      <p className="text-sm text-slate-600 leading-relaxed max-w-[480px] mb-9">
-        Real deployments. Real workflows. Real results — with live voice agents you can try right now.
-      </p>
+    <>
+      {/* Hero */}
+      <section className="pt-36 pb-12 px-4 text-center max-w-3xl mx-auto">
+        <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-4">
+          Case studies
+        </div>
+        <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl tracking-tight text-slate-900 leading-[0.95] mb-4">
+          What happens when <em className="italic text-blue-500">infrastructure works</em>
+        </h1>
+        <p className="text-base text-slate-600 leading-relaxed font-light max-w-xl mx-auto">
+          Real deployments. Real workflows. Real results — with live voice agents you can try right now.
+        </p>
+      </section>
 
-      <div className="flex flex-wrap gap-[7px] mb-7">
-        {FILTERS.map((f) => (
-          <button
-            key={f.key}
-            onClick={() => setFilter(f.key)}
-            className={`text-xs font-medium px-[13px] py-1 rounded-full border transition-colors ${
-              filter === f.key
-                ? "bg-slate-900 text-white border-slate-900"
-                : "bg-transparent text-slate-600 border-slate-200 hover:bg-slate-900 hover:text-white hover:border-slate-900"
-            }`}
-          >
-            {f.label}
-          </button>
-        ))}
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          {topRow.map((c, i) => (
+            <CaseCard key={c.id} c={c} onOpen={() => onOpen(i)} />
+          ))}
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {bottomRow.map((c, i) => (
+            <CaseCard key={c.id} c={c} onOpen={() => onOpen(i + 2)} />
+          ))}
+        </div>
+
+        <BottomCTA />
       </div>
-
-      <div className="grid gap-[1.5px] [grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr))]">
-        {cases.map((c, i) => (
-          <CaseCard key={c.id} c={c} onOpen={() => onOpen(i)} />
-        ))}
-      </div>
-
-      <BottomCTA />
-    </div>
+    </>
   );
 }
 
 function CaseCard({ c, onOpen }: { c: CaseStudy; onOpen: () => void }) {
-  if (c.featured) {
-    return (
-      <div
-        onClick={onOpen}
-        className="group cursor-pointer bg-white border border-slate-200 hover:border-slate-400 transition-colors [grid-column:1/-1] grid [grid-template-columns:3fr_2fr] max-[580px]:grid-cols-1"
-      >
-        <div className="p-[1.35rem]">
-          <CardHeader c={c} />
-          <ChipsRow c={c} />
-          <ReadMore />
-        </div>
-        <div className="bg-slate-50 p-[1.35rem] flex flex-col gap-5 border-l border-slate-200 max-[580px]:border-l-0 max-[580px]:border-t">
-          <p className="font-serif italic text-base leading-[1.5] text-slate-900">
-            "{c.featured.quote}"
-          </p>
-          <div className="flex gap-5 items-center">
-            <div>
-              <div className="text-2xl font-medium leading-none mb-0.5">{c.featured.before}</div>
-              <div className="text-[11px] text-slate-600 leading-[1.4]">
-                {c.featured.label}
-                <br />
-                before Hana
-              </div>
-            </div>
-            <div className="text-[15px] text-slate-400">→</div>
-            <div>
-              <div className="text-2xl font-medium leading-none mb-0.5">{c.featured.after}</div>
-              <div className="text-[11px] text-slate-600 leading-[1.4]">
-                {c.featured.label}
-                <br />
-                with Hana
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
   return (
     <div
       onClick={onOpen}
-      className="group cursor-pointer bg-white border border-slate-200 hover:border-slate-400 transition-colors p-[1.35rem]"
+      className="group cursor-pointer bg-white border border-slate-200 hover:border-slate-400 rounded-lg transition-colors p-6 flex flex-col"
     >
       <CardHeader c={c} />
       <ChipsRow c={c} />
-      <ReadMore />
+      <div className="mt-auto">
+        <ReadMore />
+      </div>
     </div>
   );
 }
