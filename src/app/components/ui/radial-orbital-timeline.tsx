@@ -188,7 +188,7 @@ export default function RadialOrbitalTimeline({
             </div>
           )}
           {title && (
-            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-normal leading-[1.2] text-white mb-5 tracking-tight">
+            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-normal leading-[1.25] text-white mb-5 tracking-tight">
               {title}
             </h2>
           )}

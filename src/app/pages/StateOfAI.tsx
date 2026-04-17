@@ -215,7 +215,7 @@ export function StateOfAI() {
             {/* removed "Published by" line */}
           </FadeIn>
           <FadeIn delay={0.05}>
-            <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl tracking-tight text-slate-900 mb-8 leading-[1.05]">
+            <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl tracking-tight text-slate-900 mb-8 leading-[1.2]">
               The State of Voice AI <br /> in Healthcare
             </h1>
           </FadeIn>

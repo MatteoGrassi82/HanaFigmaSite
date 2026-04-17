@@ -555,7 +555,7 @@ export function Pricing() {
       {/* Hero */}
       <section className="pt-36 pb-10 px-4 text-center max-w-2xl mx-auto">
         <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-4">Outcome-based pricing</div>
-        <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl tracking-tight text-slate-900 leading-[1.05] mb-4">
+        <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl tracking-tight text-slate-900 leading-[1.2] mb-4">
           See what this currently <em className="italic text-blue-500">costs your practice</em>
         </h1>
         <p className="text-base text-slate-600 leading-relaxed font-light max-w-md mx-auto">
