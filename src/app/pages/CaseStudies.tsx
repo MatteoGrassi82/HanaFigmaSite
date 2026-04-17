@@ -402,7 +402,7 @@ function CardHeader({ c }: { c: CaseStudy }) {
   return (
     <>
       <span
-        className={`inline-block text-[11px] font-medium tracking-[0.08em] uppercase px-[9px] py-[3px] rounded-full mb-[0.85rem] ${TAG_COLORS[c.tagClass]}`}
+        className={`inline-block text-[13px] font-medium tracking-[0.08em] uppercase px-3 py-1 rounded-full mb-3 ${TAG_COLORS[c.tagClass]}`}
       >
         {c.tag}
       </span>
