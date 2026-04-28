@@ -333,8 +333,8 @@ function SlideResult({ providers, workflows, volumes, onBack }: {
       {/* CTA */}
       <div className="bg-[#00122F] rounded-xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <p className="text-white font-medium text-sm mb-1">Ready to confirm your numbers?</p>
-          <p className="text-slate-400 text-xs font-light leading-relaxed">Book a 20-minute call. We'll calculate your exact projection using your actual workflows before any commitment.</p>
+          <p className="text-white font-medium text-sm mb-1">Want to confirm these numbers?</p>
+          <p className="text-slate-400 text-xs font-light leading-relaxed">These are directional benchmarks. Book a 20-minute call and we'll build your exact projection using your actual workflows — before any commitment.</p>
         </div>
         <a
           href="https://calendly.com/matteowastaken/discoverycall"
@@ -457,17 +457,17 @@ export function Pricing() {
             Savings Calculator
           </div>
           <h1 className="font-['Instrument_Serif'] text-4xl md:text-5xl lg:text-6xl text-slate-900 leading-[1.1] mb-4">
-            See how much your{" "}
-            <em className="italic text-blue-500">practice can save</em>
+            Understand your{" "}
+            <em className="italic text-blue-500">savings potential</em>
           </h1>
           <p className="text-base text-slate-500 leading-relaxed font-light mb-8 max-w-md mx-auto">
-            Answer five quick questions about your practice. We'll show you exactly how much time and money HANA saves compared to human staff doing the same work.
+            Answer five quick questions about your practice and get a personalised estimate of what you could save with HANA. This is a starting point to understand the opportunity — not a price quote.
           </p>
           <button
             onClick={() => setWizardOpen(true)}
             className="inline-block bg-[#00122F] text-white rounded-lg px-9 py-4 text-sm font-medium hover:bg-slate-800 transition-colors"
           >
-            Calculate my savings
+            Explore my savings
           </button>
           <p className="text-xs text-slate-400 mt-3 font-light">Takes 90 seconds · No sign-up required</p>
         </section>
@@ -475,7 +475,7 @@ export function Pricing() {
         {/* FAQ */}
         <section className="max-w-xl mx-auto px-4 pb-20">
           <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium text-center mb-2">Common questions</div>
-          <h2 className="font-['Instrument_Serif'] text-2xl md:text-3xl text-slate-900 text-center mb-8">How does this work?</h2>
+          <h2 className="font-['Instrument_Serif'] text-2xl md:text-3xl text-slate-900 text-center mb-8">How are estimates calculated?</h2>
           {FAQS.map((f) => (
             <FaqItem key={f.q} q={f.q} a={f.a} />
           ))}
