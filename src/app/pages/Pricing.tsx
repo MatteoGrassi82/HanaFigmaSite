@@ -442,9 +442,9 @@ export function Pricing() {
   return (
     <>
       <SEO
-        title="Pricing | Hana Voice AI"
-        description="Outcome-based pricing aligned with your savings. Calculate exactly what Hana costs and what you save compared to human staff."
-        path="/pricing"
+        title="Savings Calculator | Hana Voice AI"
+        description="See how much your practice could save with Hana Voice AI. Answer five quick questions to get a personalised savings estimate."
+        path="/calculator"
         useExactTitle
       />
 
@@ -454,14 +454,14 @@ export function Pricing() {
         {/* Hero */}
         <section className="pt-36 pb-16 px-4 text-center max-w-2xl mx-auto">
           <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-4">
-            Outcome-based pricing
+            Savings Calculator
           </div>
           <h1 className="font-['Instrument_Serif'] text-4xl md:text-5xl lg:text-6xl text-slate-900 leading-[1.1] mb-4">
-            Pricing aligned with{" "}
-            <em className="italic text-blue-500">your savings</em>
+            See how much your{" "}
+            <em className="italic text-blue-500">practice can save</em>
           </h1>
           <p className="text-base text-slate-500 leading-relaxed font-light mb-8 max-w-md mx-auto">
-            Answer five quick questions about your practice. We'll show you exactly what HANA costs — and what you save compared to human staff doing the same work.
+            Answer five quick questions about your practice. We'll show you exactly how much time and money HANA saves compared to human staff doing the same work.
           </p>
           <button
             onClick={() => setWizardOpen(true)}

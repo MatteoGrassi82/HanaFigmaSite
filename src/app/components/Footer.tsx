@@ -49,7 +49,7 @@ export function Footer() {
         <nav aria-label="Company navigation">
           <h4 className="text-white font-medium mb-4">Company</h4>
           <ul className="space-y-2 text-sm">
-            <li><Link to="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
+            <li><Link to="/calculator" className="hover:text-white transition-colors">Calculator</Link></li>
             <li><Link to="/about" className="hover:text-white transition-colors">About Us</Link></li>
             <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
             <li><Link to="/contact" className="hover:text-white transition-colors">Partnerships</Link></li>

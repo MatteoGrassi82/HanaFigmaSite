@@ -234,7 +234,7 @@ function AppContent() {
               <Route path="/test-webhook" element={<TestWebhook />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/state-of-ai" element={<StateOfAI />} />
-              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/calculator" element={<Pricing />} />
             </Routes>
           </main>
         </div>
