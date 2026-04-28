@@ -57,7 +57,7 @@ export const NavbarDefaults: Props = {
     },
     {
       url: "/pricing",
-      title: "Pricing",
+      title: "Calculator",
     },
   ],
   button: {
