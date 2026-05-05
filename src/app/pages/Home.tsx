@@ -9,6 +9,7 @@ import { CaseStudiesSection } from "../components/CaseStudiesSection";
 import { HowHanaWorks } from "../components/HowHanaWorks";
 import { IntegrationsSection } from "../components/IntegrationsSection";
 import { ReadyToUseSection } from "../components/ReadyToUseSection";
+import { RecipesMarquee } from "../components/RecipesMarquee";
 import { Footer } from "../components/Footer";
 import { SEO } from "../components/SEO";
 import { organizationSchema, websiteSchema, softwareApplicationSchema } from "../components/SEO";
@@ -77,15 +78,17 @@ export function Home({
         handleEndWebCall={handleEndWebCall}
       />
 
-      {/* 6. INTEGRATIONS */}
-      <IntegrationsSection />
+      {/* RECIPES MARQUEE */}
+      <RecipesMarquee />
 
       {/* 7. 3-STEP ONBOARDING */}
       <InlineImageHeader />
 
-
       {/* 9. COMPLIANCE */}
       <ComplianceSection />
+
+      {/* 6. INTEGRATIONS */}
+      <IntegrationsSection />
 
       {/* 10. FINAL CTA */}
       <ReadyToUseSection />
