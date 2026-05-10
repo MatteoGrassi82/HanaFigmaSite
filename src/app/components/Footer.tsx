@@ -63,6 +63,7 @@ export function Footer() {
             <li><Link to="/terms" className="hover:text-white transition-colors">Privacy Policy</Link></li>
             <li><Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
             <li><Link to="/terms" className="hover:text-white transition-colors">Compliance</Link></li>
+            <li><Link to="/aup" className="hover:text-white transition-colors">Acceptable Use Policy</Link></li>
           </ul>
         </div>
       </div>
@@ -73,6 +74,7 @@ export function Footer() {
           <Link to="/terms" className="hover:text-slate-400 transition-colors">Privacy</Link>
           <Link to="/terms" className="hover:text-slate-400 transition-colors">Terms</Link>
           <Link to="/terms" className="hover:text-slate-400 transition-colors">Cookies</Link>
+          <Link to="/aup" className="hover:text-slate-400 transition-colors">AUP</Link>
         </div>
       </div>
     </footer>

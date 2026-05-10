@@ -13,6 +13,7 @@ import { RadialOrbitalTimelineDemo } from "./pages/Timeline";
 import { Contact } from "./pages/Contact";
 import { TestWebhook } from "./components/TestWebhook";
 import { Terms } from "./pages/Terms";
+import { AUP } from "./pages/AUP";
 import { StateOfAI } from "./pages/StateOfAI";
 import { Pricing } from "./pages/Pricing";
 import { CaseStudies } from "./pages/CaseStudies";
@@ -226,6 +227,7 @@ function AppContent() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/test-webhook" element={<TestWebhook />} />
               <Route path="/terms" element={<Terms />} />
+              <Route path="/aup" element={<AUP />} />
               <Route path="/state-of-ai" element={<StateOfAI />} />
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/case-studies" element={
