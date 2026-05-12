@@ -13,18 +13,21 @@ function formatDate(dateStr?: string) {
 
 const portableTextComponents = {
   types: {
-    image: ({ value }: any) => (
-      <figure className="my-8">
-        <img
-          src={urlFor(value).width(800).url()}
-          alt={value.alt || ""}
-          className="w-full rounded-xl"
-        />
-        {value.caption && (
-          <figcaption className="text-center text-sm text-slate-400 mt-2">{value.caption}</figcaption>
-        )}
-      </figure>
-    ),
+    image: ({ value }: any) => {
+      if (!value?.asset) return null;
+      return (
+        <figure className="my-8">
+          <img
+            src={urlFor(value).width(800).url()}
+            alt={value.alt || ""}
+            className="w-full rounded-xl"
+          />
+          {value.caption && (
+            <figcaption className="text-center text-sm text-slate-400 mt-2">{value.caption}</figcaption>
+          )}
+        </figure>
+      );
+    },
   },
   block: {
     h1: ({ children }: any) => <h1 className="font-serif text-4xl text-slate-900 mt-10 mb-4 leading-tight">{children}</h1>,

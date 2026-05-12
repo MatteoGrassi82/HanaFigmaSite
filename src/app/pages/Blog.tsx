@@ -64,7 +64,7 @@ export function Blog() {
                 >
                   {/* Cover image */}
                   <div className="h-48 bg-slate-50 overflow-hidden">
-                    {post.mainImage ? (
+                    {post.mainImage && (post.mainImage as any)?.asset ? (
                       <img
                         src={urlFor(post.mainImage).width(600).height(400).url()}
                         alt={post.title}
