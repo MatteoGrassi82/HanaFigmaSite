@@ -40,7 +40,7 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
   };
 
   return (
-    <section className="relative w-full flex justify-center items-center bg-slate-50 overflow-x-hidden">
+    <section className="relative w-full flex justify-center items-center bg-slate-50">
       <div 
         className="w-full relative overflow-hidden min-h-[100dvh] md:min-h-[850px] flex flex-col items-center justify-center transition-colors duration-500 pt-10 pb-20 md:py-0"
         onMouseEnter={() => setIsHovered(true)}
@@ -68,9 +68,9 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
         </Suspense>
 
         {/* Content Container */}
-        <div className="relative z-10 container mx-auto px-6 h-full flex flex-col justify-center min-h-[850px] pointer-events-none">
-          
-          <div className="flex flex-col items-center text-center z-20 pointer-events-auto max-w-5xl mx-auto mt-[-50px]">
+        <div className="relative z-10 container mx-auto px-6 flex flex-col justify-center pointer-events-none">
+
+          <div className="flex flex-col items-center text-center z-20 pointer-events-auto max-w-5xl mx-auto">
              {/* Headline */}
              <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl tracking-normal text-slate-900 mb-6 md:mb-8 leading-[1.1]">
                The voice AI infrastructure healthcare teams <br className="hidden md:block"/><span className="text-blue-600">actually build on</span>.
