@@ -52,16 +52,16 @@ export const NavbarDefaults: Props = {
       title: "Docs",
     },
     {
-      url: "/blog",
-      title: "Blog",
+      url: "#",
+      title: "Resources",
+      subMenuLinks: [
+        { url: "/blog", title: "Blog" },
+        { url: "/pricing", title: "Calculator" },
+      ],
     },
     {
       url: "/research",
       title: "Research",
-    },
-    {
-      url: "/pricing",
-      title: "Calculator",
     },
   ],
   button: {
