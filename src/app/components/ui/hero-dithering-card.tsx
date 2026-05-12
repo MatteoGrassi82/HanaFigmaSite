@@ -40,7 +40,7 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
   };
 
   return (
-    <section className="relative w-full flex justify-center items-center bg-slate-50">
+    <section className="relative w-full flex justify-center items-center bg-slate-50 overflow-x-hidden">
       <div 
         className="w-full relative overflow-hidden min-h-[100dvh] md:min-h-[850px] flex flex-col items-center justify-center transition-colors duration-500 pt-10 pb-20 md:py-0"
         onMouseEnter={() => setIsHovered(true)}

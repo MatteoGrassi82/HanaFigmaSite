@@ -203,7 +203,7 @@ function AppContent() {
     <BrowserRouter>
         <SEO />
         <GoogleTagManager />
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 pb-12 relative">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 pb-12 relative overflow-x-hidden">
           <Toaster position="top-center" />
 
           <AnnouncementBar />
