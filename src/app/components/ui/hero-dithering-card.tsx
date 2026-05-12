@@ -72,12 +72,12 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
           
           <div className="flex flex-col items-center text-center z-20 pointer-events-auto max-w-5xl mx-auto mt-[-50px]">
              {/* Headline */}
-             <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-normal text-slate-900 mb-8 leading-[1.1]">
+             <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl tracking-normal text-slate-900 mb-6 md:mb-8 leading-[1.1]">
                The voice AI infrastructure healthcare teams <br className="hidden md:block"/><span className="text-blue-600">actually build on</span>.
              </h1>
 
              {/* Subheadline */}
-             <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto mb-10 leading-relaxed font-normal">
+             <p className="text-lg md:text-2xl text-slate-600 max-w-3xl mx-auto mb-8 md:mb-10 leading-relaxed font-normal">
                Voice, SMS, and chat that follows your patients across the care journey. Reads the chart. Engages between visits. Writes back.
              </p>
 
