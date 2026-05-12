@@ -96,7 +96,7 @@ export function BlogPost() {
       />
       <div className="bg-white min-h-screen">
         {/* Cover */}
-        {post.mainImage && (
+        {post.mainImage && (post.mainImage as any)?.asset && (
           <div className="w-full h-[40vh] md:h-[50vh] overflow-hidden bg-slate-100">
             <img
               src={urlFor(post.mainImage).width(1200).height(600).url()}
@@ -129,7 +129,7 @@ export function BlogPost() {
 
           {post.author && (
             <div className="flex items-center gap-3 mb-10 pb-8 border-b border-slate-100">
-              {post.author.image && (
+              {post.author.image && (post.author.image as any)?.asset && (
                 <img
                   src={urlFor(post.author.image).width(40).height(40).url()}
                   alt={post.author.name}
