@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
 import { PortableText } from "@portabletext/react";
-import { getPost, urlFor, type Post } from "../../lib/sanity";
+import { getPost, type Post } from "../../lib/sanity";
 import { Footer } from "../components/Footer";
 import { SEO } from "../components/SEO";
 import { ArrowLeft } from "lucide-react";
@@ -96,16 +96,6 @@ export function BlogPost() {
       />
       <div className="bg-white min-h-screen">
         {/* Cover */}
-        {post.mainImage && (post.mainImage as any)?.asset && (
-          <div className="w-full h-[40vh] md:h-[50vh] overflow-hidden bg-slate-100">
-            <img
-              src={urlFor(post.mainImage).width(1200).height(600).url()}
-              alt={post.title}
-              className="w-full h-full object-cover"
-            />
-          </div>
-        )}
-
         <div className="max-w-2xl mx-auto px-4 py-12">
           <Link to="/blog" className="inline-flex items-center gap-1 text-sm text-slate-400 hover:text-slate-700 mb-8 transition-colors">
             <ArrowLeft className="w-4 h-4" /> All posts
@@ -128,14 +118,7 @@ export function BlogPost() {
           </h1>
 
           {post.author && (
-            <div className="flex items-center gap-3 mb-10 pb-8 border-b border-slate-100">
-              {post.author.image && (post.author.image as any)?.asset && (
-                <img
-                  src={urlFor(post.author.image).width(40).height(40).url()}
-                  alt={post.author.name}
-                  className="w-10 h-10 rounded-full object-cover"
-                />
-              )}
+            <div className="mb-10 pb-8 border-b border-slate-100">
               <span className="text-sm text-slate-600 font-medium">{post.author.name}</span>
             </div>
           )}

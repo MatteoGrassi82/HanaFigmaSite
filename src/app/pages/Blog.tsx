@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import { getPosts, urlFor, type Post } from "../../lib/sanity";
+import { getPosts, type Post } from "../../lib/sanity";
 import { Footer } from "../components/Footer";
 import { SEO } from "../components/SEO";
 
@@ -62,21 +62,6 @@ export function Blog() {
                   to={`/blog/${post.slug.current}`}
                   className="group flex flex-col rounded-2xl overflow-hidden border border-slate-100 hover:border-slate-200 hover:shadow-lg transition-all duration-200"
                 >
-                  {/* Cover image */}
-                  <div className="h-48 bg-slate-50 overflow-hidden">
-                    {post.mainImage && (post.mainImage as any)?.asset ? (
-                      <img
-                        src={urlFor(post.mainImage).width(600).height(400).url()}
-                        alt={post.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-blue-50 to-slate-100 flex items-center justify-center">
-                        <span className="text-4xl">✍️</span>
-                      </div>
-                    )}
-                  </div>
-
                   <div className="flex flex-col flex-1 p-5">
                     {/* Category + date */}
                     <div className="flex items-center gap-2 mb-3 flex-wrap">
@@ -100,18 +85,11 @@ export function Blog() {
                       </p>
                     )}
 
-                    <div className="mt-4 flex items-center gap-2">
-                      {post.author?.image && (
-                        <img
-                          src={urlFor(post.author.image).width(32).height(32).url()}
-                          alt={post.author.name}
-                          className="w-7 h-7 rounded-full object-cover"
-                        />
-                      )}
-                      {post.author?.name && (
+                    {post.author?.name && (
+                      <div className="mt-4">
                         <span className="text-xs text-slate-500">{post.author.name}</span>
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </div>
                 </Link>
               ))}
