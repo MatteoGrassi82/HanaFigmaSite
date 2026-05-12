@@ -52,6 +52,10 @@ export const NavbarDefaults: Props = {
       title: "Docs",
     },
     {
+      url: "/blog",
+      title: "Blog",
+    },
+    {
       url: "/research",
       title: "Research",
     },

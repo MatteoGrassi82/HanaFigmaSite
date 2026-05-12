@@ -40,6 +40,7 @@ export function Footer() {
           <h4 className="text-white font-medium mb-4">Resources</h4>
           <ul className="space-y-2 text-sm">
             <li><a href="https://docs.hana.health/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Documentation</a></li>
+            <li><Link to="/blog" className="hover:text-white transition-colors">Blog</Link></li>
             <li><Link to="/research" className="hover:text-white transition-colors">Research</Link></li>
             <li><Link to="/state-of-ai" className="hover:text-white transition-colors">State of Voice AI</Link></li>
             <li><Link to="/use-cases" className="hover:text-white transition-colors">Use Cases</Link></li>

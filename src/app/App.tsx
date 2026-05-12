@@ -17,6 +17,8 @@ import { AUP } from "./pages/AUP";
 import { StateOfAI } from "./pages/StateOfAI";
 import { Pricing } from "./pages/Pricing";
 import { CaseStudies } from "./pages/CaseStudies";
+import { Blog } from "./pages/Blog";
+import { BlogPost } from "./pages/BlogPost";
 import { VideoAskWidget } from "./components/VideoAskWidget";
 
 // Configuration
@@ -230,6 +232,8 @@ function AppContent() {
               <Route path="/aup" element={<AUP />} />
               <Route path="/state-of-ai" element={<StateOfAI />} />
               <Route path="/pricing" element={<Pricing />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/case-studies" element={
                 <CaseStudies
                   activeAgentId={activeAgentId}
