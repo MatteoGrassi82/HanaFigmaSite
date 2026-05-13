@@ -234,7 +234,7 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
 
               {/* Title */}
               <div>
-                <h2 className="font-serif text-2xl text-slate-900 leading-tight mb-2">{c.title}</h2>
+                <h2 className="font-serif text-3xl text-slate-900 leading-tight mb-2">{c.title}</h2>
                 <p className="text-sm text-slate-500">{c.sub}</p>
               </div>
 
@@ -262,7 +262,7 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
               <ArrowRight className="w-4 h-4 text-blue-400 group-hover:translate-x-1 transition-transform" />
             </div>
             <div>
-              <h2 className="font-serif text-2xl text-white leading-tight mb-2">Build your case study</h2>
+              <h2 className="font-serif text-3xl text-white leading-tight mb-2">Build your case study</h2>
               <p className="text-sm text-slate-400">Every deployment is different. Book a call and we'll design a workflow around how your team works.</p>
             </div>
             <div className="mt-auto pt-4 border-t border-white/10">
