@@ -220,6 +220,7 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
               onClick={() => onOpen(i)}
               className="group bg-white text-left p-8 hover:bg-slate-50 transition-colors flex flex-col gap-6"
             >
+
               {/* Tag */}
               <div className="flex items-center justify-between">
                 <span
@@ -248,6 +249,26 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
               </div>
             </button>
           ))}
+
+          {/* "Your case study" CTA card */}
+          <a
+            href="https://calendly.com/matteowastaken/discoverycall"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group bg-[#00122F] text-left p-8 flex flex-col gap-6 hover:bg-[#001a3d] transition-colors"
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-bold tracking-[2px] uppercase text-blue-400">Your organisation</span>
+              <ArrowRight className="w-4 h-4 text-blue-400 group-hover:translate-x-1 transition-transform" />
+            </div>
+            <div>
+              <h2 className="font-serif text-2xl text-white leading-tight mb-2">Build your case study</h2>
+              <p className="text-sm text-slate-400">Every deployment is different. Book a call and we'll design a workflow around how your team works.</p>
+            </div>
+            <div className="mt-auto pt-4 border-t border-white/10">
+              <span className="text-sm font-semibold text-white group-hover:underline">Book a demo →</span>
+            </div>
+          </a>
         </div>
 
         {/* Bottom CTA */}
