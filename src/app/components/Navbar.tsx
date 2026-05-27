@@ -52,8 +52,13 @@ export const NavbarDefaults: Props = {
       title: "Docs",
     },
     {
-      url: "/resources",
+      url: "#",
       title: "Resources",
+      subMenuLinks: [
+        { url: "/whitepapers", title: "Whitepapers" },
+        { url: "/blog", title: "Blog" },
+        { url: "/research", title: "Research" },
+      ],
     },
     {
       url: "/research",
