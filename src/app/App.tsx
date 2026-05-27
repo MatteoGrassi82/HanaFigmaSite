@@ -20,6 +20,8 @@ import { CaseStudies } from "./pages/CaseStudies";
 import { Blog } from "./pages/Blog";
 import { BlogPost } from "./pages/BlogPost";
 import { VideoAskWidget } from "./components/VideoAskWidget";
+import { WhitepaperADHD } from "./pages/WhitepaperADHD";
+import { Resources } from "./pages/Resources";
 
 // Configuration
 const VAPI_PUBLIC_KEY = "5dfc26c6-90a6-4efe-907b-7bd0d690dc6e";
@@ -234,6 +236,8 @@ function AppContent() {
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="/whitepapers/adhd-intake" element={<WhitepaperADHD />} />
+              <Route path="/resources" element={<Resources />} />
               <Route path="/case-studies" element={
                 <CaseStudies
                   activeAgentId={activeAgentId}
