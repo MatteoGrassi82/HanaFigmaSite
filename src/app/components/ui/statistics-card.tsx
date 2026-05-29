@@ -71,9 +71,8 @@ const Stats = () => {
         <div className="mt-12 text-center">
              <p className="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">We achieved 85% patient engagement week over week.</p>
         </div>
-        {/* <div className="mt-10 text-center">
-          <AskAiAboutUs />
-        </div> */}
+
+        <AskAiAboutUs className="mt-16" />
       </div>
     </section>
   );
