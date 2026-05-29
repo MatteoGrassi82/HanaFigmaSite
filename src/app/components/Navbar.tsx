@@ -58,6 +58,7 @@ export const NavbarDefaults: Props = {
         { url: "/whitepapers", title: "Whitepapers" },
         { url: "/blog", title: "Blog" },
         { url: "/research", title: "Research" },
+        { url: "/pricing", title: "Savings Calculator" },
       ],
     },
     {
