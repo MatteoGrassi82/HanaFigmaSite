@@ -22,6 +22,12 @@ export interface Post {
   categories?: { title: string }[];
   body?: any[];
   author?: { name: string; image?: SanityImageSource };
+  seo?: {
+    metaTitle?: string;
+    metaDescription?: string;
+    ogImage?: SanityImageSource;
+    noIndex?: boolean;
+  };
 }
 
 export async function getPosts(): Promise<Post[]> {
@@ -40,7 +46,8 @@ export async function getPost(slug: string): Promise<Post | null> {
       _id, title, slug, excerpt, mainImage, publishedAt,
       categories[]->{ title },
       author->{ name, image },
-      body
+      body,
+      seo { metaTitle, metaDescription, ogImage, noIndex }
     }
   `, { slug });
 }
