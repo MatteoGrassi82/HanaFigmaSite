@@ -87,12 +87,34 @@ export function BlogPost() {
     );
   }
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": post.excerpt || "",
+    "url": `https://www.hana.health/blog/${slug}`,
+    "datePublished": post.publishedAt || undefined,
+    "dateModified": post.publishedAt || undefined,
+    "author": post.author
+      ? { "@type": "Person", "name": post.author.name }
+      : { "@type": "Organization", "name": "Hana Health" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Hana Health",
+      "logo": { "@type": "ImageObject", "url": "https://www.hana.health/logo.png" }
+    },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": `https://www.hana.health/blog/${slug}` },
+    ...(post.categories?.length ? { "keywords": post.categories.map(c => c.title).join(", ") } : {}),
+  };
+
   return (
     <>
       <SEO
         title={`${post.title} | Hana Health`}
         description={post.excerpt || ""}
         path={`/blog/${slug}`}
+        type="article"
+        jsonLd={articleSchema}
       />
       <div className="bg-white min-h-screen">
         {/* Cover */}
