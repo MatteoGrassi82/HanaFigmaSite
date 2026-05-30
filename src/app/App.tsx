@@ -5,7 +5,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import { Navbar } from "./components/Navbar";
 import { AnnouncementBar } from "./components/AnnouncementBar";
 import { SEO } from "./components/SEO";
-import { GoogleTagManager } from "./components/GoogleTagManager";
 import { Home } from "./pages/Home";
 import { Research } from "./pages/Research";
 import { About } from "./pages/About";
@@ -206,7 +205,6 @@ function AppContent() {
   return (
     <BrowserRouter>
         <SEO />
-        <GoogleTagManager />
         <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 pb-12 relative">
           <Toaster position="top-center" />
 
