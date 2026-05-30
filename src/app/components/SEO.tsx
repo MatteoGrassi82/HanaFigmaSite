@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import ogImage from 'figma:asset/7dab76c8bd67019090a5609cf9a1a41e8c727fbb.png';
 
 const SITE_NAME = "Hana Voice AI";
-const SITE_DOMAIN = "https://hanavoice.ai";
+const SITE_DOMAIN = "https://www.hana.health";
 const DEFAULT_KEYWORDS = "Voice AI, Patient Engagement, Clinical AI, Remote Patient Monitoring, AI Receptionist, Healthcare Automation, Intelligent Intake, Care Coordination, Healthcare Voice Technology, Medical AI Assistant";
 
 interface SEOProps {
@@ -141,24 +141,13 @@ export const organizationSchema: Record<string, unknown> = {
   "logo": `${SITE_DOMAIN}/logo.png`,
   "description": "Hana Health builds clinical Voice AI agents that automate patient engagement, intake, monitoring, and care coordination for healthcare organizations.",
   "sameAs": [
-    "https://twitter.com/hanahealth",
-    "https://www.linkedin.com/company/hanahealth",
-    "https://github.com/hanahealth"
+    "https://www.linkedin.com/company/hana-health"
   ],
   "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "+1-555-123-4567",
     "contactType": "sales",
     "email": "hello@hana.health",
     "availableLanguage": ["English"]
-  },
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "123 Innovation Drive",
-    "addressLocality": "San Francisco",
-    "addressRegion": "CA",
-    "postalCode": "94103",
-    "addressCountry": "US"
   }
 };
 

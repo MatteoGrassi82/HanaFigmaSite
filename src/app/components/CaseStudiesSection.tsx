@@ -96,7 +96,7 @@ export function CaseStudiesSection() {
               <div className="space-y-6">
                 <Quote className={`w-6 h-6 ${study.theme === 'peach' ? 'text-slate-900' : 'text-white/80'}`} />
                 
-                <h3 className="text-xl md:text-2xl lg:text-3xl font-serif leading-tight tracking-tight max-w-3xl font-light">
+                <h3 className="text-xl md:text-2xl lg:text-3xl font-['Instrument_Serif'] leading-tight tracking-tight max-w-3xl">
                   {study.quote}
                 </h3>
               </div>

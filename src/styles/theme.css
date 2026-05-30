@@ -2,6 +2,11 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+}
+
 :root {
   --font-size: 16px;
   --background: #ffffff;

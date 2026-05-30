@@ -188,7 +188,7 @@ export default function RadialOrbitalTimeline({
             </div>
           )}
           {title && (
-            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-normal leading-[1.1] text-white mb-5 tracking-tight">
+            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-normal leading-[1.1] text-white mb-5 tracking-normal">
               {title}
             </h2>
           )}
@@ -200,7 +200,44 @@ export default function RadialOrbitalTimeline({
         </div>
       )}
 
-      <div className="relative w-full max-w-5xl h-[450px] md:h-[800px] flex items-center justify-center md:scale-100 origin-center transition-transform duration-500 mt-4 md:mt-8">
+      {/* Mobile: vertical list */}
+      {isMobile ? (
+        <div className="w-full px-4 mt-4 space-y-3">
+          {timelineData.map((item) => {
+            const isExpanded = expandedItems[item.id];
+            const Icon = item.icon;
+            return (
+              <div
+                key={item.id}
+                className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden cursor-pointer"
+                onClick={(e) => { e.stopPropagation(); toggleItem(item.id); }}
+              >
+                <div className="flex items-center gap-4 px-4 py-4">
+                  <div className={cn(
+                    "w-10 h-10 rounded-full flex items-center justify-center border-2 shrink-0 transition-colors",
+                    isExpanded ? "bg-[#00122F] text-white border-white" : "bg-white text-slate-600 border-slate-300"
+                  )}>
+                    <Icon className="w-5 h-5" strokeWidth={2} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className={cn("font-serif text-base font-medium", isExpanded ? "text-white" : "text-slate-300")}>
+                      {item.title}
+                    </p>
+                    <p className="text-xs text-slate-500 font-mono">{item.date}</p>
+                  </div>
+                  <span className="text-slate-500 text-sm">{isExpanded ? "−" : "+"}</span>
+                </div>
+                {isExpanded && (
+                  <div className="px-4 pb-4 text-sm text-slate-400 leading-relaxed border-t border-white/10 pt-3">
+                    {item.content}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+      <div className="relative w-full max-w-5xl h-[800px] flex items-center justify-center origin-center mt-8">
         <div
           className="absolute w-full h-full flex items-center justify-center"
           ref={orbitRef}
@@ -225,14 +262,8 @@ export default function RadialOrbitalTimeline({
           </div>
 
           {/* Orbital Rings */}
-          <div className={cn(
-            "absolute rounded-full border-[3px] border-slate-700 opacity-70",
-            isMobile ? "w-[300px] h-[300px]" : "w-[600px] h-[600px]"
-          )} />
-          <div className={cn(
-            "absolute rounded-full border-[3px] border-slate-800 border-dashed opacity-70",
-            isMobile ? "w-[200px] h-[200px]" : "w-[400px] h-[400px]"
-          )} />
+          <div className="absolute rounded-full border-[3px] border-slate-700 opacity-70 w-[600px] h-[600px]" />
+          <div className="absolute rounded-full border-[3px] border-slate-800 border-dashed opacity-70 w-[400px] h-[400px]" />
 
           {timelineData.map((item, index) => {
             const position = calculateNodePosition(index, timelineData.length);
@@ -271,10 +302,10 @@ export default function RadialOrbitalTimeline({
                   }}
                 ></div>
 
-                {/* Node Icon - Larger and wider */}
+                {/* Node Icon */}
                 <div
                   className={cn(
-                    "w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 transform shadow-sm",
+                    "w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 transform shadow-sm",
                     isExpanded
                       ? "bg-[#00122F] text-white border-white shadow-md"
                       : isRelated
@@ -282,16 +313,14 @@ export default function RadialOrbitalTimeline({
                       : "bg-white text-slate-600 border-slate-300"
                   )}
                 >
-                  <Icon className="w-6 h-6 md:w-8 md:h-8" strokeWidth={2} />
+                  <Icon className="w-8 h-8" strokeWidth={2} />
                 </div>
 
-                {/* Title Label - Moved to top and serif */}
+                {/* Title Label */}
                 <div
                   className={cn(
-                    "absolute bottom-14 md:bottom-20 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs md:text-lg font-serif font-medium tracking-wide transition-all duration-300",
-                    isExpanded
-                      ? "text-white"
-                      : "text-slate-400"
+                    "absolute bottom-20 left-1/2 -translate-x-1/2 whitespace-nowrap text-lg font-serif font-medium tracking-wide transition-all duration-300",
+                    isExpanded ? "text-white" : "text-slate-400"
                   )}
                 >
                   {item.title}
@@ -299,17 +328,16 @@ export default function RadialOrbitalTimeline({
 
                 {/* Expanded Card */}
                 {isExpanded && (
-                  <Card className="absolute top-16 md:top-20 left-1/2 -translate-x-1/2 w-[220px] md:w-[350px] bg-white/95 backdrop-blur-xl border-slate-200 shadow-xl overflow-visible z-50 text-left">
+                  <Card className="absolute top-20 left-1/2 -translate-x-1/2 w-[350px] bg-white/95 backdrop-blur-xl border-slate-200 shadow-xl overflow-visible z-50 text-left">
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-px h-3 bg-slate-300"></div>
-                    <CardHeader className="pb-2 md:pb-3 pt-3 md:pt-4 px-4 md:px-6">
+                    <CardHeader className="pb-3 pt-4 px-6">
                       <div className="flex justify-between items-center mb-1">
-                        <span className="text-base md:text-2xl font-bold text-slate-900 font-[Courier_Prime]">
+                        <span className="text-2xl font-bold text-slate-900 font-[Courier_Prime]">
                           {item.date}
                         </span>
                       </div>
-                      {/* Title removed as requested since it repeats the node label */}
                     </CardHeader>
-                    <CardContent className="px-4 md:px-6 pb-4 md:pb-6 text-sm md:text-base text-slate-600">
+                    <CardContent className="px-6 pb-6 text-base text-slate-600">
                       <p className="mb-0 leading-relaxed">{item.content}</p>
                     </CardContent>
                   </Card>
@@ -319,6 +347,7 @@ export default function RadialOrbitalTimeline({
           })}
         </div>
       </div>
+      )}
     </div>
   );
 }

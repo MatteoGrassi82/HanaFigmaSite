@@ -1,5 +1,5 @@
 # Hana Voice AI - robots.txt
-# https://hanavoice.ai
+# https://www.hana.health
 
 User-agent: *
 Allow: /
@@ -7,10 +7,7 @@ Disallow: /api/
 Disallow: /functions/
 
 # Sitemaps
-Sitemap: https://hanavoice.ai/sitemap.xml
-
-# Crawl-delay (optional, for polite crawlers)
-Crawl-delay: 1
+Sitemap: https://www.hana.health/sitemap.xml
 
 # Specific bot allowances
 User-agent: Googlebot

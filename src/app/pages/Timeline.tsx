@@ -76,11 +76,11 @@ export function RadialOrbitalTimelineDemo() {
           { name: "Reasoning Engine", url: "https://hanavoice.ai/timeline" }
         ])}
       />
-      <RadialOrbitalTimeline 
-        timelineData={timelineData} 
-        label="Hana Reasoning Engine"
-        title="How Hana thinks. Not what it says."
-        description="Five layers of reasoning. Not a chatbot with a script."
+      <RadialOrbitalTimeline
+        timelineData={timelineData}
+        label="HANA REASONING ENGINE"
+        title="Five layers of intelligence. Not a chatbot with a script."
+        description="Safety agents that monitor every conversation in real time. A memory layer that compounds across interactions. Protocol libraries built from your clinical guidelines. Observability so your team sees what the AI did and why. And a reasoning model that ties it all together."
       />
     </>
   );

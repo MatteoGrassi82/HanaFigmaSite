@@ -28,12 +28,15 @@ const Stats = () => {
       <style>{css}</style>
       <div className="container mx-auto">
         <div className="mx-auto max-w-2xl text-center mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-slate-900 dark:text-white mb-6 font-serif">
-             Your vision. Our engine. <br />
-             <span className="italic">Make&nbsp;it&nbsp;yours.</span>
+          <p className="text-base text-slate-500 dark:text-slate-400 mb-3">
+            Engaging patients takes time your team doesn't have.
+          </p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-normal text-slate-900 dark:text-white mb-6 font-serif">
+            What 2 million patient interactions <br />
+            <span className="italic">taught us.</span>
           </h2>
           <p className="text-lg text-slate-500 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
-            Off-the-shelf tools cap out at 15–35% engagement. Teams that build on Hana hit 85%, with their own workflows, their own brand, and none of the build time.
+            When the infrastructure adapts to each patient's channel, language, and response pattern, engagement stops being a problem you manage and starts being a system that runs.
           </p>
         </div>
         <div className="relative mx-auto mt-20 flex h-[300px] md:h-[500px] max-w-4xl items-center justify-center gap-2 md:gap-8">
@@ -68,9 +71,8 @@ const Stats = () => {
         <div className="mt-12 text-center">
              <p className="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">We achieved 85% patient engagement week over week.</p>
         </div>
-        {/* <div className="mt-10 text-center">
-          <AskAiAboutUs />
-        </div> */}
+
+        <AskAiAboutUs className="mt-16" />
       </div>
     </section>
   );

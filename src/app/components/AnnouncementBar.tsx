@@ -56,27 +56,37 @@ export function AnnouncementBar() {
     <>
       <div className="relative bg-[#00122F] border-b border-slate-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center gap-3 py-2.5 text-sm">
-            <div className="flex items-center gap-3">
-              <span className="text-white/90 font-normal">
-                The Clinical Voice AI Guide. Learn why architecture determines safety.
+          <div className="grid grid-cols-[1fr_auto_1fr] items-center py-2.5 gap-2">
+
+            {/* Left spacer — mirrors the dismiss button width */}
+            <div />
+
+            {/* Centered content */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-x-2 gap-y-0.5 text-center">
+              <span className="text-white/90 text-xs sm:text-sm font-normal leading-snug">
+                The Clinical Voice AI Guide.{" "}
+                <span className="hidden sm:inline">Learn why architecture determines safety.</span>
               </span>
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="inline-flex items-center gap-1.5 text-white hover:text-white/80 font-medium transition-colors group"
+                className="inline-flex items-center gap-1 text-white hover:text-white/80 text-xs sm:text-sm font-medium transition-colors group whitespace-nowrap"
               >
                 <span>Download free</span>
-                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+                <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5 group-hover:translate-x-0.5 transition-transform" />
               </button>
             </div>
 
-            <button
-              onClick={handleDismiss}
-              className="absolute right-4 p-1 text-white/60 hover:text-white/90 hover:bg-white/5 rounded transition-colors"
-              aria-label="Dismiss announcement"
-            >
-              <X className="h-3.5 w-3.5" />
-            </button>
+            {/* Dismiss button — right-aligned */}
+            <div className="flex justify-end">
+              <button
+                onClick={handleDismiss}
+                className="p-1.5 text-white/60 hover:text-white/90 hover:bg-white/5 rounded transition-colors"
+                aria-label="Dismiss announcement"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            </div>
+
           </div>
         </div>
       </div>

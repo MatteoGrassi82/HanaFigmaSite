@@ -24,8 +24,8 @@ const SLIDES = [
     id: "monitoring",
     label: "Remote Monitoring",
     icon: Activity,
-    title: "Proactive Remote Patient Monitoring",
-    description: "Keep patients on track between visits with automated check ins. Hana verifies identity, tracks medication adherence and vitals, uses motivational interviewing to overcome barriers, and seamlessly switches between voice and text.",
+    title: "Inside a HANA Conversation",
+    description: "How the AI monitors, reasons, and reports across a patient conversation.",
     videoId: "hf22mhjxbe",
     features: ["Adherence & vitals tracking", "Motivational interviewing", "Multi channel engagement"]
   },

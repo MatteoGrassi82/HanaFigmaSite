@@ -1,22 +1,26 @@
 import { useState, useEffect, useRef } from "react";
 import { useConversation, ConversationProvider } from "@elevenlabs/react";
 import { toast, Toaster } from "sonner";
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import { Navbar } from "./components/Navbar";
 import { AnnouncementBar } from "./components/AnnouncementBar";
 import { SEO } from "./components/SEO";
-import { GoogleTagManager } from "./components/GoogleTagManager";
 import { Home } from "./pages/Home";
-import { UseCases } from "./components/UseCases";
 import { Research } from "./pages/Research";
 import { About } from "./pages/About";
 import { RadialOrbitalTimelineDemo } from "./pages/Timeline";
 import { Contact } from "./pages/Contact";
 import { TestWebhook } from "./components/TestWebhook";
 import { Terms } from "./pages/Terms";
+import { AUP } from "./pages/AUP";
 import { StateOfAI } from "./pages/StateOfAI";
 import { Pricing } from "./pages/Pricing";
+import { CaseStudies } from "./pages/CaseStudies";
+import { Blog } from "./pages/Blog";
+import { BlogPost } from "./pages/BlogPost";
 import { VideoAskWidget } from "./components/VideoAskWidget";
+import { WhitepaperADHD } from "./pages/WhitepaperADHD";
+import { Whitepapers } from "./pages/Whitepapers";
 
 // Configuration
 const VAPI_PUBLIC_KEY = "5dfc26c6-90a6-4efe-907b-7bd0d690dc6e";
@@ -201,7 +205,6 @@ function AppContent() {
   return (
     <BrowserRouter>
         <SEO />
-        <GoogleTagManager />
         <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 pb-12 relative">
           <Toaster position="top-center" />
 
@@ -219,22 +222,28 @@ function AppContent() {
                   handleEndWebCall={handleEndWebCall}
                 />
               } />
-              <Route path="/use-cases" element={
-                <UseCases
-                  activeAgentId={activeAgentId}
-                  webCallStatus={webCallStatus}
-                  handleStartWebCall={handleStartWebCall}
-                  handleEndWebCall={handleEndWebCall}
-                />
-              } />
+              <Route path="/use-cases" element={<Navigate to="/case-studies" replace />} />
               <Route path="/timeline" element={<RadialOrbitalTimelineDemo />} />
               <Route path="/research" element={<Research />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/test-webhook" element={<TestWebhook />} />
               <Route path="/terms" element={<Terms />} />
+              <Route path="/aup" element={<AUP />} />
               <Route path="/state-of-ai" element={<StateOfAI />} />
               <Route path="/pricing" element={<Pricing />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="/whitepapers" element={<Whitepapers />} />
+              <Route path="/whitepapers/adhd-intake" element={<WhitepaperADHD />} />
+              <Route path="/case-studies" element={
+                <CaseStudies
+                  activeAgentId={activeAgentId}
+                  webCallStatus={webCallStatus}
+                  handleStartWebCall={handleStartWebCall}
+                  handleEndWebCall={handleEndWebCall}
+                />
+              } />
             </Routes>
           </main>
         </div>

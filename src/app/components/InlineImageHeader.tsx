@@ -1,60 +1,123 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
-import image_902cc6fcb4c48eee244e5db0e40dfc456537e85f from 'figma:asset/902cc6fcb4c48eee244e5db0e40dfc456537e85f.png';
-import image_604a2f01ad9c55649c86d210ffa7add1143256c8 from 'figma:asset/604a2f01ad9c55649c86d210ffa7add1143256c8.png';
+
+function WorkflowAnimation() {
+  return (
+    <div className="relative w-9 h-9 grid grid-cols-2 gap-[5px]">
+      {[0, 1, 2, 3].map((i) => (
+        <div
+          key={i}
+          className="rounded-[3px] bg-white"
+          style={{
+            animation: `tileFlash 2s ease-in-out infinite`,
+            animationDelay: `${i * 0.25}s`,
+          }}
+        />
+      ))}
+      <style>{`
+        @keyframes tileFlash {
+          0%, 100% { opacity: 0.2; transform: scale(0.85); }
+          50% { opacity: 1; transform: scale(1); }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+function SyncAnimation() {
+  return (
+    <div className="relative w-9 h-7 flex items-center justify-between">
+      {/* Left node */}
+      <div
+        className="w-3 h-3 rounded-full bg-white flex-shrink-0"
+        style={{ animation: 'nodePulse 1.8s ease-in-out infinite' }}
+      />
+
+      {/* Travelling dot on line */}
+      <div className="absolute inset-0 flex items-center">
+        <div className="relative w-full h-px bg-white/20">
+          <div
+            className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-white"
+            style={{ animation: 'travel 1.8s ease-in-out infinite' }}
+          />
+        </div>
+      </div>
+
+      {/* Right node */}
+      <div
+        className="w-3 h-3 rounded-full bg-white/40 flex-shrink-0"
+        style={{ animation: 'nodePulse 1.8s ease-in-out infinite', animationDelay: '0.9s' }}
+      />
+
+      <style>{`
+        @keyframes travel {
+          0% { left: 0%; opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { left: 100%; opacity: 0; }
+        }
+        @keyframes nodePulse {
+          0%, 100% { opacity: 0.4; transform: scale(0.85); }
+          50% { opacity: 1; transform: scale(1.15); }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+function LiveAnimation() {
+  return (
+    <div className="relative w-9 h-9 flex items-center justify-center">
+      {[0, 1, 2].map((i) => (
+        <div
+          key={i}
+          className="absolute rounded-full border border-[#A7BCF5]"
+          style={{
+            width: `${(i + 1) * 33}%`,
+            height: `${(i + 1) * 33}%`,
+            animation: `ripple 2s ease-out infinite`,
+            animationDelay: `${i * 0.55}s`,
+          }}
+        />
+      ))}
+      <div className="w-2.5 h-2.5 rounded-full bg-[#A7BCF5]" />
+      <style>{`
+        @keyframes ripple {
+          0% { opacity: 0.8; transform: scale(0.6); }
+          100% { opacity: 0; transform: scale(2.2); }
+        }
+      `}</style>
+    </div>
+  );
+}
 
 export function InlineImageHeader() {
   return (
     <section className="py-[100px] px-6 md:px-10 bg-[#00122F] text-white font-['DM_Sans']">
       <div className="max-w-[1200px] mx-auto">
-        
+
         {/* Header */}
         <div className="text-center mb-[72px]">
-          <h2 className="font-serif text-[36px] md:text-[56px] leading-[1.1] tracking-[-0.025em] text-white max-w-[720px] mx-auto mb-5">
-            Show us the
-            <span className="inline-flex items-center align-middle relative -top-[3px] mx-[2px]">
-              <img 
-                src={image_604a2f01ad9c55649c86d210ffa7add1143256c8} 
-                alt="Workflow" 
-                className="w-[48px] h-[48px] md:w-[64px] md:h-[64px] rounded-full object-cover shadow-[0_2px_10px_rgba(0,0,0,0.08)]" 
-              />
-            </span>
-            workflow. We build the
-            <span className="inline-flex items-center align-middle relative -top-[3px] mx-[2px]">
-              <img 
-                src={image_902cc6fcb4c48eee244e5db0e40dfc456537e85f} 
-                alt="AI Integration" 
-                className="w-[48px] h-[48px] md:w-[64px] md:h-[64px] rounded-full object-cover shadow-[0_2px_10px_rgba(0,0,0,0.08)] z-10" 
-              />
-            </span>
-            infrastructure.
+          <h2 className="font-serif text-[36px] md:text-[56px] leading-[1.1] tracking-normal text-white max-w-[720px] mx-auto mb-5">
+            Designed for patient journeys. Built around your workflow.
           </h2>
+          <p className="text-[16px] leading-[1.7] text-slate-400 max-w-[520px] mx-auto">
+            Tell us how you work. We build around it. Most teams are live in a week.
+          </p>
         </div>
 
         {/* Steps */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-0 relative">
-          {/* Dashed Connecting Line (Desktop Only) */}
-          <div 
-            className="hidden md:block absolute top-[52px] left-[calc(16.66%+24px)] right-[calc(16.66%+24px)] h-[2px] z-0"
-            style={{
-              background: 'repeating-linear-gradient(90deg, rgba(255,255,255,0.25) 0px, rgba(255,255,255,0.25) 6px, transparent 6px, transparent 14px)'
-            }}
-          />
 
           {/* Step 1 */}
           <div className="flex flex-col items-center text-center relative z-10 px-7 group">
             <p className="text-[11px] font-bold uppercase tracking-[2px] text-slate-400 mb-[18px]">001</p>
             <div className="w-[104px] h-[104px] rounded-full flex items-center justify-center mb-7 transition-transform duration-300 group-hover:scale-105 bg-white/5 border-2 border-white/10 shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="3" width="7" height="7" rx="1.5"/>
-                <rect x="14" y="3" width="7" height="7" rx="1.5"/>
-                <rect x="3" y="14" width="7" height="7" rx="1.5"/>
-                <rect x="14" y="14" width="7" height="7" rx="1.5"/>
-              </svg>
+              <WorkflowAnimation />
             </div>
-            <h3 className="font-serif text-[26px] text-white mb-3 tracking-[-0.01em]">Pick your workflow.</h3>
+            <h3 className="font-serif text-[26px] text-white mb-3 tracking-normal">Pick your workflow.</h3>
             <p className="text-[15px] leading-[1.7] text-slate-400 max-w-[280px] mx-auto">
-              Choose from pre-built clinical templates or we build one together — designed around how your organization actually operates.
+              Intake. Outreach. Monitoring. Coordination. Pre-op. Post-op. Choose from pre-built templates or we build one together — designed around how your team actually operates.
             </p>
           </div>
 
@@ -62,20 +125,11 @@ export function InlineImageHeader() {
           <div className="flex flex-col items-center text-center relative z-10 px-7 group">
             <p className="text-[11px] font-bold uppercase tracking-[2px] text-slate-400 mb-[18px]">002</p>
             <div className="w-[104px] h-[104px] rounded-full flex items-center justify-center mb-7 transition-transform duration-300 group-hover:scale-105 bg-blue-500/20 border-2 border-blue-400/30 shadow-[0_4px_20px_rgba(59,130,246,0.15)]">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2v4"/>
-                <path d="M12 18v4"/>
-                <path d="M4.93 4.93l2.83 2.83"/>
-                <path d="M16.24 16.24l2.83 2.83"/>
-                <path d="M2 12h4"/>
-                <path d="M18 12h4"/>
-                <path d="M4.93 19.07l2.83-2.83"/>
-                <path d="M16.24 7.76l2.83-2.83"/>
-              </svg>
+              <SyncAnimation />
             </div>
-            <h3 className="font-serif text-[26px] text-white mb-3 tracking-[-0.01em]">Connect it.</h3>
+            <h3 className="font-serif text-[26px] text-white mb-3 tracking-normal">Connect your EHR.</h3>
             <p className="text-[15px] leading-[1.7] text-slate-400 max-w-[280px] mx-auto">
-              Whether it's your EHR, website, phone system, or app — we connect it wherever your patients are.
+              Direct integrations with major EHRs. Or connect through Redox and Catagon to reach 95+ systems. We read the chart first so patients aren't asked what you already know.
             </p>
           </div>
 
@@ -83,11 +137,9 @@ export function InlineImageHeader() {
           <div className="flex flex-col items-center text-center relative z-10 px-7 group">
             <p className="text-[11px] font-bold uppercase tracking-[2px] text-slate-400 mb-[18px]">003</p>
             <div className="w-[104px] h-[104px] rounded-full flex items-center justify-center mb-7 transition-transform duration-300 group-hover:scale-105 bg-[rgb(167,188,245)]/20 border-2 border-[rgb(167,188,245)]/30 shadow-[0_4px_16px_rgba(167,188,245,0.1)]">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#A7BCF5" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
+              <LiveAnimation />
             </div>
-            <h3 className="font-serif text-[26px] text-white mb-3 tracking-[-0.01em]">Live.</h3>
+            <h3 className="font-serif text-[26px] text-white mb-3 tracking-normal">Live.</h3>
             <p className="text-[15px] leading-[1.7] text-slate-400 max-w-[280px] mx-auto">
               Your agent is live. Handling calls, messages, and follow-ups so your team doesn't have to.
             </p>

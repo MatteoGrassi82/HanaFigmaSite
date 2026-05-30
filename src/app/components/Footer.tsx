@@ -40,6 +40,7 @@ export function Footer() {
           <h4 className="text-white font-medium mb-4">Resources</h4>
           <ul className="space-y-2 text-sm">
             <li><a href="https://docs.hana.health/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Documentation</a></li>
+            <li><Link to="/blog" className="hover:text-white transition-colors">Blog</Link></li>
             <li><Link to="/research" className="hover:text-white transition-colors">Research</Link></li>
             <li><Link to="/state-of-ai" className="hover:text-white transition-colors">State of Voice AI</Link></li>
             <li><Link to="/use-cases" className="hover:text-white transition-colors">Use Cases</Link></li>
@@ -63,6 +64,7 @@ export function Footer() {
             <li><Link to="/terms" className="hover:text-white transition-colors">Privacy Policy</Link></li>
             <li><Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
             <li><Link to="/terms" className="hover:text-white transition-colors">Compliance</Link></li>
+            <li><Link to="/aup" className="hover:text-white transition-colors">Acceptable Use Policy</Link></li>
           </ul>
         </div>
       </div>
@@ -73,6 +75,7 @@ export function Footer() {
           <Link to="/terms" className="hover:text-slate-400 transition-colors">Privacy</Link>
           <Link to="/terms" className="hover:text-slate-400 transition-colors">Terms</Link>
           <Link to="/terms" className="hover:text-slate-400 transition-colors">Cookies</Link>
+          <Link to="/aup" className="hover:text-slate-400 transition-colors">AUP</Link>
         </div>
       </div>
     </footer>
