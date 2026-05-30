@@ -87,6 +87,11 @@ export function BlogPost() {
     );
   }
 
+  const seoTitle = post.seo?.metaTitle || `${post.title} | Hana Health`;
+  const seoDescription = post.seo?.metaDescription || post.excerpt || "";
+  const seoImage = post.seo?.ogImage ? urlFor(post.seo.ogImage).width(1200).height(630).url() : undefined;
+  const seoRobots = post.seo?.noIndex ? "noindex, nofollow" : undefined;
+
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -110,11 +115,14 @@ export function BlogPost() {
   return (
     <>
       <SEO
-        title={`${post.title} | Hana Health`}
-        description={post.excerpt || ""}
+        title={seoTitle}
+        useExactTitle={!!post.seo?.metaTitle}
+        description={seoDescription}
         path={`/blog/${slug}`}
         type="article"
         jsonLd={articleSchema}
+        {...(seoImage ? { image: seoImage } : {})}
+        {...(seoRobots ? { robots: seoRobots } : {})}
       />
       <div className="bg-white min-h-screen">
         {/* Cover */}
