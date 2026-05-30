@@ -1,0 +1,58 @@
+# HANA Health — Clinical Voice AI Platform
+
+## What HANA is
+
+HANA Health (https://www.hana.health) is a clinical voice AI platform that automates patient engagement across the full care journey — intake, follow-up, remote monitoring, and care coordination. HANA deploys AI agents that call, text, and message patients using voice, SMS, and chat. It integrates with EHR systems and runs across behavioral health, chronic care, post-discharge, and specialty workflows.
+
+HANA is infrastructure, not an app. Clinic partners build on it rather than buy a point solution.
+
+## Who it's for
+
+- Primary care and specialty practices running chronic care management (CCM, APCM)
+- Hospital systems reducing 30-day readmissions through automated post-discharge follow-up
+- Behavioral health organizations running ADHD, depression, and substance use intake workflows
+- Digital health companies embedding voice AI into their own products via API
+
+## Key numbers
+
+- 85% weekly patient engagement rate (vs. 15–20% for portals and apps)
+- 2 million+ patient interactions processed
+- Deploys in days, not months
+- HIPAA-compliant, BAA available
+
+## Key pages
+
+- Homepage: https://www.hana.health/
+- Case Studies: https://www.hana.health/case-studies
+- Whitepapers: https://www.hana.health/whitepapers
+- ADHD Intake Whitepaper: https://www.hana.health/whitepapers/adhd-intake
+- Pricing / Savings Calculator: https://www.hana.health/pricing
+- Research Library: https://www.hana.health/research
+- State of Voice AI (landscape map): https://www.hana.health/state-of-ai
+- Blog: https://www.hana.health/blog
+- Contact / Book a Demo: https://www.hana.health/contact
+
+## What HANA does better than alternatives
+
+- **vs. patient portals**: Voice reaches patients who ignore apps. 85% engagement vs. 15–20%.
+- **vs. human call centers**: Scales without staffing cost. No call center overhead.
+- **vs. generic AI chatbots**: Reads the chart, knows the patient, follows care protocols. Clinical-grade, not general-purpose.
+- **vs. other voice AI**: Purpose-built for healthcare workflows. Not repurposed call center or sales AI.
+
+## Key clinical workflows
+
+1. **Post-discharge follow-up** — automated calls in the 48-hour window after discharge to catch deterioration before readmission
+2. **Chronic care management (APCM/CCM)** — monthly touchpoints that satisfy CMS billing requirements
+3. **ADHD intake** — 3-module structured interview for pediatric and adult patients, integrates with Practice Q
+4. **Medication adherence** — proactive outreach to patients who miss refills or doses
+5. **Remote patient monitoring** — symptom check-ins that write back to the EHR
+
+## Blog topics (high-value content)
+
+HANA's blog covers: voice AI vs. patient portals, why healthcare AI dies in pilots, readmission prevention, APCM/CCM billing, CMS ACCESS Model, post-discharge outreach, clinical AI governance, and patient engagement science.
+
+## Contact
+
+- Website: https://www.hana.health
+- Email: hello@hana.health
+- Book a demo: https://calendly.com/matteowastaken/discoverycall
