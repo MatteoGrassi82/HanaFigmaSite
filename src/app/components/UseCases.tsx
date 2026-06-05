@@ -499,8 +499,8 @@ export function UseCases({
         path="/use-cases"
         keywords="clinical AI agents, healthcare use cases, patient monitoring AI, care coordination automation, medical intake automation, AI outreach agents"
         jsonLd={breadcrumbSchema([
-          { name: "Home", url: "https://hanavoice.ai/" },
-          { name: "Agent Catalogue", url: "https://hanavoice.ai/use-cases" }
+          { name: "Home", url: "https://www.hana.health/" },
+          { name: "Agent Catalogue", url: "https://www.hana.health/use-cases" }
         ])}
       />
 

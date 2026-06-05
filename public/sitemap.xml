@@ -1,234 +1,243 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <!-- Core pages -->
   <url>
     <loc>https://www.hana.health/</loc>
-    <lastmod>2026-05-30</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.hana.health/case-studies</loc>
-    <lastmod>2026-05-30</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.hana.health/pricing</loc>
-    <lastmod>2026-05-30</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.hana.health/state-of-ai</loc>
-    <lastmod>2026-05-30</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.hana.health/research</loc>
-    <lastmod>2026-05-30</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.hana.health/about</loc>
-    <lastmod>2026-05-30</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.hana.health/contact</loc>
-    <lastmod>2026-05-30</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
-
-  <!-- Resources -->
   <url>
     <loc>https://www.hana.health/whitepapers</loc>
-    <lastmod>2026-05-30</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.hana.health/whitepapers/adhd-intake</loc>
-    <lastmod>2026-05-30</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
-
-  <!-- Blog index -->
   <url>
     <loc>https://www.hana.health/blog</loc>
-    <lastmod>2026-05-30</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-
-  <!-- Blog posts -->
   <url>
-    <loc>https://www.hana.health/blog/how-to-make-your-healthcare-organization-ai-powered</loc>
-    <lastmod>2026-05-12</lastmod>
+    <loc>https://www.hana.health/timeline</loc>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.hana.health/blog/healthcare-ai-production-governance</loc>
-    <lastmod>2026-05-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://www.hana.health/terms</loc>
+    <lastmod>2026-06-05</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://www.hana.health/blog/patient-engagement-voice-vs-apps</loc>
-    <lastmod>2026-05-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://www.hana.health/aup</loc>
+    <lastmod>2026-06-05</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://www.hana.health/blog/why-healthcare-ai-dies-in-pilots</loc>
-    <lastmod>2026-05-15</lastmod>
+    <loc>https://www.hana.health/blog/voice-ai-healthcare-production-2026</loc>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.hana.health/blog/why-hospital-readmission-program-isnt-working</loc>
-    <lastmod>2026-05-15</lastmod>
+    <loc>https://www.hana.health/blog/post-discharge-outreach-not-reaching-high-risk-patients</loc>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.hana.health/blog/real-reason-patient-engagement-isnt-working</loc>
-    <lastmod>2026-05-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.hana.health/blog/why-89-percent-healthcare-ai-agents-never-reach-production</loc>
-    <lastmod>2026-05-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.hana.health/blog/why-most-patients-stop-engaging-and-what-ai-voice-is-finally-getting-right</loc>
+    <loc>https://www.hana.health/blog/why-patient-reminders-dont-reduce-readmissions</loc>
     <lastmod>2026-05-17</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.hana.health/blog/apcm-2025-13-service-elements-explained</loc>
+    <loc>https://www.hana.health/blog/voice-ai-healthcare-production-scale-2026</loc>
     <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.hana.health/blog/apcm-ccm-cannot-bill-together-alternatives</loc>
+    <loc>https://www.hana.health/blog/why-89-percent-of-healthcare-ai-never-reaches-production</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.hana.health/blog/post-discharge-follow-up-readmissions-behavioral-science-2026</loc>
     <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.hana.health/blog/apcm-profitable-without-hiring-staff</loc>
-    <lastmod>2026-05-19</lastmod>
+    <loc>https://www.hana.health/blog/why-your-readmission-rate-is-a-follow-up-problem</loc>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.hana.health/blog/cms-access-model-primary-care-july-2026</loc>
-    <lastmod>2026-05-19</lastmod>
+    <loc>https://www.hana.health/blog/only-11-percent-healthcare-ai-production-problem</loc>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.hana.health/blog/voice-ai-vs-patient-portals-engagement-85-percent</loc>
-    <lastmod>2026-05-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.hana.health/blog/voice-ai-demo-vs-deployment-healthcare</loc>
-    <lastmod>2026-05-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.hana.health/blog/why-patients-get-readmitted-automated-follow-up</loc>
-    <lastmod>2026-05-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.hana.health/blog/voice-ai-patient-engagement-why-85-percent</loc>
-    <lastmod>2026-05-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.hana.health/blog/reducing-hospital-readmissions-automated-follow-up-48-hours</loc>
-    <lastmod>2026-05-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.hana.health/blog/why-does-the-discharge-call-go-to-voicemail</loc>
     <lastmod>2026-05-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.hana.health/blog/why-do-most-healthcare-ai-platforms-fail</loc>
     <lastmod>2026-05-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.hana.health/blog/only-11-percent-healthcare-ai-production-problem</loc>
-    <lastmod>2026-05-30</lastmod>
+    <loc>https://www.hana.health/blog/voice-ai-patient-engagement-why-85-percent</loc>
+    <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.hana.health/blog/voice-ai-healthcare-production-scale-2026</loc>
-    <lastmod>2026-05-30</lastmod>
+    <loc>https://www.hana.health/blog/reducing-hospital-readmissions-automated-follow-up-48-hours</loc>
+    <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.hana.health/blog/why-89-percent-of-healthcare-ai-never-reaches-production</loc>
-    <lastmod>2026-05-30</lastmod>
+    <loc>https://www.hana.health/blog/voice-ai-demo-vs-deployment-healthcare</loc>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.hana.health/blog/why-your-readmission-rate-is-a-follow-up-problem</loc>
-    <lastmod>2026-05-30</lastmod>
+    <loc>https://www.hana.health/blog/why-patients-get-readmitted-automated-follow-up</loc>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.hana.health/blog/post-discharge-follow-up-readmissions-behavioral-science-2026</loc>
-    <lastmod>2026-05-30</lastmod>
+    <loc>https://www.hana.health/blog/voice-ai-vs-patient-portals-engagement-85-percent</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.hana.health/blog/post-discharge-outreach-not-reaching-high-risk-patients</loc>
-    <lastmod>2026-05-30</lastmod>
+    <loc>https://www.hana.health/blog/apcm-ccm-cannot-bill-together-alternatives</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.hana.health/blog/voice-ai-healthcare-production-2026</loc>
-    <lastmod>2026-05-30</lastmod>
+    <loc>https://www.hana.health/blog/cms-access-model-primary-care-july-2026</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.hana.health/blog/why-reminders-dont-reduce-readmissions</loc>
-    <lastmod>2026-05-30</lastmod>
+    <loc>https://www.hana.health/blog/apcm-2025-13-service-elements-explained</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
-
+  <url>
+    <loc>https://www.hana.health/blog/apcm-profitable-without-hiring-staff</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.hana.health/blog/why-most-patients-stop-engaging-and-what-ai-voice-is-finally-getting-right</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.hana.health/blog/real-reason-patient-engagement-isnt-working</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.hana.health/blog/why-89-percent-healthcare-ai-agents-never-reach-production</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.hana.health/blog/why-healthcare-ai-dies-in-pilots</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.hana.health/blog/why-hospital-readmission-program-isnt-working</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.hana.health/blog/healthcare-ai-production-governance</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.hana.health/blog/patient-engagement-voice-vs-apps</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.hana.health/blog/how-to-make-your-healthcare-organization-ai-powered</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>

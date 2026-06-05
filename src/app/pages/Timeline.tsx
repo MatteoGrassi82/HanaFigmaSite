@@ -63,19 +63,27 @@ const timelineData = [
   },
 ];
 
-export function RadialOrbitalTimelineDemo() {
+/**
+ * Used both as the standalone /timeline route AND as a section embedded in the
+ * homepage. When `embedded`, we DON'T render <SEO> — otherwise its title/JSON-LD
+ * would clobber the host page's (they share document.head + the single
+ * data-seo-jsonld script). Only the real /timeline route owns the SEO.
+ */
+export function RadialOrbitalTimelineDemo({ embedded = false }: { embedded?: boolean }) {
   return (
     <>
-      <SEO 
-        title="Reasoning Engine"
-        description="See how Hana's Reasoning Engine works. Five layers of intelligence—Memory, Data, Protocols, Engagement, and Safety—power every patient interaction."
-        path="/timeline"
-        keywords="AI reasoning engine, healthcare intelligence layers, clinical AI architecture, voice AI technology, patient interaction AI"
-        jsonLd={breadcrumbSchema([
-          { name: "Home", url: "https://hanavoice.ai/" },
-          { name: "Reasoning Engine", url: "https://hanavoice.ai/timeline" }
-        ])}
-      />
+      {!embedded && (
+        <SEO
+          title="Reasoning Engine"
+          description="See how Hana's Reasoning Engine works. Five layers of intelligence—Memory, Data, Protocols, Engagement, and Safety—power every patient interaction."
+          path="/timeline"
+          keywords="AI reasoning engine, healthcare intelligence layers, clinical AI architecture, voice AI technology, patient interaction AI"
+          jsonLd={breadcrumbSchema([
+            { name: "Home", url: "https://www.hana.health/" },
+            { name: "Reasoning Engine", url: "https://www.hana.health/timeline" }
+          ])}
+        />
+      )}
       <RadialOrbitalTimeline
         timelineData={timelineData}
         label="HANA REASONING ENGINE"

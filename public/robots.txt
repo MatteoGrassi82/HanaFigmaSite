@@ -9,6 +9,9 @@ Disallow: /functions/
 # Sitemaps
 Sitemap: https://www.hana.health/sitemap.xml
 
+# LLM-facing summary (emerging convention; pointer for AI agents)
+# llms.txt: https://www.hana.health/llms.txt
+
 # Specific bot allowances
 User-agent: Googlebot
 Allow: /
@@ -17,4 +20,56 @@ User-agent: Bingbot
 Allow: /
 
 User-agent: Slurp
+Allow: /
+
+# ─── AI answer-engine crawlers — EXPLICITLY ALLOWED (we want to be cited) ───
+# These power live citations in ChatGPT search, Perplexity, Gemini/AI Overviews,
+# Claude, and Copilot. Allowing them lets Hana be discovered and cited as a source.
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+# ─── Training-data crawlers ───
+# Below crawl primarily to collect LLM TRAINING data (not live citation).
+# Allowing them can strengthen brand-entity presence in future models, but it is
+# a business decision — change "Allow: /" to "Disallow: /" to opt out of training use.
+User-agent: GPTBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Bytespider
 Allow: /

@@ -45,9 +45,11 @@ export function SEO({
   type = "website",
   jsonLd,
 }: SEOProps) {
-  // Construct the full title
+  // Construct the full title. Only append the brand suffix when the title
+  // doesn't already mention the brand (covers "Hana Voice AI", "Hana Health",
+  // and Sanity-authored titles ending in "| Hana …") — avoids double-branding.
   let fullTitle = title;
-  if (!useExactTitle && !title.includes(SITE_NAME)) {
+  if (!useExactTitle && !/\bHana\b/i.test(title)) {
     fullTitle = `${title} | ${SITE_NAME}`;
   }
 

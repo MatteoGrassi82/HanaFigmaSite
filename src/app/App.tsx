@@ -4,7 +4,6 @@ import { toast, Toaster } from "sonner";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import { Navbar } from "./components/Navbar";
 import { AnnouncementBar } from "./components/AnnouncementBar";
-import { SEO } from "./components/SEO";
 import { Home } from "./pages/Home";
 import { Research } from "./pages/Research";
 import { About } from "./pages/About";
@@ -21,6 +20,8 @@ import { BlogPost } from "./pages/BlogPost";
 import { VideoAskWidget } from "./components/VideoAskWidget";
 import { WhitepaperADHD } from "./pages/WhitepaperADHD";
 import { Whitepapers } from "./pages/Whitepapers";
+import { Demo } from "./pages/Demo";
+import { NotFound } from "./pages/NotFound";
 
 // Configuration
 const VAPI_PUBLIC_KEY = "5dfc26c6-90a6-4efe-907b-7bd0d690dc6e";
@@ -204,7 +205,6 @@ function AppContent() {
 
   return (
     <BrowserRouter>
-        <SEO />
         <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 pb-12 relative">
           <Toaster position="top-center" />
 
@@ -236,6 +236,7 @@ function AppContent() {
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/whitepapers" element={<Whitepapers />} />
               <Route path="/whitepapers/adhd-intake" element={<WhitepaperADHD />} />
+              <Route path="/demo" element={<Demo />} />
               <Route path="/case-studies" element={
                 <CaseStudies
                   activeAgentId={activeAgentId}
@@ -244,6 +245,7 @@ function AppContent() {
                   handleEndWebCall={handleEndWebCall}
                 />
               } />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
         </div>

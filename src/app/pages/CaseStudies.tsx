@@ -1,7 +1,21 @@
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, Phone, Mic, MicOff } from "lucide-react";
-import { SEO, breadcrumbSchema } from "../components/SEO";
+import { SEO, breadcrumbSchema, faqSchema } from "../components/SEO";
 import { Footer } from "../components/Footer";
+
+/* Case-studies FAQ — answer-first, citation-friendly for AI answer engines. */
+const CASE_STUDIES_FAQ = faqSchema([
+  {
+    question: "What results have healthcare organizations seen with Hana?",
+    answer:
+      "Across deployments in behavioral health, chronic care, post-discharge, surgical, and digital-health settings, Hana drives roughly 85% weekly patient engagement (versus 15–20% for portals and apps) and has processed more than 2 million patient interactions. It reduces 30-day readmissions through automated post-discharge follow-up and supports CMS-billable chronic care management.",
+  },
+  {
+    question: "What types of practices use Hana?",
+    answer:
+      "Hana is used by primary care and specialty practices running chronic care management, hospital systems reducing readmissions, behavioral health organizations running ADHD, depression, and substance-use intake, and digital health companies embedding voice AI into their own products via API.",
+  },
+]);
 
 interface CaseStudiesProps {
   activeAgentId: string | null;
@@ -166,10 +180,13 @@ export function CaseStudies({ activeAgentId, webCallStatus, handleStartWebCall, 
         title="Case Studies"
         description="Real Hana deployments across behavioral health, chronic care, surgical, digital health, and platform integrations."
         path="/case-studies"
-        jsonLd={breadcrumbSchema([
-          { name: "Home", url: "https://hanavoice.ai/" },
-          { name: "Case Studies", url: "https://hanavoice.ai/case-studies" },
-        ])}
+        jsonLd={[
+          breadcrumbSchema([
+            { name: "Home", url: "https://www.hana.health/" },
+            { name: "Case Studies", url: "https://www.hana.health/case-studies" },
+          ]),
+          CASE_STUDIES_FAQ,
+        ]}
       />
       <div className="min-h-screen bg-white">
         {selected ? (

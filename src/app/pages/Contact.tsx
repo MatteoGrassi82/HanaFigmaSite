@@ -31,8 +31,8 @@ export function Contact() {
         path="/contact"
         keywords="contact Hana Health, schedule AI demo, healthcare AI partnership, clinical voice AI inquiry, book demo"
         jsonLd={breadcrumbSchema([
-          { name: "Home", url: "https://hanavoice.ai/" },
-          { name: "Contact", url: "https://hanavoice.ai/contact" }
+          { name: "Home", url: "https://www.hana.health/" },
+          { name: "Contact", url: "https://www.hana.health/contact" }
         ])}
       />
       <div className="max-w-7xl mx-auto px-4 md:px-8">

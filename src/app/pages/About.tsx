@@ -150,8 +150,8 @@ export function About() {
         path="/about"
         keywords="Hana Health team, healthcare AI company, clinical AI founders, voice AI startup, healthcare technology company"
         jsonLd={breadcrumbSchema([
-          { name: "Home", url: "https://hanavoice.ai/" },
-          { name: "About", url: "https://hanavoice.ai/about" }
+          { name: "Home", url: "https://www.hana.health/" },
+          { name: "About", url: "https://www.hana.health/about" }
         ])}
       />
       

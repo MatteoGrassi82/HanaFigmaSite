@@ -99,7 +99,7 @@ export function BlogPost() {
     "description": post.excerpt || "",
     "url": `https://www.hana.health/blog/${slug}`,
     "datePublished": post.publishedAt || undefined,
-    "dateModified": post.publishedAt || undefined,
+    "dateModified": post._updatedAt || post.publishedAt || undefined,
     "author": post.author
       ? { "@type": "Person", "name": post.author.name }
       : { "@type": "Organization", "name": "Hana Health" },
