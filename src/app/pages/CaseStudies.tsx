@@ -379,10 +379,10 @@ function DetailView({
         </div>
 
         {/* Pull quote */}
-        <div className="border-y border-slate-100 py-14 px-6 md:px-12" style={{ backgroundColor: `${c.color}07` }}>
-          <div className="max-w-4xl mx-auto flex gap-6 items-start">
-            <div className="w-[3px] self-stretch rounded-full shrink-0" style={{ backgroundColor: c.color }} />
-            <p className="font-serif text-2xl md:text-[2rem] text-slate-900 leading-[1.4] italic">
+        <div className="border-y border-slate-100 py-16 px-6 md:px-12" style={{ backgroundColor: `${c.color}07` }}>
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="w-8 h-[3px] rounded-full mx-auto mb-8" style={{ backgroundColor: c.color }} />
+            <p className="font-serif text-2xl md:text-[2.25rem] text-slate-900 leading-[1.4] italic">
               "{c.sub}"
             </p>
           </div>
@@ -418,37 +418,28 @@ function DetailView({
           </div>
         </div>
 
-        {/* In numbers — dark */}
-        <div className="bg-[#00122F] px-6 md:px-12 py-20">
-          <div className="max-w-4xl mx-auto">
+        {/* In numbers — dark, centered */}
+        <div className="bg-[#00122F] px-6 md:px-12 py-24 text-center">
+          <div className="max-w-3xl mx-auto">
             <p className="text-[10px] font-bold tracking-[3px] uppercase text-slate-500 mb-10">In numbers</p>
-            <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-12 items-center">
-              <div className="shrink-0">
-                <div className="font-serif text-[88px] md:text-[108px] leading-none tracking-tight" style={{ color: c.color }}>
-                  {c.stats[0][0]}
-                </div>
-                <div className="text-[10px] text-slate-500 uppercase tracking-[3px] mt-3">{c.stats[0][1]}</div>
-              </div>
-              <div className="md:border-l md:border-white/8 md:pl-12">
-                <p className="text-[16px] leading-[1.9] text-slate-300">{c.inNumbers}</p>
-              </div>
+            <div className="font-serif text-[96px] md:text-[120px] leading-none tracking-tight mb-4" style={{ color: c.color }}>
+              {c.stats[0][0]}
             </div>
+            <div className="text-[10px] text-slate-500 uppercase tracking-[3px] mb-12">{c.stats[0][1]}</div>
+            <div className="w-12 h-px bg-white/10 mx-auto mb-12" />
+            <p className="text-[16px] md:text-[17px] leading-[1.9] text-slate-400 max-w-2xl mx-auto">{c.inNumbers}</p>
           </div>
         </div>
 
         {/* Agents */}
         <div className="bg-[#010f26] px-6 md:px-12 py-20">
           <div className="max-w-4xl mx-auto">
-            <div className="mb-12 pb-10 border-b border-white/[0.07]">
+            <div className="mb-12 pb-10 border-b border-white/[0.07] text-center">
               <p className="text-[10px] font-bold tracking-[3px] uppercase mb-5" style={{ color: c.color }}>Try the live agents</p>
-              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-                <h2 className="font-serif text-3xl md:text-4xl text-white leading-tight max-w-lg">
-                  These are the actual agents from this deployment.
-                </h2>
-                <p className="text-slate-500 text-sm shrink-0">
-                  No app. No login. Just click to call.
-                </p>
-              </div>
+              <h2 className="font-serif text-3xl md:text-4xl text-white leading-tight mb-3">
+                These are the actual agents from this deployment.
+              </h2>
+              <p className="text-slate-500 text-sm">No app. No login. Just click to call.</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {c.agents.map((a) => {
