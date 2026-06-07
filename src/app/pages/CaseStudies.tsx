@@ -324,30 +324,30 @@ function DetailView({
   return (
     <div>
       {/* Dark header */}
-      <div className="bg-[#00122F] text-white pt-24 pb-16 px-4">
-        <div className="max-w-5xl mx-auto">
+      <div className="bg-[#00122F] text-white pt-24 pb-20 px-4">
+        <div className="max-w-4xl mx-auto">
           <button
             onClick={onBack}
-            className="inline-flex items-center gap-2 text-slate-400 hover:text-white text-sm mb-10 transition-colors"
+            className="inline-flex items-center gap-2 text-slate-500 hover:text-white text-sm mb-12 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> All case studies
           </button>
 
-          <div className="flex items-center gap-3 mb-6">
-            <span className="text-xs font-bold tracking-[2px] uppercase" style={{ color: c.color }}>{c.tag}</span>
-            <span className="text-slate-600 text-xs">{idx + 1} / {total}</span>
+          <div className="flex items-center gap-3 mb-5">
+            <span className="text-[11px] font-bold tracking-[2.5px] uppercase" style={{ color: c.color }}>{c.tag}</span>
+            <span className="text-slate-700 text-xs">{idx + 1} / {total}</span>
           </div>
 
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl leading-[1.05] mb-6 max-w-3xl">{c.title}</h1>
+          <h1 className="font-serif text-4xl sm:text-5xl md:text-[3.5rem] leading-[1.05] mb-5 max-w-3xl">{c.title}</h1>
           <p className="text-slate-400 text-lg max-w-2xl leading-relaxed mb-10">{c.sub}</p>
 
           {/* Workflow chips */}
-          <div className="flex flex-wrap gap-2 mb-12">
+          <div className="flex flex-wrap gap-2 mb-14">
             {c.chips.map(chip => (
               <span
                 key={chip}
                 className="text-[11px] font-semibold px-3 py-1.5 rounded-full border"
-                style={{ color: c.color, borderColor: `${c.color}40`, backgroundColor: `${c.color}12` }}
+                style={{ color: c.color, borderColor: `${c.color}35`, backgroundColor: `${c.color}10` }}
               >
                 {chip}
               </span>
@@ -355,11 +355,11 @@ function DetailView({
           </div>
 
           {/* Stats bar */}
-          <div className="grid grid-cols-3 gap-px bg-white/10 rounded-xl overflow-hidden">
+          <div className="grid grid-cols-3 divide-x divide-white/[0.07] border border-white/[0.07] rounded-2xl overflow-hidden">
             {c.stats.map(([n, l]) => (
-              <div key={l} className="bg-white/5 px-6 py-5">
-                <div className="text-3xl font-semibold text-white mb-1">{n}</div>
-                <div className="text-xs text-slate-400 uppercase tracking-widest">{l}</div>
+              <div key={l} className="px-6 py-6 bg-white/[0.03]">
+                <div className="text-[2rem] font-semibold text-white mb-1.5 leading-none">{n}</div>
+                <div className="text-[10px] text-slate-500 uppercase tracking-widest">{l}</div>
               </div>
             ))}
           </div>
@@ -370,37 +370,37 @@ function DetailView({
       <div className="bg-white">
 
         {/* Situation */}
-        <div className="max-w-4xl mx-auto px-6 md:px-10 pt-14 pb-10">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-6 h-px" style={{ backgroundColor: c.color }} />
+        <div className="max-w-4xl mx-auto px-6 md:px-12 pt-16 pb-16">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-8 h-px" style={{ backgroundColor: c.color }} />
             <span className="text-[10px] font-bold tracking-[3px] uppercase" style={{ color: c.color }}>The situation</span>
           </div>
-          <p className="text-[16px] md:text-[17px] leading-[1.85] text-slate-600 max-w-2xl">{c.situation}</p>
+          <p className="text-[17px] md:text-[18px] leading-[1.9] text-slate-600">{c.situation}</p>
         </div>
 
         {/* Pull quote */}
-        <div className="border-y border-slate-100 py-10 px-6 md:px-10" style={{ backgroundColor: `${c.color}07` }}>
-          <div className="max-w-4xl mx-auto flex gap-5 items-start">
-            <div className="w-1 self-stretch rounded-full shrink-0 mt-1" style={{ backgroundColor: c.color }} />
-            <p className="font-serif text-2xl md:text-3xl text-slate-900 leading-[1.35] italic">
+        <div className="border-y border-slate-100 py-14 px-6 md:px-12" style={{ backgroundColor: `${c.color}07` }}>
+          <div className="max-w-4xl mx-auto flex gap-6 items-start">
+            <div className="w-[3px] self-stretch rounded-full shrink-0" style={{ backgroundColor: c.color }} />
+            <p className="font-serif text-2xl md:text-[2rem] text-slate-900 leading-[1.4] italic">
               "{c.sub}"
             </p>
           </div>
         </div>
 
-        {/* What Hana did — two column with sticky stat rail */}
-        <div className="max-w-4xl mx-auto px-6 md:px-10 py-12">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-6 h-px" style={{ backgroundColor: c.color }} />
+        {/* What Hana did */}
+        <div className="max-w-4xl mx-auto px-6 md:px-12 py-16">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-8 h-px" style={{ backgroundColor: c.color }} />
             <span className="text-[10px] font-bold tracking-[3px] uppercase" style={{ color: c.color }}>What Hana did</span>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-[1fr_200px] gap-10 items-start">
-            <p className="text-[16px] md:text-[17px] leading-[1.85] text-slate-600">{c.what}</p>
-            <div className="flex flex-row md:flex-col gap-6 md:gap-8 md:border-l md:pl-8" style={{ borderColor: `${c.color}30` }}>
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_180px] gap-12 items-start">
+            <p className="text-[17px] md:text-[18px] leading-[1.9] text-slate-600">{c.what}</p>
+            <div className="flex flex-row md:flex-col gap-8 border-t md:border-t-0 md:border-l pt-6 md:pt-0 md:pl-8" style={{ borderColor: `${c.color}25` }}>
               {c.stats.map(([n, l]) => (
                 <div key={l}>
-                  <div className="font-serif text-3xl text-slate-900 leading-none mb-1" style={{ color: c.color }}>{n}</div>
-                  <div className="text-[10px] text-slate-400 uppercase tracking-widest leading-tight">{l}</div>
+                  <div className="font-serif text-[2rem] leading-none mb-1.5" style={{ color: c.color }}>{n}</div>
+                  <div className="text-[10px] text-slate-400 uppercase tracking-widest leading-snug">{l}</div>
                 </div>
               ))}
             </div>
@@ -408,46 +408,49 @@ function DetailView({
         </div>
 
         {/* The result */}
-        <div className="px-6 md:px-10 py-12 border-t border-slate-100" style={{ backgroundColor: `${c.color}06` }}>
+        <div className="border-t border-slate-100 py-16 px-6 md:px-12" style={{ backgroundColor: `${c.color}05` }}>
           <div className="max-w-4xl mx-auto">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-6 h-px" style={{ backgroundColor: c.color }} />
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-8 h-px" style={{ backgroundColor: c.color }} />
               <span className="text-[10px] font-bold tracking-[3px] uppercase" style={{ color: c.color }}>The result</span>
             </div>
-            <p className="text-[16px] md:text-[17px] leading-[1.85] text-slate-600 max-w-2xl">{c.result}</p>
+            <p className="text-[17px] md:text-[18px] leading-[1.9] text-slate-600">{c.result}</p>
           </div>
         </div>
 
         {/* In numbers — dark */}
-        <div className="bg-[#00122F] px-6 md:px-10 py-14">
-          <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-[auto_1fr] gap-10 items-center">
-            <div className="shrink-0">
-              <div className="font-serif text-[80px] md:text-[96px] leading-none tracking-tight" style={{ color: c.color }}>
-                {c.stats[0][0]}
+        <div className="bg-[#00122F] px-6 md:px-12 py-20">
+          <div className="max-w-4xl mx-auto">
+            <p className="text-[10px] font-bold tracking-[3px] uppercase text-slate-500 mb-10">In numbers</p>
+            <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-12 items-center">
+              <div className="shrink-0">
+                <div className="font-serif text-[88px] md:text-[108px] leading-none tracking-tight" style={{ color: c.color }}>
+                  {c.stats[0][0]}
+                </div>
+                <div className="text-[10px] text-slate-500 uppercase tracking-[3px] mt-3">{c.stats[0][1]}</div>
               </div>
-              <div className="text-[10px] text-slate-500 uppercase tracking-[3px] mt-2">{c.stats[0][1]}</div>
-            </div>
-            <div className="md:border-l md:border-white/10 md:pl-10">
-              <p className="text-[15px] leading-[1.9] text-slate-300">{c.inNumbers}</p>
+              <div className="md:border-l md:border-white/8 md:pl-12">
+                <p className="text-[16px] leading-[1.9] text-slate-300">{c.inNumbers}</p>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Agents */}
-        <div className="bg-[#010f26] px-6 md:px-10 py-14">
+        <div className="bg-[#010f26] px-6 md:px-12 py-20">
           <div className="max-w-4xl mx-auto">
-            <div className="mb-10 pb-8 border-b border-white/8">
-              <p className="text-[10px] font-bold tracking-[3px] uppercase mb-4" style={{ color: c.color }}>Try the live agents</p>
+            <div className="mb-12 pb-10 border-b border-white/[0.07]">
+              <p className="text-[10px] font-bold tracking-[3px] uppercase mb-5" style={{ color: c.color }}>Try the live agents</p>
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-                <h2 className="font-serif text-2xl md:text-3xl text-white leading-tight">
+                <h2 className="font-serif text-3xl md:text-4xl text-white leading-tight max-w-lg">
                   These are the actual agents from this deployment.
                 </h2>
-                <p className="text-slate-500 text-[13px] leading-relaxed md:text-right md:max-w-[220px] shrink-0">
+                <p className="text-slate-500 text-sm shrink-0">
                   No app. No login. Just click to call.
                 </p>
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {c.agents.map((a) => {
                 const agentId = `${c.id}-${a.assistantId}`;
                 const isActive = activeAgentId === agentId;
@@ -470,7 +473,7 @@ function DetailView({
 
         {/* Nav */}
         <div className="bg-white border-t border-slate-100">
-          <div className="max-w-4xl mx-auto px-6 md:px-10 py-8 flex items-center justify-between">
+          <div className="max-w-4xl mx-auto px-6 md:px-12 py-10 flex items-center justify-between">
             <button onClick={onPrev} className="flex items-center gap-2 text-[13px] text-slate-400 hover:text-slate-900 transition-colors">
               <ArrowLeft className="w-3.5 h-3.5" /> Previous
             </button>
@@ -495,7 +498,7 @@ function AgentCard({ a, color, status, isOtherActive, onStart, onEnd }: {
   const isConnecting = status === "connecting";
 
   return (
-    <div className="rounded-xl p-5 flex flex-col gap-4 transition-all border border-white/8 bg-white/5 hover:bg-white/10 hover:border-white/15">
+    <div className="rounded-2xl p-6 flex flex-col gap-5 transition-all border border-white/[0.07] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/[0.12]">
       <div className="flex items-start justify-between gap-3">
         <div
           className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
