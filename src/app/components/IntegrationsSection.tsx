@@ -21,7 +21,7 @@ export function IntegrationsSection() {
               Reads the chart. Engages the patient. <em className="italic text-blue-600">Writes back.</em>
             </h2>
             <p className="text-lg leading-[1.65] text-[#718096] max-w-2xl mx-auto font-normal">
-              Direct integrations with major EHRs. Or connect through Redox and Catagon to reach 95+ systems. Voice, SMS, WhatsApp, iMessage. No app. No portal. No login. Just a conversation that continues from where it left off.
+              95+ EHRs. No app. No portal. No login. Just a conversation that picks up where it left off.
             </p>
           </div>
 
@@ -62,7 +62,7 @@ export function IntegrationsSection() {
                 </div>
                 
                 <h3 className="text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">Patient channels</h3>
-                <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">Voice, SMS, WhatsApp, iMessage. 3+ languages. No app, no portal.</p>
+                <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">Hana picks the right channel, time, and tone. No app. No portal. No login.</p>
                 <p className="text-[15px] leading-[1.7] text-[#718096] mb-8 font-normal">
                   Hana picks the right channel, time, and tone for each patient. No app. No portal. No login. Just a conversation.
                 </p>

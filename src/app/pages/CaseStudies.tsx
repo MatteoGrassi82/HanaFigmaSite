@@ -50,8 +50,8 @@ const CASES: CaseStudy[] = [
     id: "behavioral-health-intake",
     tag: "Behavioral Health",
     color: "#10B981",
-    title: "Behavioral Health Intake",
-    sub: "How a practice cut diagnostic time by 85%",
+    title: "The intake that does itself.",
+    sub: "85% faster to diagnosis. 96% of patients preferred it to the old way.",
     stats: [
       ["85%", "faster time to diagnosis"],
       ["96%", "patient acceptance rate"],
@@ -74,8 +74,8 @@ const CASES: CaseStudy[] = [
     id: "chronic-care-management",
     tag: "Chronic Care",
     color: "#3B82F6",
-    title: "Chronic Care Management",
-    sub: "From 30% medication adherence to 73%",
+    title: "From 30% to 73%.",
+    sub: "They had the data. They didn't have the why. Hana found it.",
     stats: [
       ["2.4×", "adherence improvement"],
       ["85%", "weekly engagement"],
@@ -99,8 +99,8 @@ const CASES: CaseStudy[] = [
     id: "knee-replacement",
     tag: "Surgical",
     color: "#F59E0B",
-    title: "Knee Replacement Pre-Op & Post-Op",
-    sub: "From last-minute cancellations to 97% surgical readiness",
+    title: "The OR slot that stops getting cancelled.",
+    sub: "97% surgical readiness. Staff stopped chasing prep. Surgeons stopped waiting.",
     stats: [
       ["97%", "surgical readiness rate"],
       ["74%", "less manual follow-up"],
@@ -123,8 +123,8 @@ const CASES: CaseStudy[] = [
     id: "mental-health-app",
     tag: "Digital Health",
     color: "#8B5CF6",
-    title: "Mental Health App (White-Label)",
-    sub: "From 15% app engagement to 85% with a voice layer",
+    title: "The app they stopped opening.",
+    sub: "15% engagement. One voice layer later: 85%. Same app, same brand.",
     stats: [
       ["15→85%", "weekly engagement"],
       ["White-label", "zero rebuilds"],
@@ -147,8 +147,8 @@ const CASES: CaseStudy[] = [
     id: "sms-platform-voice-layer",
     tag: "Platform",
     color: "#F97316",
-    title: "Voice Layer for a National SMS Platform",
-    sub: "Adding voice AI and multilingual support to 10M+ conversations",
+    title: "When SMS isn't enough.",
+    sub: "10M+ conversations. Four languages. Zero rebuilds for the platform.",
     stats: [
       ["10M+", "conversations extended"],
       ["4", "languages supported"],
@@ -220,10 +220,10 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
           <p className="text-blue-400 text-xs font-semibold tracking-[3px] uppercase mb-6">Case Studies</p>
           <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl leading-[1.05] mb-6">
             What happens when<br />
-            <span className="text-blue-400">infrastructure works</span>
+            <span className="text-blue-400">the routine gets handled</span>
           </h1>
           <p className="text-slate-400 text-lg md:text-xl max-w-xl leading-relaxed">
-            Real deployments. Real workflows. Real results — with live voice agents you can try right now.
+            Five deployments. Real numbers. And the live agents you can call to hear it yourself.
           </p>
         </div>
       </section>
@@ -279,8 +279,8 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
               <ArrowRight className="w-4 h-4 text-blue-400 group-hover:translate-x-1 transition-transform" />
             </div>
             <div>
-              <h2 className="font-serif text-3xl text-white leading-tight mb-2">Build your case study</h2>
-              <p className="text-sm text-slate-400">Every deployment is different. Book a call and we'll design a workflow around how your team works.</p>
+              <h2 className="font-serif text-3xl text-white leading-tight mb-2">Your clinic, next.</h2>
+              <p className="text-sm text-slate-400">Every deployment is different. Book a call — we'll show you what this looks like for how your team actually works.</p>
             </div>
             <div className="mt-auto pt-4 border-t border-white/10">
               <span className="text-sm font-semibold text-white group-hover:underline">Book a demo →</span>
@@ -336,11 +336,24 @@ function DetailView({
             <span className="text-slate-600 text-xs">{idx + 1} / {total}</span>
           </div>
 
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl leading-[1.05] mb-4 max-w-3xl">{c.title}</h1>
-          <p className="text-slate-400 text-lg">{c.sub}</p>
+          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl leading-[1.05] mb-6 max-w-3xl">{c.title}</h1>
+          <p className="text-slate-400 text-lg max-w-2xl leading-relaxed mb-10">{c.sub}</p>
+
+          {/* Workflow chips */}
+          <div className="flex flex-wrap gap-2 mb-12">
+            {c.chips.map(chip => (
+              <span
+                key={chip}
+                className="text-[11px] font-semibold px-3 py-1.5 rounded-full border"
+                style={{ color: c.color, borderColor: `${c.color}40`, backgroundColor: `${c.color}12` }}
+              >
+                {chip}
+              </span>
+            ))}
+          </div>
 
           {/* Stats bar */}
-          <div className="grid grid-cols-3 gap-px bg-white/10 mt-12 rounded-xl overflow-hidden">
+          <div className="grid grid-cols-3 gap-px bg-white/10 rounded-xl overflow-hidden">
             {c.stats.map(([n, l]) => (
               <div key={l} className="bg-white/5 px-6 py-5">
                 <div className="text-3xl font-semibold text-white mb-1">{n}</div>
@@ -353,37 +366,40 @@ function DetailView({
 
       {/* Body */}
       <div className="max-w-5xl mx-auto px-4 py-16">
-        {/* 3-col narrative */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+
+        {/* Narrative — stacked sections with breathing room */}
+        <div className="divide-y divide-slate-100 mb-16">
           {[
             { label: "The situation", body: c.situation },
             { label: "What Hana did", body: c.what },
             { label: "The result", body: c.result },
           ].map(({ label, body }) => (
-            <div key={label}>
-              <div
-                className="w-6 h-0.5 mb-4 rounded-full"
-                style={{ backgroundColor: c.color }}
-              />
-              <p className="text-xs font-bold tracking-[2px] uppercase text-slate-400 mb-3">{label}</p>
-              <p className="text-[15px] leading-relaxed text-slate-600">{body}</p>
+            <div key={label} className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-6 py-10">
+              <div className="flex items-start gap-3">
+                <div className="w-1 h-full min-h-[20px] rounded-full shrink-0 mt-0.5" style={{ backgroundColor: c.color }} />
+                <p className="text-xs font-bold tracking-[2px] uppercase text-slate-400 pt-0.5">{label}</p>
+              </div>
+              <p className="text-[16px] leading-relaxed text-slate-600">{body}</p>
             </div>
           ))}
         </div>
 
-        {/* In numbers callout */}
-        <div
-          className="rounded-2xl p-8 mb-16"
-          style={{ backgroundColor: `${c.color}10`, borderLeft: `3px solid ${c.color}` }}
-        >
-          <p className="text-xs font-bold tracking-[2px] uppercase mb-2" style={{ color: c.color }}>In numbers</p>
-          <p className="text-[15px] leading-relaxed text-slate-700">{c.inNumbers}</p>
+        {/* Big result callout */}
+        <div className="bg-[#00122F] rounded-2xl p-10 mb-16 flex flex-col md:flex-row items-center gap-8">
+          <div className="shrink-0 text-center md:text-left">
+            <div className="font-serif text-6xl md:text-7xl font-normal leading-none mb-2" style={{ color: c.color }}>
+              {c.stats[0][0]}
+            </div>
+            <div className="text-xs text-slate-400 uppercase tracking-widest">{c.stats[0][1]}</div>
+          </div>
+          <div className="w-px h-16 bg-white/10 hidden md:block shrink-0" />
+          <p className="text-[15px] leading-relaxed text-slate-300">{c.inNumbers}</p>
         </div>
 
         {/* Agents */}
-        <div className="mb-6">
-          <p className="text-xs font-bold tracking-[2px] uppercase text-slate-400 mb-1">Try the live agents</p>
-          <p className="text-sm text-slate-500">These are the actual Hana agents used in this deployment. Click any card to start a live voice demo.</p>
+        <div className="mb-8">
+          <p className="text-xs font-bold tracking-[2px] uppercase text-slate-400 mb-2">Try the live agents</p>
+          <p className="text-sm text-slate-500 max-w-xl">These are the actual Hana agents used in this deployment. Click any card to start a live voice call.</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">

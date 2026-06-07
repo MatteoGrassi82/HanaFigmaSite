@@ -87,8 +87,8 @@ export function RadialOrbitalTimelineDemo({ embedded = false }: { embedded?: boo
       <RadialOrbitalTimeline
         timelineData={timelineData}
         label="HANA REASONING ENGINE"
-        title="Five layers of intelligence. Not a chatbot with a script."
-        description="Safety agents that monitor every conversation in real time. A memory layer that compounds across interactions. Protocol libraries built from your clinical guidelines. Observability so your team sees what the AI did and why. And a reasoning model that ties it all together."
+        title="Smart enough to know when to talk. And when to escalate."
+        description="Reads the chart before every call. Remembers what the patient said last time. Follows your protocols. Flags what matters."
       />
     </>
   );

@@ -59,7 +59,7 @@ export function ComplianceSection() {
               Built for healthcare from day one.
             </h2>
             <p className="text-base text-slate-500 dark:text-slate-400 leading-relaxed">
-              HIPAA, GDPR, SOC 2, EU AI Act — across the US, UK, Ireland, and Italy. Every deployment. Every country. Not bolted on. Built in.
+              HIPAA. GDPR. SOC 2. EU AI Act. Not bolted on. Built in.
             </p>
           </div>
 

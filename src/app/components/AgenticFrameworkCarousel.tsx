@@ -81,8 +81,8 @@ export function AgenticFrameworkCarousel() {
   const slides = [
     {
       id: 1,
-      title: "Modular Flows, Designed Around How You Work",
-      description: "No two clinics work the same way. Your agent runs on flows built specifically for your workflows calls, messages, reminders, follow ups modular enough to handle any scenario, rigid enough to stay on protocol.",
+      title: "Your workflows. Not ours.",
+      description: "No two clinics work the same. Pick from 100+ pre-built workflows or we build yours — structured enough to stay on protocol, flexible enough to handle anything.",
       component: WorkflowBuilderComp,
       durationInFrames: 510,
     },
@@ -150,10 +150,10 @@ export function AgenticFrameworkCarousel() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 mb-16">
           <h2 className="text-3xl md:text-5xl font-serif font-normal tracking-normal text-slate-900 dark:text-white max-w-2xl leading-[1.1]">
-            Voice AI infrastructure for clinical workflows.
+            Built around how your clinic works.
           </h2>
           <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-3xl leading-relaxed md:mt-4 font-sans">
-            Routine follow-ups to complex care pathways. Deploy in days.
+            Simple workflows to complex care pathways. Live in a week.
           </p>
         </div>
 
