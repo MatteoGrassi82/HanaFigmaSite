@@ -1,7 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import { useConversation, ConversationProvider } from "@elevenlabs/react";
 import { toast, Toaster } from "sonner";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
 import { Navbar } from "./components/Navbar";
 import { AnnouncementBar } from "./components/AnnouncementBar";
 import { Home } from "./pages/Home";
@@ -205,6 +211,7 @@ function AppContent() {
 
   return (
     <BrowserRouter>
+        <ScrollToTop />
         <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 pb-12 relative">
           <Toaster position="top-center" />
 
