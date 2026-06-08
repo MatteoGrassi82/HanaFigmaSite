@@ -32,6 +32,7 @@ const PORT = 4178;
 // Static marketing routes (must match the <Route> list in App.tsx).
 const STATIC_ROUTES = [
   '/',
+  '/access',
   '/case-studies',
   '/pricing',
   '/state-of-ai',
