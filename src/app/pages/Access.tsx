@@ -1,29 +1,10 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowRight, Mic, MicOff, ChevronDown, ChevronUp, Globe, Loader2, CheckCircle2, PhoneOff } from "lucide-react";
+import { ArrowRight, ChevronDown, ChevronUp, Globe, Loader2, CheckCircle2, PhoneOff } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { Footer } from "../components/Footer";
 import { SEO } from "../components/SEO";
 
-// ─── Placeholder agent IDs — replace with real ElevenLabs agent IDs ───────────
-const AGENTS = [
-  {
-    id: "access-advisor",
-    name: "Ask about ACCESS",
-    desc: "Ask anything about OAT mechanics, the 15-day window, WHODAS, pricing, or how Hana fits your track. Hana answers.",
-    assistantId: "PLACEHOLDER_ACCESS_ADVISOR",
-    color: "#3B82F6",
-    tag: "Strategy & Mechanics",
-  },
-  {
-    id: "whodas-demo",
-    name: "Try the WHODAS agent",
-    desc: "A live demo of the WHODAS 2.0 collection call Hana runs for BH-track patients. 36 items, conversational, ~20 minutes. Try a few questions.",
-    assistantId: "PLACEHOLDER_WHODAS_AGENT",
-    color: "#10B981",
-    tag: "BH Track · Live Demo",
-  },
-];
 
 const TRACKS = [
   {
@@ -808,67 +789,6 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
           handleStartWebCall={handleStartWebCall}
           handleEndWebCall={handleEndWebCall}
         />
-
-        {/* ── Ask Hana ─────────────────────────────────────────────────────── */}
-        {(() => {
-          const advisor = AGENTS.find(a => a.id === "access-advisor")!;
-          const agentKey = `access-${advisor.id}`;
-          const isActive = activeAgentId === agentKey;
-          const status = isActive ? webCallStatus : "idle";
-          const isConnecting = status === "connecting";
-          const isLive = status === "active";
-          const isOtherActive = activeAgentId !== null && !isActive;
-          return (
-            <section className="bg-[#010f26] px-4 py-20">
-              <div className="max-w-3xl mx-auto text-center">
-                <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-400 mb-4">Ask anything</p>
-                <h2 className="font-serif text-3xl md:text-4xl text-white leading-tight mb-3">
-                  Talk to Hana. Right now.
-                </h2>
-                <p className="text-slate-500 text-[15px] mb-10">OAT mechanics, pricing, your track. No app. No login. Just click to call.</p>
-                <div className="rounded-2xl p-8 flex flex-col gap-5 border border-white/[0.07] bg-white/[0.04] text-left">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full mb-3" style={{ backgroundColor: `${advisor.color}15`, border: `1px solid ${advisor.color}30` }}>
-                        <span className="text-[10px] font-bold tracking-[2px] uppercase" style={{ color: advisor.color }}>{advisor.tag}</span>
-                      </div>
-                      <h3 className="text-[16px] font-semibold text-white leading-tight">{advisor.name}</h3>
-                    </div>
-                    {isLive && (
-                      <span className="flex items-center gap-1 text-[10px] font-semibold px-2 py-1 rounded-full shrink-0" style={{ color: advisor.color, backgroundColor: `${advisor.color}20` }}>
-                        <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: advisor.color }} />
-                        Live
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-[14px] text-slate-400 leading-relaxed">{advisor.desc}</p>
-                  {isLive ? (
-                    <button
-                      onClick={handleEndWebCall}
-                      className="w-full flex items-center justify-center gap-2 py-3 bg-red-500/10 text-red-400 border border-red-500/20 rounded-xl text-[13px] font-semibold hover:bg-red-500/20 transition-colors"
-                    >
-                      <MicOff className="w-4 h-4" /> End call
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => handleStartWebCall(agentKey, advisor.assistantId)}
-                      disabled={isOtherActive || isConnecting}
-                      className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-[13px] font-semibold transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:opacity-80"
-                      style={
-                        isOtherActive || isConnecting
-                          ? { color: "#475569", border: "1px solid rgba(255,255,255,0.08)", backgroundColor: "transparent" }
-                          : { color: advisor.color, border: `1px solid ${advisor.color}50`, backgroundColor: `${advisor.color}12` }
-                      }
-                    >
-                      <Mic className="w-4 h-4" />
-                      {isConnecting ? "Connecting..." : "Start Web Call"}
-                    </button>
-                  )}
-                </div>
-              </div>
-            </section>
-          );
-        })()}
 
         {/* ── FAQ ───────────────────────────────────────────────────────────── */}
         <section className="px-4 py-20 bg-white border-t border-slate-100">
