@@ -109,6 +109,28 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
+  // Calculator state
+  const [calcPatients, setCalcPatients] = useState(500);
+  const [calcTrack, setCalcTrack] = useState<"CKM" | "BH" | "MSK">("CKM");
+  const [calcOAR, setCalcOAR] = useState(55);
+
+  const OAP_RATES: Record<string, number> = { CKM: 35, BH: 15, MSK: 20 };
+  const BASE_FEES: Record<string, number> = { CKM: 3, BH: 4, MSK: 3 };
+  const oap = OAP_RATES[calcTrack];
+  const baseFee = BASE_FEES[calcTrack];
+  const annualOAP = oap * calcPatients * 12;
+  const withheld = annualOAP * 0.5;
+  // OAT = 50%; if OAR >= 50 → full release; else proportional, floor 50%
+  const oat = 50;
+  const releaseFraction = calcOAR >= oat ? 1 : Math.max(0.5, calcOAR / oat);
+  const released = withheld * releaseFraction;
+  const hanaBase = baseFee * calcPatients * 12;
+  const hanaSuccess = released * 0.1;
+  const hanaTotal = hanaBase + hanaSuccess;
+  const revenueProtected = released - withheld * 0.5; // vs floor scenario
+  const roi = hanaTotal > 0 ? (released / hanaTotal) : 0;
+  const hitOAT = calcOAR >= oat;
+
   const track = TRACKS.find(t => t.key === activeTrack)!;
 
   return (
@@ -348,6 +370,163 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                     Missing OAT at 40% OAR → only $168K released instead of $210K. The $42K difference covers Hana's full annual cost.
                   </p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Calculator ───────────────────────────────────────────────────── */}
+        <section className="px-4 py-20 bg-[#00122F]" id="calculator">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-14">
+              <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-400 mb-4">ROI Calculator</p>
+              <h2 className="font-serif text-3xl md:text-4xl text-white leading-tight mb-3">
+                Run the numbers for your cohort.
+              </h2>
+              <p className="text-slate-500 text-[15px]">
+                Adjust your patient count, track, and expected OAR. See exactly what's at stake.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+              {/* Inputs */}
+              <div className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-8 flex flex-col gap-8">
+
+                {/* Patient count */}
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <label className="text-[11px] font-bold tracking-[2px] uppercase text-slate-400">Patients enrolled</label>
+                    <span className="font-serif text-2xl text-white">{calcPatients.toLocaleString()}</span>
+                  </div>
+                  <input
+                    type="range"
+                    min={100} max={5000} step={50}
+                    value={calcPatients}
+                    onChange={e => setCalcPatients(Number(e.target.value))}
+                    className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
+                    style={{
+                      background: `linear-gradient(to right, #3B82F6 ${((calcPatients - 100) / 4900) * 100}%, rgba(255,255,255,0.1) ${((calcPatients - 100) / 4900) * 100}%)`
+                    }}
+                  />
+                  <div className="flex justify-between text-[11px] text-slate-600 mt-1.5">
+                    <span>100</span><span>5,000</span>
+                  </div>
+                </div>
+
+                {/* Track */}
+                <div>
+                  <label className="text-[11px] font-bold tracking-[2px] uppercase text-slate-400 block mb-3">Track</label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {(["CKM", "BH", "MSK"] as const).map(t => (
+                      <button
+                        key={t}
+                        onClick={() => setCalcTrack(t)}
+                        className="py-2.5 rounded-xl text-[13px] font-semibold transition-all border"
+                        style={calcTrack === t
+                          ? { backgroundColor: "#3B82F6", color: "#fff", borderColor: "#3B82F6" }
+                          : { backgroundColor: "transparent", color: "#94a3b8", borderColor: "rgba(255,255,255,0.08)" }
+                        }
+                      >
+                        {t === "CKM" ? "CKM / eCKM" : t}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="text-[11px] text-slate-600 mt-2">
+                    OAP rate: ${OAP_RATES[calcTrack]}/pt/mo · Base fee: ${BASE_FEES[calcTrack]}/pt/mo{calcTrack === "BH" ? " (WHODAS)" : ""}
+                  </p>
+                </div>
+
+                {/* OAR slider — the key one */}
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <label className="text-[11px] font-bold tracking-[2px] uppercase text-slate-400">
+                      Expected OAR
+                    </label>
+                    <div className="flex items-center gap-2">
+                      <span className="font-serif text-2xl text-white">{calcOAR}%</span>
+                      <span
+                        className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                        style={hitOAT
+                          ? { color: "#10B981", backgroundColor: "rgba(16,185,129,0.15)" }
+                          : { color: "#F59E0B", backgroundColor: "rgba(245,158,11,0.15)" }
+                        }
+                      >
+                        {hitOAT ? "✓ OAT hit" : "✗ Below OAT"}
+                      </span>
+                    </div>
+                  </div>
+                  <input
+                    type="range"
+                    min={10} max={90} step={1}
+                    value={calcOAR}
+                    onChange={e => setCalcOAR(Number(e.target.value))}
+                    className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
+                    style={{
+                      background: `linear-gradient(to right, ${hitOAT ? "#10B981" : "#F59E0B"} ${((calcOAR - 10) / 80) * 100}%, rgba(255,255,255,0.1) ${((calcOAR - 10) / 80) * 100}%)`
+                    }}
+                  />
+                  <div className="flex justify-between text-[11px] mt-1.5">
+                    <span className="text-slate-600">10%</span>
+                    <span className="text-blue-400 font-semibold">← OAT threshold: 50% →</span>
+                    <span className="text-slate-600">90%</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Outputs */}
+              <div className="flex flex-col gap-4">
+
+                {/* OAT status banner */}
+                <div
+                  className="rounded-2xl px-6 py-5 border transition-all"
+                  style={hitOAT
+                    ? { backgroundColor: "rgba(16,185,129,0.08)", borderColor: "rgba(16,185,129,0.25)" }
+                    : { backgroundColor: "rgba(245,158,11,0.08)", borderColor: "rgba(245,158,11,0.25)" }
+                  }
+                >
+                  <p className="text-[11px] font-bold tracking-[2px] uppercase mb-1" style={{ color: hitOAT ? "#10B981" : "#F59E0B" }}>
+                    {hitOAT ? "Full withheld pool released" : "Proportional reduction applies"}
+                  </p>
+                  <p className="text-[13px] leading-relaxed" style={{ color: hitOAT ? "#6ee7b7" : "#fcd34d" }}>
+                    {hitOAT
+                      ? `OAR ${calcOAR}% ≥ 50% threshold — CMS releases 100% of your withheld pool.`
+                      : `OAR ${calcOAR}% ÷ 50% OAT = ${Math.round(releaseFraction * 100)}% released. Drag to 50% to see the difference.`
+                    }
+                  </p>
+                </div>
+
+                {/* Key numbers */}
+                <div className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-6 flex flex-col gap-4 flex-1">
+                  {[
+                    ["Annual OAP revenue", `$${annualOAP.toLocaleString()}`],
+                    ["CMS withheld (50%)", `$${withheld.toLocaleString()}`],
+                    ["Released at reconciliation", `$${Math.round(released).toLocaleString()}`, hitOAT ? "#10B981" : "#F59E0B"],
+                    ["Hana base cost", `$${hanaBase.toLocaleString()}`],
+                    ["Hana success fee (10%)", `$${Math.round(hanaSuccess).toLocaleString()}`],
+                    ["Total Hana cost", `$${Math.round(hanaTotal).toLocaleString()}`],
+                  ].map(([label, value, color]) => (
+                    <div key={String(label)} className="flex items-baseline justify-between gap-4">
+                      <span className="text-[13px] text-slate-500">{label}</span>
+                      <span className="text-[14px] font-semibold tabular-nums" style={{ color: color as string || "#f1f5f9" }}>{value}</span>
+                    </div>
+                  ))}
+                  <div className="border-t border-white/[0.07] pt-4 flex items-center justify-between">
+                    <span className="text-[13px] text-white font-semibold">Revenue-to-cost ratio</span>
+                    <span className="font-serif text-2xl" style={{ color: "#3B82F6" }}>{roi.toFixed(1)}×</span>
+                  </div>
+                </div>
+
+                {/* CTA */}
+                <a
+                  href="https://calendly.com/matteowastaken/discoverycall"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 py-4 bg-blue-500 hover:bg-blue-400 text-white rounded-2xl font-semibold text-[14px] transition-all hover:-translate-y-0.5 group"
+                >
+                  Book a call to walk through your numbers
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </a>
               </div>
             </div>
           </div>
