@@ -397,8 +397,9 @@ export function WhitepaperADHD() {
   return (
     <>
       <SEO
-        title="ADHD Intake Workflow — Clinic Partner Whitepaper | HANA"
+        title="ADHD Intake Workflow — Clinic Partner Whitepaper"
         description="A complete walkthrough of the HANA ADHD intake workflow: 3-module interview architecture, pediatric & adult intake flows, and Practice Q integration."
+        path="/whitepapers/adhd-intake"
       />
 
       {/* Hero */}

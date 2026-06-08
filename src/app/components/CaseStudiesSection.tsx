@@ -1,7 +1,8 @@
 import image_f650da2227696c54cef0e7df2c6156528919b7ef from 'figma:asset/f650da2227696c54cef0e7df2c6156528919b7ef.png';
 import image_79f9f204476e9693a3b2efedb57797a6f4a0fa38 from 'figma:asset/79f9f204476e9693a3b2efedb57797a6f4a0fa38.png';
 import image_15b8b08ff934107140826361e6e3912f69618bae from 'figma:asset/15b8b08ff934107140826361e6e3912f69618bae.png';
-import { Play, Quote } from "lucide-react";
+import { ArrowRight, Play, Quote } from "lucide-react";
+import { Link } from "react-router";
 
 interface CaseStudy {
   id: string;
@@ -38,7 +39,7 @@ const caseStudies: CaseStudy[] = [
   },
   {
     id: "penry",
-    quote: "The Hana team understood that quality assessments require both consistency and flexibility. Their Voice AI conducts standardized screening tools, adapts questions based on patient responses, and captures 340% more clinical data while maintaining protocol validity.",
+    quote: "340% more clinical data captured. Protocol validity maintained.",
     image: image_15b8b08ff934107140826361e6e3912f69618bae,
     theme: "blue",
     hasVideo: true,
@@ -73,6 +74,19 @@ const caseStudies: CaseStudy[] = [
 export function CaseStudiesSection() {
   return (
     <section className="py-12 md:py-24 bg-[#F5F5F5] dark:bg-slate-950" id="case-studies">
+      {/* Section Header */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 text-center mb-12 md:mb-16">
+        <p className="text-[11px] font-semibold uppercase tracking-[2.5px] text-slate-400 mb-4">
+          Case Studies
+        </p>
+        <h2 className="font-serif text-4xl md:text-5xl text-slate-900 dark:text-white leading-tight max-w-3xl mx-auto">
+          Receipts.
+        </h2>
+        <p className="text-lg text-slate-500 dark:text-slate-400 max-w-xl mx-auto mt-4 leading-relaxed">
+          See how teams put Hana on the routine — and what changed when they did.
+        </p>
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 md:px-8 flex flex-col gap-6">
         {caseStudies.map((study, index) => (
           <div
@@ -136,6 +150,20 @@ export function CaseStudiesSection() {
 
           </div>
         ))}
+      </div>
+
+      {/* CTA to full case studies page */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 mt-12 md:mt-16 text-center">
+        <Link
+          to="/case-studies"
+          className="inline-flex items-center gap-2 px-8 py-[14px] bg-[#00122F] text-white rounded-full text-[15px] font-semibold hover:bg-[#011b48] hover:-translate-y-[2px] hover:shadow-[0_8px_24px_rgba(0,0,0,0.2)] transition-all duration-200 group"
+        >
+          Read the case studies
+          <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-[3px]" />
+        </Link>
+        <p className="text-[13px] text-slate-500 dark:text-slate-400 mt-[14px]">
+          Full deployments — with live voice agents you can try.
+        </p>
       </div>
     </section>
   );

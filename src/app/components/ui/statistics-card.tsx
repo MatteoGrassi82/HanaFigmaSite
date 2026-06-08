@@ -29,10 +29,10 @@ const Stats = () => {
       <div className="container mx-auto">
         <div className="mx-auto max-w-2xl text-center mb-16">
           <p className="text-base text-slate-500 dark:text-slate-400 mb-3">
-            Engaging patients takes time your team doesn't have.
+            Most routine calls never get made. Ours do.
           </p>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-normal text-slate-900 dark:text-white mb-6 font-serif">
-            What 2 million patient interactions <br />
+            What 2 million patient conversations <br />
             <span className="italic">taught us.</span>
           </h2>
           <p className="text-lg text-slate-500 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
@@ -69,7 +69,7 @@ const Stats = () => {
           ))}
         </div>
         <div className="mt-12 text-center">
-             <p className="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">We achieved 85% patient engagement week over week.</p>
+             <p className="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Industry average: 15%. HANA: 85%. Every week.</p>
         </div>
 
         <AskAiAboutUs className="mt-16" />

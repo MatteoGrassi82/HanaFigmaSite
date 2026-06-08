@@ -357,7 +357,7 @@ export function RecipesMarquee() {
           100+ Workflows. Already built.
         </p>
         <h2 className="font-serif text-4xl md:text-5xl text-slate-900 leading-tight mb-4">
-          Pre-built voice AI workflows for every patient touchpoint.
+          100+ routine workflows. Ready on day one.
         </h2>
         <div className="flex flex-wrap justify-center gap-4 mt-6">
           {(Object.entries(CHANNELS) as [Channel, (typeof CHANNELS)[Channel]][]).map(([key, ch]) => (

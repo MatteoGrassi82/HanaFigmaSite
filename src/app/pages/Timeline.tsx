@@ -63,24 +63,32 @@ const timelineData = [
   },
 ];
 
-export function RadialOrbitalTimelineDemo() {
+/**
+ * Used both as the standalone /timeline route AND as a section embedded in the
+ * homepage. When `embedded`, we DON'T render <SEO> — otherwise its title/JSON-LD
+ * would clobber the host page's (they share document.head + the single
+ * data-seo-jsonld script). Only the real /timeline route owns the SEO.
+ */
+export function RadialOrbitalTimelineDemo({ embedded = false }: { embedded?: boolean }) {
   return (
     <>
-      <SEO 
-        title="Reasoning Engine"
-        description="See how Hana's Reasoning Engine works. Five layers of intelligence—Memory, Data, Protocols, Engagement, and Safety—power every patient interaction."
-        path="/timeline"
-        keywords="AI reasoning engine, healthcare intelligence layers, clinical AI architecture, voice AI technology, patient interaction AI"
-        jsonLd={breadcrumbSchema([
-          { name: "Home", url: "https://hanavoice.ai/" },
-          { name: "Reasoning Engine", url: "https://hanavoice.ai/timeline" }
-        ])}
-      />
+      {!embedded && (
+        <SEO
+          title="Reasoning Engine"
+          description="See how Hana's Reasoning Engine works. Five layers of intelligence—Memory, Data, Protocols, Engagement, and Safety—power every patient interaction."
+          path="/timeline"
+          keywords="AI reasoning engine, healthcare intelligence layers, clinical AI architecture, voice AI technology, patient interaction AI"
+          jsonLd={breadcrumbSchema([
+            { name: "Home", url: "https://www.hana.health/" },
+            { name: "Reasoning Engine", url: "https://www.hana.health/timeline" }
+          ])}
+        />
+      )}
       <RadialOrbitalTimeline
         timelineData={timelineData}
         label="HANA REASONING ENGINE"
-        title="Five layers of intelligence. Not a chatbot with a script."
-        description="Safety agents that monitor every conversation in real time. A memory layer that compounds across interactions. Protocol libraries built from your clinical guidelines. Observability so your team sees what the AI did and why. And a reasoning model that ties it all together."
+        title="Smart enough to know when to talk. And when to escalate."
+        description="Reads the chart before every call. Remembers what the patient said last time. Follows your protocols. Flags what matters."
       />
     </>
   );

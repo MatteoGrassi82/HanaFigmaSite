@@ -156,8 +156,8 @@ export function Research() {
         path="/research"
         keywords="clinical AI research, voice biomarkers, healthcare AI publications, conversational AI healthcare, patient engagement research, voice analysis machine learning"
         jsonLd={breadcrumbSchema([
-          { name: "Home", url: "https://hanavoice.ai/" },
-          { name: "Research", url: "https://hanavoice.ai/research" }
+          { name: "Home", url: "https://www.hana.health/" },
+          { name: "Research", url: "https://www.hana.health/research" }
         ])}
       />
       {/* Hero Section */}

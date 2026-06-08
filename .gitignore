@@ -30,3 +30,10 @@ npm-debug.log*
 
 # Supabase CLI temp files
 supabase/.temp/
+.vercel
+
+# Claude Code agent/session state
+.claude/
+
+# Local AEO content drafts (review locally, publish to Sanity)
+content-drafts/

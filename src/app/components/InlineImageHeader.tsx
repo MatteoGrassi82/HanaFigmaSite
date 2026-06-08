@@ -99,10 +99,10 @@ export function InlineImageHeader() {
         {/* Header */}
         <div className="text-center mb-[72px]">
           <h2 className="font-serif text-[36px] md:text-[56px] leading-[1.1] tracking-normal text-white max-w-[720px] mx-auto mb-5">
-            Designed for patient journeys. Built around your workflow.
+            Tell us what's routine. We handle it.
           </h2>
           <p className="text-[16px] leading-[1.7] text-slate-400 max-w-[520px] mx-auto">
-            Tell us how you work. We build around it. Most teams are live in a week.
+            Most teams go live in a week.
           </p>
         </div>
 
@@ -117,7 +117,7 @@ export function InlineImageHeader() {
             </div>
             <h3 className="font-serif text-[26px] text-white mb-3 tracking-normal">Pick your workflow.</h3>
             <p className="text-[15px] leading-[1.7] text-slate-400 max-w-[280px] mx-auto">
-              Intake. Outreach. Monitoring. Coordination. Pre-op. Post-op. Choose from pre-built templates or we build one together — designed around how your team actually operates.
+              Intake. Outreach. Monitoring. Post-op. Refills. Reactivation. Choose from pre-built or we build around you.
             </p>
           </div>
 
@@ -129,7 +129,7 @@ export function InlineImageHeader() {
             </div>
             <h3 className="font-serif text-[26px] text-white mb-3 tracking-normal">Connect your EHR.</h3>
             <p className="text-[15px] leading-[1.7] text-slate-400 max-w-[280px] mx-auto">
-              Direct integrations with major EHRs. Or connect through Redox and Catagon to reach 95+ systems. We read the chart first so patients aren't asked what you already know.
+              Direct integrations with major EHRs. Or connect through Redox and Catagon — 95+ systems. We read the chart first. Patients are never asked what you already know.
             </p>
           </div>
 
@@ -139,9 +139,9 @@ export function InlineImageHeader() {
             <div className="w-[104px] h-[104px] rounded-full flex items-center justify-center mb-7 transition-transform duration-300 group-hover:scale-105 bg-[rgb(167,188,245)]/20 border-2 border-[rgb(167,188,245)]/30 shadow-[0_4px_16px_rgba(167,188,245,0.1)]">
               <LiveAnimation />
             </div>
-            <h3 className="font-serif text-[26px] text-white mb-3 tracking-normal">Live.</h3>
+            <h3 className="font-serif text-[26px] text-white mb-3 tracking-normal">Live in days.</h3>
             <p className="text-[15px] leading-[1.7] text-slate-400 max-w-[280px] mx-auto">
-              Your agent is live. Handling calls, messages, and follow-ups so your team doesn't have to.
+              Your agent is running. Handling the routine so your team can focus on what matters.
             </p>
           </div>
         </div>

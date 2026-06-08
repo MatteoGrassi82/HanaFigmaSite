@@ -2,8 +2,27 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Plus, Minus, ArrowLeft, ArrowRight, Check, ChevronDown } from "lucide-react";
 import { Footer } from "../components/Footer";
-import { SEO } from "../components/SEO";
+import { SEO, faqSchema } from "../components/SEO";
 import { cn } from "../../lib/utils";
+
+/* Pricing FAQ — answer-first, citation-friendly for AI answer engines. */
+const PRICING_FAQ = faqSchema([
+  {
+    question: "How much does Hana Voice AI cost?",
+    answer:
+      "Hana uses outcome-based pricing aligned with the savings it generates, rather than a fixed per-seat license. Pricing scales with the workflows you automate; the savings calculator estimates your cost and your savings versus human staffing for your specific practice. Contact Hana for an enterprise quote.",
+  },
+  {
+    question: "Is Hana's pricing cheaper than hiring staff?",
+    answer:
+      "Hana is designed to cost less than the human staff time it replaces. Because it scales without call-center overhead or per-call staffing cost, practices typically save across every workflow they automate — the savings calculator shows the comparison for your patient volume.",
+  },
+  {
+    question: "Is there a free trial or setup fee?",
+    answer:
+      "Hana deploys in days and is sold as infrastructure clinics build on. Reach out through the pricing page or book a demo to discuss a pilot, scope, and pricing for your organization.",
+  },
+]);
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -550,6 +569,7 @@ export function Pricing() {
         description="Outcome-based pricing aligned with your savings. Calculate exactly what Hana costs and what you save compared to human staff."
         path="/pricing"
         useExactTitle
+        jsonLd={PRICING_FAQ}
       />
 
       {/* Hero */}

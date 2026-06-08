@@ -1,10 +1,77 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import { ChevronLeft, ChevronRight, X, Maximize2 } from 'lucide-react';
 import { cn } from '../../lib/utils';
-import agentFlowImage from 'figma:asset/7dab76c8bd67019090a5609cf9a1a41e8c727fbb.png';
-import functionCallingImage from 'figma:asset/62582804397f26f4d27fce669c639631250afc5e.png';
+import { Player, type PlayerRef } from '@remotion/player';
+import { WorkflowBuilderComp } from './remotion/WorkflowBuilderComp';
+import { SafetyMonitorComp } from './remotion/SafetyMonitorComp';
+import { PatientContextComp } from './remotion/PatientContextComp';
+
+/* Shared <Player> render for a homepage demo slide. The compositions are
+   900x506 (≈16:9), so they fill the carousel's aspect-video frame cleanly.
+   Loop, no controls — matching the previous silent-video behavior.
+
+   For Core Web Vitals we DON'T autoplay every slide: only the active (and
+   in-view) demo animates. Off-screen / non-active slides stay paused so the
+   homepage isn't running three canvas animations at once. */
+function DemoPlayer({
+  component,
+  durationInFrames,
+  active,
+}: {
+  component: React.ComponentType;
+  durationInFrames: number;
+  active: boolean;
+}) {
+  const playerRef = useRef<PlayerRef>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+
+  // Only animate when this slide's carousel section is actually on screen.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      setInView(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.15 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // Play only when this slide is the active one AND it's in view; otherwise pause.
+  useEffect(() => {
+    const p = playerRef.current;
+    if (!p) return;
+    if (active && inView) {
+      p.play();
+    } else {
+      p.pause();
+    }
+  }, [active, inView]);
+
+  return (
+    <div ref={containerRef} className="w-full h-full">
+      <Player
+        ref={playerRef}
+        component={component}
+        durationInFrames={durationInFrames}
+        compositionWidth={900}
+        compositionHeight={506}
+        fps={30}
+        style={{ width: '100%', height: '100%' }}
+        loop
+        controls={false}
+        clickToPlay={false}
+        doubleClickToFullscreen={false}
+      />
+    </div>
+  );
+}
 
 export function AgenticFrameworkCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -14,23 +81,24 @@ export function AgenticFrameworkCarousel() {
   const slides = [
     {
       id: 1,
-      title: "Modular Flows, Designed Around How You Work",
-      description: "No two clinics work the same way. Your agent runs on flows built specifically for your workflows calls, messages, reminders, follow ups modular enough to handle any scenario, rigid enough to stay on protocol.",
-      image: agentFlowImage,
-      video: "https://s3.amazonaws.com/webflow-prod-assets/6935ed01e1dd66f3db9dacf0/69850b0e9bc9fada14bd38fa_Kapture%202026-02-05%20at%2021.01.26.mp4"
+      title: "Your workflows. Not ours.",
+      description: "No two clinics work the same. Pick from 100+ pre-built workflows or we build yours — structured enough to stay on protocol, flexible enough to handle anything.",
+      component: WorkflowBuilderComp,
+      durationInFrames: 510,
     },
     {
       id: 2,
       title: "Your Protocols, Guidelines & Documents Always On",
       description: "Upload your clinical documents, medication rules, and escalation policies. The agent doesn't just store them it references them across every interaction, so nothing gets missed.",
-      image: functionCallingImage,
-      video: "https://s3.amazonaws.com/webflow-prod-assets/6935ed01e1dd66f3db9dacf0/698513b6fbebddded1d44648_Kapture%202026-02-05%20at%2021.48.30.mp4"
+      component: SafetyMonitorComp,
+      durationInFrames: 390,
     },
     {
       id: 3,
       title: "An AI That Knows Your Patients And Gets Better Over Time",
       description: "Every interaction adds context. Preferred channel, best time to reach them, past conversations, care status. Whether it's a call, a text, or a reminder the agent carries it all forward so every touchpoint feels personal.",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80",
+      component: PatientContextComp,
+      durationInFrames: 390,
     }
   ];
 
@@ -82,17 +150,17 @@ export function AgenticFrameworkCarousel() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 mb-16">
           <h2 className="text-3xl md:text-5xl font-serif font-normal tracking-normal text-slate-900 dark:text-white max-w-2xl leading-[1.1]">
-            Voice AI infrastructure for clinical workflows.
+            Built around how your clinic works.
           </h2>
           <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-3xl leading-relaxed md:mt-4 font-sans">
-            Routine follow-ups to complex care pathways. Deploy in days.
+            Simple workflows to complex care pathways. Live in a week.
           </p>
         </div>
 
         {/* Carousel */}
         <div className="-mx-4 md:-mx-8"> {/* Negative margin to allow slider to touch edges on small screens if needed, or just standard */}
             <Slider ref={sliderRef} {...settings} className="agentic-carousel pl-4 md:pl-0">
-            {slides.map((slide) => (
+            {slides.map((slide, index) => (
                 <div key={slide.id} className="px-1.5 md:px-6 focus:outline-none h-full">
                 <div className="group h-full flex flex-col">
                     {/* Image Container with Light Gray Border/Background */}
@@ -104,35 +172,13 @@ export function AgenticFrameworkCarousel() {
                         <div className="absolute top-3 right-3 z-10 md:hidden bg-black/50 backdrop-blur-sm rounded-full p-1.5 text-white/80">
                           <Maximize2 className="w-3.5 h-3.5" />
                         </div>
-                        {/* Inner Image (Screenshot) or Video */}
-                        <div className="w-full h-full rounded-lg overflow-hidden bg-white dark:bg-slate-900 relative">
-                            {slide.video ? (
-                                <video
-                                    src={slide.video}
-                                    autoPlay
-                                    muted
-                                    loop
-                                    playsInline
-                                    className="w-full h-full object-cover scale-[1.15] md:scale-100 origin-center transition-transform"
-                                />
-                            ) : (
-                                slide.id === 3 ? (
-                                    <video
-                                        src="https://s3.amazonaws.com/webflow-prod-assets/6935ed01e1dd66f3db9dacf0/6985318dfce8af6163ebd6b2_Kapture%202026-02-06%20at%2000.10.12.mp4"
-                                        autoPlay
-                                        muted
-                                        loop
-                                        playsInline
-                                        className="w-full h-full object-cover scale-[1.15] md:scale-100 origin-center transition-transform"
-                                    />
-                                ) : (
-                                    <img 
-                                        src={slide.image} 
-                                        alt={slide.title} 
-                                        className="w-full h-full object-cover object-left-top scale-[1.15] md:scale-100 origin-top-left transition-transform"
-                                    />
-                                )
-                            )}
+                        {/* Inner live Remotion demo */}
+                        <div className="w-full h-full rounded-lg overflow-hidden bg-white dark:bg-slate-900 relative pointer-events-none">
+                            <DemoPlayer
+                                component={slide.component}
+                                durationInFrames={slide.durationInFrames}
+                                active={index === currentSlide}
+                            />
                         </div>
                     </div>
 
@@ -215,34 +261,14 @@ export function AgenticFrameworkCarousel() {
             </button>
           </div>
           
-          {/* Full-width media */}
+          {/* Full-width live demo */}
           <div className="flex-1 flex items-center px-2" onClick={(e) => e.stopPropagation()}>
-            <div className="w-full rounded-xl overflow-hidden bg-slate-900">
-              {expandedSlideData.video ? (
-                <video
-                  src={expandedSlideData.video}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="w-full h-auto object-contain"
-                />
-              ) : expandedSlideData.id === 3 ? (
-                <video
-                  src="https://s3.amazonaws.com/webflow-prod-assets/6935ed01e1dd66f3db9dacf0/6985318dfce8af6163ebd6b2_Kapture%202026-02-06%20at%2000.10.12.mp4"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="w-full h-auto object-contain"
-                />
-              ) : (
-                <img 
-                  src={expandedSlideData.image} 
-                  alt={expandedSlideData.title} 
-                  className="w-full h-auto object-contain"
-                />
-              )}
+            <div className="w-full aspect-video rounded-xl overflow-hidden bg-slate-900">
+              <DemoPlayer
+                component={expandedSlideData.component}
+                durationInFrames={expandedSlideData.durationInFrames}
+                active={true}
+              />
             </div>
           </div>
 

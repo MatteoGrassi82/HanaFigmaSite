@@ -17,7 +17,7 @@ export function Footer() {
             />
           </Link>
           <p className="text-sm text-slate-500 mb-4">
-            Voice AI infrastructure for healthcare.
+            Automate the routine. Free your team.
           </p>
           <div className="flex gap-4">
             <a href="https://twitter.com/hanahealth" target="_blank" rel="noopener noreferrer" aria-label="Follow Hana Health on Twitter" className="hover:text-white transition-colors"><Twitter className="w-5 h-5" /></a>

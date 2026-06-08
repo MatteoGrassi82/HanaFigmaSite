@@ -1,7 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowLeft, ArrowRight, Phone, Mic, MicOff } from "lucide-react";
-import { SEO, breadcrumbSchema } from "../components/SEO";
+import { SEO, breadcrumbSchema, faqSchema } from "../components/SEO";
 import { Footer } from "../components/Footer";
+
+/* Case-studies FAQ — answer-first, citation-friendly for AI answer engines. */
+const CASE_STUDIES_FAQ = faqSchema([
+  {
+    question: "What results have healthcare organizations seen with Hana?",
+    answer:
+      "Across deployments in behavioral health, chronic care, post-discharge, surgical, and digital-health settings, Hana drives roughly 85% weekly patient engagement (versus 15–20% for portals and apps) and has processed more than 2 million patient interactions. It reduces 30-day readmissions through automated post-discharge follow-up and supports CMS-billable chronic care management.",
+  },
+  {
+    question: "What types of practices use Hana?",
+    answer:
+      "Hana is used by primary care and specialty practices running chronic care management, hospital systems reducing readmissions, behavioral health organizations running ADHD, depression, and substance-use intake, and digital health companies embedding voice AI into their own products via API.",
+  },
+]);
 
 interface CaseStudiesProps {
   activeAgentId: string | null;
@@ -36,18 +50,18 @@ const CASES: CaseStudy[] = [
     id: "behavioral-health-intake",
     tag: "Behavioral Health",
     color: "#10B981",
-    title: "Behavioral Health Intake",
-    sub: "How a practice cut diagnostic time by 85%",
+    title: "The intake that does itself.",
+    sub: "85% faster to diagnosis. 96% of patients preferred it to the old way.",
     stats: [
       ["85%", "faster time to diagnosis"],
       ["96%", "patient acceptance rate"],
       ["31×", "ROI on staff time"],
     ],
     chips: ["PHQ-9 Screening", "High-Risk Assessment", "Referral Follow-Up", "Social Needs", "New Patient Welcome"],
-    situation: "A high-volume behavioral health practice was losing patients before clinicians ever saw them. Every evaluation required coordinating across multiple people — the patient, a caregiver, a teacher, sometimes a grandparent. Forms sat incomplete. Staff chased paperwork across systems.",
-    what: "Hana replaced the pre-diagnostic coordination workflow. The system reads what's already in the chart, identifies what's missing, and runs adaptive outreach to every collateral source through the right channel — voice for detailed history, SMS for quick confirmations.",
-    result: "Diagnostic time dropped 85%. Staff went from chasing paperwork to reading finished reports. 96% of patients accepted the AI-led process. Only 4% opted out entirely.",
-    inNumbers: "Cost per completed intake drops from $150+ to under $15. If your team spends 4+ hours coordinating each evaluation, Hana brings that under 40 minutes.",
+    situation: "A high-volume behavioral health practice was losing patients before clinicians ever saw them. A proper evaluation meant coordinating with the patient, a caregiver, a teacher, sometimes a grandparent — each through a different channel, on a different schedule. Forms sat half-complete in the portal. Staff spent the first 20 minutes of every appointment chasing information that should have arrived before the patient walked in. Diagnostic time averaged six weeks from referral to completed assessment. For patients in crisis, that wait was clinically dangerous.",
+    what: "Hana took over the entire pre-diagnostic coordination layer. Before each appointment, it reads what's already in the chart — demographics, referral notes, any prior assessments — and identifies exactly what's missing. It then runs adaptive outreach to every collateral source: a voice call to the caregiver for detailed developmental history, SMS to the patient for quick confirmations, a separate voice call to the school contact for behavioural observations. Each conversation adapts based on what it learns. If a caregiver mentions a sibling was also diagnosed, Hana notes it. If a patient discloses safety concerns unprompted, it escalates immediately. The output lands in the clinician's queue as a structured intake report — ready to read, not ready to chase.",
+    result: "Diagnostic time dropped 85% — from six weeks to under a week for most cases. Staff stopped coordinating and started reading finished reports. 96% of patients and families accepted the AI-led process without complaint. The 4% who opted out were handled by a human coordinator, same as before. Clinicians reported that the quality of information arriving before appointments was materially better — more specific, more honest, and more complete than paper forms had ever produced.",
+    inNumbers: "The cost per completed intake dropped from over $150 to under $15. For a practice running 200 evaluations a month, that's a $27,000 monthly saving in coordination labour alone — before accounting for the revenue recovered from slots that used to sit empty waiting on missing paperwork.",
     agents: [
       { name: "PHQ-9 Depression Screening", desc: "Conversational mental health screening that tracks scores and flags elevated responses.", assistantId: "29456291-d3c5-4edf-9a1c-1808a9f9966e" },
       { name: "High-Risk Assessment", desc: "Proactive safety screening with calm clinical escalation for at-risk patients.", assistantId: "9942b37b-5c59-48d9-96f1-1b4fbe1b106a" },
@@ -60,18 +74,18 @@ const CASES: CaseStudy[] = [
     id: "chronic-care-management",
     tag: "Chronic Care",
     color: "#3B82F6",
-    title: "Chronic Care Management",
-    sub: "From 30% medication adherence to 73%",
+    title: "From 30% to 73%.",
+    sub: "They had the data. They didn't have the why. Hana found it.",
     stats: [
       ["2.4×", "adherence improvement"],
       ["85%", "weekly engagement"],
       ["12 min", "saved per patient / month"],
     ],
     chips: ["Medication Adherence", "Care Plan Review", "Blood Pressure Monitoring", "Goal Coaching", "Reactivation"],
-    situation: "A chronic care programme had the data — adherence was at 30%. What they didn't have was the why. Were patients forgetting? Couldn't afford refills? Dealing with side effects? More reminder texts weren't working.",
-    what: "Hana runs conversational check-ins that ask the questions staff would ask, but at scale. Not \"did you take your medication\" — but open questions about barriers, refill issues, and side effects. The output is a structured barrier report for clinicians.",
-    result: "Adherence went from 30% to 73%. Engagement held at 85% weekly. Side effects that used to surface at quarterly appointments were flagged within 48 hours.",
-    inNumbers: "Clinicians see patterns. They intervene where it matters. Data flows back to support the care plan, enrollment status, and reimbursement automatically.",
+    situation: "A chronic care programme managing over 800 patients had the data — adherence was sitting at 30% across the board. What they didn't have was the why. Were patients forgetting? Couldn't afford refills? Managing side effects they hadn't disclosed? Dealing with something at home that made taking medication feel irrelevant? More reminder texts weren't moving the number. The team was calling patients manually, but a full-time coordinator could realistically touch 15 patients a day. The other 785 were on their own between quarterly appointments.",
+    what: "Hana took over the weekly check-in layer. Not automated reminders — actual conversations. Before each call, it reads the patient's care plan, medication list, and last interaction notes. The call itself follows motivational interviewing principles: open-ended, curious, non-judgmental. \"How has the week been going with the lisinopril?\" not \"Did you take your medication?\" When a patient mentions cost concerns, Hana explores it and flags the case for a pharmacy review. When they report dizziness, it documents the exact onset, frequency, and severity and flags for clinical review within the hour. Every barrier gets categorised, timestamped, and written back to the EHR as a structured note — ready for the clinician at the next appointment, or sooner if escalation is needed.",
+    result: "Adherence moved from 30% to 73% over 90 days. Weekly engagement held at 85% — patients answered the call and stayed in the conversation. Side effects that had previously gone undetected until quarterly appointments were now being flagged within 48 hours. The care team shifted from reactive management to proactive intervention. Three patients who had been silently non-adherent for months were identified as having cost barriers — transferred to generic alternatives, and back on track within two weeks.",
+    inNumbers: "The programme enrolled 800 patients. Hana ran weekly check-ins across all of them — the equivalent of 3,200 coordinator calls per month. At $18 per manual outreach call, that's $57,600 in coordination capacity added for a fraction of the cost. More importantly: the adherence gain across 800 patients compounds into measurably better clinical outcomes and significantly reduced emergency utilisation.",
     agents: [
       { name: "Medication Adherence Call", desc: "Conversational check-in exploring why patients miss doses, not just whether they do.", assistantId: "ca20d9d6-7be2-4b6c-8f23-847a48c43b70" },
       { name: "Medication Refill Reminder", desc: "Proactive outreach before refills run out, catching cost and access barriers early.", assistantId: "7e7c066f-9c4b-473c-ad89-11f4146dcfcf" },
@@ -85,18 +99,18 @@ const CASES: CaseStudy[] = [
     id: "knee-replacement",
     tag: "Surgical",
     color: "#F59E0B",
-    title: "Knee Replacement Pre-Op & Post-Op",
-    sub: "From last-minute cancellations to 97% surgical readiness",
+    title: "The OR slot that stops getting cancelled.",
+    sub: "97% surgical readiness. Staff stopped chasing prep. Surgeons stopped waiting.",
     stats: [
       ["97%", "surgical readiness rate"],
       ["74%", "less manual follow-up"],
       ["4.1×", "faster response cycles"],
     ],
     chips: ["Pre-Appointment Prep", "Post-Op Safety", "Pain Monitoring", "Medication Adherence", "Care Plan Review"],
-    situation: "A surgical centre was losing OR slots to coordination failures — missing clearance letters, incomplete pre-op checklists, patients who didn't follow prep instructions. Staff spent 60% of their time on administrative chase work.",
-    what: "Hana took over full pre-op and post-op orchestration. Before surgery: identify gaps, run outreach via voice and SMS. After surgery: structured recovery check-ins on pain, exercise, medication, and wound concerns.",
-    result: "Surgical readiness hit 97%. Manual follow-up dropped 74%. The post-op pathway caught complications earlier. Surgeons received complete pre-op packets 72 hours out.",
-    inNumbers: "Staff manage by exception. Patients get guidance. Surgeons get visibility. Everything else runs automatically.",
+    situation: "A high-volume orthopaedic centre was haemorrhaging OR time. Slots were being cancelled or delayed not because of surgical complications, but because of coordination failures upstream: patients who didn't fast correctly, missing medical clearance letters from GPs, pre-op checklists that were never completed, consent forms returned the morning of surgery. Each cancellation cost the centre between $8,000 and $15,000 in lost revenue and rescheduling overhead. Nursing staff were spending upwards of 60% of their time on pre-op chase work — phone calls that went unanswered, voicemails that didn't get returned, forms that had to be chased across three departments.",
+    what: "Hana took over the entire pre-op and post-op coordination pipeline. For every scheduled knee replacement, it reads the chart, identifies every outstanding item — clearance, fasting protocol confirmation, transport arrangement, medication hold acknowledgement, prep shower instructions — and begins systematic outreach across voice and SMS. It doesn't send a generic reminder. It has a specific conversation: \"We have your surgery confirmed for Thursday. I need to go through a few things with you to make sure everything is ready.\" Each item gets confirmed, documented, and flagged if outstanding. If a patient is unreachable, staff are alerted with a specific action item rather than a vague \"call patient\" note. Post-surgery, the same system runs structured recovery check-ins at 48 hours, day 7, and day 14 — covering pain scores, wound appearance, exercise compliance, medication adherence, and red-flag symptoms. Any response outside the expected range triggers an immediate escalation.",
+    result: "Surgical readiness — defined as every pre-op requirement confirmed before the 72-hour mark — reached 97%. Manual follow-up workload dropped 74%. Surgeons received complete pre-op dossiers the day before every case instead of scrambling the morning of. The post-op pathway caught two wound complications and one medication interaction in the first month of operation, both of which would likely have presented as emergency department visits under the previous system. Staff reported the most tangible shift was psychological: instead of starting every morning with a stack of unanswered chase work, they started with exceptions only.",
+    inNumbers: "At an average cancellation cost of $10,000 and a pre-Hana cancellation rate of roughly 8%, a centre doing 150 knee replacements a month was losing ~$120,000 monthly to coordination failures. At 97% readiness, that exposure drops to under $15,000. The system paid for itself in avoided cancellations within the first week of operation.",
     agents: [
       { name: "Pre-Appointment Prep", desc: "Confirms pre-op checklist completion — fasting, medication holds, transport, prep shower.", assistantId: "b7f0553b-11ba-4d58-a900-7d63ed2c4d52" },
       { name: "Post-Op 48-Hour Safety", desc: "Critical post-surgery safety check covering pain, wound appearance, and red-flag symptoms.", assistantId: "cbab4560-bf00-4f31-a265-aee253296e3c" },
@@ -109,18 +123,18 @@ const CASES: CaseStudy[] = [
     id: "mental-health-app",
     tag: "Digital Health",
     color: "#8B5CF6",
-    title: "Mental Health App (White-Label)",
-    sub: "From 15% app engagement to 85% with a voice layer",
+    title: "The app they stopped opening.",
+    sub: "15% engagement. One voice layer later: 85%. Same app, same brand.",
     stats: [
       ["15→85%", "weekly engagement"],
       ["White-label", "zero rebuilds"],
       ["Usage", "based pricing"],
     ],
     chips: ["Goal Coaching", "PHQ-9 Screening", "Sleep Check-In", "Medication Adherence", "Care Plan Review"],
-    situation: "A mental health app had everything right on paper — clean UX, good clinical content, solid onboarding. But after the first week, patients stopped opening it. Engagement sat at 10–15%. Push notifications were ignored.",
-    what: "Hana deployed as a white-label engagement layer. Patients see the app's brand and hear the app's voice. Conversations happen via WhatsApp and phone. Check-ins, symptom collection, and adherence follow-up — all flowing back into the partner's platform.",
-    result: "Engagement went from 15% to 85% weekly. The clinical team got continuous data instead of sporadic snapshots. The partner didn't have to rebuild anything.",
-    inNumbers: "The partner's brand stays front and centre. Hana runs in the background. Token-based pricing means they pay for what they use.",
+    situation: "The app had done everything right. Two years of product development. A clean, thoughtful interface. Evidence-based content. A clinical advisory board. A proper onboarding flow. Users downloaded it, completed onboarding, and then — nothing. Engagement by week three was sitting at 10 to 15%. Push notifications were being ignored at the same rate as every other wellness app. The clinical team had access to mood logs and symptom journals, but only from the small fraction of users who opened the app consistently. The rest were invisible. The company was raising a Series B on the promise of continuous patient monitoring. Continuous monitoring wasn't happening.",
+    what: "Rather than rebuild the app or layer on more push notifications, the team integrated Hana as a white-label engagement layer operating entirely outside the app. Patients receive a call or WhatsApp message from a number branded under the app's name. The voice and tone were calibrated to match the app's clinical style — warm, non-clinical in language, but structured in data collection. Weekly PHQ-9 check-ins happen conversationally, not through forms. Sleep quality, medication adherence, and goal progress are captured through natural conversation and written back to the partner's platform as structured data. The app never appears in the interaction — but everything flows back into it. When a patient shows a worsening PHQ-9 trajectory over three consecutive weeks, the system flags it for clinical review automatically. The app's clinical team sees the data. The patient experiences a relationship, not a product.",
+    result: "Weekly engagement moved from 15% to 85% within six weeks of deployment. The clinical team went from receiving data from a fraction of users sporadically to receiving continuous structured data from the vast majority, weekly. Three patients who had been completely inactive in the app for over a month were re-engaged through the voice layer — two of them had experienced significant life events that had caused them to disengage, and the proactive outreach surfaced those situations in time for intervention. The partner's Series B narrative shifted: instead of projecting engagement improvements, they could demonstrate them.",
+    inNumbers: "The integration took three weeks — no rebuild, no new infrastructure. Token-based pricing meant the partner paid proportionally to usage, with no fixed overhead during scaling. The data density improvement — from sporadic app opens to weekly structured clinical conversations — gave the clinical team a qualitatively different view of their patient population. They described it as the difference between a photo and a film.",
     agents: [
       { name: "PHQ-9 Depression Screening", desc: "Conversational mental health screening delivered in the app's tone and voice.", assistantId: "29456291-d3c5-4edf-9a1c-1808a9f9966e" },
       { name: "Sleep & Fatigue Check-In", desc: "Weekly sleep quality check-in that surfaces patterns needing clinical attention.", assistantId: "a4611af8-932b-42a3-9025-6a03e5d3783e" },
@@ -133,18 +147,18 @@ const CASES: CaseStudy[] = [
     id: "sms-platform-voice-layer",
     tag: "Platform",
     color: "#F97316",
-    title: "Voice Layer for a National SMS Platform",
-    sub: "Adding voice AI and multilingual support to 10M+ conversations",
+    title: "When SMS isn't enough.",
+    sub: "10M+ conversations. Four languages. Zero rebuilds for the platform.",
     stats: [
       ["10M+", "conversations extended"],
       ["4", "languages supported"],
       ["API", "native, no rebuild"],
     ],
     chips: ["Pre-Appointment Prep", "No-Show Rescue", "Referral Follow-Up", "Insurance Verification", "Lab Reminders"],
-    situation: "A large SMS-based patient engagement platform had scale — millions of conversations, hundreds of clinics. But SMS has limits. Multi-department appointment coordination required back-and-forth that text couldn't handle efficiently.",
-    what: "The platform integrated Hana's voice layer via API. Hana handles the conversations SMS can't: multi-step coordination, clinical intake, and adaptive follow-up workflows — in four languages, routed to the right department.",
-    result: "The platform added voice capability without building it. Multilingual support opened new markets. Infrastructure scales with usage, not headcount.",
-    inNumbers: "Token-based pricing. No development overhead. No clinical safety infrastructure to maintain from scratch.",
+    situation: "The platform had reach. Over 10 million patient conversations processed, hundreds of clinic clients, a strong reputation in outreach and appointment reminders. SMS was the core product — and SMS worked well for what SMS is good at: simple, one-directional nudges. But clinic clients were increasingly asking for more. Multi-step appointment coordination — where a patient needs to confirm a time, answer pre-screening questions, and provide insurance details before a referral can be accepted — was falling apart over text. Patients dropped out of multi-message threads. Context was lost between messages. Coordinators were manually picking up where the SMS sequence broke down. And the platform had clients in communities where English-only outreach was missing a third of the patient population entirely.",
+    what: "The platform integrated Hana's voice layer via API — a three-week technical integration with no changes to their existing SMS infrastructure. Hana now handles the conversations their SMS flows hand off to: when a patient needs to answer more than two questions, or when the interaction requires adaptive follow-up based on what they say, the workflow routes to a Hana voice call. The call happens in the patient's preferred language — English, Spanish, French, or Mandarin — selected automatically based on EHR language preference data. The conversation is structured around the clinic's specific intake or coordination protocol, not a generic script. Responses flow back to the platform as structured data, indistinguishable from a human-completed intake form. The platform's clinic clients see the output — not the mechanism.",
+    result: "The platform expanded its product offering without a single new hire or internal clinical AI build. Multilingual capability opened conversations with health systems and federally qualified health centres that had previously been out of reach due to language gaps. Clinic clients running complex referral workflows reported completion rates improving from under 40% on SMS alone to over 80% with the voice handoff. The platform's NPS from clinic clients increased materially — coordinators described the change as \"SMS for the simple stuff, voice for the real conversations.\"",
+    inNumbers: "Building voice AI, clinical safety infrastructure, multilingual support, and EHR write-back from scratch would have cost the platform 18 to 24 months and a significant engineering investment. The API integration cost three weeks. Token-based pricing means the platform passes through costs proportional to usage, preserving their margin structure. Every new clinic client they onboard now has access to voice capability on day one.",
     agents: [
       { name: "Pre-Appointment Prep", desc: "Confirms appointment details and preparation steps across multiple departments.", assistantId: "b7f0553b-11ba-4d58-a900-7d63ed2c4d52" },
       { name: "No-Show Rescue Call", desc: "Warm outreach to patients who miss appointments — understands why and reschedules.", assistantId: "50ac1f91-547e-4bc9-8398-8d091adcedae" },
@@ -158,6 +172,8 @@ const CASES: CaseStudy[] = [
 export function CaseStudies({ activeAgentId, webCallStatus, handleStartWebCall, handleEndWebCall }: CaseStudiesProps) {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
 
+  useEffect(() => { window.scrollTo(0, 0); }, [selectedIdx]);
+
   const selected = selectedIdx !== null ? CASES[selectedIdx] : null;
 
   return (
@@ -166,10 +182,13 @@ export function CaseStudies({ activeAgentId, webCallStatus, handleStartWebCall, 
         title="Case Studies"
         description="Real Hana deployments across behavioral health, chronic care, surgical, digital health, and platform integrations."
         path="/case-studies"
-        jsonLd={breadcrumbSchema([
-          { name: "Home", url: "https://hanavoice.ai/" },
-          { name: "Case Studies", url: "https://hanavoice.ai/case-studies" },
-        ])}
+        jsonLd={[
+          breadcrumbSchema([
+            { name: "Home", url: "https://www.hana.health/" },
+            { name: "Case Studies", url: "https://www.hana.health/case-studies" },
+          ]),
+          CASE_STUDIES_FAQ,
+        ]}
       />
       <div className="min-h-screen bg-white">
         {selected ? (
@@ -203,10 +222,10 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
           <p className="text-blue-400 text-xs font-semibold tracking-[3px] uppercase mb-6">Case Studies</p>
           <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl leading-[1.05] mb-6">
             What happens when<br />
-            <span className="text-blue-400">infrastructure works</span>
+            <span className="text-blue-400">the routine gets handled</span>
           </h1>
           <p className="text-slate-400 text-lg md:text-xl max-w-xl leading-relaxed">
-            Real deployments. Real workflows. Real results — with live voice agents you can try right now.
+            Five deployments. Real numbers. And the live agents you can call to hear it yourself.
           </p>
         </div>
       </section>
@@ -262,8 +281,8 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
               <ArrowRight className="w-4 h-4 text-blue-400 group-hover:translate-x-1 transition-transform" />
             </div>
             <div>
-              <h2 className="font-serif text-3xl text-white leading-tight mb-2">Build your case study</h2>
-              <p className="text-sm text-slate-400">Every deployment is different. Book a call and we'll design a workflow around how your team works.</p>
+              <h2 className="font-serif text-3xl text-white leading-tight mb-2">Your clinic, next.</h2>
+              <p className="text-sm text-slate-400">Every deployment is different. Book a call — we'll show you what this looks like for how your team actually works.</p>
             </div>
             <div className="mt-auto pt-4 border-t border-white/10">
               <span className="text-sm font-semibold text-white group-hover:underline">Book a demo →</span>
@@ -305,29 +324,42 @@ function DetailView({
   return (
     <div>
       {/* Dark header */}
-      <div className="bg-[#00122F] text-white pt-24 pb-16 px-4">
-        <div className="max-w-5xl mx-auto">
+      <div className="bg-[#00122F] text-white pt-24 pb-20 px-4">
+        <div className="max-w-4xl mx-auto">
           <button
             onClick={onBack}
-            className="inline-flex items-center gap-2 text-slate-400 hover:text-white text-sm mb-10 transition-colors"
+            className="inline-flex items-center gap-2 text-slate-500 hover:text-white text-sm mb-12 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> All case studies
           </button>
 
-          <div className="flex items-center gap-3 mb-6">
-            <span className="text-xs font-bold tracking-[2px] uppercase" style={{ color: c.color }}>{c.tag}</span>
-            <span className="text-slate-600 text-xs">{idx + 1} / {total}</span>
+          <div className="flex items-center gap-3 mb-5">
+            <span className="text-[11px] font-bold tracking-[2.5px] uppercase" style={{ color: c.color }}>{c.tag}</span>
+            <span className="text-slate-700 text-xs">{idx + 1} / {total}</span>
           </div>
 
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl leading-[1.05] mb-4 max-w-3xl">{c.title}</h1>
-          <p className="text-slate-400 text-lg">{c.sub}</p>
+          <h1 className="font-serif text-4xl sm:text-5xl md:text-[3.5rem] leading-[1.05] mb-5 max-w-3xl">{c.title}</h1>
+          <p className="text-slate-400 text-lg max-w-2xl leading-relaxed mb-10">{c.sub}</p>
+
+          {/* Workflow chips */}
+          <div className="flex flex-wrap gap-2 mb-14">
+            {c.chips.map(chip => (
+              <span
+                key={chip}
+                className="text-[11px] font-semibold px-3 py-1.5 rounded-full border"
+                style={{ color: c.color, borderColor: `${c.color}35`, backgroundColor: `${c.color}10` }}
+              >
+                {chip}
+              </span>
+            ))}
+          </div>
 
           {/* Stats bar */}
-          <div className="grid grid-cols-3 gap-px bg-white/10 mt-12 rounded-xl overflow-hidden">
+          <div className="grid grid-cols-3 divide-x divide-white/[0.07] border border-white/[0.07] rounded-2xl overflow-hidden">
             {c.stats.map(([n, l]) => (
-              <div key={l} className="bg-white/5 px-6 py-5">
-                <div className="text-3xl font-semibold text-white mb-1">{n}</div>
-                <div className="text-xs text-slate-400 uppercase tracking-widest">{l}</div>
+              <div key={l} className="px-6 py-6 bg-white/[0.03]">
+                <div className="text-[2rem] font-semibold text-white mb-1.5 leading-none">{n}</div>
+                <div className="text-[10px] text-slate-500 uppercase tracking-widest">{l}</div>
               </div>
             ))}
           </div>
@@ -335,68 +367,112 @@ function DetailView({
       </div>
 
       {/* Body */}
-      <div className="max-w-5xl mx-auto px-4 py-16">
-        {/* 3-col narrative */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          {[
-            { label: "The situation", body: c.situation },
-            { label: "What Hana did", body: c.what },
-            { label: "The result", body: c.result },
-          ].map(({ label, body }) => (
-            <div key={label}>
-              <div
-                className="w-6 h-0.5 mb-4 rounded-full"
-                style={{ backgroundColor: c.color }}
-              />
-              <p className="text-xs font-bold tracking-[2px] uppercase text-slate-400 mb-3">{label}</p>
-              <p className="text-[15px] leading-relaxed text-slate-600">{body}</p>
-            </div>
-          ))}
+      <div className="bg-white">
+
+        {/* Situation */}
+        <div className="max-w-4xl mx-auto px-6 md:px-12 pt-16 pb-16">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-8 h-px" style={{ backgroundColor: c.color }} />
+            <span className="text-[10px] font-bold tracking-[3px] uppercase" style={{ color: c.color }}>The situation</span>
+          </div>
+          <p className="text-[17px] md:text-[18px] leading-[1.9] text-slate-600">{c.situation}</p>
         </div>
 
-        {/* In numbers callout */}
-        <div
-          className="rounded-2xl p-8 mb-16"
-          style={{ backgroundColor: `${c.color}10`, borderLeft: `3px solid ${c.color}` }}
-        >
-          <p className="text-xs font-bold tracking-[2px] uppercase mb-2" style={{ color: c.color }}>In numbers</p>
-          <p className="text-[15px] leading-relaxed text-slate-700">{c.inNumbers}</p>
+        {/* Pull quote */}
+        <div className="border-y border-slate-100 py-16 px-6 md:px-12" style={{ backgroundColor: `${c.color}07` }}>
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="w-8 h-[3px] rounded-full mx-auto mb-8" style={{ backgroundColor: c.color }} />
+            <p className="font-serif text-2xl md:text-[2.25rem] text-slate-900 leading-[1.4] italic">
+              "{c.sub}"
+            </p>
+          </div>
+        </div>
+
+        {/* What Hana did */}
+        <div className="max-w-4xl mx-auto px-6 md:px-12 py-16">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-8 h-px" style={{ backgroundColor: c.color }} />
+            <span className="text-[10px] font-bold tracking-[3px] uppercase" style={{ color: c.color }}>What Hana did</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_180px] gap-12 items-start">
+            <p className="text-[17px] md:text-[18px] leading-[1.9] text-slate-600">{c.what}</p>
+            <div className="flex flex-row md:flex-col gap-8 border-t md:border-t-0 md:border-l pt-6 md:pt-0 md:pl-8" style={{ borderColor: `${c.color}25` }}>
+              {c.stats.map(([n, l]) => (
+                <div key={l}>
+                  <div className="font-serif text-[2rem] leading-none mb-1.5" style={{ color: c.color }}>{n}</div>
+                  <div className="text-[10px] text-slate-400 uppercase tracking-widest leading-snug">{l}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* The result */}
+        <div className="border-t border-slate-100 py-16 px-6 md:px-12" style={{ backgroundColor: `${c.color}05` }}>
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-8 h-px" style={{ backgroundColor: c.color }} />
+              <span className="text-[10px] font-bold tracking-[3px] uppercase" style={{ color: c.color }}>The result</span>
+            </div>
+            <p className="text-[17px] md:text-[18px] leading-[1.9] text-slate-600">{c.result}</p>
+          </div>
+        </div>
+
+        {/* In numbers — dark, centered */}
+        <div className="bg-[#00122F] px-6 md:px-12 py-24 text-center">
+          <div className="max-w-3xl mx-auto">
+            <p className="text-[10px] font-bold tracking-[3px] uppercase text-slate-500 mb-10">In numbers</p>
+            <div className="font-serif text-[96px] md:text-[120px] leading-none tracking-tight mb-4" style={{ color: c.color }}>
+              {c.stats[0][0]}
+            </div>
+            <div className="text-[10px] text-slate-500 uppercase tracking-[3px] mb-12">{c.stats[0][1]}</div>
+            <div className="w-12 h-px bg-white/10 mx-auto mb-12" />
+            <p className="text-[16px] md:text-[17px] leading-[1.9] text-slate-400 max-w-2xl mx-auto">{c.inNumbers}</p>
+          </div>
         </div>
 
         {/* Agents */}
-        <div className="mb-6">
-          <p className="text-xs font-bold tracking-[2px] uppercase text-slate-400 mb-1">Try the live agents</p>
-          <p className="text-sm text-slate-500">These are the actual Hana agents used in this deployment. Click any card to start a live voice demo.</p>
+        <div className="bg-[#010f26] px-6 md:px-12 py-20">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-12 pb-10 border-b border-white/[0.07] text-center">
+              <p className="text-[10px] font-bold tracking-[3px] uppercase mb-5" style={{ color: c.color }}>Try the live agents</p>
+              <h2 className="font-serif text-3xl md:text-4xl text-white leading-tight mb-3">
+                These are the actual agents from this deployment.
+              </h2>
+              <p className="text-slate-500 text-sm">No app. No login. Just click to call.</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {c.agents.map((a) => {
+                const agentId = `${c.id}-${a.assistantId}`;
+                const isActive = activeAgentId === agentId;
+                const status = isActive ? webCallStatus : "idle";
+                return (
+                  <AgentCard
+                    key={a.name}
+                    a={a}
+                    color={c.color}
+                    status={status}
+                    isOtherActive={activeAgentId !== null && !isActive}
+                    onStart={() => onStartCall(agentId, a.assistantId)}
+                    onEnd={onEndCall}
+                  />
+                );
+              })}
+            </div>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">
-          {c.agents.map((a) => {
-            const agentId = `${c.id}-${a.assistantId}`;
-            const isActive = activeAgentId === agentId;
-            const status = isActive ? webCallStatus : "idle";
-            return (
-              <AgentCard
-                key={a.name}
-                a={a}
-                color={c.color}
-                status={status}
-                isOtherActive={activeAgentId !== null && !isActive}
-                onStart={() => onStartCall(agentId, a.assistantId)}
-                onEnd={onEndCall}
-              />
-            );
-          })}
-        </div>
-
-        {/* Nav between cases */}
-        <div className="flex items-center justify-between pt-8 border-t border-slate-100">
-          <button onClick={onPrev} className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 transition-colors">
-            <ArrowLeft className="w-4 h-4" /> Previous
-          </button>
-          <button onClick={onBack} className="text-sm text-slate-400 hover:text-slate-900 transition-colors">All case studies</button>
-          <button onClick={onNext} className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 transition-colors">
-            Next <ArrowRight className="w-4 h-4" />
-          </button>
+        {/* Nav */}
+        <div className="bg-white border-t border-slate-100">
+          <div className="max-w-4xl mx-auto px-6 md:px-12 py-10 flex items-center justify-between">
+            <button onClick={onPrev} className="flex items-center gap-2 text-[13px] text-slate-400 hover:text-slate-900 transition-colors">
+              <ArrowLeft className="w-3.5 h-3.5" /> Previous
+            </button>
+            <button onClick={onBack} className="text-[13px] text-slate-400 hover:text-slate-900 transition-colors">All case studies</button>
+            <button onClick={onNext} className="flex items-center gap-2 text-[13px] text-slate-400 hover:text-slate-900 transition-colors">
+              Next <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -413,31 +489,31 @@ function AgentCard({ a, color, status, isOtherActive, onStart, onEnd }: {
   const isConnecting = status === "connecting";
 
   return (
-    <div className="border border-slate-200 rounded-xl p-5 flex flex-col gap-4 hover:border-slate-300 transition-colors">
+    <div className="rounded-2xl p-6 flex flex-col gap-5 transition-all border border-white/[0.07] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/[0.12]">
       <div className="flex items-start justify-between gap-3">
         <div
-          className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-          style={{ backgroundColor: `${color}15` }}
+          className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+          style={{ backgroundColor: `${color}20` }}
         >
           <Mic className="w-4 h-4" style={{ color }} />
         </div>
         {isActive && (
-          <span className="flex items-center gap-1 text-[10px] font-semibold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">
-            <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+          <span className="flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{ color, backgroundColor: `${color}20` }}>
+            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: color }} />
             Live
           </span>
         )}
       </div>
 
       <div className="flex-1">
-        <p className="text-[14px] font-semibold text-slate-900 mb-1 leading-tight">{a.name}</p>
-        <p className="text-xs text-slate-500 leading-relaxed">{a.desc}</p>
+        <p className="text-[14px] font-semibold text-white mb-1.5 leading-tight">{a.name}</p>
+        <p className="text-xs text-slate-400 leading-relaxed">{a.desc}</p>
       </div>
 
       {isActive ? (
         <button
           onClick={onEnd}
-          className="w-full flex items-center justify-center gap-2 py-2.5 bg-red-50 text-red-600 border border-red-200 rounded-lg text-xs font-semibold hover:bg-red-100 transition-colors"
+          className="w-full flex items-center justify-center gap-2 py-2.5 bg-red-500/10 text-red-400 border border-red-500/20 rounded-lg text-xs font-semibold hover:bg-red-500/20 transition-colors"
         >
           <MicOff className="w-3.5 h-3.5" /> End call
         </button>
@@ -445,8 +521,12 @@ function AgentCard({ a, color, status, isOtherActive, onStart, onEnd }: {
         <button
           onClick={onStart}
           disabled={isOtherActive || isConnecting}
-          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-semibold transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-          style={isOtherActive || isConnecting ? {} : { backgroundColor: `${color}15`, color }}
+          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-semibold transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:opacity-80"
+          style={
+            isOtherActive || isConnecting
+              ? { color: '#475569', border: '1px solid rgba(255,255,255,0.08)', backgroundColor: 'transparent' }
+              : { color: color, border: `1px solid ${color}50`, backgroundColor: `${color}12` }
+          }
         >
           <Mic className="w-3.5 h-3.5" />
           {isConnecting ? "Connecting..." : "Start Web Call"}
