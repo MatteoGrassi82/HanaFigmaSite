@@ -118,10 +118,22 @@ async function main() {
   });
   const base = `http://localhost:${PORT}`;
 
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-  });
+  // On Vercel (and other CI environments), Chromium may be at a custom path.
+  // PUPPETEER_EXECUTABLE_PATH lets us override the bundled binary.
+  // If Chrome isn't available, skip prerendering gracefully (SPA still works; only SEO baking is skipped).
+  const executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || undefined;
+  let browser;
+  try {
+    browser = await puppeteer.launch({
+      headless: true,
+      executablePath,
+      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+    });
+  } catch (launchErr) {
+    console.warn(`▸ Prerender skipped: could not launch Chromium (${launchErr.message})`);
+    await server.httpServer.close();
+    return;
+  }
 
   let ok = 0;
   let failed = 0;
