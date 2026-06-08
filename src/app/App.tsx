@@ -21,6 +21,7 @@ import { AUP } from "./pages/AUP";
 import { StateOfAI } from "./pages/StateOfAI";
 import { Pricing } from "./pages/Pricing";
 import { CaseStudies } from "./pages/CaseStudies";
+import { Access } from "./pages/Access";
 import { Blog } from "./pages/Blog";
 import { BlogPost } from "./pages/BlogPost";
 import { VideoAskWidget } from "./components/VideoAskWidget";
@@ -246,6 +247,14 @@ function AppContent() {
               <Route path="/demo" element={<Demo />} />
               <Route path="/case-studies" element={
                 <CaseStudies
+                  activeAgentId={activeAgentId}
+                  webCallStatus={webCallStatus}
+                  handleStartWebCall={handleStartWebCall}
+                  handleEndWebCall={handleEndWebCall}
+                />
+              } />
+              <Route path="/access" element={
+                <Access
                   activeAgentId={activeAgentId}
                   webCallStatus={webCallStatus}
                   handleStartWebCall={handleStartWebCall}
