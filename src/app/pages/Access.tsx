@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { ArrowRight, Mic, MicOff, ChevronDown, ChevronUp } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { ArrowRight, Mic, MicOff, ChevronDown, ChevronUp, Globe, Loader2, CheckCircle2, PhoneOff } from "lucide-react";
+import { cn } from "../../lib/utils";
 import { Footer } from "../components/Footer";
 import { SEO } from "../components/SEO";
 
@@ -19,7 +21,7 @@ const AGENTS = [
     desc: "A live demo of the WHODAS 2.0 collection call Hana runs for BH-track patients. 36 items, conversational, ~20 minutes. Try a few questions.",
     assistantId: "PLACEHOLDER_WHODAS_AGENT",
     color: "#10B981",
-    tag: "BH Track Demo",
+    tag: "BH Track · Live Demo",
   },
 ];
 
@@ -96,6 +98,183 @@ const FAQS = [
   },
 ];
 
+const ACCESS_AGENT_TYPES = ["CKM Outreach", "WHODAS Demo", "MSK Outreach", "ACCESS Advisor"] as const;
+type AccessAgentType = typeof ACCESS_AGENT_TYPES[number];
+
+const ACCESS_AGENT_IDS: Record<AccessAgentType, string> = {
+  "CKM Outreach":    "PLACEHOLDER_CKM_AGENT",
+  "WHODAS Demo":     "PLACEHOLDER_WHODAS_AGENT",
+  "MSK Outreach":    "PLACEHOLDER_MSK_AGENT",
+  "ACCESS Advisor":  "PLACEHOLDER_ACCESS_ADVISOR",
+};
+
+function AccessDemoSection({
+  webCallStatus, handleStartWebCall, handleEndWebCall,
+}: {
+  webCallStatus: "idle" | "connecting" | "active";
+  handleStartWebCall: (agentId: string, assistantId: string) => void;
+  handleEndWebCall: () => void;
+}) {
+  const [selectedAgent, setSelectedAgent] = useState<AccessAgentType | "">("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<{ agent?: string; name?: string; email?: string }>({});
+
+  const handleWebCallClick = () => {
+    const errors: { agent?: string; name?: string; email?: string } = {};
+    if (!selectedAgent)  errors.agent = "Please select a use case";
+    if (!name.trim())    errors.name  = "Name is required";
+    if (!email.trim())   errors.email = "Email is required";
+    if (Object.keys(errors).length > 0) { setFieldErrors(errors); return; }
+    setFieldErrors({});
+    handleStartWebCall(selectedAgent, ACCESS_AGENT_IDS[selectedAgent as AccessAgentType]);
+  };
+
+  return (
+    <section className="py-20 px-4 md:px-8 bg-white">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="font-serif text-5xl md:text-7xl text-slate-900 leading-[1.0] text-center mb-14 tracking-tight">
+          Try Our<br />Live Demo
+        </h2>
+
+        <div className="flex flex-col lg:flex-row gap-0 border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+          {/* Left — video + agent tags */}
+          <div className="relative lg:w-[48%] bg-slate-50 flex flex-col justify-between p-8 min-h-[420px]">
+            <div className="absolute inset-0 flex items-center justify-center p-6 pointer-events-none">
+              <video src="/video1.mp4" autoPlay loop muted playsInline className="w-full h-full object-cover rounded-xl" />
+            </div>
+            <div className="relative z-10 mt-auto flex flex-wrap gap-2 pt-48">
+              {ACCESS_AGENT_TYPES.map(type => (
+                <button
+                  key={type}
+                  onClick={() => { setSelectedAgent(type); setFieldErrors(p => ({ ...p, agent: undefined })); }}
+                  className={cn(
+                    "px-4 py-2 rounded-full text-sm font-medium border transition-all duration-150",
+                    selectedAgent === type
+                      ? "bg-slate-900 text-white border-slate-900"
+                      : "bg-white text-slate-700 border-slate-200 hover:border-slate-400"
+                  )}
+                >
+                  {type}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Right — form / active state */}
+          <div className="lg:w-[52%] bg-slate-50 border-t lg:border-t-0 lg:border-l border-slate-200 p-8 flex flex-col justify-between">
+            <AnimatePresence mode="wait">
+              {webCallStatus !== "idle" ? (
+                <motion.div
+                  key="active"
+                  initial={{ opacity: 0, scale: 0.97 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="flex-1 flex flex-col items-center justify-center gap-6 text-center py-8"
+                >
+                  <div className="relative w-24 h-24">
+                    {webCallStatus === "connecting" && <div className="absolute inset-0 bg-blue-500/10 rounded-full animate-ping" />}
+                    {webCallStatus === "active" && <div className="absolute inset-0 bg-green-500/10 rounded-full animate-pulse" />}
+                    <div className={cn(
+                      "absolute inset-2 bg-white rounded-full flex items-center justify-center border shadow-sm",
+                      webCallStatus === "active" ? "border-green-100" : "border-blue-100"
+                    )}>
+                      <Globe className={cn("w-8 h-8", webCallStatus === "active" ? "text-green-600" : "text-blue-600")} />
+                    </div>
+                    <div className={cn(
+                      "absolute -right-1 -top-1 text-white p-1.5 rounded-full border-4 border-slate-50",
+                      webCallStatus === "active" ? "bg-green-500" : "bg-blue-500"
+                    )}>
+                      {webCallStatus === "active"
+                        ? <CheckCircle2 className="w-3.5 h-3.5" />
+                        : <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xl font-medium text-slate-900 mb-1">
+                      {webCallStatus === "active" ? `Speaking with ${selectedAgent} Agent` : "Connecting..."}
+                    </p>
+                    <p className="text-sm text-slate-500">
+                      {webCallStatus === "active" ? "Click End Call when you're done." : "Establishing connection..."}
+                    </p>
+                  </div>
+                  <button
+                    onClick={handleEndWebCall}
+                    className="bg-red-500 text-white px-6 py-2.5 rounded-full text-sm font-medium flex items-center gap-2 hover:bg-red-600 transition-colors"
+                  >
+                    <PhoneOff className="w-4 h-4" /> End Call
+                  </button>
+                </motion.div>
+              ) : (
+                <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col gap-5 w-full">
+                  <p className="text-[17px] text-slate-700 leading-relaxed">
+                    Receive a live call from our ACCESS agent and hear how Hana handles patient conversations across every track.
+                  </p>
+
+                  {selectedAgent ? (
+                    <p className="text-[13px] text-slate-500">Use case: <span className="font-semibold text-slate-900">{selectedAgent}</span></p>
+                  ) : (
+                    <p className="text-[13px] text-slate-400 italic">Select a use case from the left →</p>
+                  )}
+                  {fieldErrors.agent && <p className="text-xs text-red-500">{fieldErrors.agent}</p>}
+
+                  <div>
+                    <label className="block text-[11px] font-semibold uppercase tracking-[1.5px] text-blue-600 mb-1.5">Name</label>
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={e => { setName(e.target.value); setFieldErrors(p => ({ ...p, name: undefined })); }}
+                      placeholder="Your Name"
+                      className={cn(
+                        "w-full bg-transparent border-b-2 py-3 text-slate-900 text-[16px] placeholder:text-slate-300 focus:outline-none transition-colors",
+                        fieldErrors.name ? "border-red-400" : "border-slate-200 focus:border-slate-900"
+                      )}
+                    />
+                    {fieldErrors.name && <p className="mt-1 text-xs text-red-500">{fieldErrors.name}</p>}
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-semibold uppercase tracking-[1.5px] text-blue-600 mb-1.5">Email</label>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={e => { setEmail(e.target.value); setFieldErrors(p => ({ ...p, email: undefined })); }}
+                      placeholder="you@company.com"
+                      className={cn(
+                        "w-full bg-transparent border-b-2 py-3 text-slate-900 text-[16px] placeholder:text-slate-300 focus:outline-none transition-colors",
+                        fieldErrors.email ? "border-red-400" : "border-slate-200 focus:border-slate-900"
+                      )}
+                    />
+                    {fieldErrors.email && <p className="mt-1 text-xs text-red-500">{fieldErrors.email}</p>}
+                  </div>
+
+                  <div className="mt-2">
+                    <button
+                      onClick={handleWebCallClick}
+                      disabled={webCallStatus !== "idle"}
+                      className="w-full flex flex-col items-start gap-3 bg-white border-2 border-slate-200 hover:border-slate-900 rounded-xl p-4 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-left"
+                    >
+                      <Globe className="w-5 h-5 text-blue-600" />
+                      <div>
+                        <p className="text-[14px] font-semibold text-slate-900">Web Call</p>
+                        <p className="text-[12px] text-slate-500">Talk in your browser</p>
+                      </div>
+                      <span className="text-[12px] font-medium text-blue-600 flex items-center gap-1">
+                        {webCallStatus === "connecting" ? (
+                          <><Loader2 className="w-3 h-3 animate-spin" /> Connecting...</>
+                        ) : "Start now →"}
+                      </span>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 interface AccessProps {
   activeAgentId: string | null;
   webCallStatus: "idle" | "connecting" | "active";
@@ -145,24 +324,24 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
 
         {/* ── Hero ──────────────────────────────────────────────────────────── */}
         <section className="bg-[#00122F] text-white pt-32 pb-24 px-4">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 mb-8">
-              <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
-              <span className="text-blue-400 text-xs font-semibold tracking-[3px] uppercase">CMS ACCESS Model · July 5 Launch</span>
+              <span className="w-2 h-2 rounded-full bg-slate-400 animate-pulse" />
+              <span className="text-slate-400 text-xs font-semibold tracking-[3px] uppercase">CMS ACCESS Model · July 5 Launch</span>
             </div>
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-[3.5rem] leading-[1.05] mb-6 max-w-3xl">
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-[3.5rem] leading-[1.05] mb-6 mx-auto max-w-3xl">
               50% of your ACCESS revenue is withheld.{" "}
-              <span className="text-blue-400">Getting it back depends on whether your patients responded.</span>
+              <span className="text-slate-300">Getting it back depends on whether your patients responded.</span>
             </h1>
-            <p className="text-slate-400 text-lg md:text-xl max-w-2xl leading-relaxed mb-10">
+            <p className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10">
               Hana is the engagement infrastructure ACCESS participants use to hit the Outcome Attainment Threshold — AI voice + SMS outreach, PROM collection within the 15-day window, FHIR-ready output. $3/patient/month.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="https://calendly.com/matteowastaken/discoverycall"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-blue-500 hover:bg-blue-400 text-white rounded-full font-semibold text-[15px] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(59,130,246,0.4)] group"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-slate-100 text-[#00122F] rounded-full font-semibold text-[15px] transition-all hover:-translate-y-0.5 group"
               >
                 Book a 20-min call
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -177,73 +356,98 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
           </div>
         </section>
 
+        {/* ── What is ACCESS ───────────────────────────────────────────────── */}
+        <section className="bg-white border-t border-slate-100 px-4 py-12">
+          <div className="max-w-4xl mx-auto">
+            <p className="text-[10px] font-bold tracking-[3px] uppercase text-slate-400 mb-8 text-center">What is ACCESS?</p>
+            <p className="text-slate-600 text-[16px] leading-relaxed text-center max-w-2xl mx-auto mb-10">
+              ACCESS is a new CMS value-based care model launching July 5. Participating practices receive monthly payments per enrolled patient — but CMS withholds 50% of that revenue for up to 12 months. You only get it back if enough of your patients completed their outcome measures.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-slate-100 rounded-2xl overflow-hidden">
+              {[
+                { term: "OAP", full: "Outcome-Aligned Payment", def: "What CMS pays per patient per month — half upfront, half withheld." },
+                { term: "OAT", full: "Outcome Attainment Threshold", def: "The 50% completion rate you must hit to get the withheld half back." },
+                { term: "OAR", full: "Outcome Attainment Rate", def: "Your actual completion rate at reconciliation. This is the number Hana moves." },
+              ].map(({ term, full, def }) => (
+                <div key={term} className="bg-white p-6 flex flex-col gap-2">
+                  <div className="flex items-baseline gap-2 mb-1">
+                    <span className="font-serif text-[24px] text-slate-900 leading-none">{term}</span>
+                    <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">{full}</span>
+                  </div>
+                  <p className="text-[13px] text-slate-500 leading-relaxed">{def}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* ── OAT Mechanics ─────────────────────────────────────────────────── */}
-        <section id="how-it-works" className="bg-[#010f26] px-4 py-20">
+        <section id="how-it-works" className="bg-white px-4 py-20 border-t border-slate-100">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-14">
-              <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-400 mb-4">The withheld pool</p>
-              <h2 className="font-serif text-3xl md:text-4xl text-white leading-tight mb-4">
+              <p className="text-[10px] font-bold tracking-[3px] uppercase text-slate-400 mb-4">The withheld pool</p>
+              <h2 className="font-serif text-3xl md:text-4xl text-slate-900 leading-tight mb-4">
                 How the OAT penalty actually works
               </h2>
-              <p className="text-slate-400 text-[16px] max-w-2xl mx-auto leading-relaxed">
+              <p className="text-slate-500 text-[16px] max-w-2xl mx-auto leading-relaxed">
                 CMS holds back 50% of every Outcome-Aligned Payment for 12 months. At reconciliation, one test determines how much you get back.
               </p>
             </div>
 
             {/* Three-column OAT diagram */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/[0.06] rounded-2xl overflow-hidden mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-100 rounded-2xl overflow-hidden mb-12">
               {/* ≥50% — full release */}
-              <div className="bg-[#00122F] p-8 flex flex-col gap-4">
+              <div className="bg-white p-8 flex flex-col gap-4">
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-emerald-400" />
-                  <span className="text-[10px] font-bold tracking-[2px] uppercase text-emerald-400">OAR ≥ 50%</span>
+                  <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                  <span className="text-[10px] font-bold tracking-[2px] uppercase text-emerald-600">OAR ≥ 50%</span>
                 </div>
-                <div className="font-serif text-4xl text-white leading-none">100%</div>
-                <div className="text-[11px] text-emerald-400 font-semibold uppercase tracking-wider">Full release</div>
-                <p className="text-[13px] text-slate-400 leading-relaxed">
+                <div className="font-serif text-4xl text-slate-900 leading-none">100%</div>
+                <div className="text-[11px] text-emerald-600 font-semibold uppercase tracking-wider">Full release</div>
+                <p className="text-[13px] text-slate-500 leading-relaxed">
                   ≥50% of your patients completed all required measures. CMS releases the full withheld pool.
                 </p>
-                <div className="mt-auto pt-4 border-t border-white/[0.07]">
-                  <span className="text-[11px] text-slate-500">1,000 CKM patients → $210K released</span>
+                <div className="mt-auto pt-4 border-t border-slate-100">
+                  <span className="text-[11px] text-slate-400">1,000 CKM patients → $210K released</span>
                 </div>
               </div>
 
               {/* 40% — proportional cut */}
-              <div className="bg-[#00122F] p-8 flex flex-col gap-4 border-x border-white/[0.06]">
+              <div className="bg-white p-8 flex flex-col gap-4">
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-amber-400" />
-                  <span className="text-[10px] font-bold tracking-[2px] uppercase text-amber-400">OAR = 40%</span>
+                  <div className="w-2 h-2 rounded-full bg-amber-500" />
+                  <span className="text-[10px] font-bold tracking-[2px] uppercase text-amber-600">OAR = 40%</span>
                 </div>
-                <div className="font-serif text-4xl text-white leading-none">80%</div>
-                <div className="text-[11px] text-amber-400 font-semibold uppercase tracking-wider">Proportional cut</div>
-                <p className="text-[13px] text-slate-400 leading-relaxed">
+                <div className="font-serif text-4xl text-slate-900 leading-none">80%</div>
+                <div className="text-[11px] text-amber-600 font-semibold uppercase tracking-wider">Proportional cut</div>
+                <p className="text-[13px] text-slate-500 leading-relaxed">
                   OAR ÷ OAT × withheld pool. 40 ÷ 50 = 80% released. You lose 20% of the withheld amount.
                 </p>
-                <div className="mt-auto pt-4 border-t border-white/[0.07]">
-                  <span className="text-[11px] text-slate-500">1,000 CKM patients → $168K released</span>
+                <div className="mt-auto pt-4 border-t border-slate-100">
+                  <span className="text-[11px] text-slate-400">1,000 CKM patients → $168K released</span>
                 </div>
               </div>
 
               {/* 20% — floor cap */}
-              <div className="bg-[#00122F] p-8 flex flex-col gap-4">
+              <div className="bg-white p-8 flex flex-col gap-4">
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-red-400" />
-                  <span className="text-[10px] font-bold tracking-[2px] uppercase text-red-400">OAR = 20%</span>
+                  <div className="w-2 h-2 rounded-full bg-red-500" />
+                  <span className="text-[10px] font-bold tracking-[2px] uppercase text-red-600">OAR = 20%</span>
                 </div>
-                <div className="font-serif text-4xl text-white leading-none">50%</div>
-                <div className="text-[11px] text-red-400 font-semibold uppercase tracking-wider">Floor cap</div>
-                <p className="text-[13px] text-slate-400 leading-relaxed">
+                <div className="font-serif text-4xl text-slate-900 leading-none">50%</div>
+                <div className="text-[11px] text-red-600 font-semibold uppercase tracking-wider">Floor cap</div>
+                <p className="text-[13px] text-slate-500 leading-relaxed">
                   CMS caps the maximum reduction at 50% — you always keep at least half of gross OAP regardless of performance.
                 </p>
-                <div className="mt-auto pt-4 border-t border-white/[0.07]">
-                  <span className="text-[11px] text-slate-500">1,000 CKM patients → $105K released</span>
+                <div className="mt-auto pt-4 border-t border-slate-100">
+                  <span className="text-[11px] text-slate-400">1,000 CKM patients → $105K released</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-blue-500/10 border border-blue-500/20 rounded-2xl px-8 py-6 text-center">
-              <p className="text-[15px] text-slate-300 leading-relaxed max-w-2xl mx-auto">
-                <span className="text-white font-semibold">Crossing 50% OAR isn't just better — it's the difference between full release and a haircut.</span>{" "}
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl px-8 py-6 text-center">
+              <p className="text-[15px] text-slate-600 leading-relaxed max-w-2xl mx-auto">
+                <span className="text-slate-900 font-semibold">Crossing 50% OAR isn't just better — it's the difference between full release and a haircut.</span>{" "}
                 Every patient who doesn't complete their measures is a patient who doesn't count toward your OAR.
               </p>
             </div>
@@ -589,7 +793,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                       <span className="text-[11px] font-bold tracking-[2px] uppercase text-emerald-600">WHODAS 2.0</span>
                     </div>
                     <p className="text-[13px] text-slate-500 leading-relaxed">
-                      36 items. 6 domains. ~20 minutes. For a Medicare patient, completing WHODAS via a portal form has low completion rates. Hana administers it conversationally — plain language, patient pacing, domain grouping — and outputs FHIR-structured results. Try the demo agent below.
+                      36 items. 6 domains. ~20 minutes. For a Medicare patient, completing WHODAS via a portal form has low completion rates. Hana administers it conversationally — plain language, patient pacing, domain grouping — and outputs FHIR-structured results.
                     </p>
                   </div>
                 )}
@@ -598,70 +802,73 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
           </div>
         </section>
 
-        {/* ── Live Agents ───────────────────────────────────────────────────── */}
-        <section className="bg-[#010f26] px-4 py-24">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-14">
-              <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-400 mb-4">Try it now</p>
-              <h2 className="font-serif text-3xl md:text-4xl text-white leading-tight mb-3">
-                Talk to Hana. Right now.
-              </h2>
-              <p className="text-slate-500 text-[15px]">No app. No login. Just click to call.</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {AGENTS.map(agent => {
-                const agentKey = `access-${agent.id}`;
-                const isActive = activeAgentId === agentKey;
-                const status = isActive ? webCallStatus : "idle";
-                const isConnecting = status === "connecting";
-                const isLive = status === "active";
-                const isOtherActive = activeAgentId !== null && !isActive;
+        {/* ── Live Demo ────────────────────────────────────────────────────── */}
+        <AccessDemoSection
+          webCallStatus={webCallStatus}
+          handleStartWebCall={handleStartWebCall}
+          handleEndWebCall={handleEndWebCall}
+        />
 
-                return (
-                  <div key={agent.id} className="rounded-2xl p-7 flex flex-col gap-5 border border-white/[0.07] bg-white/[0.04] hover:bg-white/[0.07] transition-all">
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full mb-3" style={{ backgroundColor: `${agent.color}15`, border: `1px solid ${agent.color}30` }}>
-                          <span className="text-[10px] font-bold tracking-[2px] uppercase" style={{ color: agent.color }}>{agent.tag}</span>
-                        </div>
-                        <h3 className="text-[16px] font-semibold text-white leading-tight">{agent.name}</h3>
+        {/* ── Ask Hana ─────────────────────────────────────────────────────── */}
+        {(() => {
+          const advisor = AGENTS.find(a => a.id === "access-advisor")!;
+          const agentKey = `access-${advisor.id}`;
+          const isActive = activeAgentId === agentKey;
+          const status = isActive ? webCallStatus : "idle";
+          const isConnecting = status === "connecting";
+          const isLive = status === "active";
+          const isOtherActive = activeAgentId !== null && !isActive;
+          return (
+            <section className="bg-[#010f26] px-4 py-20">
+              <div className="max-w-3xl mx-auto text-center">
+                <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-400 mb-4">Ask anything</p>
+                <h2 className="font-serif text-3xl md:text-4xl text-white leading-tight mb-3">
+                  Talk to Hana. Right now.
+                </h2>
+                <p className="text-slate-500 text-[15px] mb-10">OAT mechanics, pricing, your track. No app. No login. Just click to call.</p>
+                <div className="rounded-2xl p-8 flex flex-col gap-5 border border-white/[0.07] bg-white/[0.04] text-left">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full mb-3" style={{ backgroundColor: `${advisor.color}15`, border: `1px solid ${advisor.color}30` }}>
+                        <span className="text-[10px] font-bold tracking-[2px] uppercase" style={{ color: advisor.color }}>{advisor.tag}</span>
                       </div>
-                      {isLive && (
-                        <span className="flex items-center gap-1 text-[10px] font-semibold px-2 py-1 rounded-full shrink-0" style={{ color: agent.color, backgroundColor: `${agent.color}20` }}>
-                          <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: agent.color }} />
-                          Live
-                        </span>
-                      )}
+                      <h3 className="text-[16px] font-semibold text-white leading-tight">{advisor.name}</h3>
                     </div>
-                    <p className="text-[14px] text-slate-400 leading-relaxed flex-1">{agent.desc}</p>
-                    {isLive ? (
-                      <button
-                        onClick={handleEndWebCall}
-                        className="w-full flex items-center justify-center gap-2 py-3 bg-red-500/10 text-red-400 border border-red-500/20 rounded-xl text-[13px] font-semibold hover:bg-red-500/20 transition-colors"
-                      >
-                        <MicOff className="w-4 h-4" /> End call
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => handleStartWebCall(agentKey, agent.assistantId)}
-                        disabled={isOtherActive || isConnecting}
-                        className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-[13px] font-semibold transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:opacity-80"
-                        style={
-                          isOtherActive || isConnecting
-                            ? { color: "#475569", border: "1px solid rgba(255,255,255,0.08)", backgroundColor: "transparent" }
-                            : { color: agent.color, border: `1px solid ${agent.color}50`, backgroundColor: `${agent.color}12` }
-                        }
-                      >
-                        <Mic className="w-4 h-4" />
-                        {isConnecting ? "Connecting..." : "Start Web Call"}
-                      </button>
+                    {isLive && (
+                      <span className="flex items-center gap-1 text-[10px] font-semibold px-2 py-1 rounded-full shrink-0" style={{ color: advisor.color, backgroundColor: `${advisor.color}20` }}>
+                        <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: advisor.color }} />
+                        Live
+                      </span>
                     )}
                   </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
+                  <p className="text-[14px] text-slate-400 leading-relaxed">{advisor.desc}</p>
+                  {isLive ? (
+                    <button
+                      onClick={handleEndWebCall}
+                      className="w-full flex items-center justify-center gap-2 py-3 bg-red-500/10 text-red-400 border border-red-500/20 rounded-xl text-[13px] font-semibold hover:bg-red-500/20 transition-colors"
+                    >
+                      <MicOff className="w-4 h-4" /> End call
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleStartWebCall(agentKey, advisor.assistantId)}
+                      disabled={isOtherActive || isConnecting}
+                      className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-[13px] font-semibold transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:opacity-80"
+                      style={
+                        isOtherActive || isConnecting
+                          ? { color: "#475569", border: "1px solid rgba(255,255,255,0.08)", backgroundColor: "transparent" }
+                          : { color: advisor.color, border: `1px solid ${advisor.color}50`, backgroundColor: `${advisor.color}12` }
+                      }
+                    >
+                      <Mic className="w-4 h-4" />
+                      {isConnecting ? "Connecting..." : "Start Web Call"}
+                    </button>
+                  )}
+                </div>
+              </div>
+            </section>
+          );
+        })()}
 
         {/* ── FAQ ───────────────────────────────────────────────────────────── */}
         <section className="px-4 py-20 bg-white border-t border-slate-100">
