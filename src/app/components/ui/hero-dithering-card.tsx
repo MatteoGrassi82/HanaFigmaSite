@@ -72,30 +72,26 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
 
           <div className="flex flex-col items-center text-center z-20 pointer-events-auto max-w-5xl mx-auto">
              {/* Headline */}
-             <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl tracking-normal text-slate-900 mb-6 md:mb-8 leading-[1.1]">
+             <h1 className="font-serif text-5xl sm:text-5xl md:text-7xl lg:text-8xl tracking-normal text-slate-900 mb-6 md:mb-8 leading-[1.1]">
                Automate the routine calls. <br className="hidden md:block"/><span className="text-blue-600">Focus on what matters</span>.
              </h1>
 
              {/* Subheadline */}
-             <p className="text-lg md:text-2xl text-slate-600 max-w-3xl mx-auto mb-8 md:mb-10 leading-relaxed font-normal">
+             <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto mb-8 md:mb-10 leading-relaxed font-normal">
                Reads the chart. Calls the patient. Writes back.
              </p>
 
              {/* CTAs */}
-             <div className="flex flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto">
-                <a href="https://calendly.com/matteowastaken/discoverycall" target="_blank" rel="noopener noreferrer" className="px-6 sm:px-8 py-4 bg-white text-slate-900 rounded-full font-medium text-base sm:text-lg hover:bg-slate-50 transition-all duration-300 flex-1 sm:flex-none shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border border-slate-200 text-center whitespace-nowrap">
-                    Book a Demo
-                </a>
-
+             <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-auto mx-auto">
                 <button
                    onClick={handleDemoClick}
                    disabled={isConnecting || disabled}
-                   className="group relative flex items-center gap-3 bg-[#01122F]/90 hover:bg-[#01122F] backdrop-blur-xl border border-white/10 rounded-full p-2 pr-6 transition-all duration-300 flex-1 sm:flex-none shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                   className="group relative flex items-center justify-center gap-3 bg-white hover:bg-slate-50 border border-slate-200 rounded-full p-2 pr-6 transition-all duration-300 w-auto shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
                 >
-                   <div className="relative w-12 h-12 rounded-full overflow-hidden shadow-inner ring-1 ring-white/10 group-hover:ring-white/20 transition-all bg-[#00122F] shrink-0">
-                      <img 
-                        src={VoiceWave} 
-                        alt="Voice Wave" 
+                   <div className="relative w-12 h-12 rounded-full overflow-hidden shadow-inner ring-1 ring-black/5 group-hover:ring-blue-500/20 transition-all bg-[#00122F] shrink-0">
+                      <img
+                        src={VoiceWave}
+                        alt="Voice Wave"
                         className="absolute inset-0 w-full h-full object-cover opacity-90"
                       />
                       {(isConnecting || isActive) && (
@@ -109,11 +105,15 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
                       )}
                    </div>
                    <div className="text-left flex flex-col justify-center">
-                      <span className="text-white text-lg font-medium whitespace-nowrap leading-none">
-                         {isActive ? "End Demo" : isConnecting ? "Connecting..." : "Try the Demo"}
+                      <span className="text-blue-600 text-lg font-medium whitespace-nowrap leading-none">
+                         {isActive ? "End Demo" : isConnecting ? "Connecting..." : "Talk to Hana"}
                       </span>
                    </div>
                 </button>
+
+                <a href="https://calendly.com/matteowastaken/discoverycall" target="_blank" rel="noopener noreferrer" className="hidden sm:inline-block px-6 sm:px-8 py-4 bg-white text-slate-900 rounded-full font-medium text-base sm:text-lg hover:bg-slate-50 transition-all duration-300 w-full sm:w-auto shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border border-slate-200 text-center whitespace-nowrap">
+                    Book a Demo
+                </a>
 
              </div>
           </div>

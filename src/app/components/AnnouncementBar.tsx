@@ -1,11 +1,9 @@
 import { X, ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
-import { DownloadGuideModal } from "./DownloadGuideModal";
-import { projectId, publicAnonKey } from '/utils/supabase/info';
+import { Link } from "react-router";
 
 export function AnnouncementBar() {
   const [isVisible, setIsVisible] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Check localStorage on mount to see if user has dismissed
   useEffect(() => {
@@ -20,82 +18,49 @@ export function AnnouncementBar() {
     localStorage.setItem("announcement-bar-dismissed", "true");
   };
 
-  const handleDownloadSubmit = async (email: string) => {
-    try {
-      const response = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/make-server-77ada9a1/guide-download`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${publicAnonKey}`,
-          },
-          body: JSON.stringify({ email }),
-        }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        console.error('Guide download error:', errorData);
-        throw new Error(`Server returned ${response.status}: ${JSON.stringify(errorData)}`);
-      }
-
-      const data = await response.json();
-      console.log('Guide download response:', data);
-      console.log('Zapier status:', data.zapier);
-      return data;
-    } catch (error) {
-      console.error('Error sending guide download request:', error);
-      throw error;
-    }
-  };
-
   if (!isVisible) return null;
 
   return (
-    <>
-      <div className="relative bg-[#00122F] border-b border-slate-800/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-[1fr_auto_1fr] items-center py-2.5 gap-2">
+    <div className="flex justify-center px-4 pt-3 pb-1">
+      <div className="announcement-float relative flex items-center gap-2 sm:gap-3 rounded-full border border-slate-200 bg-white pl-2 pr-2 py-1.5 shadow-[0_2px_12px_rgba(0,0,0,0.08)] ring-1 ring-slate-100">
+        {/* Soft blue glow */}
+        <div className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(ellipse_at_center,_rgba(59,130,246,0.06),_transparent_70%)]" />
 
-            {/* Left spacer — mirrors the dismiss button width */}
-            <div />
+        {/* Whole pill (minus dismiss) is the link */}
+        <Link
+          to="/access"
+          className="group relative flex items-center gap-2 sm:gap-2.5 pl-1.5"
+        >
+          {/* Live deadline badge */}
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-500 px-2.5 py-0.5 shadow-sm shadow-blue-500/30 whitespace-nowrap">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
+            </span>
+            <span className="text-[10px] font-bold tracking-[1.5px] uppercase text-white">July 5</span>
+          </span>
 
-            {/* Centered content */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-x-2 gap-y-0.5 text-center">
-              <span className="text-white/90 text-xs sm:text-sm font-normal leading-snug">
-                The Clinical Voice AI Guide.{" "}
-                <span className="hidden sm:inline">Learn why architecture determines safety.</span>
-              </span>
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="inline-flex items-center gap-1 text-white hover:text-white/80 text-xs sm:text-sm font-medium transition-colors group whitespace-nowrap"
-              >
-                <span>Download free</span>
-                <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5 group-hover:translate-x-0.5 transition-transform" />
-              </button>
-            </div>
+          <span className="hidden sm:inline text-slate-600 text-sm font-normal leading-snug whitespace-nowrap">
+            The CMS ACCESS program launches.
+          </span>
 
-            {/* Dismiss button — right-aligned */}
-            <div className="flex justify-end">
-              <button
-                onClick={handleDismiss}
-                className="p-1.5 text-white/60 hover:text-white/90 hover:bg-white/5 rounded transition-colors"
-                aria-label="Dismiss announcement"
-              >
-                <X className="h-3.5 w-3.5" />
-              </button>
-            </div>
+          {/* CTA pill */}
+          <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 group-hover:bg-slate-200 px-3 py-1 text-xs sm:text-sm font-medium text-slate-700 transition-colors whitespace-nowrap">
+            <span className="sm:hidden">ACCESS launches</span>
+            <span className="hidden sm:inline">See if you're ready</span>
+            <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5 group-hover:translate-x-0.5 transition-transform" />
+          </span>
+        </Link>
 
-          </div>
-        </div>
+        {/* Dismiss button */}
+        <button
+          onClick={handleDismiss}
+          className="relative shrink-0 p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors"
+          aria-label="Dismiss announcement"
+        >
+          <X className="h-3.5 w-3.5" />
+        </button>
       </div>
-
-      <DownloadGuideModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSubmit={handleDownloadSubmit}
-      />
-    </>
+    </div>
   );
 }

@@ -1,0 +1,8 @@
+{
+  "name": "voice-prompt-engineer-v3",
+  "version": "3.0.0",
+  "description": "Generate production-ready voice AI agent prompts from requirements. Supports TTS-specific optimization for Cartesia Sonic-3, ElevenLabs V3 Conversational (including rich custom audio tags, agent-type tag palettes, tagged one-liner openers), and generic TTS. Includes prompt compression to 2,000-token ceiling, MBTI personality anchors with character references, latency management, conversational depth rules for relational agents, and healthcare-specific modules with IPTS crisis detection. Covers patient intake, wellness check-in, no-show recovery, B2B sales outreach, coordination demos, and any voice AI platform (Vapi, Retell, Bland, Vocode, LiveKit, ElevenAgents).",
+  "author": {
+    "name": "Matteo"
+  }
+}

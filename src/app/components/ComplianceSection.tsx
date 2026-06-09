@@ -50,7 +50,7 @@ export function ComplianceSection() {
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
           
           {/* Left Content */}
-          <div className="flex-1 lg:max-w-sm space-y-8 sticky top-24 self-start">
+          <div className="flex-1 lg:max-w-sm space-y-8 lg:sticky lg:top-24 self-start">
             <div className="inline-flex items-center rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-300 shadow-sm">
               Enterprise Compliance
             </div>

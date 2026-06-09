@@ -10,25 +10,31 @@ import { PatientContextComp } from './remotion/PatientContextComp';
 
 /* Shared <Player> render for a homepage demo slide. The compositions are
    900x506 (≈16:9), so they fill the carousel's aspect-video frame cleanly.
-   Loop, no controls — matching the previous silent-video behavior.
+   Loop, no controls, no audio — these are silent visual animations.
 
-   For Core Web Vitals we DON'T autoplay every slide: only the active (and
-   in-view) demo animates. Off-screen / non-active slides stay paused so the
-   homepage isn't running three canvas animations at once. */
+   Autoplay rules:
+   - The Player is `initiallyMuted` + `autoPlay`, which is what lets it start
+     without a user gesture on mobile (browsers block UN-muted programmatic
+     play). Our comps have no audio, so muting is free.
+   - We still gate on IntersectionObserver so off-screen slides stay paused
+     (Core Web Vitals — don't burn CPU animating canvases the user can't see).
+   - Every IN-VIEW slide plays, not just the carousel's "current" index. The
+     carousel shows ~1.4 slides, so the peeking next slide is visible and
+     should animate too. This is the fix for "the second video doesn't play."
+   - We retry play() on a short delay because Remotion's play() can no-op if
+     called before the player has fully mounted. */
 function DemoPlayer({
   component,
   durationInFrames,
-  active,
 }: {
   component: React.ComponentType;
   durationInFrames: number;
-  active: boolean;
 }) {
   const playerRef = useRef<PlayerRef>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
 
-  // Only animate when this slide's carousel section is actually on screen.
+  // Animate only when this slide is actually on screen.
   useEffect(() => {
     const el = containerRef.current;
     if (!el || typeof IntersectionObserver === 'undefined') {
@@ -37,22 +43,40 @@ function DemoPlayer({
     }
     const io = new IntersectionObserver(
       ([entry]) => setInView(entry.isIntersecting),
-      { threshold: 0.15 }
+      { threshold: 0.15, rootMargin: '0px 0px -10% 0px' }
     );
     io.observe(el);
     return () => io.disconnect();
   }, []);
 
-  // Play only when this slide is the active one AND it's in view; otherwise pause.
+  // Drive play/pause off visibility. Retry once shortly after, in case the
+  // player mounted a beat after this effect ran (common on mobile / slick).
   useEffect(() => {
-    const p = playerRef.current;
-    if (!p) return;
-    if (active && inView) {
-      p.play();
-    } else {
-      p.pause();
-    }
-  }, [active, inView]);
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const drive = () => {
+      const p = playerRef.current;
+      if (!p) return;
+      if (inView) {
+        try {
+          p.mute();
+          p.play();
+        } catch {
+          /* not interactive yet */
+        }
+      } else {
+        try {
+          p.pause();
+        } catch {
+          /* noop */
+        }
+      }
+    };
+    drive();
+    if (inView) timer = setTimeout(drive, 400);
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [inView]);
 
   return (
     <div ref={containerRef} className="w-full h-full">
@@ -65,6 +89,8 @@ function DemoPlayer({
         fps={30}
         style={{ width: '100%', height: '100%' }}
         loop
+        autoPlay
+        initiallyMuted
         controls={false}
         clickToPlay={false}
         doubleClickToFullscreen={false}
@@ -108,6 +134,10 @@ export function AgenticFrameworkCarousel() {
     speed: 500,
     slidesToShow: 1.4, // Show 1 full slide + 40% of the next
     slidesToScroll: 1,
+    swipe: true,
+    swipeToSlide: true,
+    draggable: true, // mouse click-and-drag on desktop
+    touchThreshold: 10,
     beforeChange: (_: number, next: number) => setCurrentSlide(next),
     arrows: false,
     responsive: [
@@ -165,7 +195,7 @@ export function AgenticFrameworkCarousel() {
                 <div className="group h-full flex flex-col">
                     {/* Image Container with Light Gray Border/Background */}
                     <div 
-                      className="relative aspect-video w-full overflow-hidden rounded-xl bg-slate-200 dark:bg-slate-800 p-1 shadow-lg cursor-pointer md:cursor-default"
+                      className="relative aspect-video w-full overflow-hidden rounded-xl bg-slate-200 dark:bg-slate-800 p-1 shadow-lg cursor-pointer md:cursor-grab md:active:cursor-grabbing"
                       onClick={() => handleSlideClick(slide.id)}
                     >
                         {/* Mobile tap hint */}
@@ -177,7 +207,6 @@ export function AgenticFrameworkCarousel() {
                             <DemoPlayer
                                 component={slide.component}
                                 durationInFrames={slide.durationInFrames}
-                                active={index === currentSlide}
                             />
                         </div>
                     </div>
@@ -267,7 +296,6 @@ export function AgenticFrameworkCarousel() {
               <DemoPlayer
                 component={expandedSlideData.component}
                 durationInFrames={expandedSlideData.durationInFrames}
-                active={true}
               />
             </div>
           </div>

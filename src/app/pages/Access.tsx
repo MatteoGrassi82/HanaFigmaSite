@@ -9,18 +9,33 @@ import { SEO } from "../components/SEO";
 const TRACKS = [
   {
     key: "CKM",
-    label: "CKM / eCKM",
+    label: "CKM",
     color: "#3B82F6",
-    subtitle: "Cardiometabolic & kidney health",
-    oap: "$35/patient/month",
+    subtitle: "Cardiometabolic & kidney health · $35/mo init, $17.50/mo follow-on",
+    oap: "$420 initial / $210 follow-on",
     measures: [
-      { name: "Blood pressure", note: "≤130/80 mmHg target" },
-      { name: "Body weight", note: "BMI or % weight loss" },
-      { name: "HbA1c", note: "Glycaemic control" },
-      { name: "LDL-C", note: "Lipid management" },
-      { name: "eGFR / uACR", note: "Kidney function" },
+      { name: "Blood pressure", note: "≤130/80, from an approved cuff that sends it in automatically" },
+      { name: "Weight / BMI", note: "valid within 15 days of submission" },
+      { name: "HbA1c", note: "lab, valid 1–2 years" },
+      { name: "LDL-C", note: "lab, valid 1–2 years" },
+      { name: "eGFR / uACR", note: "lab, valid 1–2 years" },
     ],
-    hana: "AI voice + SMS reminders timed to the 15-day window. BP and weight check-ins. HbA1c and lab result follow-up. FHIR output ready for the ACCESS Data Reporting API.",
+    hana: "Hana calls and texts patients to keep blood pressure, weight, and lab results current, each one timed so it counts with CMS. One note for honesty: the official blood pressure reading has to come from an approved cuff that sends it in automatically, so Hana flags when a patient needs that set up. Everything goes to CMS in the format they require.",
+  },
+  {
+    key: "eCKM",
+    label: "eCKM",
+    color: "#3B82F6",
+    subtitle: "Enhanced cardiometabolic & kidney · $30/mo init, $15/mo follow-on",
+    oap: "$360 initial / $180 follow-on",
+    measures: [
+      { name: "Blood pressure", note: "≤130/80, from an approved cuff that sends it in automatically" },
+      { name: "Weight / BMI", note: "valid within 15 days of submission" },
+      { name: "HbA1c", note: "lab, valid 1–2 years" },
+      { name: "LDL-C", note: "lab, valid 1–2 years" },
+      { name: "eGFR / uACR", note: "lab, valid 1–2 years" },
+    ],
+    hana: "Same check-ins as CKM, paid at the eCKM rate, with an extra $15 for rural patients who need a connected device. Hana keeps every reading on time, and handles the yearly re-consent for you: it calls inside the 60-day window, gets the patient's okay to continue, and takes a fresh reading if needed. Miss that window and you can't bill, so Hana makes sure it gets done.",
   },
   {
     key: "BH",
@@ -29,12 +44,12 @@ const TRACKS = [
     subtitle: "Mental health & substance use",
     oap: "$15/patient/month",
     measures: [
-      { name: "PHQ-9", note: "Depression symptom score" },
-      { name: "GAD-7", note: "Anxiety symptom score" },
-      { name: "PGIC", note: "Patient global impression of change" },
-      { name: "WHODAS 2.0", note: "36-item functional disability — the hard one" },
+      { name: "PHQ-9", note: "Depression check-in (required)" },
+      { name: "GAD-7", note: "Anxiety check-in (required)" },
+      { name: "PGIC", note: "How they feel they're doing (required)" },
+      { name: "WHODAS 2.0", note: "Daily function (optional for 2026–27)" },
     ],
-    hana: "Conversational PHQ-9, GAD-7, and PGIC collection. Full WHODAS 2.0 administration via AI voice — 36 items, plain language, domain scoring, FHIR output. Safety escalation built in.",
+    hana: "Hana runs the required mental-health check-ins by phone, in plain conversation instead of a form. It can also handle the optional one if you want it. If a patient says anything concerning, your team is alerted right away.",
     whodas: true,
   },
   {
@@ -42,51 +57,51 @@ const TRACKS = [
     label: "Musculoskeletal",
     color: "#F59E0B",
     subtitle: "Orthopaedics & pain management",
-    oap: "$20/patient/month",
+    oap: "$15/patient/month",
     measures: [
-      { name: "PROMIS Pain Interference", note: "Function & daily impact" },
-      { name: "NRS Pain Score", note: "Numeric rating scale" },
-      { name: "PGIC", note: "Patient global impression of change" },
+      { name: "Pain level", note: "How much pain gets in the way" },
+      { name: "Pain score", note: "Zero to ten" },
+      { name: "PGIC", note: "How they feel they're doing" },
     ],
-    hana: "Weekly pain and function check-ins. PROMIS and NRS collection via voice or SMS. PGIC administered at the end of each measurement period. FHIR-ready output.",
+    hana: "Hana checks in on pain and how patients are getting around, by phone or text. It asks the same questions a nurse would, then sends the answers to CMS for you.",
   },
 ];
 
 const FAQS = [
   {
-    q: "Is this RPM?",
-    a: "No. Hana is engagement infrastructure, not a remote monitoring device. You don't need to order devices or bill RPM codes. Hana handles the patient outreach, PROM collection, and data output — that's it.",
+    q: "Is this remote patient monitoring?",
+    a: "No. There are no devices to order and no monitoring codes to bill. Hana just calls your patients, runs the check-ins, and sends the results to CMS.",
   },
   {
-    q: "Do we need to change our EHR?",
-    a: "No. Hana connects via FHIR or direct integration. If you're on Athena, Charm, or using Redox/Catagon, we're already compatible. If you have a custom stack, we build the connector.",
+    q: "Do we have to change our EHR?",
+    a: "No. Hana connects to Athena, Charm, and most major systems. If you're on something custom, we build the connection for you.",
   },
   {
-    q: "What if we miss OAT?",
-    a: "The base fee ($3/patient/month) still applies — you've paid for a systematic engagement programme. The success fee doesn't trigger. We both have skin in the game, which is why we're incentivised to help you hit the threshold.",
+    q: "What if we miss the threshold?",
+    a: "You still pay the $5 base fee, since you got the full outreach program. But the 10% success fee only kicks in when CMS pays you back. If you don't get the money, we don't get ours.",
   },
   {
-    q: "Is your FHIR output compliant with the ACCESS Implementation Guide?",
-    a: "Yes. We map all PROM outputs to the ACCESS IG FHIR profiles. BP, weight, HbA1c, PHQ-9, GAD-7, WHODAS 2.0 — all structured and ready for the CMS Data Reporting API.",
+    q: "Will the data be in the right format for CMS?",
+    a: "Yes. Every reading and check-in goes to CMS exactly how they want it. You don't have to set any of that up.",
   },
   {
-    q: "Can you handle multiple tracks?",
-    a: "Yes. If your organisation enrolled across CKM and BH, Hana handles both tracks with the correct measure sets, timing logic, and FHIR mappings per patient.",
+    q: "Can you handle patients in more than one track?",
+    a: "Yes. If a patient is in two programs, Hana runs both and keeps each one straight, so you don't manage it.",
   },
   {
-    q: "What's the WHODAS 2.0 completion rate you expect?",
-    a: "We're targeting 70–80% completion on the first attempt, with multi-attempt logic for non-responders. The conversational format significantly outperforms portal-based self-completion — especially for Medicare patients.",
+    q: "What response rate can we expect?",
+    a: "We aim for 70 to 80% on the first try, and Hana keeps trying if someone doesn't pick up. Studies show phone outreach reaches 75 to 88% of older patients, versus about 45 to 55% for portal reminders alone. We treat our own numbers as goals, not promises.",
   },
 ];
 
-const ACCESS_AGENT_TYPES = ["CKM Outreach", "WHODAS Demo", "MSK Outreach", "ACCESS Advisor"] as const;
+const ACCESS_AGENT_TYPES = ["CKM Outreach", "BH Screening", "MSK Outreach", "ACCESS Advisor"] as const;
 type AccessAgentType = typeof ACCESS_AGENT_TYPES[number];
 
 const ACCESS_AGENT_IDS: Record<AccessAgentType, string> = {
-  "CKM Outreach":    "PLACEHOLDER_CKM_AGENT",
-  "WHODAS Demo":     "PLACEHOLDER_WHODAS_AGENT",
-  "MSK Outreach":    "PLACEHOLDER_MSK_AGENT",
-  "ACCESS Advisor":  "PLACEHOLDER_ACCESS_ADVISOR",
+  "CKM Outreach":    "agent_9401ktmj1srweajt71rxw4f1h3g8",
+  "BH Screening":    "agent_4701ktmj1veae90s9zpfz6jc9d97",
+  "MSK Outreach":    "agent_2301ktmj1wd3et4anjq29m2bvtkz",
+  "ACCESS Advisor":  "agent_4401ktmj1y4dfnragb1hw9tm8d0z",
 };
 
 function AccessDemoSection({
@@ -271,11 +286,11 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
 
   // Calculator state
   const [calcPatients, setCalcPatients] = useState(500);
-  const [calcTrack, setCalcTrack] = useState<"CKM" | "BH" | "MSK">("CKM");
+  const [calcTrack, setCalcTrack] = useState<"eCKM" | "CKM" | "BH" | "MSK">("CKM");
   const [calcOAR, setCalcOAR] = useState(55);
 
-  const OAP_RATES: Record<string, number> = { CKM: 35, BH: 15, MSK: 20 };
-  const BASE_FEES: Record<string, number> = { CKM: 3, BH: 4, MSK: 3 };
+  const OAP_RATES: Record<string, number> = { eCKM: 30, CKM: 35, BH: 15, MSK: 15 };
+  const BASE_FEES: Record<string, number> = { eCKM: 5, CKM: 5, BH: 6, MSK: 5 };
   const oap = OAP_RATES[calcTrack];
   const baseFee = BASE_FEES[calcTrack];
   const annualOAP = oap * calcPatients * 12;
@@ -296,8 +311,8 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
   return (
     <>
       <SEO
-        title="CMS ACCESS Model — Patient Engagement Infrastructure"
-        description="50% of your ACCESS OAP revenue is withheld by CMS. Getting it back depends on whether your patients responded. Hana makes that happen. $3/patient/month."
+        title="CMS ACCESS Model — Patient Outreach That Gets You Paid"
+        description="CMS holds back half your ACCESS payments until your patients respond. Hana calls and texts them so you earn it back. Five dollars a patient, a month."
         path="/access"
       />
 
@@ -315,7 +330,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
               <span className="text-slate-300">Getting it back depends on whether your patients responded.</span>
             </h1>
             <p className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10">
-              Hana is the engagement infrastructure ACCESS participants use to hit the Outcome Attainment Threshold — AI voice + SMS outreach, PROM collection within the 15-day window, FHIR-ready output. $3/patient/month.
+              Hana calls and texts your patients, collects the measures CMS needs, and sends the data over in the right format. That's how you hit the threshold and get your money back. Five dollars a patient, a month.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
@@ -342,13 +357,13 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
           <div className="max-w-4xl mx-auto">
             <p className="text-[10px] font-bold tracking-[3px] uppercase text-slate-400 mb-8 text-center">What is ACCESS?</p>
             <p className="text-slate-600 text-[16px] leading-relaxed text-center max-w-2xl mx-auto mb-10">
-              ACCESS is a new CMS value-based care model launching July 5. Participating practices receive monthly payments per enrolled patient — but CMS withholds 50% of that revenue for up to 12 months. You only get it back if enough of your patients completed their outcome measures.
+              ACCESS is a new CMS program that starts July 5. You get paid every month for each patient you enroll. But CMS keeps half of it for up to a year. You earn that half back only if enough of your patients complete their check-ins.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-slate-100 rounded-2xl overflow-hidden">
               {[
-                { term: "OAP", full: "Outcome-Aligned Payment", def: "What CMS pays per patient per month — half upfront, half withheld." },
-                { term: "OAT", full: "Outcome Attainment Threshold", def: "The 50% completion rate you must hit to get the withheld half back." },
-                { term: "OAR", full: "Outcome Attainment Rate", def: "Your actual completion rate at reconciliation. This is the number Hana moves." },
+                { term: "OAP", full: "Outcome-Aligned Payment", def: "What CMS pays you per patient each month. Half now, half held back." },
+                { term: "OAT", full: "Outcome Attainment Threshold", def: "The 50% completion rate you have to hit to earn the held-back half." },
+                { term: "OAR", full: "Outcome Attainment Rate", def: "Your real completion rate when CMS settles up. This is the number Hana moves." },
               ].map(({ term, full, def }) => (
                 <div key={term} className="bg-white p-6 flex flex-col gap-2">
                   <div className="flex items-baseline gap-2 mb-1">
@@ -362,16 +377,69 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
           </div>
         </section>
 
-        {/* ── OAT Mechanics ─────────────────────────────────────────────────── */}
-        <section id="how-it-works" className="bg-white px-4 py-20 border-t border-slate-100">
+        {/* ── The revenue cliff ─────────────────────────────────────────────── */}
+        <section className="bg-slate-50 border-t border-slate-100 px-4 py-20">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-14">
-              <p className="text-[10px] font-bold tracking-[3px] uppercase text-slate-400 mb-4">The withheld pool</p>
+              <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-600 mb-4">The revenue cliff</p>
               <h2 className="font-serif text-3xl md:text-4xl text-slate-900 leading-tight mb-4">
-                How the OAT penalty actually works
+                You go from <span className="text-blue-600">~$216</span> a month to <span className="text-blue-600">~$35</span>. And half of that is held back.
               </h2>
+              <p className="text-slate-600 text-[16px] max-w-2xl mx-auto leading-relaxed">
+                Today, a chronic-care patient on remote monitoring brings in about $216 a month. Under ACCESS, your best-paying track pays about $35. Then CMS holds back half of that for up to a year, and only pays it out once your patients respond.
+              </p>
+            </div>
+
+            {/* Two stat callouts: the cliff + the withhold */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-slate-100 rounded-2xl overflow-hidden mb-12">
+              {/* before */}
+              <div className="bg-white p-8 flex flex-col gap-2">
+                <div className="font-serif text-4xl text-slate-900 leading-none">~$216</div>
+                <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Remote monitoring / patient / month</div>
+                <p className="text-[13px] text-slate-500 leading-relaxed">
+                  What a chronic-care patient brings in today.
+                </p>
+              </div>
+              {/* after */}
+              <div className="bg-white p-8 flex flex-col gap-2">
+                <div className="font-serif text-4xl text-blue-600 leading-none">~$35</div>
+                <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">ACCESS CKM / patient / month</div>
+                <p className="text-[13px] text-slate-500 leading-relaxed">
+                  The top ACCESS rate. Most tracks pay $15 to $30 a month.
+                </p>
+              </div>
+              {/* withheld */}
+              <div className="bg-white p-8 flex flex-col gap-2">
+                <div className="font-serif text-4xl text-slate-900 leading-none">50%</div>
+                <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Held back up to 12 months</div>
+                <p className="text-[13px] text-slate-500 leading-relaxed">
+                  You only earn it back once your patients complete their check-ins.
+                </p>
+              </div>
+            </div>
+
+            {/* The mandate */}
+            <div className="bg-[#00122F] rounded-2xl p-8 md:p-10">
+              <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-400 mb-4">Software, not staff</p>
+              <h3 className="font-serif text-2xl md:text-3xl text-white leading-tight mb-4">
+                CMS set the rates this low on purpose
+              </h3>
+              <p className="text-slate-300 text-[16px] leading-relaxed mb-4">
+                At $15 to $35 a patient, you can't pay a person to chase down follow-ups. The math only works if software does it. That's the whole idea behind the program.
+              </p>
+              <p className="text-slate-400 text-[15px] leading-relaxed">
+                Hana is how you get the held-back half. It runs the outreach for you, gets your completion rate over the line, and the money comes back.
+              </p>
+            </div>
+
+            {/* How the penalty actually works — at reconciliation */}
+            <div id="how-it-works" className="text-center mt-20 mb-14 scroll-mt-24">
+              <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-600 mb-4">When CMS settles up</p>
+              <h3 className="font-serif text-2xl md:text-3xl text-slate-900 leading-tight mb-4">
+                One number decides how much you get back
+              </h3>
               <p className="text-slate-500 text-[16px] max-w-2xl mx-auto leading-relaxed">
-                CMS holds back 50% of every Outcome-Aligned Payment for 12 months. At reconciliation, one test determines how much you get back.
+                It's the share of your patients who finished their check-ins. The higher it is, the more of the held-back money you keep.
               </p>
             </div>
 
@@ -384,9 +452,9 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                   <span className="text-[10px] font-bold tracking-[2px] uppercase text-emerald-600">OAR ≥ 50%</span>
                 </div>
                 <div className="font-serif text-4xl text-slate-900 leading-none">100%</div>
-                <div className="text-[11px] text-emerald-600 font-semibold uppercase tracking-wider">Full release</div>
+                <div className="text-[11px] text-emerald-600 font-semibold uppercase tracking-wider">You get it all back</div>
                 <p className="text-[13px] text-slate-500 leading-relaxed">
-                  ≥50% of your patients completed all required measures. CMS releases the full withheld pool.
+                  Half or more of your patients finished their check-ins. CMS pays back the whole held-back amount.
                 </p>
                 <div className="mt-auto pt-4 border-t border-slate-100">
                   <span className="text-[11px] text-slate-400">1,000 CKM patients → $210K released</span>
@@ -400,9 +468,9 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                   <span className="text-[10px] font-bold tracking-[2px] uppercase text-amber-600">OAR = 40%</span>
                 </div>
                 <div className="font-serif text-4xl text-slate-900 leading-none">80%</div>
-                <div className="text-[11px] text-amber-600 font-semibold uppercase tracking-wider">Proportional cut</div>
+                <div className="text-[11px] text-amber-600 font-semibold uppercase tracking-wider">You lose a slice</div>
                 <p className="text-[13px] text-slate-500 leading-relaxed">
-                  OAR ÷ OAT × withheld pool. 40 ÷ 50 = 80% released. You lose 20% of the withheld amount.
+                  Fall short of 50% and your payout drops to match. At 40%, you get 80% of the held-back money back.
                 </p>
                 <div className="mt-auto pt-4 border-t border-slate-100">
                   <span className="text-[11px] text-slate-400">1,000 CKM patients → $168K released</span>
@@ -416,9 +484,9 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                   <span className="text-[10px] font-bold tracking-[2px] uppercase text-red-600">OAR = 20%</span>
                 </div>
                 <div className="font-serif text-4xl text-slate-900 leading-none">50%</div>
-                <div className="text-[11px] text-red-600 font-semibold uppercase tracking-wider">Floor cap</div>
+                <div className="text-[11px] text-red-600 font-semibold uppercase tracking-wider">As low as it goes</div>
                 <p className="text-[13px] text-slate-500 leading-relaxed">
-                  CMS caps the maximum reduction at 50% — you always keep at least half of gross OAP regardless of performance.
+                  Even in a bad year, you keep at least half of the held-back money. That's the floor.
                 </p>
                 <div className="mt-auto pt-4 border-t border-slate-100">
                   <span className="text-[11px] text-slate-400">1,000 CKM patients → $105K released</span>
@@ -426,12 +494,75 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
               </div>
             </div>
 
-            <div className="bg-slate-50 border border-slate-200 rounded-2xl px-8 py-6 text-center">
+            <div className="bg-white border border-slate-200 rounded-2xl px-8 py-6 text-center">
               <p className="text-[15px] text-slate-600 leading-relaxed max-w-2xl mx-auto">
-                <span className="text-slate-900 font-semibold">Crossing 50% OAR isn't just better — it's the difference between full release and a haircut.</span>{" "}
-                Every patient who doesn't complete their measures is a patient who doesn't count toward your OAR.
+                <span className="text-slate-900 font-semibold">Getting past 50% is the difference between all your money and a cut of it.</span>{" "}
+                Every patient who doesn't finish their check-ins counts against you.
               </p>
             </div>
+          </div>
+        </section>
+
+        {/* ── Equity / Portal-Failure Evidence ──────────────────────────────── */}
+        <section className="px-4 py-20 bg-slate-50 border-t border-slate-100">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-14">
+              <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-600 mb-4">Why voice-first</p>
+              <h2 className="font-serif text-3xl md:text-4xl text-slate-900 leading-tight mb-4">
+                Most Medicare patients won't use the portal
+              </h2>
+              <p className="text-slate-500 text-[16px] max-w-2xl mx-auto leading-relaxed">
+                And if they don't check in, it counts as a miss. So the way you reach them sets a ceiling on your score before you even start. The research is clear on this, and it points to one answer: pick up the phone.
+              </p>
+            </div>
+
+            {/* The channel evidence — the load-bearing argument */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-100 rounded-2xl overflow-hidden mb-12">
+              {/* Passive portal alone — below OAT */}
+              <div className="bg-white p-8 flex flex-col gap-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-red-500" />
+                  <span className="text-[10px] font-bold tracking-[2px] uppercase text-red-600">Portal reminders only</span>
+                </div>
+                <div className="font-serif text-4xl text-slate-900 leading-none">45–52%</div>
+                <div className="text-[11px] text-red-600 font-semibold uppercase tracking-wider">Below the 50% line</div>
+                <p className="text-[13px] text-slate-500 leading-relaxed">
+                  In a Medicare study, sending portal reminders and waiting got just 45 to 52% of patients to respond. That's not enough to clear the threshold.
+                </p>
+              </div>
+
+              {/* + Active phone follow-up — clears the gate */}
+              <div className="bg-white p-8 flex flex-col gap-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                  <span className="text-[10px] font-bold tracking-[2px] uppercase text-emerald-600">Add phone calls</span>
+                </div>
+                <div className="font-serif text-4xl text-slate-900 leading-none">75–85%</div>
+                <div className="text-[11px] text-emerald-600 font-semibold uppercase tracking-wider">Clears the line</div>
+                <p className="text-[13px] text-slate-500 leading-relaxed">
+                  Add a phone call on top and response jumps to 75 to 85%. Same patients, same portal. The only thing that changed was someone calling them.
+                </p>
+              </div>
+
+              {/* The population reality — NPHA */}
+              <div className="bg-white p-8 flex flex-col gap-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-amber-500" />
+                  <span className="text-[10px] font-bold tracking-[2px] uppercase text-amber-600">Older adults with a portal</span>
+                </div>
+                <div className="font-serif text-4xl text-slate-900 leading-none">~55%</div>
+                <div className="text-[11px] text-amber-600 font-semibold uppercase tracking-wider">Opened it last month</div>
+                <p className="text-[13px] text-slate-500 leading-relaxed">
+                  Even among older adults who have a portal, only about half had logged in that month. Many would rather just talk to someone on the phone.
+                </p>
+              </div>
+            </div>
+
+            {/* Honesty note — kept short */}
+            <p className="text-[13px] text-slate-400 leading-relaxed text-center max-w-2xl mx-auto">
+              Those numbers come from studies where people made the calls. Our own 85% is a{" "}
+              <span className="text-slate-500 font-medium">goal we're working toward</span>, not a promise. We'd rather show you why phone outreach works than throw a number at you.
+            </p>
           </div>
         </section>
 
@@ -448,28 +579,28 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
             <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-slate-100 border border-slate-100 rounded-2xl overflow-hidden">
               {[
                 {
-                  title: "AI voice + SMS outreach",
-                  body: "Calls every patient at the right time in the 15-day validity window. Adapts channel, time, and tone per patient. Multi-attempt logic for non-responders.",
+                  title: "Calls and texts your patients",
+                  body: "Hana reaches every patient at the right time, in plain conversation. If someone doesn't answer, it tries again.",
                 },
                 {
-                  title: "PROM collection",
-                  body: "PHQ-9, GAD-7, PGIC, WHODAS 2.0, PROMIS Pain Interference, NRS — all administered conversationally, not as forms.",
+                  title: "Runs the check-ins",
+                  body: "Depression, anxiety, and pain questionnaires, plus blood pressure and weight. Asked like a real conversation, not a form to fill out.",
                 },
                 {
-                  title: "Clinical escalation",
-                  body: "Flags safety disclosures, worsening scores, and patients outside expected ranges immediately. Staff see exceptions, not the full call list.",
+                  title: "Flags what matters",
+                  body: "If a patient says something concerning or a number looks off, your team hears about it right away. They see the exceptions, not every call.",
                 },
                 {
-                  title: "FHIR-compliant output",
-                  body: "All measure results mapped to the ACCESS Implementation Guide profiles, ready for the CMS Data Reporting API. You don't build the FHIR layer.",
+                  title: "Sends CMS the data",
+                  body: "Every result goes to CMS in the exact format they want. You don't have to build or manage any of that.",
                 },
                 {
-                  title: "15-day window compliance",
-                  body: "Scheduling logic built around the measurement period deadlines — not generic reminder timing. Every outreach is timed to count.",
+                  title: "Times it to count",
+                  body: "CMS only accepts readings inside tight windows. Hana schedules each call so the data lands when it counts, not a day too early or too late.",
                 },
                 {
-                  title: "EHR integration",
-                  body: "Direct integrations with Athena, Charm, and major EHRs. Or connect via Redox/Catagon to 95+ systems. Reads the chart before every call.",
+                  title: "Works with your EHR",
+                  body: "Connects to Athena, Charm, and most major systems. Hana reads the chart before every call so nothing is asked twice.",
                 },
               ].map(({ title, body }) => (
                 <div key={title} className="bg-white p-8">
@@ -478,6 +609,98 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* ── Follow-On Re-Consent ──────────────────────────────────────────── */}
+        <section className="px-4 py-20 bg-slate-50 border-t border-slate-100">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-14">
+              <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-600 mb-4">The easy one to hand off</p>
+              <h2 className="font-serif text-3xl md:text-4xl text-slate-900 leading-tight mb-4">
+                Every year, you have to get consent again
+              </h2>
+              <p className="text-slate-500 text-[16px] max-w-2xl mx-auto leading-relaxed">
+                For each patient you keep, you have to ask them to re-up every twelve months. Miss the window and you can't bill that patient. It happens again next year, and the year after, for ten years.
+              </p>
+            </div>
+
+            {/* The recurring obligation */}
+            <div className="bg-white border border-slate-200 rounded-2xl px-8 py-7 mb-12">
+              <p className="text-[15px] text-slate-600 leading-relaxed">
+                You have a <span className="text-slate-900 font-semibold">60-day window</span> to get the patient's consent again, confirm they still need the care, and take a fresh reading if the old one's gone stale.{" "}
+                <span className="text-slate-900 font-semibold">Miss it and you can't bill that patient that year.</span>{" "}
+                It's easy to forget, and the cost of forgetting is a whole year of payments.
+              </p>
+            </div>
+
+            {/* Why this is the strongest automation fit — 4 traits */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-px bg-slate-100 rounded-2xl overflow-hidden mb-12">
+              {[
+                { label: "Every year", body: "It comes back every twelve months for every patient you keep. Not a one-off." },
+                { label: "Hard deadline", body: "You have 60 days. Inside it you can bill. Outside it you can't." },
+                { label: "Real money", body: "Miss it and you lose a full year of payments for that patient." },
+                { label: "Nothing clinical", body: "It's consent, contact info, and a quick reading. No doctor needed." },
+              ].map(({ label, body }) => (
+                <div key={label} className="bg-white p-8 flex flex-col gap-3">
+                  <span className="text-[10px] font-bold tracking-[2px] uppercase text-blue-600">{label}</span>
+                  <p className="text-[13px] text-slate-500 leading-relaxed">{body}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* What Hana does — one compact block */}
+            <div className="bg-[#00122F] rounded-2xl p-8 md:p-10">
+              <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-400 mb-4">What Hana does</p>
+              <p className="text-white text-[17px] leading-relaxed mb-4">
+                Hana handles the whole thing with one call, on time.
+              </p>
+              <p className="text-slate-300 text-[15px] leading-relaxed">
+                It calls inside the window, gets the consent, confirms the details, takes a fresh reading if needed, and writes it all back to the chart with a timestamp. Your team only sees the few patients who didn't pick up, with time to spare.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ── How the timing works ─────────────────────────────────────────── */}
+        <section className="px-4 py-20 bg-white border-t border-slate-100">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-14">
+              <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-600 mb-4">Timing matters</p>
+              <h2 className="font-serif text-3xl md:text-4xl text-slate-900 leading-tight mb-4">
+                A reading on the wrong day doesn't count
+              </h2>
+              <p className="text-slate-600 text-[16px] max-w-2xl mx-auto leading-relaxed">
+                CMS only accepts data inside specific windows. A regular reminder app doesn't know that. Hana does, so every call lands when the reading actually counts toward your score.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-100 border border-slate-100 rounded-2xl overflow-hidden">
+              <div className="bg-white p-8">
+                <div className="font-serif text-5xl text-slate-900 leading-none mb-3">15</div>
+                <p className="text-[10px] font-bold tracking-[2px] uppercase text-blue-600 mb-3">Days to submit a reading</p>
+                <p className="text-[14px] text-slate-500 leading-relaxed">
+                  Blood pressure, weight, and check-ins only count if sent within 15 days. Hana calls so the reading is fresh when it goes in.
+                </p>
+              </div>
+
+              <div className="bg-white p-8">
+                <div className="font-serif text-5xl text-slate-900 leading-none mb-3">60</div>
+                <p className="text-[10px] font-bold tracking-[2px] uppercase text-blue-600 mb-3">Days to get the first reading</p>
+                <p className="text-[14px] text-slate-500 leading-relaxed">
+                  You have 60 days to get a patient's first reading, or they drop out of the program. Hana makes sure it happens in time.
+                </p>
+              </div>
+
+              <div className="bg-white p-8">
+                <div className="font-serif text-5xl text-slate-900 leading-none mb-3">1–2</div>
+                <p className="text-[10px] font-bold tracking-[2px] uppercase text-blue-600 mb-3">Years a lab result lasts</p>
+                <p className="text-[14px] text-slate-500 leading-relaxed">
+                  Lab results count for one to two years, so they're on a different clock. Hana tracks each one separately instead of nagging everyone at once.
+                </p>
+              </div>
+            </div>
+
           </div>
         </section>
 
@@ -490,7 +713,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                 We win when you win.
               </h2>
               <p className="text-slate-500 text-[16px] max-w-xl mx-auto leading-relaxed">
-                The success fee hits at the exact moment CMS releases a pool you've been waiting 12 months for. It's the easiest cheque you write all year.
+                You only pay the success fee when CMS pays you back the money they held for a year. It's the easiest check you'll write.
               </p>
             </div>
 
@@ -498,10 +721,10 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
               {/* Base fee */}
               <div className="bg-white border border-slate-200 rounded-2xl p-8">
                 <p className="text-[10px] font-bold tracking-[2px] uppercase text-slate-400 mb-4">Base fee</p>
-                <div className="font-serif text-5xl text-slate-900 mb-2">$3</div>
+                <div className="font-serif text-5xl text-slate-900 mb-2">$5</div>
                 <div className="text-slate-500 text-sm mb-6">per patient / per month</div>
                 <ul className="space-y-2">
-                  {["All voice + SMS outreach", "PROM collection (all tracks)", "15-day window compliance logic", "FHIR-ready output", "Clinical escalation"].map(item => (
+                  {["All the calls and texts", "Every check-in, all tracks", "Timed to count with CMS", "Data sent to CMS for you", "Alerts when something's off"].map(item => (
                     <li key={item} className="flex items-center gap-2 text-[13px] text-slate-600">
                       <div className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
                       {item}
@@ -514,9 +737,9 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
               <div className="bg-[#00122F] border border-white/10 rounded-2xl p-8 text-white">
                 <p className="text-[10px] font-bold tracking-[2px] uppercase text-blue-400 mb-4">Success fee</p>
                 <div className="font-serif text-5xl text-white mb-2">+10%</div>
-                <div className="text-slate-400 text-sm mb-6">of the withheld OAP pool released at OAT reconciliation</div>
+                <div className="text-slate-400 text-sm mb-6">of the held-back money CMS pays you back</div>
                 <p className="text-[13px] text-slate-400 leading-relaxed">
-                  Only triggered when OAT is hit and CMS releases the withheld funds. If you don't get it back, we don't charge it.
+                  You only pay this when CMS pays you back. If the money doesn't come back, neither does our fee.
                 </p>
                 <div className="mt-6 pt-6 border-t border-white/10">
                   <span className="text-[12px] text-blue-400 font-semibold">We both have skin in the game.</span>
@@ -526,17 +749,17 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
 
             {/* ROI calc */}
             <div className="bg-white border border-slate-200 rounded-2xl p-8 md:p-10">
-              <p className="text-[10px] font-bold tracking-[2px] uppercase text-blue-600 mb-6">The math — CKM track, 1,000 patients</p>
+              <p className="text-[10px] font-bold tracking-[2px] uppercase text-blue-600 mb-6">The math · CKM track, 1,000 patients</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-3">
                   {[
-                    ["OAP revenue", "$35/mo × 1,000 = $35,000/mo"],
-                    ["Annual OAP", "$420,000"],
-                    ["CMS withheld (50%)", "~$210,000"],
-                    ["OAT hit → released", "$210,000"],
+                    ["Monthly payment", "$35/mo × 1,000 = $35,000/mo"],
+                    ["Paid over the year", "$420,000"],
+                    ["Held back by CMS (50%)", "~$210,000"],
+                    ["You hit the line → paid back", "$210,000"],
                     ["Hana success fee", "$21,000 (10%)"],
-                    ["Hana base cost", "$3 × 1,000 × 12 = $36,000"],
-                    ["Total Hana cost", "$57,000"],
+                    ["Hana base cost", "$5 × 1,000 × 12 = $60,000"],
+                    ["Total Hana cost", "$81,000"],
                   ].map(([label, value]) => (
                     <div key={label} className="flex items-baseline justify-between gap-4 text-[14px]">
                       <span className="text-slate-500">{label}</span>
@@ -549,10 +772,10 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                   </div>
                 </div>
                 <div className="flex flex-col items-center justify-center bg-blue-50 rounded-xl p-8 text-center">
-                  <div className="font-serif text-[72px] text-blue-600 leading-none mb-2">3.7×</div>
-                  <div className="text-[11px] font-bold tracking-[2px] uppercase text-blue-600 mb-3">ROI</div>
+                  <div className="font-serif text-[72px] text-blue-600 leading-none mb-2">2.6×</div>
+                  <div className="text-[11px] font-bold tracking-[2px] uppercase text-blue-600 mb-3">Return</div>
                   <p className="text-[13px] text-slate-500 leading-relaxed">
-                    Missing OAT at 40% OAR → only $168K released instead of $210K. The $42K difference covers Hana's full annual cost.
+                    Hana brings back $210K for $81K. And if you fall short of the line, say 40%, you'd get just $168K instead, leaving $42K on the table.
                   </p>
                 </div>
               </div>
@@ -568,8 +791,8 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
               <h2 className="font-serif text-3xl md:text-4xl text-white leading-tight mb-3">
                 Run the numbers for your cohort.
               </h2>
-              <p className="text-slate-500 text-[15px]">
-                Adjust your patient count, track, and expected OAR. See exactly what's at stake.
+              <p className="text-slate-300 text-[15px]">
+                Adjust your patient count, track, and response rate. See exactly what's at stake.
               </p>
             </div>
 
@@ -581,7 +804,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                 {/* Patient count */}
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <label className="text-[11px] font-bold tracking-[2px] uppercase text-slate-400">Patients enrolled</label>
+                    <label className="text-[11px] font-bold tracking-[2px] uppercase text-slate-300">Patients enrolled</label>
                     <span className="font-serif text-2xl text-white">{calcPatients.toLocaleString()}</span>
                   </div>
                   <input
@@ -594,39 +817,39 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                       background: `linear-gradient(to right, #3B82F6 ${((calcPatients - 100) / 4900) * 100}%, rgba(255,255,255,0.1) ${((calcPatients - 100) / 4900) * 100}%)`
                     }}
                   />
-                  <div className="flex justify-between text-[11px] text-slate-600 mt-1.5">
+                  <div className="flex justify-between text-[11px] text-slate-400 mt-1.5">
                     <span>100</span><span>5,000</span>
                   </div>
                 </div>
 
                 {/* Track */}
                 <div>
-                  <label className="text-[11px] font-bold tracking-[2px] uppercase text-slate-400 block mb-3">Track</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {(["CKM", "BH", "MSK"] as const).map(t => (
+                  <label className="text-[11px] font-bold tracking-[2px] uppercase text-slate-300 block mb-3">Track</label>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    {(["eCKM", "CKM", "BH", "MSK"] as const).map(t => (
                       <button
                         key={t}
                         onClick={() => setCalcTrack(t)}
                         className="py-2.5 rounded-xl text-[13px] font-semibold transition-all border"
                         style={calcTrack === t
                           ? { backgroundColor: "#3B82F6", color: "#fff", borderColor: "#3B82F6" }
-                          : { backgroundColor: "transparent", color: "#94a3b8", borderColor: "rgba(255,255,255,0.08)" }
+                          : { backgroundColor: "transparent", color: "#cbd5e1", borderColor: "rgba(255,255,255,0.08)" }
                         }
                       >
-                        {t === "CKM" ? "CKM / eCKM" : t}
+                        {t}
                       </button>
                     ))}
                   </div>
-                  <p className="text-[11px] text-slate-600 mt-2">
-                    OAP rate: ${OAP_RATES[calcTrack]}/pt/mo · Base fee: ${BASE_FEES[calcTrack]}/pt/mo{calcTrack === "BH" ? " (WHODAS)" : ""}
+                  <p className="text-[11px] text-slate-300 mt-2">
+                    CMS pays ${OAP_RATES[calcTrack]}/patient/mo · Hana base fee ${BASE_FEES[calcTrack]}/patient/mo{calcTrack === "BH" ? " (more check-ins)" : ""}
                   </p>
                 </div>
 
                 {/* OAR slider — the key one */}
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <label className="text-[11px] font-bold tracking-[2px] uppercase text-slate-400">
-                      Expected OAR
+                    <label className="text-[11px] font-bold tracking-[2px] uppercase text-slate-300">
+                      Expected response rate
                     </label>
                     <div className="flex items-center gap-2">
                       <span className="font-serif text-2xl text-white">{calcOAR}%</span>
@@ -637,7 +860,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                           : { color: "#F59E0B", backgroundColor: "rgba(245,158,11,0.15)" }
                         }
                       >
-                        {hitOAT ? "✓ OAT hit" : "✗ Below OAT"}
+                        {hitOAT ? "✓ Over the line" : "✗ Below the line"}
                       </span>
                     </div>
                   </div>
@@ -652,9 +875,9 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                     }}
                   />
                   <div className="flex justify-between text-[11px] mt-1.5">
-                    <span className="text-slate-600">10%</span>
-                    <span className="text-blue-400 font-semibold">← OAT threshold: 50% →</span>
-                    <span className="text-slate-600">90%</span>
+                    <span className="text-slate-400">10%</span>
+                    <span className="text-blue-400 font-semibold">← 50% line →</span>
+                    <span className="text-slate-400">90%</span>
                   </div>
                 </div>
               </div>
@@ -671,12 +894,12 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                   }
                 >
                   <p className="text-[11px] font-bold tracking-[2px] uppercase mb-1" style={{ color: hitOAT ? "#10B981" : "#F59E0B" }}>
-                    {hitOAT ? "Full withheld pool released" : "Proportional reduction applies"}
+                    {hitOAT ? "You get all of it back" : "You get a cut of it back"}
                   </p>
                   <p className="text-[13px] leading-relaxed" style={{ color: hitOAT ? "#6ee7b7" : "#fcd34d" }}>
                     {hitOAT
-                      ? `OAR ${calcOAR}% ≥ 50% threshold — CMS releases 100% of your withheld pool.`
-                      : `OAR ${calcOAR}% ÷ 50% OAT = ${Math.round(releaseFraction * 100)}% released. Drag to 50% to see the difference.`
+                      ? `At ${calcOAR}%, you're past the 50% line. CMS pays back the whole held-back amount.`
+                      : `At ${calcOAR}%, you get ${Math.round(releaseFraction * 100)}% of it back. Drag to 50% to see the difference.`
                     }
                   </p>
                 </div>
@@ -684,15 +907,15 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                 {/* Key numbers */}
                 <div className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-6 flex flex-col gap-4 flex-1">
                   {[
-                    ["Annual OAP revenue", `$${annualOAP.toLocaleString()}`],
-                    ["CMS withheld (50%)", `$${withheld.toLocaleString()}`],
-                    ["Released at reconciliation", `$${Math.round(released).toLocaleString()}`, hitOAT ? "#10B981" : "#F59E0B"],
+                    ["Paid over the year", `$${annualOAP.toLocaleString()}`],
+                    ["Held back by CMS (50%)", `$${withheld.toLocaleString()}`],
+                    ["Paid back to you", `$${Math.round(released).toLocaleString()}`, hitOAT ? "#10B981" : "#F59E0B"],
                     ["Hana base cost", `$${hanaBase.toLocaleString()}`],
                     ["Hana success fee (10%)", `$${Math.round(hanaSuccess).toLocaleString()}`],
                     ["Total Hana cost", `$${Math.round(hanaTotal).toLocaleString()}`],
                   ].map(([label, value, color]) => (
                     <div key={String(label)} className="flex items-baseline justify-between gap-4">
-                      <span className="text-[13px] text-slate-500">{label}</span>
+                      <span className="text-[13px] text-slate-300">{label}</span>
                       <span className="text-[14px] font-semibold tabular-nums" style={{ color: color as string || "#f1f5f9" }}>{value}</span>
                     </div>
                   ))}
@@ -771,10 +994,10 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                   <div className="mt-6 pt-6 border-t border-slate-200">
                     <div className="flex items-center gap-2 mb-3">
                       <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                      <span className="text-[11px] font-bold tracking-[2px] uppercase text-emerald-600">WHODAS 2.0</span>
+                      <span className="text-[11px] font-bold tracking-[2px] uppercase text-emerald-600">WHODAS 2.0 · optional</span>
                     </div>
                     <p className="text-[13px] text-slate-500 leading-relaxed">
-                      36 items. 6 domains. ~20 minutes. For a Medicare patient, completing WHODAS via a portal form has low completion rates. Hana administers it conversationally — plain language, patient pacing, domain grouping — and outputs FHIR-structured results.
+                      A short check-in on daily function. It's optional for now, but CMS has hinted something like it is coming, so it's worth getting ahead of. Most older patients won't fill it out online. Hana just asks them over the phone, in plain language, and sends the results in for you.
                     </p>
                   </div>
                 )}
@@ -789,6 +1012,58 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
           handleStartWebCall={handleStartWebCall}
           handleEndWebCall={handleEndWebCall}
         />
+
+        {/* ── Roadmap ───────────────────────────────────────────────────────── */}
+        <section className="px-4 py-20 bg-slate-50 border-t border-slate-100">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-14">
+              <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-600 mb-4">On the roadmap</p>
+              <h2 className="font-serif text-3xl md:text-4xl text-slate-900 leading-tight mb-4">
+                What we're building next
+              </h2>
+              <p className="text-slate-500 text-[16px] max-w-xl mx-auto leading-relaxed">
+                These aren't live yet, and we won't pretend they are. Here's what's coming, and we're upfront about where it stops.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-100 rounded-2xl overflow-hidden">
+              {[
+                {
+                  title: "Care update drafts",
+                  what: "Hana writes up the care update for you and gets the patient's okay to share it.",
+                  not: "Your system still sends it. We write the draft, we don't move the data.",
+                },
+                {
+                  title: "One call, two tracks",
+                  what: "If a patient is in two programs, Hana covers both in a single call so they aren't bothered twice.",
+                  not: "It makes the call simpler. It doesn't change what CMS pays.",
+                },
+                {
+                  title: "Heads-up on outside care",
+                  what: "If a patient mentions getting care elsewhere, Hana flags it early so your team can reach out.",
+                  not: "It's a heads-up, not a fix. Patients are always free to go elsewhere.",
+                },
+              ].map(({ title, what, not }) => (
+                <div key={title} className="bg-white p-8">
+                  <div className="inline-flex items-center gap-2 mb-5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                    <span className="text-[10px] font-bold tracking-[2px] uppercase text-amber-600">Coming soon</span>
+                  </div>
+                  <h3 className="font-semibold text-slate-900 text-[15px] mb-3">{title}</h3>
+                  <p className="text-[14px] text-slate-600 leading-relaxed mb-5">{what}</p>
+                  <div className="pt-4 border-t border-slate-100">
+                    <p className="text-[10px] font-bold tracking-[2px] uppercase text-slate-400 mb-2">Where it stops</p>
+                    <p className="text-[13px] text-slate-500 leading-relaxed">{not}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-center text-[13px] text-slate-400 leading-relaxed max-w-2xl mx-auto mt-10">
+              None of this is live yet, and none of it changes what CMS pays. If another vendor tells you they can "fix" your numbers here, ask them to show you the rules.
+            </p>
+          </div>
+        </section>
 
         {/* ── FAQ ───────────────────────────────────────────────────────────── */}
         <section className="px-4 py-20 bg-white border-t border-slate-100">
@@ -827,10 +1102,10 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
             <div className="text-center mb-12">
               <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-400 mb-4">July 5 is close</p>
               <h2 className="font-serif text-4xl md:text-5xl text-white leading-tight mb-4">
-                Get your OAT infrastructure<br />in place before launch.
+                Get set up before<br />the program starts.
               </h2>
               <p className="text-slate-400 text-[16px] max-w-xl mx-auto leading-relaxed mb-10">
-                20 minutes. We'll show you exactly what the outreach looks like for your track, your patient population, and your timeline.
+                Twenty minutes. We'll show you what the calls sound like for your patients and walk through your numbers.
               </p>
               <a
                 href="https://calendly.com/matteowastaken/discoverycall"
@@ -847,11 +1122,11 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
             <div className="border-t border-white/[0.07] pt-12 max-w-xl mx-auto text-center">
               <p className="text-[10px] font-bold tracking-[3px] uppercase text-slate-500 mb-3">Free one-pager</p>
               <p className="text-white font-semibold text-[15px] mb-2">ACCESS Pricing & ROI Calculator</p>
-              <p className="text-slate-500 text-[13px] mb-6">The OAT math for CKM, BH, and MSK — with your patient count filled in.</p>
+              <p className="text-slate-500 text-[13px] mb-6">The numbers for each track, with your patient count filled in.</p>
               {submitted ? (
                 <div className="flex items-center justify-center gap-2 text-emerald-400 text-[14px] font-semibold py-3">
                   <div className="w-2 h-2 rounded-full bg-emerald-400" />
-                  Got it — we'll send it over shortly.
+                  Got it. We'll send it over shortly.
                 </div>
               ) : (
                 <form

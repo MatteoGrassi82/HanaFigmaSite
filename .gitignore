@@ -37,3 +37,7 @@ supabase/.temp/
 
 # Local AEO content drafts (review locally, publish to Sanity)
 content-drafts/
+
+# ElevenLabs API key (local only)
+.env.elevenlabs
+.eleven-deploy/

@@ -131,8 +131,15 @@
     @apply border-border outline-ring/50;
   }
 
+  html,
   body {
     @apply bg-background text-foreground;
+    /* `clip` (not `hidden`) stops horizontal overflow / the right-side white
+       gap WITHOUT turning html/body into a scroll container — which would
+       break `position: sticky` descendants (e.g. the stacked case-study
+       cards and the compliance column). */
+    overflow-x: clip;
+    max-width: 100%;
   }
 
   /**
@@ -214,6 +221,28 @@
 
 .animate-ping {
   animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Floating announcement entrance */
+@keyframes announcement-float-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.announcement-float {
+  animation: announcement-float-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .announcement-float {
+    animation: none;
+  }
 }
 
 /* Transitions */
