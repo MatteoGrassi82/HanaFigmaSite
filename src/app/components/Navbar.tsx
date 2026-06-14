@@ -58,13 +58,13 @@ export const NavbarDefaults: Props = {
       subMenuLinks: [
         { url: "/whitepapers", title: "Whitepapers" },
         { url: "/blog", title: "Blog" },
-        { url: "/research", title: "Research" },
+        { url: "/labs", title: "Labs" },
         { url: "/pricing", title: "Savings Calculator" },
       ],
     },
     {
-      url: "/research",
-      title: "Research",
+      url: "/labs",
+      title: "Labs",
     },
   ],
   signInButton: {

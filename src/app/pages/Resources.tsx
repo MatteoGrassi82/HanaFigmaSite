@@ -29,7 +29,7 @@ const WHITEPAPERS = [
 // ── Static research links ─────────────────────────────────────────────────────
 const RESEARCH_ITEMS = [
   { title: "State of Voice AI", desc: "Interactive landscape of 400+ voice AI companies across infrastructure, platforms, and healthcare applications.", href: "/state-of-ai", internal: true },
-  { title: "Academic Research Library", desc: "Curated peer-reviewed studies on voice AI in clinical settings — Parkinson's, depression, chronic care, and more.", href: "/research", internal: true },
+  { title: "Academic Research Library", desc: "Curated peer-reviewed studies on voice AI in clinical settings — Parkinson's, depression, chronic care, and more.", href: "/labs", internal: true },
 ];
 
 // ── Category tabs ─────────────────────────────────────────────────────────────

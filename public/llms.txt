@@ -29,7 +29,7 @@ HANA is infrastructure, not an app. Clinic partners build on it rather than buy 
 - Whitepapers: https://www.hana.health/whitepapers
 - ADHD Intake Whitepaper: https://www.hana.health/whitepapers/adhd-intake
 - Pricing / Savings Calculator: https://www.hana.health/pricing
-- Research Library: https://www.hana.health/research
+- Labs (research library): https://www.hana.health/labs
 - State of Voice AI (landscape map): https://www.hana.health/state-of-ai
 - Blog: https://www.hana.health/blog
 - Contact / Book a Demo: https://www.hana.health/contact

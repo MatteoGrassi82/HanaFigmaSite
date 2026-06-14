@@ -151,32 +151,32 @@ export function Research() {
   return (
     <div className="bg-slate-50 min-h-screen">
       <SEO 
-        title="Research"
+        title="Labs"
         description="Explore the clinical research and publications behind Hana Voice AI. Advancing conversational AI in healthcare with voice biomarkers, patient engagement studies, and adaptive engagement technology."
-        path="/research"
+        path="/labs"
         keywords="clinical AI research, voice biomarkers, healthcare AI publications, conversational AI healthcare, patient engagement research, voice analysis machine learning"
         jsonLd={breadcrumbSchema([
           { name: "Home", url: "https://www.hana.health/" },
-          { name: "Research", url: "https://www.hana.health/research" }
+          { name: "Labs", url: "https://www.hana.health/labs" }
         ])}
       />
       {/* Hero Section */}
-      <section className="pt-20 pb-20 md:pt-32 md:pb-24 px-6 relative bg-slate-50 overflow-hidden">
+      <section className="pt-16 pb-16 md:pt-24 md:pb-20 px-6 relative bg-slate-50 overflow-hidden">
         {/* Abstract background blobs to match homepage feel */}
         <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[120%] h-[80%] rounded-[100%] bg-blue-100/30 blur-[120px] pointer-events-none" />
         
         <div className="max-w-4xl mx-auto text-center relative z-10">
            <FadeIn>
-              <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-normal text-slate-900 mb-8 leading-[1.1]">
+              <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-normal text-slate-900 mb-6 leading-[1.1]">
                  Advancing Conversational AI <br className="hidden md:block"/> in Healthcare
               </h1>
            </FadeIn>
            <FadeIn delay={0.1}>
              <div className="space-y-6 max-w-2xl mx-auto">
-                <p className="text-xl text-slate-600 leading-relaxed">
+                <p className="text-lg text-slate-600 leading-relaxed">
                    At Hana, we're pioneering research into how conversational AI can transform patient engagement and care delivery. Our mission is to investigate the complex dynamics of human-AI interaction in healthcare contexts.
                 </p>
-                <p className="text-xl text-slate-600 leading-relaxed">
+                <p className="text-lg text-slate-600 leading-relaxed">
                    We focus on fundamental questions: How can AI systems detect subtle changes in patient health through voice? What engagement patterns lead to sustained behavior change?
                 </p>
              </div>

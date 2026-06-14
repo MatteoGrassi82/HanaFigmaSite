@@ -235,7 +235,8 @@ function AppContent() {
               } />
               <Route path="/use-cases" element={<Navigate to="/case-studies" replace />} />
               <Route path="/timeline" element={<RadialOrbitalTimelineDemo />} />
-              <Route path="/research" element={<Research />} />
+              <Route path="/labs" element={<Research />} />
+              <Route path="/research" element={<Navigate to="/labs" replace />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/test-webhook" element={<TestWebhook />} />

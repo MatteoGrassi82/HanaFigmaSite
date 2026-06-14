@@ -39,7 +39,7 @@ export function Footer() {
           <ul className="space-y-2 text-sm">
             <li><a href="https://docs.hana.health/" target="_blank" rel="noopener noreferrer" className="inline-block py-2 hover:text-white transition-colors">Documentation</a></li>
             <li><Link to="/blog" className="inline-block py-2 hover:text-white transition-colors">Blog</Link></li>
-            <li><Link to="/research" className="inline-block py-2 hover:text-white transition-colors">Research</Link></li>
+            <li><Link to="/labs" className="inline-block py-2 hover:text-white transition-colors">Labs</Link></li>
             <li><Link to="/state-of-ai" className="inline-block py-2 hover:text-white transition-colors">State of Voice AI</Link></li>
             <li><Link to="/use-cases" className="inline-block py-2 hover:text-white transition-colors">Use Cases</Link></li>
           </ul>
