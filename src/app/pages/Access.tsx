@@ -135,17 +135,17 @@ function AccessDemoSection({
 
         <div className="flex flex-col lg:flex-row gap-0 border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
           {/* Left — video + agent tags */}
-          <div className="relative lg:w-[48%] bg-slate-50 flex flex-col justify-between p-8 min-h-[420px]">
+          <div className="relative lg:w-[48%] bg-slate-50 flex flex-col justify-between p-8 min-h-[280px] md:min-h-[420px]">
             <div className="absolute inset-0 flex items-center justify-center p-6 pointer-events-none">
               <video src="/video1.mp4" autoPlay loop muted playsInline className="w-full h-full object-cover rounded-xl" />
             </div>
-            <div className="relative z-10 mt-auto flex flex-wrap gap-2 pt-48">
+            <div className="relative z-10 mt-auto flex flex-wrap gap-2 pt-24 sm:pt-48">
               {ACCESS_AGENT_TYPES.map(type => (
                 <button
                   key={type}
                   onClick={() => { setSelectedAgent(type); setFieldErrors(p => ({ ...p, agent: undefined })); }}
                   className={cn(
-                    "px-4 py-2 rounded-full text-sm font-medium border transition-all duration-150",
+                    "px-4 py-2 min-h-[44px] md:min-h-0 rounded-full text-sm font-medium border transition-all duration-150",
                     selectedAgent === type
                       ? "bg-slate-900 text-white border-slate-900"
                       : "bg-white text-slate-700 border-slate-200 hover:border-slate-400"
@@ -209,7 +209,10 @@ function AccessDemoSection({
                   {selectedAgent ? (
                     <p className="text-[13px] text-slate-500">Use case: <span className="font-semibold text-slate-900">{selectedAgent}</span></p>
                   ) : (
-                    <p className="text-[13px] text-slate-400 italic">Select a use case from the left →</p>
+                    <p className="text-[13px] text-slate-400 italic">
+                      <span className="lg:hidden">Select a use case above ↑</span>
+                      <span className="hidden lg:inline">Select a use case from the left →</span>
+                    </p>
                   )}
                   {fieldErrors.agent && <p className="text-xs text-red-500">{fieldErrors.agent}</p>}
 
@@ -761,9 +764,9 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                     ["Hana base cost", "$5 × 1,000 × 12 = $60,000"],
                     ["Total Hana cost", "$81,000"],
                   ].map(([label, value]) => (
-                    <div key={label} className="flex items-baseline justify-between gap-4 text-[14px]">
+                    <div key={label} className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4 text-[14px]">
                       <span className="text-slate-500">{label}</span>
-                      <span className="text-slate-900 font-medium tabular-nums">{value}</span>
+                      <span className="text-slate-900 font-medium tabular-nums sm:text-right">{value}</span>
                     </div>
                   ))}
                   <div className="border-t border-slate-100 pt-3 flex items-baseline justify-between gap-4">
@@ -772,7 +775,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                   </div>
                 </div>
                 <div className="flex flex-col items-center justify-center bg-blue-50 rounded-xl p-8 text-center">
-                  <div className="font-serif text-[72px] text-blue-600 leading-none mb-2">2.6×</div>
+                  <div className="font-serif text-5xl sm:text-6xl md:text-[72px] text-blue-600 leading-none mb-2">2.6×</div>
                   <div className="text-[11px] font-bold tracking-[2px] uppercase text-blue-600 mb-3">Return</div>
                   <p className="text-[13px] text-slate-500 leading-relaxed">
                     Hana brings back $210K for $81K. And if you fall short of the line, say 40%, you'd get just $168K instead, leaving $42K on the table.
@@ -956,7 +959,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                 <button
                   key={t.key}
                   onClick={() => setActiveTrack(t.key)}
-                  className="px-5 py-2.5 rounded-lg text-[13px] font-semibold transition-all"
+                  className="px-5 py-3 sm:py-2.5 rounded-lg text-[13px] font-semibold transition-all"
                   style={activeTrack === t.key
                     ? { backgroundColor: t.color, color: "#fff" }
                     : { color: "#64748b", backgroundColor: "transparent" }
@@ -1131,7 +1134,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
               ) : (
                 <form
                   onSubmit={e => { e.preventDefault(); if (email) setSubmitted(true); }}
-                  className="flex gap-2"
+                  className="flex flex-col sm:flex-row gap-2"
                 >
                   <input
                     type="email"
@@ -1143,7 +1146,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                   />
                   <button
                     type="submit"
-                    className="px-6 py-3 bg-white text-[#00122F] rounded-xl font-semibold text-[14px] hover:bg-slate-100 transition-colors shrink-0"
+                    className="w-full sm:w-auto px-6 py-3 bg-white text-[#00122F] rounded-xl font-semibold text-[14px] hover:bg-slate-100 transition-colors shrink-0"
                   >
                     Send it
                   </button>

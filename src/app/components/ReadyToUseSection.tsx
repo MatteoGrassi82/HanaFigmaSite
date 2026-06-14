@@ -4,7 +4,7 @@ import { Link } from "react-router";
 
 export function ReadyToUseSection() {
   return (
-    <section className="py-32 px-4 bg-[rgb(0,18,47)] relative overflow-hidden text-center border-t border-white/5">
+    <section className="py-20 sm:py-24 md:py-32 px-4 bg-[rgb(0,18,47)] relative overflow-hidden text-center border-t border-white/5">
       {/* Background gradients/effects */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-blue-600/20 rounded-full blur-[100px]" />
@@ -18,10 +18,10 @@ export function ReadyToUseSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-5xl md:text-6xl font-light text-white mb-6 tracking-tight">
-            See it live.
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-light text-white mb-6 tracking-tight">
+            Automate the routine. Free your team.
           </h2>
-          <p className="text-xl md:text-2xl text-slate-300 font-light mb-12 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-slate-300 font-light mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed">
             Book a demo. We'll show you a workflow built for how your team works — not a generic product tour.
           </p>
 

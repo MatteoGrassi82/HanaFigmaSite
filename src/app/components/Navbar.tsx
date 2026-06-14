@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, Menu, X, ArrowRight } from "lucide-react";
+import { ChevronDown, Menu, X, Sparkle } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { Link } from "react-router";
 import logoImage from 'figma:asset/55130a9cc9a8f890dc08e580a5cf6dd0df0df413.png';
@@ -22,7 +22,7 @@ type NavLink = {
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   title: string;
-  variant?: "primary" | "secondary" | "link";
+  variant?: "primary" | "white" | "secondary" | "link";
   size?: "sm" | "md" | "lg";
   href?: string;
 };
@@ -31,6 +31,7 @@ type Props = {
   logo: ImageProps;
   navLinks: NavLink[];
   button: ButtonProps;
+  signInButton: ButtonProps;
 };
 
 export type NavbarProps = React.ComponentPropsWithoutRef<"section"> & Partial<Props>;
@@ -66,6 +67,12 @@ export const NavbarDefaults: Props = {
       title: "Research",
     },
   ],
+  signInButton: {
+    title: "Sign in",
+    size: "md",
+    variant: "white" as const,
+    href: "https://app.hana.health",
+  },
   button: {
     title: "Book a Demo",
     size: "md",
@@ -114,13 +121,13 @@ const SmartLink = ({ href, children, className, target, ...props }: SmartLinkPro
 
 // --- Component ---
 export const Navbar = (props: NavbarProps) => {
-  const { logo, navLinks, button } = {
+  const { logo, navLinks, button, signInButton } = {
     ...NavbarDefaults,
     ...props,
   };
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const isMobile = useMediaQuery("(max-width: 1023px)");
+  const isMobile = useMediaQuery("(max-width: 1023.98px)");
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -172,16 +179,19 @@ export const Navbar = (props: NavbarProps) => {
           )}
         </div>
 
-        {/* Right Side: Button & Mobile Toggle */}
+        {/* Right Side: Buttons & Mobile Toggle */}
         <div className="flex items-center gap-4">
-          <div className="hidden lg:block">
+          <div className="hidden lg:flex items-center gap-3">
+            <Button {...signInButton} />
             <Button {...button} />
           </div>
           
           <button
             ref={buttonRef}
-            className="flex items-center justify-center lg:hidden p-2 text-[#1e2a3a]"
+            className="flex items-center justify-center lg:hidden min-h-[44px] min-w-[44px] p-2 text-[#1e2a3a]"
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
@@ -198,7 +208,7 @@ export const Navbar = (props: NavbarProps) => {
             transition={{ duration: 0.2 }}
             className="border-t border-[#e2e8f0] bg-[#f5f6f8] overflow-hidden lg:hidden"
           >
-            <div ref={menuRef} className="flex flex-col p-6 gap-4">
+            <div ref={menuRef} className="flex flex-col p-6 gap-4 max-h-[calc(100dvh-80px)] overflow-y-auto">
               {navLinks.map((navLink, index) =>
                 navLink.subMenuLinks && navLink.subMenuLinks.length > 0 ? (
                   <SubMenu key={index} navLink={navLink} isMobile={true} />
@@ -212,7 +222,8 @@ export const Navbar = (props: NavbarProps) => {
                   </SmartLink>
                 )
               )}
-              <div className="mt-4 pt-4 border-t border-[#e2e8f0]">
+              <div className="mt-4 pt-4 border-t border-[#e2e8f0] flex flex-col gap-3">
+                <Button {...signInButton} className="w-full justify-center" />
                 <Button {...button} className="w-full justify-center" />
               </div>
             </div>
@@ -230,7 +241,7 @@ const SubMenu = ({ navLink, isMobile }: { navLink: NavLink; isMobile: boolean })
     return (
       <div className="flex flex-col">
         <button
-          className="flex w-full items-center justify-between text-lg font-medium text-[#1e2a3a] py-2 font-['DM_Sans']"
+          className="flex w-full items-center justify-between text-lg font-medium text-[#1e2a3a] py-3 font-['DM_Sans']"
           onClick={() => setIsDropdownOpen((prev) => !prev)}
         >
           <span>{navLink.title}</span>
@@ -248,7 +259,7 @@ const SubMenu = ({ navLink, isMobile }: { navLink: NavLink; isMobile: boolean })
                 <SmartLink
                   key={index}
                   href={subMenuLink.url}
-                  className="py-2 text-[#718096] hover:text-[#1e2a3a] font-['DM_Sans']"
+                  className="flex items-center min-h-[44px] py-3 text-[#718096] hover:text-[#1e2a3a] font-['DM_Sans']"
                 >
                   {subMenuLink.title}
                 </SmartLink>
@@ -305,22 +316,26 @@ const Button = ({ className, title, variant = "primary", href, ...props }: Butto
     const baseStyles = "inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-[15px] font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 min-h-[44px] group";
     const variants = {
         primary: "bg-[#1e2a3a] text-white hover:bg-[#2d3f54] hover:-translate-y-[2px] shadow-sm hover:shadow-[0_8px_24px_rgba(30,42,58,0.2)]",
+        white: "bg-white text-[#1e2a3a] border border-[#e2e8f0] hover:bg-[#f5f6f8] hover:-translate-y-[2px] shadow-sm hover:shadow-[0_8px_24px_rgba(30,42,58,0.08)]",
         secondary: "bg-[#f5f6f8] text-[#1e2a3a] hover:bg-[#e2e8f0]",
         link: "text-[#1e2a3a] underline-offset-4 hover:underline",
     };
+    // sparkle shown only on the white "Sign in" button (Book a Demo stays clean)
+    const showSparkle = variant === 'white';
+    const sparkle = showSparkle ? (
+      <Sparkle className="w-4 h-4 fill-current transition-transform duration-200 group-hover:rotate-12 group-hover:scale-110" />
+    ) : null;
 
     if (href) {
+      const external = href.startsWith('http');
       return (
-        <a 
-          href={href} 
+        <a
+          href={href}
           className={cn(baseStyles, variants[variant], className)}
-          target="_blank"
-          rel="noopener noreferrer"
+          {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
         >
             {title}
-            {variant === 'primary' && (
-              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-[3px]" />
-            )}
+            {sparkle}
         </a>
       );
     }
@@ -328,9 +343,7 @@ const Button = ({ className, title, variant = "primary", href, ...props }: Butto
     return (
         <button className={cn(baseStyles, variants[variant], className)} {...props}>
             {title}
-            {variant === 'primary' && (
-              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-[3px]" />
-            )}
+            {sparkle}
         </button>
     );
 }

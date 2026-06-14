@@ -156,11 +156,11 @@ export function About() {
       />
       
       {/* Hero Section */}
-      <section className="pt-24 pb-20 px-6 max-w-7xl mx-auto">
+      <section className="pt-20 pb-12 sm:pt-24 sm:pb-20 px-6 max-w-7xl mx-auto">
         <div className="max-w-4xl mx-auto text-center">
           <FadeIn>
             <span className="text-blue-600 font-semibold tracking-wider uppercase text-sm mb-4 block">About Hana</span>
-            <h1 className="font-serif text-5xl md:text-7xl text-slate-900 mb-8 leading-tight">
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-slate-900 mb-8 md:leading-tight">
               We're building the care infrastructure for the hours between visits.
             </h1>
           </FadeIn>
@@ -174,9 +174,9 @@ export function About() {
 
       {/* Founders Story */}
       <section className="py-20 px-6 bg-white border-y border-slate-200/60">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           <FadeIn className="order-2 lg:order-1">
-            <h2 className="font-serif text-4xl text-slate-900 mb-8">Founders' Story</h2>
+            <h2 className="font-serif text-3xl sm:text-4xl text-slate-900 mb-8">Founders' Story</h2>
             <div className="space-y-6 text-lg text-slate-600 leading-relaxed">
               <p>
                 <strong className="text-slate-900">Matteo Grassi</strong>, 3× founder and clinical psychologist. Built an app to monitor patients with bipolar disorder. The tech worked. Engagement didn't. So he threw out the app and called patients directly with AI. Engagement went from 15% to 85%. The problem was never the protocol, it was the delivery.
@@ -215,11 +215,11 @@ export function About() {
       </section>
 
       {/* Values */}
-      <section className="py-24 px-6 max-w-7xl mx-auto">
+      <section className="py-16 sm:py-20 lg:py-24 px-6 max-w-7xl mx-auto">
         <FadeIn>
-          <h2 className="font-serif text-4xl text-slate-900 mb-16 text-center">Our Values</h2>
+          <h2 className="font-serif text-3xl sm:text-4xl text-slate-900 mb-16 text-center">Our Values</h2>
         </FadeIn>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 sm:gap-x-12 sm:gap-y-16">
           {values.map((val, i) => (
             <FadeIn key={i} delay={i * 0.05}>
               <div>
@@ -232,10 +232,10 @@ export function About() {
       </section>
 
       {/* Timeline - How We Got Here */}
-      <section className="py-24 px-6 bg-slate-50 overflow-hidden">
+      <section className="py-16 sm:py-20 lg:py-24 px-6 bg-slate-50 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <FadeIn>
-            <h2 className="font-serif text-4xl text-slate-900 mb-20 text-center">How We Got Here</h2>
+            <h2 className="font-serif text-3xl sm:text-4xl text-slate-900 mb-12 sm:mb-20 text-center">How We Got Here</h2>
           </FadeIn>
           
           <div className="relative w-full">
@@ -295,7 +295,7 @@ export function About() {
       </section>
 
       {/* Where We're Going */}
-      <section className="py-24 px-6 bg-slate-900 text-white overflow-hidden relative">
+      <section className="py-16 sm:py-20 lg:py-24 px-6 bg-slate-900 text-white overflow-hidden relative">
         <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_#3b82f6_0%,_transparent_50%)]"></div>
         </div>
@@ -351,10 +351,10 @@ export function About() {
       </section>
 
       {/* Team */}
-      <section className="py-24 px-6 bg-slate-50">
+      <section className="py-16 sm:py-20 lg:py-24 px-6 bg-slate-50">
         <div className="max-w-6xl mx-auto">
           <FadeIn>
-             <h2 className="font-serif text-4xl text-slate-900 mb-16 text-center">Meet the Team</h2>
+             <h2 className="font-serif text-3xl sm:text-4xl text-slate-900 mb-16 text-center">Meet the Team</h2>
           </FadeIn>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {team.map((member, i) => (
@@ -392,7 +392,7 @@ export function About() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 px-6 bg-white border-t border-slate-200">
+      <section className="py-16 sm:py-20 lg:py-24 px-6 bg-white border-t border-slate-200">
          <div className="max-w-4xl mx-auto text-center">
             <FadeIn>
                <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-6">Let's close the engagement gap together</h2>

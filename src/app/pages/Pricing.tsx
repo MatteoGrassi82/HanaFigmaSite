@@ -20,7 +20,7 @@ const PRICING_FAQ = faqSchema([
   {
     question: "Is there a free trial or setup fee?",
     answer:
-      "Hana deploys in days and is sold as infrastructure clinics build on. Reach out through the pricing page or book a demo to discuss a pilot, scope, and pricing for your organization.",
+      "Hana deploys in about 3 weeks and is sold as infrastructure clinics build on. Reach out through the pricing page or book a demo to discuss a pilot, scope, and pricing for your organization.",
   },
 ]);
 
@@ -171,7 +171,7 @@ function SlideTypeSelect({ value, onChange, onNext }: {
       <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3 text-center">1 of 5</div>
       <h2 className="font-['Instrument_Serif'] text-3xl md:text-4xl text-slate-900 mb-2 text-center">What kind of practice are you?</h2>
       <p className="text-sm text-slate-600 font-light mb-8 leading-relaxed text-center">This pre-selects the most relevant workflows for your setting.</p>
-      <div className="grid grid-cols-2 gap-2.5 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-8">
         {PRACTICE_TYPES.map(t => (
           <button key={t.id} onClick={() => onChange(t.id)}
             className={cn("text-left p-4 rounded-xl border transition-all duration-150",
@@ -204,7 +204,7 @@ function SlideProviders({ value, onChange, onNext, onBack }: {
         <button onClick={() => onChange(Math.max(1, value - 1))} className="w-11 h-11 rounded-full border border-slate-200 bg-white flex items-center justify-center hover:border-blue-500 hover:text-blue-500 transition-colors">
           <Minus className="w-4 h-4" />
         </button>
-        <span className="font-['Instrument_Serif'] text-6xl font-medium text-slate-900 min-w-[80px] text-center">{value}</span>
+        <span className="font-['Instrument_Serif'] text-5xl sm:text-6xl font-medium text-slate-900 min-w-[80px] text-center">{value}</span>
         <button onClick={() => onChange(Math.min(50, value + 1))} className="w-11 h-11 rounded-full border border-slate-200 bg-white flex items-center justify-center hover:border-blue-500 hover:text-blue-500 transition-colors">
           <Plus className="w-4 h-4" />
         </button>
@@ -235,7 +235,7 @@ function SlideMods({ mods, wfs, onChange, onNext, onBack }: {
       <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3 text-center">3 of 5</div>
       <h2 className="font-['Instrument_Serif'] text-3xl md:text-4xl text-slate-900 mb-2 text-center">Which modules do you want?</h2>
       <p className="text-sm text-slate-600 font-light mb-8 leading-relaxed text-center">Select the categories relevant to your practice.</p>
-      <div className="grid grid-cols-2 gap-2.5 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-8">
         {MODULES.map(m => {
           const sel = !!mods[m.id];
           const cnt = Object.keys(WORKFLOWS).filter(w => WORKFLOWS[w].mod === m.id && wfs[w]).length;
@@ -387,7 +387,7 @@ function SlideVolumes({ mods, wfs, vols, onChange, onNext, onBack }: {
                     </div>
                     <div className="flex items-center gap-2.5">
                       <button onClick={() => onChange(id, Math.max(w.min ?? 0, val - (w.step ?? 1)))}
-                        className="w-8 h-8 rounded-full border border-slate-200 bg-slate-50 flex items-center justify-center hover:border-blue-400 hover:text-blue-500 transition-colors">
+                        className="w-9 h-9 sm:w-8 sm:h-8 rounded-full border border-slate-200 bg-slate-50 flex items-center justify-center hover:border-blue-400 hover:text-blue-500 transition-colors">
                         <Minus className="w-3 h-3" />
                       </button>
                       <input
@@ -401,7 +401,7 @@ function SlideVolumes({ mods, wfs, vols, onChange, onNext, onBack }: {
                         className="font-['Instrument_Serif'] text-xl font-medium text-slate-900 w-16 text-center border border-slate-200 rounded-lg py-1 focus:outline-none focus:border-blue-400 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       />
                       <button onClick={() => onChange(id, val + (w.step ?? 1))}
-                        className="w-8 h-8 rounded-full border border-slate-200 bg-slate-50 flex items-center justify-center hover:border-blue-400 hover:text-blue-500 transition-colors">
+                        className="w-9 h-9 sm:w-8 sm:h-8 rounded-full border border-slate-200 bg-slate-50 flex items-center justify-center hover:border-blue-400 hover:text-blue-500 transition-colors">
                         <Plus className="w-3 h-3" />
                       </button>
                     </div>
@@ -441,11 +441,11 @@ function SlideResult({ providers, mods, wfs, vols, onBack }: {
     <div className="w-full max-w-[640px]">
       <div className="text-center mb-6 pb-6 border-b border-slate-200">
         <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-1">Your estimated monthly saving</div>
-        <div className="font-['Instrument_Serif'] text-6xl font-medium text-blue-500">{fmt(saving)}</div>
+        <div className="font-['Instrument_Serif'] text-5xl sm:text-6xl font-medium text-blue-500">{fmt(saving)}</div>
         <div className="text-sm text-slate-400 mt-1 font-light">{pct}% less than your current practice cost for the same tasks</div>
       </div>
 
-      <div className="grid grid-cols-3 gap-3 mb-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
         {[{ val: fmt(hana), label: "HANA / month" }, { val: fmt(human), label: "Current practice cost" }, { val: fmt(annual), label: "Annual saving" }].map(m => (
           <div key={m.label} className="bg-white border border-slate-200 rounded-lg p-4 text-center">
             <div className="font-['Instrument_Serif'] text-xl font-medium text-slate-900">{m.val}</div>
@@ -455,30 +455,30 @@ function SlideResult({ providers, mods, wfs, vols, onBack }: {
       </div>
 
       <div className="rounded-xl overflow-hidden border border-slate-200 mb-5">
-        <table className="w-full text-sm">
+        <table className="w-full text-xs sm:text-sm">
           <thead>
             <tr className="bg-[#00122F] text-slate-300">
-              <th className="text-left px-4 py-3 text-[10px] tracking-[1.5px] uppercase font-normal">Workflow</th>
-              <th className="text-right px-4 py-3 text-[10px] tracking-[1.5px] uppercase font-normal">HANA</th>
-              <th className="text-right px-4 py-3 text-[10px] tracking-[1.5px] uppercase font-normal">Current cost</th>
+              <th className="text-left px-2.5 sm:px-4 py-3 text-[10px] tracking-[1.5px] uppercase font-normal">Workflow</th>
+              <th className="text-right px-2.5 sm:px-4 py-3 text-[10px] tracking-[1.5px] uppercase font-normal">HANA</th>
+              <th className="text-right px-2.5 sm:px-4 py-3 text-[10px] tracking-[1.5px] uppercase font-normal">Current cost</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-slate-100">
             {rows.map((r, i) => (
               <tr key={i}>
-                <td className="px-4 py-3 text-slate-600 font-light">{r.label}</td>
-                <td className="px-4 py-3 text-right text-blue-600 font-medium">{fmt(r.hana)}</td>
-                <td className="px-4 py-3 text-right text-slate-400 line-through">{fmt(r.curr)}</td>
+                <td className="px-2.5 sm:px-4 py-3 text-slate-600 font-light">{r.label}</td>
+                <td className="px-2.5 sm:px-4 py-3 text-right text-blue-600 font-medium">{fmt(r.hana)}</td>
+                <td className="px-2.5 sm:px-4 py-3 text-right text-slate-400 line-through">{fmt(r.curr)}</td>
               </tr>
             ))}
             <tr className="border-t-2 border-slate-200">
-              <td className="px-4 py-3 font-medium text-slate-900">Monthly total</td>
-              <td className="px-4 py-3 text-right font-medium text-blue-600">{fmt(hana)}</td>
-              <td className="px-4 py-3 text-right font-medium text-slate-900">{fmt(human)}</td>
+              <td className="px-2.5 sm:px-4 py-3 font-medium text-slate-900">Monthly total</td>
+              <td className="px-2.5 sm:px-4 py-3 text-right font-medium text-blue-600">{fmt(hana)}</td>
+              <td className="px-2.5 sm:px-4 py-3 text-right font-medium text-slate-900">{fmt(human)}</td>
             </tr>
             <tr>
-              <td className="px-4 py-3 font-medium text-emerald-700">You save</td>
-              <td className="px-4 py-3 text-right font-medium text-emerald-700" colSpan={2}>{fmt(saving)} / month ({pct}%)</td>
+              <td className="px-2.5 sm:px-4 py-3 font-medium text-emerald-700">You save</td>
+              <td className="px-2.5 sm:px-4 py-3 text-right font-medium text-emerald-700" colSpan={2}>{fmt(saving)} / month ({pct}%)</td>
             </tr>
           </tbody>
         </table>
@@ -575,7 +575,7 @@ export function Pricing() {
       {/* Hero */}
       <section className="pt-36 pb-10 px-4 text-center max-w-2xl mx-auto">
         <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-4">Outcome-based pricing</div>
-        <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl tracking-normal text-slate-900 leading-[1.1] mb-4">
+        <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-normal text-slate-900 leading-[1.1] mb-4">
           See what this currently <em className="italic text-blue-500">costs your practice</em>
         </h1>
         <p className="text-base text-slate-600 leading-relaxed font-light max-w-md mx-auto">

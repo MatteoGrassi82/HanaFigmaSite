@@ -177,7 +177,7 @@ export function Resources() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
 
           {/* Category tabs */}
-          <div className="flex gap-2 mb-10 border-b border-slate-200 pb-0">
+          <div className="flex gap-2 mb-10 border-b border-slate-200 pb-0 overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
             {TABS.map(tab => {
               const Icon = tab.icon;
               const active = activeTab === tab.id;
@@ -185,7 +185,7 @@ export function Resources() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 py-3 text-sm font-semibold border-b-2 -mb-px transition-all ${
+                  className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-3.5 sm:py-3 min-h-[44px] shrink-0 whitespace-nowrap text-sm font-semibold border-b-2 -mb-px transition-all ${
                     active
                       ? "border-blue-600 text-blue-600"
                       : "border-transparent text-slate-500 hover:text-slate-800 hover:border-slate-300"

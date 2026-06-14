@@ -42,7 +42,7 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
   return (
     <section className="relative w-full flex justify-center items-center bg-slate-50">
       <div 
-        className="w-full relative overflow-hidden min-h-[100dvh] md:min-h-[850px] flex flex-col items-center justify-center transition-colors duration-500 pt-10 pb-20 md:py-0"
+        className="w-full relative overflow-hidden min-h-[90dvh] md:min-h-[850px] flex flex-col items-center justify-center transition-colors duration-500 pt-10 pb-20 md:py-0"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -72,13 +72,13 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
 
           <div className="flex flex-col items-center text-center z-20 pointer-events-auto max-w-5xl mx-auto">
              {/* Headline */}
-             <h1 className="font-serif text-5xl sm:text-5xl md:text-7xl lg:text-8xl tracking-normal text-slate-900 mb-6 md:mb-8 leading-[1.1]">
-               Automate the routine calls. <br className="hidden md:block"/><span className="text-blue-600">Focus on what matters</span>.
+             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-normal text-slate-900 mb-6 md:mb-8 leading-[1.1]">
+               Automate the routine calls <br className="hidden md:block"/>your EHR <span className="text-blue-600">can't make</span>.
              </h1>
 
              {/* Subheadline */}
-             <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto mb-8 md:mb-10 leading-relaxed font-normal">
-               Reads the chart. Calls the patient. Writes back.
+             <p className="text-base sm:text-lg md:text-2xl text-slate-600 max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed font-normal">
+               Hana runs your routine patient calls end to end — reads the chart, makes the call, writes it back. Your team stays on the work that needs a human.
              </p>
 
              {/* CTAs */}
@@ -111,7 +111,7 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
                    </div>
                 </button>
 
-                <a href="https://calendly.com/matteowastaken/discoverycall" target="_blank" rel="noopener noreferrer" className="hidden sm:inline-block px-6 sm:px-8 py-4 bg-white text-slate-900 rounded-full font-medium text-base sm:text-lg hover:bg-slate-50 transition-all duration-300 w-full sm:w-auto shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border border-slate-200 text-center whitespace-nowrap">
+                <a href="https://calendly.com/matteowastaken/discoverycall" target="_blank" rel="noopener noreferrer" className="inline-block px-6 sm:px-8 py-4 bg-white text-slate-900 rounded-full font-medium text-base sm:text-lg hover:bg-slate-50 transition-all duration-300 w-full sm:w-auto shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border border-slate-200 text-center whitespace-nowrap">
                     Book a Demo
                 </a>
 

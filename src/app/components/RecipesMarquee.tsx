@@ -119,7 +119,7 @@ const RECIPES: Recipe[] = [
     steps: ["Post-op discharge triggers schedule", "HANA calls at 24h, 48h, 72h intervals", "Captures structured symptom data", "Escalates concerning answers to on-call surgeon"],
     systems: ["Epic","Cerner"] },
 
-  { tag: "Behavioral Health", flow: ["voice","alert","ehr"], title: "Triage crisis risk in real time",
+  { tag: "Behavioral Health", flow: ["voice","alert","ehr"], title: "Flag crisis risk, warm-transfer to your on-call clinician",
     desc: "During a check-in call, HANA detects suicidal ideation or acute distress through validated screening logic. The call is immediately escalated to an on-call clinician with warm handoff.",
     steps: ["HANA conducts routine BH check-in", "Detects high-risk language or PHQ-9 >= 15", "Triggers live clinician escalation", "Logs risk assessment and disposition to chart"],
     systems: ["TherapyNotes","SimplePractice"] },
@@ -239,10 +239,10 @@ function RecipeCard({ recipe, onClick }: { recipe: Recipe; onClick: () => void }
 function Modal({ recipe, onClose }: { recipe: Recipe; onClose: () => void }) {
   return (
     <div
-      className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-6"
+      className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 sm:p-6"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="bg-[#F5F3F0] rounded-2xl max-w-[560px] w-full max-h-[90vh] overflow-y-auto p-8 relative">
+      <div className="bg-[#F5F3F0] rounded-2xl max-w-[560px] w-full max-h-[90vh] overflow-y-auto p-5 sm:p-8 relative">
         <button
           onClick={onClose}
           className="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-900/10 hover:bg-slate-900/20 flex items-center justify-center text-slate-500 transition-colors"
@@ -251,9 +251,9 @@ function Modal({ recipe, onClose }: { recipe: Recipe; onClose: () => void }) {
         </button>
 
         <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-blue-600 mb-3">{recipe.tag}</div>
-        <h3 className="font-serif text-[28px] leading-tight text-slate-900 mb-5">{recipe.title}</h3>
+        <h3 className="font-serif text-[22px] sm:text-[28px] leading-tight text-slate-900 mb-5">{recipe.title}</h3>
 
-        <div className="flex items-center gap-3 flex-wrap bg-white/60 rounded-xl p-4 mb-6">
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap bg-white/60 rounded-xl p-4 mb-6">
           {recipe.flow.map((ch, i) => (
             <React.Fragment key={i}>
               {React.createElement(ICONS[ch], { size: 36 })}
@@ -330,6 +330,10 @@ export function RecipesMarquee() {
           style={{ animation: `${reverse ? "marqueeRight" : "marqueeLeft"} ${duration} linear infinite` }}
           onMouseEnter={(e) => ((e.currentTarget as HTMLDivElement).style.animationPlayState = "paused")}
           onMouseLeave={(e) => ((e.currentTarget as HTMLDivElement).style.animationPlayState = "running")}
+          onTouchStart={(e) => ((e.currentTarget as HTMLDivElement).style.animationPlayState = "paused")}
+          onTouchEnd={(e) => ((e.currentTarget as HTMLDivElement).style.animationPlayState = "running")}
+          onPointerDown={(e) => ((e.currentTarget as HTMLDivElement).style.animationPlayState = "paused")}
+          onPointerUp={(e) => ((e.currentTarget as HTMLDivElement).style.animationPlayState = "running")}
         >
           {doubled.map((r, i) => (
             <RecipeCard key={i} recipe={r} onClick={() => select(r)} />
@@ -354,11 +358,14 @@ export function RecipesMarquee() {
 
       <div className="text-center px-6 mb-10">
         <p className="text-[11px] font-semibold uppercase tracking-[2.5px] text-slate-400 mb-4">
-          100+ Workflows. Already built.
+          Workflow automation
         </p>
         <h2 className="font-serif text-4xl md:text-5xl text-slate-900 leading-tight mb-4">
-          100+ routine workflows. Ready on day one.
+          Your clinical protocols, already built in.
         </h2>
+        <p className="text-base md:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
+          100+ call workflows, ready day one — across ortho, GI, behavioral health, and primary care. Turn on the one bleeding revenue first; add the rest as you go.
+        </p>
         <div className="flex flex-wrap justify-center gap-4 mt-6">
           {(Object.entries(CHANNELS) as [Channel, (typeof CHANNELS)[Channel]][]).map(([key, ch]) => (
             <div key={key} className="flex items-center gap-2 text-[12px] text-slate-500">

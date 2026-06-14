@@ -18,6 +18,8 @@ import { Contact } from "./pages/Contact";
 import { TestWebhook } from "./components/TestWebhook";
 import { Terms } from "./pages/Terms";
 import { AUP } from "./pages/AUP";
+import { Privacy } from "./pages/Privacy";
+import { Cookies } from "./pages/Cookies";
 import { StateOfAI } from "./pages/StateOfAI";
 import { Pricing } from "./pages/Pricing";
 import { CaseStudies } from "./pages/CaseStudies";
@@ -28,6 +30,7 @@ import { VideoAskWidget } from "./components/VideoAskWidget";
 import { WhitepaperADHD } from "./pages/WhitepaperADHD";
 import { Whitepapers } from "./pages/Whitepapers";
 import { Demo } from "./pages/Demo";
+import { Preview } from "./pages/Preview";
 import { NotFound } from "./pages/NotFound";
 
 // Configuration
@@ -238,6 +241,8 @@ function AppContent() {
               <Route path="/test-webhook" element={<TestWebhook />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/aup" element={<AUP />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/cookies" element={<Cookies />} />
               <Route path="/state-of-ai" element={<StateOfAI />} />
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/blog" element={<Blog />} />
@@ -245,6 +250,7 @@ function AppContent() {
               <Route path="/whitepapers" element={<Whitepapers />} />
               <Route path="/whitepapers/adhd-intake" element={<WhitepaperADHD />} />
               <Route path="/demo" element={<Demo />} />
+              <Route path="/preview" element={<Preview />} />
               <Route path="/case-studies" element={
                 <CaseStudies
                   activeAgentId={activeAgentId}

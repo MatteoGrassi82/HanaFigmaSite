@@ -334,7 +334,10 @@ function JourneyGrid({ steps }: { steps: typeof PEDIATRIC_STEPS }) {
               : "bg-blue-50 border-blue-200 text-slate-900 hover:bg-blue-100"
           }`}
         >
-          <p className="text-xs font-bold opacity-60 mb-1">{step.n}</p>
+          <div className="flex items-center justify-between mb-1">
+            <p className="text-xs font-bold opacity-60">{step.n}</p>
+            <ChevronDown size={14} className={`shrink-0 opacity-50 transition-transform ${active === i ? "rotate-180" : ""}`} />
+          </div>
           <p className="text-sm font-bold mb-1.5 leading-tight">{step.title}</p>
           <AnimatePresence>
             {active === i && (
@@ -406,10 +409,10 @@ export function WhitepaperADHD() {
       <div className="bg-[rgb(0,18,47)] border-b border-white/5 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-600/15 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none" />
-        <div className="max-w-4xl mx-auto px-6 py-24 md:py-32 relative z-10">
+        <div className="max-w-4xl mx-auto px-6 py-16 sm:py-24 md:py-32 relative z-10">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <p className="text-blue-400 text-xs font-bold uppercase tracking-widest mb-5">Clinic Partner Whitepaper</p>
-            <h1 className="text-5xl md:text-7xl font-black mb-3 leading-none tracking-tight text-white">HANA</h1>
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black mb-3 leading-none tracking-tight text-white">HANA</h1>
             <h2 className="text-3xl md:text-4xl font-black text-blue-400 mb-8 leading-tight">ADHD INTAKE WORKFLOW</h2>
             <div className="w-16 h-0.5 bg-blue-500 mb-8" />
             <p className="text-lg text-slate-300 mb-3 font-light">A Complete Walkthrough for Prospective Clinic Partners</p>
@@ -423,7 +426,7 @@ export function WhitepaperADHD() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="mt-14 grid grid-cols-3 gap-6 max-w-xl"
+            className="mt-10 sm:mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-xl"
           >
             {[
               { val: 85, suffix: "%", label: "faster time to diagnosis" },
@@ -562,12 +565,12 @@ export function WhitepaperADHD() {
                 <p className="text-slate-600 leading-relaxed mb-8">HANA supports two primary ADHD intake flows. Both follow the same three-module interview structure, adapted for the respondent.</p>
 
                 {/* Tab toggle */}
-                <div className="flex gap-2 p-1 bg-white border border-slate-200 rounded-xl w-fit mb-8 shadow-sm">
+                <div className="flex gap-2 p-1 bg-white border border-slate-200 rounded-xl w-full sm:w-fit mb-8 shadow-sm">
                   {(["pediatric", "adult"] as const).map(tab => (
                     <button
                       key={tab}
                       onClick={() => setJourneyTab(tab)}
-                      className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all ${
+                      className={`flex-1 sm:flex-none px-3 sm:px-5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
                         journeyTab === tab
                           ? "bg-blue-600 text-white shadow"
                           : "text-slate-500 hover:text-slate-800"

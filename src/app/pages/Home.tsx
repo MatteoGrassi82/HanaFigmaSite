@@ -3,13 +3,17 @@ import { Stats } from "../components/ui/statistics-card";
 import { InlineImageHeader } from "../components/InlineImageHeader";
 import { LiveDemoSection } from "../components/LiveDemoSection";
 import { AgenticFrameworkCarousel } from "../components/AgenticFrameworkCarousel";
-import { RadialOrbitalTimelineDemo } from "./Timeline";
 import { ComplianceSection } from "../components/ComplianceSection";
 import { CaseStudiesSection } from "../components/CaseStudiesSection";
+import { ClientFeedback } from "../components/ui/testimonial";
+import { LoopDiagram } from "../components/ui/loop-diagram";
+import { SafetyStack } from "../components/ui/safety-stack";
 import { HowHanaWorks } from "../components/HowHanaWorks";
 import { IntegrationsSection } from "../components/IntegrationsSection";
 import { ReadyToUseSection } from "../components/ReadyToUseSection";
 import { RecipesMarquee } from "../components/RecipesMarquee";
+import { AskAiAboutUs } from "../components/AskAiAboutUs";
+import { LatestPosts } from "../components/LatestPosts";
 import { Footer } from "../components/Footer";
 import { SEO } from "../components/SEO";
 import { organizationSchema, websiteSchema, softwareApplicationSchema, faqSchema } from "../components/SEO";
@@ -25,7 +29,7 @@ const HOME_FAQ = faqSchema([
   {
     question: "How is Hana different from a patient portal or a generic AI chatbot?",
     answer:
-      "Unlike patient portals — which see 15–20% engagement — Hana reaches patients by voice and messaging and achieves around 85% weekly engagement. Unlike generic AI chatbots, Hana reads the chart, knows the patient, and follows clinical care protocols, so it is purpose-built for healthcare workflows rather than repurposed call-center or sales AI.",
+      "Patient portals and text reminders wait for the patient to act, so slots go empty. Hana picks up the phone and reaches patients the way they actually respond. Unlike generic AI chatbots, Hana reads the chart, knows the patient, and follows clinical care protocols, so it is purpose-built for healthcare workflows rather than repurposed call-center or sales AI.",
   },
   {
     question: "What clinical workflows does Hana support?",
@@ -35,7 +39,7 @@ const HOME_FAQ = faqSchema([
   {
     question: "How long does it take to deploy Hana?",
     answer:
-      "Hana deploys in days, not months. It is infrastructure that clinics build on rather than a fixed point solution, and it has processed more than 2 million patient interactions.",
+      "Hana deploys in weeks, not months. Most teams go live in about 3 weeks — your team tests it on a real line before a single patient is called. It is infrastructure that clinics build on rather than a fixed point solution.",
   },
 ]);
 
@@ -57,17 +61,17 @@ export function Home({
 }: HomeProps) {
   return (
     <div className="space-y-0">
-      <SEO 
-        title="Hana Voice AI | Voice AI Infrastructure for Patient Engagement"
+      <SEO
+        title="Hana Voice AI | The calls your EHR can't make"
         useExactTitle={true}
-        description="Voice AI infrastructure for patient engagement. AI agents that call, text, and message patients across every care workflow. Deploy in days."
+        description="Hana works your patient access calls end to end — pre-visit intake, prior auth status checks, no-show recovery, recalls, refills. Reads the chart, makes the call, writes the note back."
         path="/"
-        keywords="voice AI infrastructure, healthcare AI, patient engagement automation, clinical voice agents, remote patient monitoring AI"
+        keywords="patient access automation, prior authorization status, no-show recovery, patient recall, AI front desk, clinical voice agents, multi-specialty clinic automation"
         jsonLd={[organizationSchema, websiteSchema, softwareApplicationSchema, HOME_FAQ]}
       />
 
-      {/* 1. HERO */}
-      <CTASection 
+      {/* §1 — HERO */}
+      <CTASection
         onStartCall={() => {
           if (webCallStatus === "idle") {
             handleStartWebCall("hero-agent", HERO_AGENT_ID);
@@ -79,23 +83,13 @@ export function Home({
         disabled={activeAgentId !== null && activeAgentId !== "hero-agent"}
       />
 
-
-      {/* 3. ENGAGEMENT STATS */}
+      {/* §2 — ACTIVE vs PASSIVE (patients-reached chart) — directly below hero */}
       <Stats />
 
-      {/* 2. REASONING ENGINE — moved up, core differentiation */}
-      <RadialOrbitalTimelineDemo embedded />
+      {/* §3 — HOW IT WORKS (the closed loop) */}
+      <LoopDiagram />
 
-      {/* 4. FEATURE CARDS */}
-      <AgenticFrameworkCarousel />
-
-      {/* 5. TESTIMONIALS — reordered */}
-      <CaseStudiesSection />
-
-      {/* HOW HANA WORKS — video carousel */}
-      <HowHanaWorks />
-
-       {/* 8. LIVE DEMO */}
+      {/* §4 — LIVE DEMO (elevated — best voice proof) */}
       <LiveDemoSection
         activeAgentId={activeAgentId}
         webCallStatus={webCallStatus}
@@ -103,19 +97,37 @@ export function Home({
         handleEndWebCall={handleEndWebCall}
       />
 
-      {/* RECIPES MARQUEE */}
+      {/* §4b — WATCH HANA IN ACTION (video carousel) */}
+      <HowHanaWorks />
+
+      {/* §5 — PROOF (testimonials) */}
+      <ClientFeedback />
+
+      {/* §6 — WORKFLOWS GRID */}
       <RecipesMarquee />
 
-      {/* 7. 3-STEP ONBOARDING */}
+      {/* §6b — secondary: how it adapts to your clinic */}
+      <AgenticFrameworkCarousel />
+
+      {/* §7 — GO LIVE */}
       <InlineImageHeader />
 
-      {/* 9. COMPLIANCE */}
-      <ComplianceSection />
-
-      {/* 6. INTEGRATIONS */}
+      {/* §8 — INTEGRATIONS (+ No-EHR / SDK tail cards) */}
       <IntegrationsSection />
 
-      {/* 10. FINAL CTA */}
+      {/* §9 — SECURITY: defense-in-depth layered stack */}
+      <SafetyStack />
+
+      {/* §9b — TAIL: COMPLIANCE (certs + safety pillars — the credentials view) */}
+      <ComplianceSection />
+
+      {/* LATEST FROM THE BLOG — 3 most recent posts */}
+      <LatestPosts />
+
+      {/* §10 — ASK AI (demoted out of prime real estate) */}
+      <AskAiAboutUs className="py-12 md:py-16" />
+
+      {/* FINAL CTA */}
       <ReadyToUseSection />
 
       {/* FOOTER */}

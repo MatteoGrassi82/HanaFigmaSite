@@ -4,7 +4,7 @@ import { Loader2, Globe, PhoneOff, CheckCircle2, Phone } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { projectId, publicAnonKey } from "../../../utils/supabase/info";
 
-const AGENT_TYPES = ["Monitoring", "Intake", "Outreach", "Coordination"];
+const AGENT_TYPES = ["Intake", "Outreach", "Monitoring", "Coordination"];
 
 const ELEVENLABS_AGENT_IDS: Record<string, string> = {
   "Monitoring":   "agent_2301kj5dz760fm7s6g6x67qmc07n",
@@ -59,19 +59,22 @@ export function LiveDemoSection({
   };
 
   return (
-    <section id="live-demo-section" className="py-20 px-4 md:px-8 bg-white">
+    <section id="live-demo-section" className="py-12 sm:py-16 lg:py-20 px-4 md:px-8 bg-white">
       <div className="max-w-6xl mx-auto">
 
         {/* Headline */}
-        <h2 className="font-serif text-5xl md:text-7xl text-slate-900 leading-[1.0] text-center mb-14 tracking-tight">
-          Try Our<br />Live Demo
+        <h2 className="font-serif text-4xl md:text-6xl text-slate-900 leading-[1.05] text-center mb-4 tracking-tight">
+          Don't take our word for it.<br />Take the call.
         </h2>
+        <p className="text-lg text-slate-500 text-center max-w-2xl mx-auto mb-8 sm:mb-12 lg:mb-14 leading-relaxed">
+          Pick a use case — intake, outreach, monitoring, coordination — and Hana calls you right now.
+        </p>
 
         {/* Two-column card */}
         <div className="flex flex-col lg:flex-row gap-0 border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
 
           {/* Left — orb + tags */}
-          <div className="relative lg:w-[48%] bg-slate-50 flex flex-col justify-between p-8 min-h-[420px]">
+          <div className="relative lg:w-[48%] bg-slate-50 flex flex-col justify-between p-5 sm:p-6 lg:p-8 min-h-[420px]">
             {/* Video */}
             <div className="absolute inset-0 flex items-center justify-center p-6 pointer-events-none">
               <video
@@ -85,7 +88,7 @@ export function LiveDemoSection({
             </div>
 
             {/* Agent tags — bottom */}
-            <div className="relative z-10 mt-auto flex flex-wrap gap-2 pt-48">
+            <div className="relative z-10 mt-auto flex flex-wrap gap-2 pt-24 sm:pt-36 lg:pt-48">
               {AGENT_TYPES.map((type) => (
                 <button
                   key={type}
@@ -104,7 +107,7 @@ export function LiveDemoSection({
           </div>
 
           {/* Right — form */}
-          <div className="lg:w-[52%] bg-slate-50 border-t lg:border-t-0 lg:border-l border-slate-200 p-8 flex flex-col justify-between">
+          <div className="lg:w-[52%] bg-slate-50 border-t lg:border-t-0 lg:border-l border-slate-200 p-5 sm:p-6 lg:p-8 flex flex-col justify-between">
 
             <AnimatePresence mode="wait">
               {webCallStatus !== "idle" ? (
@@ -206,7 +209,7 @@ export function LiveDemoSection({
                   </div>
 
                   {/* Two call options */}
-                  <div className="grid grid-cols-2 gap-3 mt-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
                     {/* Web call */}
                     <button
                       onClick={handleWebCallClick}

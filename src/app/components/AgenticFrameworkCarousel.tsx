@@ -174,21 +174,21 @@ export function AgenticFrameworkCarousel() {
   const expandedSlideData = expandedSlide !== null ? slides.find(s => s.id === expandedSlide) : null;
 
   return (
-    <section className="py-24 bg-[#F5F5F5] dark:bg-slate-950 overflow-hidden">
+    <section className="py-16 md:py-24 bg-[#F5F5F5] dark:bg-slate-950 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 mb-16">
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 mb-10 md:mb-16">
           <h2 className="text-3xl md:text-5xl font-serif font-normal tracking-normal text-slate-900 dark:text-white max-w-2xl leading-[1.1]">
             Built around how your clinic works.
           </h2>
           <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-3xl leading-relaxed md:mt-4 font-sans">
-            Simple workflows to complex care pathways. Live in a week.
+            Simple workflows to complex care pathways. Live in 3 weeks.
           </p>
         </div>
 
         {/* Carousel */}
-        <div className="-mx-4 md:-mx-8"> {/* Negative margin to allow slider to touch edges on small screens if needed, or just standard */}
+        <div className="-mx-4 md:-mx-8 overflow-x-clip"> {/* Negative margin to allow slider to touch edges; overflow-x-clip stops the de-emphasized peeking slide from bleeding past the viewport (body uses overflow-x:clip) while preserving the desktop peek inside the wrapper */}
             <Slider ref={sliderRef} {...settings} className="agentic-carousel pl-4 md:pl-0">
             {slides.map((slide, index) => (
                 <div key={slide.id} className="px-1.5 md:px-6 focus:outline-none h-full">
@@ -227,12 +227,12 @@ export function AgenticFrameworkCarousel() {
         </div>
 
         {/* Navigation Controls */}
-        <div className="mt-12 flex items-center gap-6">
+        <div className="mt-8 md:mt-12 flex items-center gap-3 md:gap-6">
             <div className="flex gap-3">
                 <button 
                     onClick={previous}
                     disabled={currentSlide === 0}
-                    className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                    className="w-11 h-11 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
                     aria-label="Previous slide"
                 >
                     <ChevronLeft className="w-5 h-5" />
@@ -240,7 +240,7 @@ export function AgenticFrameworkCarousel() {
                 <button 
                     onClick={next}
                     disabled={currentSlide === slides.length - 1}
-                    className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors"
+                    className="w-11 h-11 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors"
                     aria-label="Next slide"
                 >
                     <ChevronRight className="w-5 h-5" />
@@ -254,7 +254,7 @@ export function AgenticFrameworkCarousel() {
                         key={index}
                         onClick={() => sliderRef.current?.slickGoTo(index)}
                         className={cn(
-                            "transition-colors",
+                            "transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center",
                             currentSlide === index
                                 ? "text-slate-900 dark:text-white"
                                 : "text-slate-400 dark:text-slate-600 hover:text-slate-600 dark:hover:text-slate-400"
@@ -266,7 +266,7 @@ export function AgenticFrameworkCarousel() {
             </div>
 
              {/* Horizontal Line */}
-             <div className="h-px bg-slate-200 dark:bg-slate-800 flex-1 ml-4" />
+             <div className="h-px bg-slate-200 dark:bg-slate-800 flex-1 ml-2 md:ml-4" />
         </div>
 
       </div>

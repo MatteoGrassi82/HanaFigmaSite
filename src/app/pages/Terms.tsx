@@ -12,7 +12,7 @@ export function Terms() {
               Terms of Service<br />& Security Policy
             </h1>
             <p className="text-slate-400 text-base">
-              Effective Date: 1 March 2025 &nbsp;|&nbsp; Version: 2.0
+              Effective Date: 14 June 2026 &nbsp;|&nbsp; Version: 2.1
             </p>
           </div>
         </section>
@@ -38,7 +38,7 @@ export function Terms() {
                   </tr>
                 </thead>
                 <tbody className="text-[#718096]">
-                  <DefRow term="HANA / We / Company" meaning="HANA Health Ltd, the operator of the HANA platform" />
+                  <DefRow term="HANA / We / Company" meaning="HANA Health, Inc., the operator of the HANA platform" />
                   <DefRow term="Client / Healthcare Provider" meaning="The licensed healthcare organisation or clinic that has contracted with HANA" />
                   <DefRow term="Patient / End User" meaning="The individual patient who interacts with the HANA platform via voice or SMS" />
                   <DefRow term="Platform" meaning="The HANA AI-powered patient engagement infrastructure, including all AI agents, APIs, integrations, and clinical workflows" />
@@ -118,7 +118,7 @@ export function Terms() {
           {/* 6. Intellectual Property */}
           <Section number="6" title="Intellectual Property">
             <ul className="list-disc pl-6 space-y-2">
-              <li>The HANA platform, including all AI models, clinical protocols, conversation designs, APIs, and documentation, is the exclusive intellectual property of HANA Health Ltd</li>
+              <li>The HANA platform, including all AI models, clinical protocols, conversation designs, APIs, and documentation, is the exclusive intellectual property of HANA Health, Inc.</li>
               <li>Client-specific data, clinical outputs, and conversation histories generated through the platform belong to the Client and their patients, subject to the DPA</li>
               <li>HANA retains the right to use anonymised, aggregated, non-identifiable data to improve platform performance, subject to applicable law</li>
               <li>Clients may not reverse-engineer, resell, sublicense, or replicate the HANA platform without prior written consent</li>
@@ -179,7 +179,7 @@ export function Terms() {
           {/* 10. Governing Law */}
           <Section number="10" title="Governing Law">
             <p>
-              These Terms are governed by the laws of Ireland. For US-based Clients, HIPAA requirements govern data protection obligations and are incorporated into the BAA. EU Clients: GDPR and applicable national implementing legislation apply. UK Clients: UK GDPR and DCB0129 / DTAC apply. For disputes not resolved by negotiation, the parties agree to binding arbitration in Dublin, Ireland.
+              These Terms are governed by the laws of the State of Delaware, United States, without regard to its conflict-of-laws rules. For US-based Clients, HIPAA governs Protected Health Information obligations and is incorporated into the Business Associate Agreement (BAA). For Clients or patients located in the EU or UK, the GDPR / UK GDPR and applicable national implementing legislation govern the processing of their personal data. The parties will first attempt to resolve any dispute through good-faith negotiation. Any dispute not so resolved will be submitted to binding arbitration administered by JAMS in Wilmington, Delaware under its applicable rules, and judgment on the award may be entered in any court of competent jurisdiction; either party may nonetheless seek injunctive or other equitable relief in a court of competent jurisdiction. Patients (End Users) are not required to arbitrate and retain all non-waivable rights under applicable consumer-protection law.
             </p>
           </Section>
 
@@ -208,7 +208,7 @@ export function Terms() {
                   {[
                     ["GDPR", "Compliant", "EU-wide; data minimisation, privacy by design, DPA with all processors"],
                     ["HIPAA", "Aligned", "BAA available; PHI architecture compliant; access controls in place"],
-                    ["SOC 2 Type II", "Completed", "Readiness complete; audit certificate process finalised"],
+                    ["SOC 2 Type II", "In progress", "Readiness assessment complete; Type II audit underway"],
                     ["EU AI Act", "Implementing", "Use-case risk classification complete; transparency & oversight measures deployed"],
                     ["DCB0129", "Compliant", "Clinical risk management for UK health IT systems"],
                     ["DTAC", "Compliant", "Digital Technology Assessment Criteria (NHS England)"],
@@ -273,7 +273,7 @@ export function Terms() {
               <li>Penetration testing: annual third-party external pentest; results reviewed within 5 business days</li>
               <li>Patch management: critical vulnerabilities patched within 48 hours; high within 7 days; medium within 30 days</li>
               <li>Dependency scanning: all third-party libraries monitored via automated tooling (CVE tracking)</li>
-              <li>Bug bounty programme: responsible disclosure policy available at hanahealth.ai/security</li>
+              <li>Bug bounty programme: responsible disclosure policy available at hana.health/security</li>
             </ul>
           </Section>
 
@@ -312,7 +312,7 @@ export function Terms() {
               <li>Right to audit provisions included in all sub-processor contracts</li>
             </ul>
             <p>
-              An up-to-date list of active sub-processors is available at hanahealth.ai/subprocessors. Clients will be notified 30 days in advance of any new sub-processor engagement and may object.
+              An up-to-date list of active sub-processors is available at hana.health/subprocessors. Clients will be notified 30 days in advance of any new sub-processor engagement and may object.
             </p>
           </Section>
 
@@ -361,10 +361,10 @@ export function Terms() {
                   </tr>
                 </thead>
                 <tbody className="text-[#718096]">
-                  <DefRow term="Security incidents and breach reports" meaning="security@hanahealth.ai" />
-                  <DefRow term="Responsible disclosure / bug reports" meaning="security@hanahealth.ai (PGP key available on request)" />
-                  <DefRow term="Compliance and audit requests" meaning="compliance@hanahealth.ai" />
-                  <DefRow term="General security questions" meaning="security@hanahealth.ai" />
+                  <DefRow term="Security incidents and breach reports" meaning="security@hana.health" />
+                  <DefRow term="Responsible disclosure / bug reports" meaning="security@hana.health (PGP key available on request)" />
+                  <DefRow term="Compliance and audit requests" meaning="compliance@hana.health" />
+                  <DefRow term="General security questions" meaning="security@hana.health" />
                 </tbody>
               </table>
             </div>
@@ -373,7 +373,7 @@ export function Terms() {
           {/* Footer note */}
           <div className="mt-16 pt-8 border-t border-slate-200 text-center">
             <p className="text-sm text-[#718096]">
-              HANA Health Ltd &nbsp;|&nbsp; <a href="mailto:privacy@hanahealth.ai" className="text-blue-600 hover:text-blue-800 transition-colors">privacy@hanahealth.ai</a>
+              HANA Health, Inc. &nbsp;|&nbsp; <a href="mailto:privacy@hana.health" className="text-blue-600 hover:text-blue-800 transition-colors">privacy@hana.health</a>
             </p>
           </div>
         </div>

@@ -18,7 +18,9 @@ HANA is infrastructure, not an app. Clinic partners build on it rather than buy 
 - 85% weekly patient engagement rate (vs. 15–20% for portals and apps)
 - 2 million+ patient interactions processed
 - Deploys in days, not months
-- HIPAA-compliant, BAA available
+- HIPAA-aligned controls; BAA available
+- SOC 2 Type II audit in progress
+- ISO 27001-aligned
 
 ## Key pages
 

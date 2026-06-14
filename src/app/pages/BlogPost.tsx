@@ -30,12 +30,12 @@ const portableTextComponents = {
     },
   },
   block: {
-    h1: ({ children }: any) => <h1 className="font-serif text-4xl text-slate-900 mt-10 mb-4 leading-tight">{children}</h1>,
-    h2: ({ children }: any) => <h2 className="font-serif text-3xl text-slate-900 mt-10 mb-4 leading-tight">{children}</h2>,
+    h1: ({ children }: any) => <h1 className="font-serif text-3xl sm:text-4xl text-slate-900 mt-10 mb-4 leading-tight">{children}</h1>,
+    h2: ({ children }: any) => <h2 className="font-serif text-2xl sm:text-3xl text-slate-900 mt-10 mb-4 leading-tight">{children}</h2>,
     h3: ({ children }: any) => <h3 className="font-serif text-2xl text-slate-900 mt-8 mb-3 leading-tight">{children}</h3>,
     normal: ({ children }: any) => <p className="text-[17px] leading-[1.8] text-slate-600 mb-5">{children}</p>,
     blockquote: ({ children }: any) => (
-      <blockquote className="border-l-4 border-blue-500 pl-6 my-6 italic text-slate-500 text-lg">{children}</blockquote>
+      <blockquote className="border-l-4 border-blue-500 pl-4 sm:pl-6 my-6 italic text-slate-500 text-lg">{children}</blockquote>
     ),
   },
   marks: {
@@ -48,8 +48,8 @@ const portableTextComponents = {
     ),
   },
   list: {
-    bullet: ({ children }: any) => <ul className="list-disc pl-6 space-y-2 mb-5 text-[17px] text-slate-600">{children}</ul>,
-    number: ({ children }: any) => <ol className="list-decimal pl-6 space-y-2 mb-5 text-[17px] text-slate-600">{children}</ol>,
+    bullet: ({ children }: any) => <ul className="list-disc pl-5 sm:pl-6 space-y-2 mb-5 text-[17px] text-slate-600">{children}</ul>,
+    number: ({ children }: any) => <ol className="list-decimal pl-5 sm:pl-6 space-y-2 mb-5 text-[17px] text-slate-600">{children}</ol>,
   },
 };
 
@@ -143,7 +143,7 @@ export function BlogPost() {
             )}
           </div>
 
-          <h1 className="font-serif text-4xl md:text-5xl text-slate-900 leading-tight mb-6">
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-slate-900 leading-tight mb-6">
             {post.title}
           </h1>
 

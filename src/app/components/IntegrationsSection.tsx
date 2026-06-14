@@ -4,13 +4,13 @@ import { Link } from 'react-router';
 
 export function IntegrationsSection() {
   return (
-    <section className="relative py-24 px-8 overflow-hidden bg-[#f5f6f8] text-[#1e2a3a]">
+    <section className="relative py-16 sm:py-20 lg:py-24 px-5 sm:px-6 lg:px-8 overflow-hidden bg-[#f5f6f8] text-[#1e2a3a]">
        {/* Ambient glow */}
-       <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(59,130,246,0.08)_0%,transparent_70%)] pointer-events-none z-0" />
+       <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[400px] h-[400px] sm:w-[600px] sm:h-[600px] lg:w-[800px] lg:h-[800px] bg-[radial-gradient(circle,rgba(59,130,246,0.08)_0%,transparent_70%)] pointer-events-none z-0" />
 
        <div className="max-w-7xl mx-auto relative z-10">
           {/* Header */}
-          <div className="text-center mb-20">
+          <div className="text-center mb-12 sm:mb-16 lg:mb-20">
             <div className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.08em] uppercase text-blue-600 mb-6
               before:content-[''] before:w-6 before:h-px before:bg-blue-600 before:opacity-40
               after:content-[''] after:w-6 after:h-px after:bg-blue-600 after:opacity-40
@@ -18,17 +18,17 @@ export function IntegrationsSection() {
               Integrations
             </div>
             <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-normal leading-[1.1] text-[#1e2a3a] mb-5 tracking-normal">
-              Reads the chart. Engages the patient. <em className="italic text-blue-600">Writes back.</em>
+              Built into the systems you <em className="italic text-blue-600">already run.</em>
             </h2>
             <p className="text-lg leading-[1.65] text-[#718096] max-w-2xl mx-auto font-normal">
-              95+ EHRs. No app. No portal. No login. Just a conversation that picks up where it left off.
+              95+ EHRs, reads and writes back automatically. Reaches patients by voice, SMS, WhatsApp, or iMessage — in 3+ languages.
             </p>
           </div>
 
           {/* Grid — 2x2 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
              {/* Pillar 1: EHR Integrations */}
-             <div className="relative bg-white border border-slate-200 rounded-[20px] p-10 pt-10 pb-9 overflow-hidden transition-all duration-300 hover:border-slate-300 hover:shadow-lg group">
+             <div className="relative bg-white border border-slate-200 rounded-[20px] p-6 sm:p-8 md:p-10 pb-6 sm:pb-7 md:pb-9 overflow-hidden transition-all duration-300 hover:border-slate-300 hover:shadow-lg group">
                 
                 <div className="w-[52px] h-[52px] rounded-[14px] flex items-center justify-center mb-7 bg-blue-50 border border-blue-200 text-blue-600">
                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -36,7 +36,7 @@ export function IntegrationsSection() {
                    </svg>
                 </div>
                 
-                <h3 className="text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">EHR integrations</h3>
+                <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">EHR integrations</h3>
                 <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">Reads the chart. Engages the patient. Writes back.</p>
                 <p className="text-[15px] leading-[1.7] text-[#718096] mb-8 font-normal">
                   Direct integrations with major EHRs. Or connect through Redox and Catagon to reach 95+ systems. Hana reads the chart, engages the patient, and writes structured notes back.
@@ -53,7 +53,7 @@ export function IntegrationsSection() {
              </div>
 
              {/* Pillar 2: Patient Channels */}
-             <div className="relative bg-white border border-slate-200 rounded-[20px] p-10 pt-10 pb-9 overflow-hidden transition-all duration-300 hover:border-slate-300 hover:shadow-lg group">
+             <div className="relative bg-white border border-slate-200 rounded-[20px] p-6 sm:p-8 md:p-10 pb-6 sm:pb-7 md:pb-9 overflow-hidden transition-all duration-300 hover:border-slate-300 hover:shadow-lg group">
                 
                 <div className="w-[52px] h-[52px] rounded-[14px] flex items-center justify-center mb-7 bg-blue-50 border border-blue-200 text-blue-600">
                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -61,7 +61,7 @@ export function IntegrationsSection() {
                    </svg>
                 </div>
                 
-                <h3 className="text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">Patient channels</h3>
+                <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">Patient channels</h3>
                 <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">Hana picks the right channel, time, and tone. No app. No portal. No login.</p>
                 <p className="text-[15px] leading-[1.7] text-[#718096] mb-8 font-normal">
                   Hana picks the right channel, time, and tone for each patient. No app. No portal. No login. Just a conversation.
@@ -78,7 +78,7 @@ export function IntegrationsSection() {
              </div>
 
              {/* Pillar 3: No EHR? No problem. */}
-             <div className="relative bg-white border border-slate-200 rounded-[20px] p-10 pt-10 pb-9 overflow-hidden transition-all duration-300 hover:border-slate-300 hover:shadow-lg group">
+             <div className="relative bg-white border border-slate-200 rounded-[20px] p-6 sm:p-8 md:p-10 pb-6 sm:pb-7 md:pb-9 overflow-hidden transition-all duration-300 hover:border-slate-300 hover:shadow-lg group">
                 
                 <div className="w-[52px] h-[52px] rounded-[14px] flex items-center justify-center mb-7 bg-blue-50 border border-blue-200 text-blue-600">
                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -86,7 +86,7 @@ export function IntegrationsSection() {
                    </svg>
                 </div>
                 
-                <h3 className="text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">No EHR? No problem.</h3>
+                <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">No EHR? No problem.</h3>
                 <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">Works with what you have.</p>
                 <p className="text-[15px] leading-[1.7] text-[#718096] mb-8 font-normal">
                   No EHR integration? No problem. We build custom dashboards, standalone agent controls, or work alongside whatever you're using today. You don't need to be "tech-ready" to start.
@@ -103,13 +103,13 @@ export function IntegrationsSection() {
              </div>
 
              {/* Pillar 4: SDK & White-Label — UPGRADED to full card */}
-             <div className="relative bg-white border border-slate-200 rounded-[20px] p-10 pt-10 pb-9 overflow-hidden transition-all duration-300 hover:border-slate-300 hover:shadow-lg group">
+             <div className="relative bg-white border border-slate-200 rounded-[20px] p-6 sm:p-8 md:p-10 pb-6 sm:pb-7 md:pb-9 overflow-hidden transition-all duration-300 hover:border-slate-300 hover:shadow-lg group">
                 
                 <div className="w-[52px] h-[52px] rounded-[14px] flex items-center justify-center mb-7 bg-blue-50 border border-blue-200 text-blue-600">
                    <Code2 className="w-6 h-6" />
                 </div>
                 
-                <h3 className="text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">SDK & White-Label</h3>
+                <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">SDK & White-Label</h3>
                 <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">Building a platform? Embed Hana via SDK and white-label it as your own.</p>
                 <p className="text-[15px] leading-[1.7] text-[#718096] mb-8 font-normal">
                   Full API access. Custom dashboards. Your branding. Our reasoning engine.

@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
-import { Mail, MapPin, Phone, Send } from "lucide-react";
+import { Mail, MapPin, Send } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router";
 import { toast } from "sonner";
 import { SEO } from "../components/SEO";
 import { breadcrumbSchema } from "../components/SEO";
@@ -11,16 +12,32 @@ export function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    toast.success("Message sent successfully!", {
-      description: "We'll get back to you as soon as possible."
-    });
-    
-    setIsSubmitting(false);
-    (e.target as HTMLFormElement).reset();
+
+    const form = e.target as HTMLFormElement;
+
+    try {
+      // Delivers the enquiry by email to matteo@usehana.com via FormSubmit (no API key
+      // required). After the one-time activation email, swap the address for FormSubmit's
+      // hashed alias so the inbox isn't exposed in client code.
+      const response = await fetch("https://formsubmit.co/ajax/matteo@usehana.com", {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: new FormData(form),
+      });
+
+      if (!response.ok) throw new Error("Request failed");
+
+      toast.success("Message sent", {
+        description: "Thanks for reaching out — we'll get back to you shortly.",
+      });
+      form.reset();
+    } catch {
+      toast.error("Couldn't send your message", {
+        description: "Please email us directly at hello@hana.health.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -40,23 +57,23 @@ export function Contact() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          className="text-center mb-10 md:mb-16"
         >
           <h1 className="text-4xl md:text-5xl font-serif font-medium text-slate-900 dark:text-white mb-6">
             Get in touch
           </h1>
-          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+          <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
             Have questions about our clinical AI agents? We're here to help you transform your healthcare workflows.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24">
           {/* Contact Info */}
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="space-y-12"
+            className="space-y-8 md:space-y-12"
           >
             <div>
               <h3 className="text-2xl font-medium text-slate-900 dark:text-white mb-6">
@@ -80,27 +97,18 @@ export function Contact() {
                   </div>
                   <div>
                     <h4 className="font-medium text-slate-900 dark:text-white mb-1">Office</h4>
+                    {/* TODO: insert real registered business address (needed as the GDPR/CCPA controller address) */}
                     <p className="text-slate-600 dark:text-slate-400">
-                      123 Innovation Drive<br />
-                      San Francisco, CA 94103
+                      HANA Health, Inc.<br />
+                      Remote-first team
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-lg bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400">
-                    <Phone className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-slate-900 dark:text-white mb-1">Phone</h4>
-                    <p className="text-slate-600 dark:text-slate-400">+1 (555) 123-4567</p>
-                    <p className="text-sm text-slate-500 mt-1">Mon-Fri from 9am to 6pm PST</p>
-                  </div>
-                </div>
               </div>
             </div>
 
-            <div className="p-8 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
+            <div className="p-6 md:p-8 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
               <h3 className="text-lg font-medium text-slate-900 dark:text-white mb-2">
                 Ready to get started?
               </h3>
@@ -119,12 +127,18 @@ export function Contact() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <form onSubmit={handleSubmit} className="p-8 rounded-2xl bg-white dark:bg-slate-900 shadow-sm border border-slate-200 dark:border-slate-800">
+            <form onSubmit={handleSubmit} className="p-6 md:p-8 rounded-2xl bg-white dark:bg-slate-900 shadow-sm border border-slate-200 dark:border-slate-800">
               <h3 className="text-2xl font-medium text-slate-900 dark:text-white mb-6">
                 Send us a message
               </h3>
               
               <div className="space-y-6">
+                {/* FormSubmit configuration (hidden) */}
+                <input type="hidden" name="_subject" value="New enquiry from hana.health" />
+                <input type="hidden" name="_template" value="table" />
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label htmlFor="firstName" className="text-sm font-medium text-slate-700 dark:text-slate-300">
@@ -133,8 +147,9 @@ export function Contact() {
                     <input
                       type="text"
                       id="firstName"
+                      name="First Name"
                       required
-                      className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                      className="w-full px-4 py-3 text-base rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                       placeholder="Jane"
                     />
                   </div>
@@ -145,8 +160,9 @@ export function Contact() {
                     <input
                       type="text"
                       id="lastName"
+                      name="Last Name"
                       required
-                      className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                      className="w-full px-4 py-3 text-base rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                       placeholder="Doe"
                     />
                   </div>
@@ -159,8 +175,9 @@ export function Contact() {
                   <input
                     type="email"
                     id="email"
+                    name="email"
                     required
-                    className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                    className="w-full px-4 py-3 text-base rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                     placeholder="jane@organization.com"
                   />
                 </div>
@@ -171,7 +188,8 @@ export function Contact() {
                   </label>
                   <select
                     id="subject"
-                    className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                    name="Subject"
+                    className="w-full px-4 py-3 text-base rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                   >
                     <option>Sales Inquiry</option>
                     <option>Technical Support</option>
@@ -186,9 +204,10 @@ export function Contact() {
                   </label>
                   <textarea
                     id="message"
+                    name="Message"
                     required
                     rows={4}
-                    className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
+                    className="w-full px-4 py-3 text-base rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
                     placeholder="Tell us about your organization's needs..."
                   />
                 </div>
@@ -207,6 +226,14 @@ export function Contact() {
                     </>
                   )}
                 </button>
+
+                <p className="text-xs text-slate-500 dark:text-slate-500 mt-4 text-center">
+                  By submitting this form you agree to our{" "}
+                  <Link to="/privacy" className="text-blue-600 hover:underline">
+                    Privacy Policy
+                  </Link>
+                  .
+                </p>
               </div>
             </form>
           </motion.div>

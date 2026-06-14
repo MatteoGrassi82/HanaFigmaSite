@@ -95,7 +95,7 @@ function CompanyPill({ company, isHighlighted, layer, onClick }: { company: Comp
   return (
     <button
       onClick={onClick}
-      className={`inline-flex items-center px-3 py-1.5 m-0.5 border rounded-full cursor-pointer text-xs font-medium transition-all duration-200 ${
+      className={`inline-flex items-center px-3 py-2 sm:py-1.5 m-1 sm:m-0.5 min-h-[40px] sm:min-h-0 border rounded-full cursor-pointer text-xs font-medium transition-all duration-200 ${
         isHighlighted
           ? `${layer.pill} ${layer.color} border-current`
           : `border-slate-200 bg-white text-slate-700 ${layer.pillHover}`
@@ -120,8 +120,8 @@ function CompanyDetail({ company, onClose }: { company: Company; onClose: () => 
 
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={onClose}>
-      <div className="w-[90%] max-w-md bg-white rounded-2xl shadow-2xl p-8 relative" onClick={(e) => e.stopPropagation()}>
-        <button onClick={onClose} className="absolute top-4 right-4 p-1 rounded-full hover:bg-slate-100 transition-colors text-slate-400 hover:text-slate-600">
+      <div className="w-[90%] max-w-md bg-white rounded-2xl shadow-2xl p-6 sm:p-8 relative" onClick={(e) => e.stopPropagation()}>
+        <button onClick={onClose} className="absolute top-4 right-4 p-2.5 rounded-full hover:bg-slate-100 transition-colors text-slate-400 hover:text-slate-600">
           <X className="w-5 h-5" />
         </button>
         <h3 className="font-serif text-2xl text-slate-900 mb-1 pr-8">{company.n}</h3>
@@ -170,7 +170,7 @@ function LayerSection({ layer, searchTerm, onCompanyClick }: { layer: typeof LAY
 
   return (
     <FadeIn>
-      <div className={`mb-8 ${layer.bg} rounded-2xl p-6 md:p-8 border ${layer.border}`}>
+      <div className={`mb-8 ${layer.bg} rounded-2xl p-4 sm:p-6 md:p-8 border ${layer.border}`}>
         <div className="mb-6">
           <div className="flex items-baseline gap-3 mb-2">
             <h2 className="font-serif text-2xl md:text-3xl text-slate-900">{layer.label}</h2>
@@ -215,8 +215,8 @@ export function StateOfAI() {
             {/* removed "Published by" line */}
           </FadeIn>
           <FadeIn delay={0.05}>
-            <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl tracking-normal text-slate-900 mb-8 leading-[1.1]">
-              The State of Voice AI <br /> in Healthcare
+            <h1 className="font-serif text-3xl sm:text-5xl md:text-7xl tracking-normal text-slate-900 mb-8 leading-[1.1]">
+              The State of Voice AI <br className="hidden sm:block" /> in Healthcare
             </h1>
           </FadeIn>
           <FadeIn delay={0.1}>
@@ -309,7 +309,7 @@ export function StateOfAI() {
                   <button
                     key={key}
                     onClick={() => setActiveFilter(key)}
-                    className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${
+                    className={`px-4 py-2.5 min-h-[40px] rounded-full text-[13px] font-semibold uppercase tracking-wider transition-all duration-200 border ${
                       activeFilter === key
                         ? "bg-slate-900 text-white border-slate-900"
                         : "bg-white text-slate-500 border-slate-200 hover:border-slate-300 hover:text-slate-700"
@@ -337,7 +337,7 @@ export function StateOfAI() {
       {/* Key Observations */}
       <section className="px-6 pb-20">
         <FadeIn>
-          <div className="max-w-5xl mx-auto bg-slate-900 rounded-2xl p-8 md:p-12">
+          <div className="max-w-5xl mx-auto bg-slate-900 rounded-2xl p-6 sm:p-8 md:p-12">
             <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">Key Observations</p>
             <h2 className="font-serif text-3xl md:text-4xl text-white mb-6">What the map reveals</h2>
             <div className="h-px w-full bg-white/10 mb-8" />

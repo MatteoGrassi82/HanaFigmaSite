@@ -220,7 +220,7 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
       <section className="bg-[#00122F] text-white pt-32 pb-20 px-4">
         <div className="max-w-4xl mx-auto">
           <p className="text-blue-400 text-xs font-semibold tracking-[3px] uppercase mb-6">Case Studies</p>
-          <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl leading-[1.05] mb-6">
+          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] mb-6">
             What happens when<br />
             <span className="text-blue-400">the routine gets handled</span>
           </h1>
@@ -291,7 +291,7 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
         </div>
 
         {/* Bottom CTA */}
-        <div className="mt-16 bg-[#00122F] rounded-2xl p-10 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="mt-16 bg-[#00122F] rounded-2xl p-6 sm:p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h3 className="font-serif text-3xl text-white mb-2">Every workflow is different.<br />That's the point.</h3>
             <p className="text-slate-400 text-sm">Book a demo. We'll show you a workflow built for how you work.</p>
@@ -396,10 +396,10 @@ function DetailView({
           </div>
           <div className="grid grid-cols-1 md:grid-cols-[1fr_180px] gap-12 items-start">
             <p className="text-[17px] md:text-[18px] leading-[1.9] text-slate-600">{c.what}</p>
-            <div className="flex flex-row md:flex-col gap-8 border-t md:border-t-0 md:border-l pt-6 md:pt-0 md:pl-8" style={{ borderColor: `${c.color}25` }}>
+            <div className="flex flex-row md:flex-col gap-4 sm:gap-8 border-t md:border-t-0 md:border-l pt-6 md:pt-0 md:pl-8" style={{ borderColor: `${c.color}25` }}>
               {c.stats.map(([n, l]) => (
                 <div key={l}>
-                  <div className="font-serif text-[2rem] leading-none mb-1.5" style={{ color: c.color }}>{n}</div>
+                  <div className="font-serif text-2xl sm:text-[2rem] leading-none mb-1.5" style={{ color: c.color }}>{n}</div>
                   <div className="text-[10px] text-slate-400 uppercase tracking-widest leading-snug">{l}</div>
                 </div>
               ))}
@@ -419,10 +419,10 @@ function DetailView({
         </div>
 
         {/* In numbers — dark, centered */}
-        <div className="bg-[#00122F] px-6 md:px-12 py-24 text-center">
+        <div className="bg-[#00122F] px-6 md:px-12 py-16 md:py-24 text-center">
           <div className="max-w-3xl mx-auto">
             <p className="text-[10px] font-bold tracking-[3px] uppercase text-slate-500 mb-10">In numbers</p>
-            <div className="font-serif text-[96px] md:text-[120px] leading-none tracking-tight mb-4" style={{ color: c.color }}>
+            <div className="font-serif text-6xl sm:text-7xl md:text-[120px] leading-none tracking-tight mb-4" style={{ color: c.color }}>
               {c.stats[0][0]}
             </div>
             <div className="text-[10px] text-slate-500 uppercase tracking-[3px] mb-12">{c.stats[0][1]}</div>
@@ -465,11 +465,11 @@ function DetailView({
         {/* Nav */}
         <div className="bg-white border-t border-slate-100">
           <div className="max-w-4xl mx-auto px-6 md:px-12 py-10 flex items-center justify-between">
-            <button onClick={onPrev} className="flex items-center gap-2 text-[13px] text-slate-400 hover:text-slate-900 transition-colors">
+            <button onClick={onPrev} className="flex items-center gap-2 py-2 -my-2 text-[13px] text-slate-400 hover:text-slate-900 transition-colors">
               <ArrowLeft className="w-3.5 h-3.5" /> Previous
             </button>
-            <button onClick={onBack} className="text-[13px] text-slate-400 hover:text-slate-900 transition-colors">All case studies</button>
-            <button onClick={onNext} className="flex items-center gap-2 text-[13px] text-slate-400 hover:text-slate-900 transition-colors">
+            <button onClick={onBack} className="py-2 -my-2 text-[13px] text-slate-400 hover:text-slate-900 transition-colors">All case studies</button>
+            <button onClick={onNext} className="flex items-center gap-2 py-2 -my-2 text-[13px] text-slate-400 hover:text-slate-900 transition-colors">
               Next <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>

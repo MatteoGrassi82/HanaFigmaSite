@@ -4,7 +4,6 @@ import NumberFlow from "@number-flow/react";
 import { motion } from "motion/react";
 import React from "react";
 import { cn } from "../../../lib/utils";
-import { AskAiAboutUs } from "../AskAiAboutUs";
 
 const css = `
 .candy-bg {
@@ -27,19 +26,16 @@ const Stats = () => {
     <section className="py-20 md:py-32 w-full px-4 md:px-6 bg-[#F5F5F5]">
       <style>{css}</style>
       <div className="container mx-auto">
-        <div className="mx-auto max-w-2xl text-center mb-16">
-          <p className="text-base text-slate-500 dark:text-slate-400 mb-3">
-            Most routine calls never get made. Ours do.
-          </p>
+        <div className="mx-auto max-w-2xl text-center mb-10 md:mb-16">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-normal text-slate-900 dark:text-white mb-6 font-serif">
-            What 2 million patient conversations <br />
-            <span className="italic">taught us.</span>
+            Portals wait. Texts wait. <br className="hidden md:inline" />
+            <span className="italic">Hana picks up the phone.</span>
           </h2>
           <p className="text-lg text-slate-500 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
-            When the infrastructure adapts to each patient's channel, language, and response pattern, engagement stops being a problem you manage and starts being a system that runs.
+            Patients ignore the portal and miss the text — then the slot goes empty. Hana reaches them the way they actually respond, and protects the schedule.
           </p>
         </div>
-        <div className="relative mx-auto mt-20 flex h-[300px] md:h-[500px] max-w-4xl items-center justify-center gap-2 md:gap-8">
+        <div className="relative mx-auto mt-8 md:mt-20 flex h-[300px] md:h-[500px] max-w-4xl items-center justify-center gap-2 md:gap-8">
           {[
             { value: 15, label: "Patient portals", delay: 0.2 },
             { value: 20, label: "Health apps", delay: 0.4 },
@@ -69,10 +65,8 @@ const Stats = () => {
           ))}
         </div>
         <div className="mt-12 text-center">
-             <p className="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Industry average: 15%. HANA: 85%. Every week.</p>
+             <p className="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">% of targeted patients reached per cycle. Voice vs. passive channels.</p>
         </div>
-
-        <AskAiAboutUs className="mt-16" />
       </div>
     </section>
   );
@@ -122,7 +116,7 @@ const BarChart = ({
           animate={{ opacity: showToolTip ? 1 : 0, y: showToolTip ? 0 : 100 }}
           transition={{ duration: 0.5, type: "spring", damping: 15, delay }}
           className={cn(
-            "absolute -top-14 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl bg-zinc-800 px-6 py-3 text-white font-bold text-lg shadow-xl z-50 whitespace-nowrap",
+            "absolute -top-14 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-[90vw] rounded-xl bg-zinc-800 px-3 py-2 text-white font-bold text-sm shadow-xl z-50 md:px-6 md:py-3 md:text-lg md:whitespace-nowrap",
             className.includes("bg-[#A7BCF5]") ? "bg-[#A7BCF5]" : "bg-zinc-800",
           )}
         >
@@ -150,7 +144,7 @@ const BarChart = ({
               fill="currentColor"
             />
           </svg>
-          Engagement
+          Patients reached
         </motion.div>
       </motion.div>
       <p className="mx-auto mt-3 md:mt-4 w-fit tracking-tight text-xs md:text-base text-slate-500 dark:text-slate-400 font-medium">

@@ -124,7 +124,6 @@ export function HowHanaWorks() {
         breakpoint: 768,
         settings: {
           slidesToShow: 1.08,
-          centerPadding: "16px",
         }
       }
     ]
@@ -139,7 +138,7 @@ export function HowHanaWorks() {
   };
 
   return (
-    <section className="py-24 bg-[#F5F5F5] dark:bg-slate-950 w-full overflow-hidden">
+    <section className="py-12 sm:py-16 md:py-24 bg-[#F5F5F5] dark:bg-slate-950 w-full overflow-hidden">
       <div className="container mx-auto px-4 md:px-8 max-w-7xl">
         
         {/* Header */}
@@ -198,7 +197,7 @@ export function HowHanaWorks() {
         </div>
 
         {/* Navigation Controls - All screens */}
-        <div className="mt-12 flex items-center gap-6">
+        <div className="mt-6 md:mt-12 flex items-center gap-4 md:gap-6">
             <div className="flex gap-3">
                 <button 
                     onClick={previous}
@@ -225,7 +224,7 @@ export function HowHanaWorks() {
                         key={index}
                         onClick={() => sliderRef.current?.slickGoTo(index)}
                         className={cn(
-                            "transition-colors",
+                            "transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center",
                             currentSlide === index
                                 ? "text-slate-900 dark:text-white"
                                 : "text-slate-400 dark:text-slate-600 hover:text-slate-600 dark:hover:text-slate-400"
