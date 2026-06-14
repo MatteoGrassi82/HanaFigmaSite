@@ -97,9 +97,6 @@ export function Home({
         handleEndWebCall={handleEndWebCall}
       />
 
-      {/* §4b — WATCH HANA IN ACTION (video carousel) */}
-      <HowHanaWorks />
-
       {/* §5 — PROOF (testimonials) */}
       <ClientFeedback />
 
@@ -117,6 +114,9 @@ export function Home({
 
       {/* §9 — SECURITY: defense-in-depth layered stack */}
       <SafetyStack />
+
+      {/* WATCH HANA IN ACTION (Wistia video carousel) — moved below security/safety */}
+      <HowHanaWorks />
 
       {/* §9b — TAIL: COMPLIANCE (certs + safety pillars — the credentials view) */}
       <ComplianceSection />
