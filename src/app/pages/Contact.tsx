@@ -14,15 +14,23 @@ export function Contact() {
     setIsSubmitting(true);
 
     const form = e.target as HTMLFormElement;
+    const fd = new FormData(form);
+    const payload = {
+      firstName: fd.get("First Name"),
+      lastName: fd.get("Last Name"),
+      email: fd.get("email"),
+      subject: fd.get("Subject"),
+      message: fd.get("Message"),
+      honey: fd.get("honey"),
+    };
 
     try {
-      // Delivers the enquiry by email to matteo@usehana.com via FormSubmit (no API key
-      // required). After the one-time activation email, swap the address for FormSubmit's
-      // hashed alias so the inbox isn't exposed in client code.
-      const response = await fetch("https://formsubmit.co/ajax/matteo@usehana.com", {
+      // Posts to our Vercel serverless function (api/contact.ts), which sends the
+      // enquiry by email via Resend to matteo@usehana.com. The API key stays server-side.
+      const response = await fetch("/api/contact", {
         method: "POST",
-        headers: { Accept: "application/json" },
-        body: new FormData(form),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) throw new Error("Request failed");
@@ -133,11 +141,8 @@ export function Contact() {
               </h3>
               
               <div className="space-y-6">
-                {/* FormSubmit configuration (hidden) */}
-                <input type="hidden" name="_subject" value="New enquiry from hana.health" />
-                <input type="hidden" name="_template" value="table" />
-                <input type="hidden" name="_captcha" value="false" />
-                <input type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
+                {/* Honeypot spam trap (humans never fill this) */}
+                <input type="text" name="honey" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">

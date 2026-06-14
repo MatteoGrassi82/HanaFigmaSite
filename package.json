@@ -78,6 +78,7 @@
     "react-slick": "0.31.0",
     "recharts": "2.15.2",
     "remotion": "^4.0.472",
+    "resend": "^6.12.4",
     "slick-carousel": "^1.8.1",
     "sonner": "2.0.3",
     "tailwind-merge": "3.2.0",
@@ -86,6 +87,7 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.1.12",
+    "@vercel/node": "^5.8.17",
     "@vitejs/plugin-react": "4.7.0",
     "puppeteer": "^25.1.0",
     "tailwindcss": "4.1.12",
