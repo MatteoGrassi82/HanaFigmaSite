@@ -143,7 +143,7 @@ export const organizationSchema: Record<string, unknown> = {
   "logo": `${SITE_DOMAIN}/logo.png`,
   "description": "Hana Health builds clinical Voice AI agents that automate patient engagement, intake, monitoring, and care coordination for healthcare organizations.",
   "sameAs": [
-    "https://www.linkedin.com/company/hana-health"
+    "https://www.linkedin.com/company/usehana"
   ],
   "contactPoint": {
     "@type": "ContactPoint",

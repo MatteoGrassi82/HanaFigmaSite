@@ -22,15 +22,13 @@ export function Footer() {
           <div className="flex gap-4">
             <a href="https://twitter.com/hanahealth" target="_blank" rel="noopener noreferrer" aria-label="Follow Hana Health on Twitter" className="inline-flex items-center justify-center w-11 h-11 -m-2 hover:text-white transition-colors"><Twitter className="w-5 h-5" /></a>
             <a href="https://github.com/hanahealth" target="_blank" rel="noopener noreferrer" aria-label="Hana Health on GitHub" className="inline-flex items-center justify-center w-11 h-11 -m-2 hover:text-white transition-colors"><Github className="w-5 h-5" /></a>
-            <a href="https://www.linkedin.com/company/hanahealth" target="_blank" rel="noopener noreferrer" aria-label="Hana Health on LinkedIn" className="inline-flex items-center justify-center w-11 h-11 -m-2 hover:text-white transition-colors"><Linkedin className="w-5 h-5" /></a>
+            <a href="https://www.linkedin.com/company/usehana" target="_blank" rel="noopener noreferrer" aria-label="Hana Health on LinkedIn" className="inline-flex items-center justify-center w-11 h-11 -m-2 hover:text-white transition-colors"><Linkedin className="w-5 h-5" /></a>
           </div>
         </div>
         
         <nav aria-label="Platform navigation">
           <h4 className="text-white font-medium mb-4">Platform</h4>
           <ul className="space-y-2 text-sm">
-            <li><Link to="/use-cases" className="inline-block py-2 hover:text-white transition-colors">Agent Catalogue</Link></li>
-            <li><Link to="/timeline" className="inline-block py-2 hover:text-white transition-colors">Reasoning Engine</Link></li>
             <li><a href="#integrations" className="inline-block py-2 hover:text-white transition-colors">Integrations</a></li>
             <li><a href="https://docs.hana.health/" target="_blank" rel="noopener noreferrer" className="inline-block py-2 hover:text-white transition-colors">SDK</a></li>
           </ul>
