@@ -129,7 +129,11 @@ function AppContent() {
   }, []);
 
   const handleStartWebCall = async (agentId: string, assistantId: string) => {
+    // assistantId is one of: "agent_…" (ElevenLabs), "squad:<uuid>" (Vapi squad
+    // — greeter routes to the specialists), or a bare uuid (single Vapi assistant).
     const isElevenLabs = assistantId.startsWith("agent_");
+    const isSquad = assistantId.startsWith("squad:");
+    const squadId = isSquad ? assistantId.slice("squad:".length) : null;
 
     if (isElevenLabs) {
       if (activeAgentId && activeAgentId !== agentId) return;
@@ -197,7 +201,13 @@ function AppContent() {
       }
 
       try {
-        await vapiRef.current.start(assistantId);
+        // Vapi's start() is positional: start(assistant, overrides, squad, …).
+        // A squad goes in the 3rd slot; a single assistant in the 1st.
+        if (squadId) {
+          await vapiRef.current.start(undefined, undefined, squadId);
+        } else {
+          await vapiRef.current.start(assistantId);
+        }
       } catch (error) {
         console.error("Vapi start error:", error);
         setWebCallStatus("idle");

@@ -6,10 +6,12 @@ import { projectId, publicAnonKey } from "../../../utils/supabase/info";
 
 const FN_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-77ada9a1`;
 
-// Single demo agent for the in-browser web call. DAX works out which use case to
-// demo during the conversation, so there's no on-page use-case picker anymore.
-// TODO: replace with the DAX demo agent id (ElevenLabs "agent_..." or Vapi uuid).
-const DEMO_AGENT_ID = "agent_1101kj5rbjvaf3ras919nbh6kdgr";
+// In-browser web call: a Vapi SQUAD. A greeter agent asks what the visitor wants
+// to try, then hands off to the matching specialist (monitoring / intake /
+// outreach / coordination) — so there's no on-page use-case picker. The "squad:"
+// prefix tells handleStartWebCall to start a squad rather than a single assistant
+// (mirrors the "agent_" prefix that routes to ElevenLabs).
+const DEMO_AGENT_ID = "squad:91b2273e-a3b2-46df-af20-193b50054921";
 
 interface LiveDemoSectionProps {
   activeAgentId: string | null;
