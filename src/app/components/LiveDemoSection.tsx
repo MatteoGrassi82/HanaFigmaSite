@@ -54,11 +54,17 @@ export function LiveDemoSection({
     return () => { if (pollRef.current) clearInterval(pollRef.current); };
   }, [smsStatus, phone]);
 
+  // Lead notification → Resend (via our Vercel function), not Zapier.
   const captureLead = (page: string) => {
-    fetch(`${FN_BASE}/leads`, {
+    fetch("/api/lead", {
       method: "POST",
-      headers: { Authorization: `Bearer ${publicAnonKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ name: name.trim(), email: email.trim(), page }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: name.trim(),
+        email: email.trim(),
+        phone: phone.trim() || undefined,
+        page,
+      }),
     }).catch((err) => console.error("Failed to capture lead:", err));
   };
 
