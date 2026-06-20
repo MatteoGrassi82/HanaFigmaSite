@@ -76,7 +76,7 @@ export function LiveDemoSection({
       const res = await fetch(`${FN_BASE}/site-demo-start`, {
         method: "POST",
         headers: { Authorization: `Bearer ${publicAnonKey}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ to: e164, region, name: name.trim() || undefined }),
+        body: JSON.stringify({ to: e164, region, name: name.trim() || undefined, email: email.trim() || undefined }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) { setSmsStatus("idle"); setSmsError(data.error || "Could not send the text."); return; }

@@ -712,6 +712,7 @@ app.post("/make-server-77ada9a1/site-demo-start", async (c) => {
     const to = String(body.to || "").trim();
     const region = normalizeRegion(body.region);
     const name = typeof body.name === "string" ? body.name.trim().slice(0, 80) : "";
+    const email = typeof body.email === "string" ? body.email.trim().slice(0, 120) : "";
 
     if (!E164.test(to)) return c.json({ error: "Enter a valid phone number in international format, e.g. +15551234567" }, 400);
 
@@ -731,7 +732,7 @@ app.post("/make-server-77ada9a1/site-demo-start", async (c) => {
       return c.json({ error: "Could not send the text. Please double-check the number." }, 502);
     }
 
-    await kv.set(`sitedemo:${to}`, { phone: to, region, name: name || null, status: "texted", agent: null, call_id: null, updated_at: new Date().toISOString() });
+    await kv.set(`sitedemo:${to}`, { phone: to, region, name: name || null, email: email || null, status: "texted", agent: null, call_id: null, updated_at: new Date().toISOString() });
     return c.json({ ok: true, status: "texted" });
   } catch (error) {
     console.error("site-demo-start error:", error);
@@ -774,7 +775,14 @@ app.post("/make-server-77ada9a1/site-demo-sms-inbound", async (c) => {
     const phoneNumberId = Deno.env.get(reg.vapiPhoneEnv) || reg.vapiPhoneFallback;
 
     try {
-      const callId = await placeVapiCall(assistantId, phoneNumberId, from, { customer_name: row.name || "there" });
+      const callId = await placeVapiCall(assistantId, phoneNumberId, from, {
+        customer_name: row.name || "there",
+        // Forwarded so the dashboard saves the visitor's real contact details
+        // (the webhook reads these back from the end-of-call report).
+        caller_name: row.name || "",
+        caller_email: row.email || "",
+        caller_phone: from,
+      });
       await kv.set(`sitedemo:${from}`, { ...row, status: "called", agent: agentKey, agent_label: agent.label, call_id: callId, updated_at: new Date().toISOString() });
     } catch (err) {
       console.error("[site-demo-sms-inbound] vapi call failed:", err);
