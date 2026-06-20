@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { Loader2, Globe, PhoneOff, CheckCircle2, MessageSquare, Smartphone } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { projectId, publicAnonKey } from "../../../utils/supabase/info";
+import { HanaBloomOrb } from "./ui/hana-bloom-orb";
 
 const FN_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-77ada9a1`;
 
@@ -102,10 +103,10 @@ export function LiveDemoSection({
 
   const inputClass = (err?: string) =>
     cn(
-      "w-full bg-transparent border-b-2 py-3 text-slate-900 text-[16px] placeholder:text-slate-300 focus:outline-none transition-colors",
-      err ? "border-red-400" : "border-slate-200 focus:border-slate-900"
+      "w-full bg-transparent border-0 border-b-[1.5px] py-2 text-[#00122f] text-[17px] placeholder:text-[#b3bdcc] focus:outline-none transition-colors",
+      err ? "border-red-400" : "border-[#dfe3ee] focus:border-[#5b76d9]"
     );
-  const labelClass = "block text-[11px] font-semibold uppercase tracking-[1.5px] text-blue-600 mb-1.5";
+  const labelClass = "block text-[12px] font-bold uppercase tracking-[2.2px] text-[#5b76d9] mb-3";
 
   return (
     <section id="live-demo-section" className="py-12 sm:py-16 lg:py-20 px-4 md:px-8 bg-white">
@@ -120,22 +121,23 @@ export function LiveDemoSection({
         </p>
 
         {/* Two-column card */}
-        <div className="flex flex-col lg:flex-row gap-0 border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+        <div className="flex flex-col lg:flex-row gap-0 border border-[#e8ebf2] rounded-[20px] overflow-hidden shadow-[0_24px_64px_rgba(0,18,47,0.10)]">
 
-          {/* Left — video */}
-          <div className="relative lg:w-[48%] bg-slate-50 min-h-[260px] lg:min-h-[480px]">
-            <video
-              src="/video1.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover"
-            />
+          {/* Left — fluid bloom orb on navy */}
+          <div className="relative lg:w-1/2 bg-[#00122f] overflow-hidden flex items-center justify-center min-h-[320px] lg:min-h-[520px] px-12 py-16">
+            <div className="relative z-10 scale-90 sm:scale-100">
+              <HanaBloomOrb />
+            </div>
+
+            {/* live caption */}
+            <div className="absolute bottom-10 left-0 right-0 flex items-center justify-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#A7BCF5]" style={{ animation: "hana-glow 2.4s ease-in-out infinite" }} />
+              <span className="text-[12px] font-bold tracking-[2.5px] uppercase text-[#7e93c8]">Hana is listening</span>
+            </div>
           </div>
 
           {/* Right — form / call */}
-          <div className="lg:w-[52%] bg-slate-50 border-t lg:border-t-0 lg:border-l border-slate-200 p-5 sm:p-6 lg:p-8 flex flex-col justify-center">
+          <div className="lg:w-1/2 bg-[#f6f7fb] border-t lg:border-t-0 lg:border-l border-[#e8ebf2] p-7 sm:p-10 lg:p-14 flex flex-col justify-center">
 
             <AnimatePresence mode="wait">
               {webCallStatus !== "idle" ? (
@@ -187,10 +189,15 @@ export function LiveDemoSection({
                 </motion.div>
               ) : (
                 /* Form state — callback first, web call below */
-                <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col gap-5 w-full">
-                  <p className="text-[17px] text-slate-700 leading-relaxed">
-                    Get a live call from Hana and hear how the AI handles a real patient conversation.
-                  </p>
+                <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col gap-6 w-full">
+                  <div>
+                    <p className="text-[24px] leading-[1.42] text-[#00122f] font-normal max-w-[30ch] mb-3">
+                      Hear Hana handle a real patient conversation.
+                    </p>
+                    <p className="text-[15px] leading-[1.7] text-[#64748b] max-w-[42ch]">
+                      Enter your details and Hana texts you first to confirm, then calls within seconds — so you can experience the AI live.
+                    </p>
+                  </div>
 
                   {/* Name */}
                   <div>
@@ -221,15 +228,15 @@ export function LiveDemoSection({
                   {/* Phone + region */}
                   <div>
                     <label className={labelClass}>Phone</label>
-                    <div className="mb-2 flex items-center gap-1 rounded-md p-0.5 bg-slate-100 max-w-[280px]">
+                    <div className="mb-4 inline-flex items-center gap-1 rounded-[10px] p-1 bg-[#eef0f5] border border-[#e2e6f4]">
                       {(["US", "EU"] as const).map((r) => (
                         <button
                           key={r}
                           type="button"
                           onClick={() => setRegion(r)}
                           className={cn(
-                            "flex-1 text-[11px] font-medium rounded px-2 py-1 transition-colors",
-                            region === r ? "bg-white text-slate-900 shadow-sm" : "text-slate-500"
+                            "rounded-[7px] px-4 py-2 text-[14px] font-semibold transition-colors",
+                            region === r ? "bg-white text-[#00122f] shadow-[0_1px_3px_rgba(0,18,47,0.12)]" : "text-[#64748b]"
                           )}
                         >
                           {r === "US" ? "🇺🇸 US / Canada" : "🇪🇺 Europe"}
@@ -251,11 +258,11 @@ export function LiveDemoSection({
                   <button
                     onClick={handleTextMeClick}
                     disabled={smsStatus === "sending" || smsStatus === "texted"}
-                    className="mt-1 inline-flex items-center justify-center gap-2 bg-slate-900 text-white text-[15px] font-medium rounded-xl py-3.5 hover:bg-slate-800 transition-colors disabled:opacity-50"
+                    className="w-full inline-flex items-center justify-center gap-2.5 bg-[#1e2a3a] text-white text-[16px] font-semibold rounded-xl py-[18px] transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(0,18,47,0.18)] disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
                   >
                     {smsStatus === "sending"
-                      ? <><Loader2 className="w-4 h-4 animate-spin" /> Texting…</>
-                      : <><Smartphone className="w-4 h-4" /> Text me &amp; call me</>}
+                      ? <><Loader2 className="w-[18px] h-[18px] animate-spin" /> Texting…</>
+                      : <><Smartphone className="w-[18px] h-[18px]" /> Start</>}
                   </button>
                   {smsError && <p className="-mt-2 text-xs text-red-500">{smsError}</p>}
 
@@ -281,19 +288,19 @@ export function LiveDemoSection({
                   )}
 
                   {/* Divider */}
-                  <div className="flex items-center gap-3 my-1">
-                    <span className="h-px flex-1 bg-slate-200" />
-                    <span className="text-[11px] uppercase tracking-wider text-slate-400">or</span>
-                    <span className="h-px flex-1 bg-slate-200" />
+                  <div className="flex items-center gap-4 my-0.5">
+                    <span className="h-px flex-1 bg-[#e8ebf2]" />
+                    <span className="text-[12px] font-semibold uppercase tracking-[2px] text-[#94a3b8]">or</span>
+                    <span className="h-px flex-1 bg-[#e8ebf2]" />
                   </div>
 
                   {/* Secondary — simple web call */}
                   <button
                     onClick={handleWebCallClick}
                     disabled={webCallStatus !== "idle"}
-                    className="inline-flex items-center justify-center gap-2 bg-white border-2 border-slate-200 hover:border-slate-900 text-slate-900 text-[14px] font-medium rounded-xl py-3 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full inline-flex items-center justify-center gap-2.5 bg-white border border-[#dfe3ee] text-[#00122f] text-[16px] font-semibold rounded-xl py-[18px] transition-all hover:-translate-y-0.5 hover:border-[#c7cfe0] hover:shadow-[0_10px_24px_rgba(0,18,47,0.08)] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
                   >
-                    <Globe className="w-4 h-4 text-blue-600" />
+                    <Globe className="w-[18px] h-[18px] text-[#5b76d9]" />
                     Prefer to talk now? Start a web call →
                   </button>
                 </motion.div>

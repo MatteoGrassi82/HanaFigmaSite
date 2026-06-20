@@ -343,3 +343,25 @@
 .text-white\/80 {
   color: rgba(255, 255, 255, 0.8);
 }
+
+/* ── Live-call "fluid bloom" orb (Talk to Hana section) ───────────────────── */
+@keyframes hana-glow {
+  0%, 100% { opacity: .55; transform: scale(1); }
+  50%      { opacity: .8;  transform: scale(1.06); }
+}
+@keyframes hana-spin-cw { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes hana-morph1 {
+  0%, 100% { border-radius: 58% 42% 55% 45% / 64% 64% 38% 38%; transform: translateY(-64px) rotate(-7deg); }
+  50%      { border-radius: 46% 54% 42% 58% / 58% 58% 42% 42%; transform: translateY(-64px) rotate(6deg); }
+}
+@keyframes hana-morph2 {
+  0%, 100% { border-radius: 52% 48% 60% 40% / 62% 62% 40% 40%; transform: translateY(-64px) rotate(8deg); }
+  50%      { border-radius: 60% 40% 48% 52% / 56% 56% 44% 44%; transform: translateY(-64px) rotate(-6deg); }
+}
+@keyframes hana-morph3 {
+  0%, 100% { border-radius: 50% 50% 46% 54% / 60% 60% 40% 40%; transform: translateY(-64px) rotate(5deg); }
+  50%      { border-radius: 44% 56% 56% 44% / 56% 56% 44% 44%; transform: translateY(-64px) rotate(-8deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hana-orb-spin, .hana-orb-glow, .hana-orb-petal { animation: none !important; }
+}
