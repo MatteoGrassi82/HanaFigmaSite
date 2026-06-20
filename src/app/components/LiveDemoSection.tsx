@@ -123,16 +123,16 @@ export function LiveDemoSection({
         {/* Two-column card */}
         <div className="flex flex-col lg:flex-row gap-0 border border-[#e8ebf2] rounded-[20px] overflow-hidden shadow-[0_24px_64px_rgba(0,18,47,0.10)]">
 
-          {/* Left — fluid bloom orb on navy */}
-          <div className="relative lg:w-1/2 bg-[#00122f] overflow-hidden flex items-center justify-center min-h-[320px] lg:min-h-[520px] px-12 py-16">
+          {/* Left — fluid bloom orb */}
+          <div className="relative lg:w-1/2 bg-white overflow-hidden flex items-center justify-center min-h-[320px] lg:min-h-[520px] px-12 py-16">
             <div className="relative z-10 scale-90 sm:scale-100">
               <HanaBloomOrb />
             </div>
 
             {/* live caption */}
             <div className="absolute bottom-10 left-0 right-0 flex items-center justify-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#A7BCF5]" style={{ animation: "hana-glow 2.4s ease-in-out infinite" }} />
-              <span className="text-[12px] font-bold tracking-[2.5px] uppercase text-[#7e93c8]">Hana is listening</span>
+              <span className="w-2 h-2 rounded-full bg-[#5b76d9]" style={{ animation: "hana-glow 2.4s ease-in-out infinite" }} />
+              <span className="text-[12px] font-bold tracking-[2.5px] uppercase text-[#64748b]">Hana is listening</span>
             </div>
           </div>
 
