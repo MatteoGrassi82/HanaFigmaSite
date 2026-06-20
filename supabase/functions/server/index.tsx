@@ -609,4 +609,195 @@ app.get("/make-server-77ada9a1/call-status/:conversationId", async (c) => {
   }
 });
 
+// ════════════════════════════════════════════════════════════════════════════
+//  Live demo: SMS → reply picks an agent → that agent (Vapi) calls the prospect
+//  Flow: site posts { to, region } → we text the 4 options → prospect replies a
+//  keyword (e.g. "MONITORING") → Twilio inbound webhook maps it to a Vapi
+//  assistant and places the outbound call from the region's number. State is kept
+//  in the KV store as `sitedemo:<phone>` so the page can poll texted→called.
+// ════════════════════════════════════════════════════════════════════════════
+
+// Use-case → new Vapi assistant id (env-overridable so ids aren't pinned in code).
+const SITE_AGENTS: Record<string, { label: string; assistantEnv: string; fallback: string }> = {
+  monitoring:   { label: "Monitoring",   assistantEnv: "VAPI_SITE_ASSISTANT_MONITORING",   fallback: "f4ed7d07-ac37-4fbe-a2f1-2acca1e45607" },
+  intake:       { label: "Intake",       assistantEnv: "VAPI_SITE_ASSISTANT_INTAKE",       fallback: "10171aae-e41e-47df-a11c-5730878c4253" },
+  outreach:     { label: "Outreach",     assistantEnv: "VAPI_SITE_ASSISTANT_OUTREACH",     fallback: "5aeee0ef-6d66-4600-8911-c8ca7e6f1050" },
+  coordination: { label: "Coordination", assistantEnv: "VAPI_SITE_ASSISTANT_COORDINATION", fallback: "4cebebf5-76df-4289-9034-ff34f7e3791c" },
+};
+
+// Region → the Twilio from-number (SMS) + the Vapi phoneNumberId (caller-ID).
+// US covers US/Canada; EU uses the UK number.
+const SITE_REGIONS: Record<string, { fromEnv: string; fromFallback: string; vapiPhoneEnv: string; vapiPhoneFallback: string }> = {
+  US: { fromEnv: "TWILIO_SITE_FROM_US", fromFallback: "+14632170155", vapiPhoneEnv: "VAPI_SITE_PHONE_US", vapiPhoneFallback: "3f412051-5b3b-485c-92fc-eef207d55409" },
+  EU: { fromEnv: "TWILIO_SITE_FROM_UK", fromFallback: "+447897023174", vapiPhoneEnv: "VAPI_SITE_PHONE_UK", vapiPhoneFallback: "22c61779-ef10-4d09-9d41-0c71e4b6d81b" },
+};
+
+const E164 = /^\+[1-9]\d{7,14}$/;
+const normalizeRegion = (r: unknown): "US" | "EU" => (String(r).toUpperCase() === "EU" ? "EU" : "US");
+
+// Map a free-text SMS reply to one agent key. Anchored so "no thanks" never matches,
+// and tolerant of partial words ("coord", "monitor").
+function replyToAgentKey(text: string): string | null {
+  const t = (text || "").toLowerCase().trim();
+  if (/^(no|nope|stop|unsubscribe|cancel|wrong)\b/.test(t)) return null;
+  if (/\b(monitor|monitoring|check.?in)\b/.test(t)) return "monitoring";
+  if (/\b(intake|onboard|new patient)\b/.test(t)) return "intake";
+  if (/\b(outreach|reactivat|haven'?t|been a while)\b/.test(t)) return "outreach";
+  if (/\b(coordinat|rebook|reschedul|no.?show|missed)\b/.test(t)) return "coordination";
+  // bare number 1-4 as a fallback selection
+  const n = t.match(/^[1-4]$/)?.[0];
+  if (n) return (["monitoring", "intake", "outreach", "coordination"] as const)[Number(n) - 1];
+  return null;
+}
+
+// Send an SMS via Twilio's REST API (no SDK; HTTP Basic with SID + auth token).
+async function sendTwilioSms(to: string, from: string, body: string): Promise<string | null> {
+  const sid = Deno.env.get("TWILIO_ACCOUNT_SID");
+  const token = Deno.env.get("TWILIO_AUTH_TOKEN");
+  if (!sid || !token) throw new Error("Missing TWILIO_ACCOUNT_SID / TWILIO_AUTH_TOKEN");
+  const form = new URLSearchParams({ To: to, From: from, Body: body });
+  const res = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`, {
+    method: "POST",
+    headers: {
+      Authorization: "Basic " + btoa(`${sid}:${token}`),
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: form.toString(),
+  });
+  if (!res.ok) throw new Error(`Twilio send failed (${res.status}): ${(await res.text()).slice(0, 200)}`);
+  const json = await res.json();
+  return json.sid ?? null;
+}
+
+// Verify an inbound Twilio webhook signature (X-Twilio-Signature): HMAC-SHA1 over
+// url + every POST param sorted by key, base64, compared in constant time.
+async function verifyTwilioSignature(url: string, params: Record<string, string>, signature: string | null): Promise<boolean> {
+  const token = Deno.env.get("TWILIO_AUTH_TOKEN");
+  if (!token || !signature) return false;
+  const data = Object.keys(params).sort().reduce((acc, k) => acc + k + params[k], url);
+  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(token), { name: "HMAC", hash: "SHA-1" }, false, ["sign"]);
+  const mac = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(data));
+  const expected = btoa(String.fromCharCode(...new Uint8Array(mac)));
+  // constant-time-ish compare
+  if (expected.length !== signature.length) return false;
+  let diff = 0;
+  for (let i = 0; i < expected.length; i++) diff |= expected.charCodeAt(i) ^ signature.charCodeAt(i);
+  return diff === 0;
+}
+
+// Place a Vapi outbound call. Returns the call id (handles the batch result shape).
+async function placeVapiCall(assistantId: string, phoneNumberId: string, to: string, vars: Record<string, string>): Promise<string | null> {
+  const apiKey = Deno.env.get("VAPI_API_KEY");
+  if (!apiKey) throw new Error("Missing VAPI_API_KEY");
+  const res = await fetch("https://api.vapi.ai/call", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      assistantId,
+      phoneNumberId,
+      customer: { number: to },
+      ...(Object.keys(vars).length ? { assistantOverrides: { variableValues: vars } } : {}),
+    }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(`Vapi call failed (${res.status}): ${JSON.stringify(data).slice(0, 200)}`);
+  return data?.id ?? data?.results?.[0]?.id ?? null;
+}
+
+// POST: start the demo — text the prospect the 4 options, record a pending row.
+app.post("/make-server-77ada9a1/site-demo-start", async (c) => {
+  try {
+    const ip = c.req.header("x-forwarded-for")?.split(",")[0] || c.req.header("x-real-ip") || "unknown";
+    const body = await c.req.json();
+    const to = String(body.to || "").trim();
+    const region = normalizeRegion(body.region);
+    const name = typeof body.name === "string" ? body.name.trim().slice(0, 80) : "";
+
+    if (!E164.test(to)) return c.json({ error: "Enter a valid phone number in international format, e.g. +15551234567" }, 400);
+
+    const rateLimit = await checkRateLimit(ip);
+    if (!rateLimit.allowed) return c.json({ error: "Too many requests. Please try again later.", retryAfter: Math.ceil(RATE_LIMIT_WINDOW_MS / 1000 / 60) }, 429);
+
+    const reg = SITE_REGIONS[region];
+    const from = Deno.env.get(reg.fromEnv) || reg.fromFallback;
+    const opener =
+      `Hi${name ? ` ${name}` : ""}, it's Hana. Reply with the agent you want to experience and I'll call you:\n` +
+      `• MONITORING — weekly check-in\n• INTAKE — pre-visit info\n• OUTREACH — "been a while" check-in\n• COORDINATION — rebook a missed visit`;
+
+    try {
+      await sendTwilioSms(to, from, opener);
+    } catch (err) {
+      console.error("[site-demo-start] sms failed:", err);
+      return c.json({ error: "Could not send the text. Please double-check the number." }, 502);
+    }
+
+    await kv.set(`sitedemo:${to}`, { phone: to, region, name: name || null, status: "texted", agent: null, call_id: null, updated_at: new Date().toISOString() });
+    return c.json({ ok: true, status: "texted" });
+  } catch (error) {
+    console.error("site-demo-start error:", error);
+    return c.json({ error: `Failed to start demo: ${error}` }, 500);
+  }
+});
+
+// POST: Twilio inbound-SMS webhook — reply picks the agent, we place the call.
+// Always returns 200 + empty TwiML so Twilio doesn't retry (the call is the reply).
+app.post("/make-server-77ada9a1/site-demo-sms-inbound", async (c) => {
+  const EMPTY_TWIML = '<?xml version="1.0" encoding="UTF-8"?><Response></Response>';
+  const xml = (s: string) => c.body(s, 200, { "Content-Type": "text/xml" });
+  try {
+    const rawBody = await c.req.text();
+    const params: Record<string, string> = {};
+    for (const [k, v] of new URLSearchParams(rawBody)) params[k] = v;
+
+    // The exact URL Twilio signed: prefer an explicit base, else reconstruct (no query).
+    const base = (Deno.env.get("PUBLIC_FUNCTION_URL") || "").replace(/\/$/, "");
+    const url = base
+      ? `${base}/site-demo-sms-inbound`
+      : `https://${c.req.header("host")}${new URL(c.req.url).pathname}`;
+
+    if (!(await verifyTwilioSignature(url, params, c.req.header("x-twilio-signature") || null))) {
+      console.warn("[site-demo-sms-inbound] bad Twilio signature");
+      return c.text("Forbidden", 403);
+    }
+
+    const from = (params.From || "").trim();
+    const agentKey = replyToAgentKey(params.Body || "");
+    if (!from || !agentKey) return xml(EMPTY_TWIML); // not a recognizable choice
+
+    const row = await kv.get(`sitedemo:${from}`);
+    if (!row || (row.status !== "texted" && row.status !== "failed")) return xml(EMPTY_TWIML);
+
+    const region = normalizeRegion(row.region);
+    const reg = SITE_REGIONS[region];
+    const agent = SITE_AGENTS[agentKey];
+    const assistantId = Deno.env.get(agent.assistantEnv) || agent.fallback;
+    const phoneNumberId = Deno.env.get(reg.vapiPhoneEnv) || reg.vapiPhoneFallback;
+
+    try {
+      const callId = await placeVapiCall(assistantId, phoneNumberId, from, { customer_name: row.name || "there" });
+      await kv.set(`sitedemo:${from}`, { ...row, status: "called", agent: agentKey, agent_label: agent.label, call_id: callId, updated_at: new Date().toISOString() });
+    } catch (err) {
+      console.error("[site-demo-sms-inbound] vapi call failed:", err);
+      await kv.set(`sitedemo:${from}`, { ...row, status: "failed", agent: agentKey, updated_at: new Date().toISOString() });
+    }
+    return xml(EMPTY_TWIML);
+  } catch (error) {
+    console.error("site-demo-sms-inbound error:", error);
+    return xml(EMPTY_TWIML); // never make Twilio retry
+  }
+});
+
+// GET: status poll for the page (texted → called → failed).
+app.get("/make-server-77ada9a1/site-demo-status/:phone", async (c) => {
+  try {
+    const phone = c.req.param("phone");
+    const row = await kv.get(`sitedemo:${phone}`);
+    if (!row) return c.json({ status: "none" });
+    return c.json({ status: row.status, agent: row.agent_label || row.agent || null, updated_at: row.updated_at });
+  } catch (error) {
+    console.error("site-demo-status error:", error);
+    return c.json({ status: "none" });
+  }
+});
+
 Deno.serve(app.fetch);
