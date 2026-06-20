@@ -1,0 +1,9 @@
+# Minimal Supabase CLI config so `supabase functions deploy` knows the entrypoint
+# is index.tsx (Figma Make uses .tsx, the CLI defaults to .ts). The function is
+# served at /functions/v1/make-server-77ada9a1/* — which is the slug the frontend
+# and Twilio webhook call — so it must deploy under THAT name, not "server".
+project_id = "dissgvupfcazdnhspdzv"
+
+[functions.make-server-77ada9a1]
+entrypoint = "./functions/server/index.tsx"
+verify_jwt = false
