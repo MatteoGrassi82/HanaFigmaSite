@@ -268,7 +268,7 @@ export function LiveDemoSection({
                   >
                     {smsStatus === "sending"
                       ? <><Loader2 className="w-[18px] h-[18px] animate-spin" /> Texting…</>
-                      : <><Smartphone className="w-[18px] h-[18px]" /> Start</>}
+                      : <><Smartphone className="w-[18px] h-[18px]" /> Text me &amp; call me</>}
                   </button>
                   {smsError && <p className="-mt-2 text-xs text-red-500">{smsError}</p>}
 
