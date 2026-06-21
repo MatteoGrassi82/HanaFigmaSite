@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { useConversation, ConversationProvider } from "@elevenlabs/react";
 import { toast, Toaster } from "sonner";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router";
@@ -10,28 +10,32 @@ function ScrollToTop() {
 }
 import { Navbar } from "./components/Navbar";
 import { AnnouncementBar } from "./components/AnnouncementBar";
-import { Home } from "./pages/Home";
-import { Research } from "./pages/Research";
-import { About } from "./pages/About";
-import { RadialOrbitalTimelineDemo } from "./pages/Timeline";
-import { Contact } from "./pages/Contact";
-import { TestWebhook } from "./components/TestWebhook";
-import { Terms } from "./pages/Terms";
-import { AUP } from "./pages/AUP";
-import { Privacy } from "./pages/Privacy";
-import { Cookies } from "./pages/Cookies";
-import { StateOfAI } from "./pages/StateOfAI";
-import { Pricing } from "./pages/Pricing";
-import { CaseStudies } from "./pages/CaseStudies";
-import { Access } from "./pages/Access";
-import { Blog } from "./pages/Blog";
-import { BlogPost } from "./pages/BlogPost";
 import { VideoAskWidget } from "./components/VideoAskWidget";
-import { WhitepaperADHD } from "./pages/WhitepaperADHD";
-import { Whitepapers } from "./pages/Whitepapers";
-import { Demo } from "./pages/Demo";
-import { Preview } from "./pages/Preview";
-import { NotFound } from "./pages/NotFound";
+import { Home } from "./pages/Home";
+
+// Route components are code-split — each page is fetched on demand so the initial
+// download is just the chrome + the landing page, not all 20 routes at once.
+// React.lazy needs a default export, so named page exports are mapped through.
+const Research = lazy(() => import("./pages/Research").then((m) => ({ default: m.Research })));
+const About = lazy(() => import("./pages/About").then((m) => ({ default: m.About })));
+const RadialOrbitalTimelineDemo = lazy(() => import("./pages/Timeline").then((m) => ({ default: m.RadialOrbitalTimelineDemo })));
+const Contact = lazy(() => import("./pages/Contact").then((m) => ({ default: m.Contact })));
+const TestWebhook = lazy(() => import("./components/TestWebhook").then((m) => ({ default: m.TestWebhook })));
+const Terms = lazy(() => import("./pages/Terms").then((m) => ({ default: m.Terms })));
+const AUP = lazy(() => import("./pages/AUP").then((m) => ({ default: m.AUP })));
+const Privacy = lazy(() => import("./pages/Privacy").then((m) => ({ default: m.Privacy })));
+const Cookies = lazy(() => import("./pages/Cookies").then((m) => ({ default: m.Cookies })));
+const StateOfAI = lazy(() => import("./pages/StateOfAI").then((m) => ({ default: m.StateOfAI })));
+const Pricing = lazy(() => import("./pages/Pricing").then((m) => ({ default: m.Pricing })));
+const CaseStudies = lazy(() => import("./pages/CaseStudies").then((m) => ({ default: m.CaseStudies })));
+const Access = lazy(() => import("./pages/Access").then((m) => ({ default: m.Access })));
+const Blog = lazy(() => import("./pages/Blog").then((m) => ({ default: m.Blog })));
+const BlogPost = lazy(() => import("./pages/BlogPost").then((m) => ({ default: m.BlogPost })));
+const WhitepaperADHD = lazy(() => import("./pages/WhitepaperADHD").then((m) => ({ default: m.WhitepaperADHD })));
+const Whitepapers = lazy(() => import("./pages/Whitepapers").then((m) => ({ default: m.Whitepapers })));
+const Demo = lazy(() => import("./pages/Demo").then((m) => ({ default: m.Demo })));
+const Preview = lazy(() => import("./pages/Preview").then((m) => ({ default: m.Preview })));
+const NotFound = lazy(() => import("./pages/NotFound").then((m) => ({ default: m.NotFound })));
 
 // Configuration
 const VAPI_PUBLIC_KEY = "5dfc26c6-90a6-4efe-907b-7bd0d690dc6e";
@@ -234,6 +238,7 @@ function AppContent() {
           <VideoAskWidget />
 
           <main>
+            <Suspense fallback={<div className="min-h-screen" aria-busy="true" />}>
             <Routes>
               <Route path="/" element={
                 <Home
@@ -280,6 +285,7 @@ function AppContent() {
               } />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            </Suspense>
           </main>
         </div>
     </BrowserRouter>

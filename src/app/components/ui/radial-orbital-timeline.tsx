@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./card";
 import { cn } from "../../../lib/utils";
-import centerOrbImage from "figma:asset/bd4bf20dbede33bcbcec4f5e7a3b05a23ea78cf4.png";
+import centerOrbImage from "../../../assets/hana-orb.webp";
 
 interface TimelineItem {
   id: number;

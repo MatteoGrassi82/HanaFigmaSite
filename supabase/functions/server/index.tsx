@@ -272,7 +272,7 @@ app.post("/make-server-77ada9a1/leads", async (c) => {
     console.log(`Lead saved: ${key}`);
 
     // Push lead to Zapier webhook → routes to email notification + Attio CRM
-    const zapierWebhookUrl = Deno.env.get("ZAPIER_WEBHOOK_URL") || "https://hooks.zapier.com/hooks/catch/23932910/ucewqcf/";
+    const zapierWebhookUrl = Deno.env.get("ZAPIER_WEBHOOK_URL");
     if (zapierWebhookUrl) {
       try {
         const zapierPayload = {
@@ -398,7 +398,10 @@ app.post("/make-server-77ada9a1/guide-download", async (c) => {
 app.get("/make-server-77ada9a1/test-guide-download", async (c) => {
   try {
     const testEmail = "test-guide@hana-voice.ai";
-    const webhookUrl = "https://hooks.zapier.com/hooks/catch/23932910/ucewqcf/";
+    const webhookUrl = Deno.env.get("ZAPIER_WEBHOOK_URL");
+    if (!webhookUrl) {
+      return c.json({ success: false, error: "ZAPIER_WEBHOOK_URL not configured" }, 503);
+    }
 
     const zapierPayload = {
       email: testEmail,

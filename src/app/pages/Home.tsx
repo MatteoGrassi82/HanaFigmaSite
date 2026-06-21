@@ -1,14 +1,16 @@
+import { lazy, Suspense } from "react";
 import { CTASection } from "../components/ui/hero-dithering-card";
 import { Stats } from "../components/ui/statistics-card";
 import { InlineImageHeader } from "../components/InlineImageHeader";
 import { LiveDemoSection } from "../components/LiveDemoSection";
-import { AgenticFrameworkCarousel } from "../components/AgenticFrameworkCarousel";
+// Below-the-fold + heavy (Remotion + react-slick): code-split so they don't ship in the homepage critical bundle.
+const AgenticFrameworkCarousel = lazy(() => import("../components/AgenticFrameworkCarousel").then((m) => ({ default: m.AgenticFrameworkCarousel })));
 import { ComplianceSection } from "../components/ComplianceSection";
 import { CaseStudiesSection } from "../components/CaseStudiesSection";
 import { ClientFeedback } from "../components/ui/testimonial";
 import { LoopDiagram } from "../components/ui/loop-diagram";
 import { SafetyStack } from "../components/ui/safety-stack";
-import { HowHanaWorks } from "../components/HowHanaWorks";
+const HowHanaWorks = lazy(() => import("../components/HowHanaWorks").then((m) => ({ default: m.HowHanaWorks })));
 import { IntegrationsSection } from "../components/IntegrationsSection";
 import { ReadyToUseSection } from "../components/ReadyToUseSection";
 import { RecipesMarquee } from "../components/RecipesMarquee";
@@ -104,7 +106,9 @@ export function Home({
       <RecipesMarquee />
 
       {/* §6b — secondary: how it adapts to your clinic */}
-      <AgenticFrameworkCarousel />
+      <Suspense fallback={null}>
+        <AgenticFrameworkCarousel />
+      </Suspense>
 
       {/* §7 — GO LIVE */}
       <InlineImageHeader />
@@ -116,7 +120,9 @@ export function Home({
       <SafetyStack />
 
       {/* WATCH HANA IN ACTION (Wistia video carousel) — moved below security/safety */}
-      <HowHanaWorks />
+      <Suspense fallback={null}>
+        <HowHanaWorks />
+      </Suspense>
 
       {/* §9b — TAIL: COMPLIANCE (certs + safety pillars — the credentials view) */}
       <ComplianceSection />

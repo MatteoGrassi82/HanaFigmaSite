@@ -1,7 +1,7 @@
 import { Star, Loader2, StopCircle, Play } from "lucide-react";
 import { useState, Suspense, lazy } from "react";
 import { cn } from "../../../lib/utils";
-import VoiceWave from "figma:asset/bd4bf20dbede33bcbcec4f5e7a3b05a23ea78cf4.png";
+import VoiceWave from "../../../assets/hana-orb.webp";
 
 // Lazy load the heavy shader component with error handling
 const Dithering = lazy(() => 
