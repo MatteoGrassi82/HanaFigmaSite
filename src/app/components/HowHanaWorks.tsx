@@ -6,7 +6,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { cn } from "../../lib/utils";
 import { CheckCircle2, Play, Activity, CalendarCheck, ChevronLeft, ChevronRight } from "lucide-react";
-import { useTranslations } from "../../lib/i18n";
+import { useTranslations, getLocale } from "../../lib/i18n";
+import { Player, type PlayerRef } from "@remotion/player";
+import { WorkflowBuilderComp } from "./remotion/WorkflowBuilderComp";
+import { SafetyMonitorComp } from "./remotion/SafetyMonitorComp";
+import { PatientContextComp } from "./remotion/PatientContextComp";
 
 // Add TypeScript declaration for custom element
 declare global {
@@ -69,9 +73,63 @@ const WistiaPlayer = memo(({ videoId }: { videoId: string }) => {
 
 WistiaPlayer.displayName = "WistiaPlayer";
 
+// Remotion-based animated player (used on Italian locale instead of Wistia)
+const REMOTION_SLIDES = [
+  { component: WorkflowBuilderComp, durationInFrames: 510 },
+  { component: SafetyMonitorComp,    durationInFrames: 390 },
+  { component: PatientContextComp,   durationInFrames: 390 },
+];
+
+function DemoPlayer({ component, durationInFrames }: { component: React.ComponentType; durationInFrames: number }) {
+  const playerRef = useRef<PlayerRef>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") { setInView(true); return; }
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.15 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    let t: ReturnType<typeof setTimeout> | undefined;
+    const drive = () => {
+      const p = playerRef.current;
+      if (!p) return;
+      try { if (inView) { p.mute(); p.play(); } else { p.pause(); } } catch { /* noop */ }
+    };
+    drive();
+    if (inView) t = setTimeout(drive, 400);
+    return () => { if (t) clearTimeout(t); };
+  }, [inView]);
+
+  return (
+    <div ref={containerRef} className="w-full h-full">
+      <Player
+        ref={playerRef}
+        component={component}
+        durationInFrames={durationInFrames}
+        compositionWidth={900}
+        compositionHeight={506}
+        fps={30}
+        style={{ width: "100%", height: "100%" }}
+        loop
+        autoPlay
+        initiallyMuted
+        controls={false}
+        clickToPlay={false}
+        doubleClickToFullscreen={false}
+      />
+    </div>
+  );
+}
+
 export function HowHanaWorks() {
   const t = useTranslations();
   const hw = t.howHanaWorks;
+  const isItalian = getLocale() === "it";
   const SLIDES = [
     {
       id: "monitoring",
@@ -158,13 +216,20 @@ export function HowHanaWorks() {
         {/* Carousel */}
         <div className="-mx-4 md:-mx-8">
             <Slider ref={sliderRef} {...settings} className="hana-carousel pl-4 md:pl-0">
-                {SLIDES.map((slide) => (
+                {SLIDES.map((slide, slideIndex) => (
                     <div key={slide.id} className="px-2 md:px-4 focus:outline-none h-full">
                          <div className="group flex flex-col h-full">
                             {/* Visual Container (The Card) */}
                             <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-slate-200 dark:bg-slate-800 p-1 shadow-lg ring-1 ring-black/5 dark:ring-white/5">
                                 <div className="w-full h-full rounded-lg overflow-hidden bg-slate-900 relative">
-                                    <WistiaPlayer videoId={slide.videoId} />
+                                    {isItalian ? (
+                                      <DemoPlayer
+                                        component={REMOTION_SLIDES[slideIndex].component}
+                                        durationInFrames={REMOTION_SLIDES[slideIndex].durationInFrames}
+                                      />
+                                    ) : (
+                                      <WistiaPlayer videoId={slide.videoId} />
+                                    )}
                                 </div>
                             </div>
 
