@@ -4,6 +4,7 @@ import { Plus, Minus, ArrowLeft, ArrowRight, Check, ChevronDown } from "lucide-r
 import { Footer } from "../components/Footer";
 import { SEO, faqSchema } from "../components/SEO";
 import { cn } from "../../lib/utils";
+import { useTranslations } from "../../lib/i18n";
 
 /* Pricing FAQ — answer-first, citation-friendly for AI answer engines. */
 const PRICING_FAQ = faqSchema([
@@ -161,10 +162,11 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 
 // ─── Slide 1: Practice type ────────────────────────────────────────────────────
 
-function SlideTypeSelect({ value, onChange, onNext }: {
+function SlideTypeSelect({ value, onChange, onNext, nextLabel }: {
   value: string | null;
   onChange: (v: string) => void;
   onNext: () => void;
+  nextLabel: string;
 }) {
   return (
     <div className="w-full max-w-[600px]">
@@ -172,19 +174,19 @@ function SlideTypeSelect({ value, onChange, onNext }: {
       <h2 className="font-['Instrument_Serif'] text-3xl md:text-4xl text-slate-900 mb-2 text-center">What kind of practice are you?</h2>
       <p className="text-sm text-slate-600 font-light mb-8 leading-relaxed text-center">This pre-selects the most relevant workflows for your setting.</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-8">
-        {PRACTICE_TYPES.map(t => (
-          <button key={t.id} onClick={() => onChange(t.id)}
+        {PRACTICE_TYPES.map(pt => (
+          <button key={pt.id} onClick={() => onChange(pt.id)}
             className={cn("text-left p-4 rounded-xl border transition-all duration-150",
-              value === t.id ? "border-2 border-blue-500 bg-blue-50" : "border border-slate-200 bg-white hover:border-blue-400 hover:bg-blue-50 hover:-translate-y-0.5"
+              value === pt.id ? "border-2 border-blue-500 bg-blue-50" : "border border-slate-200 bg-white hover:border-blue-400 hover:bg-blue-50 hover:-translate-y-0.5"
             )}>
-            <div className="text-sm font-medium text-slate-800 mb-1">{t.name}</div>
-            <div className="text-xs text-slate-400 font-light leading-snug">{t.sub}</div>
+            <div className="text-sm font-medium text-slate-800 mb-1">{pt.name}</div>
+            <div className="text-xs text-slate-400 font-light leading-snug">{pt.sub}</div>
           </button>
         ))}
       </div>
       <button onClick={onNext} disabled={!value}
         className="w-full bg-[#00122F] text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors disabled:opacity-30 disabled:cursor-default">
-        Next <ArrowRight className="w-4 h-4" />
+        {nextLabel} <ArrowRight className="w-4 h-4" />
       </button>
     </div>
   );
@@ -192,8 +194,8 @@ function SlideTypeSelect({ value, onChange, onNext }: {
 
 // ─── Slide 2: Providers ───────────────────────────────────────────────────────
 
-function SlideProviders({ value, onChange, onNext, onBack }: {
-  value: number; onChange: (v: number) => void; onNext: () => void; onBack: () => void;
+function SlideProviders({ value, onChange, onNext, onBack, nextLabel, backLabel }: {
+  value: number; onChange: (v: number) => void; onNext: () => void; onBack: () => void; nextLabel: string; backLabel: string;
 }) {
   return (
     <div className="w-full max-w-[560px]">
@@ -211,9 +213,9 @@ function SlideProviders({ value, onChange, onNext, onBack }: {
       </div>
       <p className="text-center text-sm text-slate-400 font-light mb-10">provider{value > 1 ? "s" : ""}</p>
       <div className="flex gap-3">
-        <button onClick={onBack} className="border border-slate-200 rounded-lg px-5 py-3 text-sm text-slate-500 hover:border-slate-400 hover:text-slate-700 transition-colors">Back</button>
+        <button onClick={onBack} className="border border-slate-200 rounded-lg px-5 py-3 text-sm text-slate-500 hover:border-slate-400 hover:text-slate-700 transition-colors">{backLabel}</button>
         <button onClick={onNext} className="flex-1 bg-[#00122F] text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors">
-          Next <ArrowRight className="w-4 h-4" />
+          {nextLabel} <ArrowRight className="w-4 h-4" />
         </button>
       </div>
     </div>
@@ -222,12 +224,14 @@ function SlideProviders({ value, onChange, onNext, onBack }: {
 
 // ─── Slide 3: Modules ─────────────────────────────────────────────────────────
 
-function SlideMods({ mods, wfs, onChange, onNext, onBack }: {
+function SlideMods({ mods, wfs, onChange, onNext, onBack, nextLabel, backLabel }: {
   mods: Record<string, boolean>;
   wfs: Record<string, boolean>;
   onChange: (id: string, checked: boolean) => void;
   onNext: () => void;
   onBack: () => void;
+  nextLabel: string;
+  backLabel: string;
 }) {
   const anyMod = Object.values(mods).some(Boolean);
   return (
@@ -262,10 +266,10 @@ function SlideMods({ mods, wfs, onChange, onNext, onBack }: {
         })}
       </div>
       <div className="flex gap-3">
-        <button onClick={onBack} className="border border-slate-200 rounded-lg px-5 py-3 text-sm text-slate-500 hover:border-slate-400 hover:text-slate-700 transition-colors">Back</button>
+        <button onClick={onBack} className="border border-slate-200 rounded-lg px-5 py-3 text-sm text-slate-500 hover:border-slate-400 hover:text-slate-700 transition-colors">{backLabel}</button>
         <button onClick={onNext} disabled={!anyMod}
           className="flex-1 bg-[#00122F] text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors disabled:opacity-30 disabled:cursor-default">
-          Next <ArrowRight className="w-4 h-4" />
+          {nextLabel} <ArrowRight className="w-4 h-4" />
         </button>
       </div>
     </div>
@@ -274,12 +278,14 @@ function SlideMods({ mods, wfs, onChange, onNext, onBack }: {
 
 // ─── Slide 4: Workflows ───────────────────────────────────────────────────────
 
-function SlideWorkflows({ mods, wfs, onChange, onNext, onBack }: {
+function SlideWorkflows({ mods, wfs, onChange, onNext, onBack, nextLabel, backLabel }: {
   mods: Record<string, boolean>;
   wfs: Record<string, boolean>;
   onChange: (id: string, checked: boolean) => void;
   onNext: () => void;
   onBack: () => void;
+  nextLabel: string;
+  backLabel: string;
 }) {
   const [openMods, setOpenMods] = useState<Record<string, boolean>>(() => {
     const init: Record<string, boolean> = {};
@@ -340,10 +346,10 @@ function SlideWorkflows({ mods, wfs, onChange, onNext, onBack }: {
       </div>
 
       <div className="flex gap-3">
-        <button onClick={onBack} className="border border-slate-200 rounded-lg px-5 py-3 text-sm text-slate-500 hover:border-slate-400 hover:text-slate-700 transition-colors">Back</button>
+        <button onClick={onBack} className="border border-slate-200 rounded-lg px-5 py-3 text-sm text-slate-500 hover:border-slate-400 hover:text-slate-700 transition-colors">{backLabel}</button>
         <button onClick={onNext} disabled={!anyWF}
           className="flex-1 bg-[#00122F] text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors disabled:opacity-30 disabled:cursor-default">
-          Next <ArrowRight className="w-4 h-4" />
+          {nextLabel} <ArrowRight className="w-4 h-4" />
         </button>
       </div>
     </div>
@@ -352,13 +358,15 @@ function SlideWorkflows({ mods, wfs, onChange, onNext, onBack }: {
 
 // ─── Slide 5: Volumes ─────────────────────────────────────────────────────────
 
-function SlideVolumes({ mods, wfs, vols, onChange, onNext, onBack }: {
+function SlideVolumes({ mods, wfs, vols, onChange, onNext, onBack, nextLabel, backLabel }: {
   mods: Record<string, boolean>;
   wfs: Record<string, boolean>;
   vols: Record<string, number>;
   onChange: (id: string, v: number) => void;
   onNext: () => void;
   onBack: () => void;
+  nextLabel: string;
+  backLabel: string;
 }) {
   let hasAny = false;
   return (
@@ -417,10 +425,10 @@ function SlideVolumes({ mods, wfs, vols, onChange, onNext, onBack }: {
       </div>
 
       <div className="flex gap-3">
-        <button onClick={onBack} className="border border-slate-200 rounded-lg px-5 py-3 text-sm text-slate-500 hover:border-slate-400 hover:text-slate-700 transition-colors">Back</button>
+        <button onClick={onBack} className="border border-slate-200 rounded-lg px-5 py-3 text-sm text-slate-500 hover:border-slate-400 hover:text-slate-700 transition-colors">{backLabel}</button>
         <button onClick={onNext}
           className="flex-1 bg-[#00122F] text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors">
-          See my estimate <ArrowRight className="w-4 h-4" />
+          {nextLabel} <ArrowRight className="w-4 h-4" />
         </button>
       </div>
     </div>
@@ -429,12 +437,14 @@ function SlideVolumes({ mods, wfs, vols, onChange, onNext, onBack }: {
 
 // ─── Result ───────────────────────────────────────────────────────────────────
 
-function SlideResult({ providers, mods, wfs, vols, onBack }: {
+function SlideResult({ providers, mods, wfs, vols, onBack, bookCallLabel, backToVolumesLabel }: {
   providers: number;
   mods: Record<string, boolean>;
   wfs: Record<string, boolean>;
   vols: Record<string, number>;
   onBack: () => void;
+  bookCallLabel: string;
+  backToVolumesLabel: string;
 }) {
   const { hana, human, saving, pct, annual, rows } = calcResults(providers, mods, wfs, vols);
   return (
@@ -491,13 +501,13 @@ function SlideResult({ providers, mods, wfs, vols, onBack }: {
         </div>
         <a href="https://calendly.com/matteowastaken/discoverycall" target="_blank" rel="noopener noreferrer"
           className="flex-shrink-0 bg-blue-500 text-white rounded-lg px-6 py-3 text-sm font-medium hover:bg-blue-600 transition-colors whitespace-nowrap">
-          Book a discovery call
+          {bookCallLabel}
         </a>
       </div>
 
       <div className="text-center mt-4">
         <button onClick={onBack} className="text-sm text-slate-400 hover:text-slate-700 transition-colors flex items-center gap-1 mx-auto">
-          <ArrowLeft className="w-3 h-3" /> Back to volumes
+          <ArrowLeft className="w-3 h-3" /> {backToVolumesLabel}
         </button>
       </div>
     </div>
@@ -509,6 +519,7 @@ function SlideResult({ providers, mods, wfs, vols, onBack }: {
 const TOTAL_SLIDES = 6; // 5 steps + result
 
 export function Pricing() {
+  const t = useTranslations();
   const [slide, setSlide] = useState(0);
   const [direction, setDirection] = useState(1);
   const [practiceType, setPracticeType] = useState<string | null>(null);
@@ -554,19 +565,19 @@ export function Pricing() {
   };
 
   const slides = [
-    <SlideTypeSelect   key="type"       value={practiceType}  onChange={selectPracticeType}  onNext={goNext} />,
-    <SlideProviders    key="providers"  value={providers}     onChange={setProviders}         onNext={goNext} onBack={goBack} />,
-    <SlideMods         key="mods"       mods={mods}           wfs={wfs}                       onChange={toggleMod}  onNext={goNext} onBack={goBack} />,
-    <SlideWorkflows    key="workflows"  mods={mods}           wfs={wfs}                       onChange={toggleWf}   onNext={goNext} onBack={goBack} />,
-    <SlideVolumes      key="volumes"    mods={mods}           wfs={wfs}   vols={vols}          onChange={(id, v) => setVols(prev => ({ ...prev, [id]: v }))} onNext={goNext} onBack={goBack} />,
-    <SlideResult       key="result"     providers={providers} mods={mods} wfs={wfs} vols={vols} onBack={goBack} />,
+    <SlideTypeSelect   key="type"       value={practiceType}  onChange={selectPracticeType}  onNext={goNext} nextLabel={t.pricing.next} />,
+    <SlideProviders    key="providers"  value={providers}     onChange={setProviders}         onNext={goNext} onBack={goBack} nextLabel={t.pricing.next} backLabel={t.pricing.back} />,
+    <SlideMods         key="mods"       mods={mods}           wfs={wfs}                       onChange={toggleMod}  onNext={goNext} onBack={goBack} nextLabel={t.pricing.next} backLabel={t.pricing.back} />,
+    <SlideWorkflows    key="workflows"  mods={mods}           wfs={wfs}                       onChange={toggleWf}   onNext={goNext} onBack={goBack} nextLabel={t.pricing.next} backLabel={t.pricing.back} />,
+    <SlideVolumes      key="volumes"    mods={mods}           wfs={wfs}   vols={vols}          onChange={(id, v) => setVols(prev => ({ ...prev, [id]: v }))} onNext={goNext} onBack={goBack} nextLabel={t.pricing.seeEstimate} backLabel={t.pricing.back} />,
+    <SlideResult       key="result"     providers={providers} mods={mods} wfs={wfs} vols={vols} onBack={goBack} bookCallLabel={t.pricing.bookCall} backToVolumesLabel={t.pricing.backToVolumes} />,
   ];
 
   return (
     <>
       <SEO
-        title="Pricing | Hana Voice AI"
-        description="Outcome-based pricing aligned with your savings. Calculate exactly what Hana costs and what you save compared to human staff."
+        title={t.pricing.seoTitle}
+        description={t.pricing.seoDescription}
         path="/pricing"
         useExactTitle
         jsonLd={PRICING_FAQ}
@@ -574,9 +585,9 @@ export function Pricing() {
 
       {/* Hero */}
       <section className="pt-36 pb-10 px-4 text-center max-w-2xl mx-auto">
-        <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-4">Outcome-based pricing</div>
+        <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-4">{t.pricing.heading}</div>
         <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-normal text-slate-900 leading-[1.1] mb-4">
-          See what this currently <em className="italic text-blue-500">costs your practice</em>
+          {t.pricing.subheading}
         </h1>
         <p className="text-base text-slate-600 leading-relaxed font-light max-w-md mx-auto">
           Answer a few questions about your practice. We'll show you exactly what HANA costs — and what you save across every workflow you automate.
@@ -612,7 +623,7 @@ export function Pricing() {
 
       {/* FAQ */}
       <section className="max-w-xl mx-auto px-4 pb-20">
-        <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium text-center mb-2">Common questions</div>
+        <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium text-center mb-2">{t.pricing.commonQuestions}</div>
         <h2 className="font-['Instrument_Serif'] text-2xl md:text-3xl text-slate-900 text-center mb-8">How does this work?</h2>
         {FAQS.map(f => <FaqItem key={f.q} q={f.q} a={f.a} />)}
       </section>

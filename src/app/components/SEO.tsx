@@ -1,8 +1,16 @@
 import { useEffect } from 'react';
 import ogImage from 'figma:asset/7dab76c8bd67019090a5609cf9a1a41e8c727fbb.png';
+import { getLocale } from '../../lib/i18n';
 
 const SITE_NAME = "Hana Voice AI";
-const SITE_DOMAIN = "https://www.hana.health";
+const EN_DOMAIN = "https://www.hana.health";
+const IT_DOMAIN = "https://ita.hana.health";
+
+function getSiteDomain(): string {
+  return getLocale() === "it" ? IT_DOMAIN : EN_DOMAIN;
+}
+
+const SITE_DOMAIN = EN_DOMAIN; // used for static schema objects only
 const DEFAULT_KEYWORDS = "Voice AI, Patient Engagement, Clinical AI, Remote Patient Monitoring, AI Receptionist, Healthcare Automation, Intelligent Intake, Care Coordination, Healthcare Voice Technology, Medical AI Assistant";
 
 interface SEOProps {
@@ -54,7 +62,8 @@ export function SEO({
   }
 
   // Auto-generate canonical URL from path if url is not explicitly provided
-  const canonicalUrl = url || (path ? `${SITE_DOMAIN}${path}` : undefined);
+  const domain = getSiteDomain();
+  const canonicalUrl = url || (path ? `${domain}${path}` : undefined);
 
   // Merge keywords
   const allKeywords = keywords 
@@ -65,8 +74,8 @@ export function SEO({
     // Set document title
     document.title = fullTitle;
 
-    // Set lang attribute
-    document.documentElement.lang = 'en';
+    // Set lang attribute based on detected locale
+    document.documentElement.lang = getLocale() === 'it' ? 'it' : 'en';
 
     // Basic meta tags
     setMeta('name', 'description', description);
@@ -86,6 +95,24 @@ export function SEO({
       link.href = canonicalUrl;
     }
 
+    // Hreflang alternate links (en ↔ it) for Google cross-domain SEO
+    if (path) {
+      const setHreflang = (hreflang: string, href: string) => {
+        const sel = `link[rel="alternate"][hreflang="${hreflang}"]`;
+        let el = document.querySelector(sel) as HTMLLinkElement | null;
+        if (!el) {
+          el = document.createElement('link');
+          el.rel = 'alternate';
+          el.setAttribute('hreflang', hreflang);
+          document.head.appendChild(el);
+        }
+        el.href = href;
+      };
+      setHreflang('en', `${EN_DOMAIN}${path}`);
+      setHreflang('it', `${IT_DOMAIN}${path}`);
+      setHreflang('x-default', `${EN_DOMAIN}${path}`);
+    }
+
     // Open Graph meta tags
     setMeta('property', 'og:type', type);
     setMeta('property', 'og:site_name', SITE_NAME);
@@ -93,7 +120,7 @@ export function SEO({
     setMeta('property', 'og:description', description);
     setMeta('property', 'og:image', image);
     setMeta('property', 'og:image:alt', `${SITE_NAME} - ${title}`);
-    setMeta('property', 'og:locale', 'en_US');
+    setMeta('property', 'og:locale', getLocale() === 'it' ? 'it_IT' : 'en_US');
     if (canonicalUrl) {
       setMeta('property', 'og:url', canonicalUrl);
     }

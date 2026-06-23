@@ -2,6 +2,7 @@
 
 import React, { useState, useCallback } from "react";
 import { X, ArrowRight } from "lucide-react";
+import { useTranslations } from "../../lib/i18n";
 
 const CHANNELS = {
   ehr:   { label: "EHR",           dot: "#4A7BA7" },
@@ -306,6 +307,8 @@ function Modal({ recipe, onClose }: { recipe: Recipe; onClose: () => void }) {
 }
 
 export function RecipesMarquee() {
+  const t = useTranslations();
+  const rm = t.recipesMarquee;
   const [selected, setSelected] = useState<Recipe | null>(null);
   const select = useCallback((r: Recipe) => setSelected(r), []);
   const close = useCallback(() => setSelected(null), []);
@@ -358,13 +361,13 @@ export function RecipesMarquee() {
 
       <div className="text-center px-6 mb-10">
         <p className="text-[11px] font-semibold uppercase tracking-[2.5px] text-slate-400 mb-4">
-          Workflow automation
+          {rm.tag}
         </p>
         <h2 className="font-serif text-4xl md:text-5xl text-slate-900 leading-tight mb-4">
-          Your clinical protocols, already built in.
+          {rm.heading}
         </h2>
         <p className="text-base md:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
-          100+ call workflows, ready day one — across ortho, GI, behavioral health, and primary care. Turn on the one bleeding revenue first; add the rest as you go.
+          {rm.body}
         </p>
         <div className="flex flex-wrap justify-center gap-4 mt-6">
           {(Object.entries(CHANNELS) as [Channel, (typeof CHANNELS)[Channel]][]).map(([key, ch]) => (

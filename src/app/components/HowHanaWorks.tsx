@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { cn } from "../../lib/utils";
 import { CheckCircle2, Play, Activity, CalendarCheck, ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslations } from "../../lib/i18n";
 
 // Add TypeScript declaration for custom element
 declare global {
@@ -18,36 +19,6 @@ declare global {
     }
   }
 }
-
-const SLIDES = [
-  {
-    id: "monitoring",
-    label: "Remote Monitoring",
-    icon: Activity,
-    title: "Inside a HANA Conversation",
-    description: "How the AI monitors, reasons, and reports across a patient conversation.",
-    videoId: "hf22mhjxbe",
-    features: ["Adherence & vitals tracking", "Motivational interviewing", "Multi channel engagement"]
-  },
-  {
-    id: "intake",
-    label: "Patient Intake",
-    icon: Play,
-    title: "Intelligent Patient Intake & Onboarding",
-    description: "Hana transforms standard intake forms into rich clinical insights. It automatically reviews patient submissions, identifies missing details, and calls patients to gather deep narrative context about symptoms and lifestyle before the first visit.",
-    videoId: "cn9zvmqv80",
-    features: ["Smart form gap analysis", "Clinical narrative generation", "Automated EHR entry"]
-  },
-  {
-    id: "coordination",
-    label: "Care Coordination",
-    icon: CalendarCheck,
-    title: "24/7 AI Receptionist & Scheduling",
-    description: "Never miss a patient call. Hana handles inbound inquiries, schedules appointments directly into your EHR based on real time availability, collects new patient demographics, and manages rescheduling requests around the clock.",
-    videoId: "qcn3w9ogd5",
-    features: ["Real time EHR scheduling", "New patient registration", "24/7 Inbound handling"]
-  }
-];
 
 // Memoized Wistia Player Component
 const WistiaPlayer = memo(({ videoId }: { videoId: string }) => {
@@ -99,6 +70,37 @@ const WistiaPlayer = memo(({ videoId }: { videoId: string }) => {
 WistiaPlayer.displayName = "WistiaPlayer";
 
 export function HowHanaWorks() {
+  const t = useTranslations();
+  const hw = t.howHanaWorks;
+  const SLIDES = [
+    {
+      id: "monitoring",
+      label: hw.tab1,
+      icon: Activity,
+      title: hw.tab1SubHeading,
+      description: hw.tab1Body,
+      videoId: "hf22mhjxbe",
+      features: [hw.tab1f1, hw.tab1f2, hw.tab1f3],
+    },
+    {
+      id: "intake",
+      label: hw.tab2,
+      icon: Play,
+      title: hw.tab2SubHeading,
+      description: hw.tab2Body,
+      videoId: "cn9zvmqv80",
+      features: [hw.tab2f1, hw.tab2f2, hw.tab2f3],
+    },
+    {
+      id: "coordination",
+      label: hw.tab3,
+      icon: CalendarCheck,
+      title: hw.tab3SubHeading,
+      description: hw.tab3Body,
+      videoId: "qcn3w9ogd5",
+      features: [hw.tab3f1, hw.tab3f2, hw.tab3f3],
+    },
+  ];
   const [currentSlide, setCurrentSlide] = useState(0);
   const sliderRef = useRef<Slider>(null);
 
@@ -145,7 +147,7 @@ export function HowHanaWorks() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
           <div className="max-w-2xl">
             <h2 className="text-3xl md:text-5xl font-serif text-slate-900 dark:text-white leading-[1.1]">
-              Watch HANA in <span className="text-blue-600 italic">Action</span>
+              {hw.headingPrefix} <span className="text-blue-600 italic">{hw.headingEmphasis}</span>
             </h2>
           </div>
           
@@ -203,15 +205,15 @@ export function HowHanaWorks() {
                     onClick={previous}
                     disabled={currentSlide === 0}
                     className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
-                    aria-label="Previous slide"
+                    aria-label={hw.prevSlide}
                 >
                     <ChevronLeft className="w-5 h-5" />
                 </button>
-                <button 
+                <button
                     onClick={next}
                     disabled={currentSlide === SLIDES.length - 1}
                     className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors"
-                    aria-label="Next slide"
+                    aria-label={hw.nextSlide}
                 >
                     <ChevronRight className="w-5 h-5" />
                 </button>

@@ -3,13 +3,16 @@ import { Link } from "react-router";
 import { getPosts, type Post } from "../../lib/sanity";
 import { Footer } from "../components/Footer";
 import { SEO } from "../components/SEO";
+import { useTranslations, getLocale } from "../../lib/i18n";
 
 function formatDate(dateStr?: string) {
   if (!dateStr) return "";
-  return new Date(dateStr).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+  const locale = getLocale() === "it" ? "it-IT" : "en-US";
+  return new Date(dateStr).toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" });
 }
 
 export function Blog() {
+  const t = useTranslations();
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -20,8 +23,8 @@ export function Blog() {
   return (
     <>
       <SEO
-        title="Blog | Hana Health"
-        description="Insights on voice AI in healthcare from the Hana team."
+        title={t.blog.seoTitle}
+        description={t.blog.seoDescription}
         path="/blog"
       />
       <div className="bg-white min-h-screen">
@@ -30,10 +33,10 @@ export function Blog() {
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-blue-400 text-sm font-semibold tracking-widest uppercase mb-4">Hana Health</p>
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl tracking-normal mb-4 leading-[1.1]">
-              Blog
+              {t.blog.heading}
             </h1>
             <p className="text-slate-400 text-base">
-              Insights on voice AI, healthcare automation, and clinical workflows.
+              {t.blog.subheading}
             </p>
           </div>
         </section>
@@ -52,7 +55,7 @@ export function Blog() {
             </div>
           ) : posts.length === 0 ? (
             <div className="text-center py-24">
-              <p className="text-slate-400 text-lg">No posts yet — check back soon.</p>
+              <p className="text-slate-400 text-lg">{t.blog.noPosts}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

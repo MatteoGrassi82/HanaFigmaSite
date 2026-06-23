@@ -6,6 +6,7 @@ import { ChevronDown, Menu, X, Sparkle } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { Link } from "react-router";
 import logoImage from 'figma:asset/55130a9cc9a8f890dc08e580a5cf6dd0df0df413.png';
+import { useTranslations } from "../../lib/i18n";
 
 // --- Types ---
 type ImageProps = {
@@ -121,8 +122,29 @@ const SmartLink = ({ href, children, className, target, ...props }: SmartLinkPro
 
 // --- Component ---
 export const Navbar = (props: NavbarProps) => {
-  const { logo, navLinks, button, signInButton } = {
+  const t = useTranslations();
+  const defaults: Props = {
     ...NavbarDefaults,
+    navLinks: [
+      { url: "/case-studies", title: t.nav.caseStudies },
+      { url: "https://docs.hana.health/getting-started/overview", title: t.nav.docs },
+      {
+        url: "#",
+        title: t.nav.resources,
+        subMenuLinks: [
+          { url: "/whitepapers", title: t.nav.whitepapers },
+          { url: "/blog", title: t.nav.blog },
+          { url: "/labs", title: t.nav.labs },
+          { url: "/pricing", title: t.nav.savingsCalculator },
+        ],
+      },
+      { url: "/labs", title: t.nav.labs },
+    ],
+    signInButton: { ...NavbarDefaults.signInButton, title: t.nav.signIn },
+    button: { ...NavbarDefaults.button, title: t.nav.bookDemo },
+  };
+  const { logo, navLinks, button, signInButton } = {
+    ...defaults,
     ...props,
   };
 

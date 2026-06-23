@@ -1,8 +1,10 @@
 import { X, ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
+import { useTranslations } from "../../lib/i18n";
 
 export function AnnouncementBar() {
+  const t = useTranslations();
   const [isVisible, setIsVisible] = useState(true);
 
   // Check localStorage on mount to see if user has dismissed
@@ -37,17 +39,17 @@ export function AnnouncementBar() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
             </span>
-            <span className="text-[10px] font-bold tracking-[1.5px] uppercase text-white">July 5</span>
+            <span className="text-[10px] font-bold tracking-[1.5px] uppercase text-white">{t.announcement.date}</span>
           </span>
 
           <span className="hidden sm:inline text-slate-600 text-sm font-normal leading-snug whitespace-nowrap">
-            The CMS ACCESS program launches.
+            {t.announcement.body}
           </span>
 
           {/* CTA pill */}
           <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 group-hover:bg-slate-200 group-active:bg-slate-200 px-3 py-1 text-xs sm:text-sm font-medium text-slate-700 transition-colors whitespace-nowrap">
-            <span className="sm:hidden">ACCESS launches</span>
-            <span className="hidden sm:inline">See if you're ready</span>
+            <span className="sm:hidden">{t.announcement.ctaMobile}</span>
+            <span className="hidden sm:inline">{t.announcement.ctaDesktop}</span>
             <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5 group-hover:translate-x-0.5 transition-transform" />
           </span>
         </Link>
@@ -56,7 +58,7 @@ export function AnnouncementBar() {
         <button
           onClick={handleDismiss}
           className="relative shrink-0 flex items-center justify-center min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 p-2.5 sm:p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 active:bg-slate-100 rounded-full transition-colors"
-          aria-label="Dismiss announcement"
+          aria-label={t.announcement.dismissLabel}
         >
           <X className="h-3.5 w-3.5" />
         </button>

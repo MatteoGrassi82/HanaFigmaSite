@@ -3,6 +3,7 @@ import { Footer } from "../components/Footer";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { SEO } from "../components/SEO";
 import { breadcrumbSchema } from "../components/SEO";
+import { useTranslations } from "../../lib/i18n";
 
 const publications = [
   {
@@ -111,7 +112,7 @@ function FadeIn({ children, delay = 0, className = "" }: { children: React.React
   );
 }
 
-function PublicationRow({ pub, isLast, index }: { pub: any, isLast: boolean, index: number }) {
+function PublicationRow({ pub, isLast, index, readArticleLabel }: { pub: any, isLast: boolean, index: number, readArticleLabel: string }) {
   const [hovered, setHovered] = useState(false);
   return (
     <FadeIn delay={Math.min(index * 0.04, 0.25)}>
@@ -129,15 +130,15 @@ function PublicationRow({ pub, isLast, index }: { pub: any, isLast: boolean, ind
             </span>
           </div>
           <div className="flex items-center">
-            <a 
-              href={pub.articleUrl} 
-              target="_blank" 
+            <a
+              href={pub.articleUrl}
+              target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 md:py-2 border border-slate-200 rounded-full text-xs font-semibold uppercase tracking-wider text-slate-900 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300 whitespace-nowrap"
-              onMouseEnter={() => setHovered(true)} 
+              onMouseEnter={() => setHovered(true)}
               onMouseLeave={() => setHovered(false)}
             >
-              Read Article <ArrowRight className="w-3.5 h-3.5" />
+              {readArticleLabel} <ArrowRight className="w-3.5 h-3.5" />
             </a>
           </div>
         </div>
@@ -148,11 +149,14 @@ function PublicationRow({ pub, isLast, index }: { pub: any, isLast: boolean, ind
 }
 
 export function Research() {
+  const t = useTranslations();
+  const lb = t.labs;
   return (
     <div className="bg-slate-50 min-h-screen">
-      <SEO 
-        title="Labs"
-        description="Explore the clinical research and publications behind Hana Voice AI. Advancing conversational AI in healthcare with voice biomarkers, patient engagement studies, and adaptive engagement technology."
+      <SEO
+        title={lb.seoTitle}
+        useExactTitle={true}
+        description={lb.seoDescription}
         path="/labs"
         keywords="clinical AI research, voice biomarkers, healthcare AI publications, conversational AI healthcare, patient engagement research, voice analysis machine learning"
         jsonLd={breadcrumbSchema([
@@ -162,22 +166,18 @@ export function Research() {
       />
       {/* Hero Section */}
       <section className="pt-16 pb-16 md:pt-24 md:pb-20 px-6 relative bg-slate-50 overflow-hidden">
-        {/* Abstract background blobs to match homepage feel */}
         <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[120%] h-[80%] rounded-[100%] bg-blue-100/30 blur-[120px] pointer-events-none" />
-        
+
         <div className="max-w-4xl mx-auto text-center relative z-10">
            <FadeIn>
               <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-normal text-slate-900 mb-6 leading-[1.1]">
-                 Advancing Conversational AI <br className="hidden md:block"/> in Healthcare
+                 {lb.h1}
               </h1>
            </FadeIn>
            <FadeIn delay={0.1}>
              <div className="space-y-6 max-w-2xl mx-auto">
                 <p className="text-lg text-slate-600 leading-relaxed">
-                   At Hana, we're pioneering research into how conversational AI can transform patient engagement and care delivery. Our mission is to investigate the complex dynamics of human-AI interaction in healthcare contexts.
-                </p>
-                <p className="text-lg text-slate-600 leading-relaxed">
-                   We focus on fundamental questions: How can AI systems detect subtle changes in patient health through voice? What engagement patterns lead to sustained behavior change?
+                   {lb.subheading}
                 </p>
              </div>
            </FadeIn>
@@ -197,7 +197,7 @@ export function Research() {
                   Our proprietary multi-model intelligence system translates research into practice by continuously monitoring conversations, analyzing vocal biomarkers, and adapting engagement in real time.
                </p>
              </FadeIn>
-             
+
              {/* Capabilities List - Centered */}
              <FadeIn delay={0.2}>
                <div className="bg-slate-50 rounded-2xl p-8 md:p-10 border border-slate-100 mb-10 text-left shadow-sm">
@@ -215,13 +215,13 @@ export function Research() {
 
              {/* Link to Docs */}
              <FadeIn delay={0.3}>
-               <a 
-                 href="https://docs.hana.health/" 
-                 target="_blank" 
-                 rel="noopener noreferrer" 
+               <a
+                 href="https://docs.hana.health/"
+                 target="_blank"
+                 rel="noopener noreferrer"
                  className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white rounded-full font-medium text-lg hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-blue-600/20 transform hover:-translate-y-0.5"
                >
-                  Read the Technical Documentation <ArrowRight className="w-4 h-4" />
+                  {lb.readDocs} <ArrowRight className="w-4 h-4" />
                </a>
              </FadeIn>
          </div>
@@ -232,14 +232,14 @@ export function Research() {
          <div className="max-w-6xl mx-auto px-6">
              <div className="text-center mb-12 md:mb-20 max-w-3xl mx-auto">
                  <FadeIn>
-                   <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-6">Publications</h2>
-                   <p className="text-xl text-slate-600">Discover the research and clinical evidence foundational to our products</p>
+                   <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-6">{lb.publicationsTitle}</h2>
+                   <p className="text-xl text-slate-600">{lb.publicationsBody}</p>
                  </FadeIn>
              </div>
-             
+
              <div className="bg-white rounded-[2rem] p-6 md:p-12 shadow-sm border border-slate-100/80">
                  {publications.map((pub, i) => (
-                   <PublicationRow key={pub.id} pub={pub} isLast={i === publications.length - 1} index={i} />
+                   <PublicationRow key={pub.id} pub={pub} isLast={i === publications.length - 1} index={i} readArticleLabel={lb.readArticle} />
                  ))}
              </div>
          </div>

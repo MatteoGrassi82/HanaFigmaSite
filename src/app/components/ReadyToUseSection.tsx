@@ -1,8 +1,10 @@
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
+import { useTranslations } from "../../lib/i18n";
 
 export function ReadyToUseSection() {
+  const t = useTranslations();
   return (
     <section className="py-20 sm:py-24 md:py-32 px-4 bg-[rgb(0,18,47)] relative overflow-hidden text-center border-t border-white/5">
       {/* Background gradients/effects */}
@@ -19,22 +21,22 @@ export function ReadyToUseSection() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-light text-white mb-6 tracking-tight">
-            Automate the routine. Free your team.
+            {t.cta.heading}
           </h2>
           <p className="text-xl md:text-2xl text-slate-300 font-light mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed">
-            Book a demo. We'll show you a workflow built for how your team works — not a generic product tour.
+            {t.cta.body}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <a href="https://calendly.com/matteowastaken/discoverycall" target="_blank" rel="noopener noreferrer" className="bg-white text-slate-900 px-8 py-4 rounded-full text-lg font-medium hover:bg-slate-100 transition-colors flex items-center gap-2 group shadow-lg shadow-blue-900/20">
-              Book a Demo
+              {t.cta.bookDemo}
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
             <Link to="/pricing" className="px-8 py-4 rounded-full text-lg font-medium text-white border border-white/20 hover:bg-white/10 transition-colors flex items-center gap-2">
-              See how much you can save
+              {t.cta.savings}
             </Link>
             <a href="https://docs.hana.health/" target="_blank" rel="noopener noreferrer" className="px-8 py-4 rounded-full text-lg font-medium text-white border border-white/20 hover:bg-white/10 transition-colors flex items-center gap-2">
-              Read the Docs
+              {t.cta.readDocs}
             </a>
           </div>
         </motion.div>

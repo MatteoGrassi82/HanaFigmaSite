@@ -4,6 +4,7 @@ import { Loader2, Globe, PhoneOff, CheckCircle2, MessageSquare, Smartphone } fro
 import { cn } from "../../lib/utils";
 import { projectId, publicAnonKey } from "../../../utils/supabase/info";
 import { HanaBloomOrb } from "./ui/hana-bloom-orb";
+import { useTranslations } from "../../lib/i18n";
 
 const FN_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-77ada9a1`;
 
@@ -26,6 +27,8 @@ export function LiveDemoSection({
   handleStartWebCall,
   handleEndWebCall,
 }: LiveDemoSectionProps) {
+  const t = useTranslations();
+  const ld = t.liveDemo;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [fieldErrors, setFieldErrors] = useState<{ name?: string; email?: string; phone?: string }>({});
@@ -48,7 +51,7 @@ export function LiveDemoSection({
         });
         const data = await res.json().catch(() => ({}));
         if (data.status === "called") { setSmsStatus("called"); }
-        else if (data.status === "failed") { setSmsStatus("failed"); setSmsError("We couldn't place the call. Please try again."); }
+        else if (data.status === "failed") { setSmsStatus("failed"); setSmsError(ld.callFailed); }
       } catch { /* keep polling */ }
     }, 3000);
     return () => { if (pollRef.current) clearInterval(pollRef.current); };
@@ -71,10 +74,10 @@ export function LiveDemoSection({
   // Primary: text the prospect, Hana calls them back.
   const handleTextMeClick = async () => {
     const errors: { name?: string; email?: string; phone?: string } = {};
-    if (!name.trim())  errors.name  = "Name is required";
-    if (!email.trim()) errors.email = "Email is required";
+    if (!name.trim())  errors.name  = ld.fieldNameRequired;
+    if (!email.trim()) errors.email = ld.fieldEmailRequired;
     const e164 = phone.replace(/[^\d+]/g, "");
-    if (!/^\+[1-9]\d{7,14}$/.test(e164)) errors.phone = "Enter your number in international format, e.g. +1 555 123 4567.";
+    if (!/^\+[1-9]\d{7,14}$/.test(e164)) errors.phone = ld.fieldPhoneFormat;
     if (Object.keys(errors).length > 0) { setFieldErrors(errors); return; }
     setFieldErrors({});
 
@@ -88,19 +91,19 @@ export function LiveDemoSection({
         body: JSON.stringify({ to: e164, region, name: name.trim() || undefined, email: email.trim() || undefined }),
       });
       const data = await res.json().catch(() => ({}));
-      if (!res.ok) { setSmsStatus("idle"); setSmsError(data.error || "Could not send the text."); return; }
+      if (!res.ok) { setSmsStatus("idle"); setSmsError(data.error || ld.networkError); return; }
       setSmsStatus("texted");
     } catch {
       setSmsStatus("idle");
-      setSmsError("Network error. Please try again.");
+      setSmsError(ld.networkError);
     }
   };
 
   // Secondary: simple in-browser web call.
   const handleWebCallClick = () => {
     const errors: { name?: string; email?: string } = {};
-    if (!name.trim())  errors.name  = "Name is required";
-    if (!email.trim()) errors.email = "Email is required";
+    if (!name.trim())  errors.name  = ld.fieldNameRequired;
+    if (!email.trim()) errors.email = ld.fieldEmailRequired;
     if (Object.keys(errors).length > 0) { setFieldErrors((p) => ({ ...p, ...errors })); return; }
     setFieldErrors({});
     captureLead("live-demo-web-call");
@@ -120,10 +123,10 @@ export function LiveDemoSection({
 
         {/* Headline */}
         <h2 className="font-serif text-4xl md:text-6xl text-slate-900 leading-[1.05] text-center mb-4 tracking-tight">
-          Don't take our word for it.<br />Take the call.
+          {ld.heading}
         </h2>
         <p className="text-lg text-slate-500 text-center max-w-2xl mx-auto mb-8 sm:mb-12 lg:mb-14 leading-relaxed">
-          Drop your number and Hana calls you right now — the agent works out the right demo as you talk.
+          {ld.subheading}
         </p>
 
         {/* Two-column card */}
@@ -138,7 +141,7 @@ export function LiveDemoSection({
             {/* live caption */}
             <div className="absolute bottom-10 left-0 right-0 flex items-center justify-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#5b76d9]" style={{ animation: "hana-glow 2.4s ease-in-out infinite" }} />
-              <span className="text-[12px] font-bold tracking-[2.5px] uppercase text-[#64748b]">Hana is listening</span>
+              <span className="text-[12px] font-bold tracking-[2.5px] uppercase text-[#64748b]">{ld.listeningLabel}</span>
             </div>
           </div>
 
@@ -179,10 +182,10 @@ export function LiveDemoSection({
 
                   <div>
                     <p className="text-xl font-medium text-slate-900 mb-1">
-                      {webCallStatus === "active" ? "Speaking with Hana" : "Connecting..."}
+                      {webCallStatus === "active" ? ld.speakingWithHana : ld.connecting}
                     </p>
                     <p className="text-sm text-slate-500">
-                      {webCallStatus === "active" ? "Click End Call when you're done." : "Establishing connection..."}
+                      {webCallStatus === "active" ? ld.clickEndCall : ld.establishingConnection}
                     </p>
                   </div>
 
@@ -190,7 +193,7 @@ export function LiveDemoSection({
                     onClick={handleEndWebCall}
                     className="bg-red-500 text-white px-6 py-2.5 rounded-full text-sm font-medium flex items-center gap-2 hover:bg-red-600 transition-colors"
                   >
-                    <PhoneOff className="w-4 h-4" /> End Call
+                    <PhoneOff className="w-4 h-4" /> {ld.endCall}
                   </button>
                 </motion.div>
               ) : (
@@ -198,21 +201,21 @@ export function LiveDemoSection({
                 <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col gap-6 w-full">
                   <div>
                     <p className="text-[24px] leading-[1.42] text-[#00122f] font-normal max-w-[30ch] mb-3">
-                      Hear Hana handle a real patient conversation.
+                      {ld.formHeading}
                     </p>
                     <p className="text-[15px] leading-[1.7] text-[#64748b] max-w-[42ch]">
-                      Enter your details and Hana texts you first to confirm, then calls within seconds — so you can experience the AI live.
+                      {ld.formSubheading}
                     </p>
                   </div>
 
                   {/* Name */}
                   <div>
-                    <label className={labelClass}>Name</label>
+                    <label className={labelClass}>{ld.nameLabel}</label>
                     <input
                       type="text"
                       value={name}
                       onChange={(e) => { setName(e.target.value); setFieldErrors((p) => ({ ...p, name: undefined })); }}
-                      placeholder="Your name"
+                      placeholder={ld.namePlaceholder}
                       className={inputClass(fieldErrors.name)}
                     />
                     {fieldErrors.name && <p className="mt-1 text-xs text-red-500">{fieldErrors.name}</p>}
@@ -220,7 +223,7 @@ export function LiveDemoSection({
 
                   {/* Email */}
                   <div>
-                    <label className={labelClass}>Email</label>
+                    <label className={labelClass}>{ld.emailLabel}</label>
                     <input
                       type="email"
                       value={email}
@@ -233,7 +236,7 @@ export function LiveDemoSection({
 
                   {/* Phone + region */}
                   <div>
-                    <label className={labelClass}>Phone</label>
+                    <label className={labelClass}>{ld.phoneLabel}</label>
                     <div className="mb-4 inline-flex items-center gap-1 rounded-[10px] p-1 bg-[#eef0f5] border border-[#e2e6f4]">
                       {(["US", "EU"] as const).map((r) => (
                         <button
@@ -245,7 +248,7 @@ export function LiveDemoSection({
                             region === r ? "bg-white text-[#00122f] shadow-[0_1px_3px_rgba(0,18,47,0.12)]" : "text-[#64748b]"
                           )}
                         >
-                          {r === "US" ? "🇺🇸 US / Canada" : "🇪🇺 Europe"}
+                          {r === "US" ? ld.regionUS : ld.regionEU}
                         </button>
                       ))}
                     </div>
@@ -267,8 +270,8 @@ export function LiveDemoSection({
                     className="w-full inline-flex items-center justify-center gap-2.5 bg-[#1e2a3a] text-white text-[16px] font-semibold rounded-xl py-[18px] transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(0,18,47,0.18)] disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
                   >
                     {smsStatus === "sending"
-                      ? <><Loader2 className="w-[18px] h-[18px] animate-spin" /> Texting…</>
-                      : <><Smartphone className="w-[18px] h-[18px]" /> Text me &amp; call me</>}
+                      ? <><Loader2 className="w-[18px] h-[18px] animate-spin" /> {ld.textingButton}</>
+                      : <><Smartphone className="w-[18px] h-[18px]" /> {ld.textMeButton}</>}
                   </button>
                   {smsError && <p className="-mt-2 text-xs text-red-500">{smsError}</p>}
 
@@ -281,13 +284,13 @@ export function LiveDemoSection({
                       {smsStatus === "texted" && (
                         <span className="flex items-center gap-2">
                           <MessageSquare className="w-4 h-4 shrink-0" />
-                          Check your texts — Hana will call you right back. 📱
+                          {ld.textedStatus}
                         </span>
                       )}
                       {smsStatus === "called" && (
                         <span className="flex items-center gap-2">
                           <CheckCircle2 className="w-4 h-4 shrink-0" />
-                          Calling you now — pick up your phone! 📞
+                          {ld.calledStatus}
                         </span>
                       )}
                     </div>
@@ -296,7 +299,7 @@ export function LiveDemoSection({
                   {/* Divider */}
                   <div className="flex items-center gap-4 my-0.5">
                     <span className="h-px flex-1 bg-[#e8ebf2]" />
-                    <span className="text-[12px] font-semibold uppercase tracking-[2px] text-[#94a3b8]">or</span>
+                    <span className="text-[12px] font-semibold uppercase tracking-[2px] text-[#94a3b8]">{ld.or}</span>
                     <span className="h-px flex-1 bg-[#e8ebf2]" />
                   </div>
 
@@ -307,7 +310,7 @@ export function LiveDemoSection({
                     className="w-full inline-flex items-center justify-center gap-2.5 bg-white border border-[#dfe3ee] text-[#00122f] text-[16px] font-semibold rounded-xl py-[18px] transition-all hover:-translate-y-0.5 hover:border-[#c7cfe0] hover:shadow-[0_10px_24px_rgba(0,18,47,0.08)] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
                   >
                     <Globe className="w-[18px] h-[18px] text-[#5b76d9]" />
-                    Prefer to talk now? Start a web call →
+                    {ld.webCallButton}
                   </button>
                 </motion.div>
               )}

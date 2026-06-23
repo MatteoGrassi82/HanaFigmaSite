@@ -5,9 +5,11 @@ import { Link } from "react-router";
 import { toast } from "sonner";
 import { SEO } from "../components/SEO";
 import { breadcrumbSchema } from "../components/SEO";
+import { useTranslations } from "../../lib/i18n";
 
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const t = useTranslations();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,13 +37,13 @@ export function Contact() {
 
       if (!response.ok) throw new Error("Request failed");
 
-      toast.success("Message sent", {
-        description: "Thanks for reaching out — we'll get back to you shortly.",
+      toast.success(t.contact.successTitle, {
+        description: t.contact.successBody,
       });
       form.reset();
     } catch {
-      toast.error("Couldn't send your message", {
-        description: "Please email us directly at hello@hana.health.",
+      toast.error(t.contact.errorTitle, {
+        description: t.contact.errorBody,
       });
     } finally {
       setIsSubmitting(false);
@@ -50,9 +52,10 @@ export function Contact() {
 
   return (
     <div className="pt-24 pb-16 min-h-screen">
-      <SEO 
-        title="Contact Us"
-        description="Get in touch with the Hana Voice AI team. Schedule a demo, ask about our clinical agents, or discuss partnership opportunities."
+      <SEO
+        title={t.contact.seoTitle}
+        useExactTitle={true}
+        description={t.contact.seoDescription}
         path="/contact"
         keywords="contact Hana Health, schedule AI demo, healthcare AI partnership, clinical voice AI inquiry, book demo"
         jsonLd={breadcrumbSchema([
@@ -68,10 +71,10 @@ export function Contact() {
           className="text-center mb-10 md:mb-16"
         >
           <h1 className="text-4xl md:text-5xl font-serif font-medium text-slate-900 dark:text-white mb-6">
-            Get in touch
+            {t.contact.h1}
           </h1>
           <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-            Have questions about our clinical AI agents? We're here to help you transform your healthcare workflows.
+            {t.contact.subheading}
           </p>
         </motion.div>
 
@@ -85,7 +88,7 @@ export function Contact() {
           >
             <div>
               <h3 className="text-2xl font-medium text-slate-900 dark:text-white mb-6">
-                Contact Information
+                {t.contact.infoTitle}
               </h3>
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
@@ -93,7 +96,7 @@ export function Contact() {
                     <Mail className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="font-medium text-slate-900 dark:text-white mb-1">Email</h4>
+                    <h4 className="font-medium text-slate-900 dark:text-white mb-1">{t.contact.emailLabel}</h4>
                     <p className="text-slate-600 dark:text-slate-400">hello@hana.health</p>
                     <p className="text-slate-600 dark:text-slate-400">support@hana.health</p>
                   </div>
@@ -104,11 +107,11 @@ export function Contact() {
                     <MapPin className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="font-medium text-slate-900 dark:text-white mb-1">Office</h4>
+                    <h4 className="font-medium text-slate-900 dark:text-white mb-1">{t.contact.officeLabel}</h4>
                     {/* TODO: insert real registered business address (needed as the GDPR/CCPA controller address) */}
                     <p className="text-slate-600 dark:text-slate-400">
-                      HANA Health, Inc.<br />
-                      Remote-first team
+                      {t.contact.officeCompany}<br />
+                      {t.contact.officeNote}
                     </p>
                   </div>
                 </div>
@@ -118,13 +121,13 @@ export function Contact() {
 
             <div className="p-6 md:p-8 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
               <h3 className="text-lg font-medium text-slate-900 dark:text-white mb-2">
-                Ready to get started?
+                {t.contact.getStartedTitle}
               </h3>
               <p className="text-slate-600 dark:text-slate-400 mb-6">
-                Skip the queue and schedule a direct demo with our product specialists.
+                {t.contact.getStartedBody}
               </p>
               <a href="https://calendly.com/matteowastaken/discoverycall" target="_blank" rel="noopener noreferrer" className="w-full py-3 px-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-lg font-medium hover:opacity-90 transition-opacity block text-center">
-                Book a Live Demo
+                {t.contact.bookDemo}
               </a>
             </div>
           </motion.div>
@@ -137,7 +140,7 @@ export function Contact() {
           >
             <form onSubmit={handleSubmit} className="p-6 md:p-8 rounded-2xl bg-white dark:bg-slate-900 shadow-sm border border-slate-200 dark:border-slate-800">
               <h3 className="text-2xl font-medium text-slate-900 dark:text-white mb-6">
-                Send us a message
+                {t.contact.formTitle}
               </h3>
               
               <div className="space-y-6">
@@ -147,7 +150,7 @@ export function Contact() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label htmlFor="firstName" className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                      First Name
+                      {t.contact.firstNameLabel}
                     </label>
                     <input
                       type="text"
@@ -155,12 +158,12 @@ export function Contact() {
                       name="First Name"
                       required
                       className="w-full px-4 py-3 text-base rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                      placeholder="Jane"
+                      placeholder={t.contact.firstNamePlaceholder}
                     />
                   </div>
                   <div className="space-y-2">
                     <label htmlFor="lastName" className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                      Last Name
+                      {t.contact.lastNameLabel}
                     </label>
                     <input
                       type="text"
@@ -168,14 +171,14 @@ export function Contact() {
                       name="Last Name"
                       required
                       className="w-full px-4 py-3 text-base rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                      placeholder="Doe"
+                      placeholder={t.contact.lastNamePlaceholder}
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <label htmlFor="email" className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                    Email Address
+                    {t.contact.emailAddress}
                   </label>
                   <input
                     type="email"
@@ -183,29 +186,29 @@ export function Contact() {
                     name="email"
                     required
                     className="w-full px-4 py-3 text-base rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                    placeholder="jane@organization.com"
+                    placeholder={t.contact.emailPlaceholder}
                   />
                 </div>
 
                 <div className="space-y-2">
                   <label htmlFor="subject" className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                    Subject
+                    {t.contact.subjectLabel}
                   </label>
                   <select
                     id="subject"
                     name="Subject"
                     className="w-full px-4 py-3 text-base rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                   >
-                    <option>Sales Inquiry</option>
-                    <option>Technical Support</option>
-                    <option>Partnership Opportunity</option>
-                    <option>Other</option>
+                    <option>{t.contact.subjectSales}</option>
+                    <option>{t.contact.subjectSupport}</option>
+                    <option>{t.contact.subjectPartnership}</option>
+                    <option>{t.contact.subjectOther}</option>
                   </select>
                 </div>
 
                 <div className="space-y-2">
                   <label htmlFor="message" className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                    Message
+                    {t.contact.messageLabel}
                   </label>
                   <textarea
                     id="message"
@@ -213,7 +216,7 @@ export function Contact() {
                     required
                     rows={4}
                     className="w-full px-4 py-3 text-base rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
-                    placeholder="Tell us about your organization's needs..."
+                    placeholder={t.contact.messagePlaceholder}
                   />
                 </div>
 
@@ -223,19 +226,19 @@ export function Contact() {
                   className="w-full py-3 px-6 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 focus:ring-4 focus:ring-blue-500/20 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
-                    "Sending..."
+                    t.contact.submittingButton
                   ) : (
                     <>
-                      Send Message
+                      {t.contact.submitButton}
                       <Send className="w-4 h-4" />
                     </>
                   )}
                 </button>
 
                 <p className="text-xs text-slate-500 dark:text-slate-500 mt-4 text-center">
-                  By submitting this form you agree to our{" "}
+                  {t.contact.privacyNote.split(/Privacy Policy|Informativa Privacy/)[0]}
                   <Link to="/privacy" className="text-blue-600 hover:underline">
-                    Privacy Policy
+                    {t.contact.subjectOther === "Altro" ? "Informativa Privacy" : "Privacy Policy"}
                   </Link>
                   .
                 </p>

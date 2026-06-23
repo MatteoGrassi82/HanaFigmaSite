@@ -5,6 +5,7 @@ import { Footer } from "../components/Footer";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { SEO } from "../components/SEO";
 import { breadcrumbSchema } from "../components/SEO";
+import { useTranslations } from "../../lib/i18n";
 
 const foundersImage = image_77a7976bf5ac7a4d6dd84ca175d8ece4a749f268;
 
@@ -35,63 +36,7 @@ function FadeIn({ children, delay = 0, className = "" }: { children: React.React
   );
 }
 
-// --- Data ---
-const stats = [
-  { label: "Patient Interactions", value: "1M+" },
-  { label: "Weekly Engagement", value: "85%" },
-  { label: "Countries", value: "5" },
-  { label: "Clinic ROI", value: "31:1" },
-];
-
-const values = [
-  {
-    title: "Zero friction for patients",
-    desc: "If it requires a download, a login, or a behavior change, it's already dead. We meet patients where they are: on the phone, in a conversation. No app. No portal. No burden."
-  },
-  {
-    title: "Safety is not a feature",
-    desc: "It's the foundation. Over one million patient interactions with zero critical adverse events. Every conversation is monitored, every escalation protocol is clinic-defined, every risk signal is caught."
-  },
-  {
-    title: "Infrastructure, not applications",
-    desc: "We don't build point solutions. We build the engagement layer that powers everything from intake to monitoring to adherence. Like electricity for patient communication."
-  },
-  {
-    title: "Global by design",
-    desc: "Healthcare protocols are universal. Incentives vary. We operate across five countries, three languages, and both public and private systems, adapting to each without rebuilding."
-  },
-  {
-    title: "AI fills gaps, not jobs",
-    desc: "We don't replace nurses and care teams. We put AI into the places where there's no one: missed calls, unmonitored hours, unasked questions. Everyone stays. Care gets better."
-  },
-  {
-    title: "Outcomes over demos",
-    desc: "We don't do flashy demos or vibe investing. We do 85% engagement, 96% completion rates, and 31:1 ROI. Boring, functional solutions that actually work. That's what healthcare needs."
-  },
-];
-
-const timeline = [
-  {
-    title: "The app that nobody used",
-    desc: "Matteo built a mental health monitoring app for patients with bipolar disorder. It collected sleep, activity, and mood data. Technically sound. Clinically useful. Engagement: abysmal."
-  },
-  {
-    title: "The phone call that changed everything",
-    desc: "What if we just called them? An AI voice agent that reached patients by phone and SMS. Engagement jumped to 85%. The problem was never the clinical protocol, it was the delivery mechanism."
-  },
-  {
-    title: "From product to platform",
-    desc: "Every clinic had different problems (intake, adherence, monitoring, outreach) but the underlying need was the same: continuous patient engagement. So we stopped building a product and started building infrastructure."
-  },
-  {
-    title: "One million interactions later",
-    desc: "HANA powers patient engagement across five countries, multiple languages, and every care setting from ADHD diagnostics to palliative care. Our reasoning model learns from every interaction."
-  },
-  {
-    title: "Cutting the cord: fully open-source",
-    desc: "Sthita led the migration off proprietary APIs entirely, moving HANA to open-source models on our own servers. No OpenAI. Full data sovereignty. Now we're testing on-premise installations for hospitals in Italy and sovereign cloud deployments in the Middle East. The future of healthcare AI is owned, not rented."
-  }
-];
+// --- Data --- (translated in component using useTranslations)
 
 const team = [
   { 
@@ -142,11 +87,31 @@ const team = [
 ];
 
 export function About() {
+  const t = useTranslations();
+  const ab = t.about;
+
+  const stats = [
+    { label: ab.stat1Label, value: ab.stat1Value },
+    { label: ab.stat2Label, value: ab.stat2Value },
+    { label: ab.stat3Label, value: ab.stat3Value },
+    { label: ab.stat4Label, value: ab.stat4Value },
+  ];
+
+  const values = [
+    { title: ab.v1Title, desc: ab.v1Body },
+    { title: ab.v2Title, desc: ab.v2Body },
+    { title: ab.v3Title, desc: ab.v3Body },
+    { title: ab.v4Title, desc: ab.v4Body },
+    { title: ab.v5Title, desc: ab.v5Body },
+    { title: ab.v6Title, desc: ab.v6Body },
+  ];
+
   return (
     <div className="bg-slate-50 min-h-screen">
-      <SEO 
-        title="About Us"
-        description="Meet the team behind Hana Voice AI. Founded by clinical experts and engineers to build the infrastructure for continuous patient engagement through AI voice agents."
+      <SEO
+        title={ab.seoTitle}
+        useExactTitle={true}
+        description={ab.seoDescription}
         path="/about"
         keywords="Hana Health team, healthcare AI company, clinical AI founders, voice AI startup, healthcare technology company"
         jsonLd={breadcrumbSchema([
@@ -154,19 +119,19 @@ export function About() {
           { name: "About", url: "https://www.hana.health/about" }
         ])}
       />
-      
+
       {/* Hero Section */}
       <section className="pt-20 pb-12 sm:pt-24 sm:pb-20 px-6 max-w-7xl mx-auto">
         <div className="max-w-4xl mx-auto text-center">
           <FadeIn>
-            <span className="text-blue-600 font-semibold tracking-wider uppercase text-sm mb-4 block">About Hana</span>
+            <span className="text-blue-600 font-semibold tracking-wider uppercase text-sm mb-4 block">{ab.h1}</span>
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-slate-900 mb-8 md:leading-tight">
-              We're building the care infrastructure for the hours between visits.
+              {ab.tagline}
             </h1>
           </FadeIn>
           <FadeIn delay={0.1}>
             <p className="text-xl md:text-2xl text-slate-600 leading-relaxed max-w-3xl mx-auto">
-              Healthcare works for the 15-minute appointment. We're solving the 10,000 hours that come after, with AI that listens, adapts, and keeps patients connected to their care.
+              {ab.story}
             </p>
           </FadeIn>
         </div>
@@ -176,7 +141,7 @@ export function About() {
       <section className="py-20 px-6 bg-white border-y border-slate-200/60">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           <FadeIn className="order-2 lg:order-1">
-            <h2 className="font-serif text-3xl sm:text-4xl text-slate-900 mb-8">Founders' Story</h2>
+            <h2 className="font-serif text-3xl sm:text-4xl text-slate-900 mb-8">{ab.foundersTitle}</h2>
             <div className="space-y-6 text-lg text-slate-600 leading-relaxed">
               <p>
                 <strong className="text-slate-900">Matteo Grassi</strong>, 3× founder and clinical psychologist. Built an app to monitor patients with bipolar disorder. The tech worked. Engagement didn't. So he threw out the app and called patients directly with AI. Engagement went from 15% to 85%. The problem was never the protocol, it was the delivery.
@@ -217,7 +182,7 @@ export function About() {
       {/* Values */}
       <section className="py-16 sm:py-20 lg:py-24 px-6 max-w-7xl mx-auto">
         <FadeIn>
-          <h2 className="font-serif text-3xl sm:text-4xl text-slate-900 mb-16 text-center">Our Values</h2>
+          <h2 className="font-serif text-3xl sm:text-4xl text-slate-900 mb-16 text-center">{ab.valuesTitle}</h2>
         </FadeIn>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 sm:gap-x-12 sm:gap-y-16">
           {values.map((val, i) => (
@@ -235,7 +200,7 @@ export function About() {
       <section className="py-16 sm:py-20 lg:py-24 px-6 bg-slate-50 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <FadeIn>
-            <h2 className="font-serif text-3xl sm:text-4xl text-slate-900 mb-12 sm:mb-20 text-center">How We Got Here</h2>
+            <h2 className="font-serif text-3xl sm:text-4xl text-slate-900 mb-12 sm:mb-20 text-center">{ab.timelineTitle}</h2>
           </FadeIn>
           
           <div className="relative w-full">
@@ -302,15 +267,14 @@ export function About() {
         <div className="max-w-4xl mx-auto relative z-10">
           <FadeIn>
             <div className="text-center mb-16">
-              <h2 className="font-serif text-4xl md:text-5xl mb-6">Where We're Going</h2>
-              <p className="text-xl md:text-2xl text-blue-200 font-light">Open source. Self-hosted. Healthcare AI that you actually own.</p>
+              <h2 className="font-serif text-4xl md:text-5xl mb-6">{ab.openSourceTitle}</h2>
             </div>
           </FadeIn>
           
           <div className="space-y-8 text-lg text-slate-300 leading-relaxed mb-12">
             <FadeIn delay={0.1}>
               <p>
-                Six months ago, we made a decision that changed our trajectory: we moved off OpenAI entirely. We migrated HANA to open-source models running on our own servers. No proprietary API dependency. No patient data leaving your jurisdiction. Full sovereignty.
+                {ab.openSourceBody}
               </p>
             </FadeIn>
             
@@ -354,7 +318,7 @@ export function About() {
       <section className="py-16 sm:py-20 lg:py-24 px-6 bg-slate-50">
         <div className="max-w-6xl mx-auto">
           <FadeIn>
-             <h2 className="font-serif text-3xl sm:text-4xl text-slate-900 mb-16 text-center">Meet the Team</h2>
+             <h2 className="font-serif text-3xl sm:text-4xl text-slate-900 mb-16 text-center">{ab.meetTeamTitle}</h2>
           </FadeIn>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {team.map((member, i) => (
@@ -376,14 +340,14 @@ export function About() {
             {/* Hiring CTA Card */}
             <FadeIn delay={team.length * 0.05}>
                 <div className="bg-blue-600 p-8 rounded-2xl border border-blue-500 shadow-lg hover:shadow-xl transition-shadow h-full relative overflow-hidden group flex flex-col items-center justify-center text-center">
-                    <h3 className="text-2xl font-serif text-white mb-4">Want to join the team?</h3>
-                    <a 
+                    <h3 className="text-2xl font-serif text-white mb-4">{ab.joinTeam}</h3>
+                    <a
                       href="https://calendly.com/matteowastaken/discoverycall"
                       target="_blank"
-                      rel="noopener noreferrer" 
+                      rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-6 py-3 bg-white text-blue-600 rounded-full font-bold text-sm hover:bg-blue-50 transition-colors"
                     >
-                      Connect with Matteo <ArrowRight className="w-4 h-4" />
+                      {ab.connectCta} <ArrowRight className="w-4 h-4" />
                     </a>
                 </div>
             </FadeIn>
@@ -395,15 +359,15 @@ export function About() {
       <section className="py-16 sm:py-20 lg:py-24 px-6 bg-white border-t border-slate-200">
          <div className="max-w-4xl mx-auto text-center">
             <FadeIn>
-               <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-6">Let's close the engagement gap together</h2>
-               <p className="text-xl text-slate-600 mb-10">Whether you're a clinic, a platform, or a health system, we'd love to talk.</p>
-               <a 
-                 href="https://calendly.com/matteowastaken/discoverycall" 
-                 target="_blank" 
+               <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-6">{ab.closingHeading}</h2>
+               <p className="text-xl text-slate-600 mb-10">{ab.closingBody}</p>
+               <a
+                 href="https://calendly.com/matteowastaken/discoverycall"
+                 target="_blank"
                  rel="noopener noreferrer"
                  className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white rounded-full font-medium text-lg hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-blue-600/20 transform hover:-translate-y-0.5"
                >
-                 Book a conversation <ArrowRight className="w-4 h-4" />
+                 {ab.bookConversation} <ArrowRight className="w-4 h-4" />
                </a>
             </FadeIn>
          </div>
