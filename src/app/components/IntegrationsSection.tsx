@@ -1,8 +1,11 @@
 import React from 'react';
 import { ArrowRight, Code2 } from 'lucide-react';
 import { Link } from 'react-router';
+import { useTranslations } from '../../lib/i18n';
 
 export function IntegrationsSection() {
+  const t = useTranslations();
+  const i = t.integrations;
   return (
     <section className="relative py-16 sm:py-20 lg:py-24 px-5 sm:px-6 lg:px-8 overflow-hidden bg-[#f5f6f8] text-[#1e2a3a]">
        {/* Ambient glow */}
@@ -15,13 +18,13 @@ export function IntegrationsSection() {
               before:content-[''] before:w-6 before:h-px before:bg-blue-600 before:opacity-40
               after:content-[''] after:w-6 after:h-px after:bg-blue-600 after:opacity-40
             ">
-              Integrations
+              {i.tag}
             </div>
             <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-normal leading-[1.1] text-[#1e2a3a] mb-5 tracking-normal">
-              Built into the systems you <em className="italic text-blue-600">already run.</em>
+              {i.heading} <em className="italic text-blue-600">{i.headingEmphasis}</em>
             </h2>
             <p className="text-lg leading-[1.65] text-[#718096] max-w-2xl mx-auto font-normal">
-              95+ EHRs, reads and writes back automatically. Reaches patients by voice, SMS, WhatsApp, or iMessage — in 3+ languages.
+              {i.body}
             </p>
           </div>
 
@@ -36,10 +39,10 @@ export function IntegrationsSection() {
                    </svg>
                 </div>
                 
-                <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">EHR integrations</h3>
-                <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">Reads the chart. Engages the patient. Writes back.</p>
+                <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">{i.ehr}</h3>
+                <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">{i.ehrTagline}</p>
                 <p className="text-[15px] leading-[1.7] text-[#718096] mb-8 font-normal">
-                  Direct integrations with major EHRs. Or connect through Redox and Catagon to reach 95+ systems. Hana reads the chart, engages the patient, and writes structured notes back.
+                  {i.ehrBody}
                 </p>
                 
                 <div className="flex flex-wrap gap-[10px]">
@@ -61,10 +64,10 @@ export function IntegrationsSection() {
                    </svg>
                 </div>
                 
-                <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">Patient channels</h3>
-                <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">Hana picks the right channel, time, and tone. No app. No portal. No login.</p>
+                <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">{i.channels}</h3>
+                <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">{i.channelsTagline}</p>
                 <p className="text-[15px] leading-[1.7] text-[#718096] mb-8 font-normal">
-                  Hana picks the right channel, time, and tone for each patient. No app. No portal. No login. Just a conversation.
+                  {i.channelsBody}
                 </p>
                 
                 <div className="flex flex-wrap gap-[10px]">
@@ -86,10 +89,10 @@ export function IntegrationsSection() {
                    </svg>
                 </div>
                 
-                <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">No EHR? No problem.</h3>
-                <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">Works with what you have.</p>
+                <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">{i.noEhr}</h3>
+                <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">{i.noEhrTagline}</p>
                 <p className="text-[15px] leading-[1.7] text-[#718096] mb-8 font-normal">
-                  No EHR integration? No problem. We build custom dashboards, standalone agent controls, or work alongside whatever you're using today. You don't need to be "tech-ready" to start.
+                  {i.noEhrBody}
                 </p>
                 
                 <div className="flex flex-wrap gap-[10px]">
@@ -109,10 +112,10 @@ export function IntegrationsSection() {
                    <Code2 className="w-6 h-6" />
                 </div>
                 
-                <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">SDK & White-Label</h3>
-                <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">Building a platform? Embed Hana via SDK and white-label it as your own.</p>
+                <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">{i.sdk}</h3>
+                <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">{i.sdkTagline}</p>
                 <p className="text-[15px] leading-[1.7] text-[#718096] mb-8 font-normal">
-                  Full API access. Custom dashboards. Your branding. Our reasoning engine.
+                  {i.sdkBody}
                 </p>
                 
                 <div className="flex flex-wrap gap-[10px] mb-8">
@@ -128,7 +131,7 @@ export function IntegrationsSection() {
                   to="/contact"
                   className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 text-[15px] font-medium transition-colors group/link"
                 >
-                  Learn about partnerships 
+                  {i.learnPartnerships}
                   <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
                 </Link>
              </div>

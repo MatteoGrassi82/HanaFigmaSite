@@ -191,6 +191,36 @@ export interface Translations {
     heading: string;
     body: string;
   };
+  // Hero (hero-dithering-card)
+  hero: {
+    headline: string;
+    headlineCantMake: string;
+    subheadline: string;
+    endDemo: string;
+    connecting: string;
+    talkToHana: string;
+    bookDemo: string;
+  };
+  // Integrations section
+  integrations: {
+    tag: string;
+    heading: string;
+    headingEmphasis: string;
+    body: string;
+    ehr: string;
+    ehrTagline: string;
+    ehrBody: string;
+    channels: string;
+    channelsTagline: string;
+    channelsBody: string;
+    noEhr: string;
+    noEhrTagline: string;
+    noEhrBody: string;
+    sdk: string;
+    sdkTagline: string;
+    sdkBody: string;
+    learnPartnerships: string;
+  };
   // Pages — Home SEO
   homeSeo: {
     title: string;
@@ -473,6 +503,34 @@ const en: Translations = {
     heading: "Your clinical protocols, already built in.",
     body: "100+ call workflows, ready day one — across ortho, GI, behavioral health, and primary care. Turn on the one bleeding revenue first; add the rest as you go.",
   },
+  hero: {
+    headline: "Automate the routine calls your EHR",
+    headlineCantMake: "can't make",
+    subheadline: "Hana runs your routine patient calls end to end — reads the chart, makes the call, writes it back. Your team stays on the work that needs a human.",
+    endDemo: "End Demo",
+    connecting: "Connecting...",
+    talkToHana: "Talk to Hana",
+    bookDemo: "Book a Demo",
+  },
+  integrations: {
+    tag: "Integrations",
+    heading: "Built into the systems you",
+    headingEmphasis: "already run.",
+    body: "95+ EHRs, reads and writes back automatically. Reaches patients by voice, SMS, WhatsApp, or iMessage — in 3+ languages.",
+    ehr: "EHR integrations",
+    ehrTagline: "Reads the chart. Engages the patient. Writes back.",
+    ehrBody: "Direct integrations with major EHRs. Or connect through Redox and Catagon to reach 95+ systems. Hana reads the chart, engages the patient, and writes structured notes back.",
+    channels: "Patient channels",
+    channelsTagline: "Hana picks the right channel, time, and tone. No app. No portal. No login.",
+    channelsBody: "Hana picks the right channel, time, and tone for each patient. No app. No portal. No login. Just a conversation.",
+    noEhr: "No EHR? No problem.",
+    noEhrTagline: "Works with what you have.",
+    noEhrBody: "No EHR integration? No problem. We build custom dashboards, standalone agent controls, or work alongside whatever you're using today. You don't need to be \"tech-ready\" to start.",
+    sdk: "SDK & White-Label",
+    sdkTagline: "Building a platform? Embed Hana via SDK and white-label it as your own.",
+    sdkBody: "Full API access. Custom dashboards. Your branding. Our reasoning engine.",
+    learnPartnerships: "Learn about partnerships",
+  },
   homeSeo: {
     title: "Hana Voice AI | The calls your EHR can't make",
     description: "Hana works your patient access calls end to end — pre-visit intake, prior auth status checks, no-show recovery, recalls, refills. Reads the chart, makes the call, writes the note back.",
@@ -752,6 +810,34 @@ const it: Translations = {
     tag: "Automazione dei workflow",
     heading: "I tuoi protocolli clinici, già integrati.",
     body: "100+ workflow di chiamata, pronti dal primo giorno — in ortopedia, gastroenterologia, salute mentale e medicina di base. Attiva prima quello che ti fa perdere più fatturato; aggiungi gli altri man mano.",
+  },
+  hero: {
+    headline: "Automatizza le chiamate di routine che il tuo EHR",
+    headlineCantMake: "non può fare",
+    subheadline: "Hana gestisce le tue chiamate di routine ai pazienti dall'inizio alla fine — legge la cartella, fa la chiamata, la scrive indietro. Il tuo team resta sul lavoro che richiede un essere umano.",
+    endDemo: "Termina Demo",
+    connecting: "Connessione...",
+    talkToHana: "Parla con Hana",
+    bookDemo: "Prenota una Demo",
+  },
+  integrations: {
+    tag: "Integrazioni",
+    heading: "Integrato nei sistemi che",
+    headingEmphasis: "già utilizzi.",
+    body: "95+ EHR, legge e scrive automaticamente. Raggiunge i pazienti tramite voce, SMS, WhatsApp o iMessage — in 3+ lingue.",
+    ehr: "Integrazioni EHR",
+    ehrTagline: "Legge la cartella. Coinvolge il paziente. Scrive indietro.",
+    ehrBody: "Integrazioni dirette con i principali EHR. O connettiti tramite Redox e Catagon per raggiungere 95+ sistemi. Hana legge la cartella, coinvolge il paziente e scrive note strutturate.",
+    channels: "Canali paziente",
+    channelsTagline: "Hana sceglie il canale, il momento e il tono giusti. Nessuna app. Nessun portale. Nessun login.",
+    channelsBody: "Hana sceglie il canale, il momento e il tono giusti per ogni paziente. Nessuna app. Nessun portale. Nessun login. Solo una conversazione.",
+    noEhr: "Nessun EHR? Nessun problema.",
+    noEhrTagline: "Funziona con quello che hai.",
+    noEhrBody: "Nessuna integrazione EHR? Nessun problema. Costruiamo dashboard personalizzati, controlli agente standalone, o lavoriamo accanto a qualsiasi strumento tu stia usando oggi. Non devi essere \"tech-ready\" per iniziare.",
+    sdk: "SDK e White-Label",
+    sdkTagline: "Stai costruendo una piattaforma? Incorpora Hana via SDK e personalizzala con il tuo brand.",
+    sdkBody: "Accesso completo alle API. Dashboard personalizzati. Il tuo brand. Il nostro motore di ragionamento.",
+    learnPartnerships: "Scopri le partnership",
   },
   homeSeo: {
     title: "Hana Voice AI | Le chiamate che il tuo EHR non può fare",
