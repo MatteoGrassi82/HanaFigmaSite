@@ -628,6 +628,16 @@ const SITE_AGENTS: Record<string, { label: string; assistantEnv: string; fallbac
   coordination: { label: "Coordination", assistantEnv: "VAPI_SITE_ASSISTANT_COORDINATION", fallback: "4cebebf5-76df-4289-9034-ff34f7e3791c" },
 };
 
+// Italian assistant twins — same agents/flows/numbers, Italian speech (transcriber
+// it, emergency line 118). Env-overridable; falls back to the ids from
+// docs/italian-demo-agents-handoff.md. Picked when the demo was started with lang="it".
+const SITE_AGENTS_IT: Record<string, { assistantEnv: string; fallback: string }> = {
+  monitoring:   { assistantEnv: "VAPI_SITE_ASSISTANT_MONITORING_IT",   fallback: "d343531d-3db4-4637-9c13-741f962e7cdb" },
+  intake:       { assistantEnv: "VAPI_SITE_ASSISTANT_INTAKE_IT",       fallback: "f0a0fd30-fc65-45f4-9b71-d6d4bc4595d5" },
+  outreach:     { assistantEnv: "VAPI_SITE_ASSISTANT_OUTREACH_IT",     fallback: "5ba6cb14-9c06-4cda-a333-6bdda2bc54e3" },
+  coordination: { assistantEnv: "VAPI_SITE_ASSISTANT_COORDINATION_IT", fallback: "c34a2840-d4da-4d47-991a-b23dc5562830" },
+};
+
 // Region → the Twilio from-number (SMS) + the Vapi phoneNumberId (caller-ID).
 // US covers US/Canada; EU uses the UK number.
 const SITE_REGIONS: Record<string, { fromEnv: string; fromFallback: string; vapiPhoneEnv: string; vapiPhoneFallback: string }> = {
@@ -637,6 +647,7 @@ const SITE_REGIONS: Record<string, { fromEnv: string; fromFallback: string; vapi
 
 const E164 = /^\+[1-9]\d{7,14}$/;
 const normalizeRegion = (r: unknown): "US" | "EU" => (String(r).toUpperCase() === "EU" ? "EU" : "US");
+const normalizeLang = (l: unknown): "en" | "it" => (String(l).toLowerCase() === "it" ? "it" : "en");
 
 // Map a free-text SMS reply to one agent key. Anchored so "no thanks" never matches,
 // and tolerant of partial words ("coord", "monitor").
@@ -714,6 +725,7 @@ app.post("/make-server-77ada9a1/site-demo-start", async (c) => {
     const body = await c.req.json();
     const to = String(body.to || "").trim();
     const region = normalizeRegion(body.region);
+    const lang = normalizeLang(body.lang);
     const name = typeof body.name === "string" ? body.name.trim().slice(0, 80) : "";
     const email = typeof body.email === "string" ? body.email.trim().slice(0, 120) : "";
 
@@ -724,9 +736,13 @@ app.post("/make-server-77ada9a1/site-demo-start", async (c) => {
 
     const reg = SITE_REGIONS[region];
     const from = Deno.env.get(reg.fromEnv) || reg.fromFallback;
-    const opener =
-      `Hi${name ? ` ${name}` : ""}, it's Hana. Reply with the agent you want to experience and I'll call you:\n` +
-      `• MONITORING — weekly check-in\n• INTAKE — pre-visit info\n• OUTREACH — "been a while" check-in\n• COORDINATION — rebook a missed visit`;
+    // Keyword options (MONITORING/INTAKE/OUTREACH/COORDINATION) stay constant so the
+    // inbound matcher works in both languages; only the surrounding copy is localized.
+    const opener = lang === "it"
+      ? `Ciao${name ? ` ${name}` : ""}, sono Hana. Rispondi con l'agente che vuoi provare e ti chiamo:\n` +
+        `• MONITORING — check-in settimanale\n• INTAKE — info pre-visita\n• OUTREACH — check-in "è passato un po'"\n• COORDINATION — riprenota una visita saltata`
+      : `Hi${name ? ` ${name}` : ""}, it's Hana. Reply with the agent you want to experience and I'll call you:\n` +
+        `• MONITORING — weekly check-in\n• INTAKE — pre-visit info\n• OUTREACH — "been a while" check-in\n• COORDINATION — rebook a missed visit`;
 
     try {
       await sendTwilioSms(to, from, opener);
@@ -735,7 +751,7 @@ app.post("/make-server-77ada9a1/site-demo-start", async (c) => {
       return c.json({ error: "Could not send the text. Please double-check the number." }, 502);
     }
 
-    await kv.set(`sitedemo:${to}`, { phone: to, region, name: name || null, email: email || null, status: "texted", agent: null, call_id: null, updated_at: new Date().toISOString() });
+    await kv.set(`sitedemo:${to}`, { phone: to, region, lang, name: name || null, email: email || null, status: "texted", agent: null, call_id: null, updated_at: new Date().toISOString() });
     return c.json({ ok: true, status: "texted" });
   } catch (error) {
     console.error("site-demo-start error:", error);
@@ -772,9 +788,13 @@ app.post("/make-server-77ada9a1/site-demo-sms-inbound", async (c) => {
     if (!row || (row.status !== "texted" && row.status !== "failed")) return xml(EMPTY_TWIML);
 
     const region = normalizeRegion(row.region);
+    const lang = normalizeLang(row.lang);
     const reg = SITE_REGIONS[region];
     const agent = SITE_AGENTS[agentKey];
-    const assistantId = Deno.env.get(agent.assistantEnv) || agent.fallback;
+    // Italian demos dial the Italian assistant twin; English uses the default.
+    const assistantId = lang === "it"
+      ? (Deno.env.get(SITE_AGENTS_IT[agentKey].assistantEnv) || SITE_AGENTS_IT[agentKey].fallback)
+      : (Deno.env.get(agent.assistantEnv) || agent.fallback);
     const phoneNumberId = Deno.env.get(reg.vapiPhoneEnv) || reg.vapiPhoneFallback;
 
     try {
