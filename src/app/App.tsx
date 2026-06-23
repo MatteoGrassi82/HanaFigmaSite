@@ -10,6 +10,7 @@ function ScrollToTop() {
 }
 import { Navbar } from "./components/Navbar";
 import { AnnouncementBar } from "./components/AnnouncementBar";
+import { getLocale } from "../lib/i18n";
 import { VideoAskWidget } from "./components/VideoAskWidget";
 import { Home } from "./pages/Home";
 
@@ -227,13 +228,17 @@ function AppContent() {
     }
   };
 
+  // The Access page is a US-specific promo; it doesn't apply to the Italian
+  // site, so we drop its route and the announcement bar that links to it.
+  const isItalian = getLocale() === "it";
+
   return (
     <BrowserRouter>
         <ScrollToTop />
         <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 pb-12 relative">
           <Toaster position="top-center" />
 
-          <AnnouncementBar />
+          {!isItalian && <AnnouncementBar />}
           <Navbar />
           <VideoAskWidget />
 
@@ -275,14 +280,16 @@ function AppContent() {
                   handleEndWebCall={handleEndWebCall}
                 />
               } />
-              <Route path="/access" element={
-                <Access
-                  activeAgentId={activeAgentId}
-                  webCallStatus={webCallStatus}
-                  handleStartWebCall={handleStartWebCall}
-                  handleEndWebCall={handleEndWebCall}
-                />
-              } />
+              {!isItalian && (
+                <Route path="/access" element={
+                  <Access
+                    activeAgentId={activeAgentId}
+                    webCallStatus={webCallStatus}
+                    handleStartWebCall={handleStartWebCall}
+                    handleEndWebCall={handleEndWebCall}
+                  />
+                } />
+              )}
               <Route path="*" element={<NotFound />} />
             </Routes>
             </Suspense>
