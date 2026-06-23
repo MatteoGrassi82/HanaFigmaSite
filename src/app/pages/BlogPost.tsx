@@ -5,10 +5,12 @@ import { getPost, type Post } from "../../lib/sanity";
 import { Footer } from "../components/Footer";
 import { SEO } from "../components/SEO";
 import { ArrowLeft } from "lucide-react";
+import { getLocale } from "../../lib/i18n";
 
 function formatDate(dateStr?: string) {
   if (!dateStr) return "";
-  return new Date(dateStr).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+  const dateLocale = getLocale() === "it" ? "it-IT" : "en-US";
+  return new Date(dateStr).toLocaleDateString(dateLocale, { year: "numeric", month: "long", day: "numeric" });
 }
 
 const portableTextComponents = {
@@ -54,6 +56,7 @@ const portableTextComponents = {
 };
 
 export function BlogPost() {
+  const it = getLocale() === "it";
   const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
@@ -71,7 +74,7 @@ export function BlogPost() {
   if (loading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="animate-pulse text-slate-400">Loading...</div>
+        <div className="animate-pulse text-slate-400">{it ? "Caricamento..." : "Loading..."}</div>
       </div>
     );
   }
@@ -79,9 +82,9 @@ export function BlogPost() {
   if (notFound || !post) {
     return (
       <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-4">
-        <p className="text-slate-500 text-lg">Post not found.</p>
+        <p className="text-slate-500 text-lg">{it ? "Articolo non trovato." : "Post not found."}</p>
         <Link to="/blog" className="text-blue-600 hover:underline flex items-center gap-1">
-          <ArrowLeft className="w-4 h-4" /> Back to Blog
+          <ArrowLeft className="w-4 h-4" /> {it ? "Torna al blog" : "Back to Blog"}
         </Link>
       </div>
     );
@@ -128,7 +131,7 @@ export function BlogPost() {
         {/* Cover */}
         <div className="max-w-2xl mx-auto px-4 py-12">
           <Link to="/blog" className="inline-flex items-center gap-1 text-sm text-slate-400 hover:text-slate-700 mb-8 transition-colors">
-            <ArrowLeft className="w-4 h-4" /> All posts
+            <ArrowLeft className="w-4 h-4" /> {it ? "Tutti gli articoli" : "All posts"}
           </Link>
 
           {/* Meta */}

@@ -4,26 +4,35 @@ import { WorkflowBuilderComp } from "../components/remotion/WorkflowBuilderComp"
 import { SafetyMonitorComp } from "../components/remotion/SafetyMonitorComp";
 import { PatientContextComp } from "../components/remotion/PatientContextComp";
 import { Footer } from "../components/Footer";
+import { getLocale } from "../../lib/i18n";
+
+const it = getLocale() === "it";
 
 const compositions = [
   {
     id: "workflow",
-    title: "Workflow Builder",
-    description: "An inbound cancellation, handled end-to-end: chart read, cancellation logged, waitlist patient found and booked, EHR notes, a staff task, and two confirmation texts — no staff touched anything.",
+    title: it ? "Costruttore di Flussi" : "Workflow Builder",
+    description: it
+      ? "Una disdetta in entrata, gestita dall'inizio alla fine: lettura della cartella, disdetta registrata, paziente in lista d'attesa trovato e prenotato, note nell'EHR, un'attività per lo staff e due SMS di conferma — senza che nessuno dello staff debba intervenire."
+      : "An inbound cancellation, handled end-to-end: chart read, cancellation logged, waitlist patient found and booked, EHR notes, a staff task, and two confirmation texts — no staff touched anything.",
     component: WorkflowBuilderComp,
     durationInFrames: 510,
   },
   {
     id: "safety",
-    title: "Safety Monitor",
-    description: "Real-time transcript analysis. Critical risk flags and automated protocol execution.",
+    title: it ? "Monitoraggio Sicurezza" : "Safety Monitor",
+    description: it
+      ? "Analisi della trascrizione in tempo reale. Segnalazione dei rischi critici ed esecuzione automatica dei protocolli."
+      : "Real-time transcript analysis. Critical risk flags and automated protocol execution.",
     component: SafetyMonitorComp,
     durationInFrames: 390,
   },
   {
     id: "patient",
-    title: "Patient Context",
-    description: "Every interaction adds context. Channel, timing, history — carried forward automatically.",
+    title: it ? "Contesto Paziente" : "Patient Context",
+    description: it
+      ? "Ogni interazione aggiunge contesto. Canale, tempistica, storico — riportati avanti automaticamente."
+      : "Every interaction adds context. Channel, timing, history — carried forward automatically.",
     component: PatientContextComp,
     durationInFrames: 390,
   },
@@ -39,10 +48,12 @@ export function Demo() {
         <div className="mb-12">
           <span className="text-xs font-semibold uppercase tracking-widest text-blue-600">Demo Lab</span>
           <h1 className="mt-3 text-4xl md:text-5xl font-serif text-slate-900 dark:text-white leading-tight">
-            Animated product demos
+            {it ? "Demo animate del prodotto" : "Animated product demos"}
           </h1>
           <p className="mt-4 text-lg text-slate-500 max-w-xl">
-            Built with Remotion Player — React animations running live in the browser, no video files needed.
+            {it
+              ? "Realizzate con Remotion Player — animazioni React eseguite dal vivo nel browser, senza bisogno di file video."
+              : "Built with Remotion Player — React animations running live in the browser, no video files needed."}
           </p>
         </div>
 
@@ -91,11 +102,21 @@ export function Demo() {
 
         {/* Dev note */}
         <div className="mt-16 p-6 bg-blue-50 dark:bg-slate-800 rounded-2xl border border-blue-100 dark:border-slate-700">
-          <h3 className="font-semibold text-slate-900 dark:text-white mb-2">About this page</h3>
+          <h3 className="font-semibold text-slate-900 dark:text-white mb-2">{it ? "Informazioni su questa pagina" : "About this page"}</h3>
           <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-            These animations are React components using the Remotion Player. They replace static screenshots and S3 screen recordings with frame-accurate, brand-consistent product demos.
-            Each composition is 300 frames (10s) at 30fps and loops automatically.
-            The next step would be to slot these into the <code className="font-mono bg-white dark:bg-slate-900 px-1 rounded">AgenticFrameworkCarousel</code> in place of the raw mp4 videos.
+            {it ? (
+              <>
+                Queste animazioni sono componenti React che usano il Remotion Player. Sostituiscono screenshot statici e registrazioni dello schermo su S3 con demo del prodotto accurate al fotogramma e coerenti con il brand.
+                Ogni composizione è di 300 fotogrammi (10s) a 30fps e si ripete automaticamente.
+                Il passo successivo sarebbe inserirle nell'<code className="font-mono bg-white dark:bg-slate-900 px-1 rounded">AgenticFrameworkCarousel</code> al posto dei video mp4 grezzi.
+              </>
+            ) : (
+              <>
+                These animations are React components using the Remotion Player. They replace static screenshots and S3 screen recordings with frame-accurate, brand-consistent product demos.
+                Each composition is 300 frames (10s) at 30fps and loops automatically.
+                The next step would be to slot these into the <code className="font-mono bg-white dark:bg-slate-900 px-1 rounded">AgenticFrameworkCarousel</code> in place of the raw mp4 videos.
+              </>
+            )}
           </p>
         </div>
       </div>

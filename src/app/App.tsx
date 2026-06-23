@@ -253,7 +253,7 @@ function AppContent() {
                   handleEndWebCall={handleEndWebCall}
                 />
               } />
-              <Route path="/use-cases" element={<Navigate to="/case-studies" replace />} />
+              {!isItalian && <Route path="/use-cases" element={<Navigate to="/case-studies" replace />} />}
               <Route path="/timeline" element={<RadialOrbitalTimelineDemo />} />
               <Route path="/labs" element={<Research />} />
               <Route path="/research" element={<Navigate to="/labs" replace />} />
@@ -264,7 +264,7 @@ function AppContent() {
               <Route path="/aup" element={<AUP />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/cookies" element={<Cookies />} />
-              <Route path="/state-of-ai" element={<StateOfAI />} />
+              {!isItalian && <Route path="/state-of-ai" element={<StateOfAI />} />}
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
@@ -272,14 +272,16 @@ function AppContent() {
               <Route path="/whitepapers/adhd-intake" element={<WhitepaperADHD />} />
               <Route path="/demo" element={<Demo />} />
               <Route path="/preview" element={<Preview />} />
-              <Route path="/case-studies" element={
-                <CaseStudies
-                  activeAgentId={activeAgentId}
-                  webCallStatus={webCallStatus}
-                  handleStartWebCall={handleStartWebCall}
-                  handleEndWebCall={handleEndWebCall}
-                />
-              } />
+              {!isItalian && (
+                <Route path="/case-studies" element={
+                  <CaseStudies
+                    activeAgentId={activeAgentId}
+                    webCallStatus={webCallStatus}
+                    handleStartWebCall={handleStartWebCall}
+                    handleEndWebCall={handleEndWebCall}
+                  />
+                } />
+              )}
               {!isItalian && (
                 <Route path="/access" element={
                   <Access

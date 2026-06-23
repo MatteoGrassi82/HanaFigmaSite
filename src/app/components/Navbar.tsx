@@ -6,7 +6,7 @@ import { ChevronDown, Menu, X, Sparkle } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { Link } from "react-router";
 import logoImage from 'figma:asset/55130a9cc9a8f890dc08e580a5cf6dd0df0df413.png';
-import { useTranslations } from "../../lib/i18n";
+import { useTranslations, getLocale } from "../../lib/i18n";
 
 // --- Types ---
 type ImageProps = {
@@ -123,10 +123,12 @@ const SmartLink = ({ href, children, className, target, ...props }: SmartLinkPro
 // --- Component ---
 export const Navbar = (props: NavbarProps) => {
   const t = useTranslations();
+  // Case Studies is US-specific and dropped on the Italian site.
+  const isItalian = getLocale() === "it";
   const defaults: Props = {
     ...NavbarDefaults,
     navLinks: [
-      { url: "/case-studies", title: t.nav.caseStudies },
+      ...(isItalian ? [] : [{ url: "/case-studies", title: t.nav.caseStudies }]),
       { url: "https://docs.hana.health/getting-started/overview", title: t.nav.docs },
       {
         url: "#",

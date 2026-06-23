@@ -1,10 +1,12 @@
 import { Github, Twitter, Linkedin } from "lucide-react";
 import { Link } from "react-router";
 import logoImage from 'figma:asset/55130a9cc9a8f890dc08e580a5cf6dd0df0df413.png';
-import { useTranslations } from "../../lib/i18n";
+import { useTranslations, getLocale } from "../../lib/i18n";
 
 export function Footer() {
   const t = useTranslations();
+  // State of Voice AI + Case Studies (via /use-cases) are US-specific; dropped on Italian.
+  const isItalian = getLocale() === "it";
   return (
     <footer className="bg-[rgb(0,18,47)] text-slate-400 py-12 px-4" role="contentinfo">
       <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-8 mb-8">
@@ -42,8 +44,8 @@ export function Footer() {
             <li><a href="https://docs.hana.health/" target="_blank" rel="noopener noreferrer" className="inline-block py-2 hover:text-white transition-colors">{t.footer.documentation}</a></li>
             <li><Link to="/blog" className="inline-block py-2 hover:text-white transition-colors">{t.footer.blog}</Link></li>
             <li><Link to="/labs" className="inline-block py-2 hover:text-white transition-colors">{t.footer.labs}</Link></li>
-            <li><Link to="/state-of-ai" className="inline-block py-2 hover:text-white transition-colors">{t.footer.stateOfVoiceAI}</Link></li>
-            <li><Link to="/use-cases" className="inline-block py-2 hover:text-white transition-colors">{t.footer.useCases}</Link></li>
+            {!isItalian && <li><Link to="/state-of-ai" className="inline-block py-2 hover:text-white transition-colors">{t.footer.stateOfVoiceAI}</Link></li>}
+            {!isItalian && <li><Link to="/use-cases" className="inline-block py-2 hover:text-white transition-colors">{t.footer.useCases}</Link></li>}
           </ul>
         </nav>
 

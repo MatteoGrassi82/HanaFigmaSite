@@ -3,7 +3,7 @@ import { CTASection } from "../components/ui/hero-dithering-card";
 import { Stats } from "../components/ui/statistics-card";
 import { InlineImageHeader } from "../components/InlineImageHeader";
 import { LiveDemoSection } from "../components/LiveDemoSection";
-import { useTranslations } from "../../lib/i18n";
+import { useTranslations, getLocale } from "../../lib/i18n";
 // Below-the-fold + heavy (Remotion + react-slick): code-split so they don't ship in the homepage critical bundle.
 const AgenticFrameworkCarousel = lazy(() => import("../components/AgenticFrameworkCarousel").then((m) => ({ default: m.AgenticFrameworkCarousel })));
 import { ComplianceSection } from "../components/ComplianceSection";
@@ -38,6 +38,9 @@ export function Home({
 }: HomeProps) {
   const t = useTranslations();
   const homeFaq = faqSchema(t.homeSeo.faq);
+  // On Italian, HowHanaWorks renders the same Remotion animations as
+  // AgenticFrameworkCarousel above — drop it to avoid showing the section twice.
+  const isItalian = getLocale() === "it";
   return (
     <div className="space-y-0">
       <SEO
@@ -96,10 +99,14 @@ export function Home({
       {/* §9 — SECURITY: defense-in-depth layered stack */}
       <SafetyStack />
 
-      {/* WATCH HANA IN ACTION (Wistia video carousel) — moved below security/safety */}
-      <Suspense fallback={null}>
-        <HowHanaWorks />
-      </Suspense>
+      {/* WATCH HANA IN ACTION (Wistia video carousel) — moved below security/safety.
+          Hidden on Italian: it would duplicate the Remotion animations already
+          shown in AgenticFrameworkCarousel above. */}
+      {!isItalian && (
+        <Suspense fallback={null}>
+          <HowHanaWorks />
+        </Suspense>
+      )}
 
       {/* §9b — TAIL: COMPLIANCE (certs + safety pillars — the credentials view) */}
       <ComplianceSection />
