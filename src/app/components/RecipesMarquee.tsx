@@ -376,18 +376,19 @@ function Modal({ recipe, onClose }: { recipe: Recipe; onClose: () => void }) {
       className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 sm:p-6"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="bg-[#F5F3F0] rounded-2xl max-w-[720px] w-full max-h-[90vh] overflow-y-auto p-5 sm:p-8 md:p-10 relative">
+      <div className="bg-[#F5F3F0] rounded-2xl w-full max-w-[640px] md:max-w-[900px] lg:max-w-[1000px] max-h-[90vh] overflow-y-auto p-5 sm:p-8 md:p-10 relative">
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-900/10 hover:bg-slate-900/20 flex items-center justify-center text-slate-500 transition-colors"
+          className="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-900/10 hover:bg-slate-900/20 flex items-center justify-center text-slate-500 transition-colors z-10"
         >
           <X size={16} />
         </button>
 
-        <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-blue-600 mb-3">{recipe.tag}</div>
-        <h3 className="font-serif text-[22px] sm:text-[28px] leading-tight text-slate-900 mb-5">{recipe.title}</h3>
+        {/* Header — spans full width */}
+        <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-blue-600 mb-3 pr-10">{recipe.tag}</div>
+        <h3 className="font-serif text-[22px] sm:text-[28px] md:text-[32px] leading-tight text-slate-900 mb-6 pr-10">{recipe.title}</h3>
 
-        <div className="flex items-center gap-2 sm:gap-3 flex-wrap bg-white/60 rounded-xl p-4 mb-6">
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap bg-white/60 rounded-xl p-4 mb-8">
           {recipe.flow.map((ch, i) => (
             <React.Fragment key={i}>
               {React.createElement(ICONS[ch], { size: 36 })}
@@ -400,29 +401,36 @@ function Modal({ recipe, onClose }: { recipe: Recipe; onClose: () => void }) {
           ))}
         </div>
 
-        <div className="mb-6">
-          <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-slate-400 mb-2">{L.whatItDoes}</div>
-          <p className="text-[15px] leading-relaxed text-slate-600">{recipe.desc}</p>
-        </div>
+        {/* Two-column landscape layout on desktop; stacks on mobile */}
+        <div className="grid grid-cols-1 md:grid-cols-2 md:gap-10">
+          {/* Left column: what it does + connects to */}
+          <div className="flex flex-col gap-6">
+            <div>
+              <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-slate-400 mb-2">{L.whatItDoes}</div>
+              <p className="text-[15px] leading-relaxed text-slate-600">{recipe.desc}</p>
+            </div>
 
-        <div className="border-t border-slate-900/10 pt-5 mb-6">
-          <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-slate-400 mb-3">{L.howItWorks}</div>
-          <ol className="space-y-0">
-            {recipe.steps.map((step, i) => (
-              <li key={i} className="flex gap-3 py-3 border-b border-slate-900/8 last:border-0 text-[14px] text-slate-600 leading-snug">
-                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-slate-900 text-white flex items-center justify-center text-[11px] font-semibold mt-0.5">{i + 1}</span>
-                {step}
-              </li>
-            ))}
-          </ol>
-        </div>
+            <div className="border-t border-slate-900/10 pt-5">
+              <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-slate-400 mb-3">{L.connectsTo}</div>
+              <div className="flex flex-wrap gap-2">
+                {recipe.systems.map((sys) => (
+                  <span key={sys} className="text-[12px] text-slate-600 bg-white/70 border border-slate-900/10 px-3 py-1.5 rounded-full">{sys}</span>
+                ))}
+              </div>
+            </div>
+          </div>
 
-        <div className="border-t border-slate-900/10 pt-5 mb-6">
-          <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-slate-400 mb-3">{L.connectsTo}</div>
-          <div className="flex flex-wrap gap-2">
-            {recipe.systems.map((sys) => (
-              <span key={sys} className="text-[12px] text-slate-600 bg-white/70 border border-slate-900/10 px-3 py-1.5 rounded-full">{sys}</span>
-            ))}
+          {/* Right column: how it works */}
+          <div className="border-t border-slate-900/10 pt-5 mt-6 md:mt-0 md:border-t-0 md:pt-0">
+            <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-slate-400 mb-3">{L.howItWorks}</div>
+            <ol className="space-y-0">
+              {recipe.steps.map((step, i) => (
+                <li key={i} className="flex gap-3 py-3 border-b border-slate-900/8 last:border-0 text-[14px] text-slate-600 leading-snug">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-slate-900 text-white flex items-center justify-center text-[11px] font-semibold mt-0.5">{i + 1}</span>
+                  {step}
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
 
@@ -430,7 +438,7 @@ function Modal({ recipe, onClose }: { recipe: Recipe; onClose: () => void }) {
           href="https://calendly.com/matteowastaken/discoverycall"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-lg text-[14px] font-medium hover:bg-blue-600 transition-colors"
+          className="inline-flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-lg text-[14px] font-medium hover:bg-blue-600 transition-colors mt-8"
         >
           {L.cta} <ArrowRight size={14} />
         </a>
@@ -446,7 +454,20 @@ export function RecipesMarquee() {
   const select = useCallback((r: Recipe) => setSelected(r), []);
   const close = useCallback(() => setSelected(null), []);
 
-  const RECIPES = getLocale() === "it" ? RECIPES_IT : RECIPES_EN;
+  const isItalian = getLocale() === "it";
+  const RECIPES = isItalian ? RECIPES_IT : RECIPES_EN;
+  // Channel legend labels — localized (and de-US-ified: PDMP -> "Verifica ricetta").
+  const channelLabel = (key: Channel): string => {
+    if (!isItalian) return CHANNELS[key].label;
+    return {
+      ehr: "Gestionale",
+      voice: "Voce",
+      sms: "SMS",
+      alert: "Avviso allo staff",
+      pdmp: "Verifica ricetta",
+      cal: "Agenda",
+    }[key];
+  };
   const row1 = RECIPES.filter((_, i) => i % 3 === 0);
   const row2 = RECIPES.filter((_, i) => i % 3 === 1);
   const row3 = RECIPES.filter((_, i) => i % 3 === 2);
@@ -504,10 +525,10 @@ export function RecipesMarquee() {
           {rm.body}
         </p>
         <div className="flex flex-wrap justify-center gap-4 mt-6">
-          {(Object.entries(CHANNELS) as [Channel, (typeof CHANNELS)[Channel]][]).map(([key, ch]) => (
+          {(Object.keys(CHANNELS) as Channel[]).map((key) => (
             <div key={key} className="flex items-center gap-2 text-[12px] text-slate-500">
-              <span className="flex-shrink-0">{React.createElement(ICONS[key as Channel], { size: 20 })}</span>
-              {ch.label}
+              <span className="flex-shrink-0">{React.createElement(ICONS[key], { size: 20 })}</span>
+              {channelLabel(key)}
             </div>
           ))}
         </div>
