@@ -4,9 +4,13 @@ import { Loader2, Globe, PhoneOff, CheckCircle2, MessageSquare, Smartphone } fro
 import { cn } from "../../lib/utils";
 import { projectId, publicAnonKey } from "../../../utils/supabase/info";
 import { HanaBloomOrb } from "./ui/hana-bloom-orb";
-import { useTranslations } from "../../lib/i18n";
+import { useTranslations, getLocale } from "../../lib/i18n";
 
 const FN_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-77ada9a1`;
+
+// Italian site routes demo callbacks through the EU/UK agent for now.
+// TODO: when a dedicated Italian agent exists, set IT_DEMO_AGENT_ID and route to it.
+const IT_DEMO_AGENT_ID: string | null = null;
 
 // In-browser web call: a Vapi SQUAD. A greeter agent asks what the visitor wants
 // to try, then hands off to the matching specialist (monitoring / intake /
@@ -29,13 +33,15 @@ export function LiveDemoSection({
 }: LiveDemoSectionProps) {
   const t = useTranslations();
   const ld = t.liveDemo;
+  const isItalian = getLocale() === "it";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [fieldErrors, setFieldErrors] = useState<{ name?: string; email?: string; phone?: string }>({});
 
   // Callback flow: we text the prospect → Hana (DAX) calls them back.
   const [phone, setPhone] = useState("");
-  const [region, setRegion] = useState<"US" | "EU">("US");
+  // Italian site serves EU only (UK/EU agent); US/Canada is not offered there.
+  const [region, setRegion] = useState<"US" | "EU">(isItalian ? "EU" : "US");
   const [smsStatus, setSmsStatus] = useState<"idle" | "sending" | "texted" | "called" | "failed">("idle");
   const [smsError, setSmsError] = useState("");
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -107,7 +113,7 @@ export function LiveDemoSection({
     if (Object.keys(errors).length > 0) { setFieldErrors((p) => ({ ...p, ...errors })); return; }
     setFieldErrors({});
     captureLead("live-demo-web-call");
-    handleStartWebCall("Demo", DEMO_AGENT_ID);
+    handleStartWebCall("Demo", isItalian && IT_DEMO_AGENT_ID ? IT_DEMO_AGENT_ID : DEMO_AGENT_ID);
   };
 
   const inputClass = (err?: string) =>
@@ -237,21 +243,23 @@ export function LiveDemoSection({
                   {/* Phone + region */}
                   <div>
                     <label className={labelClass}>{ld.phoneLabel}</label>
-                    <div className="mb-4 inline-flex items-center gap-1 rounded-[10px] p-1 bg-[#eef0f5] border border-[#e2e6f4]">
-                      {(["US", "EU"] as const).map((r) => (
-                        <button
-                          key={r}
-                          type="button"
-                          onClick={() => setRegion(r)}
-                          className={cn(
-                            "rounded-[7px] px-4 py-2 text-[14px] font-semibold transition-colors",
-                            region === r ? "bg-white text-[#00122f] shadow-[0_1px_3px_rgba(0,18,47,0.12)]" : "text-[#64748b]"
-                          )}
-                        >
-                          {r === "US" ? ld.regionUS : ld.regionEU}
-                        </button>
-                      ))}
-                    </div>
+                    {!isItalian && (
+                      <div className="mb-4 inline-flex items-center gap-1 rounded-[10px] p-1 bg-[#eef0f5] border border-[#e2e6f4]">
+                        {(["US", "EU"] as const).map((r) => (
+                          <button
+                            key={r}
+                            type="button"
+                            onClick={() => setRegion(r)}
+                            className={cn(
+                              "rounded-[7px] px-4 py-2 text-[14px] font-semibold transition-colors",
+                              region === r ? "bg-white text-[#00122f] shadow-[0_1px_3px_rgba(0,18,47,0.12)]" : "text-[#64748b]"
+                            )}
+                          >
+                            {r === "US" ? ld.regionUS : ld.regionEU}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                     <input
                       type="tel"
                       inputMode="tel"

@@ -7,6 +7,7 @@ import { Player, type PlayerRef } from '@remotion/player';
 import { WorkflowBuilderComp } from './remotion/WorkflowBuilderComp';
 import { SafetyMonitorComp } from './remotion/SafetyMonitorComp';
 import { PatientContextComp } from './remotion/PatientContextComp';
+import { getLocale } from '../../lib/i18n';
 
 /* Shared <Player> render for a homepage demo slide. The compositions are
    900x506 (≈16:9), so they fill the carousel's aspect-video frame cleanly.
@@ -104,7 +105,32 @@ export function AgenticFrameworkCarousel() {
   const sliderRef = useRef<Slider>(null);
   const [expandedSlide, setExpandedSlide] = useState<number | null>(null);
 
-  const slides = [
+  const it = getLocale() === "it";
+  const slides = it
+    ? [
+        {
+          id: 1,
+          title: "I tuoi flussi. Non i nostri.",
+          description: "Nessuna clinica lavora allo stesso modo. Scegli tra 100+ flussi già pronti o costruiamo i tuoi — abbastanza strutturati da restare sul protocollo, abbastanza flessibili da gestire qualsiasi cosa.",
+          component: WorkflowBuilderComp,
+          durationInFrames: 510,
+        },
+        {
+          id: 2,
+          title: "I Tuoi Protocolli, Linee Guida e Documenti Sempre Attivi",
+          description: "Carica i tuoi documenti clinici, le regole sui farmaci e le politiche di escalation. L'agente non li archivia soltanto: li consulta a ogni interazione, così non sfugge nulla.",
+          component: SafetyMonitorComp,
+          durationInFrames: 390,
+        },
+        {
+          id: 3,
+          title: "Un'AI Che Conosce i Tuoi Pazienti e Migliora nel Tempo",
+          description: "Ogni interazione aggiunge contesto. Canale preferito, orario migliore per raggiungerli, conversazioni passate, stato di cura. Che sia una chiamata, un messaggio o un promemoria, l'agente porta tutto con sé, così ogni contatto risulta personale.",
+          component: PatientContextComp,
+          durationInFrames: 390,
+        },
+      ]
+    : [
     {
       id: 1,
       title: "Your workflows. Not ours.",
@@ -180,10 +206,10 @@ export function AgenticFrameworkCarousel() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 mb-10 md:mb-16">
           <h2 className="text-3xl md:text-5xl font-serif font-normal tracking-normal text-slate-900 dark:text-white max-w-2xl leading-[1.1]">
-            Built around how your clinic works.
+            {it ? "Costruito su come lavora la tua clinica." : "Built around how your clinic works."}
           </h2>
           <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-3xl leading-relaxed md:mt-4 font-sans">
-            Simple workflows to complex care pathways. Live in 3 weeks.
+            {it ? "Dai flussi semplici ai percorsi di cura complessi. Attivo in 3 settimane." : "Simple workflows to complex care pathways. Live in 3 weeks."}
           </p>
         </div>
 
@@ -233,7 +259,7 @@ export function AgenticFrameworkCarousel() {
                     onClick={previous}
                     disabled={currentSlide === 0}
                     className="w-11 h-11 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
-                    aria-label="Previous slide"
+                    aria-label={it ? "Slide precedente" : "Previous slide"}
                 >
                     <ChevronLeft className="w-5 h-5" />
                 </button>
@@ -241,7 +267,7 @@ export function AgenticFrameworkCarousel() {
                     onClick={next}
                     disabled={currentSlide === slides.length - 1}
                     className="w-11 h-11 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors"
-                    aria-label="Next slide"
+                    aria-label={it ? "Slide successiva" : "Next slide"}
                 >
                     <ChevronRight className="w-5 h-5" />
                 </button>

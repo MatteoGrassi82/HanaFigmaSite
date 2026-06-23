@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { Lock, BookLock, UserCheck, Activity } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { getLocale } from "../../../lib/i18n";
 
 /* ── Safety layers — liquid-glass "defense in depth" ─────────────────────────
    Four coplanar glass cards fanned on a single tilted plane (so each stays a
@@ -30,7 +31,7 @@ type Layer = {
 };
 
 /* Ordered back → front to match DOM paint order on the coplanar plane. */
-const LAYERS: Layer[] = [
+const LAYERS_EN: Layer[] = [
   {
     id: "observability",
     name: "Observability",
@@ -68,6 +69,63 @@ const LAYERS: Layer[] = [
     ty: 108,
   },
 ];
+
+/* Italian — same ids/icons/geometry/colors, translated name + line only. */
+const LAYERS_IT: Layer[] = [
+  {
+    id: "observability",
+    name: "Osservabilità",
+    line: "Gli agenti non deterministici sono monitorati di continuo — ogni decisione registrata, le anomalie intercettate e interrotte automaticamente.",
+    icon: Activity,
+    glass: "linear-gradient(150deg, rgba(0,18,47,0.82), rgba(8,20,70,0.82))",
+    tx: 150,
+    ty: -108,
+  },
+  {
+    id: "human",
+    name: "Supervisione umana",
+    line: "Tutto ciò che è clinico o fuori ambito viene passato a una persona in tempo reale, secondo le regole di escalation che imposti tu.",
+    icon: UserCheck,
+    glass: "linear-gradient(150deg, rgba(48,62,200,0.78), rgba(22,34,150,0.80))",
+    tx: 50,
+    ty: -36,
+  },
+  {
+    id: "protocols",
+    name: "Protocolli",
+    line: "Hana agisce solo all'interno dei protocolli clinici e dei guardrail che definisci tu — mai secondo il giudizio autonomo di un modello.",
+    icon: BookLock,
+    glass: "linear-gradient(150deg, rgba(59,130,246,0.80), rgba(12,58,158,0.80))",
+    tx: -50,
+    ty: 36,
+  },
+  {
+    id: "encryption",
+    name: "Crittografia",
+    line: "Crittografata in transito (TLS 1.2/1.3) e a riposo (AES-256); end-to-end dove il canale lo consente.",
+    icon: Lock,
+    glass: "linear-gradient(150deg, rgba(124,196,240,0.82), rgba(40,120,180,0.80))",
+    tx: -150,
+    ty: 108,
+  },
+];
+
+const LAYERS: Layer[] = getLocale() === "it" ? LAYERS_IT : LAYERS_EN;
+
+/* Heading + intro copy. */
+const COPY_EN = {
+  eyebrow: "Security & Safety",
+  heading: "Defense in depth, on every single call.",
+  intro:
+    "Four layers between every patient conversation and what could go wrong. Explore each one to see what it does.",
+};
+const COPY_IT = {
+  eyebrow: "Sicurezza e protezione",
+  heading: "Difesa in profondità, in ogni singola chiamata.",
+  intro:
+    "Quattro livelli tra ogni conversazione con il paziente e ciò che potrebbe andare storto. Esplora ciascuno per vedere cosa fa.",
+};
+const COPY = getLocale() === "it" ? COPY_IT : COPY_EN;
 
 /* Display order for the right-hand list (front → back = Encryption first). */
 const LIST_ORDER = ["encryption", "protocols", "human", "observability"];
@@ -184,7 +242,7 @@ export function SafetyStack() {
               className="text-xs font-semibold uppercase tracking-[0.2em]"
               style={{ color: SKY }}
             >
-              Security &amp; Safety
+              {COPY.eyebrow}
             </motion.span>
             <motion.h2
               initial={{ opacity: 0, y: 16 }}
@@ -192,7 +250,7 @@ export function SafetyStack() {
               transition={{ duration: 0.5, delay: 0.08 }}
               className="mt-4 font-serif text-3xl leading-tight text-white md:text-[2.6rem] md:leading-[1.15]"
             >
-              Defense in depth, on every single call.
+              {COPY.heading}
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 16 }}
@@ -201,8 +259,7 @@ export function SafetyStack() {
               className="mx-auto mt-5 max-w-xl text-base leading-relaxed"
               style={{ color: INK_SOFT }}
             >
-              Four layers between every patient conversation and what could go
-              wrong. Explore each one to see what it does.
+              {COPY.intro}
             </motion.p>
           </div>
 

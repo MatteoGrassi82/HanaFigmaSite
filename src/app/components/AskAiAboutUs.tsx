@@ -1,9 +1,12 @@
 import { motion } from "motion/react";
 import { toast } from "sonner";
+import { getLocale } from "../../lib/i18n";
 
 // Pre-written prompt the visitor will take to their chosen AI platform.
-const HANA_PROMPT =
+const HANA_PROMPT_EN =
   "What is HANA Health? Explain what their clinical voice AI platform does for healthcare providers, how it works for patient intake and follow-up, and how it compares to alternatives.";
+const HANA_PROMPT_IT =
+  "Cos'è HANA Health? Spiega cosa fa la loro piattaforma di AI vocale clinica per gli operatori sanitari, come funziona per l'accoglienza e il follow-up dei pazienti e come si confronta con le alternative.";
 
 type Platform = {
   name: string;
@@ -76,6 +79,9 @@ const aiPlatforms: Platform[] = [
 ];
 
 export function AskAiAboutUs({ className }: { className?: string } = {}) {
+  const it = getLocale() === "it";
+  const HANA_PROMPT = it ? HANA_PROMPT_IT : HANA_PROMPT_EN;
+
   const handleClick = (platform: Platform) => {
     // Copy first so the prompt is always available to paste, even where the URL can't prefill.
     if (navigator.clipboard?.writeText) {
@@ -86,11 +92,20 @@ export function AskAiAboutUs({ className }: { className?: string } = {}) {
     const tab = window.open(platform.url(HANA_PROMPT), "_blank");
     if (tab) tab.opener = null;
 
-    toast.success(`Prompt copied — opening ${platform.name}`, {
-      description: platform.prefills
-        ? "The question should be pre-filled. If not, just paste."
-        : "Paste the copied question into the chat box.",
-    });
+    toast.success(
+      it
+        ? `Prompt copiato — apro ${platform.name}`
+        : `Prompt copied — opening ${platform.name}`,
+      {
+        description: platform.prefills
+          ? it
+            ? "La domanda dovrebbe essere già inserita. Altrimenti, incollala."
+            : "The question should be pre-filled. If not, just paste."
+          : it
+            ? "Incolla la domanda copiata nella chat."
+            : "Paste the copied question into the chat box.",
+      },
+    );
   };
 
   return (
@@ -102,10 +117,12 @@ export function AskAiAboutUs({ className }: { className?: string } = {}) {
       className={`flex flex-col items-center text-center ${className ?? "mt-14"}`}
     >
       <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">
-        Ask AI about HANA
+        {it ? "Chiedi all'AI di HANA" : "Ask AI about HANA"}
       </h2>
       <p className="text-base text-slate-500 mb-6">
-        Get an unbiased overview from your favorite AI assistant
+        {it
+          ? "Ottieni una panoramica imparziale dal tuo assistente AI preferito"
+          : "Get an unbiased overview from your favorite AI assistant"}
       </p>
       <div className="flex items-center gap-4">
         {aiPlatforms.map((platform) => (
@@ -118,8 +135,16 @@ export function AskAiAboutUs({ className }: { className?: string } = {}) {
             transition={{ type: "spring", stiffness: 400, damping: 15 }}
             className="flex items-center justify-center w-11 h-11 rounded-full bg-white shadow-md border border-slate-100 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
             style={{ color: platform.color }}
-            title={`Ask ${platform.name} about HANA`}
-            aria-label={`Ask ${platform.name} about HANA`}
+            title={
+              it
+                ? `Chiedi a ${platform.name} di HANA`
+                : `Ask ${platform.name} about HANA`
+            }
+            aria-label={
+              it
+                ? `Chiedi a ${platform.name} di HANA`
+                : `Ask ${platform.name} about HANA`
+            }
           >
             {platform.logo}
           </motion.button>

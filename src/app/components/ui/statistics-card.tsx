@@ -4,6 +4,36 @@ import NumberFlow from "@number-flow/react";
 import { motion } from "motion/react";
 import React from "react";
 import { cn } from "../../../lib/utils";
+import { getLocale } from "../../../lib/i18n";
+
+const COPY_EN = {
+  headingLine1: "Portals wait. Texts wait.",
+  headingLine2: "Hana picks up the phone.",
+  subheading:
+    "Patients ignore the portal and miss the text — then the slot goes empty. Hana reaches them the way they actually respond, and protects the schedule.",
+  barPatientPortals: "Patient portals",
+  barHealthApps: "Health apps",
+  barHana: "Hana",
+  barSmsReminders: "SMS reminders",
+  tooltip: "Patients reached",
+  caption: "% of targeted patients reached per cycle. Voice vs. passive channels.",
+};
+
+const COPY_IT = {
+  headingLine1: "I portali aspettano. Gli SMS aspettano.",
+  headingLine2: "Hana alza il telefono.",
+  subheading:
+    "I pazienti ignorano il portale e non leggono l'SMS — e l'appuntamento resta vuoto. Hana li raggiunge nel modo in cui rispondono davvero, e protegge l'agenda.",
+  barPatientPortals: "Portali pazienti",
+  barHealthApps: "App sanitarie",
+  barHana: "Hana",
+  barSmsReminders: "Promemoria SMS",
+  tooltip: "Pazienti raggiunti",
+  caption:
+    "% di pazienti target raggiunti per ciclo. Voce vs. canali passivi.",
+};
+
+const t = getLocale() === "it" ? COPY_IT : COPY_EN;
 
 const css = `
 .candy-bg {
@@ -28,25 +58,25 @@ const Stats = () => {
       <div className="container mx-auto">
         <div className="mx-auto max-w-2xl text-center mb-10 md:mb-16">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-normal text-slate-900 dark:text-white mb-6 font-serif">
-            Portals wait. Texts wait. <br className="hidden md:inline" />
-            <span className="italic">Hana picks up the phone.</span>
+            {t.headingLine1} <br className="hidden md:inline" />
+            <span className="italic">{t.headingLine2}</span>
           </h2>
           <p className="text-lg text-slate-500 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
-            Patients ignore the portal and miss the text — then the slot goes empty. Hana reaches them the way they actually respond, and protects the schedule.
+            {t.subheading}
           </p>
         </div>
         <div className="relative mx-auto mt-8 md:mt-20 flex h-[300px] md:h-[500px] max-w-4xl items-center justify-center gap-2 md:gap-8">
           {[
-            { value: 15, label: "Patient portals", delay: 0.2 },
-            { value: 20, label: "Health apps", delay: 0.4 },
+            { value: 15, label: t.barPatientPortals, delay: 0.2 },
+            { value: 20, label: t.barHealthApps, delay: 0.4 },
             {
               value: 85,
-              label: "Hana",
+              label: t.barHana,
               className: "bg-[#A7BCF5]",
               showToolTip: true,
               delay: 0.6,
             },
-            { value: 35, label: "SMS reminders", delay: 0.8 },
+            { value: 35, label: t.barSmsReminders, delay: 0.8 },
           ].map((props, index) => (
             <motion.div
               key={index}
@@ -65,7 +95,7 @@ const Stats = () => {
           ))}
         </div>
         <div className="mt-12 text-center">
-             <p className="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">% of targeted patients reached per cycle. Voice vs. passive channels.</p>
+             <p className="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">{t.caption}</p>
         </div>
       </div>
     </section>
@@ -144,7 +174,7 @@ const BarChart = ({
               fill="currentColor"
             />
           </svg>
-          Patients reached
+          {t.tooltip}
         </motion.div>
       </motion.div>
       <p className="mx-auto mt-3 md:mt-4 w-fit tracking-tight text-xs md:text-base text-slate-500 dark:text-slate-400 font-medium">

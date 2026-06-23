@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { ArrowRight } from "lucide-react";
 import { getPosts, urlFor, type Post } from "../../lib/sanity";
+import { getLocale } from "../../lib/i18n";
 
 /* ── Latest from the blog ───────────────────────────────────────────────────
    Pulls the 3 most recent posts from Sanity (getPosts already returns them
@@ -21,7 +22,7 @@ function safeImageUrl(src: Post["mainImage"]): string | null {
 
 function formatDate(dateStr?: string) {
   if (!dateStr) return "";
-  return new Date(dateStr).toLocaleDateString("en-US", {
+  return new Date(dateStr).toLocaleDateString(getLocale() === "it" ? "it-IT" : "en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -50,23 +51,25 @@ export function LatestPosts() {
   // Nothing to show — don't render an empty section.
   if (loaded && posts.length === 0) return null;
 
+  const it = getLocale() === "it";
+
   return (
     <section className="bg-white py-20 md:py-28">
       <div className="container mx-auto px-4 md:px-8">
         <div className="mb-12 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
           <div>
             <p className="mb-3 text-[11px] font-semibold uppercase tracking-[2.5px] text-slate-400">
-              From the blog
+              {it ? "Dal blog" : "From the blog"}
             </p>
             <h2 className="font-serif text-3xl leading-tight text-slate-900 md:text-4xl">
-              How clinics are putting Hana to work.
+              {it ? "Come le cliniche mettono Hana al lavoro." : "How clinics are putting Hana to work."}
             </h2>
           </div>
           <Link
             to="/blog"
             className="group inline-flex shrink-0 items-center gap-1.5 -mx-2 px-2 py-2 sm:p-0 text-sm font-semibold text-blue-600 hover:text-blue-700 active:text-blue-700 focus-visible:text-blue-700"
           >
-            All posts
+            {it ? "Tutti gli articoli" : "All posts"}
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-active:translate-x-0.5" />
           </Link>
         </div>

@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { type Variants } from "motion/react";
 import { TimelineContent } from "./timeline-animation";
+import { getLocale } from "../../../lib/i18n";
 
 /* ── Mosaic tiles ─────────────────────────────────────────────────────────
    A mix of people-quote tiles and big stat tiles, laid out as a solid-color
@@ -56,7 +57,7 @@ const nameText = (t: Tint) => (IS_DARK[t] ? "text-white" : "text-slate-900");
 const roleText = (t: Tint) => (IS_DARK[t] ? "text-white/70" : "text-slate-500");
 const statLabel = (t: Tint) => (IS_DARK[t] ? "text-white/80" : "text-slate-600");
 
-const TILES: Tile[] = [
+const TILES_EN: Tile[] = [
   {
     kind: "stat",
     value: "2.3×",
@@ -108,6 +109,61 @@ const TILES: Tile[] = [
     tint: "peach",
   },
 ];
+
+const TILES_IT: Tile[] = [
+  {
+    kind: "stat",
+    value: "2.3×",
+    title: "Pazienti in più per ogni coordinatore",
+    label: "con l'outreach assistito dall'AI sulle patologie croniche",
+    tint: "blue",
+  },
+  {
+    kind: "quote",
+    quote:
+      "Nel coordinamento delle cure il collo di bottiglia è sempre stato documentare il tempo dedicato a ogni paziente. Hana gestisce le chiamate mensili, trascrive la conversazione in note strutturate che finiscono direttamente in cartella e segnala chi va richiamato in giornata.",
+    name: "Fakhrudin Mohamed, MD",
+    role: "Medico Specialista",
+    avatarUrl: "/avatars/fakhrudin.png",
+    tint: "peach",
+  },
+  {
+    kind: "quote",
+    quote:
+      "Il team di Hana ha capito che i questionari di valutazione richiedono insieme coerenza e flessibilità. La loro AI vocale somministra strumenti di screening standardizzati, adatta le domande alle risposte del paziente e raccoglie il 340% di dati clinici in più, senza mai violare il protocollo.",
+    name: "Katie Murphy Psy.D.",
+    role: "Fondatrice di Penry",
+    avatarUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSo8EnMM6OdUF76MM7VtByTGOQ024clSnnSQ&s",
+    tint: "mint",
+  },
+  {
+    kind: "quote",
+    quote:
+      "Preparare i pazienti anziani all'intervento per telefono è quasi impossibile: non rispondono, si perdono i messaggi in segreteria, e se arrivano impreparati l'intervento salta. HANA li raggiunge, li guida passo passo in tutto ciò che devono sapere e ci segnala chi non è ancora pronto, così possiamo intervenire.",
+    name: "Lorri Hanes",
+    role: "Shoorah",
+    avatarUrl: "https://www.eftandmindfulness.com/pictures/profile/pimage-2849-187-photo.jpg",
+    tint: "sky",
+  },
+  {
+    kind: "stat",
+    value: "53%",
+    title: "Cancellazioni in meno il giorno dell'intervento",
+    label: "quando è Hana a gestire la preparazione pre-operatoria",
+    tint: "mint",
+  },
+  {
+    kind: "quote",
+    quote:
+      "Di Hana non mi ha colpito solo la tecnologia AI, che pure è eccellente: è stato quanto bene il team ha capito le nostre difficoltà. Ci hanno aiutato a configurare il sistema sui nostri pazienti. È sembrata una vera collaborazione, non il solito rapporto con un fornitore.",
+    name: "Jonathan Wayne",
+    role: "Fondatore di NTX",
+    avatarUrl: "/avatars/jonathan.jpg",
+    tint: "peach",
+  },
+];
+
+const TILES: Tile[] = getLocale() === "it" ? TILES_IT : TILES_EN;
 
 const revealVariants: Variants = {
   visible: (i: number) => ({
@@ -191,6 +247,13 @@ function StatTile({
 
 export function ClientFeedback() {
   const timelineRef = useRef<HTMLDivElement>(null);
+  const isIt = getLocale() === "it";
+  const heading = isIt
+    ? "Scelto dai team che gestiscono la routine quotidiana"
+    : "Trusted by the teams running routine care";
+  const subheading = isIt
+    ? "Risultati reali, raccontati dalle cliniche e dai partner che usano Hana."
+    : "Real outcomes, in the words of the clinics and partners using Hana.";
 
   return (
     <section ref={timelineRef} className="w-full bg-white py-20 md:py-24">
@@ -203,7 +266,7 @@ export function ClientFeedback() {
             timelineRef={timelineRef}
             className="font-serif text-3xl text-slate-900 md:text-4xl"
           >
-            Trusted by the teams running routine care
+            {heading}
           </TimelineContent>
           <TimelineContent
             as="p"
@@ -212,7 +275,7 @@ export function ClientFeedback() {
             timelineRef={timelineRef}
             className="mx-auto text-slate-500"
           >
-            Real outcomes, in the words of the clinics and partners using Hana.
+            {subheading}
           </TimelineContent>
         </div>
 

@@ -9,6 +9,13 @@ import {
   type Variants,
 } from "motion/react";
 import { LOOP_ICONS } from "./loop-icons";
+import { getLocale } from "../../../lib/i18n";
+
+/* ── Locale ─────────────────────────────────────────────────────────────────
+   All visible copy is rendered in Italian when the site locale is Italian and
+   stays English otherwise. Translations are kept local to this component. */
+const IT = getLocale() === "it";
+const t = (en: string, it: string) => (IT ? it : en);
 
 /* ── Hana "closes the loop" infinity diagram ───────────────────────────────
    A refined flat 2D figure-8 on a warm canvas. Two-rail track painted with a
@@ -95,46 +102,58 @@ type Station = {
 const STATIONS: Station[] = [
   {
     id: "read",
-    label: "Read",
+    label: t("Read", "Legge"),
     x: LEFT_X,
     y: UP_Y,
     accent: BLUE,
     corner: "tl",
     num: 1,
-    body: "Pulls the chart, history, and protocols first.",
+    body: t(
+      "Pulls the chart, history, and protocols first.",
+      "Apre prima la cartella, lo storico e i protocolli.",
+    ),
     at: 0.125,
   },
   {
     id: "reason",
-    label: "Reason",
+    label: t("Reason", "Ragiona"),
     x: LEFT_X,
     y: DOWN_Y,
     accent: BLUE,
     corner: "bl",
     num: 2,
-    body: "Picks the channel they'll actually answer.",
+    body: t(
+      "Picks the channel they'll actually answer.",
+      "Sceglie il canale a cui il paziente risponde davvero.",
+    ),
     at: 0.375,
   },
   {
     id: "engage",
-    label: "Engage",
+    label: t("Engage", "Contatta"),
     x: RIGHT_X,
     y: UP_Y,
     accent: SKY,
     corner: "tr",
     num: 3,
-    body: "Confirms, chases auth, preps, intakes — routes risk to your nurse.",
+    body: t(
+      "Confirms, chases auth, preps, intakes — routes risk to your nurse.",
+      "Conferma, segue le autorizzazioni, prepara, raccoglie i dati — e gira al tuo infermiere ciò che è a rischio.",
+    ),
     at: 0.625,
   },
   {
     id: "writeback",
-    label: "Write-Back",
+    label: t("Write-Back", "Scrive in cartella"),
     x: RIGHT_X,
     y: DOWN_Y,
     accent: SKY,
     corner: "br",
     num: 4,
-    body: "Structured note, straight to the chart.",
+    body: t(
+      "Structured note, straight to the chart.",
+      "Nota strutturata, direttamente nella cartella.",
+    ),
     at: 0.875,
   },
 ];
@@ -283,7 +302,7 @@ export function LoopDiagram() {
               className="text-xs font-semibold uppercase tracking-[0.2em]"
               style={{ color: SKY }}
             >
-              How it works
+              {t("How it works", "Come funziona")}
             </motion.span>
             <motion.h2
               initial={{ opacity: 0, y: 16 }}
@@ -291,7 +310,10 @@ export function LoopDiagram() {
               transition={{ duration: 0.5, delay: 0.08 }}
               className="mt-4 font-serif text-2xl leading-snug text-white sm:text-3xl md:text-[2.6rem] md:leading-[1.15]"
             >
-              It knows the patient before it dials. Documents the call after.
+              {t(
+                "It knows the patient before it dials. Documents the call after.",
+                "Conosce il paziente prima di chiamare. Documenta la chiamata dopo.",
+              )}
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 16 }}
@@ -300,8 +322,10 @@ export function LoopDiagram() {
               className="mx-auto mt-5 max-w-xl text-base leading-relaxed"
               style={{ color: INK_SOFT }}
             >
-              Not an answering service. Hana works the whole call — chart to
-              note — and routes only what needs a human to your team.
+              {t(
+                "Not an answering service. Hana works the whole call — chart to note — and routes only what needs a human to your team.",
+                "Non una semplice segreteria telefonica. Hana gestisce l'intera chiamata — dalla cartella alla nota — e gira al tuo team solo ciò che richiede una persona.",
+              )}
             </motion.p>
           </div>
 
@@ -320,7 +344,10 @@ export function LoopDiagram() {
                 viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
                 className="h-auto w-full overflow-visible"
                 role="img"
-                aria-label="Hana's closed-loop workflow: read, reason, engage, write-back"
+                aria-label={t(
+                  "Hana's closed-loop workflow: read, reason, engage, write-back",
+                  "Il flusso a ciclo chiuso di Hana: legge, ragiona, contatta, scrive in cartella",
+                )}
               >
                 <defs>
                   {/* gradient that flows navy → blue → sky across the loop */}
@@ -401,8 +428,8 @@ export function LoopDiagram() {
                     textAnchor="middle"
                     style={{ fontFamily: "Georgia, 'Times New Roman', serif", fill: INK }}
                   >
-                    <tspan x={CX} fontSize="22">No app. No login.</tspan>
-                    <tspan x={CX} dy="28" fontSize="22">No behavior change.</tspan>
+                    <tspan x={CX} fontSize="22">{t("No app. No login.", "Nessuna app. Nessun login.")}</tspan>
+                    <tspan x={CX} dy="28" fontSize="22">{t("No behavior change.", "Nessun cambio di abitudini.")}</tspan>
                   </text>
                 </motion.g>
               </svg>
@@ -420,8 +447,10 @@ export function LoopDiagram() {
             className="relative z-10 mx-auto mt-12 max-w-2xl text-center text-sm leading-relaxed md:mt-16"
             style={{ color: INK_SOFT }}
           >
-            You set the escalation rules. A person on every clinical flag, full
-            audit trail on every call.
+            {t(
+              "You set the escalation rules. A person on every clinical flag, full audit trail on every call.",
+              "Le regole di escalation le imposti tu. Una persona su ogni segnalazione clinica, audit trail completo su ogni chiamata.",
+            )}
           </motion.p>
         </div>
       </div>
@@ -550,9 +579,9 @@ function MobileTimeline({
         transition={{ delay: 0.9, duration: 0.6 }}
         className="mt-8 text-center font-serif text-lg leading-snug text-white"
       >
-        No app. No login.
+        {t("No app. No login.", "Nessuna app. Nessun login.")}
         <br />
-        No behavior change.
+        {t("No behavior change.", "Nessun cambio di abitudini.")}
       </motion.p>
     </div>
   );
