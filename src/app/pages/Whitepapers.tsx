@@ -3,8 +3,9 @@ import { motion } from "motion/react";
 import { ArrowRight, FileText } from "lucide-react";
 import { Footer } from "../components/Footer";
 import { SEO } from "../components/SEO";
+import { getLocale } from "../../lib/i18n";
 
-const WHITEPAPERS = [
+const WHITEPAPERS_EN = [
   {
     id: "adhd-intake",
     title: "ADHD Intake Workflow",
@@ -17,7 +18,23 @@ const WHITEPAPERS = [
   },
 ];
 
+const WHITEPAPERS_IT = [
+  {
+    id: "adhd-intake",
+    title: "Flusso di Accoglienza ADHD",
+    subtitle: "Una Guida Completa per i Centri Partner",
+    description: "Architettura di intervista a 3 moduli, flussi di accoglienza pediatrici e per adulti, e integrazione con Practice Q. Come HANA automatizza l'accoglienza della valutazione ADHD dall'inizio alla fine.",
+    tags: ["ADHD", "Accoglienza", "Flusso Clinico"],
+    href: "/whitepapers/adhd-intake",
+    year: "2026",
+    badge: "Centro Partner",
+  },
+];
+
+const WHITEPAPERS = getLocale() === "it" ? WHITEPAPERS_IT : WHITEPAPERS_EN;
+
 function WhitepaperCard({ wp, index }: { wp: typeof WHITEPAPERS[0]; index: number }) {
+  const it = getLocale() === "it";
   return (
     <motion.div
       initial={{ opacity: 0, y: 18 }}
@@ -43,7 +60,7 @@ function WhitepaperCard({ wp, index }: { wp: typeof WHITEPAPERS[0]; index: numbe
           </div>
           <p className="text-sm text-slate-600 leading-relaxed flex-1">{wp.description}</p>
           <div className="mt-5 flex items-center gap-1.5 text-blue-600 text-sm font-semibold group-hover:gap-2.5 transition-all">
-            Read whitepaper <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+            {it ? "Leggi il whitepaper" : "Read whitepaper"} <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
           </div>
         </div>
       </Link>
@@ -52,11 +69,14 @@ function WhitepaperCard({ wp, index }: { wp: typeof WHITEPAPERS[0]; index: numbe
 }
 
 export function Whitepapers() {
+  const it = getLocale() === "it";
   return (
     <>
       <SEO
-        title="Whitepapers | HANA"
-        description="Clinical whitepapers on voice AI workflows for healthcare — ADHD intake, chronic care, and more."
+        title={it ? "Whitepaper | HANA" : "Whitepapers | HANA"}
+        description={it
+          ? "Whitepaper clinici sui flussi di lavoro voice AI per la sanità — accoglienza ADHD, gestione delle cure croniche e altro ancora."
+          : "Clinical whitepapers on voice AI workflows for healthcare — ADHD intake, chronic care, and more."}
         path="/whitepapers"
       />
 
@@ -65,9 +85,11 @@ export function Whitepapers() {
         <div className="max-w-4xl mx-auto px-6 py-20 md:py-24 relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <p className="text-blue-400 text-xs font-bold uppercase tracking-widest mb-4">Hana Health</p>
-            <h1 className="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">Whitepapers</h1>
+            <h1 className="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">{it ? "Whitepaper" : "Whitepapers"}</h1>
             <p className="text-slate-400 text-lg max-w-xl">
-              Deep-dive clinical workflows and integration guides for HANA partners.
+              {it
+                ? "Flussi di lavoro clinici approfonditi e guide all'integrazione per i partner HANA."
+                : "Deep-dive clinical workflows and integration guides for HANA partners."}
             </p>
           </motion.div>
         </div>
@@ -83,8 +105,8 @@ export function Whitepapers() {
               className="rounded-2xl border-2 border-dashed border-slate-200 bg-white/50 flex flex-col items-center justify-center p-8 text-center min-h-[220px]"
             >
               <FileText size={28} className="text-slate-300 mb-3" />
-              <p className="text-sm font-semibold text-slate-400">More whitepapers coming</p>
-              <p className="text-xs text-slate-400 mt-1">Depression screening, chronic care, and more</p>
+              <p className="text-sm font-semibold text-slate-400">{it ? "Altri whitepaper in arrivo" : "More whitepapers coming"}</p>
+              <p className="text-xs text-slate-400 mt-1">{it ? "Screening depressione, gestione delle cure croniche e altro ancora" : "Depression screening, chronic care, and more"}</p>
             </motion.div>
           </div>
         </div>

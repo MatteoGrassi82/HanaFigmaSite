@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { getLocale } from "../../lib/i18n";
+
+const IT = getLocale() === "it";
 
 // ── Container-level InView (works across tab switches) ────────────────────────
 function useContainerInView() {
@@ -115,7 +118,7 @@ const J_W = J.ml * 2 + 4 * J.cw + 3 * J.gap;
 const J_H = J.tp + 2 * J.ch + J.rowGap + 30;
 
 // Row 1: cards 0-3 (steps 01-04). Row 2: step 05 at col 3, 06 at col 2, 07 at col 1, 08 at col 0
-const JOURNEY_CARDS = [
+const JOURNEY_CARDS_EN = [
   { num:"01", title:"Initial Contact",     desc:"10-min screening call, eligibility confirmed, intake packet sent", row:1 as const, col:0, hana:false },
   { num:"02", title:"Registration",        desc:"Family registers in Practice Q — demographics, history, insurance", row:1 as const, col:1, hana:false },
   { num:"03", title:"Assessment Dispatch", desc:"HANA auto-sends NICHQ, BASC-3, Conners 3 and BRIEF-2 packets",    row:1 as const, col:2, hana:false },
@@ -125,6 +128,19 @@ const JOURNEY_CARDS = [
   { num:"07", title:"Clinician Review",    desc:"Clinician reviews report and flags items for deeper exploration",  row:2 as const, col:1, hana:false },
   { num:"08", title:"Diagnostic Session",  desc:"Clinician focuses entirely on interpretation — intake is complete",row:2 as const, col:0, hana:false },
 ];
+
+const JOURNEY_CARDS_IT: typeof JOURNEY_CARDS_EN = [
+  { num:"01", title:"Primo Contatto",        desc:"Screening di 10 min, idoneità confermata, pacchetto di accoglienza inviato", row:1 as const, col:0, hana:false },
+  { num:"02", title:"Registrazione",         desc:"La famiglia si registra in Practice Q — anagrafica, anamnesi, assicurazione", row:1 as const, col:1, hana:false },
+  { num:"03", title:"Invio Valutazioni",     desc:"HANA invia in automatico i pacchetti NICHQ, BASC-3, Conners 3 e BRIEF-2",   row:1 as const, col:2, hana:false },
+  { num:"04", title:"Intervista HANA",       desc:"Il genitore completa l'intervista vocale a 3 moduli — 30-45 min, 24/7",     row:1 as const, col:3, hana:true  },
+  { num:"05", title:"Compilazione Dati",     desc:"HANA struttura trascrizione e dati delle scale in un referto",             row:2 as const, col:3, hana:true  },
+  { num:"06", title:"Referto Pubblicato",    desc:"Il clinico riceve il referto di accoglienza completo in Practice Q",       row:2 as const, col:2, hana:false },
+  { num:"07", title:"Revisione Clinico",     desc:"Il clinico esamina il referto e segnala gli elementi da approfondire",     row:2 as const, col:1, hana:false },
+  { num:"08", title:"Seduta Diagnostica",    desc:"Il clinico si concentra sull'interpretazione — accoglienza già completa",  row:2 as const, col:0, hana:false },
+];
+
+const JOURNEY_CARDS = IT ? JOURNEY_CARDS_IT : JOURNEY_CARDS_EN;
 
 // Connector paths
 const jPaths = [
@@ -159,7 +175,7 @@ function JourneyDiagram({ visible }: { visible: boolean }) {
       <motion.text x={jMidX(3)} y={J.tp-13} textAnchor="middle" fontSize={9} fontWeight="700"
         fill="#93c5fd" letterSpacing="0.1em"
         initial={{ opacity:0 }} animate={visible?{opacity:1}:{}} transition={{ delay:0.4 }}>
-        HANA AUTOMATED
+        {IT ? "AUTOMATIZZATO DA HANA" : "HANA AUTOMATED"}
       </motion.text>
       {/* HANA badge row 2 */}
       <motion.rect x={jCardX(3)-3} y={jRowY(2)-28} width={J.cw+6} height={22} rx={11}
@@ -167,7 +183,7 @@ function JourneyDiagram({ visible }: { visible: boolean }) {
       <motion.text x={jMidX(3)} y={jRowY(2)-13} textAnchor="middle" fontSize={9} fontWeight="700"
         fill="#93c5fd" letterSpacing="0.1em"
         initial={{ opacity:0 }} animate={visible?{opacity:1}:{}} transition={{ delay:0.4 }}>
-        HANA AUTOMATED
+        {IT ? "AUTOMATIZZATO DA HANA" : "HANA AUTOMATED"}
       </motion.text>
 
       {/* Cards */}
@@ -244,11 +260,17 @@ const A = {
   repY: 418, repW: 300, repH: 62,
 };
 const A_H = A.repY + A.repH + 28;
-const aMods = [
+const aMods_EN = [
   { x: 20,                  color:"#1d4ed8", border:"#3b82f6", label:"#93c5fd", dot:"#60a5fa", title:"Module 01", sub:"Opening & Rapport",       items:["State & Consent","Chief Complaint","Primary Goal","Symptom Diversity","Background Context"] },
   { x: 20+A.modW+A.modGap,  color:"#3730a3", border:"#6366f1", label:"#a5b4fc", dot:"#818cf8", title:"Module 02", sub:"Diagnostic Decision",      items:["Cross-Setting Review","Peer & Social","School Follow-up","Goal-Setting","Functional Impairment"] },
   { x: 20+2*(A.modW+A.modGap),color:"#4c1d95",border:"#8b5cf6",label:"#c4b5fd",dot:"#a78bfa", title:"Module 03", sub:"Developmental Context",    items:["Strengths & Resources","Motivation Patterns","Emotional Regulation","Dev. History","Hyperfocus Patterns"] },
 ];
+const aMods_IT: typeof aMods_EN = [
+  { x: 20,                  color:"#1d4ed8", border:"#3b82f6", label:"#93c5fd", dot:"#60a5fa", title:"Modulo 01", sub:"Apertura e Rapporto",      items:["Avvio e Consenso","Motivo Principale","Obiettivo Primario","Varietà dei Sintomi","Contesto e Anamnesi"] },
+  { x: 20+A.modW+A.modGap,  color:"#3730a3", border:"#6366f1", label:"#a5b4fc", dot:"#818cf8", title:"Modulo 02", sub:"Decisione Diagnostica",    items:["Analisi Multi-Contesto","Pari e Socialità","Approfondimento Scuola","Definizione Obiettivi","Compromissione Funzionale"] },
+  { x: 20+2*(A.modW+A.modGap),color:"#4c1d95",border:"#8b5cf6",label:"#c4b5fd",dot:"#a78bfa", title:"Modulo 03", sub:"Contesto Evolutivo",       items:["Punti di Forza e Risorse","Pattern Motivazionali","Regolazione Emotiva","Anamnesi Evolutiva","Iperfocalizzazione"] },
+];
+const aMods = IT ? aMods_IT : aMods_EN;
 const trigCX = A.trigX + A.trigW / 2;
 const repCX = (A.svgW - A.repW) / 2;
 const repCXmid = repCX + A.repW / 2;
@@ -282,11 +304,11 @@ function ArchDiagram({ visible }: { visible: boolean }) {
       <motion.text x={trigCX} y={A.trigY+18} textAnchor="middle" fontSize={9} fontWeight="700"
         fill="#475569" letterSpacing="0.12em"
         initial={{ opacity:0 }} animate={visible?{opacity:1}:{}} transition={{ delay:0.2 }}>
-        PATIENT CONTACTS PRACTICE
+        {IT ? "IL PAZIENTE CONTATTA LO STUDIO" : "PATIENT CONTACTS PRACTICE"}
       </motion.text>
       <motion.text x={trigCX} y={A.trigY+36} textAnchor="middle" fontSize={14} fontWeight="700" fill="white"
         initial={{ opacity:0 }} animate={visible?{opacity:1}:{}} transition={{ delay:0.25 }}>
-        HANA Interview Initiated
+        {IT ? "Intervista HANA Avviata" : "HANA Interview Initiated"}
       </motion.text>
 
       {/* Fan paths */}
@@ -358,15 +380,15 @@ function ArchDiagram({ visible }: { visible: boolean }) {
       <motion.text x={repCXmid} y={A.repY+20} textAnchor="middle" fontSize={9} fontWeight="700"
         fill="#475569" letterSpacing="0.12em"
         initial={{ opacity:0 }} animate={visible?{opacity:1}:{}} transition={{ delay:2.0 }}>
-        OUTPUT
+        {IT ? "OUTPUT" : "OUTPUT"}
       </motion.text>
       <motion.text x={repCXmid} y={A.repY+38} textAnchor="middle" fontSize={14} fontWeight="700" fill="white"
         initial={{ opacity:0 }} animate={visible?{opacity:1}:{}} transition={{ delay:2.05 }}>
-        Structured Clinical Report
+        {IT ? "Referto Clinico Strutturato" : "Structured Clinical Report"}
       </motion.text>
       <motion.text x={repCXmid} y={A.repY+55} textAnchor="middle" fontSize={10} fill="#64748b"
         initial={{ opacity:0 }} animate={visible?{opacity:1}:{}} transition={{ delay:2.1 }}>
-        Delivered to Practice Q before appointment
+        {IT ? "Consegnato in Practice Q prima dell'appuntamento" : "Delivered to Practice Q before appointment"}
       </motion.text>
       {/* Pulse ring */}
       {visible && (
@@ -396,7 +418,9 @@ export function WhitepaperFlows() {
             className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${
               tab === t ? "bg-blue-600 text-white shadow" : "text-slate-500 hover:text-slate-800"
             }`}>
-            {t === "journey" ? "Patient Journey" : "Interview Architecture"}
+            {t === "journey"
+              ? (IT ? "Percorso del Paziente" : "Patient Journey")
+              : (IT ? "Architettura dell'Intervista" : "Interview Architecture")}
           </button>
         ))}
       </div>

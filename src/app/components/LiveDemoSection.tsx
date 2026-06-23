@@ -8,8 +8,10 @@ import { useTranslations, getLocale } from "../../lib/i18n";
 
 const FN_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-77ada9a1`;
 
-// Italian site routes demo callbacks through the EU/UK agent for now.
-// TODO: when a dedicated Italian agent exists, set IT_DEMO_AGENT_ID and route to it.
+// The SMS callback flow sends `lang` so the backend dials the Italian Vapi
+// assistant twins (see docs/italian-demo-agents-handoff.md). The in-browser web
+// call uses a Vapi SQUAD; there's no Italian squad yet, so set IT_DEMO_AGENT_ID
+// to an Italian "squad:<id>" once it exists to route the web call too.
 const IT_DEMO_AGENT_ID: string | null = null;
 
 // In-browser web call: a Vapi SQUAD. A greeter agent asks what the visitor wants
@@ -94,7 +96,9 @@ export function LiveDemoSection({
       const res = await fetch(`${FN_BASE}/site-demo-start`, {
         method: "POST",
         headers: { Authorization: `Bearer ${publicAnonKey}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ to: e164, region, name: name.trim() || undefined, email: email.trim() || undefined }),
+        // lang tells the backend which Vapi assistant twin to dial (Italian vs
+        // English). Wiring per docs/italian-demo-agents-handoff.md (Option B).
+        body: JSON.stringify({ to: e164, region, lang: isItalian ? "it" : "en", name: name.trim() || undefined, email: email.trim() || undefined }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) { setSmsStatus("idle"); setSmsError(data.error || ld.networkError); return; }

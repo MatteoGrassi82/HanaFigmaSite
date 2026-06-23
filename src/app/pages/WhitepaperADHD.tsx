@@ -5,6 +5,9 @@ import { SEO } from "../components/SEO";
 import { ArrowRight, ChevronDown, ChevronUp, CheckCircle2, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router";
 import { WhitepaperFlows } from "../components/WhitepaperFlows";
+import { getLocale } from "../../lib/i18n";
+
+const IT = getLocale() === "it";
 
 // ── Animated counter ──────────────────────────────────────────────────────────
 function Counter({ target, suffix = "" }: { target: number; suffix?: string }) {
@@ -35,7 +38,7 @@ function Counter({ target, suffix = "" }: { target: number; suffix?: string }) {
 }
 
 // ── TOC ───────────────────────────────────────────────────────────────────────
-const SECTIONS = [
+const SECTIONS_EN = [
   { id: "executive-summary", label: "Executive Summary" },
   { id: "workflow-overview", label: "Workflow Overview" },
   { id: "the-challenge", label: "The Challenge" },
@@ -47,8 +50,22 @@ const SECTIONS = [
   { id: "onboarding", label: "Onboarding Timeline" },
 ];
 
+const SECTIONS_IT = [
+  { id: "executive-summary", label: "Sintesi Esecutiva" },
+  { id: "workflow-overview", label: "Panoramica del Workflow" },
+  { id: "the-challenge", label: "La Sfida" },
+  { id: "the-solution", label: "La Soluzione HANA" },
+  { id: "interview-architecture", label: "Architettura dell'Intervista" },
+  { id: "patient-journey", label: "Percorso del Paziente" },
+  { id: "ehr-integration", label: "Integrazione EHR" },
+  { id: "outcomes", label: "Risultati Attesi" },
+  { id: "onboarding", label: "Tempistiche di Onboarding" },
+];
+
+const SECTIONS = IT ? SECTIONS_IT : SECTIONS_EN;
+
 // ── Modules data ──────────────────────────────────────────────────────────────
-const MODULES = [
+const MODULES_EN = [
   {
     key: "M1", num: "01",
     title: "Opening & Rapport",
@@ -92,7 +109,53 @@ const MODULES = [
   },
 ];
 
-const PEDIATRIC_STEPS = [
+const MODULES_IT: typeof MODULES_EN = [
+  {
+    key: "M1", num: "01",
+    title: "Apertura e Costruzione del Rapporto",
+    description: "Stabilisce un clima di fiducia, orienta la famiglia al processo dell'intervista e raccoglie il motivo principale della consultazione e l'obiettivo primario, che inquadrano il resto della valutazione.",
+    items: [
+      { id: "S1", topic: "Avvio e Consenso", purpose: "Orientare la famiglia, instaurare fiducia e ottenere il consenso verbale a procedere con l'intervista di valutazione." },
+      { id: "S2", topic: "Spiegazione del Processo", purpose: "Definire le aspettative su formato e durata dell'intervista e su come verranno usate le domande di HANA." },
+      { id: "S3", topic: "Motivo Principale", purpose: "Individuare la ragione principale per cui la famiglia richiede una valutazione per l'ADHD in questo momento." },
+      { id: "S4", topic: "Obiettivo Primario", purpose: "Chiarire come si configura un esito positivo della valutazione per questa famiglia." },
+      { id: "S5", topic: "Varietà dei Sintomi", purpose: "Effettuare lo screening dell'ampiezza e della varietà delle difficoltà osservate dal genitore o dal paziente." },
+      { id: "S6", topic: "Contesto e Anamnesi", purpose: "Raccogliere gli eventi o i momenti comportamentali chiave che hanno motivato la decisione di richiedere la valutazione." },
+    ],
+    sample: '"Grazie per aver completato la documentazione di accoglienza. Mi chiamo Hana. Come primo passo del suo percorso di valutazione, le farò alcune domande sulla sua esperienza a casa, così da formare un quadro completo delle difficoltà e degli obiettivi di suo figlio prima dell\'appuntamento con il clinico. Può fare una pausa o porre domande in qualsiasi momento."',
+  },
+  {
+    key: "M2", num: "02",
+    title: "Decisione Diagnostica e Piano Funzionale",
+    description: "Il nucleo clinico dell'intervista. Raccoglie dati sui sintomi nei diversi contesti e mette in relazione i sintomi con la compromissione funzionale reale, a supporto della mappatura dei criteri DSM-5 e della diagnosi differenziale.",
+    callout: "HANA raccoglie informazioni sui sintomi nei diversi contesti, la compromissione funzionale nei vari domini e il contesto scolastico e relazionale tra pari, a supporto della mappatura dei criteri DSM-5 e della diagnosi differenziale.",
+    items: [
+      { id: "C1", topic: "Analisi Multi-Contesto", purpose: "Raccogliere dati sui sintomi negli ambienti domestico e scolastico per stabilire la compromissione in più contesti — un criterio DSM-5 per l'ADHD." },
+      { id: "C2", topic: "Funzionamento Sociale e tra Pari", purpose: "Valutare la qualità delle relazioni tra pari, le competenze sociali ed eventuali compromissioni nei rapporti con i coetanei." },
+      { id: "C3", topic: "Approfondimento Scolastico", purpose: "Indagare il rendimento scolastico, le osservazioni degli insegnanti, lo stato di eventuali piani educativi individualizzati (PEI/PDP) e il comportamento in classe." },
+      { id: "C4", topic: "Definizione degli Obiettivi", purpose: "Individuare i domini funzionali prioritari per la famiglia ai fini della pianificazione del trattamento." },
+      { id: "C5", topic: "Compromissione Funzionale", purpose: "Quantificare in che misura i sintomi legati all'ADHD compromettono il funzionamento quotidiano nei diversi contesti." },
+    ],
+  },
+  {
+    key: "M3", num: "03",
+    title: "Contesto Evolutivo e Risorse per il Trattamento",
+    description: "Raccoglie le informazioni di contesto di cui i clinici hanno bisogno per progettare un piano di trattamento efficace e individualizzato — andando oltre la descrizione dei sintomi fino al profilo evolutivo completo.",
+    callout: 'Una direttiva clinica chiave: distinguere tra un deficit di motivazione ("Non vuole" — motivazionale) e un deficit di conoscenza/abilità/ambientale ("Non riesce" — divario di capacità). Questa distinzione è fondamentale per la pianificazione del trattamento T1.',
+    items: [
+      { id: "D1", topic: "Punti di Forza e Risorse", purpose: "Individuare i supporti familiari, le risorse della comunità e gli interventi precedenti su cui far leva nella pianificazione del trattamento." },
+      { id: "D2", topic: "Pattern Motivazionali", purpose: "Comprendere i fattori di motivazione intrinseca ed estrinseca per personalizzare le strategie comportamentali." },
+      { id: "D3", topic: "Regolazione Emotiva", purpose: "Valutare disregolazione emotiva, ansia o fattori dell'umore concomitanti che interagiscono con la presentazione dell'ADHD." },
+      { id: "D4", topic: "Anamnesi Evolutiva", purpose: "Raccogliere l'anamnesi perinatale, le tappe dello sviluppo, le diagnosi pregresse e la storia dei trattamenti precedenti." },
+      { id: "D5", topic: "Iperfocalizzazione / Focus Notturno", purpose: "Documentare i pattern di iperfocalizzazione e gli interessi speciali — clinicamente importanti per la diagnosi differenziale e per un trattamento basato sui punti di forza." },
+      { id: "D6", topic: "Contesto Scolastico e Sociale", purpose: "Sintetizzare il rendimento scolastico, la qualità delle relazioni tra pari ed eventuali accomodamenti formali in essere." },
+    ],
+  },
+];
+
+const MODULES = IT ? MODULES_IT : MODULES_EN;
+
+const PEDIATRIC_STEPS_EN = [
   { n: "01", title: "Initial Contact", desc: "10-min screening call. Practice confirms eligibility and sends intake packet." },
   { n: "02", title: "Client Registration", desc: "Family registers in Practice Q. Demographics, history, and insurance captured." },
   { n: "03", title: "Assessment Dispatch", desc: "HANA automatically sends NICHQ, BASC-3, Conners 3, and BRIEF-2 packets." },
@@ -103,7 +166,18 @@ const PEDIATRIC_STEPS = [
   { n: "08", title: "Diagnostic Session", desc: "Clinician focuses entirely on interpretation — intake data is already complete." },
 ];
 
-const ADULT_STEPS = [
+const PEDIATRIC_STEPS_IT: typeof PEDIATRIC_STEPS_EN = [
+  { n: "01", title: "Primo Contatto", desc: "Telefonata di screening di 10 minuti. Lo studio conferma l'idoneità e invia il pacchetto di accoglienza." },
+  { n: "02", title: "Registrazione del Cliente", desc: "La famiglia si registra in Practice Q. Vengono raccolti dati anagrafici, anamnesi e assicurazione." },
+  { n: "03", title: "Invio delle Valutazioni", desc: "HANA invia automaticamente i pacchetti NICHQ, BASC-3, Conners 3 e BRIEF-2." },
+  { n: "04", title: "Intervista HANA", desc: "Il genitore completa l'intervista vocale a 3 moduli (30–45 min, con i propri tempi, 24/7)." },
+  { n: "05", title: "Compilazione dei Dati", desc: "HANA struttura la trascrizione dell'intervista e tutti i dati delle scale in un referto clinico." },
+  { n: "06", title: "Referto Pubblicato", desc: "Il clinico riceve il referto di accoglienza completo in Practice Q prima dell'appuntamento." },
+  { n: "07", title: "Revisione del Clinico", desc: "Il clinico esamina il referto e segnala gli elementi da approfondire durante la seduta." },
+  { n: "08", title: "Seduta Diagnostica", desc: "Il clinico si concentra interamente sull'interpretazione — i dati di accoglienza sono già completi." },
+];
+
+const ADULT_STEPS_EN = [
   { n: "01", title: "Initial Contact", desc: "Adult contacts practice. Brief screening confirms ADHD assessment pathway." },
   { n: "02", title: "Registration", desc: "Client registers in Practice Q. History and insurance captured electronically." },
   { n: "03", title: "Assessment Dispatch", desc: "HANA sends adult self-report scales and a structured developmental history form." },
@@ -114,7 +188,21 @@ const ADULT_STEPS = [
   { n: "08", title: "Diagnostic Session", desc: "Session focused on clinical interpretation, differential, and treatment planning." },
 ];
 
-const EHR_STEPS = [
+const ADULT_STEPS_IT: typeof ADULT_STEPS_EN = [
+  { n: "01", title: "Primo Contatto", desc: "L'adulto contatta lo studio. Un breve screening conferma il percorso di valutazione ADHD." },
+  { n: "02", title: "Registrazione", desc: "Il cliente si registra in Practice Q. Anamnesi e assicurazione raccolte elettronicamente." },
+  { n: "03", title: "Invio delle Valutazioni", desc: "HANA invia le scale di autovalutazione per adulti e un modulo strutturato di anamnesi evolutiva." },
+  { n: "04", title: "Intervista HANA", desc: "Il cliente completa l'intervista vocale a 3 moduli su funzionamento attuale e anamnesi evolutiva." },
+  { n: "05", title: "Contributo Collaterale", desc: "Se disponibile, il partner o un familiare compila una breve scala di valutazione come osservatore." },
+  { n: "06", title: "Referto Compilato", desc: "HANA organizza tutti i dati di intervista e scale in un riepilogo clinico strutturato." },
+  { n: "07", title: "Revisione del Clinico", desc: "Il clinico esamina il referto e le ipotesi di diagnosi differenziale prima della seduta." },
+  { n: "08", title: "Seduta Diagnostica", desc: "Seduta focalizzata su interpretazione clinica, diagnosi differenziale e pianificazione del trattamento." },
+];
+
+const PEDIATRIC_STEPS = IT ? PEDIATRIC_STEPS_IT : PEDIATRIC_STEPS_EN;
+const ADULT_STEPS = IT ? ADULT_STEPS_IT : ADULT_STEPS_EN;
+
+const EHR_STEPS_EN = [
   {
     n: "1", title: "Create Your Source Message Template",
     desc: "The email sent to the family with intake instructions, HANA interview link, and assessment packet links.",
@@ -163,6 +251,57 @@ const EHR_STEPS = [
   },
 ];
 
+const EHR_STEPS_IT: typeof EHR_STEPS_EN = [
+  {
+    n: "1", title: "Crea il Template del Messaggio Sorgente",
+    desc: "L'email inviata alla famiglia con le istruzioni di accoglienza, il link all'intervista HANA e i link al pacchetto di valutazioni.",
+    steps: [
+      "Vai su Sistema > Messaggi > Nuovi Template",
+      'Imposta il Tipo di Template su "Accoglienza Nuovo Paziente"',
+      "Titola il template: Pacchetto Accoglienza ADHD HANA",
+      'Imposta l\'Oggetto Email: "La tua valutazione di accoglienza [Nome Studio] — Da completare prima dell\'appuntamento"',
+      'Apri con: "Gentile [Nome],"',
+      "Corpo: includi il link all'intervista HANA, i link alle valutazioni (NICHQ, BASC, Conners, BRIEF) e la scadenza per il completamento (almeno 48 ore prima dell'appuntamento)",
+      "Aggiungi i campi dinamici: nome del bambino, data/ora dell'appuntamento, nome del clinico",
+      "Salva e contrassegna come Attivo",
+    ],
+  },
+  {
+    n: "2", title: "Crea la Checklist di Accoglienza come Lista di Attività",
+    desc: "La lista di attività garantisce che nessun componente della valutazione venga tralasciato durante ogni workflow di accoglienza.",
+    steps: [
+      "Nell'EHR, vai su Attività > Nuovo Template di Attività",
+      "Nome: Checklist Accoglienza ADHD",
+      "Aggiungi le voci della checklist: intervista HANA (link inviato), NICHQ genitore + insegnante, BASC-3, Conners 3, BRIEF-2",
+      "Imposta l'attivazione automatica: parte quando viene creato un nuovo appuntamento di accoglienza ADHD",
+      "Assegna a: ruolo di coordinatore dell'accoglienza",
+    ],
+  },
+  {
+    n: "3", title: "Configura la Pianificazione dell'Intervista HANA",
+    desc: "",
+    steps: [
+      "Disponibilità dell'intervista HANA: 24/7, tempo di completamento stimato 30–45 minuti",
+      "Preavviso minimo: invio 48 ore prima dell'appuntamento diagnostico",
+      "Promemoria automatico se non completata: inviato 24 ore prima della scadenza",
+      "Al completamento: HANA compila automaticamente il referto strutturato e lo carica nella cartella del paziente in Practice Q",
+    ],
+  },
+  {
+    n: "4", title: "Automatizza la Consegna del Referto",
+    desc: "Una volta completata l'intervista, HANA automaticamente:",
+    steps: [
+      "Trascrive e struttura l'intervista nel formato standard di referto clinico a 3 moduli",
+      "Allega tutte le scale di valutazione completate alla cartella del paziente",
+      'Invia al clinico assegnato una notifica: "Accoglienza completata — da rivedere prima del [data appuntamento]"',
+      "Contrassegna come completate tutte le voci della checklist di accoglienza nella lista di attività",
+      "Segnala eventuali componenti della valutazione mancanti o incompleti per il follow-up del coordinatore",
+    ],
+  },
+];
+
+const EHR_STEPS = IT ? EHR_STEPS_IT : EHR_STEPS_EN;
+
 // ── Module card ───────────────────────────────────────────────────────────────
 function ModuleCard({ mod, index }: { mod: typeof MODULES[0]; index: number }) {
   const [open, setOpen] = useState(false);
@@ -182,7 +321,7 @@ function ModuleCard({ mod, index }: { mod: typeof MODULES[0]; index: number }) {
           {mod.num}
         </span>
         <div className="flex-1 min-w-0">
-          <p className="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-0.5">Module {mod.num}</p>
+          <p className="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-0.5">{IT ? "Modulo" : "Module"} {mod.num}</p>
           <p className="text-base font-semibold text-slate-900">{mod.title}</p>
           <p className="text-sm text-slate-500 mt-1 leading-relaxed">{mod.description}</p>
         </div>
@@ -209,8 +348,8 @@ function ModuleCard({ mod, index }: { mod: typeof MODULES[0]; index: number }) {
                   <thead>
                     <tr className="bg-slate-800 text-white">
                       <th className="text-left px-4 py-2.5 font-semibold rounded-tl-lg w-16">ID</th>
-                      <th className="text-left px-4 py-2.5 font-semibold w-48">Topic</th>
-                      <th className="text-left px-4 py-2.5 font-semibold rounded-tr-lg">Clinical Purpose</th>
+                      <th className="text-left px-4 py-2.5 font-semibold w-48">{IT ? "Argomento" : "Topic"}</th>
+                      <th className="text-left px-4 py-2.5 font-semibold rounded-tr-lg">{IT ? "Finalità Clinica" : "Clinical Purpose"}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -226,7 +365,7 @@ function ModuleCard({ mod, index }: { mod: typeof MODULES[0]; index: number }) {
               </div>
               {mod.sample && (
                 <div className="mt-5 border-l-4 border-blue-500 pl-4">
-                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Opening sample</p>
+                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">{IT ? "Esempio di apertura" : "Opening sample"}</p>
                   <p className="text-sm text-slate-500 italic leading-relaxed">{mod.sample}</p>
                 </div>
               )}
@@ -304,7 +443,7 @@ function EHRStep({ step, index }: { step: typeof EHR_STEPS[0]; index: number }) 
                   animate={{ opacity: 1, y: 0 }}
                   className="text-xs text-blue-400 font-semibold mt-3 flex items-center gap-1.5"
                 >
-                  <CheckCircle2 size={12} /> Step complete
+                  <CheckCircle2 size={12} /> {IT ? "Passo completato" : "Step complete"}
                 </motion.p>
               )}
             </div>
@@ -400,8 +539,10 @@ export function WhitepaperADHD() {
   return (
     <>
       <SEO
-        title="ADHD Intake Workflow — Clinic Partner Whitepaper"
-        description="A complete walkthrough of the HANA ADHD intake workflow: 3-module interview architecture, pediatric & adult intake flows, and Practice Q integration."
+        title={IT ? "Workflow di Accoglienza ADHD — Whitepaper per Cliniche Partner" : "ADHD Intake Workflow — Clinic Partner Whitepaper"}
+        description={IT
+          ? "Una guida completa al workflow di accoglienza ADHD di HANA: architettura dell'intervista a 3 moduli, flussi di accoglienza pediatrici e per adulti e integrazione con Practice Q."
+          : "A complete walkthrough of the HANA ADHD intake workflow: 3-module interview architecture, pediatric & adult intake flows, and Practice Q integration."}
         path="/whitepapers/adhd-intake"
       />
 
@@ -411,13 +552,15 @@ export function WhitepaperADHD() {
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none" />
         <div className="max-w-4xl mx-auto px-6 py-16 sm:py-24 md:py-32 relative z-10">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            <p className="text-blue-400 text-xs font-bold uppercase tracking-widest mb-5">Clinic Partner Whitepaper</p>
+            <p className="text-blue-400 text-xs font-bold uppercase tracking-widest mb-5">{IT ? "Whitepaper per Cliniche Partner" : "Clinic Partner Whitepaper"}</p>
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-black mb-3 leading-none tracking-tight text-white">HANA</h1>
-            <h2 className="text-3xl md:text-4xl font-black text-blue-400 mb-8 leading-tight">ADHD INTAKE WORKFLOW</h2>
+            <h2 className="text-3xl md:text-4xl font-black text-blue-400 mb-8 leading-tight">{IT ? "WORKFLOW DI ACCOGLIENZA ADHD" : "ADHD INTAKE WORKFLOW"}</h2>
             <div className="w-16 h-0.5 bg-blue-500 mb-8" />
-            <p className="text-lg text-slate-300 mb-3 font-light">A Complete Walkthrough for Prospective Clinic Partners</p>
+            <p className="text-lg text-slate-300 mb-3 font-light">{IT ? "Una Guida Completa per Cliniche Partner Potenziali" : "A Complete Walkthrough for Prospective Clinic Partners"}</p>
             <p className="text-sm text-slate-500">
-              Covering: 3-module interview architecture &nbsp;·&nbsp; pediatric &amp; adult intake flows &nbsp;·&nbsp; Practice Q integration
+              {IT
+                ? <>Contenuti: architettura dell'intervista a 3 moduli &nbsp;·&nbsp; flussi di accoglienza pediatrici &amp; adulti &nbsp;·&nbsp; integrazione Practice Q</>
+                : <>Covering: 3-module interview architecture &nbsp;·&nbsp; pediatric &amp; adult intake flows &nbsp;·&nbsp; Practice Q integration</>}
             </p>
           </motion.div>
 
@@ -428,11 +571,18 @@ export function WhitepaperADHD() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="mt-10 sm:mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-xl"
           >
-            {[
-              { val: 85, suffix: "%", label: "faster time to diagnosis" },
-              { val: 90, suffix: "%", label: "reduction in coordinator time" },
-              { val: 100, suffix: "%", label: "protocol adherence" },
-            ].map(s => (
+            {(IT
+              ? [
+                  { val: 85, suffix: "%", label: "tempo alla diagnosi più rapido" },
+                  { val: 90, suffix: "%", label: "riduzione del tempo del coordinatore" },
+                  { val: 100, suffix: "%", label: "aderenza al protocollo" },
+                ]
+              : [
+                  { val: 85, suffix: "%", label: "faster time to diagnosis" },
+                  { val: 90, suffix: "%", label: "reduction in coordinator time" },
+                  { val: 100, suffix: "%", label: "protocol adherence" },
+                ]
+            ).map(s => (
               <div key={s.label}>
                 <p className="text-3xl font-black text-white mb-1">
                   <Counter target={s.val} suffix={s.suffix} />
@@ -452,7 +602,7 @@ export function WhitepaperADHD() {
             {/* Sticky TOC */}
             <aside className="hidden lg:block w-52 shrink-0">
               <div className="sticky top-28">
-                <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">Contents</p>
+                <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">{IT ? "Indice" : "Contents"}</p>
                 <nav className="space-y-0.5">
                   {SECTIONS.map(s => (
                     <button
@@ -476,31 +626,48 @@ export function WhitepaperADHD() {
 
               {/* Executive Summary */}
               <section ref={setRef("executive-summary")} id="executive-summary">
-                <SectionHeader label="Executive Summary" />
+                <SectionHeader label={IT ? "Sintesi Esecutiva" : "Executive Summary"} />
                 <div className="space-y-4 text-slate-600 leading-relaxed">
-                  <p>HANA is a voice AI platform that transforms how mental health and neurodevelopmental practices conduct patient intake. This document provides a complete, step-by-step walkthrough of the HANA ADHD intake workflow — from the moment a patient contacts your practice to the moment your clinician receives a structured, analysis-ready report.</p>
-                  <p>The HANA ADHD intake is built around a structured <span className="text-slate-900 font-semibold">three-module interview</span>, designed in collaboration with board-certified ADHD diagnosticians. HANA conducts the interview by voice, collects clinician-defined data points, and organizes findings into your practice management system — reducing administrative burden, improving data consistency, and freeing clinicians to focus on care.</p>
-                  <p>This walkthrough covers two core use cases: <span className="text-slate-900 font-semibold">pediatric ADHD intake (parent-report flow)</span> and <span className="text-slate-900 font-semibold">adult ADHD intake (self-report flow)</span>. Both leverage the same three-module interview architecture, adapted for the respondent type.</p>
+                  {IT ? (
+                    <>
+                      <p>HANA è una piattaforma di voice AI che trasforma il modo in cui gli studi di salute mentale e neurosviluppo conducono l'accoglienza dei pazienti. Questo documento offre una guida completa, passo dopo passo, al workflow di accoglienza ADHD di HANA — dal momento in cui un paziente contatta il tuo studio fino a quando il clinico riceve un referto strutturato e pronto per l'analisi.</p>
+                      <p>L'accoglienza ADHD di HANA si basa su una <span className="text-slate-900 font-semibold">intervista strutturata a tre moduli</span>, progettata in collaborazione con specialisti certificati nella diagnosi dell'ADHD. HANA conduce l'intervista tramite voce, raccoglie i punti dati definiti dal clinico e organizza i risultati nel tuo gestionale — riducendo il carico amministrativo, migliorando la coerenza dei dati e liberando i clinici per concentrarsi sulla cura.</p>
+                      <p>Questa guida copre due casi d'uso principali: <span className="text-slate-900 font-semibold">accoglienza ADHD pediatrica (flusso su segnalazione del genitore)</span> e <span className="text-slate-900 font-semibold">accoglienza ADHD per adulti (flusso di autovalutazione)</span>. Entrambi utilizzano la stessa architettura di intervista a tre moduli, adattata al tipo di rispondente.</p>
+                    </>
+                  ) : (
+                    <>
+                      <p>HANA is a voice AI platform that transforms how mental health and neurodevelopmental practices conduct patient intake. This document provides a complete, step-by-step walkthrough of the HANA ADHD intake workflow — from the moment a patient contacts your practice to the moment your clinician receives a structured, analysis-ready report.</p>
+                      <p>The HANA ADHD intake is built around a structured <span className="text-slate-900 font-semibold">three-module interview</span>, designed in collaboration with board-certified ADHD diagnosticians. HANA conducts the interview by voice, collects clinician-defined data points, and organizes findings into your practice management system — reducing administrative burden, improving data consistency, and freeing clinicians to focus on care.</p>
+                      <p>This walkthrough covers two core use cases: <span className="text-slate-900 font-semibold">pediatric ADHD intake (parent-report flow)</span> and <span className="text-slate-900 font-semibold">adult ADHD intake (self-report flow)</span>. Both leverage the same three-module interview architecture, adapted for the respondent type.</p>
+                    </>
+                  )}
                 </div>
               </section>
 
               {/* Workflow Overview */}
               <section ref={setRef("workflow-overview")} id="workflow-overview">
-                <SectionHeader label="Workflow Overview" />
-                <p className="text-slate-600 leading-relaxed mb-6">Interactive diagrams of the full patient journey and the three-module interview architecture. Drag to pan, scroll to zoom.</p>
+                <SectionHeader label={IT ? "Panoramica del Workflow" : "Workflow Overview"} />
+                <p className="text-slate-600 leading-relaxed mb-6">{IT ? "Diagrammi interattivi dell'intero percorso del paziente e dell'architettura dell'intervista a tre moduli. Trascina per spostarti, scorri per zoomare." : "Interactive diagrams of the full patient journey and the three-module interview architecture. Drag to pan, scroll to zoom."}</p>
                 <WhitepaperFlows />
               </section>
 
               {/* The Challenge */}
               <section ref={setRef("the-challenge")} id="the-challenge">
-                <SectionHeader label="The Challenge: Why ADHD Intake Needs a Rethink" />
-                <p className="text-slate-600 leading-relaxed mb-8">ADHD assessment is one of the most data-intensive processes in clinical mental health. A thorough intake requires gathering structured information from multiple informants, across multiple settings, on dozens of behavioral dimensions. The challenge shows up in three ways:</p>
+                <SectionHeader label={IT ? "La Sfida: Perché l'Accoglienza ADHD va Ripensata" : "The Challenge: Why ADHD Intake Needs a Rethink"} />
+                <p className="text-slate-600 leading-relaxed mb-8">{IT ? "La valutazione dell'ADHD è uno dei processi più intensivi in termini di dati nella salute mentale clinica. Un'accoglienza accurata richiede la raccolta di informazioni strutturate da più informatori, in più contesti, su decine di dimensioni comportamentali. La sfida si manifesta in tre modi:" : "ADHD assessment is one of the most data-intensive processes in clinical mental health. A thorough intake requires gathering structured information from multiple informants, across multiple settings, on dozens of behavioral dimensions. The challenge shows up in three ways:"}</p>
                 <div className="grid gap-4 sm:grid-cols-3">
-                  {[
-                    { title: "Time burden", text: "A comprehensive parent intake interview can take 45–90 minutes of clinician or coordinator time. Most practices cannot absorb this volume without creating bottlenecks or cutting corners." },
-                    { title: "Data inconsistency", text: "Unstructured intake calls produce inconsistent clinical data. Different coordinators ask different questions, and important diagnostic dimensions are routinely missed." },
-                    { title: "Clinician fatigue", text: "When clinicians conduct intake personally, they spend 30–40% of their diagnostic hours gathering information rather than interpreting it and planning treatment." },
-                  ].map((c, i) => (
+                  {(IT
+                    ? [
+                        { title: "Onere di tempo", text: "Un'intervista di accoglienza approfondita con il genitore può richiedere 45–90 minuti di tempo del clinico o del coordinatore. La maggior parte degli studi non riesce ad assorbire questo volume senza creare colli di bottiglia o tagliare gli angoli." },
+                        { title: "Incoerenza dei dati", text: "Le chiamate di accoglienza non strutturate producono dati clinici incoerenti. Coordinatori diversi pongono domande diverse e dimensioni diagnostiche importanti vengono regolarmente trascurate." },
+                        { title: "Affaticamento del clinico", text: "Quando i clinici conducono l'accoglienza di persona, dedicano il 30–40% delle loro ore diagnostiche alla raccolta delle informazioni anziché alla loro interpretazione e alla pianificazione del trattamento." },
+                      ]
+                    : [
+                        { title: "Time burden", text: "A comprehensive parent intake interview can take 45–90 minutes of clinician or coordinator time. Most practices cannot absorb this volume without creating bottlenecks or cutting corners." },
+                        { title: "Data inconsistency", text: "Unstructured intake calls produce inconsistent clinical data. Different coordinators ask different questions, and important diagnostic dimensions are routinely missed." },
+                        { title: "Clinician fatigue", text: "When clinicians conduct intake personally, they spend 30–40% of their diagnostic hours gathering information rather than interpreting it and planning treatment." },
+                      ]
+                  ).map((c, i) => (
                     <motion.div
                       key={c.title}
                       initial={{ opacity: 0, y: 16 }}
@@ -515,30 +682,39 @@ export function WhitepaperADHD() {
                   ))}
                 </div>
                 <p className="text-slate-700 leading-relaxed mt-6 font-medium">
-                  The result: longer wait times for families, higher operational costs for clinics, and clinician burnout — without improving diagnostic accuracy.
+                  {IT ? "Il risultato: tempi di attesa più lunghi per le famiglie, costi operativi più alti per le cliniche e burnout dei clinici — senza migliorare l'accuratezza diagnostica." : "The result: longer wait times for families, higher operational costs for clinics, and clinician burnout — without improving diagnostic accuracy."}
                 </p>
               </section>
 
               {/* Solution */}
               <section ref={setRef("the-solution")} id="the-solution">
-                <SectionHeader label="The HANA Solution" />
-                <p className="text-slate-600 leading-relaxed mb-8">HANA replaces unstructured intake calls with a structured voice AI interview. A parent or patient calls a dedicated HANA line (or receives an outbound call), and HANA conducts a clinician-designed interview — capturing the exact data points your clinicians need, in a consistent and empathetic format, every time.</p>
+                <SectionHeader label={IT ? "La Soluzione HANA" : "The HANA Solution"} />
+                <p className="text-slate-600 leading-relaxed mb-8">{IT ? "HANA sostituisce le chiamate di accoglienza non strutturate con un'intervista voice AI strutturata. Un genitore o un paziente chiama una linea HANA dedicata (o riceve una chiamata in uscita) e HANA conduce un'intervista progettata dal clinico — raccogliendo esattamente i punti dati di cui i tuoi clinici hanno bisogno, in un formato coerente ed empatico, ogni volta." : "HANA replaces unstructured intake calls with a structured voice AI interview. A parent or patient calls a dedicated HANA line (or receives an outbound call), and HANA conducts a clinician-designed interview — capturing the exact data points your clinicians need, in a consistent and empathetic format, every time."}</p>
                 <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm">
                   <table className="w-full text-sm">
                     <thead>
                       <tr>
-                        <th className="bg-slate-800 text-white text-left px-5 py-3.5 font-semibold rounded-tl-2xl">Traditional Intake</th>
-                        <th className="bg-blue-600 text-white text-left px-5 py-3.5 font-semibold rounded-tr-2xl">HANA Intake</th>
+                        <th className="bg-slate-800 text-white text-left px-5 py-3.5 font-semibold rounded-tl-2xl">{IT ? "Accoglienza Tradizionale" : "Traditional Intake"}</th>
+                        <th className="bg-blue-600 text-white text-left px-5 py-3.5 font-semibold rounded-tr-2xl">{IT ? "Accoglienza HANA" : "HANA Intake"}</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {[
-                        ["45–90 min of staff time per intake", "Fully automated — zero staff time during the interview"],
-                        ["Inconsistent question coverage", "Structured protocol — same clinical quality every time"],
-                        ["Unstructured notes to synthesize", "Organized data output, ready for clinician review"],
-                        ["Scheduling bottleneck", "Patients complete intake on their own schedule, 24/7"],
-                        ["Clinician burnout on data-gathering", "Clinicians engage only at interpretation and planning stage"],
-                      ].map(([bad, good], i) => (
+                      {(IT
+                        ? [
+                            ["45–90 min di tempo del personale per accoglienza", "Completamente automatizzata — zero tempo del personale durante l'intervista"],
+                            ["Copertura delle domande incoerente", "Protocollo strutturato — stessa qualità clinica ogni volta"],
+                            ["Note non strutturate da sintetizzare", "Output di dati organizzati, pronti per la revisione del clinico"],
+                            ["Collo di bottiglia nella pianificazione", "I pazienti completano l'accoglienza con i propri tempi, 24/7"],
+                            ["Burnout del clinico nella raccolta dati", "I clinici intervengono solo nella fase di interpretazione e pianificazione"],
+                          ]
+                        : [
+                            ["45–90 min of staff time per intake", "Fully automated — zero staff time during the interview"],
+                            ["Inconsistent question coverage", "Structured protocol — same clinical quality every time"],
+                            ["Unstructured notes to synthesize", "Organized data output, ready for clinician review"],
+                            ["Scheduling bottleneck", "Patients complete intake on their own schedule, 24/7"],
+                            ["Clinician burnout on data-gathering", "Clinicians engage only at interpretation and planning stage"],
+                          ]
+                      ).map(([bad, good], i) => (
                         <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-slate-50"}>
                           <td className="px-5 py-3.5 text-slate-500">{bad}</td>
                           <td className="px-5 py-3.5 text-blue-600 font-medium">{good}</td>
@@ -551,9 +727,9 @@ export function WhitepaperADHD() {
 
               {/* Interview Architecture */}
               <section ref={setRef("interview-architecture")} id="interview-architecture">
-                <SectionHeader label="The Interview Architecture: Three Modules" />
-                <p className="text-slate-600 leading-relaxed mb-8">The HANA ADHD interview is organized into three sequential modules. Each module has a defined clinical purpose and together they produce a complete picture of the patient's presentation, functional impairment, developmental history, and treatment context.</p>
-                <p className="text-xs text-slate-400 mb-4 uppercase tracking-wider font-semibold">Click a module to expand</p>
+                <SectionHeader label={IT ? "L'Architettura dell'Intervista: Tre Moduli" : "The Interview Architecture: Three Modules"} />
+                <p className="text-slate-600 leading-relaxed mb-8">{IT ? "L'intervista ADHD di HANA è organizzata in tre moduli sequenziali. Ogni modulo ha una finalità clinica definita e insieme producono un quadro completo della presentazione del paziente, della compromissione funzionale, dell'anamnesi evolutiva e del contesto di trattamento." : "The HANA ADHD interview is organized into three sequential modules. Each module has a defined clinical purpose and together they produce a complete picture of the patient's presentation, functional impairment, developmental history, and treatment context."}</p>
+                <p className="text-xs text-slate-400 mb-4 uppercase tracking-wider font-semibold">{IT ? "Clicca un modulo per espanderlo" : "Click a module to expand"}</p>
                 <div className="space-y-3">
                   {MODULES.map((mod, i) => <ModuleCard key={mod.key} mod={mod} index={i} />)}
                 </div>
@@ -561,8 +737,8 @@ export function WhitepaperADHD() {
 
               {/* Patient Journey */}
               <section ref={setRef("patient-journey")} id="patient-journey">
-                <SectionHeader label="The Patient Journey" />
-                <p className="text-slate-600 leading-relaxed mb-8">HANA supports two primary ADHD intake flows. Both follow the same three-module interview structure, adapted for the respondent.</p>
+                <SectionHeader label={IT ? "Il Percorso del Paziente" : "The Patient Journey"} />
+                <p className="text-slate-600 leading-relaxed mb-8">{IT ? "HANA supporta due flussi principali di accoglienza ADHD. Entrambi seguono la stessa struttura di intervista a tre moduli, adattata al rispondente." : "HANA supports two primary ADHD intake flows. Both follow the same three-module interview structure, adapted for the respondent."}</p>
 
                 {/* Tab toggle */}
                 <div className="flex gap-2 p-1 bg-white border border-slate-200 rounded-xl w-full sm:w-fit mb-8 shadow-sm">
@@ -576,7 +752,9 @@ export function WhitepaperADHD() {
                           : "text-slate-500 hover:text-slate-800"
                       }`}
                     >
-                      {tab === "pediatric" ? "Pediatric (Parent-Report)" : "Adult (Self-Report)"}
+                      {tab === "pediatric"
+                        ? (IT ? "Pediatrico (Segnalazione Genitore)" : "Pediatric (Parent-Report)")
+                        : (IT ? "Adulto (Autovalutazione)" : "Adult (Self-Report)")}
                     </button>
                   ))}
                 </div>
@@ -591,17 +769,24 @@ export function WhitepaperADHD() {
                   >
                     <p className="text-sm text-slate-500 mb-5">
                       {journeyTab === "pediatric"
-                        ? "A parent or guardian completes the HANA interview on behalf of their child. Most common ADHD assessment pathway in child psychiatry and neuropsychology."
-                        : "The patient completes the HANA interview directly, supplemented by adult-normed rating scales. HANA adapts language, pacing, and probe strategy for adult respondents."}
+                        ? (IT
+                            ? "Un genitore o tutore completa l'intervista HANA per conto del proprio figlio. È il percorso di valutazione ADHD più comune in psichiatria infantile e neuropsicologia."
+                            : "A parent or guardian completes the HANA interview on behalf of their child. Most common ADHD assessment pathway in child psychiatry and neuropsychology.")
+                        : (IT
+                            ? "Il paziente completa direttamente l'intervista HANA, integrata da scale di valutazione normalizzate per adulti. HANA adatta linguaggio, ritmo e strategia di approfondimento ai rispondenti adulti."
+                            : "The patient completes the HANA interview directly, supplemented by adult-normed rating scales. HANA adapts language, pacing, and probe strategy for adult respondents.")}
                     </p>
-                    <p className="text-xs text-slate-400 mb-3 uppercase tracking-wider font-semibold">Click a step to expand</p>
+                    <p className="text-xs text-slate-400 mb-3 uppercase tracking-wider font-semibold">{IT ? "Clicca un passo per espanderlo" : "Click a step to expand"}</p>
                     <JourneyGrid steps={journeyTab === "pediatric" ? PEDIATRIC_STEPS : ADULT_STEPS} />
 
                     {journeyTab === "pediatric" && (
                       <div className="mt-5 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
-                        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Assessment instruments dispatched</p>
+                        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">{IT ? "Strumenti di valutazione inviati" : "Assessment instruments dispatched"}</p>
                         <ul className="text-sm text-slate-600 space-y-1">
-                          {["NICHQ Vanderbilt Assessment Scales (Parent & Teacher forms)", "BASC-3: Behavior Assessment System for Children, 3rd Edition", "Conners 3rd Edition (C3) — Parent, Teacher, and Self-Report forms", "BRIEF-2: Behavior Rating Inventory of Executive Function, 2nd Edition"].map(item => (
+                          {(IT
+                            ? ["NICHQ Vanderbilt Assessment Scales (moduli Genitore e Insegnante)", "BASC-3: Behavior Assessment System for Children, 3ª edizione", "Conners 3rd Edition (C3) — moduli Genitore, Insegnante e Autovalutazione", "BRIEF-2: Behavior Rating Inventory of Executive Function, 2ª edizione"]
+                            : ["NICHQ Vanderbilt Assessment Scales (Parent & Teacher forms)", "BASC-3: Behavior Assessment System for Children, 3rd Edition", "Conners 3rd Edition (C3) — Parent, Teacher, and Self-Report forms", "BRIEF-2: Behavior Rating Inventory of Executive Function, 2nd Edition"]
+                          ).map(item => (
                             <li key={item} className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">·</span>{item}</li>
                           ))}
                         </ul>
@@ -613,8 +798,8 @@ export function WhitepaperADHD() {
 
               {/* EHR Integration */}
               <section ref={setRef("ehr-integration")} id="ehr-integration">
-                <SectionHeader label="Practice Integration: Setup in EHR" />
-                <p className="text-slate-600 leading-relaxed mb-8">HANA integrates directly with your EHR to automate scheduling, assessment dispatch, and report delivery. Work through each step below to configure your practice.</p>
+                <SectionHeader label={IT ? "Integrazione nello Studio: Configurazione nell'EHR" : "Practice Integration: Setup in EHR"} />
+                <p className="text-slate-600 leading-relaxed mb-8">{IT ? "HANA si integra direttamente con il tuo EHR per automatizzare la pianificazione, l'invio delle valutazioni e la consegna dei referti. Segui ogni passo qui sotto per configurare il tuo studio." : "HANA integrates directly with your EHR to automate scheduling, assessment dispatch, and report delivery. Work through each step below to configure your practice."}</p>
                 <div className="space-y-3">
                   {EHR_STEPS.map((step, i) => <EHRStep key={step.n} step={step} index={i} />)}
                 </div>
@@ -622,14 +807,21 @@ export function WhitepaperADHD() {
 
               {/* Outcomes */}
               <section ref={setRef("outcomes")} id="outcomes">
-                <SectionHeader label="Expected Outcomes for Clinic Partners" />
-                <p className="text-slate-600 leading-relaxed mb-8">Practices that implement the HANA ADHD intake workflow see measurable improvements across three dimensions:</p>
+                <SectionHeader label={IT ? "Risultati Attesi per le Cliniche Partner" : "Expected Outcomes for Clinic Partners"} />
+                <p className="text-slate-600 leading-relaxed mb-8">{IT ? "Gli studi che adottano il workflow di accoglienza ADHD di HANA registrano miglioramenti misurabili su tre dimensioni:" : "Practices that implement the HANA ADHD intake workflow see measurable improvements across three dimensions:"}</p>
                 <div className="grid gap-4 sm:grid-cols-3">
-                  {[
-                    { title: "Operational Efficiency", accent: "border-blue-500", bg: "bg-white", text: "Eliminate 40–90 minutes of coordinator time per intake. Scale ADHD assessment volume without adding headcount or creating scheduling bottlenecks." },
-                    { title: "Clinical Quality", accent: "border-indigo-500", bg: "bg-white", text: "100% protocol adherence. Every patient receives the same evidence-based intake — no questions skipped, no informants missed, no variation by coordinator." },
-                    { title: "Patient Experience", accent: "border-violet-500", bg: "bg-white", text: "Families complete intake on their own schedule, at home, without a phone appointment. Reduces no-shows and improves intake completion rates." },
-                  ].map((o, i) => (
+                  {(IT
+                    ? [
+                        { title: "Efficienza Operativa", accent: "border-blue-500", bg: "bg-white", text: "Elimina 40–90 minuti di tempo del coordinatore per ogni accoglienza. Scala il volume delle valutazioni ADHD senza aumentare il personale né creare colli di bottiglia nella pianificazione." },
+                        { title: "Qualità Clinica", accent: "border-indigo-500", bg: "bg-white", text: "100% di aderenza al protocollo. Ogni paziente riceve la stessa accoglienza basata sulle evidenze — nessuna domanda saltata, nessun informatore tralasciato, nessuna variazione da coordinatore a coordinatore." },
+                        { title: "Esperienza del Paziente", accent: "border-violet-500", bg: "bg-white", text: "Le famiglie completano l'accoglienza con i propri tempi, da casa, senza un appuntamento telefonico. Riduce le mancate presentazioni e migliora i tassi di completamento dell'accoglienza." },
+                      ]
+                    : [
+                        { title: "Operational Efficiency", accent: "border-blue-500", bg: "bg-white", text: "Eliminate 40–90 minutes of coordinator time per intake. Scale ADHD assessment volume without adding headcount or creating scheduling bottlenecks." },
+                        { title: "Clinical Quality", accent: "border-indigo-500", bg: "bg-white", text: "100% protocol adherence. Every patient receives the same evidence-based intake — no questions skipped, no informants missed, no variation by coordinator." },
+                        { title: "Patient Experience", accent: "border-violet-500", bg: "bg-white", text: "Families complete intake on their own schedule, at home, without a phone appointment. Reduces no-shows and improves intake completion rates." },
+                      ]
+                  ).map((o, i) => (
                     <motion.div
                       key={o.title}
                       initial={{ opacity: 0, y: 16 }}
@@ -647,15 +839,23 @@ export function WhitepaperADHD() {
 
               {/* Onboarding */}
               <section ref={setRef("onboarding")} id="onboarding">
-                <SectionHeader label="Onboarding Timeline" />
-                <p className="text-slate-600 leading-relaxed mb-8">HANA is available for pilot deployment with select clinic partners. The typical onboarding timeline is 2–4 weeks, including template configuration, staff training, and a supervised first-intake review.</p>
+                <SectionHeader label={IT ? "Tempistiche di Onboarding" : "Onboarding Timeline"} />
+                <p className="text-slate-600 leading-relaxed mb-8">{IT ? "HANA è disponibile per deployment pilota con un numero selezionato di cliniche partner. Le tempistiche di onboarding tipiche sono 2–4 settimane, comprese la configurazione dei template, la formazione del personale e una revisione supervisionata della prima accoglienza." : "HANA is available for pilot deployment with select clinic partners. The typical onboarding timeline is 2–4 weeks, including template configuration, staff training, and a supervised first-intake review."}</p>
                 <div className="space-y-3 mb-14">
-                  {[
-                    { week: "Week 1", text: "Kickoff call. EHR integration. Message template and assessment packet configuration." },
-                    { week: "Week 2", text: "HANA interview customization to your specific clinical protocol. Staff training session." },
-                    { week: "Week 3", text: "Supervised pilot — 2 to 3 live intakes with clinician review of HANA output and protocol refinement." },
-                    { week: "Week 4", text: "Go-live. Full ADHD intake volume transitions to the HANA workflow." },
-                  ].map((row, i) => (
+                  {(IT
+                    ? [
+                        { week: "Settimana 1", text: "Chiamata di avvio. Integrazione EHR. Configurazione del template del messaggio e del pacchetto di valutazioni." },
+                        { week: "Settimana 2", text: "Personalizzazione dell'intervista HANA sul tuo specifico protocollo clinico. Sessione di formazione del personale." },
+                        { week: "Settimana 3", text: "Pilota supervisionato — da 2 a 3 accoglienze live con revisione dell'output di HANA da parte del clinico e affinamento del protocollo." },
+                        { week: "Settimana 4", text: "Go-live. L'intero volume di accoglienze ADHD passa al workflow HANA." },
+                      ]
+                    : [
+                        { week: "Week 1", text: "Kickoff call. EHR integration. Message template and assessment packet configuration." },
+                        { week: "Week 2", text: "HANA interview customization to your specific clinical protocol. Staff training session." },
+                        { week: "Week 3", text: "Supervised pilot — 2 to 3 live intakes with clinician review of HANA output and protocol refinement." },
+                        { week: "Week 4", text: "Go-live. Full ADHD intake volume transitions to the HANA workflow." },
+                      ]
+                  ).map((row, i) => (
                     <motion.div
                       key={row.week}
                       initial={{ opacity: 0, x: -16 }}
@@ -675,8 +875,8 @@ export function WhitepaperADHD() {
                   <div className="absolute top-0 right-0 w-80 h-80 bg-blue-600/20 rounded-full blur-[80px] pointer-events-none" />
                   <div className="absolute bottom-0 left-0 w-60 h-60 bg-indigo-600/15 rounded-full blur-[60px] pointer-events-none" />
                   <div className="relative z-10">
-                    <p className="text-2xl font-bold text-white mb-2">Ready to transform your ADHD intake workflow?</p>
-                    <p className="text-slate-400 text-sm mb-8">Schedule a demo or start a pilot conversation</p>
+                    <p className="text-2xl font-bold text-white mb-2">{IT ? "Pronto a trasformare il tuo workflow di accoglienza ADHD?" : "Ready to transform your ADHD intake workflow?"}</p>
+                    <p className="text-slate-400 text-sm mb-8">{IT ? "Prenota una demo o avvia una conversazione sul programma pilota" : "Schedule a demo or start a pilot conversation"}</p>
                     <div className="flex flex-col sm:flex-row gap-3 justify-center">
                       <a
                         href="https://calendly.com/matteowastaken/discoverycall"
@@ -684,7 +884,7 @@ export function WhitepaperADHD() {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 bg-white text-slate-900 px-6 py-3 rounded-full font-semibold text-sm hover:bg-slate-100 transition-colors group"
                       >
-                        Book a Demo <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
+                        {IT ? "Chiedici una Demo" : "Book a Demo"} <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
                       </a>
                       <a
                         href="mailto:matteo@usehana.com"
@@ -693,7 +893,7 @@ export function WhitepaperADHD() {
                         matteo@usehana.com <ArrowUpRight size={14} />
                       </a>
                     </div>
-                    <p className="text-xs text-slate-600 mt-6">Confidential — prepared exclusively for prospective HANA clinic partners</p>
+                    <p className="text-xs text-slate-600 mt-6">{IT ? "Riservato — preparato esclusivamente per le potenziali cliniche partner di HANA" : "Confidential — prepared exclusively for prospective HANA clinic partners"}</p>
                   </div>
                 </div>
               </section>

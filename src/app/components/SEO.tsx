@@ -11,7 +11,9 @@ function getSiteDomain(): string {
 }
 
 const SITE_DOMAIN = EN_DOMAIN; // used for static schema objects only
-const DEFAULT_KEYWORDS = "Voice AI, Patient Engagement, Clinical AI, Remote Patient Monitoring, AI Receptionist, Healthcare Automation, Intelligent Intake, Care Coordination, Healthcare Voice Technology, Medical AI Assistant";
+const DEFAULT_KEYWORDS_EN = "Voice AI, Patient Engagement, Clinical AI, Remote Patient Monitoring, AI Receptionist, Healthcare Automation, Intelligent Intake, Care Coordination, Healthcare Voice Technology, Medical AI Assistant";
+const DEFAULT_KEYWORDS_IT = "AI vocale, coinvolgimento dei pazienti, AI clinica, monitoraggio remoto dei pazienti, segreteria AI, automazione sanitaria, accoglienza intelligente, coordinamento delle cure, tecnologia vocale per la sanità, assistente medico AI";
+const DEFAULT_KEYWORDS = getLocale() === "it" ? DEFAULT_KEYWORDS_IT : DEFAULT_KEYWORDS_EN;
 
 interface SEOProps {
   title?: string;
