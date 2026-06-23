@@ -6,6 +6,7 @@ import {
   spring,
   Easing,
 } from "remotion";
+import { getLocale } from "../../../lib/i18n";
 
 /* ------------------------------------------------------------------ */
 /*  Hana — Patient Context demo. Apple-grade redesign.                 */
@@ -240,9 +241,10 @@ function channelTint(channel: Channel): string {
 }
 
 function channelLabel(channel: Channel): string {
-  if (channel === "call") return "via call";
+  const it = getLocale() === "it";
+  if (channel === "call") return it ? "via telefono" : "via call";
   if (channel === "whatsapp") return "via WhatsApp";
-  return "via reminder";
+  return it ? "via promemoria" : "via reminder";
 }
 
 /* ---- Static data (defined once, outside render) ------------------- */
@@ -258,7 +260,7 @@ type Card = {
   activeAt: number; // frame this touchpoint goes live (active state sweeps here)
 };
 
-const CARDS: Card[] = [
+const CARDS_EN: Card[] = [
   {
     month: "JUN",
     day: "01",
@@ -285,6 +287,35 @@ const CARDS: Card[] = [
   },
 ];
 
+const CARDS_IT: Card[] = [
+  {
+    month: "GIU",
+    day: "01",
+    label: "PREFERENZE RACCOLTE",
+    channel: "call",
+    bullets: ["Consenso + canale", "Livello di dettaglio"],
+    activeAt: 40,
+  },
+  {
+    month: "GIU",
+    day: "02",
+    label: "CHECK-IN",
+    channel: "whatsapp",
+    bullets: ["Esegui protocollo", "Scostamento baseline"],
+    activeAt: 150,
+  },
+  {
+    month: "GIU",
+    day: "07",
+    label: "FOLLOW-UP",
+    channel: "reminder",
+    bullets: ["Verifica aderenza", "Regola frequenza"],
+    activeAt: 240,
+  },
+];
+
+const CARDS: Card[] = getLocale() === "it" ? CARDS_IT : CARDS_EN;
+
 /*  Each record row is tied to the touchpoint that produced it. `source`
     is the small tag (via call / via WhatsApp / via reminder). Rows write
     in as their touchpoint activates — the record visibly compounds.   */
@@ -296,7 +327,7 @@ type Row = {
   mono?: boolean;
 };
 
-const ROWS: Row[] = [
+const ROWS_EN: Row[] = [
   { label: "Preferred channel:", value: "WhatsApp", delay: 92, source: "call" },
   { label: "Explanation level:", value: "Simple", delay: 176, source: "whatsapp" },
   { label: "Best time:", value: "Tue 6–7pm", delay: 256, source: "reminder", mono: true },
@@ -306,6 +337,15 @@ const ROWS: Row[] = [
   { label: "Caregiver:", value: "Daughter · CC", delay: 290, source: "whatsapp" },
 ];
 
+const ROWS_IT: Row[] = [
+  { label: "Canale preferito:", value: "WhatsApp", delay: 92, source: "call" },
+  { label: "Livello di dettaglio:", value: "Semplice", delay: 176, source: "whatsapp" },
+  { label: "Orario migliore:", value: "Mar 18–19", delay: 256, source: "reminder", mono: true },
+  { label: "Caregiver:", value: "Figlia · CC", delay: 290, source: "whatsapp" },
+];
+
+const ROWS: Row[] = getLocale() === "it" ? ROWS_IT : ROWS_EN;
+
 const WAVE_BARS = 5;
 
 /* ================================================================== */
@@ -314,6 +354,7 @@ export function PatientContextComp() {
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
   const D = durationInFrames;
+  const loc = getLocale();
 
   /* Normalized loop phase [0,1). Used for all continuous micro-life so
      every cyclic value returns exactly to its frame-0 state on wrap. */
@@ -472,7 +513,7 @@ export function PatientContextComp() {
               textTransform: "uppercase",
             }}
           >
-            To
+            {loc === "it" ? "A" : "To"}
           </span>
           <span
             style={{
@@ -484,7 +525,9 @@ export function PatientContextComp() {
               textOverflow: "ellipsis",
             }}
           >
-            Hi Ms. Johnson, this is Hana confirming your appointment
+            {loc === "it"
+              ? "Salve Sig.ra Johnson, sono Hana, confermo il suo appuntamento"
+              : "Hi Ms. Johnson, this is Hana confirming your appointment"}
             <span
               style={{
                 display: "inline-block",
@@ -842,7 +885,9 @@ export function PatientContextComp() {
                   letterSpacing: -0.1,
                 }}
               >
-                Every touch writes to one record — carried into the next.
+                {loc === "it"
+                  ? "Ogni contatto scrive in un unico record — portato in quello dopo."
+                  : "Every touch writes to one record — carried into the next."}
               </p>
             </div>
           </div>
@@ -881,7 +926,7 @@ export function PatientContextComp() {
                 letterSpacing: 1.1,
               }}
             >
-              PATIENT CONTEXT
+              {loc === "it" ? "CONTESTO PAZIENTE" : "PATIENT CONTEXT"}
             </span>
             {/* live record counter — increments as facts compound */}
             <RecordCounter frame={frame} />
@@ -899,7 +944,7 @@ export function PatientContextComp() {
                 border: "1px solid rgba(48,209,88,0.22)",
               }}
             >
-              UPDATED
+              {loc === "it" ? "AGGIORNATO" : "UPDATED"}
             </span>
           </div>
 
@@ -1091,8 +1136,10 @@ export function PatientContextComp() {
                 lineHeight: 1.3,
               }}
             >
-              Context carried into
-              <span style={{ color: "#F5F5F7" }}> next touch</span>
+              {loc === "it" ? "Contesto portato nel" : "Context carried into"}
+              <span style={{ color: "#F5F5F7" }}>
+                {loc === "it" ? " contatto dopo" : " next touch"}
+              </span>
             </span>
           </div>
         </div>
@@ -1152,7 +1199,7 @@ export function PatientContextComp() {
                 letterSpacing: 1,
               }}
             >
-              VOICE CHANNEL ACTIVE
+              {loc === "it" ? "CANALE VOCALE ATTIVO" : "VOICE CHANNEL ACTIVE"}
             </span>
           </div>
 
@@ -1196,7 +1243,7 @@ export function PatientContextComp() {
             />
           </svg>
           <span style={{ fontSize: 12, fontWeight: 600, color: "#fff", letterSpacing: 0.2 }}>
-            End call
+            {loc === "it" ? "Termina" : "End call"}
           </span>
         </div>
       </div>
@@ -1223,7 +1270,16 @@ function ChannelChip({ channel }: { channel: Channel }) {
     : isCall
     ? "0 1px 2px rgba(0,0,0,0.10), 0 6px 14px -8px rgba(10,132,255,0.55), inset 0 1px 0 rgba(255,255,255,0.35)"
     : "0 1px 2px rgba(0,0,0,0.10), 0 6px 14px -8px rgba(255,159,10,0.55), inset 0 1px 0 rgba(255,255,255,0.35)";
-  const label = isWA ? "WhatsApp" : isCall ? "Voice call" : "SMS reminder";
+  const it = getLocale() === "it";
+  const label = isWA
+    ? "WhatsApp"
+    : isCall
+    ? it
+      ? "Chiamata"
+      : "Voice call"
+    : it
+    ? "Promemoria SMS"
+    : "SMS reminder";
   return (
     <div
       style={{
@@ -1260,6 +1316,7 @@ function ContextCaption({
   cardActivation: { live: number; completed: number }[];
 }) {
   const r = reveal(frame, fps, { delay: 60, drift: 6, dur: 24 });
+  const it = getLocale() === "it";
   const touched = cardActivation.reduce((n, c) => n + (c.completed > 0.5 ? 1 : 0), 0);
   return (
     <div
@@ -1301,7 +1358,9 @@ function ContextCaption({
         </span>
         <span style={{ width: 1, height: 11, background: HAIRLINE_2 }} />
         <span style={{ fontSize: 11.5, color: SLATE, letterSpacing: -0.1 }}>
-          Touchpoints — each writes one fact into the record
+          {it
+            ? "Contatti — ognuno scrive un dato nel record"
+            : "Touchpoints — each writes one fact into the record"}
         </span>
       </div>
     </div>
@@ -1325,7 +1384,7 @@ function RecordCounter({ frame }: { frame: number }) {
         border: "1px solid rgba(255,255,255,0.07)",
       }}
     >
-      {count} fields
+      {count} {getLocale() === "it" ? "campi" : "fields"}
     </span>
   );
 }

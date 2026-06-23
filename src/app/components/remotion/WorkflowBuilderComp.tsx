@@ -6,6 +6,13 @@ import {
   Easing,
 } from "remotion";
 import type { ReactNode } from "react";
+import { getLocale } from "../../../lib/i18n";
+
+/* Locale (stable singleton, evaluated once at module load). All user-visible
+   copy below is provided in EN and IT and selected via this flag. Non-text
+   code — geometry, timings, easing, colors, ports, camera — is untouched. */
+const LOC = getLocale();
+const IT = LOC === "it";
 
 /* ----------------------------------------------------------------------------
    Hana — "Workflow Builder"  (510f / 17s @ 30fps, seamless loop)
@@ -214,7 +221,7 @@ type EdgeDef = {
    Bodies are single wrapping paragraphs; each card uses an explicit fixed
    height (= `h`) so the bezier ports stay attached to the real card edges and
    nothing is clipped at the node's beat.                                    */
-const NODES: NodeDef[] = [
+const NODES_EN: NodeDef[] = [
   {
     id: "inbound",
     title: "# Inbound Trigger",
@@ -318,6 +325,114 @@ const NODES: NodeDef[] = [
     chips: [],
   },
 ];
+
+/* Italian variant — identical geometry/accent/ports, translated copy only. */
+const NODES_IT: NodeDef[] = [
+  {
+    id: "inbound",
+    title: "# Trigger in Entrata",
+    accent: "purple",
+    x: 60,
+    y: 96,
+    w: NODE_W,
+    h: 112,
+    body:
+      "Arriva una chiamata sul numero dello studio. HANA risponde all'istante — non una persona, non la segreteria. Il flusso parte alla risposta.",
+    chips: [],
+  },
+  {
+    id: "chart",
+    title: "# Leggi: Cartella Paziente",
+    accent: "purple",
+    x: 452,
+    y: 96,
+    w: NODE_W,
+    h: 168,
+    body:
+      "Prima di dire una parola, HANA apre la cartella del chiamante: identità, appuntamento, storico disdette, stato assicurativo e flag clinici.",
+    chips: [{ label: "Cartella Caricata", dim: false }],
+  },
+  {
+    id: "cancel",
+    title: "# Parla: Disdetta",
+    accent: "blue",
+    x: 844,
+    y: 80,
+    w: NODE_W,
+    h: 206,
+    body:
+      "Sulla base della cartella, HANA saluta il paziente per nome, conferma l'appuntamento e ne chiede il motivo — registrato come dato strutturato, non come chiacchiera.",
+    chips: [
+      { label: "Disdetta Confermata", dim: false },
+      { label: "Mantiene l'Appuntamento", dim: true },
+    ],
+  },
+  {
+    id: "note",
+    title: "# Scrivi: Nota di Disdetta",
+    accent: "purple",
+    x: 844,
+    y: 430,
+    w: NODE_W,
+    h: 168,
+    body:
+      "HANA scrive una nota strutturata nel gestionale — codice motivo, parole del paziente, orario, flag ricorrenza — e libera lo slot in agenda.",
+    chips: [{ label: "Slot Liberato", dim: false }],
+  },
+  {
+    id: "waitlist",
+    title: "# Leggi: Lista d'Attesa",
+    accent: "purple",
+    x: 452,
+    y: 430,
+    w: NODE_W,
+    h: 168,
+    body:
+      "Appena lo slot si libera, HANA interroga la lista d'attesa E l'idoneità di ogni candidato — scegliendo il paziente giusto (un controllo in sospeso), non solo il primo in coda.",
+    chips: [{ label: "Candidato Scelto · controllo dovuto", dim: false, warn: true }],
+  },
+  {
+    id: "offer",
+    title: "# Parla: Proponi Slot",
+    accent: "blue",
+    x: 60,
+    y: 420,
+    w: NODE_W,
+    h: 206,
+    body:
+      "HANA chiama il paziente scelto dalla lista, conoscendo già nome, storico e perché era in attesa, e gli propone il posto in modo caloroso e mirato.",
+    chips: [
+      { label: "Proposta Accettata", dim: false },
+      { label: "Rifiuta -> Prossimo Candidato", dim: true },
+    ],
+  },
+  {
+    id: "confirm",
+    title: "# Parla: Conferma Prenotazione",
+    accent: "blue",
+    x: 452,
+    y: 740,
+    w: NODE_W,
+    h: 168,
+    body:
+      "Il paziente accetta. HANA prenota in diretta durante la chiamata — confermando data, ora, sede e ogni preparazione utile dalla cartella — e promette un messaggio.",
+    chips: [{ label: "Prenotato", dim: false }],
+  },
+  {
+    id: "final",
+    title: "# Scrivi: Nota + Attività + SMS",
+    accent: "purple",
+    x: 844,
+    y: 740,
+    w: NODE_W,
+    h: 128,
+    body:
+      "Quattro scritture in un colpo solo: una nota nel gestionale per il nuovo appuntamento, un'attività per lo staff per verificare l'assicurazione e messaggi di conferma a ENTRAMBI i pazienti.",
+    chips: [],
+  },
+];
+
+const NODES: NodeDef[] = IT ? NODES_IT : NODES_EN;
 
 const NODE_BY_ID: Record<NodeId, NodeDef> = NODES.reduce((acc, n) => {
   acc[n.id] = n;
@@ -557,7 +672,7 @@ function ok(text: string): ConsoleLineT {
 }
 
 /* Node 1 — Telephony pickup */
-const CALLS_TELEPHONY: ConsoleCall[] = [
+const CALLS_TELEPHONY_EN: ConsoleCall[] = [
   {
     tool: "TELEPHONY",
     status: "CALL ANSWERED",
@@ -569,9 +684,22 @@ const CALLS_TELEPHONY: ConsoleCall[] = [
     ],
   },
 ];
+const CALLS_TELEPHONY_IT: ConsoleCall[] = [
+  {
+    tool: "TELEPHONY",
+    status: "CALL ANSWERED",
+    statusColor: SYN_OK,
+    lines: [
+      kv("inbound from", '"+1 (415) 555-0148"', 0),
+      kv("matched_line", '"front_desk"', 0),
+      comment("// workflow: cancellation_handler v3"),
+    ],
+  },
+];
+const CALLS_TELEPHONY: ConsoleCall[] = IT ? CALLS_TELEPHONY_IT : CALLS_TELEPHONY_EN;
 
 /* Node 2 — EHR Chart read */
-const CALLS_CHART: ConsoleCall[] = [
+const CALLS_CHART_EN: ConsoleCall[] = [
   {
     tool: "EHR CHART",
     status: "200 OK",
@@ -586,9 +714,25 @@ const CALLS_CHART: ConsoleCall[] = [
     ],
   },
 ];
+const CALLS_CHART_IT: ConsoleCall[] = [
+  {
+    tool: "EHR CHART",
+    status: "200 OK",
+    statusColor: SYN_OK,
+    lines: [
+      verb("GET", "/api/v1/patients/by_phone/5550148"),
+      kv("patient", '"Margaret Johnson"'),
+      kv("appt", '"Gio 11 giu, 14:00 · Dr. Ramirez"'),
+      kv("cancellations_90d", "0"),
+      kv("insurance", '"attiva · BCBS"'),
+      comment("// 1 flag clinico"),
+    ],
+  },
+];
+const CALLS_CHART: ConsoleCall[] = IT ? CALLS_CHART_IT : CALLS_CHART_EN;
 
 /* Node 4 — EHR note write */
-const CALLS_NOTE: ConsoleCall[] = [
+const CALLS_NOTE_EN: ConsoleCall[] = [
   {
     tool: "EHR NOTE",
     status: "201 Created",
@@ -602,9 +746,24 @@ const CALLS_NOTE: ConsoleCall[] = [
     ],
   },
 ];
+const CALLS_NOTE_IT: ConsoleCall[] = [
+  {
+    tool: "EHR NOTE",
+    status: "201 Created",
+    statusColor: SYN_OK,
+    lines: [
+      verb("POST", "/api/v1/patients/mj_4821/notes"),
+      kv("reason_code", '"PT_WORK_CONFLICT"'),
+      kv("verbatim", '"impegno di lavoro, nulla di sanitario"'),
+      kv("slot_released", '"2026-06-11T14:00:00Z"'),
+      ok("● SLOT LIBERATO · agenda aggiornata"),
+    ],
+  },
+];
+const CALLS_NOTE: ConsoleCall[] = IT ? CALLS_NOTE_IT : CALLS_NOTE_EN;
 
 /* Node 5 — Waitlist + Eligibility (two calls in one card) */
-const CALLS_WAITLIST: ConsoleCall[] = [
+const CALLS_WAITLIST_EN: ConsoleCall[] = [
   {
     tool: "WAITLIST",
     status: "200 OK",
@@ -627,9 +786,33 @@ const CALLS_WAITLIST: ConsoleCall[] = [
     ],
   },
 ];
+const CALLS_WAITLIST_IT: ConsoleCall[] = [
+  {
+    tool: "WAITLIST",
+    status: "200 OK",
+    statusColor: SYN_OK,
+    lines: [
+      verb("GET", "/api/v1/waitlist?slot=2026-06-11T14:00"),
+      kv("candidates", "4"),
+    ],
+  },
+  {
+    tool: "ELIGIBILITY",
+    status: "200 OK",
+    statusColor: SYN_OK,
+    lines: [
+      verb("GET", "/api/v1/patients/ra_2207/eligibility"),
+      kv("patient", '"Carlos Alvarez"'),
+      kv("care_gap", '"A1C in ritardo · 38 giorni"'),
+      kv("contact_pref", '"telefono"'),
+      comment("// scelto: il più adatto, non il primo in coda"),
+    ],
+  },
+];
+const CALLS_WAITLIST: ConsoleCall[] = IT ? CALLS_WAITLIST_IT : CALLS_WAITLIST_EN;
 
 /* Node 8 — Four writes in one conceptual card */
-const CALLS_FINAL: ConsoleCall[] = [
+const CALLS_FINAL_EN: ConsoleCall[] = [
   {
     tool: "EHR + TASKS + SMS",
     status: "4x OK",
@@ -673,6 +856,51 @@ const CALLS_FINAL: ConsoleCall[] = [
     ],
   },
 ];
+const CALLS_FINAL_IT: ConsoleCall[] = [
+  {
+    tool: "EHR + TASKS + SMS",
+    status: "4x OK",
+    statusColor: SYN_OK,
+    lines: [
+      {
+        indent: 0,
+        segs: [
+          seg("POST ", SYN_VERB),
+          seg("/api/v1/patients/ra_2207/appointments", SYN_PATH),
+          seg("  ", SYN_PATH),
+          seg("201 booked", SYN_OK),
+        ],
+      },
+      {
+        indent: 0,
+        segs: [
+          seg("POST ", SYN_VERB),
+          seg("/api/v1/tasks", SYN_PATH),
+          seg("  ", SYN_PATH),
+          seg("201 created", SYN_OK),
+        ],
+      },
+      kv("task", '"Verifica idoneità assicurativa"'),
+      kv("due", '"Gio 11 giu, entro le 14:00"'),
+      {
+        indent: 0,
+        segs: [
+          seg("SMS -> Johnson: ", SYN_VERB),
+          seg('"Il tuo appuntamento di gio alle 14:00 è stato disdetto come richiesto."', SYN_STR),
+        ],
+      },
+      {
+        indent: 0,
+        segs: [
+          seg("SMS -> Alvarez: ", SYN_VERB),
+          seg('"Confermato: gio 11 giu, 14:00 con il Dr. Ramirez."', SYN_STR),
+        ],
+      },
+      ok("● FATTO · 0 azioni dello staff"),
+    ],
+  },
+];
+const CALLS_FINAL: ConsoleCall[] = IT ? CALLS_FINAL_IT : CALLS_FINAL_EN;
 
 /* ---- Conversation script --------------------------------------------------- */
 type ConvItem =
@@ -685,7 +913,7 @@ type ConvItem =
       lineDelay: number;
     };
 
-const STREAM: ConvItem[] = [
+const STREAM_EN: ConvItem[] = [
   // B1 — Inbound (telephony console)
   { kind: "console", appearAt: 18, calls: CALLS_TELEPHONY, lineDelay: 11 },
   // B2 — Chart read
@@ -736,6 +964,62 @@ const STREAM: ConvItem[] = [
   // B8 — Four writes
   { kind: "console", appearAt: 444, calls: CALLS_FINAL, lineDelay: 7 },
 ];
+
+/* Italian variant — identical frames/kinds/lineDelay, translated text only.
+   Console items reference the same locale-aware CALLS_* constants. */
+const STREAM_IT: ConvItem[] = [
+  // B1 — Inbound (telephony console)
+  { kind: "console", appearAt: 18, calls: CALLS_TELEPHONY, lineDelay: 11 },
+  // B2 — Chart read
+  { kind: "console", appearAt: 84, calls: CALLS_CHART, lineDelay: 9 },
+  // B3 — Cancellation conversation
+  {
+    kind: "agent",
+    appearAt: 140,
+    text:
+      "Salve [Sig.ra Johnson], sono Hana, chiamo dallo studio del [Dr. Ramirez]. Vedo che ha un appuntamento [giovedì alle 14:00] — come posso aiutarla?",
+  },
+  {
+    kind: "user",
+    appearAt: 158,
+    text: "Salve — sì, devo disdirlo. Mi è capitato un imprevisto di lavoro.",
+  },
+  {
+    kind: "agent",
+    appearAt: 176,
+    text:
+      "Nessun problema, me ne occupo io. Posso chiederle il motivo, solo per i nostri archivi?",
+  },
+  {
+    kind: "user",
+    appearAt: 194,
+    text: "Solo un impegno di lavoro, nulla di sanitario.",
+  },
+  // B4 — Cancellation note write
+  { kind: "console", appearAt: 224, calls: CALLS_NOTE, lineDelay: 9 },
+  // B5 — Waitlist + eligibility
+  { kind: "console", appearAt: 272, calls: CALLS_WAITLIST, lineDelay: 9 },
+  // B6 — Offer conversation
+  {
+    kind: "agent",
+    appearAt: 332,
+    text:
+      "Salve [Sig. Alvarez], sono Hana dello studio del [Dr. Ramirez]. Si è appena liberato un posto [giovedì alle 14:00] — so che era in attesa ed è un po' in ritardo con il controllo. Lo vuole?",
+  },
+  { kind: "user", appearAt: 356, text: "Oh — sì! Va benissimo, grazie." },
+  // B7 — Confirm booking conversation
+  {
+    kind: "agent",
+    appearAt: 398,
+    text:
+      "Perfetto. È prenotato per [giovedì 11 giugno alle 14:00] con il [Dr. Ramirez]. Resti a digiuno per 8 ore prima per le analisi. Le invio subito un messaggio di conferma.",
+  },
+  { kind: "user", appearAt: 422, text: "Perfetto, ricevuto." },
+  // B8 — Four writes
+  { kind: "console", appearAt: 444, calls: CALLS_FINAL, lineDelay: 7 },
+];
+
+const STREAM: ConvItem[] = IT ? STREAM_IT : STREAM_EN;
 
 /* Estimated rendered heights (fixed, not measured) for the auto-scroll math. */
 function lineCharLen(line: ConsoleLineT): number {
@@ -902,7 +1186,9 @@ export function WorkflowBuilderComp() {
               color: INK,
             }}
           >
-            HANA didn't just answer the phone. It finished the job.
+            {IT
+              ? "HANA non ha solo risposto al telefono. Ha portato a termine il lavoro."
+              : "HANA didn't just answer the phone. It finished the job."}
           </span>
         </div>
       </div>
@@ -1314,7 +1600,7 @@ function SimPanel({
                 color: INK,
               }}
             >
-              Live Simulation
+              {IT ? "Simulazione Live" : "Live Simulation"}
             </span>
           </div>
           <div
@@ -1330,7 +1616,7 @@ function SimPanel({
               padding: "4px 9px",
             }}
           >
-            END CALL
+            {IT ? "TERMINA" : "END CALL"}
           </div>
         </div>
 
@@ -1435,7 +1721,7 @@ function StateCard({
             fontWeight: 500,
           }}
         >
-          LISTENING…
+          {IT ? "IN ASCOLTO…" : "LISTENING…"}
         </span>
       </div>
       {/* SPEAKING layer */}
@@ -1460,7 +1746,7 @@ function StateCard({
             fontWeight: 600,
           }}
         >
-          AGENT SPEAKING
+          {IT ? "AGENTE PARLA" : "AGENT SPEAKING"}
         </span>
       </div>
     </div>

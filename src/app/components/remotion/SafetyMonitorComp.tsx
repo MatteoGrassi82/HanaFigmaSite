@@ -7,6 +7,7 @@ import {
   Easing,
 } from "remotion";
 import type { ReactNode } from "react";
+import { getLocale } from "../../../lib/i18n";
 
 /* ============================================================================
    Hana — Safety Monitor  (390f / 13s @ 30fps, seamless loop)
@@ -93,7 +94,7 @@ type Turn =
     }
   | { who: "hana"; text: string };
 
-const TURNS: Turn[] = [
+const TURNS_EN: Turn[] = [
   {
     who: "patient",
     before:
@@ -116,6 +117,31 @@ const TURNS: Turn[] = [
   },
 ];
 
+const TURNS_IT: Turn[] = [
+  {
+    who: "patient",
+    before:
+      "Oggi il dolore è insopportabile. Lo so che la scatola dice una pastiglia, ma ",
+    danger: "ne ho già prese quattro stamattina",
+    after: ".",
+    tone: "elevated",
+  },
+  {
+    who: "hana",
+    text:
+      "La capisco — è più della dose prescritta e non è sicuro. Lo segnalo subito al suo team di cura. La prego, non ne prenda altre.",
+  },
+  {
+    who: "patient",
+    before: "…e a dirla tutta ",
+    danger: "sto pensando di prendere tutta la scatola pur di farlo smettere",
+    after: ".",
+    tone: "critical",
+  },
+];
+
+const TURNS: Turn[] = getLocale() === "it" ? TURNS_IT : TURNS_EN;
+
 /* Per-turn character length (only the visible text counts). */
 function turnLen(t: Turn): number {
   if (t.who === "hana") return t.text.length;
@@ -126,7 +152,7 @@ const TURN_LENS = TURNS.map(turnLen);
 /* Live protocol actions — each reads as an executed action with a console
    confirmation tag (verb · status), echoing the Workflow Builder.           */
 type Protocol = { label: string; tag: string; code: string };
-const PROTOCOLS: Protocol[] = [
+const PROTOCOLS_EN: Protocol[] = [
   { label: "Notify Primary Physician (Urgent)", tag: "paged", code: "200 OK" },
   {
     label: "Flag Chart for Medication Reconciliation",
@@ -135,6 +161,19 @@ const PROTOCOLS: Protocol[] = [
   },
   { label: "Schedule Same-Day Welfare Check", tag: "task created", code: "OK" },
 ];
+
+const PROTOCOLS_IT: Protocol[] = [
+  { label: "Avvisa il Medico Curante (Urgente)", tag: "paged", code: "200 OK" },
+  {
+    label: "Segnala la Cartella per Riconciliazione Farmacologica",
+    tag: "EHR note",
+    code: "201",
+  },
+  { label: "Pianifica una Verifica in Giornata", tag: "task created", code: "OK" },
+];
+
+const PROTOCOLS: Protocol[] =
+  getLocale() === "it" ? PROTOCOLS_IT : PROTOCOLS_EN;
 
 /* --------------------------------- Helpers --------------------------------- */
 const EASE = Easing.bezier(0.22, 1, 0.36, 1);
@@ -260,6 +299,7 @@ export function SafetyMonitorComp() {
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
   const LOOP = durationInFrames; // 390
+  const loc = getLocale();
 
   /* ---- Choreography (frames @ 390f / 13s) ----
      0    backdrop + blurred cards settle
@@ -392,7 +432,17 @@ export function SafetyMonitorComp() {
       extrapolateRight: "clamp",
     })
   );
-  const riskLabel = isCritical ? "Critical" : isElevated ? "Elevated" : "Low";
+  const riskLabel = isCritical
+    ? loc === "it"
+      ? "Critico"
+      : "Critical"
+    : isElevated
+    ? loc === "it"
+      ? "Elevato"
+      : "Elevated"
+    : loc === "it"
+    ? "Basso"
+    : "Low";
   const riskColor = isCritical
     ? COLOR.danger
     : isElevated
@@ -618,7 +668,7 @@ export function SafetyMonitorComp() {
                     color: COLOR.ink,
                   }}
                 >
-                  Safety Monitor
+                  {loc === "it" ? "Monitor di Sicurezza" : "Safety Monitor"}
                 </p>
                 <p
                   style={{
@@ -736,7 +786,9 @@ export function SafetyMonitorComp() {
               margin: "0 0 6px",
             }}
           >
-            <SectionLabel>Live Transcript</SectionLabel>
+            <SectionLabel>
+              {loc === "it" ? "Trascrizione Live" : "Live Transcript"}
+            </SectionLabel>
             {/* Risk meter — the legible escalation moment. */}
             <RiskMeter
               risk={risk}
@@ -785,7 +837,9 @@ export function SafetyMonitorComp() {
             filter: `blur(${analysis.blur}px)`,
           }}
         >
-          <SectionLabel>Real-Time Analysis</SectionLabel>
+          <SectionLabel>
+            {loc === "it" ? "Analisi in Tempo Reale" : "Real-Time Analysis"}
+          </SectionLabel>
           <div
             style={{
               display: "flex",
@@ -848,7 +902,9 @@ export function SafetyMonitorComp() {
                     color: COLOR.ink,
                   }}
                 >
-                  Medication Misuse Detected
+                  {loc === "it"
+                    ? "Uso Improprio di Farmaci Rilevato"
+                    : "Medication Misuse Detected"}
                 </p>
                 <p
                   style={{
@@ -894,7 +950,7 @@ export function SafetyMonitorComp() {
                   color: COLOR.muted,
                 }}
               >
-                RISK LEVEL
+                {loc === "it" ? "LIVELLO DI RISCHIO" : "RISK LEVEL"}
               </p>
               <p
                 style={{
@@ -936,7 +992,11 @@ export function SafetyMonitorComp() {
 
         {/* -------------------------- Protocol execution ---------------------- */}
         <div style={{ padding: "2px 22px 8px" }}>
-          <SectionLabel>Live Response · Protocols Executing</SectionLabel>
+          <SectionLabel>
+            {loc === "it"
+              ? "Risposta Live · Protocolli in Esecuzione"
+              : "Live Response · Protocols Executing"}
+          </SectionLabel>
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             {PROTOCOLS.map((p, i) => {
               const r = protocolReveals[i];
@@ -1096,7 +1156,9 @@ export function SafetyMonitorComp() {
                 letterSpacing: -0.1,
               }}
             >
-              All protocols dispatched
+              {loc === "it"
+                ? "Tutti i protocolli inviati"
+                : "All protocols dispatched"}
             </span>
             <span style={{ margin: "0 1px", color: COLOR.faint, fontSize: 11 }}>
               ·
@@ -1109,7 +1171,7 @@ export function SafetyMonitorComp() {
                 letterSpacing: -0.1,
               }}
             >
-              Care team notified
+              {loc === "it" ? "Team di cura avvisato" : "Care team notified"}
             </span>
             {/* mono "0 staff actions" tag — echoes Workflow Builder's close. */}
             <span
@@ -1129,7 +1191,8 @@ export function SafetyMonitorComp() {
                 flexShrink: 0,
               }}
             >
-              <span style={{ color: SYN_COMMENT }}>//</span> 0 staff actions
+              <span style={{ color: SYN_COMMENT }}>//</span>{" "}
+              {loc === "it" ? "0 azioni dello staff" : "0 staff actions"}
             </span>
           </div>
         </div>
