@@ -2,7 +2,7 @@
 
 import React, { useState, useCallback } from "react";
 import { X, ArrowRight } from "lucide-react";
-import { useTranslations } from "../../lib/i18n";
+import { useTranslations, getLocale } from "../../lib/i18n";
 
 const CHANNELS = {
   ehr:   { label: "EHR",           dot: "#4A7BA7" },
@@ -89,7 +89,7 @@ interface Recipe {
   systems: string[];
 }
 
-const RECIPES: Recipe[] = [
+const RECIPES_EN: Recipe[] = [
   { tag: "Intake", flow: ["ehr","voice","ehr"], title: "Call new patients when they register",
     desc: "When a new patient is registered in your EHR, HANA calls them within 24 hours to verify demographics, capture clinical history, and explain what to expect — then writes structured fields directly back into the chart.",
     steps: ['EHR fires "new patient registered" event', "HANA places outbound voice call", "Captures demographics, history, insurance verbally", "Writes structured intake to chart, flags anomalies"],
@@ -211,6 +211,132 @@ const RECIPES: Recipe[] = [
     systems: ["Surescripts"] },
 ];
 
+// Italian-market workflows. Rewritten for the Italian context (not a literal
+// translation of the US set): Italian gestionali, SSN/regional realities, the
+// ricetta dematerializzata (DEM), CUP scheduling, and Italian specialties — no
+// US billing codes (HEDIS/CCM/CPT/Medicare/AWV) or US systems (Epic, Surescripts).
+const RECIPES_IT: Recipe[] = [
+  { tag: "Accoglienza", flow: ["ehr","voice","ehr"], title: "Chiama i nuovi pazienti dopo la registrazione",
+    desc: "Quando un nuovo paziente viene registrato nel gestionale, HANA lo chiama entro 24 ore per verificare i dati anagrafici, raccogliere l'anamnesi e spiegare cosa lo aspetta — poi scrive i campi strutturati direttamente in cartella.",
+    steps: ['Il gestionale registra "nuovo paziente"', "HANA effettua la chiamata in uscita", "Raccoglie anagrafica, anamnesi ed esenzioni a voce", "Scrive l'accoglienza in cartella e segnala le anomalie"],
+    systems: ["GIPO","CGM","Dedalus","TeamSystem"] },
+
+  { tag: "Ricette", flow: ["voice","ehr","alert"], title: "Gestisci le richieste di ricetta in entrata",
+    desc: "Il paziente chiama per una ricetta. HANA verifica l'identità, controlla l'ultima erogazione e lo storico, conferma la farmacia e instrada la richiesta al medico per l'approvazione.",
+    steps: ["Il paziente chiama il numero ricette", "HANA verifica l'identità (nome + data di nascita)", "Controlla ultima erogazione ed esenzione", "Inoltra al medico con il contesto completo"],
+    systems: ["Ricetta dematerializzata (DEM)","SAR","CGM"] },
+
+  { tag: "Pre-Operatorio", flow: ["ehr","voice","sms"], title: "Accompagna i pazienti nella preparazione pre-operatoria",
+    desc: "Un intervento pianificato nel gestionale attiva una chiamata 48 ore prima. HANA spiega il digiuno, la sospensione dei farmaci e cosa portare, poi invia una checklist scritta via SMS.",
+    steps: ["Intervento pianificato nel gestionale", "HANA chiama 48 ore prima", "Verifica la comprensione facendo ripetere", "SMS con la checklist di preparazione"],
+    systems: ["Dedalus","GPI","TrakCare"] },
+
+  { tag: "Prevenzione", flow: ["ehr","voice","cal","ehr"], title: "Recupera gli screening in ritardo durante la chiamata",
+    desc: "Il gestionale individua i pazienti in ritardo su screening mammografico, colon-retto o controllo dell'emoglobina glicata. HANA chiama, spiega cosa è dovuto, prenota in diretta e scrive l'esito in cartella.",
+    steps: ["Coorte gestionale: screening in ritardo", "HANA chiama con messaggio personalizzato", "Prenota sull'agenda in tempo reale", "Scrive in cartella il recupero dello screening"],
+    systems: ["Screening regionali","CUP","Dedalus"] },
+
+  { tag: "Recupero", flow: ["ehr","voice","cal"], title: "Richiama i pazienti fermi da oltre 12 mesi",
+    desc: "Una query sul gestionale individua i pazienti senza visite recenti. HANA chiama con un messaggio personalizzato sul percorso di cura e prenota un appuntamento durante la telefonata.",
+    steps: ["Query gestionale: nessuna visita da 12+ mesi", "HANA chiama con messaggio di richiamo personalizzato", "Affronta i dubbi in modo colloquiale", "Prenota in linea, conferma via SMS"],
+    systems: ["CGM","GIPO","CUP"] },
+
+  { tag: "Chirurgia", flow: ["voice","ehr","alert"], title: "Esegui i controlli post-operatori a 24/48/72h",
+    desc: "La dimissione avvia chiamate post-operatorie automatiche a 24, 48 e 72 ore. HANA chiede di dolore, ferita, mobilità e tolleranza ai farmaci — e segnala subito i campanelli d'allarme all'équipe chirurgica.",
+    steps: ["La dimissione attiva la pianificazione", "HANA chiama a 24h, 48h, 72h", "Raccoglie dati strutturati sui sintomi", "Inoltra le risposte critiche al chirurgo reperibile"],
+    systems: ["Dedalus","GPI"] },
+
+  { tag: "Salute Mentale", flow: ["voice","alert","ehr"], title: "Rileva il rischio acuto e passa la chiamata al clinico reperibile",
+    desc: "Durante una chiamata di monitoraggio, HANA rileva ideazione suicidaria o disagio acuto tramite logiche di screening validate. La chiamata viene immediatamente inoltrata a un clinico reperibile con passaggio assistito.",
+    steps: ["HANA conduce il monitoraggio di routine", "Rileva linguaggio a rischio o PHQ-9 ≥ 15", "Attiva l'inoltro live al clinico", "Registra in cartella la valutazione del rischio"],
+    systems: ["Gestionale ambulatoriale","CSM"] },
+
+  { tag: "Cronicità", flow: ["ehr","voice","ehr"], title: "Monitora l'aderenza nelle terapie croniche",
+    desc: "Prima di ogni rinnovo, HANA chiama il paziente cronico per verificare efficacia ed effetti collaterali della terapia, e documenta la chiamata di monitoraggio in cartella.",
+    steps: ["Il rinnovo attiva il controllo aderenza", "HANA chiama per l'attestazione verbale", "Raccoglie efficacia ed effetti collaterali", "Scrive la documentazione con data e ora"],
+    systems: ["CGM","Dedalus"] },
+
+  { tag: "Esami", flow: ["voice","sms","ehr"], title: "Imposta Holter ed event monitor",
+    desc: "Quando viene prescritto un monitor cardiaco, HANA guida il paziente nell'uso del dispositivo, nella registrazione degli eventi e nel diario dei sintomi. Promemoria SMS quotidiani durante il periodo di monitoraggio.",
+    steps: ["Monitor cardiaco prescritto nel gestionale", "HANA chiama per spiegare il dispositivo", "SMS giornalieri durante il periodo d'uso", "Scrive il registro di monitoraggio in cartella"],
+    systems: ["Cardiologia","Dedalus"] },
+
+  { tag: "Referti", flow: ["ehr","voice","ehr"], title: "Comunica a voce i referti nella norma",
+    desc: "I referti di routine nella norma attivano una chiamata di HANA con spiegazione in linguaggio semplice. La chiamata è registrata come consegna del referto e la presa visione del paziente viene annotata in cartella.",
+    steps: ["Referto nella norma caricato nel gestionale", "HANA chiama con sintesi in linguaggio semplice", "Raccoglie domande o dubbi del paziente", "Segna il referto come consegnato, registra l'interazione"],
+    systems: ["Laboratorio","Dedalus"] },
+
+  { tag: "Accoglienza", flow: ["voice","ehr"], title: "Rispondi alle chiamate dei nuovi pazienti",
+    desc: "Quando i nuovi pazienti chiamano lo studio, HANA raccoglie esenzione/assicurazione, motivo della visita e preferenze di prenotazione — creando una scheda in cartella prima che intervenga una persona.",
+    steps: ["Il nuovo paziente chiama il numero principale", "HANA raccoglie l'accoglienza in modo colloquiale", "Verifica esenzione o copertura", "Crea la scheda e prenota la prima visita"],
+    systems: ["Qualsiasi gestionale","CUP"] },
+
+  { tag: "Ricette", flow: ["ehr","voice","ehr"], title: "Avvisa i pazienti prima che finisca la terapia",
+    desc: "Il gestionale segnala 7 giorni di terapia residua per i pazienti cronici. HANA chiama per confermare l'aderenza, individuare effetti collaterali e avviare il rinnovo prima dell'interruzione.",
+    steps: ["Il gestionale rileva 7 giorni di terapia residua", "HANA chiama per aderenza ed effetti collaterali", "Avvia il rinnovo della ricetta se confermato", "Aggiorna lo stato della terapia in cartella"],
+    systems: ["Ricetta dematerializzata (DEM)","CGM"] },
+
+  { tag: "Cronicità", flow: ["ehr","voice","ehr"], title: "Conduci le chiamate mensili di gestione della cronicità",
+    desc: "Per i pazienti cronici presi in carico (PDTA), HANA conduce ogni mese una chiamata di coordinamento strutturata, raccoglie gli aggiornamenti clinici e prepara la documentazione per il medico.",
+    steps: ["Coorte cronicità segnalata nel gestionale", "HANA conduce la chiamata strutturata", "Documenta aggiornamenti del piano e sintomi", "Genera la registrazione dell'incontro"],
+    systems: ["PDTA","CGM","Dedalus"] },
+
+  { tag: "Pre-Operatorio", flow: ["ehr","voice","ehr"], title: "Riconcilia i farmaci 48h prima dell'intervento",
+    desc: "Il trigger pre-operatorio scatta 48 ore prima della procedura. HANA rivede la terapia in corso del paziente, segnala anticoagulanti e GLP-1 da sospendere e documenta le istruzioni fornite.",
+    steps: ["Il timer pre-operatorio scatta a T-48 ore", "HANA legge al paziente la terapia in corso", "Individua i farmaci da sospendere", "Documenta le istruzioni di sospensione in cartella"],
+    systems: ["Ricetta dematerializzata (DEM)","Dedalus"] },
+
+  { tag: "Recupero", flow: ["ehr","voice","sms"], title: "Recupera i follow-up specialistici saltati",
+    desc: "Quando vengono saltati i controlli di cardiologia, endocrinologia o gastroenterologia, HANA chiama dando il giusto peso clinico e invia un link SMS per riprenotare.",
+    steps: ["Controllo specialistico saltato segnalato", "HANA chiama con messaggio legato al percorso di cura", "Ripiega su SMS se non risponde", "Scrive in cartella tentativo ed esito"],
+    systems: ["CUP","Dedalus"] },
+
+  { tag: "Referti", flow: ["ehr","voice","cal","alert"], title: "Gestisci i referti con valori alterati",
+    desc: "I referti con valori alterati arrivano nel gestionale. HANA prenota i controlli urgenti, inoltra subito i valori critici al clinico reperibile e segnala i casi in attesa di revisione.",
+    steps: ["Referto alterato caricato nel gestionale", "HANA valuta l'urgenza per valore/criteri", "Prenota il controllo o inoltra al medico", "Documenta in cartella la decisione di triage"],
+    systems: ["Laboratorio","CUP","Dedalus"] },
+
+  { tag: "Salute Mentale", flow: ["ehr","voice","alert"], title: "Somministra gli screening PHQ-9 / GAD-7",
+    desc: "Lo screening di routine attiva le chiamate di HANA. Le scale validate vengono somministrate in modo colloquiale, calcolate automaticamente, e i punteggi elevati sono inoltrati in giornata al personale clinico.",
+    steps: ["Il trigger di screening scatta secondo cadenza", "HANA somministra a voce PHQ-9 / GAD-7", "Calcola il punteggio con soglie validate", "Punteggi alti: avviso al clinico in giornata"],
+    systems: ["Gestionale ambulatoriale","CSM"] },
+
+  { tag: "Chirurgia", flow: ["ehr","voice","cal"], title: "Riempi le disdette in sala operatoria dalla lista d'attesa",
+    desc: "Quando si libera uno slot in sala operatoria, HANA chiama la lista d'attesa chirurgica in ordine di priorità clinica, riempie la seduta e conferma lo stato della preparazione pre-operatoria con il nuovo paziente.",
+    steps: ["Una disdetta libera uno slot in sala", "HANA chiama la lista d'attesa per priorità", "Conferma disponibilità e prontezza pre-operatoria", "Prenota il paziente, avvisa il coordinatore di sala"],
+    systems: ["Lista d'attesa","Dedalus"] },
+
+  { tag: "Prevenzione", flow: ["ehr","voice","cal"], title: "Prenota le visite di controllo periodiche",
+    desc: "Per i pazienti con un controllo periodico dovuto, HANA chiama per prenotare, raccoglie in anticipo le informazioni utili e prepara la cartella per la visita.",
+    steps: ["Coorte: controllo periodico dovuto", "HANA chiama e raccoglie le info a voce", "Prenota la visita di controllo", "Pre-compila la cartella per la visita"],
+    systems: ["CUP","CGM","Dedalus"] },
+
+  { tag: "Esami", flow: ["ehr","voice","sms"], title: "Guida i pazienti nella preparazione alla colonscopia",
+    desc: "Il giorno prima della colonscopia, HANA chiama per verificare che la preparazione sia iniziata, controlla l'idratazione, affronta i problemi di tollerabilità e invia un promemoria finale per la preparazione del mattino.",
+    steps: ["Colonscopia pianificata per il giorno dopo", "HANA chiama il pomeriggio precedente", "Verifica l'avvio della preparazione e la tolleranza", "SMS di promemoria finale prima del mattino"],
+    systems: ["Endoscopia","Dedalus"] },
+
+  { tag: "Salute Mentale", flow: ["ehr","voice","ehr"], title: "Conduci l'accoglienza dei nuovi pazienti in salute mentale",
+    desc: "Un'accoglienza sensibile e colloquiale raccoglie il motivo della richiesta, la storia clinica, i farmaci in corso e la rete di supporto — senza mettere fretta al paziente.",
+    steps: ["Nuovo paziente di salute mentale registrato", "HANA conduce un'accoglienza senza fretta", "Raccoglie con empatia la storia clinica", "Scrive l'accoglienza strutturata in cartella"],
+    systems: ["Gestionale ambulatoriale","CSM"] },
+
+  { tag: "Aderenza", flow: ["ehr","voice","ehr"], title: "Somministra a voce le scale di valutazione",
+    desc: "Quando sono dovute le scale di valutazione, HANA le somministra a voce in base all'età del paziente, calcola automaticamente i punteggi e scrive il modulo compilato in cartella.",
+    steps: ["Scala dovuta secondo il calendario", "HANA somministra a voce la scala adatta all'età", "Calcola automaticamente i punteggi", "Scrive in cartella il modulo strutturato"],
+    systems: ["CGM","Dedalus"] },
+
+  { tag: "Recupero", flow: ["ehr","voice","cal"], title: "Recupera i pazienti con mancata presentazione da 90 giorni",
+    desc: "La segnalazione di mancata presentazione vecchia di 90 giorni attiva il contatto. HANA chiama per affrontare gli ostacoli di fondo, offre una riprenotazione flessibile e prenota il primo slot disponibile.",
+    steps: ["Mancata presentazione vecchia di 90 giorni", "HANA chiama affrontando gli ostacoli", "Offre opzioni di prenotazione flessibili", "Prenota il primo slot, aggiorna il gestionale"],
+    systems: ["CUP","CGM"] },
+
+  { tag: "Ricette", flow: ["voice","ehr"], title: "Aggiorna la farmacia durante la chiamata",
+    desc: "Quando durante una chiamata il paziente dice di aver cambiato farmacia, HANA conferma la nuova sede e aggiorna la scheda nel gestionale.",
+    steps: ["Il paziente segnala il cambio di farmacia", "HANA conferma nuova sede e indirizzo", "Verifica i dati della farmacia", "Aggiorna il gestionale per i prossimi rinnovi"],
+    systems: ["Ricetta dematerializzata (DEM)"] },
+];
+
 
 
 function RecipeCard({ recipe, onClick }: { recipe: Recipe; onClick: () => void }) {
@@ -238,12 +364,19 @@ function RecipeCard({ recipe, onClick }: { recipe: Recipe; onClick: () => void }
 }
 
 function Modal({ recipe, onClose }: { recipe: Recipe; onClose: () => void }) {
+  const it = getLocale() === "it";
+  const L = {
+    whatItDoes: it ? "Cosa fa" : "What it does",
+    howItWorks: it ? "Come funziona" : "How it works",
+    connectsTo: it ? "Si collega a" : "Connects to",
+    cta: it ? "Vedi HANA in azione" : "See HANA in action",
+  };
   return (
     <div
       className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 sm:p-6"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="bg-[#F5F3F0] rounded-2xl max-w-[560px] w-full max-h-[90vh] overflow-y-auto p-5 sm:p-8 relative">
+      <div className="bg-[#F5F3F0] rounded-2xl max-w-[720px] w-full max-h-[90vh] overflow-y-auto p-5 sm:p-8 md:p-10 relative">
         <button
           onClick={onClose}
           className="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-900/10 hover:bg-slate-900/20 flex items-center justify-center text-slate-500 transition-colors"
@@ -268,12 +401,12 @@ function Modal({ recipe, onClose }: { recipe: Recipe; onClose: () => void }) {
         </div>
 
         <div className="mb-6">
-          <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-slate-400 mb-2">What it does</div>
+          <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-slate-400 mb-2">{L.whatItDoes}</div>
           <p className="text-[15px] leading-relaxed text-slate-600">{recipe.desc}</p>
         </div>
 
         <div className="border-t border-slate-900/10 pt-5 mb-6">
-          <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-slate-400 mb-3">How it works</div>
+          <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-slate-400 mb-3">{L.howItWorks}</div>
           <ol className="space-y-0">
             {recipe.steps.map((step, i) => (
               <li key={i} className="flex gap-3 py-3 border-b border-slate-900/8 last:border-0 text-[14px] text-slate-600 leading-snug">
@@ -285,7 +418,7 @@ function Modal({ recipe, onClose }: { recipe: Recipe; onClose: () => void }) {
         </div>
 
         <div className="border-t border-slate-900/10 pt-5 mb-6">
-          <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-slate-400 mb-3">Connects to</div>
+          <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-slate-400 mb-3">{L.connectsTo}</div>
           <div className="flex flex-wrap gap-2">
             {recipe.systems.map((sys) => (
               <span key={sys} className="text-[12px] text-slate-600 bg-white/70 border border-slate-900/10 px-3 py-1.5 rounded-full">{sys}</span>
@@ -299,7 +432,7 @@ function Modal({ recipe, onClose }: { recipe: Recipe; onClose: () => void }) {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-lg text-[14px] font-medium hover:bg-blue-600 transition-colors"
         >
-          See HANA in action <ArrowRight size={14} />
+          {L.cta} <ArrowRight size={14} />
         </a>
       </div>
     </div>
@@ -313,6 +446,7 @@ export function RecipesMarquee() {
   const select = useCallback((r: Recipe) => setSelected(r), []);
   const close = useCallback(() => setSelected(null), []);
 
+  const RECIPES = getLocale() === "it" ? RECIPES_IT : RECIPES_EN;
   const row1 = RECIPES.filter((_, i) => i % 3 === 0);
   const row2 = RECIPES.filter((_, i) => i % 3 === 1);
   const row3 = RECIPES.filter((_, i) => i % 3 === 2);
