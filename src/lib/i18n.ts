@@ -4,8 +4,11 @@
 export type Locale = "en" | "it";
 
 export function detectLocale(): Locale {
-  if (typeof window !== "undefined" && window.location.hostname.startsWith("ita.")) {
-    return "it";
+  if (typeof window !== "undefined") {
+    const h = window.location.hostname;
+    if (h.startsWith("ita.") || h.includes("hanafigmasite-ita")) {
+      return "it";
+    }
   }
   return "en";
 }
