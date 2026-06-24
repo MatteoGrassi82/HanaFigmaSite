@@ -132,6 +132,15 @@ export function HowHanaWorks() {
   const isItalian = getLocale() === "it";
   const SLIDES = [
     {
+      id: "first-week",
+      label: hw.tab2,
+      icon: Play,
+      title: hw.tab2SubHeading,
+      description: hw.tab2Body,
+      videoId: "cn9zvmqv80",
+      features: [hw.tab2f1, hw.tab2f2, hw.tab2f3],
+    },
+    {
       id: "monitoring",
       label: hw.tab1,
       icon: Activity,
@@ -139,15 +148,6 @@ export function HowHanaWorks() {
       description: hw.tab1Body,
       videoId: "hf22mhjxbe",
       features: [hw.tab1f1, hw.tab1f2, hw.tab1f3],
-    },
-    {
-      id: "intake",
-      label: hw.tab2,
-      icon: Play,
-      title: hw.tab2SubHeading,
-      description: hw.tab2Body,
-      videoId: "cn9zvmqv80",
-      features: [hw.tab2f1, hw.tab2f2, hw.tab2f3],
     },
     {
       id: "coordination",
