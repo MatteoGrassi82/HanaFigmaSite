@@ -200,6 +200,7 @@ export interface Translations {
     connecting: string;
     talkToHana: string;
     bookDemo: string;
+    builtByClinicians: string;
   };
   // Integrations section
   integrations: {
@@ -511,6 +512,7 @@ const en: Translations = {
     connecting: "Connecting...",
     talkToHana: "Talk to Hana",
     bookDemo: "Book a Demo",
+    builtByClinicians: "Built by clinicians",
   },
   integrations: {
     tag: "Integrations",
@@ -819,6 +821,7 @@ const it: Translations = {
     connecting: "Connessione...",
     talkToHana: "Parla con Hana",
     bookDemo: "Chiedici una Demo",
+    builtByClinicians: "Costruito da clinici",
   },
   integrations: {
     tag: "Integrazioni",

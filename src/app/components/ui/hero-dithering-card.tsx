@@ -73,6 +73,12 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
         <div className="relative z-10 container mx-auto px-6 flex flex-col justify-center pointer-events-none">
 
           <div className="flex flex-col items-center text-center z-20 pointer-events-auto max-w-5xl mx-auto">
+             {/* Peel badge */}
+             <div className="inline-flex items-center gap-1.5 bg-white/80 backdrop-blur-sm border border-slate-200 rounded-full px-4 py-1.5 mb-6 shadow-sm">
+               <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
+               <span className="text-sm font-medium text-slate-700 tracking-wide">{t.hero.builtByClinicians}</span>
+             </div>
+
              {/* Headline */}
              <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-normal text-slate-900 mb-6 md:mb-8 leading-[1.1]">
                {t.hero.headline} <br className="hidden md:block"/><span className="text-blue-600">{t.hero.headlineCantMake}</span>.
