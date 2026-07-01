@@ -99,6 +99,19 @@ type Station = {
   at: number;
 };
 
+/** Optional copy overrides so the loop works as a standalone unit on any page.
+ *  Every field falls back to the homepage (front-desk) copy, so existing
+ *  call sites are unchanged. Station geometry/animation stay internal — only
+ *  the words are configurable. */
+export type LoopDiagramCopy = {
+  eyebrow?: string;
+  heading?: string;
+  sub?: string;
+  center?: [string, string];
+  footnote?: string;
+  stations?: Partial<Record<"read" | "reason" | "engage" | "writeback", { label?: string; body?: string }>>;
+};
+
 const STATIONS: Station[] = [
   {
     id: "read",
@@ -258,16 +271,46 @@ function useContinuousPulse(enabled: boolean) {
   return { progress, activeId };
 }
 
-export function LoopDiagram() {
+export function LoopDiagram({ copy, bare = false }: { copy?: LoopDiagramCopy; bare?: boolean } = {}) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.4 });
   const { progress, activeId } = useContinuousPulse(inView);
   // map 0..1 loop progress → offsetDistance string for the pulse
   const offsetDistance = useTransform(progress, (v) => `${(v % 1) * 100}%`);
 
+  // Resolve copy: overrides win, otherwise the homepage (front-desk) defaults.
+  const c = {
+    eyebrow: copy?.eyebrow ?? t("How it works", "Come funziona"),
+    heading:
+      copy?.heading ??
+      t(
+        "It knows the patient before it dials. Documents the call after.",
+        "Conosce il paziente prima di chiamare. Documenta la chiamata dopo.",
+      ),
+    sub:
+      copy?.sub ??
+      t(
+        "Not an answering service. Hana works the whole call — chart to note — and routes only what needs a human to your team.",
+        "Non una semplice segreteria telefonica. Hana gestisce l'intera chiamata — dalla cartella alla nota — e gira al tuo team solo ciò che richiede una persona.",
+      ),
+    center:
+      copy?.center ??
+      ([t("No app. No login.", "Nessuna app. Nessun login."), t("No behavior change.", "Nessun cambio di abitudini.")] as [string, string]),
+    footnote:
+      copy?.footnote ??
+      t(
+        "You set the escalation rules. A person on every clinical flag, full audit trail on every call.",
+        "Le regole di escalation le imposti tu. Una persona su ogni segnalazione clinica, audit trail completo su ogni chiamata.",
+      ),
+  };
+  const stations = STATIONS.map((s) => ({
+    ...s,
+    ...copy?.stations?.[s.id as "read" | "reason" | "engage" | "writeback"],
+  }));
+
   return (
     <section
-      className="relative w-full overflow-hidden py-20 md:py-28"
+      className={`relative w-full overflow-hidden ${bare ? "py-10 md:py-14" : "py-20 md:py-28"}`}
       style={{ backgroundColor: FIELD }}
     >
       {/* blue radial glow at top — matches the Reasoning Engine section so the
@@ -293,7 +336,8 @@ export function LoopDiagram() {
             }}
           />
 
-          {/* Section heading */}
+          {/* Section heading (omitted in bare mode — the figure stands alone) */}
+          {!bare && (
           <div className="relative z-10 mx-auto mb-14 max-w-3xl text-center md:mb-20">
             <motion.span
               initial={{ opacity: 0, y: 10 }}
@@ -302,7 +346,7 @@ export function LoopDiagram() {
               className="text-xs font-semibold uppercase tracking-[0.2em]"
               style={{ color: SKY }}
             >
-              {t("How it works", "Come funziona")}
+              {c.eyebrow}
             </motion.span>
             <motion.h2
               initial={{ opacity: 0, y: 16 }}
@@ -310,10 +354,7 @@ export function LoopDiagram() {
               transition={{ duration: 0.5, delay: 0.08 }}
               className="mt-4 font-serif text-2xl leading-snug text-white sm:text-3xl md:text-[2.6rem] md:leading-[1.15]"
             >
-              {t(
-                "It knows the patient before it dials. Documents the call after.",
-                "Conosce il paziente prima di chiamare. Documenta la chiamata dopo.",
-              )}
+              {c.heading}
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 16 }}
@@ -322,12 +363,10 @@ export function LoopDiagram() {
               className="mx-auto mt-5 max-w-xl text-base leading-relaxed"
               style={{ color: INK_SOFT }}
             >
-              {t(
-                "Not an answering service. Hana works the whole call — chart to note — and routes only what needs a human to your team.",
-                "Non una semplice segreteria telefonica. Hana gestisce l'intera chiamata — dalla cartella alla nota — e gira al tuo team solo ciò che richiede una persona.",
-              )}
+              {c.sub}
             </motion.p>
           </div>
+          )}
 
           {/* ── Desktop: animated figure-8 ──────────────────────────────── */}
           <motion.div
@@ -335,7 +374,7 @@ export function LoopDiagram() {
             animate={inView ? "visible" : "hidden"}
             className="relative hidden md:block md:min-h-[26rem]"
           >
-            {STATIONS.map((s, i) => (
+            {stations.map((s, i) => (
               <CornerLabel key={s.id} station={s} index={i} active={activeId === s.id} />
             ))}
 
@@ -411,7 +450,7 @@ export function LoopDiagram() {
                   transition={{ opacity: { duration: 0.4, delay: 1.6 } }}
                 />
 
-                {STATIONS.map((s, i) => (
+                {stations.map((s, i) => (
                   <StationNode key={s.id} station={s} index={i} appear={inView} active={activeId === s.id} />
                 ))}
 
@@ -428,8 +467,8 @@ export function LoopDiagram() {
                     textAnchor="middle"
                     style={{ fontFamily: "Georgia, 'Times New Roman', serif", fill: INK }}
                   >
-                    <tspan x={CX} fontSize="22">{t("No app. No login.", "Nessuna app. Nessun login.")}</tspan>
-                    <tspan x={CX} dy="28" fontSize="22">{t("No behavior change.", "Nessun cambio di abitudini.")}</tspan>
+                    <tspan x={CX} fontSize="22">{c.center[0]}</tspan>
+                    <tspan x={CX} dy="28" fontSize="22">{c.center[1]}</tspan>
                   </text>
                 </motion.g>
               </svg>
@@ -437,9 +476,10 @@ export function LoopDiagram() {
           </motion.div>
 
           {/* ── Mobile: vertical timeline ───────────────────────────────── */}
-          <MobileTimeline inView={inView} progress={progress} activeId={activeId} />
+          <MobileTimeline inView={inView} progress={progress} activeId={activeId} stations={stations} center={c.center} />
 
-          {/* Reassurance line */}
+          {/* Reassurance line (omitted in bare mode) */}
+          {!bare && (
           <motion.p
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : { opacity: 0 }}
@@ -447,11 +487,9 @@ export function LoopDiagram() {
             className="relative z-10 mx-auto mt-12 max-w-2xl text-center text-sm leading-relaxed md:mt-16"
             style={{ color: INK_SOFT }}
           >
-            {t(
-              "You set the escalation rules. A person on every clinical flag, full audit trail on every call.",
-              "Le regole di escalation le imposti tu. Una persona su ogni segnalazione clinica, audit trail completo su ogni chiamata.",
-            )}
+            {c.footnote}
           </motion.p>
+          )}
         </div>
       </div>
     </section>
@@ -472,14 +510,18 @@ function MobileTimeline({
   inView,
   progress,
   activeId,
+  stations = STATIONS,
+  center,
 }: {
   inView: boolean;
   progress: ReturnType<typeof useMotionValue<number>>;
   activeId: string | null;
+  stations?: Station[];
+  center: [string, string];
 }) {
   const NODE = MS_NODE_R * 2;
   const railTop = MS_ROW_H / 2;
-  const railBottom = railTop + (STATIONS.length - 1) * MS_ROW_H;
+  const railBottom = railTop + (stations.length - 1) * MS_ROW_H;
   const railSpan = railBottom - railTop;
   // Pulse position down the rail: sweeps top→bottom then bottom→top, forever.
   const pulseTop = useTransform(progress, (v) => {
@@ -514,7 +556,7 @@ function MobileTimeline({
         }}
       />
 
-      {STATIONS.map((s, i) => {
+      {stations.map((s, i) => {
         const Icon = LOOP_ICONS[s.id];
         const active = activeId === s.id;
         return (
@@ -579,9 +621,9 @@ function MobileTimeline({
         transition={{ delay: 0.9, duration: 0.6 }}
         className="mt-8 text-center font-serif text-lg leading-snug text-white"
       >
-        {t("No app. No login.", "Nessuna app. Nessun login.")}
+        {center[0]}
         <br />
-        {t("No behavior change.", "Nessun cambio di abitudini.")}
+        {center[1]}
       </motion.p>
     </div>
   );
@@ -656,6 +698,13 @@ function StationNode({
       </foreignObject>
     </motion.g>
   );
+}
+
+/** The loop figure on its own — no eyebrow, heading, sub, or footnote. For
+ *  embedding directly below a page hero (e.g. /hana-remote), where the hero
+ *  copy does the talking and the figure is the unit. */
+export function LoopFigure({ copy }: { copy?: LoopDiagramCopy } = {}) {
+  return <LoopDiagram copy={copy} bare />;
 }
 
 export default LoopDiagram;
