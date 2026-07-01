@@ -39,6 +39,7 @@ const STATIC_ROUTES = [
   '/research',
   '/about',
   '/contact',
+  '/hana-contact',
   '/terms',
   '/aup',
   '/blog',

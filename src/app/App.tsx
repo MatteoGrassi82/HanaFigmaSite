@@ -21,6 +21,7 @@ const Research = lazy(() => import("./pages/Research").then((m) => ({ default: m
 const About = lazy(() => import("./pages/About").then((m) => ({ default: m.About })));
 const RadialOrbitalTimelineDemo = lazy(() => import("./pages/Timeline").then((m) => ({ default: m.RadialOrbitalTimelineDemo })));
 const Contact = lazy(() => import("./pages/Contact").then((m) => ({ default: m.Contact })));
+const HanaContact = lazy(() => import("./pages/HanaContact").then((m) => ({ default: m.HanaContact })));
 const TestWebhook = lazy(() => import("./components/TestWebhook").then((m) => ({ default: m.TestWebhook })));
 const Terms = lazy(() => import("./pages/Terms").then((m) => ({ default: m.Terms })));
 const AUP = lazy(() => import("./pages/AUP").then((m) => ({ default: m.AUP })));
@@ -259,6 +260,7 @@ function AppContent() {
               <Route path="/research" element={<Navigate to="/labs" replace />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/hana-contact" element={<HanaContact />} />
               <Route path="/test-webhook" element={<TestWebhook />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/aup" element={<AUP />} />
