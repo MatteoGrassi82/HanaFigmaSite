@@ -868,16 +868,18 @@ export function HanaRemote() {
         </div>
       </header>
 
-      {/* THE LOOP — just the figure, on its own, directly below the hero (the
-          hero line above does the talking). Monitoring-framed station copy. */}
+      {/* THE LOOP — just the figure, on its own, directly below the hero on the
+          same light field (like Contact's hero → diagram). Stations reframed as
+          the RTM/RPM closed monitoring cycle: enroll → monitor → escalate → document. */}
       <LoopFigure
+        light
         copy={{
           center: ["No device. No app.", "No behavior change."],
           stations: {
-            read: { body: "Pulls the chart, care plan, and protocol first." },
-            reason: { body: "Picks the cadence and channel they'll actually answer." },
-            engage: { body: "Runs the check-in — symptoms, adherence, vitals by voice." },
-            writeback: { body: "Structured data to the chart — flagged for review, documented for billing." },
+            read: { label: "Enroll", body: "Consent, onboarding, and protocol setup — by phone, on day one." },
+            reason: { label: "Monitor", body: "Scheduled check-ins capture symptoms, adherence, and vitals — wearables via API." },
+            engage: { label: "Escalate", body: "Clinical flags routed to your worklist — a clinician on every flag." },
+            writeback: { label: "Document", body: "Structured data to the EHR — RTM and CCM codes ready for attestation." },
           },
         }}
       />

@@ -193,10 +193,12 @@ function CornerLabel({
   station,
   index,
   active,
+  light = false,
 }: {
   station: Station;
   index: number;
   active: boolean;
+  light?: boolean;
 }) {
   const alignEnd = station.corner === "tr" || station.corner === "br";
   return (
@@ -210,16 +212,16 @@ function CornerLabel({
         {/* big refined step number */}
         <motion.span
           className="font-serif text-5xl leading-none"
-          animate={{ color: active ? PEACH : "#3E587C" }}
+          animate={{ color: active ? PEACH : light ? "#B7C3DA" : "#3E587C" }}
           transition={{ duration: 0.3 }}
         >
           {station.num}
         </motion.span>
-        <span className="text-xl font-semibold tracking-tight" style={{ color: INK }}>
+        <span className="text-xl font-semibold tracking-tight" style={{ color: light ? NAVY : INK }}>
           {station.label}
         </span>
       </div>
-      <p className="mt-2 text-sm leading-relaxed" style={{ color: INK_SOFT }}>
+      <p className="mt-2 text-sm leading-relaxed" style={{ color: light ? "#64748b" : INK_SOFT }}>
         {station.body}
       </p>
     </motion.div>
@@ -271,7 +273,11 @@ function useContinuousPulse(enabled: boolean) {
   return { progress, activeId };
 }
 
-export function LoopDiagram({ copy, bare = false }: { copy?: LoopDiagramCopy; bare?: boolean } = {}) {
+export function LoopDiagram({
+  copy,
+  bare = false,
+  light = false,
+}: { copy?: LoopDiagramCopy; bare?: boolean; light?: boolean } = {}) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.4 });
   const { progress, activeId } = useContinuousPulse(inView);
@@ -311,10 +317,11 @@ export function LoopDiagram({ copy, bare = false }: { copy?: LoopDiagramCopy; ba
   return (
     <section
       className={`relative w-full overflow-hidden ${bare ? "py-10 md:py-14" : "py-20 md:py-28"}`}
-      style={{ backgroundColor: FIELD }}
+      style={{ backgroundColor: light ? "#f6f7fb" : FIELD }}
     >
       {/* blue radial glow at top — matches the Reasoning Engine section so the
-          two read as one continuous block */}
+          two read as one continuous block (dark theme only) */}
+      {!light && (
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-[-200px] z-0 h-[400px] w-[400px] -translate-x-1/2 md:h-[800px] md:w-[800px]"
@@ -323,6 +330,7 @@ export function LoopDiagram({ copy, bare = false }: { copy?: LoopDiagramCopy; ba
             "radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%)",
         }}
       />
+      )}
       <div className="container relative z-10 mx-auto px-4 md:px-8">
         <div ref={ref} className="relative mx-auto max-w-5xl px-4 py-4 sm:px-6 md:px-14 md:py-6">
           {/* subtle dot-grid texture */}
@@ -375,7 +383,7 @@ export function LoopDiagram({ copy, bare = false }: { copy?: LoopDiagramCopy; ba
             className="relative hidden md:block md:min-h-[26rem]"
           >
             {stations.map((s, i) => (
-              <CornerLabel key={s.id} station={s} index={i} active={activeId === s.id} />
+              <CornerLabel key={s.id} station={s} index={i} active={activeId === s.id} light={light} />
             ))}
 
             <div className="mx-auto w-full max-w-3xl md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2">
@@ -460,12 +468,12 @@ export function LoopDiagram({ copy, bare = false }: { copy?: LoopDiagramCopy; ba
                   animate={inView ? { opacity: 1 } : { opacity: 0 }}
                   transition={{ delay: 1.8, duration: 0.6 }}
                 >
-                  <ellipse cx={CX} cy={CY} rx={172} ry={52} fill={CANVAS_BOT} />
+                  <ellipse cx={CX} cy={CY} rx={172} ry={52} fill={light ? "#f6f7fb" : CANVAS_BOT} />
                   <text
                     x={CX}
                     y={CY - 4}
                     textAnchor="middle"
-                    style={{ fontFamily: "Georgia, 'Times New Roman', serif", fill: INK }}
+                    style={{ fontFamily: "Georgia, 'Times New Roman', serif", fill: light ? NAVY : INK }}
                   >
                     <tspan x={CX} fontSize="22">{c.center[0]}</tspan>
                     <tspan x={CX} dy="28" fontSize="22">{c.center[1]}</tspan>
@@ -476,7 +484,7 @@ export function LoopDiagram({ copy, bare = false }: { copy?: LoopDiagramCopy; ba
           </motion.div>
 
           {/* ── Mobile: vertical timeline ───────────────────────────────── */}
-          <MobileTimeline inView={inView} progress={progress} activeId={activeId} stations={stations} center={c.center} />
+          <MobileTimeline inView={inView} progress={progress} activeId={activeId} stations={stations} center={c.center} light={light} />
 
           {/* Reassurance line (omitted in bare mode) */}
           {!bare && (
@@ -512,12 +520,14 @@ function MobileTimeline({
   activeId,
   stations = STATIONS,
   center,
+  light = false,
 }: {
   inView: boolean;
   progress: ReturnType<typeof useMotionValue<number>>;
   activeId: string | null;
   stations?: Station[];
   center: [string, string];
+  light?: boolean;
 }) {
   const NODE = MS_NODE_R * 2;
   const railTop = MS_ROW_H / 2;
@@ -591,22 +601,26 @@ function MobileTimeline({
             <motion.div
               className="ml-16 flex-1 rounded-2xl border p-3 sm:ml-[68px] sm:p-4"
               animate={{
-                backgroundColor: active ? "rgba(255,192,145,0.10)" : "rgba(255,255,255,0.03)",
-                borderColor: active ? "rgba(255,192,145,0.45)" : "rgba(255,255,255,0.08)",
+                backgroundColor: active
+                  ? light ? "rgba(255,192,145,0.16)" : "rgba(255,192,145,0.10)"
+                  : light ? "#ffffff" : "rgba(255,255,255,0.03)",
+                borderColor: active
+                  ? "rgba(255,192,145,0.45)"
+                  : light ? "#e2e6f0" : "rgba(255,255,255,0.08)",
               }}
               transition={{ duration: 0.3 }}
             >
               <div className="flex items-baseline gap-2">
                 <motion.span
                   className="font-serif text-2xl leading-none"
-                  animate={{ color: active ? PEACH : "#3E587C" }}
+                  animate={{ color: active ? PEACH : light ? "#B7C3DA" : "#3E587C" }}
                   transition={{ duration: 0.3 }}
                 >
                   {s.num}
                 </motion.span>
-                <span className="text-base font-semibold tracking-tight text-white">{s.label}</span>
+                <span className="text-base font-semibold tracking-tight" style={{ color: light ? NAVY : "#FFFFFF" }}>{s.label}</span>
               </div>
-              <p className="mt-1.5 text-[13px] leading-relaxed" style={{ color: INK_SOFT }}>
+              <p className="mt-1.5 text-[13px] leading-relaxed" style={{ color: light ? "#64748b" : INK_SOFT }}>
                 {s.body}
               </p>
             </motion.div>
@@ -619,7 +633,8 @@ function MobileTimeline({
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : { opacity: 0 }}
         transition={{ delay: 0.9, duration: 0.6 }}
-        className="mt-8 text-center font-serif text-lg leading-snug text-white"
+        className="mt-8 text-center font-serif text-lg leading-snug"
+        style={{ color: light ? NAVY : "#FFFFFF" }}
       >
         {center[0]}
         <br />
@@ -703,8 +718,8 @@ function StationNode({
 /** The loop figure on its own — no eyebrow, heading, sub, or footnote. For
  *  embedding directly below a page hero (e.g. /hana-remote), where the hero
  *  copy does the talking and the figure is the unit. */
-export function LoopFigure({ copy }: { copy?: LoopDiagramCopy } = {}) {
-  return <LoopDiagram copy={copy} bare />;
+export function LoopFigure({ copy, light = false }: { copy?: LoopDiagramCopy; light?: boolean } = {}) {
+  return <LoopDiagram copy={copy} bare light={light} />;
 }
 
 export default LoopDiagram;
