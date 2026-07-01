@@ -258,6 +258,7 @@ export interface Translations {
     v6Title: string;
     v6Body: string;
     timelineTitle: string;
+    tItems: { title: string; desc: string }[];
     openSourceTitle: string;
     openSourceBody: string;
     meetTeamTitle: string;
@@ -572,6 +573,13 @@ const en: Translations = {
     v6Title: "Outcomes over demos",
     v6Body: "We don't do flashy demos or vibe investing. We do 85% engagement, 96% completion rates, and 31:1 ROI. Boring, functional solutions that actually work. That's what healthcare needs.",
     timelineTitle: "How We Got Here",
+    tItems: [
+      { title: "The app that nobody used", desc: "Matteo built a mental health monitoring app for patients with bipolar disorder. It collected sleep, activity, and mood data. Technically sound. Clinically useful. Engagement: abysmal." },
+      { title: "The phone call that changed everything", desc: "What if we just called them? An AI voice agent that reached patients by phone and SMS. Engagement jumped to 85%. The problem was never the clinical protocol, it was the delivery mechanism." },
+      { title: "From product to platform", desc: "Every clinic had different problems (intake, adherence, monitoring, outreach) but the underlying need was the same: continuous patient engagement. So we stopped building a product and started building infrastructure." },
+      { title: "One million interactions later", desc: "HANA powers patient engagement across five countries, multiple languages, and every care setting from ADHD diagnostics to palliative care. Our reasoning model learns from every interaction." },
+      { title: "Cutting the cord: fully open-source", desc: "Sthita led the migration off proprietary APIs entirely, moving HANA to open-source models on our own servers. No OpenAI. Full data sovereignty. Now we're testing on-premise installations for hospitals in Italy and sovereign cloud deployments in the Middle East. The future of healthcare AI is owned, not rented." },
+    ],
     openSourceTitle: "Open source. Self-hosted. Healthcare AI that you actually own.",
     openSourceBody: "Six months ago, we made a decision that changed our trajectory: we moved off OpenAI entirely. We migrated HANA to open-source models running on our own servers. No proprietary API dependency. No patient data leaving your jurisdiction. Full sovereignty.",
     meetTeamTitle: "Meet the Team",
@@ -881,6 +889,13 @@ const it: Translations = {
     v6Title: "Risultati prima delle demo",
     v6Body: "Non facciamo demo sgargianti o investimenti di immagine. Facciamo 85% di coinvolgimento, 96% di tassi di completamento e 31:1 ROI. Soluzioni noiose e funzionali che funzionano davvero. Questo è ciò di cui ha bisogno la sanità.",
     timelineTitle: "Come Ci Siamo Arrivati",
+    tItems: [
+      { title: "L'app che nessuno usava", desc: "Matteo aveva costruito un'app di monitoraggio della salute mentale per pazienti con disturbo bipolare. Raccoglieva dati su sonno, attività e umore. Tecnicamente valida. Clinicamente utile. Coinvolgimento: pessimo." },
+      { title: "La telefonata che ha cambiato tutto", desc: "E se li chiamassimo e basta? Un agente vocale AI che raggiungeva i pazienti per telefono e SMS. Il coinvolgimento è salito all'85%. Il problema non è mai stato il protocollo clinico, ma il meccanismo di consegna." },
+      { title: "Dal prodotto alla piattaforma", desc: "Ogni clinica aveva problemi diversi (accoglienza, aderenza, monitoraggio, outreach) ma il bisogno di fondo era lo stesso: coinvolgimento continuo dei pazienti. Così abbiamo smesso di costruire un prodotto e iniziato a costruire infrastruttura." },
+      { title: "Un milione di interazioni dopo", desc: "HANA alimenta il coinvolgimento dei pazienti in cinque paesi, in più lingue e in ogni contesto di cura, dalla diagnostica dell'ADHD alle cure palliative. Il nostro modello di ragionamento impara da ogni interazione." },
+      { title: "Tagliare il cordone: completamente open-source", desc: "Sthita ha guidato la migrazione completa dalle API proprietarie, portando HANA a modelli open-source sui nostri server. Niente OpenAI. Piena sovranità dei dati. Ora stiamo testando installazioni on-premise per ospedali in Italia e deployment su cloud sovrano in Medio Oriente. Il futuro dell'AI sanitaria è posseduto, non affittato." },
+    ],
     openSourceTitle: "Open source. Self-hosted. Healthcare AI che possiedi davvero.",
     openSourceBody: "Sei mesi fa abbiamo preso una decisione che ha cambiato la nostra traiettoria: ci siamo spostati completamente da OpenAI. Abbiamo migrato HANA a modelli open-source sui nostri server. Nessuna dipendenza da API proprietarie. Nessun dato paziente che lascia la tua giurisdizione. Piena sovranità.",
     meetTeamTitle: "Il Nostro Team",

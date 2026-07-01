@@ -106,6 +106,9 @@ export function About() {
     { title: ab.v6Title, desc: ab.v6Body },
   ];
 
+  // "How we got here" milestones — localized via i18n (ab.tItems).
+  const timeline = ab.tItems;
+
   return (
     <div className="bg-slate-50 min-h-screen">
       <SEO
