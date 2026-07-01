@@ -87,9 +87,9 @@ const TILES_EN: Tile[] = [
     kind: "quote",
     quote:
       "Getting elderly patients ready for surgery over the phone is nearly impossible — they don't pick up, they miss voicemails, and if they show up unprepared the case gets cancelled. HANA reaches them, walks them through everything they need to know, and flags whoever still isn't ready so we can step in.",
-    name: "Lorri Hanes",
-    role: "Shoorah",
-    avatarUrl: "https://www.eftandmindfulness.com/pictures/profile/pimage-2849-187-photo.jpg",
+    name: "Dr Oprandi",
+    role: "Primary care clinic",
+    avatarUrl: "/avatars/oprandi.webp",
     tint: "sky",
   },
   {
@@ -140,9 +140,9 @@ const TILES_IT: Tile[] = [
     kind: "quote",
     quote:
       "Preparare i pazienti anziani all'intervento per telefono è quasi impossibile: non rispondono, si perdono i messaggi in segreteria, e se arrivano impreparati l'intervento salta. HANA li raggiunge, li guida passo passo in tutto ciò che devono sapere e ci segnala chi non è ancora pronto, così possiamo intervenire.",
-    name: "Lorri Hanes",
-    role: "Shoorah",
-    avatarUrl: "https://www.eftandmindfulness.com/pictures/profile/pimage-2849-187-photo.jpg",
+    name: "Dr Oprandi",
+    role: "Primary care clinic",
+    avatarUrl: "/avatars/oprandi.webp",
     tint: "sky",
   },
   {
