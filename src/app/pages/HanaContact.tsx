@@ -259,11 +259,14 @@ export function HanaContact() {
                 Patients actually pick up."
               </div>
               <div className="flex items-center gap-3 mt-6">
-                <div className="w-11 h-11 rounded-full bg-[#e8a86b] flex items-center justify-center font-bold text-[15px] shrink-0 text-white">
-                  PC
-                </div>
+                <img
+                  src="/avatars/oprandi.webp"
+                  alt="Dr Oprandi"
+                  loading="lazy"
+                  className="w-11 h-11 rounded-full object-cover object-top shrink-0"
+                />
                 <div>
-                  <div className="text-sm font-bold">Practice Coordinator</div>
+                  <div className="text-sm font-bold">Dr Oprandi</div>
                   <div className="text-[13px] opacity-70">Primary care clinic</div>
                 </div>
               </div>
