@@ -447,7 +447,7 @@ function Modal({ recipe, onClose }: { recipe: Recipe; onClose: () => void }) {
   );
 }
 
-export function RecipesMarquee() {
+export function RecipesMarquee({ tags }: { tags?: string[] } = {}) {
   const t = useTranslations();
   const rm = t.recipesMarquee;
   const [selected, setSelected] = useState<Recipe | null>(null);
@@ -455,7 +455,10 @@ export function RecipesMarquee() {
   const close = useCallback(() => setSelected(null), []);
 
   const isItalian = getLocale() === "it";
-  const RECIPES = isItalian ? RECIPES_IT : RECIPES_EN;
+  // Optional tag filter so product pages can show only their relevant workflows
+  // (e.g. HANA Contact shows front-desk recipes, not clinical-program ones).
+  const ALL_RECIPES = isItalian ? RECIPES_IT : RECIPES_EN;
+  const RECIPES = tags ? ALL_RECIPES.filter((r) => tags.includes(r.tag)) : ALL_RECIPES;
   // Channel legend labels — localized (and de-US-ified: PDMP -> "Verifica ricetta").
   const channelLabel = (key: Channel): string => {
     if (!isItalian) return CHANNELS[key].label;
@@ -473,8 +476,13 @@ export function RecipesMarquee() {
   const row3 = RECIPES.filter((_, i) => i % 3 === 2);
 
   const renderRow = (items: Recipe[], reverse?: boolean) => {
-    const doubled = [...items, ...items];
-    const duration = `${items.length * 8}s`;
+    if (items.length === 0) return null;
+    // Repeat short (filtered) rows until they're wide enough that the -50%
+    // marquee translation never exposes a gap on large screens.
+    const base: Recipe[] = [];
+    while (base.length < 8) base.push(...items);
+    const doubled = [...base, ...base];
+    const duration = `${base.length * 8}s`;
     return (
       <div
         className="overflow-hidden py-2 mb-3"
