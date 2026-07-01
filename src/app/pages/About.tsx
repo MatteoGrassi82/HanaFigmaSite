@@ -38,54 +38,6 @@ function FadeIn({ children, delay = 0, className = "" }: { children: React.React
 
 // --- Data --- (translated in component using useTranslations)
 
-const team = [
-  { 
-    name: "Matteo Grassi", 
-    role: "CEO & Co-founder", 
-    background: "3x founder. Clinical psychologist turned healthcare AI founder. 20 years scaling companies to $16M+ revenue. Built API headless commerce platform backed by Accel. Combines rare clinical credibility with proven commercial execution." 
-  },
-  { 
-    name: "Sthita Pragyan Pujari", 
-    role: "Co-founder & AI Lead", 
-    background: "Voice AI and NLP expert. Built AI voice agents before the category existed. Experience at Honeywell and scaling Speech AI at Thumb Technologies. Architected Hana's proprietary two-model system (reasoning + speaking) that achieves 85% engagement vs. industry 15-20%." 
-  },
-  { 
-    name: "Drew Mcusic, PhD", 
-    role: "Co-founder & COO", 
-    background: "VC operating partner (Chloe Capital). 15+ years in health tech. Former CTO at Theoria Medical building EHR, AI/ML tools, and value-based care infrastructure. PhD in Bioengineering. Based in Detroit, driving US market expansion." 
-  },
-  { 
-    name: "Marco Massenzio", 
-    role: "Head of Engineering", 
-    background: "Ex-Meta, Ex-Google, Ex-Adobe. Built systems handling billions of requests. Kubernetes and cloud architecture expert. The senior technical horsepower behind Hana's scalable infrastructure." 
-  },
-  { 
-    name: "Priyanshu Sinha", 
-    role: "AI/NLP Engineer", 
-    background: "7 patents in NLP and AI. Led conversational intelligence at Gojek (serving millions). Former Honeywell senior data scientist. Deep expertise in multi-turn dialogue systems, search, and applied AI research." 
-  },
-  { 
-    name: "Ankit Nidhi Shroff", 
-    role: "Full Stack Developer", 
-    background: "5+ years building production AI platforms, real-time systems, and developer tooling. React, TypeScript, Node.js, Python. Previously built AI testing automation at scale. Clean architecture obsessed." 
-  },
-  { 
-    name: "Brittany Tamang", 
-    role: "Clinical Product Lead", 
-    background: "10+ years in healthcare at Humana, public health, and clinical operations. Delivered $2M+ in pilot savings and 20% readmission reduction. Translates clinical workflows into product requirements." 
-  },
-  { 
-    name: "Marco Margotto", 
-    role: "Founding Growth", 
-    background: "Psychology student building at the intersection of tech and mental health. Previously co-founded travel-tech startup, ran growth for ESG consultancy. Italy-based, driving European expansion and thought leadership." 
-  },
-  { 
-    name: "Dan Noyes", 
-    role: "Strategic Advisor", 
-    background: "Healthcare AI Strategist with 40+ certifications from Stanford, Johns Hopkins, Wharton, Google, IBM. Author of \"Subjects to Sovereigns: Reclaiming Medicine in the Age of AI.\" Survived a near-fatal medical error. Brings the patient perspective VCs rarely see on founding teams." 
-  }
-];
-
 export function About() {
   const t = useTranslations();
   const ab = t.about;
@@ -312,47 +264,6 @@ export function About() {
               <p className="mt-12 text-center text-xl font-serif italic text-white/90">
                 "We believe the future of healthcare AI is open, sovereign, and owned by the institutions that serve patients, not locked behind proprietary APIs."
               </p>
-            </FadeIn>
-          </div>
-        </div>
-      </section>
-
-      {/* Team */}
-      <section className="py-16 sm:py-20 lg:py-24 px-6 bg-slate-50">
-        <div className="max-w-6xl mx-auto">
-          <FadeIn>
-             <h2 className="font-serif text-3xl sm:text-4xl text-slate-900 mb-16 text-center">{ab.meetTeamTitle}</h2>
-          </FadeIn>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {team.map((member, i) => (
-              <FadeIn key={i} delay={i * 0.05}>
-                <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow h-full relative overflow-hidden group">
-                  <div className="flex flex-col h-full">
-                     <div className="flex justify-between items-start mb-4 gap-4">
-                       <div>
-                          <h3 className="text-xl font-bold text-slate-900">{member.name}</h3>
-                          <span className="text-blue-600 text-sm font-semibold uppercase tracking-wide">{member.role}</span>
-                       </div>
-                     </div>
-                     <p className="text-slate-600 text-sm leading-relaxed">{member.background}</p>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-
-            {/* Hiring CTA Card */}
-            <FadeIn delay={team.length * 0.05}>
-                <div className="bg-blue-600 p-8 rounded-2xl border border-blue-500 shadow-lg hover:shadow-xl transition-shadow h-full relative overflow-hidden group flex flex-col items-center justify-center text-center">
-                    <h3 className="text-2xl font-serif text-white mb-4">{ab.joinTeam}</h3>
-                    <a
-                      href="https://calendly.com/matteowastaken/discoverycall"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-white text-blue-600 rounded-full font-bold text-sm hover:bg-blue-50 transition-colors"
-                    >
-                      {ab.connectCta} <ArrowRight className="w-4 h-4" />
-                    </a>
-                </div>
             </FadeIn>
           </div>
         </div>
