@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion, useInView } from "motion/react";
 import { SEO, breadcrumbSchema } from "../components/SEO";
 import { Footer } from "../components/Footer";
-import { HanaBloomOrb } from "../components/ui/hana-bloom-orb";
 
 const DEMO_URL = "https://calendly.com/matteowastaken/discoverycall";
 
@@ -39,27 +38,28 @@ export function HanaContact() {
       />
 
       {/* HERO */}
-      <header className="pt-28 pb-16 md:pt-32 md:pb-24">
-        <div className="max-w-[1200px] mx-auto px-6 md:px-16">
+      {/* HERO + digital-front-desk diagram — one dominant navy block */}
+      <header className="bg-[#00122F] text-white pt-32 pb-16 md:pt-40 md:pb-20">
+        <div className="max-w-[1200px] mx-auto px-6 md:px-16 text-center">
           <motion.p
             {...fadeUp}
-            className={`${eyebrow} text-[#5b76d9] m-0`}
+            className={`${eyebrow} text-[#A7BCF5] m-0`}
           >
-            HANA Contact
+            HANA Contact · Better than an IVR
           </motion.p>
           <motion.h1
             {...fadeUp}
             transition={{ duration: 0.5, delay: 0.05 }}
-            className="font-serif font-normal text-[44px] sm:text-[56px] md:text-[76px] leading-[1.02] tracking-[-0.01em] mt-5 mb-0 max-w-[20ch]"
+            className="font-serif font-normal text-[52px] sm:text-[68px] md:text-[92px] leading-[1.0] tracking-[-0.015em] mt-6 mb-0 mx-auto max-w-[16ch]"
           >
             Your phones answer themselves.
             <br />
-            <em className="text-[#5b76d9]">So your front desk can focus on care.</em>
+            <em className="text-[#A7BCF5]">So your front desk can focus on care.</em>
           </motion.h1>
           <motion.p
             {...fadeUp}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-lg leading-[1.7] text-slate-500 max-w-[52ch] mt-7 mb-9"
+            className="text-lg md:text-xl leading-[1.7] text-white/60 max-w-[56ch] mx-auto mt-8 mb-10"
           >
             HANA Contact handles every inbound call, outreach, and patient follow-up your team
             doesn't have time for — automatically, in any language, 24/7, and directly inside your EHR.
@@ -70,12 +70,26 @@ export function HanaContact() {
             href={DEMO_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 bg-[#1e2a3a] text-white text-[15px] font-semibold px-8 py-[15px] rounded-[10px] no-underline hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2.5 bg-white text-[#00122F] text-[15px] font-semibold px-8 py-[15px] rounded-[10px] no-underline hover:opacity-90 transition-opacity"
           >
             Book a demo →
           </motion.a>
         </div>
       </header>
+
+      {/* Digital front desk — blended into the hero (same navy, no gap) */}
+      <section className="bg-[#00122F] text-white pb-24 md:pb-28">
+        <div className="max-w-[1200px] mx-auto px-6 md:px-16">
+          <motion.div {...fadeUp} className="text-center mb-12 md:mb-16">
+            <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>How it works</p>
+            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch]">
+              A digital front desk. Every call in, every action out.
+            </h2>
+          </motion.div>
+
+          <FrontDeskDiagram />
+        </div>
+      </section>
 
       {/* PROBLEM — stat left / text right */}
       <section className="py-20 md:py-24 bg-[#f6f7fb]">
@@ -177,22 +191,8 @@ export function HanaContact() {
         </p>
       </section>
 
-      {/* HOW IT WORKS — the orb-hub flow diagram (big-picture overview) */}
-      <section className="bg-[#00122F] text-white py-20 md:py-24">
-        <div className="max-w-[1200px] mx-auto px-6 md:px-16">
-          <motion.div {...fadeUp} className="text-center mb-12 md:mb-16">
-            <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>How it works</p>
-            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch]">
-              A digital front desk. Every call in, every action out.
-            </h2>
-          </motion.div>
-
-          <FrontDeskDiagram />
-        </div>
-      </section>
-
       {/* THE FIVE-STEP FLOW — interactive stage pipeline (step-by-step detail) */}
-      <section className="bg-[#00122F] text-white pb-20 md:pb-24 -mt-4 md:-mt-8">
+      <section className="bg-[#00122F] text-white py-20 md:py-24">
         <div className="max-w-[1200px] mx-auto px-6 md:px-16">
           <motion.div {...fadeUp} className="text-center mb-10 md:mb-14">
             <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>The five-step flow</p>
@@ -680,7 +680,6 @@ function FrontDeskDiagram() {
   );
 
   return (
-    <div className="relative">
     <motion.svg
       viewBox="0 0 940 310"
       className="w-full block"
@@ -774,32 +773,40 @@ function FrontDeskDiagram() {
       >
         <rect x="370" y="5" width="200" height="300" rx="16" fill="#1e2a3a" />
 
-        {/* ACT 2 — ACTIVATE: when the inbound streams land, the orb ignites and
+        {/* ACT 2 — ACTIVATE: when the inbound streams land, the hub ignites and
             three rings burst outward in quick succession (the "moment"). */}
         {!reduce &&
           [0, 0.18, 0.36].map((off, i) => (
             <motion.circle
               key={i}
               cx="470"
-              cy="100"
+              cy="118"
               fill="none"
               stroke="#A7BCF5"
               strokeWidth="1.5"
-              initial={{ r: 16, opacity: 0 }}
-              whileInView={{ r: [16, 104], opacity: [0.55, 0] }}
+              initial={{ r: 14, opacity: 0 }}
+              whileInView={{ r: [14, 96], opacity: [0.55, 0] }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ delay: T.activate + off, duration: 1.5, ease: "easeOut" }}
             />
           ))}
 
-        {/* The live "Talk to Hana" bloom orb sits here as an HTML overlay (see the
-            wrapper in the return below). The text + captions read beneath it. */}
-        <text x="470" y="190" textAnchor="middle" fontFamily="DM Sans, sans-serif" fontSize="11" fontWeight="700" fill="#A7BCF5" letterSpacing="2">HANA</text>
-        <text x="470" y="217" textAnchor="middle" fontFamily="Instrument Serif, Georgia, serif" fontSize="27" fill="white">Contact</text>
-        <line x1="406" y1="240" x2="534" y2="240" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-        <text x="470" y="262" textAnchor="middle" fontFamily="DM Sans, sans-serif" fontSize="10.5" fill="rgba(255,255,255,0.38)">Your existing phone lines</text>
-        <text x="470" y="280" textAnchor="middle" fontFamily="DM Sans, sans-serif" fontSize="10.5" fill="rgba(255,255,255,0.38)">150+ EHR integrations</text>
-        <text x="470" y="298" textAnchor="middle" fontFamily="DM Sans, sans-serif" fontSize="10.5" fill="rgba(255,255,255,0.38)">Any language · 24 / 7</text>
+        {/* Plain hub — static orbital rings + a small core dot, then the label.
+            (No bloom orb — the hub is a clean navy card.) */}
+        <circle cx="470" cy="118" r="70" stroke="#A7BCF5" strokeWidth="1" fill="none" opacity="0.12" />
+        <circle cx="470" cy="118" r="94" stroke="#A7BCF5" strokeWidth="1" fill="none" opacity="0.07" />
+        <motion.circle
+          cx="470" cy="118" r="6" fill="#A7BCF5"
+          animate={reduce ? undefined : { opacity: [0.55, 0.9, 0.55], scale: [1, 1.15, 1] }}
+          transition={reduce ? undefined : { duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+          style={{ opacity: 0.7, transformOrigin: "470px 118px", transformBox: "fill-box" }}
+        />
+        <text x="470" y="170" textAnchor="middle" fontFamily="DM Sans, sans-serif" fontSize="11" fontWeight="700" fill="#A7BCF5" letterSpacing="2">HANA</text>
+        <text x="470" y="197" textAnchor="middle" fontFamily="Instrument Serif, Georgia, serif" fontSize="27" fill="white">Contact</text>
+        <line x1="406" y1="220" x2="534" y2="220" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+        <text x="470" y="242" textAnchor="middle" fontFamily="DM Sans, sans-serif" fontSize="10.5" fill="rgba(255,255,255,0.38)">Your existing phone lines</text>
+        <text x="470" y="260" textAnchor="middle" fontFamily="DM Sans, sans-serif" fontSize="10.5" fill="rgba(255,255,255,0.38)">150+ EHR integrations</text>
+        <text x="470" y="278" textAnchor="middle" fontFamily="DM Sans, sans-serif" fontSize="10.5" fill="rgba(255,255,255,0.38)">Any language · 24 / 7</text>
       </motion.g>
 
       {/* Connection dots */}
@@ -874,55 +881,6 @@ function FrontDeskDiagram() {
         );
       })}
     </motion.svg>
-
-      {/* "Talk to Hana" bloom orb — HTML overlay centered on the SVG hub core.
-          Position tracks the hub: cx 470/940 = 50%, cy 100/310 ≈ 32.3% of the
-          rendered SVG. Scales down with the diagram so it always fills the hub.
-          Choreography: appears DIM during ACT 1 (ingest), then IGNITES at ACT 2 —
-          a brightness + scale surge synced to the ripple burst — and settles. */}
-      <motion.div
-        className="pointer-events-none absolute"
-        style={{ left: "50%", top: "32.3%", translate: "-50% -50%" }}
-        initial={{ opacity: 0, scale: 0.82, filter: "saturate(0.4) brightness(0.6)" }}
-        whileInView={
-          reduce
-            ? { opacity: 1, scale: 1, filter: "saturate(1) brightness(1)" }
-            : {
-                opacity: [0, 0.5, 0.5, 1, 0.92],
-                scale: [0.82, 0.9, 0.9, 1.06, 1],
-                filter: [
-                  "saturate(0.4) brightness(0.6)",
-                  "saturate(0.55) brightness(0.72)",
-                  "saturate(0.55) brightness(0.72)",
-                  "saturate(1.15) brightness(1.25)",
-                  "saturate(1) brightness(1)",
-                ],
-              }
-        }
-        viewport={{ once: true, margin: "-80px" }}
-        transition={
-          reduce
-            ? { duration: 0 }
-            : {
-                // keyframe times map to: appear(hub) → hold dim → ignite(activate) → settle
-                duration: T.activate + 1.2,
-                times: [0, T.hub / (T.activate + 1.2), (T.activate - 0.3) / (T.activate + 1.2), (T.activate + 0.5) / (T.activate + 1.2), 1],
-                ease: "easeInOut",
-              }
-        }
-        aria-hidden="true"
-      >
-        {/* HanaBloomOrb renders a fixed 300px square; scale it down to fill the
-            hub interior. transform-scale keeps the center pinned to the hub core
-            (the wrapper above centers via translate), so it tracks across breakpoints. */}
-        <div
-          style={{ transformOrigin: "center center" }}
-          className="scale-[0.2] sm:scale-[0.34] md:scale-[0.46] lg:scale-[0.56]"
-        >
-          <HanaBloomOrb />
-        </div>
-      </motion.div>
-    </div>
   );
 }
 
