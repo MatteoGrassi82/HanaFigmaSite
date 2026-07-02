@@ -599,7 +599,38 @@ function DashboardTour() {
   return (
     <div ref={ref} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
       <div className="max-w-[1100px] mx-auto">
-        <SaaSWindow active={tab} onNav={setTab}>
+        {/* Top tab bar — the switcher above the window. Auto-cycles through the
+            three panels (pauses on hover); each pill carries a fill bar that
+            drains over the dwell so the "pa pa pa" advance reads on screen. */}
+        <div className="flex justify-center mb-5">
+          <div className="inline-flex gap-1.5 p-1.5 rounded-full bg-white/[0.06] border border-white/10">
+            {DASH_TABS.map((t, i) => (
+              <button
+                key={t}
+                onClick={() => setTab(i)}
+                aria-pressed={tab === i}
+                className={`relative overflow-hidden px-4 sm:px-5 py-2 rounded-full text-[12.5px] sm:text-[13px] font-semibold transition-colors ${
+                  tab === i ? "bg-white text-[#00122F]" : "text-white/60 hover:text-white/90"
+                }`}
+              >
+                {tab === i && !reduce && !paused && (
+                  <motion.span
+                    key={`fill-${tab}`}
+                    aria-hidden
+                    className="absolute inset-0 bg-[#5b76d9]/15"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 4.5, ease: "linear" }}
+                    style={{ originX: 0 }}
+                  />
+                )}
+                <span className="relative">{t}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <SaaSWindow active={tab}>
           <div className="h-full overflow-y-auto">
             <AnimatePresence mode="wait">
               <motion.div
@@ -616,21 +647,6 @@ function DashboardTour() {
             </AnimatePresence>
           </div>
         </SaaSWindow>
-        {/* Mobile tab switcher (sidebar hides below sm) */}
-        <div className="flex sm:hidden justify-center gap-2 mt-4">
-          {DASH_TABS.map((t, i) => (
-            <button
-              key={t}
-              onClick={() => setTab(i)}
-              aria-pressed={tab === i}
-              className={`px-3.5 py-1.5 rounded-full text-[12px] font-semibold transition-colors ${
-                tab === i ? "bg-white text-[#00122F]" : "bg-white/[0.08] text-white/60"
-              }`}
-            >
-              {t}
-            </button>
-          ))}
-        </div>
         <p className="text-center text-[12px] text-white/35 mt-4">Illustrative interface. Your team reviews what matters — the rest is handled.</p>
       </div>
     </div>
@@ -955,7 +971,7 @@ function PatientAgentSection() {
           low-opacity so it never fights the heading text) */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0" style={{ background: "radial-gradient(90% 70% at 30% 75%, rgba(167,188,245,0.30) 0%, rgba(246,247,251,0) 60%)" }} />
-        <div className="absolute left-[8%] bottom-[-8%] opacity-35 blur-[3px] hidden md:block">
+        <div className="absolute left-[8%] bottom-[-8%] opacity-[0.15] blur-[5px] hidden md:block">
           <div className="scale-[1.7]" style={{ transformOrigin: "center" }}>
             <HanaBloomOrb />
           </div>
@@ -1180,22 +1196,6 @@ export function HanaRemote() {
           },
         }}
       />
-
-      {/* SaaS window — the platform peek right after the loop */}
-      <section className="bg-[#f6f7fb] pt-20 md:pt-24 pb-24 md:pb-28">
-        <div className="max-w-[1100px] mx-auto px-6 md:px-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <SaaSWindow active={0}>
-              <TaskQueuePane />
-            </SaaSWindow>
-          </motion.div>
-        </div>
-      </section>
 
       {/* THE PROBLEM — narrative + the CPAP number */}
       <section className="py-20 md:py-24 bg-white">
