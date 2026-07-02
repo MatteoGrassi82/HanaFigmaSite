@@ -4,8 +4,8 @@ import { Check, ChevronDown } from "lucide-react";
 import { SEO, breadcrumbSchema } from "../components/SEO";
 import { Footer } from "../components/Footer";
 import { HanaBloomOrb } from "../components/ui/hana-bloom-orb";
-import { LoopFigure } from "../components/ui/loop-diagram";
-import { Link } from "react-router";
+import { RecipesMarquee } from "../components/RecipesMarquee";
+import { InlineImageHeader } from "../components/InlineImageHeader";
 
 const DEMO_URL = "https://calendly.com/matteowastaken/discoverycall";
 
@@ -26,6 +26,7 @@ const fadeUp = {
 };
 
 const eyebrow = "text-[13px] font-bold tracking-[2.5px] uppercase";
+// (readability pass: body copy uses slate-600+, never the lighter grays)
 
 // Compact lucide-style icon paths (24×24) used across the page.
 const RI = {
@@ -53,116 +54,65 @@ function Glyph({ d, className = "w-5 h-5" }: { d: string; className?: string }) 
 
 // ── Content ──────────────────────────────────────────────────────────────────
 
+// The five-step monitoring flow (ported from Contact's five-step-flow pipeline,
+// applied to device-less RPM/RTM): enroll → check in → flag → escalate → document.
+const HOW_SOURCES = ["New enrollments", "Scheduled check-ins", "Wearable & device data", "Patient-reported symptoms"];
+const HOW_OUTCOMES = ["Higher adherence", "Every flag reviewed", "Reimbursement captured"];
+
 const HOW_BLOCKS = [
   {
-    key: "Voice",
-    icon: RI.phone,
-    title: "Voice AI replaces the device",
+    key: "Enroll",
+    title: "Enroll by phone, on day one",
+    short: "Consent and onboarding on a call — no app to download.",
+    detail: "HANA Remote calls the patient, explains the program, captures consent, and sets up the right clinical protocol for their condition. No device to ship, no app to download, no behavior change asked of the patient.",
+    stat: "Day 1",
+    statLabel: "consent + onboarding, entirely by phone",
+    proof: "Consent captured on the call",
+  },
+  {
+    key: "Check in",
+    title: "Check in on the right cadence",
     short: "The conversation is the monitoring.",
-    body: "HANA Remote calls your patients on the right cadence, in their language, with the right clinical protocol for their condition. No Bluetooth. No hardware. No compliance problem. The conversation is the monitoring.",
+    detail: "Scheduled voice calls capture symptoms, adherence, and vitals in the patient's language, on the cadence their protocol needs. Wearable and connected-device data flows in via API alongside the voice data.",
     stat: "85%",
-    statLabel: "of patients pick up and engage — vs 20% for apps",
+    statLabel: "pick up and engage — vs 20% for apps",
+    proof: "Voice + wearable data",
   },
   {
-    key: "Wearables",
-    icon: RI.watch,
-    title: "Wearables data, when you have it",
-    short: "Device-less by default. Device-connected when available.",
-    body: "HANA Remote connects to wearables and RPM devices via API — so if your patients are already using Apple Watch, WHOOP, or a connected glucometer, that data flows in alongside the voice data.",
-    stat: "API",
-    statLabel: "Apple Watch · WHOOP · connected glucometers",
-  },
-  {
-    key: "Protocols",
-    icon: RI.clipboard,
-    title: "45+ clinical protocols",
-    short: "Co-built with clinicians inside real clinics.",
-    body: "MSK, CPAP/sleep, diabetes, hypertension, behavioral health, post-op, chronic care management, ACCESS. Every protocol was built with practicing clinicians inside real clinics. Not written in a boardroom.",
+    key: "Flag",
+    title: "Flag what matters",
+    short: "45+ clinical protocols score every response.",
+    detail: "Every answer is scored against the protocol — MSK, CPAP/sleep, diabetes, hypertension, behavioral health, post-op, chronic care. When a threshold trips or risk rises, HANA surfaces it instead of burying it in a log.",
     stat: "45+",
     statLabel: "clinical protocols across conditions",
+    proof: "Protocol-scored in real time",
   },
   {
-    key: "Full-cycle",
-    icon: RI.cycle,
-    title: "Full-cycle program management",
-    short: "Enrollment to escalation to billing — handled.",
-    body: "Enrollment, engagement, assessment, escalation, care coordination, billing documentation — HANA Remote runs the full cycle. Your team reviews what matters, on a flagged worklist. The rest is handled.",
+    key: "Escalate",
+    title: "Escalate to a clinician",
+    short: "A clinician on every flag — the rest is handled.",
+    detail: "Clinical flags route straight to your worklist with the full context of the call. Your team reviews only what matters, on one flagged queue — not a phone list and not every check-in.",
     stat: "1",
     statLabel: "flagged worklist is all your team reviews",
+    proof: "Straight to the worklist",
   },
   {
-    key: "Billing",
-    icon: RI.dollar,
-    title: "Reimbursable from day one",
-    short: "The billing architecture is part of the product.",
-    body: "Built around the billing architecture: RTM codes 98975–98981, CCM, APCM, and ACCESS Pathway 4. Every interaction is documented for the clinician's attestation. The reimbursement infrastructure is part of the product, not an afterthought.",
-    stat: "Day 1",
-    statLabel: "reimbursable — RTM · CCM · APCM · ACCESS",
-  },
-  {
-    key: "EHR",
-    icon: RI.database,
-    title: "Live inside your EHR",
-    short: "No new portal for your team to learn.",
-    body: "150+ integrations. Structured data written back to your existing system — ready for the clinician's review the moment the call ends.",
+    key: "Document",
+    title: "Document to the EHR",
+    short: "Structured data + codes, ready to attest.",
+    detail: "The moment the call ends, structured data is written back to your EHR with the interaction documented for attestation — RTM 98975–98981, CCM, APCM, and ACCESS Pathway 4, ready to bill. 150+ integrations.",
     stat: "150+",
-    statLabel: "EHR integrations, live in your workflow",
+    statLabel: "EHR integrations · RTM · CCM · APCM",
+    proof: "Direct EHR write-back",
   },
 ];
 
-const PROGRAMS = [
-  {
-    key: "RTM",
-    name: "Remote Therapeutic Monitoring",
-    who: "Musculoskeletal, respiratory, and behavioral health programs.",
-    what: "Software as the device — HANA Remote's voice interactions are the monitoring instrument. No FDA-cleared hardware required.",
-    codes: ["98975", "98976", "98977", "98980", "98981"],
-    stat: "45+",
-    statLabel: "clinical protocols across conditions",
-  },
-  {
-    key: "RPM",
-    name: "Remote Patient Monitoring",
-    who: "Clinics with existing device-based RPM programs.",
-    what: "The engagement layer that makes your existing RPM program work. HANA Remote handles the between-visit contact your devices can't — and keeps patients transmitting.",
-    codes: ["99453", "99454", "99457", "99458"],
-    stat: "85%",
-    statLabel: "patient engagement vs 20% for apps",
-  },
-  {
-    key: "CCM & APCM",
-    name: "Chronic Care Management",
-    who: "Patients with multiple chronic conditions.",
-    what: "Full-cycle coordination — monthly touchpoints, assessments, care plan updates, and escalations. Monthly reimbursement, documented and billable.",
-    codes: ["99490", "99439", "APCM"],
-    stat: "4M+",
-    statLabel: "patient interactions processed",
-  },
-  {
-    key: "ACCESS",
-    name: "ACCESS Program (CMS)",
-    who: "Enrolled ACCESS participants — or clinics working toward enrollment.",
-    what: "Live inside the CMS ACCESS program (launched July 2026). If you're an enrolled participant or working toward enrollment, HANA Remote is your engagement layer for Pathway 4.",
-    codes: ["Pathway 4"],
-    stat: "Live",
-    statLabel: "inside the CMS ACCESS program",
-  },
-  {
-    key: "HANA Sleep",
-    name: "Sleep & DME",
-    who: "Sleep labs and DME providers with CPAP non-adherence problems.",
-    what: "CPAP adherence, sleep program management, and DME resupply outreach. The sharpest use case for the device-less model — voice cuts non-adherence in half.",
-    codes: ["E0601", "94660", "Resupply"],
-    stat: "50→22%",
-    statLabel: "CPAP non-adherence in production",
-  },
-];
-
-const PAYERS = [
-  { icon: RI.dollar, title: "Medicare", body: "RTM and RPM engagement — the codes exist, the money is there, and CMS has been paying for monitoring programs for years." },
-  { icon: RI.building, title: "Commercial insurers", body: "The same monitoring programs, reimbursed by commercial payers alongside Medicare." },
-  { icon: RI.activity, title: "Value-based contracts", body: "Paid from savings, code-independent. Engagement that keeps patients out of the ED pays for itself." },
-  { icon: RI.heart, title: "Cash-pay & DME", body: "GLP-1 programs, CPAP resupply, concierge monitoring — revenue that doesn't wait on a payer at all." },
+// Which workflow tags (RecipesMarquee) are the clinical / monitoring-program ones
+// — the workflows behind these programs (not front-desk intake/refills). Includes
+// the Italian tag twins so the marquee filters correctly in either locale.
+const PROGRAM_WORKFLOW_TAGS = [
+  "Outreach", "Behavioral Health", "Surgery", "Testing", "ADHD",
+  "Cronicità", "Salute Mentale", "Chirurgia", "Esami", "Aderenza", "Prevenzione",
 ];
 
 const R_FAQS = [
@@ -207,16 +157,29 @@ const TASK_ROWS = [
   { initials: "KO", name: "K. Okafor", program: "Diabetes · RTM", reason: "Glucose log captured by voice", level: "green", act: "Done" },
 ];
 
-// Billing readiness — the signature RPM view. HANA counts completed voice
-// check-in days (device-less spin on the CMS 16-day 99454 rule) and management
-// minutes (99457/99458), with a live billable status per patient.
-const BILLING_ROWS = [
-  { initials: "LR", name: "L. Rossi", program: "CCM", days: 22, mins: 24, status: "billable" },
-  { initials: "KO", name: "K. Okafor", program: "RTM", days: 19, mins: 21, status: "billable" },
-  { initials: "NP", name: "N. Petrov", program: "CCM", days: 16, mins: 20, status: "billable" },
-  { initials: "EW", name: "E. Whitmore", program: "RTM", days: 14, mins: 18, status: "atrisk" },
-  { initials: "SB", name: "S. Bianchi", program: "CoCM", days: 21, mins: 12, status: "needtime" },
-  { initials: "MA", name: "M. Alvarez", program: "Sleep", days: 9, mins: 8, status: "atrisk" },
+// Billing readiness — the care-management + monitoring view. Each program bills
+// its own CPT/HCPCS family, so a row shows the codes that actually apply and the
+// requirement that gates them. "req" is the human-readable threshold; "met" is
+// what HANA has captured toward it this month.
+//   RPM  — 99453 setup · 99454 device (16 days) · 99457/58 mgmt time (20 min)
+//   RTM  — 98975 setup · 98977 device (16 days) · 98980/81 mgmt time (20 min)
+//   CCM  — 99490 + 99439 (staff, 20 min) · 99491/99437 (physician time)
+//   CoCM — 99492/99493/99494 (behavioral, monthly by minutes)
+//   APCM — G0556/G0557/G0558 (monthly by complexity — no time threshold)
+//   ACCESS — advanced primary care access, billed under APCM (G0556–G0558)
+type BillProgram = "RPM" | "RTM" | "CCM" | "CoCM" | "APCM" | "ACCESS";
+const BILLING_ROWS: {
+  initials: string; name: string; program: BillProgram;
+  codes: string; req: string; met: string; pct: number; status: string;
+}[] = [
+  { initials: "KO", name: "K. Okafor", program: "RTM",    codes: "98977 · 98980", req: "16 device-days + 20 min", met: "19 days · 21 min", pct: 100, status: "billable" },
+  { initials: "LR", name: "L. Rossi",  program: "CCM",    codes: "99490 · 99439", req: "20 min care mgmt",        met: "24 min",          pct: 100, status: "billable" },
+  { initials: "NP", name: "N. Petrov", program: "RPM",    codes: "99454 · 99457", req: "16 device-days + 20 min", met: "16 days · 20 min", pct: 100, status: "billable" },
+  { initials: "GA", name: "G. Adeyemi",program: "APCM",   codes: "G0557",         req: "Monthly · Level 2",       met: "2 conditions",    pct: 100, status: "billable" },
+  { initials: "EW", name: "E. Whitmore",program: "RTM",   codes: "98977 · 98980", req: "16 device-days + 20 min", met: "14 days · 18 min", pct: 82,  status: "atrisk" },
+  { initials: "SB", name: "S. Bianchi", program: "CoCM",  codes: "99492 · 99493", req: "70 min first mo.",         met: "48 min",          pct: 68,  status: "needtime" },
+  { initials: "DM", name: "D. Mensah",  program: "ACCESS",codes: "G0556",         req: "Monthly · Level 1",       met: "enrolled",        pct: 100, status: "billable" },
+  { initials: "MA", name: "M. Alvarez", program: "RPM",   codes: "99454 · 99457", req: "16 device-days + 20 min", met: "9 days · 8 min",   pct: 45,  status: "atrisk" },
 ];
 
 const ANALYTICS_KPIS = [
@@ -228,10 +191,11 @@ const ANALYTICS_KPIS = [
 // monthly adherence % trend (12 pts) — climbs as the program matures
 const ANALYTICS_TREND = [38, 44, 49, 55, 58, 63, 68, 71, 74, 78, 81, 85];
 const ANALYTICS_MIX = [
-  { label: "RTM", pct: 34, color: "#5b76d9" },
-  { label: "CCM", pct: 28, color: "#7c92e6" },
-  { label: "RPM", pct: 22, color: "#A7BCF5" },
-  { label: "Sleep", pct: 16, color: "#c9d4f7" },
+  { label: "RPM", pct: 31, color: "#5b76d9" },
+  { label: "RTM", pct: 27, color: "#7c92e6" },
+  { label: "CCM", pct: 21, color: "#A7BCF5" },
+  { label: "APCM", pct: 13, color: "#c1cdf5" },
+  { label: "CoCM", pct: 8, color: "#d7defa" },
 ];
 
 const DASH_TABS = ["Task queue", "Billing", "Analytics"] as const;
@@ -259,7 +223,7 @@ function TaskQueuePane({ compact = false }: { compact?: boolean }) {
   const rows = compact ? TASK_ROWS.slice(0, 4) : TASK_ROWS;
   return (
     <div>
-      <div className="flex items-center justify-between px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[1px] text-slate-400 border-b border-slate-100 bg-[#fbfcfe]">
+      <div className="flex items-center justify-between px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[1px] text-slate-500 border-b border-slate-100 bg-[#fbfcfe]">
         <span>Priority queue · 38 of 412 need action</span>
         {!compact && <span className="hidden sm:block">Ranked by risk + billing</span>}
       </div>
@@ -280,9 +244,9 @@ function TaskQueuePane({ compact = false }: { compact?: boolean }) {
             <div className="flex items-center gap-2">
               <LevelDot level={r.level} />
               <span className="text-[13px] font-semibold text-slate-900 truncate">{r.name}</span>
-              <span className="text-[11px] text-slate-400 truncate hidden md:block">{r.program}</span>
+              <span className="text-[11px] text-slate-500 truncate hidden md:block">{r.program}</span>
             </div>
-            <p className="text-[12px] text-slate-500 m-0 mt-0.5 truncate">{r.reason}</p>
+            <p className="text-[12px] text-slate-600 m-0 mt-0.5 truncate">{r.reason}</p>
           </div>
           <span className={`inline-flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-lg shrink-0 ${actClasses(r.level, true)}`}>
             {r.act === "Call now" && <Glyph d={RI.phone} className="w-3 h-3" />}
@@ -311,69 +275,101 @@ function Meter({ value, max, tone }: { value: number; max: number; tone: string 
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
         />
       </div>
-      <span className="text-[11px] font-semibold text-slate-500 tabular-nums w-11 text-right shrink-0">{value}/{max}</span>
+      <span className="text-[11px] font-semibold text-slate-600 tabular-nums w-11 text-right shrink-0">{value}/{max}</span>
     </div>
   );
 }
 
 
-// BILLING — the signature RPM readiness view. Per patient: progress toward the
-// two thresholds (voice check-in days → 99454; management minutes → 99457/58),
-// with a live billable status. HANA counts voice check-ins, not device transmits.
+// BILLING — care-management + monitoring readiness. Per patient: progress toward
+// that program's requirement (device-days/minutes for RPM·RTM, care-management
+// minutes for CCM·CoCM, monthly enrollment for APCM·ACCESS), with a live status.
 const BILL_STATUS = {
   billable: { chip: "bg-emerald-50 text-emerald-600", label: "Billable" },
-  atrisk: { chip: "bg-amber-50 text-amber-600", label: "Days short" },
+  atrisk: { chip: "bg-amber-50 text-amber-600", label: "Short" },
   needtime: { chip: "bg-[#eef1fb] text-[#5b76d9]", label: "Needs time" },
 } as const;
 
+// Per-program accent for the code chip — keeps the six programs visually distinct.
+const PROGRAM_CHIP: Record<BillProgram, string> = {
+  RPM:    "bg-[#eef1fb] text-[#5b76d9]",
+  RTM:    "bg-[#eaf3fb] text-[#3b82c4]",
+  CCM:    "bg-[#eafaf1] text-emerald-600",
+  CoCM:   "bg-[#f3eefb] text-[#8b5cf6]",
+  APCM:   "bg-[#fdf3ea] text-amber-600",
+  ACCESS: "bg-[#fdeef2] text-rose-500",
+};
+
 function BillingPane() {
+  const reduce = useReducedMotion();
   return (
     <div className="flex flex-col h-full">
       {/* month-readiness summary strip */}
       <div className="grid grid-cols-3 border-b border-slate-100 bg-[#fbfcfe]">
         {[
-          { v: "218", l: "Billable now", c: "text-emerald-600" },
-          { v: "34", l: "Days short", c: "text-amber-600" },
-          { v: "$142K", l: "Ready this month", c: "text-[#00122F]" },
+          { v: "218", l: "Ready to bill", c: "text-emerald-600" },
+          { v: "34", l: "Short of threshold", c: "text-amber-600" },
+          { v: "$142K", l: "Across RPM · RTM · CCM · APCM", c: "text-[#00122F]" },
         ].map((s, i) => (
           <div key={s.l} className={`px-4 py-3.5 ${i > 0 ? "border-l border-slate-100" : ""}`}>
             <div className={`font-serif text-[24px] leading-none ${s.c}`}>{s.v}</div>
-            <div className="text-[11px] text-slate-400 mt-1">{s.l}</div>
+            <div className="text-[11px] text-slate-500 mt-1">{s.l}</div>
           </div>
         ))}
       </div>
       {/* column header */}
-      <div className="hidden md:grid grid-cols-[1.4fr_1.1fr_1.1fr_0.9fr] gap-3 px-4 py-2 text-[10px] font-bold uppercase tracking-[1px] text-slate-300 border-b border-slate-100">
+      <div className="hidden md:grid grid-cols-[1.5fr_1.1fr_1.4fr_0.9fr] gap-3 px-4 py-2 text-[10px] font-bold uppercase tracking-[1px] text-slate-300 border-b border-slate-100">
         <span>Patient</span>
-        <span>Check-in days · 99454</span>
-        <span>Mgmt time · 99457/58</span>
+        <span>Program · codes</span>
+        <span>Requirement met</span>
         <span className="text-right">Status</span>
       </div>
-      {BILLING_ROWS.map((b) => {
-        const st = BILL_STATUS[b.status as keyof typeof BILL_STATUS];
-        return (
-          <div key={b.name} className="grid grid-cols-[1fr_auto] md:grid-cols-[1.4fr_1.1fr_1.1fr_0.9fr] gap-3 items-center px-4 py-3 border-b border-slate-100 hover:bg-[#fafbfe] transition-colors">
-            <div className="flex items-center gap-2.5 min-w-0">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#eef1fb] text-[#5b76d9] text-[10px] font-bold shrink-0">{b.initials}</span>
-              <div className="min-w-0">
-                <div className="text-[13px] font-semibold text-slate-900 truncate">{b.name}</div>
-                <div className="text-[11px] text-slate-400">{b.program}</div>
+      <div className="flex-1">
+        {BILLING_ROWS.map((b) => {
+          const st = BILL_STATUS[b.status as keyof typeof BILL_STATUS];
+          const tone = b.status === "billable" ? "#10b981" : b.status === "needtime" ? "#5b76d9" : "#f59e0b";
+          return (
+            <div key={b.name} className="grid grid-cols-[1fr_auto] md:grid-cols-[1.5fr_1.1fr_1.4fr_0.9fr] gap-3 items-center px-4 py-3 border-b border-slate-100 hover:bg-[#fafbfe] transition-colors">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#eef1fb] text-[#5b76d9] text-[10px] font-bold shrink-0">{b.initials}</span>
+                <div className="min-w-0">
+                  <div className="text-[13px] font-semibold text-slate-900 truncate">{b.name}</div>
+                  <div className="text-[11px] text-slate-500 md:hidden">{b.program} · {b.codes}</div>
+                </div>
+              </div>
+              <div className="hidden md:flex flex-col gap-1">
+                <span className={`inline-flex w-fit items-center text-[11px] font-bold px-2 py-0.5 rounded-md ${PROGRAM_CHIP[b.program]}`}>{b.program}</span>
+                <span className="text-[11px] text-slate-500 tabular-nums">{b.codes}</span>
+              </div>
+              <div className="hidden md:block">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[11px] text-slate-600">{b.req}</span>
+                  <span className="text-[11px] font-semibold text-slate-600 tabular-nums">{b.met}</span>
+                </div>
+                <div className="h-1.5 rounded-full bg-slate-100 overflow-hidden">
+                  <motion.div
+                    className="h-full rounded-full"
+                    style={{ backgroundColor: tone }}
+                    initial={{ width: reduce ? `${b.pct}%` : 0 }}
+                    whileInView={{ width: `${b.pct}%` }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end">
+                <span className={`inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-full ${st.chip}`}>
+                  {b.status === "billable" && <Check className="w-3 h-3" strokeWidth={3} />}
+                  {st.label}
+                </span>
               </div>
             </div>
-            <div className="hidden md:block"><Meter value={b.days} max={16} tone={b.days >= 16 ? "billable" : "atrisk"} /></div>
-            <div className="hidden md:block"><Meter value={b.mins} max={20} tone={b.mins >= 20 ? "billable" : "needtime"} /></div>
-            <div className="flex justify-end">
-              <span className={`inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-full ${st.chip}`}>
-                {b.status === "billable" && <Check className="w-3 h-3" strokeWidth={3} />}
-                {st.label}
-              </span>
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
       <div className="flex items-center justify-between px-4 py-3 mt-auto border-t border-slate-100 bg-[#fbfcfe]">
-        <span className="text-[12px] text-slate-500">One click generates the month's claim set — 99453–99458, docs attached.</span>
-        <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-white bg-[#1e2a3a] rounded-lg px-3 py-1.5">Generate claims</span>
+        <span className="text-[12px] text-slate-600">One click generates the month's claim set — RPM, RTM, CCM &amp; APCM codes, docs attached.</span>
+        <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-white bg-[#1e2a3a] rounded-lg px-3 py-1.5 shrink-0">Generate claims</span>
       </div>
     </div>
   );
@@ -390,29 +386,29 @@ function AnalyticsPane() {
   }).join(" ");
   const areaPts = `0,${H} ${pts} ${W},${H}`;
   return (
-    <div className="p-4 md:p-5">
+    <div className="flex flex-col h-full p-4 md:p-5">
       {/* KPI tiles */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4 shrink-0">
         {ANALYTICS_KPIS.map((k) => (
           <div key={k.label} className="rounded-xl border border-slate-100 bg-white p-3.5">
-            <div className="text-[10.5px] font-semibold uppercase tracking-[0.5px] text-slate-400">{k.label}</div>
+            <div className="text-[10.5px] font-semibold uppercase tracking-[0.5px] text-slate-500">{k.label}</div>
             <div className="flex items-baseline gap-1.5 mt-1">
               <span className="font-serif text-[28px] leading-none text-[#00122F]">{k.value}</span>
               {k.trend === "up" && <span className="text-[11px] font-semibold text-emerald-500">▲</span>}
               {k.trend === "down" && <span className="text-[11px] font-semibold text-emerald-500">▼</span>}
             </div>
-            <div className="text-[11px] text-slate-400 mt-1 leading-snug">{k.sub}</div>
+            <div className="text-[11px] text-slate-500 mt-1 leading-snug">{k.sub}</div>
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-4 flex-1 min-h-0">
         {/* Adherence trend */}
-        <div className="rounded-xl border border-slate-100 bg-white p-4">
-          <div className="flex items-center justify-between mb-3">
+        <div className="rounded-xl border border-slate-100 bg-white p-4 flex flex-col">
+          <div className="flex items-center justify-between mb-3 shrink-0">
             <span className="text-[12px] font-semibold text-slate-700">Adherence trend</span>
-            <span className="text-[11px] text-slate-400">12 months</span>
+            <span className="text-[11px] text-slate-500">12 months</span>
           </div>
-          <svg viewBox={`0 0 ${W} ${H}`} className="w-full" aria-label="Adherence climbing to 85% over 12 months">
+          <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="w-full flex-1 min-h-0" aria-label="Adherence climbing to 85% over 12 months">
             <defs>
               <linearGradient id="analyticsFill" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#5b76d9" stopOpacity="0.22" />
@@ -431,24 +427,25 @@ function AnalyticsPane() {
               points={pts}
               fill="none"
               stroke="#5b76d9"
-              strokeWidth="2.5"
+              strokeWidth="1"
+              vectorEffect="non-scaling-stroke"
               strokeLinecap="round"
               strokeLinejoin="round"
-              initial={{ pathLength: reduce ? 1 : 0 }}
-              whileInView={{ pathLength: 1 }}
+              initial={{ opacity: reduce ? 1 : 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: reduce ? 0 : 1.4, ease: "easeOut", delay: 0.2 }}
+              transition={{ duration: reduce ? 0 : 0.6, ease: "easeOut", delay: 0.2 }}
             />
           </svg>
-          <div className="flex justify-between text-[10px] text-slate-400 mt-1"><span>38%</span><span className="text-[#5b76d9] font-semibold">85% now</span></div>
+          <div className="flex justify-between text-[10px] text-slate-500 mt-1 shrink-0"><span>38%</span><span className="text-[#5b76d9] font-semibold">85% now</span></div>
         </div>
         {/* Program mix */}
-        <div className="rounded-xl border border-slate-100 bg-white p-4">
-          <span className="text-[12px] font-semibold text-slate-700">Program mix</span>
-          <div className="mt-3.5 space-y-2.5">
+        <div className="rounded-xl border border-slate-100 bg-white p-4 flex flex-col">
+          <span className="text-[12px] font-semibold text-slate-700 shrink-0">Program mix</span>
+          <div className="mt-3.5 flex-1 flex flex-col justify-between gap-2.5">
             {ANALYTICS_MIX.map((m) => (
               <div key={m.label} className="flex items-center gap-2.5">
-                <span className="text-[11px] font-medium text-slate-500 w-10 shrink-0">{m.label}</span>
+                <span className="text-[11px] font-medium text-slate-600 w-12 shrink-0">{m.label}</span>
                 <div className="h-2 flex-1 rounded-full bg-slate-100 overflow-hidden">
                   <motion.div
                     className="h-full rounded-full"
@@ -459,7 +456,7 @@ function AnalyticsPane() {
                     transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
                   />
                 </div>
-                <span className="text-[11px] font-semibold text-slate-500 w-8 text-right tabular-nums shrink-0">{m.pct}%</span>
+                <span className="text-[11px] font-semibold text-slate-600 w-8 text-right tabular-nums shrink-0">{m.pct}%</span>
               </div>
             ))}
           </div>
@@ -497,7 +494,7 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
         <span className="w-3 h-3 rounded-full bg-[#febc2e]" aria-hidden="true" />
         <span className="w-3 h-3 rounded-full bg-[#28c840]" aria-hidden="true" />
         <div className="flex-1 flex justify-center min-w-0 px-2">
-          <span className="inline-flex items-center gap-1.5 bg-white border border-slate-200 rounded-md px-3 py-1 text-[11px] text-slate-400 font-medium max-w-full truncate">
+          <span className="inline-flex items-center gap-1.5 bg-white border border-slate-200 rounded-md px-3 py-1 text-[11px] text-slate-500 font-medium max-w-full truncate">
             <svg viewBox="0 0 24 24" className="w-3 h-3 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
             </svg>
@@ -520,7 +517,7 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
             </span>
             <div className="leading-tight">
               <div className="text-[13px] font-semibold text-slate-800">Compass</div>
-              <div className="text-[10px] text-slate-400">by HANA Remote</div>
+              <div className="text-[10px] text-slate-500">by HANA Remote</div>
             </div>
           </div>
           <div className="px-3 py-4 flex flex-col flex-1">
@@ -532,7 +529,7 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
                 disabled={!onNav}
                 aria-pressed={i === active}
                 className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] font-medium transition-colors text-left mb-0.5 ${
-                  i === active ? "bg-[#eef1fb] text-[#5b76d9]" : `text-slate-500 ${onNav ? "hover:bg-slate-100 cursor-pointer" : "cursor-default"}`
+                  i === active ? "bg-[#eef1fb] text-[#5b76d9]" : `text-slate-600 ${onNav ? "hover:bg-slate-100 cursor-pointer" : "cursor-default"}`
                 }`}
               >
                 <Glyph d={n.icon} className="w-[18px] h-[18px]" />
@@ -544,7 +541,7 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
             <div className="mt-6 space-y-2.5">
               {DASH_KPIS.map((k) => (
                 <div key={k.label} className="rounded-lg border border-slate-100 bg-white px-3 py-2.5">
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.5px] text-slate-400">{k.label}</div>
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.5px] text-slate-500">{k.label}</div>
                   <div className="flex items-baseline gap-1.5 mt-0.5">
                     <span className="text-[18px] font-semibold text-[#00122F] leading-none">{k.value}</span>
                     {k.trend === "up" && <span className="text-[11px] font-semibold text-emerald-500">▲</span>}
@@ -556,7 +553,7 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
               <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#eef1fb] text-[#5b76d9] text-[10px] font-bold">DR</span>
               <div className="min-w-0">
                 <div className="text-[12px] font-medium text-slate-700 truncate">Dr. Reyes</div>
-                <div className="text-[10.5px] text-slate-400">412 monitored</div>
+                <div className="text-[10.5px] text-slate-500">412 monitored</div>
               </div>
             </div>
           </div>
@@ -566,11 +563,11 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
         <div className="flex-1 min-w-0 flex flex-col bg-white">
           <div className="flex items-center gap-3 px-5 h-14 border-b border-slate-100 shrink-0">
             <span className="text-[15px] font-semibold text-[#00122F]">{DASH_NAV[active].label}</span>
-            <div className="ml-auto hidden md:flex items-center gap-2 bg-[#f6f7fb] border border-slate-200 rounded-lg px-3 py-1.5 text-[12px] text-slate-400 w-56">
+            <div className="ml-auto hidden md:flex items-center gap-2 bg-[#f6f7fb] border border-slate-200 rounded-lg px-3 py-1.5 text-[12px] text-slate-500 w-56">
               <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
               Search patients…
             </div>
-            <span className="relative flex items-center justify-center w-8 h-8 rounded-lg hover:bg-slate-50 text-slate-400" aria-hidden="true">
+            <span className="relative flex items-center justify-center w-8 h-8 rounded-lg hover:bg-slate-50 text-slate-500" aria-hidden="true">
               <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" /><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" /></svg>
               <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-[#5b76d9]" />
             </span>
@@ -610,7 +607,7 @@ function DashboardTour() {
                 onClick={() => setTab(i)}
                 aria-pressed={tab === i}
                 className={`relative overflow-hidden px-4 sm:px-5 py-2 rounded-full text-[12.5px] sm:text-[13px] font-semibold transition-colors ${
-                  tab === i ? "bg-white text-[#00122F]" : "text-white/60 hover:text-white/90"
+                  tab === i ? "bg-white text-[#00122F]" : "text-white/80 hover:text-white/90"
                 }`}
               >
                 {tab === i && !reduce && !paused && (
@@ -635,6 +632,7 @@ function DashboardTour() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={tab}
+                className="h-full"
                 initial={{ opacity: 0, y: reduce ? 0 : 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: reduce ? 0 : -8 }}
@@ -647,14 +645,75 @@ function DashboardTour() {
             </AnimatePresence>
           </div>
         </SaaSWindow>
-        <p className="text-center text-[12px] text-white/35 mt-4">Illustrative interface. Your team reviews what matters — the rest is handled.</p>
+        <p className="text-center text-[12px] text-white/70 mt-4">Illustrative interface. Your team reviews what matters — the rest is handled.</p>
       </div>
     </div>
   );
 }
 
-// "How it works" — interactive stage flow (the Contact five-step pattern):
-// stage cards auto-advance, the active card expands, a detail panel explains.
+// Per-stage animated icon (ported from Contact's five-step flow): a small motif
+// that loops while its stage is active. Rings for enroll/document, dot-matrices
+// for the middle stages.
+function StageIcon({ stage, active }: { stage: number; active: boolean }) {
+  const reduce = useReducedMotion();
+  const anim = active && !reduce;
+  const fill = active ? "#fff" : "#A7BCF5";
+  if (stage === 0 || stage === 4) {
+    return (
+      <svg viewBox="0 0 64 64" className="w-12 h-12 md:w-14 md:h-14">
+        {[10, 18, 26].map((r, i) => (
+          <motion.circle
+            key={r}
+            cx="32"
+            cy="32"
+            r={r}
+            fill="none"
+            stroke={fill}
+            strokeWidth="2"
+            initial={{ opacity: 0.5, scale: 0.7 }}
+            animate={anim ? { opacity: [0.6, 0, 0.6], scale: [0.7, 1.1, 0.7] } : { opacity: 0.5, scale: 1 }}
+            transition={anim ? { duration: 2.2, repeat: Infinity, delay: i * 0.3, ease: "easeInOut" } : undefined}
+            style={{ transformOrigin: "32px 32px", transformBox: "fill-box" }}
+          />
+        ))}
+        <circle cx="32" cy="32" r="4" fill={fill} />
+      </svg>
+    );
+  }
+  const dots: [number, number][] = [];
+  for (let r = 0; r < 4; r++) for (let c = 0; c < 4; c++) dots.push([c, r]);
+  return (
+    <svg viewBox="0 0 64 64" className="w-12 h-12 md:w-14 md:h-14">
+      {dots.map(([c, r], i) => {
+        const gx = 14 + c * 12;
+        const gy = 14 + r * 12;
+        const scatter = stage === 2;
+        return (
+          <motion.rect
+            key={i}
+            width="5"
+            height="5"
+            rx="1.2"
+            fill={fill}
+            initial={{ x: gx, y: gy, opacity: 0.85 }}
+            animate={
+              anim
+                ? scatter
+                  ? { x: [gx, gx + ((i * 7) % 11) - 5, gx], y: [gy, gy + ((i * 5) % 11) - 5, gy], opacity: [0.85, 0.4, 0.85] }
+                  : { opacity: [0.3, 1, 0.3] }
+                : { x: gx, y: gy, opacity: 0.7 }
+            }
+            transition={anim ? { duration: 2.4, repeat: Infinity, delay: (i % 4) * 0.12, ease: "easeInOut" } : undefined}
+          />
+        );
+      })}
+    </svg>
+  );
+}
+
+// "How it works" — the five-step monitoring pipeline (ported from Contact's
+// FrontDeskPipeline): sources rail · animated stage cards · outcomes rail, with
+// a cross-fading detail panel. Auto-advances on-screen; pauses on hover.
 function HowItWorksFlow() {
   const reduce = useReducedMotion();
   const [active, setActive] = useState(0);
@@ -664,7 +723,7 @@ function HowItWorksFlow() {
 
   useEffect(() => {
     if (reduce || paused || !inView) return;
-    const id = setInterval(() => setActive((a) => (a + 1) % HOW_BLOCKS.length), 3800);
+    const id = setInterval(() => setActive((a) => (a + 1) % HOW_BLOCKS.length), 3600);
     return () => clearInterval(id);
   }, [reduce, paused, inView]);
 
@@ -672,158 +731,95 @@ function HowItWorksFlow() {
 
   return (
     <div ref={ref} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-      <div className="flex gap-2.5 md:gap-3 overflow-x-auto lg:overflow-visible pb-1 -mx-2 px-2 lg:mx-0 lg:px-0 snap-x snap-mandatory lg:snap-none">
-        {HOW_BLOCKS.map((b, i) => {
-          const is = i === active;
-          return (
-            <button
-              key={b.key}
-              onClick={() => setActive(i)}
-              aria-pressed={is}
-              className={`group relative flex-1 min-w-[150px] lg:min-w-0 snap-start text-left rounded-2xl p-5 transition-all duration-500 border ${
-                is ? "bg-[#1e2a3a] border-[#1e2a3a] shadow-[0_18px_50px_rgba(0,18,47,0.30)]" : "bg-[#f6f7fb] border-slate-200 hover:border-[#c2cef6]"
-              }`}
-              style={{ flexGrow: is ? 1.6 : 1 }}
-            >
-              <span className={`flex items-center justify-center w-10 h-10 rounded-[12px] mb-3 transition-colors ${is ? "bg-white/10 text-[#A7BCF5]" : "bg-[#eef1fb] text-[#5b76d9]"}`}>
-                <Glyph d={b.icon} className="w-5 h-5" />
-              </span>
-              <div className={`font-semibold text-[14.5px] leading-snug ${is ? "text-white" : "text-[#00122F]"}`}>{b.title}</div>
-              <motion.p
-                initial={false}
-                animate={{ opacity: is ? 1 : 0, height: is ? "auto" : 0 }}
-                className="overflow-hidden text-[12.5px] leading-[1.5] text-white/75 mt-1.5 m-0"
+      {/* Pipeline row: sources · stages · outcomes */}
+      <div className="grid grid-cols-1 lg:grid-cols-[150px_1fr_150px] gap-6 lg:gap-5 items-stretch">
+        {/* Sources */}
+        <div className="hidden lg:flex flex-col justify-center gap-3 text-right">
+          <p className="text-[11px] font-bold tracking-[2px] uppercase text-[#A7BCF5] mb-1">Sources</p>
+          {HOW_SOURCES.map((s) => (
+            <p key={s} className="text-[13.5px] text-white/70 leading-snug">{s}</p>
+          ))}
+        </div>
+
+        {/* Stage cards */}
+        <div className="flex gap-2.5 md:gap-3 overflow-x-auto lg:overflow-visible pb-1 -mx-2 px-2 lg:mx-0 lg:px-0 snap-x snap-mandatory lg:snap-none">
+          {HOW_BLOCKS.map((b, i) => {
+            const is = i === active;
+            return (
+              <button
+                key={b.key}
+                onClick={() => setActive(i)}
+                aria-pressed={is}
+                className={`group relative flex-1 min-w-[150px] lg:min-w-0 snap-start text-left rounded-2xl p-5 transition-all duration-500 ${
+                  is ? "bg-[#2347e6] shadow-[0_18px_50px_rgba(35,71,230,0.45)]" : "bg-white/[0.04] hover:bg-white/[0.07]"
+                }`}
+                style={{ flexGrow: is ? 1.5 : 1 }}
               >
-                {b.short}
-              </motion.p>
-              <span className={`absolute top-4 right-4 text-[11px] font-bold ${is ? "text-white/60" : "text-slate-300"}`}>{i + 1}</span>
-            </button>
-          );
-        })}
+                <div className="h-14 flex items-center">
+                  <StageIcon stage={i} active={is} />
+                </div>
+                <div className={`mt-3 font-semibold text-[15px] ${is ? "text-white" : "text-white/80"}`}>{b.key}</div>
+                <motion.p
+                  initial={false}
+                  animate={{ opacity: is ? 1 : 0, height: is ? "auto" : 0 }}
+                  className="overflow-hidden text-[13px] leading-[1.5] text-white/85 mt-1.5 m-0"
+                >
+                  {b.short}
+                </motion.p>
+                <span className={`absolute top-4 right-4 text-[11px] font-bold ${is ? "text-white/70" : "text-white/30"}`}>{i + 1}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Outcomes */}
+        <div className="hidden lg:flex flex-col justify-center gap-3">
+          <p className="text-[11px] font-bold tracking-[2px] uppercase text-[#A7BCF5] mb-1">Outcomes</p>
+          {HOW_OUTCOMES.map((o) => (
+            <p key={o} className="text-[13.5px] text-white/70 leading-snug">{o}</p>
+          ))}
+        </div>
       </div>
 
-      <div className="mt-6 rounded-2xl bg-[#f6f7fb] border border-slate-200 p-7 md:p-9 grid grid-cols-1 md:grid-cols-[1fr_240px] gap-8 items-center min-h-[190px]">
+      {/* Detail panel — cross-fades on stage change */}
+      <div className="mt-8 rounded-2xl bg-white/[0.03] border border-white/[0.06] p-7 md:p-9 grid grid-cols-1 md:grid-cols-[1fr_220px] gap-8 items-center min-h-[200px]">
         <AnimatePresence mode="wait">
           <motion.div
             key={cur.key}
             initial={{ opacity: 0, y: reduce ? 0 : 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: reduce ? 0 : -10 }}
-            transition={{ duration: 0.35 }}
+            transition={{ duration: 0.4 }}
           >
-            <h3 className="font-serif font-normal text-[24px] md:text-[28px] text-[#00122F] mt-0 mb-3">{cur.title}</h3>
-            <p className="text-[15px] leading-[1.7] text-slate-500 m-0 max-w-[60ch]">{cur.body}</p>
+            <h3 className="font-serif font-normal text-[26px] md:text-[30px] text-white mt-0 mb-3">{cur.title}</h3>
+            <p className="text-[15px] leading-[1.7] text-white/65 m-0 max-w-[60ch]">{cur.detail}</p>
+            <p className="text-[12px] font-semibold tracking-[1.5px] uppercase text-[#A7BCF5] mt-5">{cur.proof}</p>
           </motion.div>
         </AnimatePresence>
+
         <AnimatePresence mode="wait">
           <motion.div
             key={cur.key + "-stat"}
             initial={{ opacity: 0, scale: reduce ? 1 : 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: reduce ? 1 : 0.96 }}
-            transition={{ duration: 0.35 }}
-            className="rounded-xl bg-[#00122F] p-6 text-center text-white"
+            transition={{ duration: 0.4 }}
+            className="rounded-xl bg-[#0b1b34] p-6 text-center"
           >
-            <div className="font-serif text-[40px] md:text-[48px] leading-[0.95]">{cur.stat}</div>
-            <div className="text-[13px] text-white/55 leading-[1.45] mt-2">{cur.statLabel}</div>
+            <div className="font-serif text-[52px] md:text-[64px] leading-[0.95] text-white">{cur.stat}</div>
+            <div className="text-[13px] text-white/80 leading-[1.45] mt-2">{cur.statLabel}</div>
           </motion.div>
         </AnimatePresence>
       </div>
 
-      <div className="flex justify-center gap-2.5 mt-6">
+      {/* Stepper dots */}
+      <div className="flex justify-center gap-2.5 mt-7">
         {HOW_BLOCKS.map((b, i) => (
           <button
             key={b.key}
             onClick={() => setActive(i)}
             aria-label={`Show ${b.title}`}
-            className={`h-2 rounded-full transition-all duration-500 ${i === active ? "w-8 bg-[#5b76d9]" : "w-2 bg-slate-300 hover:bg-slate-400"}`}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// ── Program explorer — tabbed, auto-advancing (Contact pipeline pattern) ─────
-
-function ProgramExplorer() {
-  const reduce = useReducedMotion();
-  const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: false, margin: "-120px" });
-
-  useEffect(() => {
-    if (reduce || paused || !inView) return;
-    const id = setInterval(() => setActive((a) => (a + 1) % PROGRAMS.length), 4000);
-    return () => clearInterval(id);
-  }, [reduce, paused, inView]);
-
-  const cur = PROGRAMS[active];
-
-  return (
-    <div ref={ref} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-      <div className="flex gap-2.5 overflow-x-auto pb-1 -mx-2 px-2 lg:mx-0 lg:px-0 snap-x snap-mandatory lg:snap-none lg:justify-center">
-        {PROGRAMS.map((p, i) => {
-          const is = i === active;
-          return (
-            <button
-              key={p.key}
-              onClick={() => setActive(i)}
-              aria-pressed={is}
-              className={`shrink-0 snap-start px-5 py-3 rounded-full text-[14px] font-semibold transition-all duration-300 ${
-                is ? "bg-[#1e2a3a] text-white shadow-[0_10px_28px_rgba(0,18,47,0.25)]" : "bg-white text-[#00122F] border border-slate-200 hover:border-[#A7BCF5]"
-              }`}
-            >
-              {p.key}
-            </button>
-          );
-        })}
-      </div>
-
-      <div className="mt-7 rounded-2xl bg-white border border-slate-200 p-7 md:p-9 grid grid-cols-1 md:grid-cols-[1fr_240px] gap-8 items-center min-h-[240px] shadow-[0_16px_48px_rgba(0,18,47,0.06)]">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={cur.key}
-            initial={{ opacity: 0, y: reduce ? 0 : 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: reduce ? 0 : -10 }}
-            transition={{ duration: 0.35 }}
-          >
-            <h3 className="font-serif font-normal text-[26px] md:text-[30px] text-[#00122F] mt-0 mb-1">{cur.name}</h3>
-            <p className="text-[14px] font-medium text-[#5b76d9] mt-0 mb-4">{cur.who}</p>
-            <p className="text-[15px] leading-[1.7] text-slate-500 m-0 max-w-[58ch]">{cur.what}</p>
-            <div className="flex flex-wrap gap-2 mt-5">
-              {cur.codes.map((c) => (
-                <span key={c} className="font-mono text-[12px] font-bold text-[#5b76d9] bg-[#eef1fb] rounded-md px-2.5 py-1">
-                  {c}
-                </span>
-              ))}
-            </div>
-          </motion.div>
-        </AnimatePresence>
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={cur.key + "-stat"}
-            initial={{ opacity: 0, scale: reduce ? 1 : 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: reduce ? 1 : 0.96 }}
-            transition={{ duration: 0.35 }}
-            className="rounded-xl bg-[#00122F] p-6 text-center text-white"
-          >
-            <div className="font-serif text-[44px] md:text-[52px] leading-[0.95]">{cur.stat}</div>
-            <div className="text-[13px] text-white/55 leading-[1.45] mt-2">{cur.statLabel}</div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      <div className="flex justify-center gap-2.5 mt-6">
-        {PROGRAMS.map((p, i) => (
-          <button
-            key={p.key}
-            onClick={() => setActive(i)}
-            aria-label={`Show ${p.name}`}
-            className={`h-2 rounded-full transition-all duration-500 ${i === active ? "w-8 bg-[#5b76d9]" : "w-2 bg-slate-300 hover:bg-slate-400"}`}
+            className={`h-2 rounded-full transition-all duration-500 ${i === active ? "w-8 bg-[#A7BCF5]" : "w-2 bg-white/25 hover:bg-white/40"}`}
           />
         ))}
       </div>
@@ -859,9 +855,9 @@ function SleepCalculator() {
   ) => (
     <div>
       <div className="flex items-center justify-between gap-3">
-        <span className="text-[13px] text-slate-500">{label}</span>
+        <span className="text-[13px] text-slate-600">{label}</span>
         <div className="flex items-center rounded-lg border border-slate-300 bg-white px-2.5 py-1 focus-within:border-[#5b76d9] focus-within:ring-2 focus-within:ring-[#5b76d9]/20 transition shrink-0">
-          {opts.prefix && <span className="text-slate-400 text-[13px] mr-0.5">{opts.prefix}</span>}
+          {opts.prefix && <span className="text-slate-500 text-[13px] mr-0.5">{opts.prefix}</span>}
           <input
             type="number"
             value={value}
@@ -870,7 +866,7 @@ function SleepCalculator() {
             onChange={(e) => set(Math.max(0, Number(e.target.value) || 0))}
             className="w-[64px] bg-transparent outline-none text-[15px] font-semibold text-[#00122F] text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           />
-          {opts.suffix && <span className="text-slate-400 text-[13px] ml-0.5">{opts.suffix}</span>}
+          {opts.suffix && <span className="text-slate-500 text-[13px] ml-0.5">{opts.suffix}</span>}
         </div>
       </div>
       <input
@@ -899,7 +895,7 @@ function SleepCalculator() {
           {field("Current 90-day non-adherence", nonAdherence, setNonAdherence, { min: 25, max: 83, suffix: "%" })}
           {field("Reimbursement per adherent patient", perPatient, setPerPatient, { min: 500, max: 3000, step: 100, prefix: "$" })}
         </div>
-        <p className="text-[12px] text-slate-400 mt-5 leading-[1.6]">
+        <p className="text-[12px] text-slate-500 mt-5 leading-[1.6]">
           Estimates only, for illustration. Assumes HANA Remote brings non-adherence to ~22%, its
           production figure. 46–83% of new CPAP patients fail Medicare's 90-day threshold today.{" "}
           <a href={DEMO_URL} target="_blank" rel="noopener noreferrer" className="text-[#5b76d9] underline">Get a tailored assessment →</a>
@@ -909,13 +905,13 @@ function SleepCalculator() {
         <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-3`}>Patients kept adherent</p>
         <div className="font-serif text-[56px] md:text-[72px] leading-[0.95]">
           ≈ {count(patientsSaved)}
-          <span className="font-sans text-[18px] md:text-[22px] font-medium text-white/50"> / year</span>
+          <span className="font-sans text-[18px] md:text-[22px] font-medium text-white/75"> / year</span>
         </div>
-        <p className="text-[15px] text-white/60 mt-3">
+        <p className="text-[15px] text-white/80 mt-3">
           That's roughly <span className="font-semibold text-white">{money(recovered)}/year</span> in reimbursement that currently walks out the door.
         </p>
         <div className="mt-6 pt-6 border-t border-white/10">
-          <p className="text-[15px] leading-[1.6] text-white/60 m-0">
+          <p className="text-[15px] leading-[1.6] text-white/80 m-0">
             Recovered with a phone call that actually works — non-adherence drops from{" "}
             <span className="font-semibold text-[#A7BCF5]">{nonAdherence}% to ~22%</span> in production.
           </p>
@@ -984,7 +980,7 @@ function PatientAgentSection() {
           <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch] text-[#00122F]">
             Not just a monitor. <em className="text-[#5b76d9]">The reason they stick with it.</em>
           </h2>
-          <p className="text-[17px] leading-[1.7] text-slate-500 max-w-[58ch] mx-auto mt-4">
+          <p className="text-[17px] leading-[1.7] text-slate-600 max-w-[58ch] mx-auto mt-4">
             Data alone doesn't change behavior. A patient who feels seen does. HANA is the voice on
             the other end of the line — an accountability partner running a real clinical protocol.
           </p>
@@ -1007,7 +1003,7 @@ function PatientAgentSection() {
                 </span>
                 <div>
                   <div className="text-[13px] font-semibold text-[#00122F]">HANA · evening check-in</div>
-                  <div className="text-[11px] text-slate-400">CPAP adherence · HANA Sleep protocol</div>
+                  <div className="text-[11px] text-slate-500">CPAP adherence · HANA Sleep protocol</div>
                 </div>
               </div>
               <div className="space-y-2.5">
@@ -1036,7 +1032,7 @@ function PatientAgentSection() {
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: reduce ? 0 : 0.3 + AGENT_TURNS.length * 0.5 }}
-                  className="flex items-center gap-2 pt-1 text-[11px] text-slate-400"
+                  className="flex items-center gap-2 pt-1 text-[11px] text-slate-500"
                 >
                   <Check className="w-3.5 h-3.5 text-emerald-500" strokeWidth={3} />
                   Logged to chart · follow-up scheduled for tomorrow
@@ -1059,7 +1055,7 @@ function PatientAgentSection() {
                 </span>
                 <div>
                   <h3 className="font-serif font-normal text-[22px] md:text-[24px] leading-[1.2] mt-0 mb-2 text-[#00122F]">{p.title}</h3>
-                  <p className="text-[15px] leading-[1.7] text-slate-500 m-0">{p.body}</p>
+                  <p className="text-[15px] leading-[1.7] text-slate-600 m-0">{p.body}</p>
                 </div>
               </motion.div>
             ))}
@@ -1077,14 +1073,69 @@ function PatientAgentSection() {
 
 // ── Small shared bits (Contact patterns) ─────────────────────────────────────
 
-function RStatCell({ value, suffix, first, children }: { value: string; suffix?: string; first?: boolean; children: React.ReactNode }) {
+// A before→after outcome stat: the big "after" number, plus two length bars
+// (baseline vs HANA) so the delta reads as a visible change on the side.
+type DeltaRow = { k: string; pct: number; v: string; hi?: boolean };
+function RDeltaStat({ big, suffix, label, rows }: { big: string; suffix?: string; label: string; rows: DeltaRow[] }) {
+  const reduce = useReducedMotion();
   return (
-    <div className={`px-5 md:px-11 ${first ? "" : "lg:border-l lg:border-[#dfe3ee]"}`}>
-      <div className="font-serif text-[44px] md:text-[72px] leading-[0.95] mb-3 text-[#00122F]">
-        {value}
-        {suffix && <span className="text-[24px] md:text-[36px] text-[#5b76d9]">{suffix}</span>}
+    <div className="rounded-2xl bg-white border border-slate-200 p-6 md:p-7 flex flex-col sm:flex-row sm:items-center gap-5 md:gap-7">
+      <div className="sm:w-[150px] shrink-0">
+        <div className="font-serif text-[52px] md:text-[64px] leading-[0.9] text-[#00122F]">
+          {big}
+          {suffix && <span className="text-[28px] md:text-[34px] text-[#5b76d9]">{suffix}</span>}
+        </div>
+        <div className="text-[14px] text-slate-600 leading-[1.5] mt-2">{label}</div>
       </div>
-      <div className="text-[15px] text-slate-500 leading-[1.5]">{children}</div>
+      <div className="flex-1 min-w-0 space-y-2.5">
+        {rows.map((r) => (
+          <div key={r.k} className="flex items-center gap-3">
+            <span className={`w-[76px] shrink-0 text-[12px] ${r.hi ? "font-semibold text-[#5b76d9]" : "text-slate-600"}`}>{r.k}</span>
+            <div className="flex-1 h-2.5 rounded-full bg-slate-100 overflow-hidden">
+              <motion.div
+                className={`h-full rounded-full ${r.hi ? "bg-[#5b76d9]" : "bg-slate-300"}`}
+                initial={{ width: reduce ? `${r.pct}%` : 0 }}
+                whileInView={{ width: `${r.pct}%` }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              />
+            </div>
+            <span className={`w-11 text-right text-[12px] tabular-nums ${r.hi ? "font-semibold text-[#00122F]" : "text-slate-600"}`}>{r.v}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// A question-framed feature block: the question, a short answer, and a small
+// live-UI snippet (children) that animates in on scroll.
+function QBlock({ q, a, children }: { q: string; a: string; children: React.ReactNode }) {
+  return (
+    <motion.div {...fadeUp} className="rounded-2xl bg-white border border-slate-200 p-6 md:p-7 flex flex-col">
+      <h3 className="text-[18px] md:text-[19px] font-semibold text-[#00122F] mt-0 mb-2 leading-snug">{q}</h3>
+      <p className="text-[14.5px] leading-[1.65] text-slate-700 m-0">{a}</p>
+      <div className="mt-5 pt-5 border-t border-slate-100">{children}</div>
+    </motion.div>
+  );
+}
+
+// Labelled mini bar used inside a QBlock (Apps vs HANA, etc.).
+function QBar({ k, pct, v, hi }: { k: string; pct: number; v: string; hi?: boolean }) {
+  const reduce = useReducedMotion();
+  return (
+    <div className="flex items-center gap-3 mb-2 last:mb-0">
+      <span className={`w-12 shrink-0 text-[12px] ${hi ? "font-semibold text-[#5b76d9]" : "text-slate-500"}`}>{k}</span>
+      <div className="flex-1 h-2.5 rounded-full bg-slate-100 overflow-hidden">
+        <motion.div
+          className={`h-full rounded-full ${hi ? "bg-[#5b76d9]" : "bg-slate-300"}`}
+          initial={{ width: reduce ? `${pct}%` : 0 }}
+          whileInView={{ width: `${pct}%` }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        />
+      </div>
+      <span className={`w-10 text-right text-[12px] tabular-nums ${hi ? "font-semibold text-[#00122F]" : "text-slate-500"}`}>{v}</span>
     </div>
   );
 }
@@ -1111,7 +1162,7 @@ function RFaqRow({ q, a, index }: { q: string; a: string; index: number }) {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <p className="text-[15px] leading-[1.7] text-slate-500 pb-5 pr-8 m-0">{a}</p>
+            <p className="text-[15px] leading-[1.7] text-slate-600 pb-5 pr-8 m-0">{a}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -1141,138 +1192,149 @@ export function HanaRemote() {
       <header className="bg-[#f6f7fb] pt-32 pb-16 md:pt-40 md:pb-20">
         <div className="max-w-[1200px] mx-auto px-6 md:px-16 text-center">
           <motion.p {...fadeUp} className={`${eyebrow} text-[#5b76d9] m-0`}>
-            HANA Remote · RPM without the device
+            HANA Remote · The engagement layer for remote care
           </motion.p>
           <motion.h1
             {...fadeUp}
             transition={{ duration: 0.5, delay: 0.05 }}
-            className="font-serif font-normal text-[48px] sm:text-[64px] md:text-[84px] leading-[1.0] tracking-[-0.015em] mt-6 mb-0 mx-auto max-w-[15ch]"
+            className="font-serif font-normal text-[44px] sm:text-[60px] md:text-[80px] leading-[1.02] tracking-[-0.015em] mt-6 mb-0 mx-auto max-w-[18ch]"
           >
-            Remote patient monitoring.
+            Turn remote care into <em className="text-[#5b76d9]">monthly revenue</em>,
             <br />
-            <em className="text-[#5b76d9]">Without the device.</em>
+            without adding staff.
           </motion.h1>
-          <motion.a
+          <motion.p
             {...fadeUp}
             transition={{ duration: 0.5, delay: 0.12 }}
+            className="text-[17px] md:text-[19px] leading-[1.6] text-slate-700 mt-7 mb-0 mx-auto max-w-[54ch]"
+          >
+            HANA keeps patients engaged across RPM, RTM, CCM, APCM &amp; ACCESS —
+            <em className="text-[#5b76d9] not-italic font-semibold"> documented to your EHR, reimbursable from day one.</em>
+          </motion.p>
+          <motion.a
+            {...fadeUp}
+            transition={{ duration: 0.5, delay: 0.18 }}
             href={DEMO_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 bg-[#1e2a3a] text-white text-[15px] font-semibold px-8 py-[15px] rounded-[10px] no-underline hover:opacity-90 transition-opacity mt-10 md:mt-12"
+            className="inline-flex items-center gap-2.5 bg-[#1e2a3a] text-white text-[15px] font-semibold px-8 py-[15px] rounded-[10px] no-underline hover:opacity-90 transition-opacity mt-9 md:mt-10"
           >
             Book a demo →
           </motion.a>
-          <motion.p
-            {...fadeUp}
-            transition={{ duration: 0.5, delay: 0.18 }}
-            className="font-serif text-[19px] md:text-[22px] text-slate-600 mt-6 mb-0"
-          >
-            It knows the patient before it dials. <em className="text-[#5b76d9]">Documents the call after.</em>
-          </motion.p>
         </div>
       </header>
 
-      {/* THE LOOP — just the figure, on its own, directly below the hero on the
-          same light field (like Contact's hero → diagram). Stations reframed as
-          the RTM/RPM closed monitoring cycle: enroll → monitor → escalate → document. */}
-      <LoopFigure
-        light
-        pulses={3}
-        copy={{
-          center: ["No device. No app.", "No behavior change."],
-          centerChips: ["CPAP · 6.4 hrs/night ✓", "BP 128/82 · self-reported", "PHQ-9 · 4 · improving", "98977 · documented ✓"],
-          cadence: {
-            read: "Day one",
-            reason: "Daily · weekly cadence",
-            engage: "Only when flagged",
-            writeback: "Monthly",
-          },
-          offRamp: { station: "engage", label: "Clinician worklist" },
-          stations: {
-            read: { label: "Enroll", body: "Consent, onboarding, and protocol setup — by phone, on day one." },
-            reason: { label: "Monitor", body: "Scheduled check-ins capture symptoms, adherence, and vitals — wearables via API.", icon: "engage" },
-            engage: { label: "Escalate", body: "Clinical flags routed to your worklist — a clinician on every flag.", icon: "reason" },
-            writeback: { label: "Document", body: "Structured data to the EHR — RTM and CCM codes ready for attestation." },
-          },
-        }}
-      />
-
-      {/* THE PROBLEM — narrative + the CPAP number */}
-      <section className="py-20 md:py-24 bg-white">
-        <div className="max-w-[1200px] mx-auto px-6 md:px-16 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
-          <motion.div {...fadeUp}>
-            <p className={`${eyebrow} text-[#5b76d9] mt-0 mb-6`}>The problem</p>
-            <div className="font-serif text-[64px] md:text-[92px] leading-[0.9] text-[#00122F] mb-5">46–83%</div>
-            <p className="text-lg leading-[1.6] text-[#00122F] m-0 max-w-[30ch]">
-              of new CPAP patients fail Medicare's adherence threshold in the first 90 days.
-              That's $1,400 per patient walking out the door.
-            </p>
-          </motion.div>
-          <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.1 }} className="md:pt-2 space-y-5">
-            <p className="text-base leading-[1.75] text-slate-700 m-0">
-              Remote patient monitoring is reimbursable. RPM, RTM, CCM, ACCESS — the codes exist,
-              the money is there, and CMS has been paying for monitoring programs for years.
-            </p>
-            <p className="text-base leading-[1.75] text-slate-700 m-0">
-              They still fail. Always for the same reason. Patients don't use the devices you ship
-              them. They don't open the apps you ask them to download. No engagement means no data.
-              No data means no reimbursement. The program dies before it pays for itself.
-            </p>
-            <p className="text-base leading-[1.75] text-slate-700 m-0">
-              The current fix is an offshore call center at $3 a call. It doesn't work either.
-            </p>
-            <p className="text-base leading-[1.75] font-semibold text-[#00122F] m-0">
-              The problem was never the monitoring. It was the engagement.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* WHAT HANA REMOTE DOES — manifesto with the orb as continuity anchor */}
-      <section className="py-20 md:py-24 px-6 md:px-16 bg-[#f6f7fb] text-center overflow-hidden">
-        <motion.div {...fadeUp} className="relative flex justify-center mb-2" aria-hidden="true">
-          <div className="relative" style={{ width: 120, height: 120 }}>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="scale-[0.4]" style={{ transformOrigin: "center center" }}>
-                <HanaBloomOrb />
-              </div>
-            </div>
-          </div>
-        </motion.div>
-        <motion.h2
-          {...fadeUp}
-          className="font-serif font-normal text-[30px] sm:text-[38px] md:text-[44px] leading-[1.15] mx-auto max-w-[26ch] mt-0 mb-6 text-[#00122F]"
-        >
-          No device to ship. No app to download. <em className="text-[#5b76d9]">No behavior change required.</em>
-        </motion.h2>
-        <motion.p
-          {...fadeUp}
-          transition={{ duration: 0.5, delay: 0.08 }}
-          className="text-[17px] leading-[1.75] text-slate-500 max-w-[62ch] mx-auto m-0"
-        >
-          We call them. They pick up. We capture the data your program needs, drive the adherence
-          that makes your reimbursement real, and write structured clinical data back to your EHR —
-          ready for the clinician's review.
-        </motion.p>
-        <motion.p
-          {...fadeUp}
-          transition={{ duration: 0.5, delay: 0.14 }}
-          className="text-[16px] leading-[1.7] font-semibold text-[#00122F] max-w-[52ch] mx-auto mt-5 mb-0"
-        >
-          We don't replace the clinician's billable interaction. We make it possible — and make their time count.
-        </motion.p>
-      </section>
-
-      {/* HOW IT WORKS — interactive stage flow (Contact five-step pattern) */}
-      <section className="py-20 md:py-24 px-6 md:px-16 bg-white">
+      {/* HOW IT WORKS — the five-step monitoring pipeline (Contact five-step flow,
+          dark), directly below the hero. Replaces the old closed-loop figure. */}
+      <section className="py-20 md:py-24 px-6 md:px-16 bg-[#00122F] text-white">
         <div className="max-w-[1200px] mx-auto">
           <motion.div {...fadeUp} className="text-center mb-10 md:mb-14">
-            <p className={`${eyebrow} text-[#5b76d9] mt-0 mb-4`}>How it works</p>
-            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch] text-[#00122F]">
-              The conversation <em className="text-[#5b76d9]">is the monitoring.</em>
+            <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>The five-step flow</p>
+            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch]">
+              From first call to documented — <em className="text-[#A7BCF5]">in five steps.</em>
             </h2>
           </motion.div>
           <HowItWorksFlow />
+        </div>
+      </section>
+
+      {/* THE PROBLEM — cost-of-inaction band (Tile-style hard stats) */}
+      <section className="py-20 md:py-24 px-6 md:px-16 bg-white">
+        <div className="max-w-[1200px] mx-auto">
+          <motion.div {...fadeUp} className="mb-10 md:mb-14 max-w-[46ch]">
+            <p className={`${eyebrow} text-[#5b76d9] mt-0 mb-4`}>The cost of doing nothing</p>
+            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-[#00122F] mt-0 mb-4">
+              The program dies before it pays for itself.
+            </h2>
+            <p className="text-[16px] leading-[1.7] text-slate-700 m-0">
+              Monitoring is reimbursable — RPM, RTM, CCM, ACCESS. The codes exist and the money is
+              there. Programs still fail for one reason: patients don't use the devices you ship or
+              open the apps you send. No engagement, no data, no reimbursement.
+            </p>
+          </motion.div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10 border-t border-slate-200 pt-10">
+            {[
+              { v: "46–83%", l: "of new CPAP patients fail Medicare's adherence threshold in the first 90 days" },
+              { v: "$1,400", l: "lost per patient who walks out the door" },
+              { v: "20%", l: "all the engagement an app gets — patients won't open it" },
+              { v: "$3/call", l: "offshore call centers that still don't move the needle" },
+            ].map((s, i) => (
+              <motion.div key={s.v} {...fadeUp} transition={{ duration: 0.5, delay: 0.04 + i * 0.07 }}>
+                <div className="font-serif text-[40px] md:text-[56px] leading-[0.95] text-[#00122F] mb-3">{s.v}</div>
+                <div className="text-[14px] leading-[1.55] text-slate-700">{s.l}</div>
+              </motion.div>
+            ))}
+          </div>
+          <motion.p {...fadeUp} transition={{ duration: 0.5, delay: 0.1 }} className="text-[18px] md:text-[20px] leading-[1.5] font-semibold text-[#00122F] mt-12 max-w-[34ch]">
+            The problem was never the monitoring. <span className="text-[#5b76d9]">It was the engagement.</span>
+          </motion.p>
+        </div>
+      </section>
+
+      {/* WHAT HANA REMOTE DOES — question-framed feature blocks (Tile pattern) */}
+      <section className="py-20 md:py-24 px-6 md:px-16 bg-[#f6f7fb]">
+        <div className="max-w-[1200px] mx-auto">
+          <motion.div {...fadeUp} className="text-center mb-10 md:mb-14">
+            <p className={`${eyebrow} text-[#5b76d9] mt-0 mb-4`}>The questions every clinic asks</p>
+            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch] text-[#00122F]">
+              No device to ship. No app to download. <em className="text-[#5b76d9]">No behavior change.</em>
+            </h2>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <QBlock
+              q="Will patients actually pick up?"
+              a="The whole model rests on it — so it's the number we lead with. We call; they answer."
+            >
+              <QBar k="Apps" pct={20} v="20%" />
+              <QBar k="HANA" pct={85} v="85%" hi />
+            </QBlock>
+
+            <QBlock
+              q="What happens when something looks wrong?"
+              a="A tripped threshold routes to your worklist in real time — a clinician on every flag, not a log nobody reads."
+            >
+              <div className="flex items-center gap-2 text-[13px]">
+                <span className="font-mono text-slate-700 bg-white border border-slate-200 rounded-md px-2.5 py-1">BP 158/94 · self-reported</span>
+                <span className="text-slate-400">→</span>
+                <motion.span
+                  initial={{ opacity: 0.4 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  className="inline-flex items-center gap-1.5 font-semibold text-rose-600 bg-rose-50 border border-rose-100 rounded-full px-2.5 py-1"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500" /> Escalated → Dr. Reyes
+                </motion.span>
+              </div>
+            </QBlock>
+
+            <QBlock
+              q="Does it actually count for billing?"
+              a="Every call writes structured data back for attestation the moment it ends — RTM, CCM, APCM, ACCESS."
+            >
+              <div className="flex flex-wrap items-center gap-2 text-[12.5px]">
+                <span className="text-slate-500">Call ends</span>
+                <span className="text-slate-400">→</span>
+                <span className="inline-flex items-center gap-1.5 font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-2.5 py-1">
+                  <Check className="w-3 h-3" strokeWidth={3} /> 98977 · documented
+                </span>
+                <span className="font-semibold text-[#5b76d9] bg-[#eef1fb] rounded-full px-2.5 py-1">20 min tracked</span>
+              </div>
+            </QBlock>
+
+            <QBlock
+              q="Do I ship a device or make them download an app?"
+              a="Never. The phone call is the monitoring instrument — wearable data flows in via API only if they already have it."
+            >
+              <div className="flex flex-wrap gap-2 text-[13px] font-semibold text-[#00122F]">
+                {["No device", "No app", "No behavior change"].map((t) => (
+                  <span key={t} className="inline-flex items-center gap-1.5 bg-white border border-slate-200 rounded-full px-3 py-1">
+                    <Check className="w-3.5 h-3.5 text-[#5b76d9]" strokeWidth={3} /> {t}
+                  </span>
+                ))}
+              </div>
+            </QBlock>
+          </div>
         </div>
       </section>
 
@@ -1285,7 +1347,7 @@ export function HanaRemote() {
             <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch]">
               Your team reviews what matters. <em className="text-[#A7BCF5]">The rest is handled.</em>
             </h2>
-            <p className="text-[17px] leading-[1.7] text-white/55 max-w-[56ch] mx-auto mt-4">
+            <p className="text-[17px] leading-[1.7] text-white/80 max-w-[56ch] mx-auto mt-4">
               Compass is where your care team lives: enrollment, escalations, and billing
               documentation run on their own. What reaches your team is a flagged worklist — not a phone queue.
             </p>
@@ -1297,16 +1359,57 @@ export function HanaRemote() {
       {/* Section 2: the patient agent — accountability + protocol, chat over orb. */}
       <PatientAgentSection />
 
-      {/* PROGRAM EXPLORER */}
-      <section className="py-20 md:py-24 px-6 md:px-16 bg-[#f6f7fb]">
-        <div className="max-w-[1200px] mx-auto">
-          <motion.div {...fadeUp} className="text-center mb-10 md:mb-12">
-            <p className={`${eyebrow} text-[#5b76d9] mt-0 mb-4`}>The programs</p>
+      {/* THE PROGRAMS — one platform, shown as the home-page workflow marquee */}
+      <RecipesMarquee
+        tags={PROGRAM_WORKFLOW_TAGS}
+        tag="The programs"
+        heading="One platform. Every monitoring program."
+        body="RPM, RTM, chronic and behavioral care, post-op, ACCESS — every reimbursable program runs as a built-in call workflow, documented to the chart for attestation. Tap any card to see the steps."
+      />
+
+      {/* PROOF — two clinician testimonials (reused approved quotes), enlarged */}
+      <section className="py-20 md:py-28 px-6 md:px-16 bg-[#eef1fb]">
+        <div className="max-w-[1080px] mx-auto">
+          <motion.div {...fadeUp} className="text-center mb-12 md:mb-14">
+            <p className={`${eyebrow} text-[#5b76d9] mt-0 mb-4`}>In their words</p>
             <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch] text-[#00122F]">
-              One platform. <em className="text-[#5b76d9]">Every monitoring program.</em>
+              The clinicians running these programs.
             </h2>
           </motion.div>
-          <ProgramExplorer />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-7">
+            {[
+              {
+                quote: "In care coordination the biggest bottleneck was always the touch-time documentation. Hana handles the monthly calls, captures the conversation in structured notes that go straight into the chart, and flags anyone who needs a same-day callback.",
+                name: "Fakhrudin Mohamed, MD",
+                role: "Board-Certified Physician",
+                avatar: "/avatars/fakhrudin.png",
+              },
+              {
+                quote: "Getting elderly patients ready for surgery over the phone is nearly impossible — they don't pick up, they miss voicemails, and if they show up unprepared the case gets cancelled. HANA reaches them, walks them through everything, and flags whoever still isn't ready so we can step in.",
+                name: "Dr. Oprandi",
+                role: "Primary care clinic",
+                avatar: "/avatars/oprandi.webp",
+              },
+            ].map((t, i) => (
+              <motion.figure
+                key={t.name}
+                {...fadeUp}
+                transition={{ duration: 0.5, delay: 0.05 + i * 0.08 }}
+                className="rounded-[24px] bg-white border border-white shadow-[0_28px_64px_rgba(0,18,47,0.10)] p-8 md:p-10 flex flex-col justify-between m-0"
+              >
+                <blockquote className="font-serif text-[21px] md:text-[24px] leading-[1.5] text-[#00122F] m-0">
+                  &ldquo;{t.quote}&rdquo;
+                </blockquote>
+                <figcaption className="flex items-center gap-3.5 mt-8">
+                  <img src={t.avatar} alt={t.name} width={56} height={56} loading="lazy" className="w-14 h-14 rounded-full object-cover shrink-0" />
+                  <div>
+                    <div className="text-[15px] font-semibold text-[#00122F] leading-tight">{t.name}</div>
+                    <div className="text-[14px] text-slate-600 mt-0.5">{t.role}</div>
+                  </div>
+                </figcaption>
+              </motion.figure>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -1318,7 +1421,7 @@ export function HanaRemote() {
             <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch] text-[#00122F]">
               What does non-adherence <em className="text-[#5b76d9]">cost your program?</em>
             </h2>
-            <p className="text-[17px] leading-[1.7] text-slate-500 max-w-[52ch] mx-auto mt-4">
+            <p className="text-[17px] leading-[1.7] text-slate-600 max-w-[52ch] mx-auto mt-4">
               Run the numbers for a sleep / DME program — the sharpest case for the device-less model.
             </p>
           </motion.div>
@@ -1335,22 +1438,22 @@ export function HanaRemote() {
               Engagement you can bill against.
             </h2>
           </motion.div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-10">
-            <RStatCell value="85" suffix="%" first>
-              Patient engagement vs. 20% for apps
-            </RStatCell>
-            <RStatCell value="50→22" suffix="%">
-              CPAP non-adherence, in production
-            </RStatCell>
-            <RStatCell value="$1.4" suffix="K">
-              Recovered per patient in sleep / DME programs
-            </RStatCell>
-            <RStatCell value="150" suffix="+">
-              EHR integrations, live in your workflow
-            </RStatCell>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <motion.div {...fadeUp}>
+              <RDeltaStat big="85" suffix="%" label="Patient engagement — vs. app-based monitoring" rows={[{ k: "Apps", pct: 20, v: "20%" }, { k: "HANA", pct: 85, v: "85%", hi: true }]} />
+            </motion.div>
+            <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.06 }}>
+              <RDeltaStat big="22" suffix="%" label="CPAP non-adherence, in production" rows={[{ k: "Before", pct: 50, v: "50%" }, { k: "HANA", pct: 22, v: "22%", hi: true }]} />
+            </motion.div>
+            <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.06 }}>
+              <RDeltaStat big="85" suffix="%" label="CPAP adherence after 12 months on program" rows={[{ k: "Month 1", pct: 38, v: "38%" }, { k: "Month 12", pct: 85, v: "85%", hi: true }]} />
+            </motion.div>
+            <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.12 }}>
+              <RDeltaStat big="2.3" suffix="×" label="More patients per care coordinator" rows={[{ k: "Baseline", pct: 43, v: "1×" }, { k: "With HANA", pct: 100, v: "2.3×", hi: true }]} />
+            </motion.div>
           </div>
-          <motion.div {...fadeUp} className="flex flex-wrap gap-2.5 mt-12">
-            {["45+ clinical protocols", "4M+ patient interactions", "Live in the CMS ACCESS program", "RTM 98975–98981 · CCM · APCM"].map((c) => (
+          <motion.div {...fadeUp} className="flex flex-wrap gap-2.5 mt-10">
+            {["$1.4K recovered per patient", "150+ EHR integrations", "45+ clinical protocols", "4M+ patient interactions", "Live in the CMS ACCESS program"].map((c) => (
               <span key={c} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200 text-[13px] font-medium text-[#00122F]">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#5b76d9]" aria-hidden="true" />
                 {c}
@@ -1360,90 +1463,10 @@ export function HanaRemote() {
         </div>
       </section>
 
-      {/* WHO IT'S FOR + FOUR-PAYER MODEL */}
-      <section className="py-20 md:py-24 px-6 md:px-16 bg-white">
-        <div className="max-w-[1200px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,380px)_1fr] gap-10 lg:gap-16 items-start mb-16 md:mb-20">
-            <motion.div {...fadeUp}>
-              <p className={`${eyebrow} text-[#5b76d9] mt-0 mb-4`}>Who it's for</p>
-              <h2 className="font-serif font-normal text-[30px] md:text-[38px] leading-[1.12] mt-0 mb-4 text-[#00122F]">
-                If you're paying a call center to chase patients — this is what replaces it.
-              </h2>
-            </motion.div>
-            <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.1 }} className="lg:pt-2">
-              <p className="text-base leading-[1.75] text-slate-700 m-0">
-                Sleep labs and DME providers with CPAP non-adherence problems. Primary care and
-                chronic care management programs. Behavioral health organizations. CCM companies and
-                RPM platforms. Any clinic running a monitoring program that's collapsing because
-                patients don't engage.
-              </p>
-            </motion.div>
-          </div>
 
-          <motion.div {...fadeUp} className="text-center mb-10">
-            <p className={`${eyebrow} text-[#5b76d9] mt-0 mb-4`}>The four-payer model</p>
-            <h2 className="font-serif font-normal text-[30px] md:text-[40px] leading-[1.1] mx-auto max-w-[26ch] text-[#00122F]">
-              Revenue across four payment types — <em className="text-[#5b76d9]">not dependent on any one.</em>
-            </h2>
-          </motion.div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {PAYERS.map((p, i) => (
-              <motion.div
-                key={p.title}
-                {...fadeUp}
-                transition={{ duration: 0.5, delay: 0.04 + i * 0.07 }}
-                className="rounded-2xl bg-[#f6f7fb] border border-slate-200 p-6"
-              >
-                <span className="flex items-center justify-center w-10 h-10 rounded-[12px] bg-[#eef1fb] text-[#5b76d9] mb-4">
-                  <Glyph d={p.icon} className="w-5 h-5" />
-                </span>
-                <h3 className="text-[17px] font-semibold mt-0 mb-2 text-[#00122F]">{p.title}</h3>
-                <p className="text-[13.5px] leading-[1.65] text-slate-500 m-0">{p.body}</p>
-              </motion.div>
-            ))}
-          </div>
-          <motion.div
-            {...fadeUp}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 md:p-7 flex flex-col md:flex-row md:items-center gap-4"
-          >
-            <span className="flex items-center justify-center w-10 h-10 rounded-[12px] bg-[#eef1fb] text-[#5b76d9] shrink-0">
-              <Glyph d={RI.globe} className="w-5 h-5" />
-            </span>
-            <p className="text-[14.5px] leading-[1.7] text-slate-600 m-0">
-              <span className="font-semibold text-[#00122F]">And in Europe:</span> France's LATM pays
-              the technology operator directly. Germany's DiGA is open for Class IIb digital
-              therapeutics. The same platform, the same protocols, new markets.
-            </p>
-          </motion.div>
-        </div>
-      </section>
 
-      {/* BRIDGE — how it connects to HANA Contact */}
-      <section className="py-20 md:py-24 px-6 md:px-16 bg-[#f6f7fb]">
-        <div className="max-w-[900px] mx-auto">
-          <motion.div
-            {...fadeUp}
-            className="rounded-2xl bg-white border border-slate-200 border-l-[3px] border-l-[#A7BCF5] p-8 md:p-10 shadow-[0_16px_48px_rgba(0,18,47,0.06)]"
-          >
-            <p className={`${eyebrow} text-[#5b76d9] mt-0 mb-4`}>Start with the front desk</p>
-            <h3 className="font-serif font-normal text-[26px] md:text-[30px] leading-[1.2] mt-0 mb-4 text-[#00122F]">
-              Most clinics start with HANA Contact. The switch to Remote is a switch — not a new project.
-            </h3>
-            <p className="text-[15px] leading-[1.75] text-slate-500 mt-0 mb-7 max-w-[64ch]">
-              HANA Contact is the front desk — the easy first step. When you're ready to move to a
-              full monitoring program, HANA Remote is already there. Same platform, same EHR
-              integration, same patient relationships. No new onboarding.
-            </p>
-            <Link
-              to="/hana-contact"
-              className="inline-flex items-center gap-2 text-[15px] font-semibold text-[#1e2a3a] no-underline hover:text-[#5b76d9] transition-colors"
-            >
-              Explore HANA Contact →
-            </Link>
-          </motion.div>
-        </div>
-      </section>
+      {/* HOW WE START — three-step go-live section, same as the homepage */}
+      <InlineImageHeader />
 
       {/* FAQ */}
       <section className="py-20 md:py-24 px-6 md:px-16 bg-white">
@@ -1479,9 +1502,14 @@ export function HanaRemote() {
           >
             Book a demo →
           </a>
-          <p className="text-sm text-slate-400 mt-[18px]">
-            Device-less by default · RTM / CCM / APCM / ACCESS · 150+ EHR integrations
-          </p>
+          {/* Transparent terms — true claims only; add real pricing terms when confirmed */}
+          <div className="flex flex-wrap items-center justify-center gap-2.5 mt-8">
+            {["No devices to ship", "No app to download", "Reimbursable from day one", "Live in your EHR in days"].map((t) => (
+              <span key={t} className="inline-flex items-center gap-1.5 text-[13px] font-medium text-white/90 bg-white/[0.06] border border-white/10 rounded-full px-3.5 py-1.5">
+                <Check className="w-3.5 h-3.5 text-[#A7BCF5]" strokeWidth={3} /> {t}
+              </span>
+            ))}
+          </div>
         </motion.div>
       </section>
 

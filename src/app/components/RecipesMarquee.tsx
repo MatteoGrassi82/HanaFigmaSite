@@ -447,9 +447,18 @@ function Modal({ recipe, onClose }: { recipe: Recipe; onClose: () => void }) {
   );
 }
 
-export function RecipesMarquee({ tags }: { tags?: string[] } = {}) {
+export function RecipesMarquee({
+  tags,
+  tag: tagOverride,
+  heading: headingOverride,
+  body: bodyOverride,
+}: { tags?: string[]; tag?: string; heading?: string; body?: string } = {}) {
   const t = useTranslations();
-  const rm = t.recipesMarquee;
+  const rm = {
+    tag: tagOverride ?? t.recipesMarquee.tag,
+    heading: headingOverride ?? t.recipesMarquee.heading,
+    body: bodyOverride ?? t.recipesMarquee.body,
+  };
   const [selected, setSelected] = useState<Recipe | null>(null);
   const select = useCallback((r: Recipe) => setSelected(r), []);
   const close = useCallback(() => setSelected(null), []);
