@@ -771,6 +771,143 @@ function SleepCalculator() {
   );
 }
 
+// ── The patient agent — accountability + protocol, conversation over the orb ──
+
+// A short behavioral-change exchange: HANA isn't recording a number, it's
+// holding the patient to the plan. Bubbles reveal one at a time on scroll.
+const AGENT_TURNS: { who: "hana" | "patient"; text: string }[] = [
+  { who: "hana", text: "Hi Maria, it's HANA calling for your evening check-in. How many hours did you wear the CPAP last night?" },
+  { who: "patient", text: "Only about two. I took it off, it felt too tight." },
+  { who: "hana", text: "That's really common in week one — let's fix the fit, not give up. Try loosening the top strap one notch tonight. Can we aim for four hours?" },
+  { who: "patient", text: "Okay, I can try that." },
+  { who: "hana", text: "Great. I'll check back tomorrow to see how it went. You're doing the hard part — showing up." },
+];
+
+const AGENT_PILLARS = [
+  {
+    icon: RI.heart,
+    title: "An accountability partner",
+    body: "Patients don't fail because they can't — they drift. HANA calls on cadence, notices when adherence slips, encourages, and holds them to the plan. That follow-through is what actually moves the number.",
+  },
+  {
+    icon: RI.clipboard,
+    title: "Running a real protocol",
+    body: "Every conversation runs a clinician-built protocol for the condition — the right questions, the right thresholds, the right escalation. The warmth is human; the rigor is clinical.",
+  },
+];
+
+function PatientAgentSection() {
+  const reduce = useReducedMotion();
+  return (
+    <section className="relative overflow-hidden bg-[#f6f7fb] py-20 md:py-28 px-6 md:px-16">
+      {/* soft periwinkle wash + the bloom orb behind the conversation (lower-left,
+          low-opacity so it never fights the heading text) */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-0" style={{ background: "radial-gradient(90% 70% at 30% 75%, rgba(167,188,245,0.30) 0%, rgba(246,247,251,0) 60%)" }} />
+        <div className="absolute left-[8%] bottom-[-8%] opacity-35 blur-[3px] hidden md:block">
+          <div className="scale-[1.7]" style={{ transformOrigin: "center" }}>
+            <HanaBloomOrb />
+          </div>
+        </div>
+      </div>
+
+      <div className="relative max-w-[1200px] mx-auto">
+        <motion.div {...fadeUp} className="text-center mb-12 md:mb-16">
+          <p className={`${eyebrow} text-[#5b76d9] mt-0 mb-4`}>The patient agent</p>
+          <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch] text-[#00122F]">
+            Not just a monitor. <em className="text-[#5b76d9]">The reason they stick with it.</em>
+          </h2>
+          <p className="text-[17px] leading-[1.7] text-slate-500 max-w-[58ch] mx-auto mt-4">
+            Data alone doesn't change behavior. A patient who feels seen does. HANA is the voice on
+            the other end of the line — an accountability partner running a real clinical protocol.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-16 items-center">
+          {/* Conversation mock */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="relative mx-auto w-full max-w-[440px]"
+          >
+            <div className="rounded-[24px] bg-white/80 backdrop-blur-sm border border-white shadow-[0_30px_80px_rgba(0,18,47,0.14)] p-5 md:p-6">
+              <div className="flex items-center gap-2.5 pb-4 mb-2 border-b border-slate-100">
+                <span className="relative flex items-center justify-center w-9 h-9 rounded-full bg-[#eef1fb] text-[#5b76d9]">
+                  <Glyph d={RI.phone} className="w-4 h-4" />
+                  <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-white" />
+                </span>
+                <div>
+                  <div className="text-[13px] font-semibold text-[#00122F]">HANA · evening check-in</div>
+                  <div className="text-[11px] text-slate-400">CPAP adherence · HANA Sleep protocol</div>
+                </div>
+              </div>
+              <div className="space-y-2.5">
+                {AGENT_TURNS.map((turn, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: reduce ? 1 : 0, y: reduce ? 0 : 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: reduce ? 0 : 0.3 + i * 0.5 }}
+                    className={`flex ${turn.who === "patient" ? "justify-end" : "justify-start"}`}
+                  >
+                    <div
+                      className={`max-w-[82%] rounded-2xl px-3.5 py-2.5 text-[13.5px] leading-[1.55] ${
+                        turn.who === "hana"
+                          ? "bg-[#1e2a3a] text-white rounded-bl-md"
+                          : "bg-white text-[#00122F] border border-slate-200 rounded-br-md"
+                      }`}
+                    >
+                      {turn.text}
+                    </div>
+                  </motion.div>
+                ))}
+                <motion.div
+                  initial={{ opacity: reduce ? 1 : 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: reduce ? 0 : 0.3 + AGENT_TURNS.length * 0.5 }}
+                  className="flex items-center gap-2 pt-1 text-[11px] text-slate-400"
+                >
+                  <Check className="w-3.5 h-3.5 text-emerald-500" strokeWidth={3} />
+                  Logged to chart · follow-up scheduled for tomorrow
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Two pillars: accountability + protocol */}
+          <div className="space-y-6">
+            {AGENT_PILLARS.map((p, i) => (
+              <motion.div
+                key={p.title}
+                {...fadeUp}
+                transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
+                className="flex items-start gap-4"
+              >
+                <span className="flex items-center justify-center w-11 h-11 rounded-[12px] bg-white border border-slate-200 text-[#5b76d9] shrink-0 shadow-sm">
+                  <Glyph d={p.icon} className="w-5 h-5" />
+                </span>
+                <div>
+                  <h3 className="font-serif font-normal text-[22px] md:text-[24px] leading-[1.2] mt-0 mb-2 text-[#00122F]">{p.title}</h3>
+                  <p className="text-[15px] leading-[1.7] text-slate-500 m-0">{p.body}</p>
+                </div>
+              </motion.div>
+            ))}
+            <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.3 }} className="pt-2">
+              <p className="font-serif text-[20px] md:text-[22px] leading-[1.3] text-[#00122F] m-0">
+                85% of patients pick up and engage — <em className="text-[#5b76d9]">because it doesn't feel like a machine.</em>
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── Small shared bits (Contact patterns) ─────────────────────────────────────
 
 function RStatCell({ value, suffix, first, children }: { value: string; suffix?: string; first?: boolean; children: React.ReactNode }) {
@@ -988,22 +1125,26 @@ export function HanaRemote() {
         </div>
       </section>
 
-      {/* THE DASHBOARD — navy signature section */}
+      {/* TWO SIDES — the control panel (care team) + the agent (patient).
+          Section 1: Compass, the SaaS control panel. */}
       <section className="bg-[#00122F] text-white py-20 md:py-24 px-6 md:px-16">
         <div className="max-w-[1200px] mx-auto">
           <motion.div {...fadeUp} className="text-center mb-10 md:mb-12">
-            <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>The platform</p>
+            <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>Compass · the control panel</p>
             <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch]">
               Your team reviews what matters. <em className="text-[#A7BCF5]">The rest is handled.</em>
             </h2>
             <p className="text-[17px] leading-[1.7] text-white/55 max-w-[56ch] mx-auto mt-4">
-              Enrollment, engagement, assessment, escalation, and billing documentation run on their
-              own. What reaches your team is a flagged worklist — not a phone queue.
+              Compass is where your care team lives: enrollment, escalations, and billing
+              documentation run on their own. What reaches your team is a flagged worklist — not a phone queue.
             </p>
           </motion.div>
           <DashboardTour />
         </div>
       </section>
+
+      {/* Section 2: the patient agent — accountability + protocol, chat over orb. */}
+      <PatientAgentSection />
 
       {/* PROGRAM EXPLORER */}
       <section className="py-20 md:py-24 px-6 md:px-16 bg-[#f6f7fb]">
