@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   motion,
   animate,
+  AnimatePresence,
   useInView,
   useMotionValue,
   useMotionValueEvent,
@@ -97,19 +98,31 @@ type Station = {
   num: number;
   body: string;
   at: number;
+  icon?: StationId;
 };
 
 /** Optional copy overrides so the loop works as a standalone unit on any page.
  *  Every field falls back to the homepage (front-desk) copy, so existing
  *  call sites are unchanged. Station geometry/animation stay internal — only
  *  the words are configurable. */
+type StationId = "read" | "reason" | "engage" | "writeback";
+
 export type LoopDiagramCopy = {
   eyebrow?: string;
   heading?: string;
   sub?: string;
   center?: [string, string];
   footnote?: string;
-  stations?: Partial<Record<"read" | "reason" | "engage" | "writeback", { label?: string; body?: string }>>;
+  /** Per-station overrides. `icon` remaps to another station's glyph (e.g. a
+   *  monitoring loop can use the waveform on its "Monitor" station). */
+  stations?: Partial<Record<StationId, { label?: string; body?: string; icon?: StationId }>>;
+  /** Small cadence captions rendered beside each station disc ("Daily", "Monthly"…). */
+  cadence?: Partial<Record<StationId, string>>;
+  /** A dashed branch off one station to a labeled chip — the loop's single human
+   *  exit (e.g. Escalate → "Clinician worklist"). */
+  offRamp?: { station: StationId; label: string };
+  /** Small readings cycling under the center caption ("6.4 hrs/night ✓"…). */
+  centerChips?: string[];
 };
 
 const STATIONS: Station[] = [
@@ -242,7 +255,7 @@ function ringDist(a: number, b: number) {
   return Math.min(d, 1 - d);
 }
 
-function useContinuousPulse(enabled: boolean) {
+function useContinuousPulse(enabled: boolean, offsets: number[] = [0]) {
   const progress = useMotionValue(0); // 0..1 around the loop
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -257,14 +270,16 @@ function useContinuousPulse(enabled: boolean) {
   }, [enabled, progress]);
 
   useMotionValueEvent(progress, "change", (v) => {
-    const p = v % 1;
+    // With multiple pulses on the rail, a station lights up when ANY pulse is near.
     let nearest: string | null = null;
     let best = ACTIVE_WINDOW;
     for (const s of STATIONS) {
-      const d = ringDist(p, s.at);
-      if (d < best) {
-        best = d;
-        nearest = s.id;
+      for (const off of offsets) {
+        const d = ringDist((v + off) % 1, s.at);
+        if (d < best) {
+          best = d;
+          nearest = s.id;
+        }
       }
     }
     setActiveId((cur) => (cur === nearest ? cur : nearest));
@@ -277,12 +292,27 @@ export function LoopDiagram({
   copy,
   bare = false,
   light = false,
-}: { copy?: LoopDiagramCopy; bare?: boolean; light?: boolean } = {}) {
+  pulses = 1,
+}: { copy?: LoopDiagramCopy; bare?: boolean; light?: boolean; pulses?: number } = {}) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.4 });
-  const { progress, activeId } = useContinuousPulse(inView);
-  // map 0..1 loop progress → offsetDistance string for the pulse
+  const nPulses = Math.min(3, Math.max(1, pulses));
+  const pulseOffsets = nPulses === 1 ? [0] : nPulses === 2 ? [0, 0.5] : [0, 1 / 3, 2 / 3];
+  const { progress, activeId } = useContinuousPulse(inView, pulseOffsets);
+  // map 0..1 loop progress → offsetDistance strings, one per pulse on the rail
   const offsetDistance = useTransform(progress, (v) => `${(v % 1) * 100}%`);
+  const offsetDistance2 = useTransform(progress, (v) => `${((v + (pulseOffsets[1] ?? 0)) % 1) * 100}%`);
+  const offsetDistance3 = useTransform(progress, (v) => `${((v + (pulseOffsets[2] ?? 0)) % 1) * 100}%`);
+  const pulseDistances = [offsetDistance, offsetDistance2, offsetDistance3].slice(0, nPulses);
+
+  // Center readings cycle (only when provided — e.g. the monitoring loop)
+  const chips = copy?.centerChips;
+  const [chipIdx, setChipIdx] = useState(0);
+  useEffect(() => {
+    if (!inView || !chips || chips.length < 2) return;
+    const id = setInterval(() => setChipIdx((i) => (i + 1) % chips.length), 2400);
+    return () => clearInterval(id);
+  }, [inView, chips]);
 
   // Resolve copy: overrides win, otherwise the homepage (front-desk) defaults.
   const c = {
@@ -445,18 +475,102 @@ export function LoopDiagram({
                   transition={{ duration: 2, ease: "easeInOut", delay: 0.1 }}
                 />
 
-                {/* pulse — the one WARM element, orbiting the cool track in a
-                    constant, unbroken loop (no stopping) */}
-                <motion.circle
-                  r={7}
-                  fill={PEACH}
-                  stroke="#FFFFFF"
-                  strokeWidth={2}
-                  style={{ offsetPath: `path("${CENTER_PATH}")`, offsetDistance }}
-                  initial={{ opacity: 0 }}
-                  animate={inView ? { opacity: 1 } : { opacity: 0 }}
-                  transition={{ opacity: { duration: 0.4, delay: 1.6 } }}
-                />
+                {/* pulse(s) — the WARM element(s) orbiting the cool track in a
+                    constant, unbroken loop. One pulse = a single call; several
+                    pulses = a monitoring program with patients mid-cycle. */}
+                {pulseDistances.map((dist, k) => (
+                  <motion.circle
+                    key={k}
+                    r={k === 0 ? 7 : 6}
+                    fill={PEACH}
+                    stroke="#FFFFFF"
+                    strokeWidth={2}
+                    style={{ offsetPath: `path("${CENTER_PATH}")`, offsetDistance: dist }}
+                    initial={{ opacity: 0 }}
+                    animate={inView ? { opacity: k === 0 ? 1 : 0.85 } : { opacity: 0 }}
+                    transition={{ opacity: { duration: 0.4, delay: 1.6 + k * 0.2 } }}
+                  />
+                ))}
+
+                {/* cadence captions — the program rhythm beside each station */}
+                {copy?.cadence &&
+                  stations.map((s) => {
+                    const label = copy.cadence?.[s.id as StationId];
+                    if (!label) return null;
+                    const below = s.corner === "tl" || s.corner === "tr";
+                    // shift aside when the off-ramp branch leaves this station
+                    const rampShift = copy?.offRamp?.station === s.id ? -64 : 0;
+                    return (
+                      <motion.text
+                        key={`cad-${s.id}`}
+                        x={s.x + rampShift}
+                        y={below ? s.y + 62 : s.y - 52}
+                        textAnchor="middle"
+                        fontSize="11.5"
+                        fontWeight="700"
+                        letterSpacing="1.5"
+                        style={{ fill: light ? "#94a3b8" : "rgba(255,255,255,0.38)", textTransform: "uppercase" }}
+                        initial={{ opacity: 0 }}
+                        animate={inView ? { opacity: 1 } : { opacity: 0 }}
+                        transition={{ delay: 2, duration: 0.6 }}
+                      >
+                        {label.toUpperCase()}
+                      </motion.text>
+                    );
+                  })}
+
+                {/* off-ramp — the loop's single human exit: a dashed branch from
+                    one station to a labeled chip that lights when the pulse passes */}
+                {copy?.offRamp && (() => {
+                  const st = stations.find((s) => s.id === copy.offRamp!.station);
+                  if (!st) return null;
+                  const activeRamp = activeId === st.id;
+                  const chipW = Math.max(110, copy.offRamp!.label.length * 7.4 + 28);
+                  const chipX = st.x + 24;
+                  const chipY = st.y + 86;
+                  return (
+                    <motion.g
+                      initial={{ opacity: 0 }}
+                      animate={inView ? { opacity: 1 } : { opacity: 0 }}
+                      transition={{ delay: 2.2, duration: 0.6 }}
+                    >
+                      <motion.path
+                        d={`M ${st.x + 8} ${st.y + 42} C ${st.x + 18} ${st.y + 62}, ${chipX + 14} ${chipY - 34}, ${chipX + 26} ${chipY - 16}`}
+                        fill="none"
+                        strokeWidth={1.8}
+                        strokeDasharray="5 5"
+                        animate={{ stroke: activeRamp ? PEACH : light ? "rgba(91,118,217,0.55)" : "rgba(124,196,240,0.45)" }}
+                        transition={{ duration: 0.3 }}
+                      />
+                      <motion.rect
+                        x={chipX}
+                        y={chipY - 14}
+                        width={chipW}
+                        height={30}
+                        rx={15}
+                        animate={{
+                          fill: light ? "#ffffff" : "rgba(255,255,255,0.06)",
+                          stroke: activeRamp ? PEACH : light ? "#e2e6f0" : "rgba(255,255,255,0.14)",
+                          scale: activeRamp ? 1.04 : 1,
+                        }}
+                        transition={{ duration: 0.3 }}
+                        strokeWidth={1.4}
+                        style={{ transformOrigin: `${chipX + chipW / 2}px ${chipY + 1}px`, transformBox: "fill-box" }}
+                      />
+                      <motion.text
+                        x={chipX + chipW / 2}
+                        y={chipY + 5.5}
+                        textAnchor="middle"
+                        fontSize="13"
+                        fontWeight="600"
+                        style={{ fontFamily: "'DM Sans', sans-serif" }}
+                        animate={{ fill: light ? NAVY : "rgba(255,255,255,0.85)" }}
+                      >
+                        {copy.offRamp!.label}
+                      </motion.text>
+                    </motion.g>
+                  );
+                })()}
 
                 {stations.map((s, i) => (
                   <StationNode key={s.id} station={s} index={i} appear={inView} active={activeId === s.id} />
@@ -478,6 +592,26 @@ export function LoopDiagram({
                     <tspan x={CX} fontSize="22">{c.center[0]}</tspan>
                     <tspan x={CX} dy="28" fontSize="22">{c.center[1]}</tspan>
                   </text>
+                  {/* live readings cycling under the caption — the chart filling up */}
+                  {chips && chips.length > 0 && (
+                    <AnimatePresence mode="wait">
+                      <motion.text
+                        key={chipIdx}
+                        x={CX}
+                        y={CY + 42}
+                        textAnchor="middle"
+                        fontSize="13"
+                        fontWeight="600"
+                        style={{ fontFamily: "'DM Sans', sans-serif", fill: light ? "#5b76d9" : SKY }}
+                        initial={{ opacity: 0, y: 4 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -4 }}
+                        transition={{ duration: 0.35 }}
+                      >
+                        {chips[chipIdx]}
+                      </motion.text>
+                    </AnimatePresence>
+                  )}
                 </motion.g>
               </svg>
             </div>
@@ -567,7 +701,7 @@ function MobileTimeline({
       />
 
       {stations.map((s, i) => {
-        const Icon = LOOP_ICONS[s.id];
+        const Icon = LOOP_ICONS[s.icon ?? s.id];
         const active = activeId === s.id;
         return (
           <motion.div
@@ -656,7 +790,7 @@ function StationNode({
   appear: boolean;
   active: boolean;
 }) {
-  const Icon = LOOP_ICONS[station.id];
+  const Icon = LOOP_ICONS[station.icon ?? station.id];
   const R = 38; // node radius (bumped up for more presence)
 
   return (
@@ -718,8 +852,12 @@ function StationNode({
 /** The loop figure on its own — no eyebrow, heading, sub, or footnote. For
  *  embedding directly below a page hero (e.g. /hana-remote), where the hero
  *  copy does the talking and the figure is the unit. */
-export function LoopFigure({ copy, light = false }: { copy?: LoopDiagramCopy; light?: boolean } = {}) {
-  return <LoopDiagram copy={copy} bare light={light} />;
+export function LoopFigure({
+  copy,
+  light = false,
+  pulses = 1,
+}: { copy?: LoopDiagramCopy; light?: boolean; pulses?: number } = {}) {
+  return <LoopDiagram copy={copy} bare light={light} pulses={pulses} />;
 }
 
 export default LoopDiagram;

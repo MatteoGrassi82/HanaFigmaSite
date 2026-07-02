@@ -873,12 +873,21 @@ export function HanaRemote() {
           the RTM/RPM closed monitoring cycle: enroll → monitor → escalate → document. */}
       <LoopFigure
         light
+        pulses={3}
         copy={{
           center: ["No device. No app.", "No behavior change."],
+          centerChips: ["CPAP · 6.4 hrs/night ✓", "BP 128/82 · self-reported", "PHQ-9 · 4 · improving", "98977 · documented ✓"],
+          cadence: {
+            read: "Day one",
+            reason: "Daily · weekly cadence",
+            engage: "Only when flagged",
+            writeback: "Monthly",
+          },
+          offRamp: { station: "engage", label: "Clinician worklist" },
           stations: {
             read: { label: "Enroll", body: "Consent, onboarding, and protocol setup — by phone, on day one." },
-            reason: { label: "Monitor", body: "Scheduled check-ins capture symptoms, adherence, and vitals — wearables via API." },
-            engage: { label: "Escalate", body: "Clinical flags routed to your worklist — a clinician on every flag." },
+            reason: { label: "Monitor", body: "Scheduled check-ins capture symptoms, adherence, and vitals — wearables via API.", icon: "engage" },
+            engage: { label: "Escalate", body: "Clinical flags routed to your worklist — a clinician on every flag.", icon: "reason" },
             writeback: { label: "Document", body: "Structured data to the EHR — RTM and CCM codes ready for attestation." },
           },
         }}
