@@ -200,6 +200,10 @@ const WORKLIST_ROWS = [
   { initials: "RP", name: "R. Patel", program: "Post-op · RTM", note: "Pain 8/10 on day 7 check-in", level: "red", action: "Escalated" },
   { initials: "LR", name: "L. Rossi", program: "CCM · Monthly", note: "Check-in complete · goals reviewed", level: "green", action: "Ready to bill" },
   { initials: "KO", name: "K. Okafor", program: "Diabetes · RTM", note: "Glucose log captured by voice", level: "green", action: "Documented" },
+  { initials: "DT", name: "D. Tran", program: "CHF · RPM", note: "Weight +3 lbs over 48h — threshold hit", level: "red", action: "Escalated" },
+  { initials: "SB", name: "S. Bianchi", program: "Behavioral health · CoCM", note: "PHQ-9 = 14 · flagged for review", level: "amber", action: "Review" },
+  { initials: "GA", name: "G. Adams", program: "COPD · RTM", note: "Inhaler adherence confirmed", level: "green", action: "Documented" },
+  { initials: "NP", name: "N. Petrov", program: "Hypertension · CCM", note: "Monthly call complete · med reconciled", level: "green", action: "Ready to bill" },
 ];
 
 const TIMELINE_EVENTS = [
@@ -383,11 +387,21 @@ const DASH_NAV = [
   { label: "Billing", icon: RI.dollar, path: "billing" },
 ];
 
+// KPI mini-stats shown in the sidebar rail — makes it read like a real product.
+const DASH_KPIS = [
+  { label: "Adherent", value: "78%", trend: "up" },
+  { label: "Flagged today", value: "38", trend: "flat" },
+  { label: "Billable this mo.", value: "$142K", trend: "up" },
+];
+
+// A full-application desktop screen (laptop 16:10 proportions): browser chrome +
+// app top bar (search / bell / avatar) + rich left rail + the active view. Sized
+// like a real dashboard rather than a small card.
 function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: number) => void; children: React.ReactNode }) {
   return (
-    <div className="rounded-xl bg-white border border-slate-200 shadow-[0_40px_90px_rgba(0,18,47,0.18)] overflow-hidden text-left">
+    <div className="rounded-xl bg-white border border-slate-200 shadow-[0_50px_110px_rgba(0,18,47,0.22)] overflow-hidden text-left">
       {/* Browser bar */}
-      <div className="flex items-center gap-2 px-4 py-2.5 bg-[#f6f7fb] border-b border-slate-200">
+      <div className="flex items-center gap-2 px-4 py-2.5 bg-[#eef0f4] border-b border-slate-200">
         <span className="w-3 h-3 rounded-full bg-[#ff5f57]" aria-hidden="true" />
         <span className="w-3 h-3 rounded-full bg-[#febc2e]" aria-hidden="true" />
         <span className="w-3 h-3 rounded-full bg-[#28c840]" aria-hidden="true" />
@@ -401,31 +415,69 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
         </div>
         <span className="w-12 shrink-0" aria-hidden="true" />
       </div>
-      <div className="flex items-stretch">
-        {/* App sidebar */}
-        <div className="hidden sm:flex flex-col w-44 shrink-0 bg-[#fbfcfe] border-r border-slate-100 py-4 px-3">
-          <div className="flex items-center gap-2 px-2 pb-3 mb-2 border-b border-slate-100">
-            <span className="flex items-center justify-center w-6 h-6 rounded-md bg-[#1e2a3a] text-white text-[10px] font-bold">H</span>
-            <span className="text-[12px] font-semibold text-slate-800">HANA Remote</span>
+
+      {/* App body — fixed laptop aspect so it reads as a full desktop screen */}
+      <div className="flex items-stretch aspect-[16/10] max-h-[640px]">
+        {/* Left rail */}
+        <div className="hidden sm:flex flex-col w-52 lg:w-56 shrink-0 bg-[#fbfcfe] border-r border-slate-100">
+          <div className="flex items-center gap-2 px-4 h-14 border-b border-slate-100">
+            <span className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#1e2a3a] text-white text-[11px] font-bold">H</span>
+            <span className="text-[13px] font-semibold text-slate-800">HANA Remote</span>
           </div>
-          {DASH_NAV.map((n, i) => (
-            <button
-              key={n.label}
-              onClick={onNav ? () => onNav(i) : undefined}
-              disabled={!onNav}
-              aria-pressed={i === active}
-              className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[12.5px] font-medium transition-colors text-left mb-0.5 ${
-                i === active ? "bg-[#eef1fb] text-[#5b76d9]" : `text-slate-500 ${onNav ? "hover:bg-slate-100 cursor-pointer" : "cursor-default"}`
-              }`}
-            >
-              <Glyph d={n.icon} className="w-4 h-4" />
-              {n.label}
-            </button>
-          ))}
-          <div className="mt-auto px-2.5 pt-3 border-t border-slate-100 text-[10.5px] text-slate-400">412 patients monitored</div>
+          <div className="px-3 py-4 flex flex-col flex-1">
+            <p className="px-2.5 mb-1.5 text-[10px] font-bold uppercase tracking-[1.5px] text-slate-300">Care team</p>
+            {DASH_NAV.map((n, i) => (
+              <button
+                key={n.label}
+                onClick={onNav ? () => onNav(i) : undefined}
+                disabled={!onNav}
+                aria-pressed={i === active}
+                className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] font-medium transition-colors text-left mb-0.5 ${
+                  i === active ? "bg-[#eef1fb] text-[#5b76d9]" : `text-slate-500 ${onNav ? "hover:bg-slate-100 cursor-pointer" : "cursor-default"}`
+                }`}
+              >
+                <Glyph d={n.icon} className="w-[18px] h-[18px]" />
+                {n.label}
+                {i === active && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#5b76d9]" />}
+              </button>
+            ))}
+            {/* KPI mini-cards */}
+            <div className="mt-6 space-y-2.5">
+              {DASH_KPIS.map((k) => (
+                <div key={k.label} className="rounded-lg border border-slate-100 bg-white px-3 py-2.5">
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.5px] text-slate-400">{k.label}</div>
+                  <div className="flex items-baseline gap-1.5 mt-0.5">
+                    <span className="text-[18px] font-semibold text-[#00122F] leading-none">{k.value}</span>
+                    {k.trend === "up" && <span className="text-[11px] font-semibold text-emerald-500">▲</span>}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-auto flex items-center gap-2 pt-4 border-t border-slate-100">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#eef1fb] text-[#5b76d9] text-[10px] font-bold">DR</span>
+              <div className="min-w-0">
+                <div className="text-[12px] font-medium text-slate-700 truncate">Dr. Reyes</div>
+                <div className="text-[10.5px] text-slate-400">412 monitored</div>
+              </div>
+            </div>
+          </div>
         </div>
-        {/* Content */}
-        <div className="flex-1 min-w-0 bg-white">{children}</div>
+
+        {/* Main column: app top bar + scrolling view */}
+        <div className="flex-1 min-w-0 flex flex-col bg-white">
+          <div className="flex items-center gap-3 px-5 h-14 border-b border-slate-100 shrink-0">
+            <span className="text-[15px] font-semibold text-[#00122F]">{DASH_NAV[active].label}</span>
+            <div className="ml-auto hidden md:flex items-center gap-2 bg-[#f6f7fb] border border-slate-200 rounded-lg px-3 py-1.5 text-[12px] text-slate-400 w-56">
+              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
+              Search patients…
+            </div>
+            <span className="relative flex items-center justify-center w-8 h-8 rounded-lg hover:bg-slate-50 text-slate-400" aria-hidden="true">
+              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" /><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" /></svg>
+              <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-[#5b76d9]" />
+            </span>
+          </div>
+          <div className="flex-1 min-h-0 overflow-hidden">{children}</div>
+        </div>
       </div>
     </div>
   );
@@ -447,9 +499,9 @@ function DashboardTour() {
 
   return (
     <div ref={ref} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-      <div className="max-w-[880px] mx-auto">
+      <div className="max-w-[1100px] mx-auto">
         <SaaSWindow active={tab} onNav={setTab}>
-          <div className="min-h-[320px]">
+          <div className="h-full overflow-y-auto">
             <AnimatePresence mode="wait">
               <motion.div
                 key={tab}
@@ -1032,7 +1084,7 @@ export function HanaRemote() {
 
       {/* SaaS window — the platform peek right after the loop */}
       <section className="bg-[#f6f7fb] pt-20 md:pt-24 pb-24 md:pb-28">
-        <div className="max-w-[880px] mx-auto px-6 md:px-10">
+        <div className="max-w-[1100px] mx-auto px-6 md:px-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
