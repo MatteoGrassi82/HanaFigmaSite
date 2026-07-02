@@ -194,33 +194,47 @@ const R_FAQS = [
 
 // ── Dashboard mock data (stylized, illustrative) ─────────────────────────────
 
-const WORKLIST_ROWS = [
-  { initials: "MA", name: "M. Alvarez", program: "CPAP · Sleep", note: "Night 3 — no usage detected", level: "red", action: "Call escalated" },
-  { initials: "JC", name: "J. Chen", program: "Hypertension · RPM", note: "BP 158/94 self-reported", level: "amber", action: "Review" },
-  { initials: "RP", name: "R. Patel", program: "Post-op · RTM", note: "Pain 8/10 on day 7 check-in", level: "red", action: "Escalated" },
-  { initials: "LR", name: "L. Rossi", program: "CCM · Monthly", note: "Check-in complete · goals reviewed", level: "green", action: "Ready to bill" },
-  { initials: "KO", name: "K. Okafor", program: "Diabetes · RTM", note: "Glucose log captured by voice", level: "green", action: "Documented" },
-  { initials: "DT", name: "D. Tran", program: "CHF · RPM", note: "Weight +3 lbs over 48h — threshold hit", level: "red", action: "Escalated" },
-  { initials: "SB", name: "S. Bianchi", program: "Behavioral health · CoCM", note: "PHQ-9 = 14 · flagged for review", level: "amber", action: "Review" },
-  { initials: "GA", name: "G. Adams", program: "COPD · RTM", note: "Inhaler adherence confirmed", level: "green", action: "Documented" },
-  { initials: "NP", name: "N. Petrov", program: "Hypertension · CCM", note: "Monthly call complete · med reconciled", level: "green", action: "Ready to bill" },
+// Priority queue — each row is a task to work, not a roster entry: why it
+// surfaced (reason) + the next best action, ranked by clinical + billing risk.
+const TASK_ROWS = [
+  { initials: "MA", name: "M. Alvarez", program: "CPAP · Sleep", reason: "No check-in 3 days", level: "red", act: "Call now" },
+  { initials: "DT", name: "D. Tran", program: "CHF · RPM", reason: "Weight +3 lbs / 48h — threshold", level: "red", act: "Escalate" },
+  { initials: "RP", name: "R. Patel", program: "Post-op · RTM", reason: "Pain 8/10 on day-7 check-in", level: "red", act: "Review" },
+  { initials: "JC", name: "J. Chen", program: "Hypertension · RPM", reason: "BP 158/94 self-reported", level: "amber", act: "Review" },
+  { initials: "SB", name: "S. Bianchi", program: "Behavioral · CoCM", reason: "PHQ-9 = 14 · needs eyes", level: "amber", act: "Review" },
+  { initials: "EW", name: "E. Whitmore", program: "Diabetes · RTM", reason: "2 check-in days short of 99454", level: "amber", act: "Nudge" },
+  { initials: "LR", name: "L. Rossi", program: "CCM · Monthly", reason: "20-min threshold met", level: "green", act: "Ready to bill" },
+  { initials: "KO", name: "K. Okafor", program: "Diabetes · RTM", reason: "Glucose log captured by voice", level: "green", act: "Done" },
 ];
 
-const TIMELINE_EVENTS = [
-  { day: "Day 1", text: "Enrollment call — consent captured, baseline PHQ-2", icon: RI.phone },
-  { day: "Day 4", text: "Check-in call — mask discomfort reported, coaching delivered", icon: RI.phone },
-  { day: "Day 9", text: "Usage rising — 6.2 hrs/night avg, encouragement call", icon: RI.activity },
-  { day: "Day 14", text: "Adherent — threshold met, documented for attestation", icon: RI.clipboard },
-];
-
+// Billing readiness — the signature RPM view. HANA counts completed voice
+// check-in days (device-less spin on the CMS 16-day 99454 rule) and management
+// minutes (99457/99458), with a live billable status per patient.
 const BILLING_ROWS = [
-  { code: "98975", desc: "RTM initial setup & education", status: "Documented" },
-  { code: "98977", desc: "Device/software supply, monthly", status: "Documented" },
-  { code: "98980", desc: "Treatment management, first 20 min", status: "Ready for attestation" },
-  { code: "98981", desc: "Treatment management, each addl 20 min", status: "Ready for attestation" },
+  { initials: "LR", name: "L. Rossi", program: "CCM", days: 22, mins: 24, status: "billable" },
+  { initials: "KO", name: "K. Okafor", program: "RTM", days: 19, mins: 21, status: "billable" },
+  { initials: "NP", name: "N. Petrov", program: "CCM", days: 16, mins: 20, status: "billable" },
+  { initials: "EW", name: "E. Whitmore", program: "RTM", days: 14, mins: 18, status: "atrisk" },
+  { initials: "SB", name: "S. Bianchi", program: "CoCM", days: 21, mins: 12, status: "needtime" },
+  { initials: "MA", name: "M. Alvarez", program: "Sleep", days: 9, mins: 8, status: "atrisk" },
 ];
 
-const DASH_TABS = ["Flagged worklist", "Patient timeline", "Billing & codes"] as const;
+const ANALYTICS_KPIS = [
+  { label: "Patient engagement", value: "85%", sub: "vs 20% app baseline", trend: "up" },
+  { label: "Avg days to adherent", value: "11", sub: "CPAP cohort", trend: "down" },
+  { label: "Billable this month", value: "$142K", sub: "218 patients ready", trend: "up" },
+  { label: "Escalation rate", value: "9%", sub: "of check-ins reach a clinician", trend: "flat" },
+];
+// monthly adherence % trend (12 pts) — climbs as the program matures
+const ANALYTICS_TREND = [38, 44, 49, 55, 58, 63, 68, 71, 74, 78, 81, 85];
+const ANALYTICS_MIX = [
+  { label: "RTM", pct: 34, color: "#5b76d9" },
+  { label: "CCM", pct: 28, color: "#7c92e6" },
+  { label: "RPM", pct: 22, color: "#A7BCF5" },
+  { label: "Sleep", pct: 16, color: "#c9d4f7" },
+];
+
+const DASH_TABS = ["Task queue", "Billing", "Analytics"] as const;
 
 // ── Dashboard panes ──────────────────────────────────────────────────────────
 
@@ -229,14 +243,25 @@ function LevelDot({ level }: { level: string }) {
   return <span className={`w-2 h-2 rounded-full ${c} shrink-0`} aria-hidden="true" />;
 }
 
-function WorklistPane({ compact = false }: { compact?: boolean }) {
+// ACT-color helpers for the task actions.
+function actClasses(level: string, primary: boolean) {
+  if (level === "green") return "bg-emerald-50 text-emerald-600 border border-emerald-100";
+  if (level === "amber") return "bg-amber-50 text-amber-600 border border-amber-100";
+  return primary
+    ? "bg-[#5b76d9] text-white border border-[#5b76d9]" // red → the one you act on
+    : "bg-red-50 text-red-500 border border-red-100";
+}
+
+// TASK QUEUE — the priority worklist: reason it surfaced + a next-best action
+// button, ranked by clinical + billing risk. You work the queue top-down.
+function TaskQueuePane({ compact = false }: { compact?: boolean }) {
   const reduce = useReducedMotion();
-  const rows = compact ? WORKLIST_ROWS.slice(0, 4) : WORKLIST_ROWS;
+  const rows = compact ? TASK_ROWS.slice(0, 4) : TASK_ROWS;
   return (
     <div>
       <div className="flex items-center justify-between px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[1px] text-slate-400 border-b border-slate-100 bg-[#fbfcfe]">
-        <span>Today · 38 flagged of 412 monitored</span>
-        {!compact && <span className="hidden sm:block">Sorted by risk</span>}
+        <span>Priority queue · 38 of 412 need action</span>
+        {!compact && <span className="hidden sm:block">Ranked by risk + billing</span>}
       </div>
       {rows.map((r, i) => (
         <motion.div
@@ -244,9 +269,10 @@ function WorklistPane({ compact = false }: { compact?: boolean }) {
           initial={{ opacity: reduce ? 1 : 0, x: reduce ? 0 : -8 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.35, delay: reduce ? 0 : 0.15 + i * 0.1 }}
+          transition={{ duration: 0.35, delay: reduce ? 0 : 0.15 + i * 0.08 }}
           className="flex items-center gap-3 px-4 py-3 border-b border-slate-100 hover:bg-[#fafbfe] transition-colors"
         >
+          <span className="text-[11px] font-semibold text-slate-300 w-4 shrink-0 tabular-nums">{i + 1}</span>
           <span className="flex items-center justify-center w-8 h-8 rounded-full bg-[#eef1fb] text-[#5b76d9] text-[11px] font-bold shrink-0">
             {r.initials}
           </span>
@@ -254,16 +280,13 @@ function WorklistPane({ compact = false }: { compact?: boolean }) {
             <div className="flex items-center gap-2">
               <LevelDot level={r.level} />
               <span className="text-[13px] font-semibold text-slate-900 truncate">{r.name}</span>
-              <span className="text-[11px] text-slate-400 truncate hidden sm:block">{r.program}</span>
+              <span className="text-[11px] text-slate-400 truncate hidden md:block">{r.program}</span>
             </div>
-            <p className="text-[12px] text-slate-500 m-0 mt-0.5 truncate">{r.note}</p>
+            <p className="text-[12px] text-slate-500 m-0 mt-0.5 truncate">{r.reason}</p>
           </div>
-          <span
-            className={`text-[11px] font-semibold px-2.5 py-1 rounded-full shrink-0 ${
-              r.level === "green" ? "bg-emerald-50 text-emerald-600" : r.level === "amber" ? "bg-amber-50 text-amber-600" : "bg-red-50 text-red-500"
-            }`}
-          >
-            {r.action}
+          <span className={`inline-flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-lg shrink-0 ${actClasses(r.level, true)}`}>
+            {r.act === "Call now" && <Glyph d={RI.phone} className="w-3 h-3" />}
+            {r.act}
           </span>
         </motion.div>
       ))}
@@ -271,108 +294,176 @@ function WorklistPane({ compact = false }: { compact?: boolean }) {
   );
 }
 
-function TimelinePane() {
+// Mini progress bar toward a threshold (check-in days / management minutes).
+function Meter({ value, max, tone }: { value: number; max: number; tone: string }) {
   const reduce = useReducedMotion();
-  // Adherence trend: non-adherence falling 50% → 22% over the program.
-  const points = "0,54 40,50 80,44 120,45 160,36 200,30 240,26 280,20 320,16";
+  const pct = Math.min(100, (value / max) * 100);
+  const color = tone === "billable" ? "#10b981" : tone === "atrisk" ? "#f59e0b" : "#5b76d9";
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-[1fr_1.1fr]">
-      <div className="p-4 border-b sm:border-b-0 sm:border-r border-slate-100">
-        <div className="flex items-center gap-3 mb-4">
-          <span className="flex items-center justify-center w-9 h-9 rounded-full bg-[#eef1fb] text-[#5b76d9] text-[12px] font-bold">MA</span>
-          <div>
-            <div className="text-[14px] font-semibold text-slate-900">M. Alvarez</div>
-            <div className="text-[11px] text-slate-400">CPAP · HANA Sleep protocol · wk 2</div>
-          </div>
-        </div>
-        <p className="text-[11px] font-semibold uppercase tracking-[1px] text-slate-400 mb-2">Usage trend</p>
-        <svg viewBox="0 0 320 70" className="w-full" aria-label="CPAP usage trend rising across the program">
-          <line x1="0" y1="62" x2="320" y2="62" stroke="#e8ecf4" strokeWidth="1" />
-          <motion.polyline
-            points={points}
-            fill="none"
-            stroke="#5b76d9"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            initial={{ pathLength: reduce ? 1 : 0 }}
-            whileInView={{ pathLength: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: reduce ? 0 : 1.6, ease: "easeOut", delay: 0.3 }}
-          />
-          <motion.circle
-            cx="320" cy="16" r="4" fill="#5b76d9"
-            initial={{ opacity: reduce ? 1 : 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: reduce ? 0 : 1.9 }}
-          />
-        </svg>
-        <div className="flex justify-between text-[10px] text-slate-400 mt-1">
-          <span>Night 1 · 2.1 hrs</span>
-          <span className="text-[#5b76d9] font-semibold">Night 14 · 6.4 hrs ✓ adherent</span>
-        </div>
+    <div className="flex items-center gap-2">
+      <div className="h-1.5 flex-1 rounded-full bg-slate-100 overflow-hidden min-w-[52px]">
+        <motion.div
+          className="h-full rounded-full"
+          style={{ backgroundColor: color }}
+          initial={{ width: reduce ? `${pct}%` : 0 }}
+          whileInView={{ width: `${pct}%` }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+        />
       </div>
-      <div className="p-4">
-        {TIMELINE_EVENTS.map((e, i) => (
-          <motion.div
-            key={e.day}
-            initial={{ opacity: reduce ? 1 : 0, y: reduce ? 0 : 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.35, delay: reduce ? 0 : 0.2 + i * 0.15 }}
-            className="flex items-start gap-3 pb-3.5 last:pb-0"
-          >
-            <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#eef1fb] text-[#5b76d9] shrink-0 mt-0.5">
-              <Glyph d={e.icon} className="w-3.5 h-3.5" />
-            </span>
-            <div>
-              <div className="text-[11px] font-bold text-[#5b76d9] uppercase tracking-[1px]">{e.day}</div>
-              <p className="text-[12.5px] text-slate-600 leading-[1.5] m-0">{e.text}</p>
-            </div>
-          </motion.div>
-        ))}
-      </div>
+      <span className="text-[11px] font-semibold text-slate-500 tabular-nums w-11 text-right shrink-0">{value}/{max}</span>
     </div>
   );
 }
+
+
+// BILLING — the signature RPM readiness view. Per patient: progress toward the
+// two thresholds (voice check-in days → 99454; management minutes → 99457/58),
+// with a live billable status. HANA counts voice check-ins, not device transmits.
+const BILL_STATUS = {
+  billable: { chip: "bg-emerald-50 text-emerald-600", label: "Billable" },
+  atrisk: { chip: "bg-amber-50 text-amber-600", label: "Days short" },
+  needtime: { chip: "bg-[#eef1fb] text-[#5b76d9]", label: "Needs time" },
+} as const;
 
 function BillingPane() {
-  const reduce = useReducedMotion();
   return (
-    <div>
-      <div className="flex items-center justify-between px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[1px] text-slate-400 border-b border-slate-100 bg-[#fbfcfe]">
-        <span>This month · RTM program</span>
-        <span>412 enrolled</span>
+    <div className="flex flex-col h-full">
+      {/* month-readiness summary strip */}
+      <div className="grid grid-cols-3 border-b border-slate-100 bg-[#fbfcfe]">
+        {[
+          { v: "218", l: "Billable now", c: "text-emerald-600" },
+          { v: "34", l: "Days short", c: "text-amber-600" },
+          { v: "$142K", l: "Ready this month", c: "text-[#00122F]" },
+        ].map((s, i) => (
+          <div key={s.l} className={`px-4 py-3.5 ${i > 0 ? "border-l border-slate-100" : ""}`}>
+            <div className={`font-serif text-[24px] leading-none ${s.c}`}>{s.v}</div>
+            <div className="text-[11px] text-slate-400 mt-1">{s.l}</div>
+          </div>
+        ))}
       </div>
-      {BILLING_ROWS.map((b, i) => (
-        <motion.div
-          key={b.code}
-          initial={{ opacity: reduce ? 1 : 0, x: reduce ? 0 : -8 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.35, delay: reduce ? 0 : 0.15 + i * 0.12 }}
-          className="flex items-center gap-3 px-4 py-3 border-b border-slate-100 hover:bg-[#fafbfe] transition-colors"
-        >
-          <span className="font-mono text-[12px] font-bold text-[#5b76d9] bg-[#eef1fb] rounded-md px-2 py-1 shrink-0">{b.code}</span>
-          <span className="text-[12.5px] text-slate-600 flex-1 min-w-0 truncate">{b.desc}</span>
-          <span className="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600 shrink-0">
-            <motion.span
-              initial={{ scale: reduce ? 1 : 0 }}
-              whileInView={{ scale: 1 }}
+      {/* column header */}
+      <div className="hidden md:grid grid-cols-[1.4fr_1.1fr_1.1fr_0.9fr] gap-3 px-4 py-2 text-[10px] font-bold uppercase tracking-[1px] text-slate-300 border-b border-slate-100">
+        <span>Patient</span>
+        <span>Check-in days · 99454</span>
+        <span>Mgmt time · 99457/58</span>
+        <span className="text-right">Status</span>
+      </div>
+      {BILLING_ROWS.map((b) => {
+        const st = BILL_STATUS[b.status as keyof typeof BILL_STATUS];
+        return (
+          <div key={b.name} className="grid grid-cols-[1fr_auto] md:grid-cols-[1.4fr_1.1fr_1.1fr_0.9fr] gap-3 items-center px-4 py-3 border-b border-slate-100 hover:bg-[#fafbfe] transition-colors">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#eef1fb] text-[#5b76d9] text-[10px] font-bold shrink-0">{b.initials}</span>
+              <div className="min-w-0">
+                <div className="text-[13px] font-semibold text-slate-900 truncate">{b.name}</div>
+                <div className="text-[11px] text-slate-400">{b.program}</div>
+              </div>
+            </div>
+            <div className="hidden md:block"><Meter value={b.days} max={16} tone={b.days >= 16 ? "billable" : "atrisk"} /></div>
+            <div className="hidden md:block"><Meter value={b.mins} max={20} tone={b.mins >= 20 ? "billable" : "needtime"} /></div>
+            <div className="flex justify-end">
+              <span className={`inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-full ${st.chip}`}>
+                {b.status === "billable" && <Check className="w-3 h-3" strokeWidth={3} />}
+                {st.label}
+              </span>
+            </div>
+          </div>
+        );
+      })}
+      <div className="flex items-center justify-between px-4 py-3 mt-auto border-t border-slate-100 bg-[#fbfcfe]">
+        <span className="text-[12px] text-slate-500">One click generates the month's claim set — 99453–99458, docs attached.</span>
+        <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-white bg-[#1e2a3a] rounded-lg px-3 py-1.5">Generate claims</span>
+      </div>
+    </div>
+  );
+}
+
+// ANALYTICS — program health at a glance: KPI tiles, adherence trend, program mix.
+function AnalyticsPane() {
+  const reduce = useReducedMotion();
+  const W = 320, H = 90;
+  const pts = ANALYTICS_TREND.map((v, i) => {
+    const x = (i / (ANALYTICS_TREND.length - 1)) * W;
+    const y = H - ((v - 30) / 60) * H;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(" ");
+  const areaPts = `0,${H} ${pts} ${W},${H}`;
+  return (
+    <div className="p-4 md:p-5">
+      {/* KPI tiles */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
+        {ANALYTICS_KPIS.map((k) => (
+          <div key={k.label} className="rounded-xl border border-slate-100 bg-white p-3.5">
+            <div className="text-[10.5px] font-semibold uppercase tracking-[0.5px] text-slate-400">{k.label}</div>
+            <div className="flex items-baseline gap-1.5 mt-1">
+              <span className="font-serif text-[28px] leading-none text-[#00122F]">{k.value}</span>
+              {k.trend === "up" && <span className="text-[11px] font-semibold text-emerald-500">▲</span>}
+              {k.trend === "down" && <span className="text-[11px] font-semibold text-emerald-500">▼</span>}
+            </div>
+            <div className="text-[11px] text-slate-400 mt-1 leading-snug">{k.sub}</div>
+          </div>
+        ))}
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-4">
+        {/* Adherence trend */}
+        <div className="rounded-xl border border-slate-100 bg-white p-4">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-[12px] font-semibold text-slate-700">Adherence trend</span>
+            <span className="text-[11px] text-slate-400">12 months</span>
+          </div>
+          <svg viewBox={`0 0 ${W} ${H}`} className="w-full" aria-label="Adherence climbing to 85% over 12 months">
+            <defs>
+              <linearGradient id="analyticsFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#5b76d9" stopOpacity="0.22" />
+                <stop offset="100%" stopColor="#5b76d9" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <motion.polygon
+              points={areaPts}
+              fill="url(#analyticsFill)"
+              initial={{ opacity: reduce ? 1 : 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: reduce ? 0 : 0.5 + i * 0.15, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="flex items-center justify-center w-4 h-4 rounded-full bg-emerald-100"
-            >
-              <Check className="w-2.5 h-2.5" strokeWidth={3} />
-            </motion.span>
-            <span className="hidden sm:inline">{b.status}</span>
-          </span>
-        </motion.div>
-      ))}
-      <div className="flex items-center justify-between px-4 py-3">
-        <span className="text-[12px] text-slate-500">Documented this month, pending attestation</span>
-        <span className="font-serif text-[22px] text-slate-900">$12,840</span>
+              transition={{ duration: 0.8, delay: 0.6 }}
+            />
+            <motion.polyline
+              points={pts}
+              fill="none"
+              stroke="#5b76d9"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ pathLength: reduce ? 1 : 0 }}
+              whileInView={{ pathLength: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: reduce ? 0 : 1.4, ease: "easeOut", delay: 0.2 }}
+            />
+          </svg>
+          <div className="flex justify-between text-[10px] text-slate-400 mt-1"><span>38%</span><span className="text-[#5b76d9] font-semibold">85% now</span></div>
+        </div>
+        {/* Program mix */}
+        <div className="rounded-xl border border-slate-100 bg-white p-4">
+          <span className="text-[12px] font-semibold text-slate-700">Program mix</span>
+          <div className="mt-3.5 space-y-2.5">
+            {ANALYTICS_MIX.map((m) => (
+              <div key={m.label} className="flex items-center gap-2.5">
+                <span className="text-[11px] font-medium text-slate-500 w-10 shrink-0">{m.label}</span>
+                <div className="h-2 flex-1 rounded-full bg-slate-100 overflow-hidden">
+                  <motion.div
+                    className="h-full rounded-full"
+                    style={{ backgroundColor: m.color }}
+                    initial={{ width: reduce ? `${m.pct}%` : 0 }}
+                    whileInView={{ width: `${m.pct}%` }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+                  />
+                </div>
+                <span className="text-[11px] font-semibold text-slate-500 w-8 text-right tabular-nums shrink-0">{m.pct}%</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -382,9 +473,9 @@ function BillingPane() {
 // address bar) and an app sidebar. When onNav is provided the sidebar items are
 // the live navigation for the tour; without it the window is a static peek.
 const DASH_NAV = [
-  { label: "Worklist", icon: RI.alert, path: "worklist" },
-  { label: "Patients", icon: RI.activity, path: "patients/m-alvarez" },
+  { label: "Task queue", icon: RI.alert, path: "queue" },
   { label: "Billing", icon: RI.dollar, path: "billing" },
+  { label: "Analytics", icon: RI.activity, path: "analytics" },
 ];
 
 // KPI mini-stats shown in the sidebar rail — makes it read like a real product.
@@ -420,9 +511,17 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
       <div className="flex items-stretch aspect-[16/10] max-h-[640px]">
         {/* Left rail */}
         <div className="hidden sm:flex flex-col w-52 lg:w-56 shrink-0 bg-[#fbfcfe] border-r border-slate-100">
-          <div className="flex items-center gap-2 px-4 h-14 border-b border-slate-100">
-            <span className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#1e2a3a] text-white text-[11px] font-bold">H</span>
-            <span className="text-[13px] font-semibold text-slate-800">HANA Remote</span>
+          <div className="flex items-center gap-2.5 px-4 h-14 border-b border-slate-100">
+            {/* Compass app mark — three ascending bars in a periwinkle tile */}
+            <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-[#5b76d9] to-[#3f57c0] shadow-sm">
+              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true">
+                <path d="M6 15v3 M12 9v9 M18 5v13" />
+              </svg>
+            </span>
+            <div className="leading-tight">
+              <div className="text-[13px] font-semibold text-slate-800">Compass</div>
+              <div className="text-[10px] text-slate-400">by HANA Remote</div>
+            </div>
           </div>
           <div className="px-3 py-4 flex flex-col flex-1">
             <p className="px-2.5 mb-1.5 text-[10px] font-bold uppercase tracking-[1.5px] text-slate-300">Care team</p>
@@ -510,9 +609,9 @@ function DashboardTour() {
                 exit={{ opacity: 0, y: reduce ? 0 : -8 }}
                 transition={{ duration: 0.35 }}
               >
-                {tab === 0 && <WorklistPane />}
-                {tab === 1 && <TimelinePane />}
-                {tab === 2 && <BillingPane />}
+                {tab === 0 && <TaskQueuePane />}
+                {tab === 1 && <BillingPane />}
+                {tab === 2 && <AnalyticsPane />}
               </motion.div>
             </AnimatePresence>
           </div>
@@ -528,7 +627,7 @@ function DashboardTour() {
                 tab === i ? "bg-white text-[#00122F]" : "bg-white/[0.08] text-white/60"
               }`}
             >
-              {t.replace("Flagged ", "").replace(" & codes", "")}
+              {t}
             </button>
           ))}
         </div>
@@ -1092,7 +1191,7 @@ export function HanaRemote() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           >
             <SaaSWindow active={0}>
-              <WorklistPane />
+              <TaskQueuePane />
             </SaaSWindow>
           </motion.div>
         </div>
