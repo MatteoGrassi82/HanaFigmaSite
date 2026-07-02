@@ -128,19 +128,26 @@ export const Navbar = (props: NavbarProps) => {
   const defaults: Props = {
     ...NavbarDefaults,
     navLinks: [
+      {
+        url: "#",
+        title: isItalian ? "Soluzioni" : "Solutions",
+        subMenuLinks: [
+          { url: "/hana-contact", title: "HANA Contact" },
+          { url: "/hana-remote", title: "HANA Remote" },
+        ],
+      },
       ...(isItalian ? [] : [{ url: "/case-studies", title: t.nav.caseStudies }]),
-      { url: "https://docs.hana.health/getting-started/overview", title: t.nav.docs },
       {
         url: "#",
         title: t.nav.resources,
         subMenuLinks: [
+          { url: "https://docs.hana.health/getting-started/overview", title: t.nav.docs },
           { url: "/whitepapers", title: t.nav.whitepapers },
           { url: "/blog", title: t.nav.blog },
           { url: "/labs", title: t.nav.labs },
           { url: "/pricing", title: t.nav.savingsCalculator },
         ],
       },
-      { url: "/labs", title: t.nav.labs },
     ],
     signInButton: { ...NavbarDefaults.signInButton, title: t.nav.signIn },
     button: { ...NavbarDefaults.button, title: t.nav.bookDemo },
