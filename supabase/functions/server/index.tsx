@@ -162,57 +162,6 @@ app.get("/make-server-77ada9a1/check-email-limit/:email", async (c) => {
   }
 });
 
-// Test lead endpoint — visit in browser to fire a test lead to Supabase + Zapier
-app.get("/make-server-77ada9a1/test-lead", async (c) => {
-  try {
-    const timestamp = Date.now();
-    const key = `lead:${timestamp}:+15551234567`;
-    const leadData = {
-      name: "Test User",
-      phone: "+15551234567",
-      email: "test@hana-voice.ai",
-      region: "US",
-      agent: "Intake",
-      timestamp: new Date().toISOString()
-    };
-
-    await kv.set(key, JSON.stringify(leadData));
-    console.log(`Test lead saved: ${key}`);
-
-    let zapierStatus = "skipped — ZAPIER_WEBHOOK_URL not configured";
-    const zapierWebhookUrl = Deno.env.get("ZAPIER_WEBHOOK_URL");
-    if (zapierWebhookUrl) {
-      try {
-        const zapierResponse = await fetch(zapierWebhookUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            ...leadData,
-            lead_key: key,
-            source: "hana-voice-ai-demo"
-          })
-        });
-        zapierStatus = zapierResponse.ok
-          ? `success (${zapierResponse.status})`
-          : `failed (${zapierResponse.status}: ${await zapierResponse.text()})`;
-      } catch (zapierError) {
-        zapierStatus = `error: ${zapierError}`;
-      }
-    }
-
-    return c.json({
-      success: true,
-      message: "Test lead created",
-      lead_key: key,
-      lead: leadData,
-      zapier: zapierStatus
-    });
-  } catch (error) {
-    console.error("Error creating test lead:", error);
-    return c.json({ error: `Failed to create test lead: ${error}` }, 500);
-  }
-});
-
 // Save lead endpoint
 app.post("/make-server-77ada9a1/leads", async (c) => {
   try {
@@ -271,58 +220,9 @@ app.post("/make-server-77ada9a1/leads", async (c) => {
     await kv.set(key, JSON.stringify(leadData));
     console.log(`Lead saved: ${key}`);
 
-    // Push lead to Zapier webhook → routes to email notification + Attio CRM
-    const zapierWebhookUrl = Deno.env.get("ZAPIER_WEBHOOK_URL");
-    if (zapierWebhookUrl) {
-      try {
-        const zapierPayload = {
-          // Core lead fields
-          ...leadData,
-          lead_key: key,
-          source: "hana-voice-ai-demo",
-
-          // Attio-friendly structured contact fields
-          contact: {
-            name: name || null,
-            phone_number: phone,
-            email: email || null,
-          },
-
-          // Attio-friendly deal / note context
-          demo_details: {
-            agent_type: agent || null,
-            workflow: workflow || null,
-            region: region || null,
-            page: page || "live-demo",
-            requested_at: new Date().toISOString(),
-          },
-
-          // Flat fields for simple Zapier mapping
-          contact_name: name || "Unknown",
-          contact_phone: phone,
-          contact_email: email || "",
-          demo_agent: agent || "Unknown",
-          demo_workflow: workflow || "",
-          demo_region: region || "US",
-          demo_page: page || "live-demo",
-        };
-
-        const zapierResponse = await fetch(zapierWebhookUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(zapierPayload)
-        });
-        if (!zapierResponse.ok) {
-          console.log(`Zapier webhook returned status ${zapierResponse.status}: ${await zapierResponse.text()}`);
-        } else {
-          console.log(`Zapier webhook triggered successfully for lead: ${key}`);
-        }
-      } catch (zapierError) {
-        console.log(`Zapier webhook failed for lead ${key}: ${zapierError}`);
-      }
-    } else {
-      console.log("ZAPIER_WEBHOOK_URL not configured — skipping webhook push");
-    }
+    // Lead is picked up from the KV store by the CRM sync
+    // (cron /api/cron/sync-site-leads) → Hot engage queue + Slack alert.
+    // (Formerly also pushed to a Zapier webhook → email + Attio; removed.)
 
     return c.json({ success: true, message: "Lead captured successfully" });
   } catch (error) {
@@ -331,7 +231,7 @@ app.post("/make-server-77ada9a1/leads", async (c) => {
   }
 });
 
-// Guide download — capture email and push to Zapier
+// Guide download — capture email to the KV store
 app.post("/make-server-77ada9a1/guide-download", async (c) => {
   try {
     const body = await c.req.json();
@@ -352,85 +252,13 @@ app.post("/make-server-77ada9a1/guide-download", async (c) => {
     await kv.set(key, JSON.stringify(downloadData));
     console.log(`Guide download saved: ${key}`);
 
-    let zapierStatus = "skipped — ZAPIER_WEBHOOK_URL not configured";
-    const zapierWebhookUrl = Deno.env.get("ZAPIER_WEBHOOK_URL");
-    console.log(`ZAPIER_WEBHOOK_URL present: ${!!zapierWebhookUrl}`);
+    // Captured to the KV store (guide-download:*); no external webhook.
+    // (Formerly pushed to a Zapier webhook; removed.)
 
-    if (zapierWebhookUrl) {
-      try {
-        const zapierPayload = {
-          email,
-          contact_email: email,
-          guide: "Clinical Voice AI Guide",
-          source: "guide-download",
-          timestamp: new Date().toISOString(),
-        };
-        console.log(`Sending to Zapier: ${JSON.stringify(zapierPayload)}`);
-        console.log(`Zapier URL: ${zapierWebhookUrl.substring(0, 50)}...`);
-
-        const zapierResponse = await fetch(zapierWebhookUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(zapierPayload),
-        });
-
-        const zapierResponseText = await zapierResponse.text();
-        zapierStatus = zapierResponse.ok
-          ? `success (${zapierResponse.status}): ${zapierResponseText}`
-          : `failed (${zapierResponse.status}): ${zapierResponseText}`;
-        console.log(`Zapier response for guide download: ${zapierStatus}`);
-      } catch (zapierError) {
-        zapierStatus = `error: ${zapierError}`;
-        console.log(`Zapier webhook failed for guide download ${email}: ${zapierError}`);
-      }
-    } else {
-      console.log("ZAPIER_WEBHOOK_URL not configured — skipping webhook push for guide download");
-    }
-
-    return c.json({ success: true, message: "Guide download request captured", zapier: zapierStatus });
+    return c.json({ success: true, message: "Guide download request captured" });
   } catch (error) {
     console.error("Error processing guide download:", error);
     return c.json({ error: `Failed to process guide download: ${error}` }, 500);
-  }
-});
-
-// Test guide download — visit in browser to verify Zapier fires
-app.get("/make-server-77ada9a1/test-guide-download", async (c) => {
-  try {
-    const testEmail = "test-guide@hana-voice.ai";
-    const webhookUrl = Deno.env.get("ZAPIER_WEBHOOK_URL");
-    if (!webhookUrl) {
-      return c.json({ success: false, error: "ZAPIER_WEBHOOK_URL not configured" }, 503);
-    }
-
-    const zapierPayload = {
-      email: testEmail,
-      contact_email: testEmail,
-      guide: "Clinical Voice AI Guide",
-      source: "guide-download-test",
-      timestamp: new Date().toISOString(),
-    };
-
-    console.log(`Sending test payload to Zapier: ${JSON.stringify(zapierPayload)}`);
-
-    const zapierResponse = await fetch(webhookUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(zapierPayload),
-    });
-
-    const responseText = await zapierResponse.text();
-    console.log(`Zapier test response: ${zapierResponse.status} - ${responseText}`);
-
-    return c.json({
-      success: zapierResponse.ok,
-      zapier_status: zapierResponse.status,
-      zapier_response: responseText,
-      payload_sent: zapierPayload,
-    });
-  } catch (error) {
-    console.log(`Test guide download error: ${error}`);
-    return c.json({ error: `Test failed: ${error}` }, 500);
   }
 });
 
