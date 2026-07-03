@@ -103,22 +103,19 @@ export interface Translations {
   compliance: {
     tag: string;
     heading: string;
-    body: string;
-    humanInLoop: string;
-    humanInLoopDesc: string;
-    auditTrail: string;
-    auditTrailDesc: string;
-    protocolBound: string;
-    protocolBoundDesc: string;
-    certNote: string;
     iso: string;
     isoDesc: string;
     soc2: string;
     soc2Desc: string;
     hipaa: string;
     hipaaDesc: string;
+    pdl: string;
+    pdlDesc: string;
     gdpr: string;
     gdprDesc: string;
+    pipeda: string;
+    pipedaDesc: string;
+    environmentsTitle: string;
     environments: string;
   };
   // Live demo section
@@ -220,7 +217,11 @@ export interface Translations {
     sdk: string;
     sdkTagline: string;
     sdkBody: string;
+    wearables: string;
+    wearablesTagline: string;
+    wearablesBody: string;
     learnPartnerships: string;
+    trustLine: string;
   };
   // Pages — Home SEO
   homeSeo: {
@@ -404,7 +405,7 @@ const en: Translations = {
     step1Body: "The one that's costing you most — pre-built, or built around your protocols.",
     step2Number: "002",
     step2Title: "Connect your EHR.",
-    step2Body: "Direct, or 95+ systems via Redox & Catagon. Reads the chart first — patients are never asked what you already know.",
+    step2Body: "Direct, or 95+ systems via Redox. Reads the chart first — patients are never asked what you already know.",
     step3Number: "003",
     step3Title: "Go live.",
     step3Body: "Your team tests it on a real line before a single patient is called.",
@@ -419,25 +420,22 @@ const en: Translations = {
     readDocs: "Read the Docs",
   },
   compliance: {
-    tag: "Safety & Security",
-    heading: "A human on every clinical call that needs one.",
-    body: "Hana never decides care on its own. You set the escalation rules; it follows them — and logs everything.",
-    humanInLoop: "Human-in-the-loop",
-    humanInLoopDesc: "Clinical risk is routed to your nurse or on-call clinician with a warm hand-off — live, or next business day, per your rules.",
-    auditTrail: "Full audit trail",
-    auditTrailDesc: "Every call is recorded, transcribed, and logged to the chart. Who said what, what was decided, and why — reviewable any time.",
-    protocolBound: "Protocol-bound",
-    protocolBoundDesc: "Hana follows your clinical protocols and screening logic. It works inside guardrails you define, not a generic model's judgment.",
-    certNote: "And the controls behind it: HIPAA-aligned, SOC 2 Type II (audit in progress), ISO 27001-aligned, GDPR. Not bolted on — built in.",
-    iso: "ISO 27001-aligned",
-    isoDesc: "ISMS implemented against ISO 27001 information security controls across EHR systems, with certification on our roadmap.",
-    soc2: "SOC 2 Type II (audit in progress)",
-    soc2Desc: "Readiness assessment complete and a Type II audit underway, with continuous monitoring and automated evidence collection across EHR environments.",
-    hipaa: "HIPAA-aligned",
-    hipaaDesc: "HIPAA controls in place — encryption, access controls, and audit logging across EHR integrations — with a BAA available.",
+    tag: "Enterprise-Grade Compliance and Security",
+    heading: "Compliance and security best hospitals already trust",
+    iso: "ISO 27001",
+    isoDesc: "Implementing ISO 27001 information security controls across EHR systems with real-time monitoring and compliance reporting.",
+    soc2: "SOC 2 Type II",
+    soc2Desc: "Delivering continuous monitoring and automated evidence collection for SOC 2 Type II audits across different EHR environments.",
+    hipaa: "HIPAA",
+    hipaaDesc: "Ensuring HIPAA compliance through encryption, access controls, and audit logging across EHR integrations.",
+    pdl: "PDL",
+    pdlDesc: "Maintaining comprehensive data governance controls for Personal Data Law compliance across EHR systems.",
     gdpr: "GDPR",
     gdprDesc: "Providing GDPR-compliant data processing with automated data mapping, consent management, and data subject request tools for EHR systems.",
-    environments: "Cloud, private cloud, or dedicated environments. Same standards.",
+    pipeda: "PIPEDA",
+    pipedaDesc: "Meeting Canadian privacy requirements through automated privacy assessments and consent tracking across EHR platforms.",
+    environmentsTitle: "Deploys into what you already run",
+    environments: "Connect your EHR and carry patient calls over Vonage, Twilio, Telnyx, or any SIP provider. No EHR? No integration needed — run on our SDK or fully white-labeled. Cloud, private cloud, or on-prem — same standards, every way.",
   },
   liveDemo: {
     heading: "Don't take our word for it. Take the call.",
@@ -522,7 +520,7 @@ const en: Translations = {
     body: "95+ EHRs, reads and writes back automatically. Reaches patients by voice, SMS, WhatsApp, or iMessage — in 3+ languages.",
     ehr: "EHR integrations",
     ehrTagline: "Reads the chart. Engages the patient. Writes back.",
-    ehrBody: "Direct integrations with major EHRs. Or connect through Redox and Catagon to reach 95+ systems. Hana reads the chart, engages the patient, and writes structured notes back.",
+    ehrBody: "Direct integrations with major EHRs. Or connect through Redox to reach 95+ systems. Hana reads the chart, engages the patient, and writes structured notes back.",
     channels: "Patient channels",
     channelsTagline: "Hana picks the right channel, time, and tone. No app. No portal. No login.",
     channelsBody: "Hana picks the right channel, time, and tone for each patient. No app. No portal. No login. Just a conversation.",
@@ -532,7 +530,11 @@ const en: Translations = {
     sdk: "SDK & White-Label",
     sdkTagline: "Building a platform? Embed Hana via SDK and white-label it as your own.",
     sdkBody: "Full API access. Custom dashboards. Your branding. Our reasoning engine.",
+    wearables: "Wearables & devices",
+    wearablesTagline: "We read the data your patients already wear.",
+    wearablesBody: "Apple Watch, Oura, Fitbit, Garmin — Hana connects to the wearables and devices your patients already use and reads the data via API. No new hardware to ship, no app to download.",
     learnPartnerships: "Learn about partnerships",
+    trustLine: "500+ healthcare practices, connected across their EHR, phone system, and tools.",
   },
   homeSeo: {
     title: "Hana Voice AI | The calls your EHR can't make",
@@ -720,7 +722,7 @@ const it: Translations = {
     step1Body: "Quello che ti fa perdere più pazienti — già pronto, o costruito attorno ai tuoi protocolli.",
     step2Number: "002",
     step2Title: "Connetti il tuo gestionale.",
-    step2Body: "Integrazione diretta, o 95+ sistemi tramite Redox e Catagon. Hana legge prima la cartella — al paziente non viene mai chiesto quello che sai già.",
+    step2Body: "Integrazione diretta, o 95+ sistemi tramite Redox. Hana legge prima la cartella — al paziente non viene mai chiesto quello che sai già.",
     step3Number: "003",
     step3Title: "Parti live.",
     step3Body: "Il tuo team testa l'assistente su una linea reale prima che venga contattato un solo paziente.",
@@ -735,25 +737,22 @@ const it: Translations = {
     readDocs: "Leggi la Documentazione",
   },
   compliance: {
-    tag: "Sicurezza",
-    heading: "Un essere umano in ogni chiamata clinica che lo richiede.",
-    body: "Hana non decide mai le cure da sola. Sei tu a impostare le regole di escalation; lei le segue — e registra tutto.",
-    humanInLoop: "Supervisione umana",
-    humanInLoopDesc: "Il rischio clinico viene indirizzato al tuo infermiere o al clinico di guardia con un trasferimento assistito — in tempo reale o il giorno lavorativo successivo, secondo le tue regole.",
-    auditTrail: "Audit trail completo",
-    auditTrailDesc: "Ogni chiamata viene registrata, trascritta e salvata nella cartella. Chi ha detto cosa, cosa è stato deciso e perché — consultabile in qualsiasi momento.",
-    protocolBound: "Vincolato ai protocolli",
-    protocolBoundDesc: "Hana segue i tuoi protocolli clinici e la tua logica di screening. Opera all'interno dei guardrail che definisci tu, non del giudizio di un modello generico.",
-    certNote: "E i controlli dietro: conforme HIPAA, SOC 2 Type II (audit in corso), allineato ISO 27001, GDPR. Non aggiunti dopo — integrati fin dall'inizio.",
-    iso: "Allineato ISO 27001",
-    isoDesc: "ISMS implementato secondo i controlli di sicurezza informatica ISO 27001 su tutti i sistemi EHR, con certificazione nel nostro roadmap.",
-    soc2: "SOC 2 Type II (audit in corso)",
-    soc2Desc: "Valutazione di idoneità completata e audit di Tipo II in corso, con monitoraggio continuo e raccolta automatizzata di prove su tutti gli ambienti EHR.",
-    hipaa: "Conforme HIPAA",
-    hipaaDesc: "Controlli HIPAA in atto — crittografia, controlli di accesso e audit logging su tutte le integrazioni EHR — con BAA disponibile.",
+    tag: "Compliance e sicurezza di livello enterprise",
+    heading: "La compliance e la sicurezza di cui si fidano i migliori ospedali",
+    iso: "ISO 27001",
+    isoDesc: "Implementazione dei controlli di sicurezza informatica ISO 27001 su tutti i sistemi EHR, con monitoraggio in tempo reale e reportistica di conformità.",
+    soc2: "SOC 2 Type II",
+    soc2Desc: "Monitoraggio continuo e raccolta automatizzata delle prove per gli audit SOC 2 Type II su tutti gli ambienti EHR.",
+    hipaa: "HIPAA",
+    hipaaDesc: "Conformità HIPAA garantita tramite crittografia, controlli di accesso e audit logging su tutte le integrazioni EHR.",
+    pdl: "PDL",
+    pdlDesc: "Controlli completi di data governance per la conformità alle leggi sui dati personali su tutti i sistemi EHR.",
     gdpr: "GDPR",
-    gdprDesc: "Elaborazione dei dati conforme al GDPR con data mapping automatizzato, gestione del consenso e strumenti per le richieste degli interessati su sistemi EHR.",
-    environments: "Cloud, private cloud o ambienti dedicati. Stessi standard.",
+    gdprDesc: "Elaborazione dei dati conforme al GDPR con data mapping automatizzato, gestione del consenso e strumenti per le richieste degli interessati sui sistemi EHR.",
+    pipeda: "PIPEDA",
+    pipedaDesc: "Requisiti di privacy canadesi soddisfatti tramite valutazioni automatizzate della privacy e tracciamento del consenso su tutte le piattaforme EHR.",
+    environmentsTitle: "Si integra in ciò che già usi",
+    environments: "Collega il tuo EHR e gestisci le chiamate ai pazienti su Vonage, Twilio, Telnyx o qualsiasi provider SIP. Nessun EHR? Nessuna integrazione necessaria — usa il nostro SDK o una versione completamente white-label. Cloud, private cloud o on-prem — stessi standard, in ogni caso.",
   },
   liveDemo: {
     heading: "Non fidarti solo di noi. Ascolta la chiamata.",
@@ -838,7 +837,7 @@ const it: Translations = {
     body: "95+ EHR, legge e scrive automaticamente. Raggiunge i pazienti tramite voce, SMS, WhatsApp o iMessage — in più lingue.",
     ehr: "Integrazioni EHR",
     ehrTagline: "Legge la cartella. Parla col paziente. Scrive il risultato.",
-    ehrBody: "Connessioni dirette con i principali software gestionali. O collegati tramite Redox e Catagon per raggiungere 95+ sistemi. Hana legge la cartella prima di chiamare — al paziente non viene mai chiesto quello che già sai.",
+    ehrBody: "Connessioni dirette con i principali software gestionali. O collegati tramite Redox per raggiungere 95+ sistemi. Hana legge la cartella prima di chiamare — al paziente non viene mai chiesto quello che già sai.",
     channels: "Canali di contatto",
     channelsTagline: "Sceglie il canale giusto, al momento giusto. Senza app, senza portali, senza login.",
     channelsBody: "Voce, SMS, WhatsApp o iMessage — Hana usa il canale che funziona per quel paziente. Nessuna app da scaricare, nessun portale da accedere. Solo una conversazione.",
@@ -848,7 +847,11 @@ const it: Translations = {
     sdk: "SDK e White-Label",
     sdkTagline: "Stai costruendo una piattaforma? Incorpora Hana via SDK con il tuo brand.",
     sdkBody: "Accesso completo alle API. Dashboard personalizzati. Il tuo marchio. Il nostro motore di ragionamento.",
+    wearables: "Wearable e dispositivi",
+    wearablesTagline: "Leggiamo i dati che i pazienti già indossano.",
+    wearablesBody: "Apple Watch, Oura, Fitbit, Garmin — Hana si collega ai wearable e ai dispositivi che i pazienti già usano e ne legge i dati via API. Nessun nuovo dispositivo da spedire, nessuna app da scaricare.",
     learnPartnerships: "Scopri le opportunità di partnership",
+    trustLine: "Oltre 500 studi sanitari, connessi tra EHR, centralino e strumenti quotidiani.",
   },
   homeSeo: {
     title: "Hana Voice AI | Le chiamate che il tuo EHR non può fare",

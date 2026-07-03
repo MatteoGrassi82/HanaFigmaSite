@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowRight, Code2 } from 'lucide-react';
 import { Link } from 'react-router';
 import { useTranslations } from '../../lib/i18n';
+import { TRUST_LOGOS, LogoMarquee } from './ui/brand-logos';
 
 export function IntegrationsSection() {
   const t = useTranslations();
@@ -28,6 +29,14 @@ export function IntegrationsSection() {
             </p>
           </div>
 
+          {/* Trusted-by band — under the header */}
+          <div className="mb-12 sm:mb-16 lg:mb-20">
+            <p className="text-center text-sm sm:text-base font-medium text-[#5a6b82]">
+              {i.trustLine}
+            </p>
+            <LogoMarquee brands={TRUST_LOGOS} className="mt-9" />
+          </div>
+
           {/* Grid — 2x2 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
              {/* Pillar 1: EHR Integrations */}
@@ -46,7 +55,7 @@ export function IntegrationsSection() {
                 </p>
                 
                 <div className="flex flex-wrap gap-[10px]">
-                   {["Athena Health", "Charm", "Practice Q", "Redox", "Catagon", "95+ EHRs"].map(item => (
+                   {["Athena Health", "Epic", "eClinicalWorks", "Redox", "95+ EHRs"].map(item => (
                      <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-slate-50 border border-slate-200 text-[13px] font-medium text-[#1e2a3a] transition-colors hover:bg-slate-100 hover:border-slate-300 tracking-[0.01em]">
                        <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-blue-500"></span>
                        {item}
@@ -134,6 +143,28 @@ export function IntegrationsSection() {
                   {i.learnPartnerships}
                   <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
                 </Link>
+             </div>
+
+             {/* Pillar 5: Wearables & devices — full-width row (spans both columns) */}
+             <div className="md:col-span-2 relative bg-white border border-slate-200 rounded-[20px] p-6 sm:p-8 md:p-10 overflow-hidden transition-all duration-300 hover:border-slate-300 hover:shadow-lg flex flex-col md:flex-row md:items-center gap-7 md:gap-10">
+                <div className="md:flex-1">
+                   <div className="w-[52px] h-[52px] rounded-[14px] flex items-center justify-center mb-6 bg-blue-50 border border-blue-200 text-blue-600">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                      </svg>
+                   </div>
+                   <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">{i.wearables}</h3>
+                   <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">{i.wearablesTagline}</p>
+                   <p className="text-[15px] leading-[1.7] text-[#718096] font-normal max-w-[560px]">{i.wearablesBody}</p>
+                </div>
+                <div className="flex flex-wrap gap-[10px] md:max-w-[300px] md:justify-end">
+                   {["Apple Watch", "Oura", "Fitbit", "Garmin"].map(item => (
+                     <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-slate-50 border border-slate-200 text-[13px] font-medium text-[#1e2a3a] transition-colors hover:bg-slate-100 hover:border-slate-300 tracking-[0.01em]">
+                       <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-blue-500"></span>
+                       {item}
+                     </span>
+                   ))}
+                </div>
              </div>
 
           </div>
