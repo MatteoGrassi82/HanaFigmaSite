@@ -223,6 +223,49 @@ export interface Translations {
     learnPartnerships: string;
     trustLine: string;
   };
+  // Home — "Everything your front desk can't get to" bento
+  frontDeskBento: {
+    tag: string;
+    heading: string;
+    languagesHeadingPre: string;
+    languagesHeadingEm: string;
+    languagesHeadingPost: string;
+    languagesBody: string;
+    languagesLiveLabel: string;
+    languagesLangBadge: string;
+    languagesMsg1: string;
+    languagesMsg2: string;
+    languagesStatNumber: string;
+    languagesStatLabel: string;
+    clinicalHeadingPre: string;
+    clinicalHeadingEm: string;
+    clinicalBody: string;
+    intelHeadingPre: string;
+    intelHeadingEm: string;
+    intelHeadingPost: string;
+    intelRow1Label: string;
+    intelRow1Badge: string;
+    intelRow1Score: string;
+    intelRow2Label: string;
+    intelRow2Badge: string;
+    intelRow2Score: string;
+    intelRow3Label: string;
+    intelRow3Badge: string;
+    intelRow3Score: string;
+    dashboardHeadingEm: string;
+    dashboardHeadingPost: string;
+    dashboardStat1Label: string;
+    dashboardStat1Value: string;
+    dashboardStat2Label: string;
+    dashboardStat2Value: string;
+    dashboardStat3Label: string;
+    dashboardStat3Value: string;
+    partnershipHeadingPre: string;
+    partnershipHeadingEm: string;
+    partnershipRow1: string;
+    partnershipRow2: string;
+    partnershipRow3: string;
+  };
   // Pages — Home SEO
   homeSeo: {
     title: string;
@@ -535,6 +578,48 @@ const en: Translations = {
     wearablesBody: "Apple Watch, Oura, Fitbit, Garmin — Hana connects to the wearables and devices your patients already use and reads the data via API. No new hardware to ship, no app to download.",
     learnPartnerships: "Learn about partnerships",
     trustLine: "500+ healthcare practices, connected across their EHR, phone system, and tools.",
+  },
+  frontDeskBento: {
+    tag: "Built for healthcare",
+    heading: "Everything your front desk can't get to",
+    languagesHeadingPre: "Speaks",
+    languagesHeadingEm: "every",
+    languagesHeadingPost: "patient's language",
+    languagesBody: "Detects it, replies in it, switches mid-call. No interpreter line, no wait.",
+    languagesLiveLabel: "Live call · auto-detected",
+    languagesLangBadge: "Español",
+    languagesMsg1: "¿Puedo adelantar mi cita de la próxima semana?",
+    languagesMsg2: "Claro, Sofía — martes 9:40 o jueves 15:00, ¿cuál le viene mejor?",
+    languagesStatNumber: "30+",
+    languagesStatLabel: "languages, one agent",
+    clinicalHeadingPre: "Our own clinical AI, watched on",
+    clinicalHeadingEm: "every call.",
+    clinicalBody: "Models · real-time eval · guardrails · escalation",
+    intelHeadingPre: "Intelligence on",
+    intelHeadingEm: "every",
+    intelHeadingPost: "conversation",
+    intelRow1Label: "Refill · M. Alvarez",
+    intelRow1Badge: "Positive",
+    intelRow1Score: "98",
+    intelRow2Label: "Recall · J. Okafor",
+    intelRow2Badge: "Neutral",
+    intelRow2Score: "95",
+    intelRow3Label: "Prior auth · L. Tran",
+    intelRow3Badge: "Concern",
+    intelRow3Score: "91",
+    dashboardHeadingEm: "Your",
+    dashboardHeadingPost: "dashboard, live",
+    dashboardStat1Label: "Calls today",
+    dashboardStat1Value: "142",
+    dashboardStat2Label: "Avg QA",
+    dashboardStat2Value: "96",
+    dashboardStat3Label: "Recovered",
+    dashboardStat3Value: "18",
+    partnershipHeadingPre: "A partnership,",
+    partnershipHeadingEm: "not a purchase",
+    partnershipRow1: "Katie R. — your named success lead",
+    partnershipRow2: "Live in days, not months",
+    partnershipRow3: "Weekly protocol tuning early on",
   },
   homeSeo: {
     title: "Hana Voice AI | The calls your EHR can't make",
@@ -852,6 +937,49 @@ const it: Translations = {
     wearablesBody: "Apple Watch, Oura, Fitbit, Garmin — Hana si collega ai wearable e ai dispositivi che i pazienti già usano e ne legge i dati via API. Nessun nuovo dispositivo da spedire, nessuna app da scaricare.",
     learnPartnerships: "Scopri le opportunità di partnership",
     trustLine: "Oltre 500 studi sanitari, connessi tra EHR, centralino e strumenti quotidiani.",
+  },
+  // NOTE: mirrored from the English copy as a placeholder — needs real Italian translation.
+  frontDeskBento: {
+    tag: "Built for healthcare",
+    heading: "Everything your front desk can't get to",
+    languagesHeadingPre: "Speaks",
+    languagesHeadingEm: "every",
+    languagesHeadingPost: "patient's language",
+    languagesBody: "Detects it, replies in it, switches mid-call. No interpreter line, no wait.",
+    languagesLiveLabel: "Live call · auto-detected",
+    languagesLangBadge: "Español",
+    languagesMsg1: "¿Puedo adelantar mi cita de la próxima semana?",
+    languagesMsg2: "Claro, Sofía — martes 9:40 o jueves 15:00, ¿cuál le viene mejor?",
+    languagesStatNumber: "30+",
+    languagesStatLabel: "languages, one agent",
+    clinicalHeadingPre: "Our own clinical AI, watched on",
+    clinicalHeadingEm: "every call.",
+    clinicalBody: "Models · real-time eval · guardrails · escalation",
+    intelHeadingPre: "Intelligence on",
+    intelHeadingEm: "every",
+    intelHeadingPost: "conversation",
+    intelRow1Label: "Refill · M. Alvarez",
+    intelRow1Badge: "Positive",
+    intelRow1Score: "98",
+    intelRow2Label: "Recall · J. Okafor",
+    intelRow2Badge: "Neutral",
+    intelRow2Score: "95",
+    intelRow3Label: "Prior auth · L. Tran",
+    intelRow3Badge: "Concern",
+    intelRow3Score: "91",
+    dashboardHeadingEm: "Your",
+    dashboardHeadingPost: "dashboard, live",
+    dashboardStat1Label: "Calls today",
+    dashboardStat1Value: "142",
+    dashboardStat2Label: "Avg QA",
+    dashboardStat2Value: "96",
+    dashboardStat3Label: "Recovered",
+    dashboardStat3Value: "18",
+    partnershipHeadingPre: "A partnership,",
+    partnershipHeadingEm: "not a purchase",
+    partnershipRow1: "Katie R. — your named success lead",
+    partnershipRow2: "Live in days, not months",
+    partnershipRow3: "Weekly protocol tuning early on",
   },
   homeSeo: {
     title: "Hana Voice AI | Le chiamate che il tuo EHR non può fare",

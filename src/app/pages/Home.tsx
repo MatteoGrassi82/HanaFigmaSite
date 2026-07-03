@@ -7,6 +7,7 @@ import { useTranslations, getLocale } from "../../lib/i18n";
 // Below-the-fold + heavy (Remotion + react-slick): code-split so they don't ship in the homepage critical bundle.
 const AgenticFrameworkCarousel = lazy(() => import("../components/AgenticFrameworkCarousel").then((m) => ({ default: m.AgenticFrameworkCarousel })));
 import { ComplianceSection } from "../components/ComplianceSection";
+import { FrontDeskBento } from "../components/FrontDeskBento";
 import { CaseStudiesSection } from "../components/CaseStudiesSection";
 import { ClientFeedback } from "../components/ui/testimonial";
 import { LoopDiagram } from "../components/ui/loop-diagram";
@@ -89,6 +90,9 @@ export function Home({
       <Suspense fallback={null}>
         <AgenticFrameworkCarousel />
       </Suspense>
+
+      {/* §6c — EVERYTHING YOUR FRONT DESK CAN'T GET TO (feature bento) */}
+      <FrontDeskBento />
 
       {/* §7 — GO LIVE */}
       <InlineImageHeader />
