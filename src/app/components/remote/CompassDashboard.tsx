@@ -388,8 +388,9 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
         <span className="w-12 shrink-0" aria-hidden="true" />
       </div>
 
-      {/* App body — fixed laptop aspect so it reads as a full desktop screen */}
-      <div className="flex items-stretch aspect-[16/10] max-h-[640px]">
+      {/* App body — readable fixed height on mobile; laptop aspect on sm+ so it
+          reads as a full desktop screen without cramping on phones. */}
+      <div className="flex items-stretch h-[440px] sm:h-auto sm:aspect-[16/10] sm:max-h-[640px]">
         {/* Left rail */}
         <div className="hidden sm:flex flex-col w-52 lg:w-56 shrink-0 bg-[#fbfcfe] border-r border-slate-100">
           <div className="flex items-center gap-2.5 px-4 h-14 border-b border-slate-100">

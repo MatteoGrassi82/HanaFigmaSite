@@ -42,7 +42,7 @@ export function Home({
   // AgenticFrameworkCarousel above — drop it to avoid showing the section twice.
   const isItalian = getLocale() === "it";
   return (
-    <div className="space-y-0">
+    <div className="space-y-0 overflow-x-hidden">
       <SEO
         title={t.homeSeo.title}
         useExactTitle={true}

@@ -80,7 +80,7 @@ const FAQS = [
 
 export function HanaContact() {
   return (
-    <div className="bg-white text-[#00122F] font-sans">
+    <div className="bg-white text-[#00122F] font-sans overflow-x-hidden">
       <SEO
         title="HANA Contact — AI Front Desk for Clinics"
         useExactTitle

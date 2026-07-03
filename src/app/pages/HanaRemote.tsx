@@ -642,7 +642,7 @@ function RFaqRow({ q, a, index }: { q: string; a: string; index: number }) {
 
 export function HanaRemote() {
   return (
-    <div className="bg-white text-[#00122F] font-sans">
+    <div className="bg-white text-[#00122F] font-sans overflow-x-hidden">
       <SEO
         title="HANA Remote — Device-less Remote Patient Monitoring"
         useExactTitle
