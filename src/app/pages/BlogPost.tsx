@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
 import { PortableText } from "@portabletext/react";
 import { getPost, type Post } from "../../lib/sanity";
+import { PostCover } from "../components/PostCover";
 import { Footer } from "../components/Footer";
 import { SEO } from "../components/SEO";
 import { ArrowLeft } from "lucide-react";
@@ -133,6 +134,9 @@ export function BlogPost() {
           <Link to="/blog" className="inline-flex items-center gap-1 text-sm text-slate-400 hover:text-slate-700 mb-8 transition-colors">
             <ArrowLeft className="w-4 h-4" /> {it ? "Tutti gli articoli" : "All posts"}
           </Link>
+
+          {/* Hero cover */}
+          <PostCover post={post} size="hero" eager className="aspect-[2/1] w-full rounded-2xl mb-8" />
 
           {/* Meta */}
           <div className="flex flex-wrap items-center gap-2 mb-4">

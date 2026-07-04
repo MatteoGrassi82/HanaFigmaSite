@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { getPosts, type Post } from "../../lib/sanity";
+import { PostCover } from "../components/PostCover";
 import { Footer } from "../components/Footer";
 import { SEO } from "../components/SEO";
 import { useTranslations, getLocale } from "../../lib/i18n";
@@ -65,6 +66,7 @@ export function Blog() {
                   to={`/blog/${post.slug.current}`}
                   className="group flex flex-col rounded-2xl overflow-hidden border border-slate-100 hover:border-slate-200 hover:shadow-lg transition-all duration-200"
                 >
+                  <PostCover post={post} size="card" className="aspect-[16/9] w-full" />
                   <div className="flex flex-col flex-1 p-5">
                     {/* Category + date */}
                     <div className="flex items-center gap-2 mb-3 flex-wrap">

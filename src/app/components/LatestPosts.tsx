@@ -1,24 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { ArrowRight } from "lucide-react";
-import { getPosts, urlFor, type Post } from "../../lib/sanity";
+import { getPosts, type Post } from "../../lib/sanity";
+import { PostCover } from "./PostCover";
 import { getLocale } from "../../lib/i18n";
 
 /* ── Latest from the blog ───────────────────────────────────────────────────
    Pulls the 3 most recent posts from Sanity (getPosts already returns them
    ordered by publishedAt desc) and renders them as cards matching the /blog
    page style. Renders nothing while loading or if no posts exist. */
-
-/* urlFor() throws if a Sanity image source can't be resolved — guard it so a
-   bad/partial image record can never crash the whole page. */
-function safeImageUrl(src: Post["mainImage"]): string | null {
-  if (!src) return null;
-  try {
-    return urlFor(src).width(640).height(360).url();
-  } catch {
-    return null;
-  }
-}
 
 function formatDate(dateStr?: string) {
   if (!dateStr) return "";
@@ -82,16 +72,7 @@ export function LatestPosts() {
                 to={`/blog/${(post as Post).slug.current}`}
                 className="group flex flex-col overflow-hidden rounded-2xl border border-slate-100 transition-all duration-200 hover:border-slate-200 hover:shadow-lg"
               >
-                {safeImageUrl((post as Post).mainImage) && (
-                  <div className="aspect-[16/9] w-full overflow-hidden bg-slate-100">
-                    <img
-                      src={safeImageUrl((post as Post).mainImage)!}
-                      alt={(post as Post).title}
-                      loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-                    />
-                  </div>
-                )}
+                <PostCover post={post as Post} size="card" className="aspect-[16/9] w-full" />
                 <div className="flex flex-1 flex-col p-5">
                   <div className="mb-3 flex flex-wrap items-center gap-2">
                     {(post as Post).categories?.map((cat) => (

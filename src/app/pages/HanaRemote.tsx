@@ -7,6 +7,7 @@ import { HanaBloomOrb } from "../components/ui/hana-bloom-orb";
 import { RecipesMarquee } from "../components/RecipesMarquee";
 import { InlineImageHeader } from "../components/InlineImageHeader";
 import { CompassDashboard, Glyph, RI } from "../components/remote/CompassDashboard";
+import { Stats } from "../components/ui/statistics-card";
 
 const DEMO_URL = "https://calendly.com/matteowastaken/discoverycall";
 
@@ -738,6 +739,9 @@ export function HanaRemote() {
           </motion.p>
         </div>
       </section>
+
+      {/* THE PROOF — voice reaches patients where passive channels don't (was homepage §2) */}
+      <Stats />
 
       {/* WHAT HANA REMOTE DOES — question-framed feature blocks (Tile pattern) */}
       <section className="py-20 md:py-24 px-6 md:px-16 bg-[#f6f7fb]">

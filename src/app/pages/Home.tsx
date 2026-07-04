@@ -6,10 +6,11 @@ import { useTranslations, getLocale } from "../../lib/i18n";
 // Below-the-fold + heavy (Remotion + react-slick): code-split so they don't ship in the homepage critical bundle.
 const AgenticFrameworkCarousel = lazy(() => import("../components/AgenticFrameworkCarousel").then((m) => ({ default: m.AgenticFrameworkCarousel })));
 import { ComplianceSection } from "../components/ComplianceSection";
-import { FrontDeskBento } from "../components/FrontDeskBento";
+import { PatientEngagement } from "../components/PatientEngagement";
 import { CaseStudiesSection } from "../components/CaseStudiesSection";
 import { ProofBento } from "../components/ui/proof-bento";
 import { LoopDiagram } from "../components/ui/loop-diagram";
+import { WhyHana } from "../components/WhyHana";
 import { SafetyStack } from "../components/ui/safety-stack";
 const HowHanaWorks = lazy(() => import("../components/HowHanaWorks").then((m) => ({ default: m.HowHanaWorks })));
 import { IntegrationsSection } from "../components/IntegrationsSection";
@@ -65,6 +66,9 @@ export function Home({
         disabled={activeAgentId !== null && activeAgentId !== "hero-agent"}
       />
 
+      {/* §1b — WHY HANA (animated bar columns + comparison) */}
+      <WhyHana />
+
       {/* §2 — HOW IT WORKS */}
       <LoopDiagram />
 
@@ -87,8 +91,8 @@ export function Home({
         <AgenticFrameworkCarousel />
       </Suspense>
 
-      {/* §6c — EVERYTHING YOUR FRONT DESK CAN'T GET TO (feature bento) */}
-      <FrontDeskBento />
+      {/* §6c — PATIENT ENGAGEMENT (feature bento) */}
+      <PatientEngagement />
 
       {/* §7 — GO LIVE */}
       <InlineImageHeader />

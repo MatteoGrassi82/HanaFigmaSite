@@ -199,6 +199,47 @@ export interface Translations {
     bookDemo: string;
     builtByClinicians: string;
   };
+  // Why Hana comparison
+  whyHana: {
+    tag: string;
+    heading: string;
+    col1Label: string;
+    col1Stat: string;
+    col1StatLabel: string;
+    col1Name: string;
+    col1Desc: string;
+    col1Row1: string;
+    col1Row2: string;
+    col1Row3: string;
+    col1Row4: string;
+    col2Label: string;
+    col2Stat: string;
+    col2StatLabel: string;
+    col2Name: string;
+    col2Desc: string;
+    col2Row1: string;
+    col2Row2: string;
+    col2Row3: string;
+    col2Row4: string;
+    col3Label: string;
+    col3Stat: string;
+    col3StatLabel: string;
+    col3Name: string;
+    col3Desc: string;
+    col3Row1: string;
+    col3Row2: string;
+    col3Row3: string;
+    col3Row4: string;
+    col4Label: string;
+    col4Stat: string;
+    col4StatLabel: string;
+    col4Name: string;
+    col4Desc: string;
+    col4Row1: string;
+    col4Row2: string;
+    col4Row3: string;
+    col4Row4: string;
+  };
   // Integrations section
   integrations: {
     tag: string;
@@ -222,6 +263,49 @@ export interface Translations {
     wearablesBody: string;
     learnPartnerships: string;
     trustLine: string;
+  };
+  // Home — "Everything your front desk can't get to" bento
+  frontDeskBento: {
+    tag: string;
+    heading: string;
+    languagesHeadingPre: string;
+    languagesHeadingEm: string;
+    languagesHeadingPost: string;
+    languagesBody: string;
+    languagesLiveLabel: string;
+    languagesLangBadge: string;
+    languagesMsg1: string;
+    languagesMsg2: string;
+    languagesStatNumber: string;
+    languagesStatLabel: string;
+    clinicalHeadingPre: string;
+    clinicalHeadingEm: string;
+    clinicalBody: string;
+    intelHeadingPre: string;
+    intelHeadingEm: string;
+    intelHeadingPost: string;
+    intelRow1Label: string;
+    intelRow1Badge: string;
+    intelRow1Score: string;
+    intelRow2Label: string;
+    intelRow2Badge: string;
+    intelRow2Score: string;
+    intelRow3Label: string;
+    intelRow3Badge: string;
+    intelRow3Score: string;
+    dashboardHeadingEm: string;
+    dashboardHeadingPost: string;
+    dashboardStat1Label: string;
+    dashboardStat1Value: string;
+    dashboardStat2Label: string;
+    dashboardStat2Value: string;
+    dashboardStat3Label: string;
+    dashboardStat3Value: string;
+    partnershipHeadingPre: string;
+    partnershipHeadingEm: string;
+    partnershipRow1: string;
+    partnershipRow2: string;
+    partnershipRow3: string;
   };
   // Pages — Home SEO
   homeSeo: {
@@ -513,6 +597,46 @@ const en: Translations = {
     bookDemo: "Book a Demo",
     builtByClinicians: "Built by clinicians",
   },
+  whyHana: {
+    tag: "Patient outreach",
+    heading: "Why Hana?",
+    col1Label: "Other solution",
+    col1Stat: "42%",
+    col1StatLabel: "of callers hang up without getting help",
+    col1Name: "IVR & Phone Trees",
+    col1Desc: "Primarily used for call routing through touch-tone menu options",
+    col1Row1: "No intelligence — just routes calls",
+    col1Row2: "Patients give up before speaking to anyone",
+    col1Row3: "Nothing is documented",
+    col1Row4: "Can't handle \"can I reschedule?\"",
+    col2Label: "Other solution",
+    col2Stat: "70%",
+    col2StatLabel: "of patients don't engage",
+    col2Name: "Portals & SMS",
+    col2Desc: "Patients must log in or respond — most don't",
+    col2Row1: "Requires patients to take action first",
+    col2Row2: "One-way — can't hold a conversation",
+    col2Row3: "No clinical outcome documented",
+    col2Row4: "Can't be proactively initiated by the clinic",
+    col3Label: "Hana",
+    col3Stat: "85%",
+    col3StatLabel: "of patients reached",
+    col3Name: "3rd-gen Voice AI",
+    col3Desc: "Powered by clinical LLMs",
+    col3Row1: "Reads the chart before dialing",
+    col3Row2: "Holds the full conversation, handles objections",
+    col3Row3: "Documents the outcome automatically",
+    col3Row4: "Routes only what needs a human to your team",
+    col4Label: "Other solution",
+    col4Stat: "35%",
+    col4StatLabel: "of patients respond to a text",
+    col4Name: "SMS Reminders",
+    col4Desc: "One-way blasts — no conversation, no follow-through",
+    col4Row1: "Can't handle a reply or rescheduling request",
+    col4Row2: "No record of whether the patient was actually reached",
+    col4Row3: "Nothing documented in the chart",
+    col4Row4: "Ignored by most patients over 60",
+  },
   integrations: {
     tag: "Integrations",
     heading: "Built into the systems you",
@@ -535,6 +659,48 @@ const en: Translations = {
     wearablesBody: "Apple Watch, Oura, Fitbit, Garmin — Hana connects to the wearables and devices your patients already use and reads the data via API. No new hardware to ship, no app to download.",
     learnPartnerships: "Learn about partnerships",
     trustLine: "500+ healthcare practices, connected across their EHR, phone system, and tools.",
+  },
+  frontDeskBento: {
+    tag: "Patient engagement",
+    heading: "Every patient conversation, handled",
+    languagesHeadingPre: "Speaks",
+    languagesHeadingEm: "every",
+    languagesHeadingPost: "patient's language",
+    languagesBody: "Every call and message — detected, answered, switched mid-conversation. No interpreter line, no wait.",
+    languagesLiveLabel: "Live call · auto-detected",
+    languagesLangBadge: "Español",
+    languagesMsg1: "¿Puedo adelantar mi cita de la próxima semana?",
+    languagesMsg2: "Claro, Sofía — martes 9:40 o jueves 15:00, ¿cuál le viene mejor?",
+    languagesStatNumber: "30+",
+    languagesStatLabel: "languages, one agent",
+    clinicalHeadingPre: "Our own clinical AI, watched on",
+    clinicalHeadingEm: "every call.",
+    clinicalBody: "Models · real-time eval · guardrails · escalation",
+    intelHeadingPre: "Intelligence on",
+    intelHeadingEm: "every",
+    intelHeadingPost: "conversation",
+    intelRow1Label: "Refill · M. Alvarez",
+    intelRow1Badge: "Positive",
+    intelRow1Score: "98",
+    intelRow2Label: "Recall · J. Okafor",
+    intelRow2Badge: "Neutral",
+    intelRow2Score: "95",
+    intelRow3Label: "Prior auth · L. Tran",
+    intelRow3Badge: "Concern",
+    intelRow3Score: "91",
+    dashboardHeadingEm: "Your",
+    dashboardHeadingPost: "dashboard, live",
+    dashboardStat1Label: "Calls today",
+    dashboardStat1Value: "142",
+    dashboardStat2Label: "Avg QA",
+    dashboardStat2Value: "96",
+    dashboardStat3Label: "Recovered",
+    dashboardStat3Value: "18",
+    partnershipHeadingPre: "A partnership,",
+    partnershipHeadingEm: "not a purchase",
+    partnershipRow1: "Katie R. — your named success lead",
+    partnershipRow2: "Live in days, not months",
+    partnershipRow3: "Weekly protocol tuning early on",
   },
   homeSeo: {
     title: "Hana Voice AI | The calls your EHR can't make",
@@ -830,6 +996,46 @@ const it: Translations = {
     bookDemo: "Chiedici una Demo",
     builtByClinicians: "Costruito da clinici",
   },
+  whyHana: {
+    tag: "Outreach pazienti",
+    heading: "Perché Hana?",
+    col1Label: "Altra soluzione",
+    col1Stat: "42%",
+    col1StatLabel: "dei chiamanti riattacca senza ottenere aiuto",
+    col1Name: "IVR e Alberi telefonici",
+    col1Desc: "Usati principalmente per instradare le chiamate tramite menu a toni",
+    col1Row1: "Nessuna intelligenza — instrada soltanto le chiamate",
+    col1Row2: "I pazienti si arrendono prima di parlare con qualcuno",
+    col1Row3: "Nulla viene documentato",
+    col1Row4: "Non gestisce «posso spostare l'appuntamento?»",
+    col2Label: "Altra soluzione",
+    col2Stat: "70%",
+    col2StatLabel: "dei pazienti non interagisce",
+    col2Name: "Portali e SMS",
+    col2Desc: "I pazienti devono accedere o rispondere — la maggior parte non lo fa",
+    col2Row1: "Richiede che sia il paziente a fare il primo passo",
+    col2Row2: "Unidirezionale — non può sostenere una conversazione",
+    col2Row3: "Nessun esito clinico documentato",
+    col2Row4: "Non può essere avviato proattivamente dalla clinica",
+    col3Label: "Hana",
+    col3Stat: "85%",
+    col3StatLabel: "dei pazienti raggiunti",
+    col3Name: "Voice AI di 3a generazione",
+    col3Desc: "Alimentata da LLM clinici",
+    col3Row1: "Legge la cartella prima di chiamare",
+    col3Row2: "Gestisce l'intera conversazione, anche le obiezioni",
+    col3Row3: "Documenta automaticamente l'esito",
+    col3Row4: "Trasferisce al team solo ciò che richiede un umano",
+    col4Label: "Altra soluzione",
+    col4Stat: "35%",
+    col4StatLabel: "dei pazienti risponde a un SMS",
+    col4Name: "Promemoria SMS",
+    col4Desc: "Messaggi unidirezionali — nessuna conversazione, nessun seguito",
+    col4Row1: "Non gestisce risposte o richieste di spostamento",
+    col4Row2: "Nessuna traccia di chi è stato effettivamente raggiunto",
+    col4Row3: "Nulla documentato nella cartella",
+    col4Row4: "Ignorato dalla maggior parte dei pazienti over 60",
+  },
   integrations: {
     tag: "Integrazioni",
     heading: "Si integra con i sistemi che",
@@ -852,6 +1058,49 @@ const it: Translations = {
     wearablesBody: "Apple Watch, Oura, Fitbit, Garmin — Hana si collega ai wearable e ai dispositivi che i pazienti già usano e ne legge i dati via API. Nessun nuovo dispositivo da spedire, nessuna app da scaricare.",
     learnPartnerships: "Scopri le opportunità di partnership",
     trustLine: "Oltre 500 studi sanitari, connessi tra EHR, centralino e strumenti quotidiani.",
+  },
+  // NOTE: mirrored from the English copy as a placeholder — needs real Italian translation.
+  frontDeskBento: {
+    tag: "Patient engagement",
+    heading: "Every patient conversation, handled",
+    languagesHeadingPre: "Speaks",
+    languagesHeadingEm: "every",
+    languagesHeadingPost: "patient's language",
+    languagesBody: "Every call and message — detected, answered, switched mid-conversation. No interpreter line, no wait.",
+    languagesLiveLabel: "Live call · auto-detected",
+    languagesLangBadge: "Español",
+    languagesMsg1: "¿Puedo adelantar mi cita de la próxima semana?",
+    languagesMsg2: "Claro, Sofía — martes 9:40 o jueves 15:00, ¿cuál le viene mejor?",
+    languagesStatNumber: "30+",
+    languagesStatLabel: "languages, one agent",
+    clinicalHeadingPre: "Our own clinical AI, watched on",
+    clinicalHeadingEm: "every call.",
+    clinicalBody: "Models · real-time eval · guardrails · escalation",
+    intelHeadingPre: "Intelligence on",
+    intelHeadingEm: "every",
+    intelHeadingPost: "conversation",
+    intelRow1Label: "Refill · M. Alvarez",
+    intelRow1Badge: "Positive",
+    intelRow1Score: "98",
+    intelRow2Label: "Recall · J. Okafor",
+    intelRow2Badge: "Neutral",
+    intelRow2Score: "95",
+    intelRow3Label: "Prior auth · L. Tran",
+    intelRow3Badge: "Concern",
+    intelRow3Score: "91",
+    dashboardHeadingEm: "Your",
+    dashboardHeadingPost: "dashboard, live",
+    dashboardStat1Label: "Calls today",
+    dashboardStat1Value: "142",
+    dashboardStat2Label: "Avg QA",
+    dashboardStat2Value: "96",
+    dashboardStat3Label: "Recovered",
+    dashboardStat3Value: "18",
+    partnershipHeadingPre: "A partnership,",
+    partnershipHeadingEm: "not a purchase",
+    partnershipRow1: "Katie R. — your named success lead",
+    partnershipRow2: "Live in days, not months",
+    partnershipRow3: "Weekly protocol tuning early on",
   },
   homeSeo: {
     title: "Hana Voice AI | Le chiamate che il tuo EHR non può fare",

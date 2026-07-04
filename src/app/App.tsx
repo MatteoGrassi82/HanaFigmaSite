@@ -22,6 +22,7 @@ const RadialOrbitalTimelineDemo = lazy(() => import("./pages/Timeline").then((m)
 const Contact = lazy(() => import("./pages/Contact").then((m) => ({ default: m.Contact })));
 const HanaContact = lazy(() => import("./pages/HanaContact").then((m) => ({ default: m.HanaContact })));
 const HanaRemote = lazy(() => import("./pages/HanaRemote").then((m) => ({ default: m.HanaRemote })));
+const HanaSleep = lazy(() => import("./pages/HanaSleep").then((m) => ({ default: m.HanaSleep })));
 const TestWebhook = lazy(() => import("./components/TestWebhook").then((m) => ({ default: m.TestWebhook })));
 const Terms = lazy(() => import("./pages/Terms").then((m) => ({ default: m.Terms })));
 const AUP = lazy(() => import("./pages/AUP").then((m) => ({ default: m.AUP })));
@@ -38,6 +39,8 @@ const Whitepapers = lazy(() => import("./pages/Whitepapers").then((m) => ({ defa
 const Demo = lazy(() => import("./pages/Demo").then((m) => ({ default: m.Demo })));
 const Preview = lazy(() => import("./pages/Preview").then((m) => ({ default: m.Preview })));
 const NotFound = lazy(() => import("./pages/NotFound").then((m) => ({ default: m.NotFound })));
+const BentoShowcase = lazy(() => import("./pages/BentoShowcase").then((m) => ({ default: m.BentoShowcase })));
+const ProofShowcase = lazy(() => import("./pages/ProofShowcase").then((m) => ({ default: m.ProofShowcase })));
 
 // Configuration
 const VAPI_PUBLIC_KEY = "5dfc26c6-90a6-4efe-907b-7bd0d690dc6e";
@@ -261,6 +264,7 @@ function AppContent() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/hana-contact" element={<HanaContact />} />
               <Route path="/hana-remote" element={<HanaRemote />} />
+              <Route path="/hana-sleep" element={<HanaSleep />} />
               <Route path="/test-webhook" element={<TestWebhook />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/aup" element={<AUP />} />
@@ -274,6 +278,8 @@ function AppContent() {
               <Route path="/whitepapers/adhd-intake" element={<WhitepaperADHD />} />
               <Route path="/demo" element={<Demo />} />
               <Route path="/preview" element={<Preview />} />
+              <Route path="/bento" element={<BentoShowcase />} />
+              <Route path="/proof" element={<ProofShowcase />} />
               {!isItalian && (
                 <Route path="/case-studies" element={
                   <CaseStudies

@@ -41,6 +41,7 @@ const STATIC_ROUTES = [
   '/contact',
   '/hana-contact',
   '/hana-remote',
+  '/hana-sleep',
   '/terms',
   '/aup',
   '/blog',

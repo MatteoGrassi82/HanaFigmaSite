@@ -41,3 +41,6 @@ content-drafts/
 # ElevenLabs API key (local only)
 .env.elevenlabs
 .eleven-deploy/
+
+# Sleep microsite build output
+dist-sleep/
