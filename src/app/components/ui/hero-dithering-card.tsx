@@ -73,9 +73,9 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
             CSS `transparent` produces; makes hero+loop read as one field. */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[55vh] md:h-[60vh]"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[80vh]"
           style={{
-            background: "linear-gradient(to bottom, rgba(0,18,47,0) 0%, rgba(0,18,47,0.15) 35%, rgba(0,18,47,0.6) 65%, #00122F 100%)",
+            background: "linear-gradient(to bottom, rgba(0,18,47,0) 0%, rgba(0,18,47,0.02) 25%, rgba(0,18,47,0.07) 45%, rgba(0,18,47,0.18) 60%, rgba(0,18,47,0.45) 75%, rgba(0,18,47,0.82) 88%, #00122F 100%)",
           }}
         />
 
