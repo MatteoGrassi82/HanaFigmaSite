@@ -1,14 +1,14 @@
 import { lazy, Suspense } from "react";
 import { CTASection } from "../components/ui/hero-dithering-card";
-import { Stats } from "../components/ui/statistics-card";
 import { InlineImageHeader } from "../components/InlineImageHeader";
 import { LiveDemoSection } from "../components/LiveDemoSection";
 import { useTranslations, getLocale } from "../../lib/i18n";
 // Below-the-fold + heavy (Remotion + react-slick): code-split so they don't ship in the homepage critical bundle.
 const AgenticFrameworkCarousel = lazy(() => import("../components/AgenticFrameworkCarousel").then((m) => ({ default: m.AgenticFrameworkCarousel })));
 import { ComplianceSection } from "../components/ComplianceSection";
+import { FrontDeskBento } from "../components/FrontDeskBento";
 import { CaseStudiesSection } from "../components/CaseStudiesSection";
-import { ClientFeedback } from "../components/ui/testimonial";
+import { ProofBento } from "../components/ui/proof-bento";
 import { LoopDiagram } from "../components/ui/loop-diagram";
 import { SafetyStack } from "../components/ui/safety-stack";
 const HowHanaWorks = lazy(() => import("../components/HowHanaWorks").then((m) => ({ default: m.HowHanaWorks })));
@@ -65,11 +65,10 @@ export function Home({
         disabled={activeAgentId !== null && activeAgentId !== "hero-agent"}
       />
 
-      {/* §2 — ACTIVE vs PASSIVE (patients-reached chart) — directly below hero */}
-      <Stats />
-
-      {/* §3 — HOW IT WORKS (the closed loop) */}
-      <LoopDiagram />
+      {/* §2 — HOW IT WORKS — negative margin pulls the section up to erase the HTML boundary seam */}
+      <div className="relative -mt-4 z-10">
+        <LoopDiagram />
+      </div>
 
       {/* §4 — LIVE DEMO (elevated — best voice proof) */}
       <LiveDemoSection
@@ -79,8 +78,8 @@ export function Home({
         handleEndWebCall={handleEndWebCall}
       />
 
-      {/* §5 — PROOF (testimonials) */}
-      <ClientFeedback />
+      {/* §5 — PROOF (customer proof bento) */}
+      <ProofBento />
 
       {/* §6 — WORKFLOWS GRID */}
       <RecipesMarquee />
@@ -89,6 +88,9 @@ export function Home({
       <Suspense fallback={null}>
         <AgenticFrameworkCarousel />
       </Suspense>
+
+      {/* §6c — EVERYTHING YOUR FRONT DESK CAN'T GET TO (feature bento) */}
+      <FrontDeskBento />
 
       {/* §7 — GO LIVE */}
       <InlineImageHeader />
