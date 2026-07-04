@@ -69,6 +69,18 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
           </div>
         </Suspense>
 
+        {/* Bottom fade — melts the hero's dithered field into the navy loop
+            section below so the two blend instead of hard-cutting. Routed
+            through periwinkle (not straight to navy) to avoid a grey midtone. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-56 md:h-80"
+          style={{
+            background:
+              "linear-gradient(to bottom, transparent 0%, rgba(0,18,47,0.6) 65%, #00122F 100%)",
+          }}
+        />
+
         {/* Content Container */}
         <div className="relative z-10 container mx-auto px-6 flex flex-col justify-center pointer-events-none">
 
