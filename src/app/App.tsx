@@ -11,7 +11,6 @@ function ScrollToTop() {
 import { Navbar } from "./components/Navbar";
 import { AnnouncementBar } from "./components/AnnouncementBar";
 import { getLocale } from "../lib/i18n";
-import { VideoAskWidget } from "./components/VideoAskWidget";
 import { Home } from "./pages/Home";
 
 // Route components are code-split — each page is fetched on demand so the initial
@@ -242,7 +241,6 @@ function AppContent() {
 
           {!isItalian && <AnnouncementBar />}
           <Navbar />
-          <VideoAskWidget />
 
           <main>
             <Suspense fallback={<div className="min-h-screen" aria-busy="true" />}>
