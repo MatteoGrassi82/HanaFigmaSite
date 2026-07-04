@@ -10,6 +10,12 @@ import { useTranslations } from "../../../lib/i18n";
 
 const VERT = `attribute vec2 p;void main(){gl_Position=vec4(p,0,1);}`
 
+// Brand palette (from loop-diagram constants):
+//   navy  #00122F  vec3(0,     .071, .184)
+//   blue  #3B82F6  vec3(.231,  .510, .965)
+//   sky   #7CC4F0  vec3(.486,  .769, .941)
+//   peach #FFC091  vec3(1.,    .753, .569)  — warm pulse accent
+//   rail  #1C3A60  vec3(.110,  .227, .376)  — mid navy-blue
 const FRAG = `
 precision highp float;
 uniform vec2 R;
@@ -41,21 +47,31 @@ void main(){
   vec3 rd=normalize(vec3(uv,1));
   vec3 col=vec3(0);
   float t=0.;
+
+  // Brand colors
+  vec3 navy=vec3(0.,.071,.184);
+  vec3 blue=vec3(.231,.510,.965);
+  vec3 sky=vec3(.486,.769,.941);
+  vec3 peach=vec3(1.,.753,.569);
+  vec3 rail=vec3(.110,.227,.376);
+
   for(int i=0;i<40;i++){
     vec3 p=ro+rd*t;
     float d=map(p);
     if(d>0.){
-      // blue → teal → indigo cycling palette
-      vec3 c=.5+.5*cos(T*.28+p.y*1.4+vec3(0.,.85,1.75));
+      // Blend blue → sky driven by time + position
+      float bs=.5+.5*sin(T*.3+p.y*1.4+p.x*.8);
+      vec3 c=mix(blue,sky,bs);
+      // Add peach warmth as a subtle accent pulse
+      float warm=max(0.,sin(T*.18+p.x*1.8)*.5+.5-.55)*2.;
+      c=mix(c,peach,warm*.12);
       col+=c*d*.42;
     }
     t+=.08;
   }
-  // #00122F = vec3(0, 18/255, 47/255)
-  vec3 navy=vec3(0.,.071,.184);
-  col=mix(navy,col+navy*.25,min(length(col)*1.9,1.));
+  col=mix(navy,col+rail*.3,min(length(col)*1.9,1.));
   col=pow(clamp(col,0.,1.),vec3(.82));
-  // fade bottom 30% to navy — seamless blend into the loop section
+  // fade bottom 30% to navy — seamless into the loop section
   float yf=gl_FragCoord.y/R.y;
   col=mix(navy,col,smoothstep(0.,.30,yf));
   gl_FragColor=vec4(col,1);
