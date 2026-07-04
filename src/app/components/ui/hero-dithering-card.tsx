@@ -48,10 +48,13 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        {/* Background Gradients (Base Layer) */}
-        <div className="absolute inset-0 bg-slate-50 z-0">
-           {/* Subtle static gradient to ensure depth if shader loads slow */}
-           <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[120%] h-[80%] rounded-[100%] bg-blue-200/40 blur-[120px]" />
+        {/* Background — gradient from slate-50 → navy so mix-blend-multiply
+            on the dithering shader naturally darkens toward the loop section */}
+        <div
+          className="absolute inset-0 z-0"
+          style={{ background: "linear-gradient(to bottom, #f8fafc 0%, #00122F 100%)" }}
+        >
+          <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[120%] h-[80%] rounded-[100%] bg-blue-200/40 blur-[120px]" />
         </div>
 
         {/* Animated Shader Background */}

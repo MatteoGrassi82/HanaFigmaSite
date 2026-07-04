@@ -65,17 +65,8 @@ export function Home({
         disabled={activeAgentId !== null && activeAgentId !== "hero-agent"}
       />
 
-      {/* §2 — HOW IT WORKS
-          Wrapper overlaps 128px into the hero (no bg — transparent, shows dithering).
-          The absolute gradient div at the top fades hero → navy across that overlap zone. */}
-      <div className="relative -mt-32 pt-32 z-10">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 z-20 h-32"
-          style={{ background: "linear-gradient(to bottom, rgba(0,18,47,0) 0%, #00122F 100%)" }}
-        />
-        <LoopDiagram />
-      </div>
+      {/* §2 — HOW IT WORKS */}
+      <LoopDiagram />
 
       {/* §4 — LIVE DEMO (elevated — best voice proof) */}
       <LiveDemoSection
