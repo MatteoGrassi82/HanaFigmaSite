@@ -69,6 +69,16 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
           </div>
         </Suspense>
 
+        {/* Bottom fade — rgba(0,18,47,0)→#00122F avoids the grey midtone that
+            CSS `transparent` produces; makes hero+loop read as one field. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-64 md:h-96"
+          style={{
+            background: "linear-gradient(to bottom, rgba(0,18,47,0) 0%, #00122F 100%)",
+          }}
+        />
+
         {/* Content Container */}
         <div className="relative z-10 container mx-auto px-6 flex flex-col justify-center pointer-events-none">
 
