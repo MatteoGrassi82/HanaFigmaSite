@@ -38,6 +38,7 @@ const PEACH = "#FFC091"; // warm brand accent — the one thing in motion (pulse
 const CANVAS_TOP = "#00122F"; // matches the section field — no card seam
 const CANVAS_BOT = "#00122F"; // pure brand navy, same as Reasoning Engine
 const FIELD = "#00122F"; // section field — identical to Reasoning Engine bg
+
 const RAIL_REST = "#1C3A60"; // resting rail — muted navy-blue (visible on dark)
 const INK = "#FFFFFF"; // primary text — white
 const INK_SOFT = "#9DB2CE"; // muted text — cool light slate
