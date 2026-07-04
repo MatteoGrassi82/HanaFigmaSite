@@ -54,9 +54,9 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
             className="absolute w-[55%] h-[65%] left-[38%] -bottom-[20%] rounded-full blur-[80px] bg-[#7CC4F0]/22"
             style={{ animation: "orb2 14s ease-in-out infinite" }}
           />
-          {/* Peach orb — #FFC091, subtle warm accent */}
+          {/* Sky orb — top-right accent */}
           <div
-            className="absolute w-[40%] h-[50%] -right-[5%] -top-[8%] rounded-full blur-[80px] bg-[#FFC091]/12"
+            className="absolute w-[40%] h-[50%] -right-[5%] -top-[8%] rounded-full blur-[80px] bg-[#7CC4F0]/18"
             style={{ animation: "orb3 9s ease-in-out infinite" }}
           />
         </div>
