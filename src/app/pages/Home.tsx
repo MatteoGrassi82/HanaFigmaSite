@@ -65,8 +65,10 @@ export function Home({
         disabled={activeAgentId !== null && activeAgentId !== "hero-agent"}
       />
 
-      {/* §2 — HOW IT WORKS — negative margin pulls the section up to erase the HTML boundary seam */}
-      <div className="relative -mt-4 z-10">
+      {/* §2 — HOW IT WORKS
+          -mt-32 overlaps 128px into the hero; pt-32 + bg-[#00122F] fills that
+          overlap with solid navy so the hero gradient dissolves into it cleanly. */}
+      <div className="relative -mt-32 pt-32 z-10 bg-[#00122F]">
         <LoopDiagram />
       </div>
 
