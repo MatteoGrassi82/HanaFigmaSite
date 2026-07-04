@@ -69,19 +69,6 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
           </div>
         </Suspense>
 
-        {/* Bottom fade — rgba(0,18,47,0)→#00122F avoids the grey midtone that
-            CSS `transparent` produces; makes hero+loop read as one field. */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[80vh]"
-          style={{
-            background: "linear-gradient(to bottom, rgba(0,18,47,0) 0%, rgba(0,18,47,0.02) 25%, rgba(0,18,47,0.07) 45%, rgba(0,18,47,0.18) 60%, rgba(0,18,47,0.45) 75%, rgba(0,18,47,0.82) 88%, #00122F 100%)",
-          }}
-        />
-
-        {/* Seam killer — solid navy strip that guarantees no sub-pixel gap at the section boundary */}
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-3 bg-[#00122F]" />
-
         {/* Content Container */}
         <div className="relative z-10 container mx-auto px-6 flex flex-col justify-center pointer-events-none">
 
