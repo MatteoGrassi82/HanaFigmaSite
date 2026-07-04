@@ -361,8 +361,8 @@ export function LoopDiagram({
         }}
       />
       )}
-      <div className="container relative z-10 mx-auto px-4 md:px-8">
-        <div ref={ref} className="relative mx-auto max-w-5xl px-4 py-4 sm:px-6 md:px-14 md:py-6">
+      <div className="relative z-10 mx-auto px-4 md:px-8">
+        <div ref={ref} className="relative mx-auto max-w-7xl px-4 py-4 sm:px-6 md:px-14 md:py-6">
           {/* subtle dot-grid texture */}
           <div
             aria-hidden

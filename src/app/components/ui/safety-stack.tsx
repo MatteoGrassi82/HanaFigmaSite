@@ -221,8 +221,8 @@ export function SafetyStack() {
         className="pointer-events-none absolute left-1/2 top-[-200px] z-0 h-[800px] w-[800px] -translate-x-1/2"
         style={{ background: "radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%)" }}
       />
-      <div className="container relative z-10 mx-auto px-4 md:px-8">
-        <div ref={ref} className="relative mx-auto max-w-5xl">
+      <div className="relative z-10 mx-auto px-4 md:px-8">
+        <div ref={ref} className="relative mx-auto max-w-7xl">
           <div
             aria-hidden
             className="pointer-events-none absolute inset-0"

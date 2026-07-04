@@ -97,7 +97,7 @@ export function InlineImageHeader() {
   const gs = t.getStarted;
   return (
     <section className="py-16 md:py-[100px] px-6 md:px-10 bg-[#00122F] text-white font-['DM_Sans']">
-      <div className="max-w-[1200px] mx-auto">
+      <div className="max-w-7xl mx-auto">
 
         {/* Header */}
         <div className="text-center mb-12 md:mb-[72px]">

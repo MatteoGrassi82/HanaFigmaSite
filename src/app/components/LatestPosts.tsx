@@ -55,7 +55,7 @@ export function LatestPosts() {
 
   return (
     <section className="bg-white py-20 md:py-28">
-      <div className="container mx-auto px-4 md:px-8">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="mb-12 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
           <div>
             <p className="mb-3 text-[11px] font-semibold uppercase tracking-[2.5px] text-slate-400">

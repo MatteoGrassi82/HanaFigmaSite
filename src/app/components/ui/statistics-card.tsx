@@ -55,7 +55,7 @@ const Stats = () => {
   return (
     <section className="py-20 md:py-32 w-full px-4 md:px-6 bg-[#F5F5F5]">
       <style>{css}</style>
-      <div className="container mx-auto">
+      <div className="max-w-7xl mx-auto">
         <div className="mx-auto max-w-2xl text-center mb-10 md:mb-16">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-normal text-slate-900 dark:text-white mb-6 font-serif">
             {t.headingLine1} <br className="hidden md:inline" />
@@ -65,7 +65,7 @@ const Stats = () => {
             {t.subheading}
           </p>
         </div>
-        <div className="relative mx-auto mt-8 md:mt-20 flex h-[300px] md:h-[500px] max-w-4xl items-center justify-center gap-2 md:gap-8">
+        <div className="relative mx-auto mt-8 md:mt-20 flex h-[300px] md:h-[500px] max-w-7xl items-center justify-center gap-2 md:gap-8">
           {[
             { value: 15, label: t.barPatientPortals, delay: 0.2 },
             { value: 20, label: t.barHealthApps, delay: 0.4 },
