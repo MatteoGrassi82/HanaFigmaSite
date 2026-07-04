@@ -42,7 +42,7 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
   };
 
   return (
-    <section className="relative w-full flex justify-center items-center bg-slate-50">
+    <section className="relative w-full flex justify-center items-center bg-[#00122F]">
       <div 
         className="w-full relative overflow-hidden min-h-[90dvh] md:min-h-[850px] flex flex-col items-center justify-center transition-colors duration-500 pt-10 pb-20 md:py-0"
         onMouseEnter={() => setIsHovered(true)}
@@ -78,6 +78,9 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
             background: "linear-gradient(to bottom, rgba(0,18,47,0) 0%, rgba(0,18,47,0.02) 25%, rgba(0,18,47,0.07) 45%, rgba(0,18,47,0.18) 60%, rgba(0,18,47,0.45) 75%, rgba(0,18,47,0.82) 88%, #00122F 100%)",
           }}
         />
+
+        {/* Seam killer — solid navy strip that guarantees no sub-pixel gap at the section boundary */}
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-3 bg-[#00122F]" />
 
         {/* Content Container */}
         <div className="relative z-10 container mx-auto px-6 flex flex-col justify-center pointer-events-none">
