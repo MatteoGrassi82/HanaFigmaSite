@@ -36,7 +36,8 @@ export function FrontDeskBento() {
                   <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block" />
                   {f.languagesLiveLabel}
                 </span>
-                <span className="text-[10.5px] font-semibold text-[#5b76d9] bg-white border border-[#e2e6f4] rounded-full px-2 py-1">
+                <span className="inline-flex items-center gap-1 text-[10.5px] font-semibold text-[#5b76d9] bg-white border border-[#e2e6f4] rounded-full px-2 py-1">
+                  <span className="text-[12px] leading-none">🇪🇸</span>
                   {f.languagesLangBadge}
                 </span>
               </div>
@@ -53,6 +54,13 @@ export function FrontDeskBento() {
             </div>
 
             <p className="text-[14.5px] leading-[1.6] text-[#64748b]">{f.languagesBody}</p>
+
+            {/* language flags */}
+            <div className="flex flex-wrap items-center gap-1.5 text-[19px] leading-none">
+              {["🇺🇸", "🇪🇸", "🇨🇳", "🇻🇳", "🇸🇦", "🇧🇷", "🇫🇷", "🇭🇹", "🇰🇷", "🇮🇳"].map((flag) => (
+                <span key={flag}>{flag}</span>
+              ))}
+            </div>
 
             <div className="mt-auto flex items-baseline gap-2 border-t border-[#e8ebf2] pt-3.5">
               <span className="font-serif text-[26px] leading-none text-[#00122F]">{f.languagesStatNumber}</span>
