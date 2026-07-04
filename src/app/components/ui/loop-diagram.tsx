@@ -321,14 +321,14 @@ export function LoopDiagram({
     heading:
       copy?.heading ??
       t(
-        "It knows the patient before it dials. Documents the call after.",
-        "Conosce il paziente prima di chiamare. Documenta la chiamata dopo.",
+        "Read. Engage. Document. Every call.",
+        "Legge. Chiama. Documenta. Per ogni paziente.",
       ),
     sub:
       copy?.sub ??
       t(
-        "Not an answering service. Hana works the whole call — chart to note — and routes only what needs a human to your team.",
-        "Non una semplice segreteria telefonica. Hana gestisce l'intera chiamata — dalla cartella alla nota — e gira al tuo team solo ciò che richiede una persona.",
+        "Hana works the whole loop — so your front desk is free for the patients standing in front of them.",
+        "Hana gestisce l'intero ciclo — così la tua segreteria è libera per i pazienti che ha davanti.",
       ),
     center:
       copy?.center ??
