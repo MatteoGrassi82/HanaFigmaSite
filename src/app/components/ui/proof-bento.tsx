@@ -1,5 +1,7 @@
 import { useRef } from "react";
 import { type Variants } from "motion/react";
+import { Link } from "react-router";
+import { ArrowRight } from "lucide-react";
 import { TimelineContent } from "./timeline-animation";
 
 /* ── Proof bento — ported from the ShipTime "ClientFeedback" layout (two
@@ -129,6 +131,8 @@ type Tile =
   | { k: "gauge"; span: string; bg: string; v: string; suf: string; label: React.ReactNode }
   | { k: "video"; span: string; caption: string; img: string }
   | { k: "quote"; span: string; company: string; quote: string; name: string; role: string; img: string | null }
+  | { k: "quoteMini"; span: string; quote: string }
+  | { k: "cta"; span: string; text: string; to: string; img: string }
   | { k: "label"; span: string; text: string }
   | { k: "empty"; span: string };
 
@@ -138,21 +142,23 @@ const NAVY2 = "bg-[#0a2143]";
 const TILES: Tile[] = [
   // ── cluster 1 ──
   { k: "statDecor", span: "col-span-1 lg:col-span-3", bg: NAVY, decor: "bar", v: "90", suf: "%", label: <>fewer missed<br />patient calls</> },
-  { k: "video", span: "col-span-1 lg:col-span-3", caption: "Customer story", img: AV.hospital },
+  { k: "video", span: "col-span-1 lg:col-span-3", caption: "Dr. G. Oprandi · Orthopedic Surgeon", img: AV.oprandi },
   { k: "quote", span: "col-span-2 lg:col-span-6 lg:row-span-2", company: "Monitoring", name: "Archie Defillo, MD", role: "Neuroscience & Sleep/Behavioral Health Innovator", img: AV.archie,
     quote: "Designed for both Remote Patient Monitoring (RPM) and Remote Therapeutic Monitoring (RTM) programs, enabling scalable, intelligent patient engagement while improving adherence, streamlining clinical operations, and lowering the cost of care." },
-  { k: "label", span: "col-span-1 lg:col-span-3", text: "Results" },
+  { k: "quoteMini", span: "col-span-1 lg:col-span-3",
+    quote: "Getting elderly patients ready for surgery over the phone is nearly impossible. HANA reaches them, walks them through everything, and flags whoever still isn't ready so we can step in." },
   { k: "gauge", span: "col-span-1 lg:col-span-3", bg: NAVY2, v: "89", suf: "%", label: <>less time to<br />respond</> },
   // ── cluster 2 ──
-  { k: "quote", span: "col-span-2 lg:col-span-6 lg:row-span-2", company: "Care Coordination", name: "Dana Alvarez, RN", role: "Care Coordination Lead", img: AV.fakhrudin,
-    quote: "Their Voice AI conducts standardized screening tools, adapts questions based on patient responses, and captures 340% more clinical data while maintaining protocol validity." },
-  { k: "video", span: "col-span-1 lg:col-span-3", caption: "Inside the platform", img: AV.oprandi },
+  { k: "quote", span: "col-span-2 lg:col-span-6 lg:row-span-2", company: "Care Coordination", name: "Fakhrudin Mohamed, MD", role: "Board-Certified Physician", img: AV.fakhrudin,
+    quote: "In care coordination the biggest bottleneck was always the touch-time documentation. Hana handles the monthly calls, captures the conversation in structured notes that go straight into the chart, and flags anyone who needs a same-day callback." },
+  { k: "cta", span: "col-span-1 lg:col-span-3", text: "See all case studies", to: "/case-studies", img: AV.hospital },
   { k: "statDecor", span: "col-span-1 lg:col-span-3", bg: NAVY, decor: "squares", v: "3", suf: "x", label: <>more slots<br />filled</> },
   { k: "statDecor", span: "col-span-1 lg:col-span-3", bg: NAVY2, decor: "squares", v: "30", suf: "%", label: <>fewer<br />no-shows</> },
-  { k: "video", span: "col-span-1 lg:col-span-3", caption: "A clinician's take", img: AV.lorri },
+  { k: "video", span: "col-span-1 lg:col-span-3", caption: "Lorri Hanes · Shoorah", img: AV.lorri },
   { k: "statDecor", span: "col-span-1 lg:col-span-3", bg: NAVY, decor: "circle", v: "2", suf: "x", label: <>the volume,<br />same headcount</> },
-  { k: "video", span: "col-span-1 lg:col-span-3", caption: "Behind the front desk", img: AV.katie },
-  { k: "empty", span: "col-span-1 lg:col-span-3" },
+  { k: "video", span: "col-span-1 lg:col-span-3", caption: "Katie Murphy Psy.D. · Founder of Penry", img: AV.katie },
+  { k: "quoteMini", span: "col-span-1 lg:col-span-3",
+    quote: "The Hana team understood that quality assessments require both consistency and flexibility. Their Voice AI conducts standardized screening tools, adapts questions based on patient responses, and captures 340% more clinical data while maintaining protocol validity." },
   { k: "statDecor", span: "col-span-1 lg:col-span-3", bg: NAVY2, decor: "rects", v: "11", suf: "%", label: <>higher show<br />rate</> },
 ];
 
@@ -184,17 +190,37 @@ function Cell({ t, i, timelineRef }: { t: Tile; i: number; timelineRef: React.Re
   if (t.k === "quote")
     return (
       <TimelineContent {...tc(`${t.span} flex flex-col justify-between p-8 bg-[#eef4fc]`)}>
-        <div>
-          <div className="font-serif text-2xl leading-none" style={{ color: INK }}>{t.company}</div>
-          <p className="mt-7 text-[17px] leading-relaxed md:text-lg" style={{ color: INK }}>&ldquo;{t.quote}&rdquo;</p>
-        </div>
-        <div className="mt-8 flex items-center gap-4">
+        <div className="flex items-center gap-4">
           <Duotone src={t.img} />
           <div>
-            <div className="text-sm font-semibold" style={{ color: INK }}>{t.name}</div>
+            <div className="font-serif text-2xl leading-tight" style={{ color: INK }}>{t.name}</div>
             <div className="text-[13px]" style={{ color: SUB }}>{t.role}</div>
           </div>
         </div>
+        <p className="mt-6 flex-1 text-[19px] leading-relaxed md:text-xl" style={{ color: INK }}>&ldquo;{t.quote}&rdquo;</p>
+        <div className="mt-6 inline-flex w-fit items-center rounded-full bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-wide" style={{ color: SUB }}>
+          {t.company}
+        </div>
+      </TimelineContent>
+    );
+  if (t.k === "quoteMini")
+    return (
+      <TimelineContent {...tc(`${t.span} flex flex-col justify-center p-6 bg-[#eef4fc]`)}>
+        <p className="text-[15px] leading-relaxed" style={{ color: INK }}>&ldquo;{t.quote}&rdquo;</p>
+      </TimelineContent>
+    );
+  if (t.k === "cta")
+    return (
+      <TimelineContent {...tc(`${t.span} relative`)}>
+        <img src={t.img} alt="" className="absolute inset-0 h-full w-full object-cover" />
+        <Link
+          to={t.to}
+          className="group absolute bottom-5 left-5 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium shadow-md transition-colors hover:bg-blue-50"
+          style={{ color: INK }}
+        >
+          {t.text}
+          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+        </Link>
       </TimelineContent>
     );
   if (t.k === "label")
