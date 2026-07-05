@@ -139,7 +139,7 @@ const TILES: Tile[] = [
   // ── cluster 1 ──
   { k: "statDecor", span: "col-span-1 lg:col-span-3", bg: NAVY, decor: "bar", v: "90", suf: "%", label: <>fewer missed<br />patient calls</> },
   { k: "video", span: "col-span-1 lg:col-span-3", caption: "Customer story", img: AV.hospital },
-  { k: "quote", span: "col-span-2 lg:col-span-6 lg:row-span-2", company: "Services", name: "Archie Defillo, MD", role: "Neuroscience & Sleep/Behavioral Health Innovator", img: AV.archie,
+  { k: "quote", span: "col-span-2 lg:col-span-6 lg:row-span-2", company: "Monitoring", name: "Archie Defillo, MD", role: "Neuroscience & Sleep/Behavioral Health Innovator", img: AV.archie,
     quote: "Designed for both Remote Patient Monitoring (RPM) and Remote Therapeutic Monitoring (RTM) programs, enabling scalable, intelligent patient engagement while improving adherence, streamlining clinical operations, and lowering the cost of care." },
   { k: "label", span: "col-span-1 lg:col-span-3", text: "Results" },
   { k: "gauge", span: "col-span-1 lg:col-span-3", bg: NAVY2, v: "89", suf: "%", label: <>less time to<br />respond</> },
