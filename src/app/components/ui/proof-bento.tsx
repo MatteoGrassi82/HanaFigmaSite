@@ -143,13 +143,13 @@ const TILES: Tile[] = [
   // ── cluster 1 ──
   { k: "statDecor", span: "col-span-1 lg:col-span-3", bg: NAVY, decor: "bar", v: "90", suf: "%", label: <>fewer missed<br />patient calls</> },
   { k: "video", span: "col-span-1 lg:col-span-3", caption: "Dr. G. Oprandi · Orthopedic Surgeon", img: AV.oprandi },
-  { k: "quote", span: "col-span-2 lg:col-span-6 lg:row-span-2", company: "Monitoring", name: "Archie Defillo, MD", role: "Neuroscience & Sleep/Behavioral Health Innovator", img: AV.archie,
+  { k: "quote", span: "col-span-1 sm:col-span-2 lg:col-span-6 lg:row-span-2", company: "Monitoring", name: "Archie Defillo, MD", role: "Neuroscience & Sleep/Behavioral Health Innovator", img: AV.archie,
     quote: "Designed for both Remote Patient Monitoring (RPM) and Remote Therapeutic Monitoring (RTM) programs, enabling scalable, intelligent patient engagement while improving adherence, streamlining clinical operations, and lowering the cost of care." },
   { k: "quoteMini", span: "col-span-1 lg:col-span-3",
     quote: "Getting elderly patients ready for surgery over the phone is nearly impossible. HANA reaches them, walks them through everything, and flags whoever still isn't ready so we can step in." },
   { k: "gauge", span: "col-span-1 lg:col-span-3", bg: NAVY2, v: "89", suf: "%", label: <>less time to<br />respond</> },
   // ── cluster 2 ──
-  { k: "quote", span: "col-span-2 lg:col-span-6 lg:row-span-2", company: "Care Coordination", name: "Fakhrudin Mohamed, MD", role: "Board-Certified Physician", img: AV.fakhrudin,
+  { k: "quote", span: "col-span-1 sm:col-span-2 lg:col-span-6 lg:row-span-2", company: "Care Coordination", name: "Fakhrudin Mohamed, MD", role: "Board-Certified Physician", img: AV.fakhrudin,
     quote: "In care coordination the biggest bottleneck was always the touch-time documentation. Hana handles the monthly calls, captures the conversation in structured notes that go straight into the chart, and flags anyone who needs a same-day callback." },
   { k: "cta", span: "col-span-1 lg:col-span-3", text: "See all case studies", to: "/case-studies", img: AV.hospital },
   { k: "statDecor", span: "col-span-1 lg:col-span-3", bg: NAVY, decor: "squares", v: "3", suf: "x", label: <>more slots<br />filled</> },
@@ -247,7 +247,7 @@ export function ProofBento() {
           </TimelineContent>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 auto-rows-[minmax(215px,1fr)] lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-3 auto-rows-[minmax(180px,auto)] sm:grid-cols-2 sm:auto-rows-[minmax(215px,1fr)] lg:grid-cols-12">
           {TILES.map((t, i) => (
             <Cell key={i} t={t} i={i} timelineRef={timelineRef} />
           ))}
