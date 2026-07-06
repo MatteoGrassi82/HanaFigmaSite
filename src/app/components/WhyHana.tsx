@@ -59,8 +59,8 @@ export function WhyHana() {
         <div className="text-[12px] font-bold uppercase tracking-[2.5px] text-[#5b76d9] mb-5">
           Overview
         </div>
-        <h2 className="font-sans font-medium text-[38px] md:text-[56px] leading-[1.04] tracking-[-0.025em] text-[#00122F] m-0">
-          What is <span className="font-serif italic font-normal">Hana?</span>
+        <h2 className="font-serif font-medium text-[38px] md:text-[56px] leading-[1.04] tracking-[-0.025em] text-[#00122F] m-0">
+          What is <span className="italic text-[#5b76d9]">Hana?</span>
         </h2>
         <p className="mt-5 mx-auto max-w-[540px] text-[16px] leading-[1.7] text-[#5b6472] tracking-[-0.01em]">
           Share of patients actually reached, by channel. Legacy systems wait for the patient to
