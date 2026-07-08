@@ -23,6 +23,8 @@ const Contact = lazy(() => import("./pages/Contact").then((m) => ({ default: m.C
 const HanaContact = lazy(() => import("./pages/HanaContact").then((m) => ({ default: m.HanaContact })));
 const HanaRemote = lazy(() => import("./pages/HanaRemote").then((m) => ({ default: m.HanaRemote })));
 const HanaSleep = lazy(() => import("./pages/HanaSleep").then((m) => ({ default: m.HanaSleep })));
+const HanaSleepAnalysis = lazy(() => import("./pages/HanaSleepAnalysis").then((m) => ({ default: m.HanaSleepAnalysis })));
+const HanaSleepCPAP = lazy(() => import("./pages/HanaSleepCPAP").then((m) => ({ default: m.HanaSleepCPAP })));
 const TestWebhook = lazy(() => import("./components/TestWebhook").then((m) => ({ default: m.TestWebhook })));
 const Terms = lazy(() => import("./pages/Terms").then((m) => ({ default: m.Terms })));
 const AUP = lazy(() => import("./pages/AUP").then((m) => ({ default: m.AUP })));
@@ -265,6 +267,8 @@ function AppContent() {
               <Route path="/hana-contact" element={<HanaContact />} />
               <Route path="/hana-remote" element={<HanaRemote />} />
               <Route path="/hana-sleep" element={<HanaSleep />} />
+              <Route path="/hana-sleep/analysis" element={<HanaSleepAnalysis />} />
+              <Route path="/hana-sleep/cpap" element={<HanaSleepCPAP />} />
               <Route path="/test-webhook" element={<TestWebhook />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/aup" element={<AUP />} />

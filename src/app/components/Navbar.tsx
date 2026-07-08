@@ -134,6 +134,9 @@ export const Navbar = (props: NavbarProps) => {
         subMenuLinks: [
           { url: "/hana-contact", title: "HANA Contact" },
           { url: "/hana-remote", title: "HANA Remote" },
+          { url: "/hana-sleep", title: "HANA Sleep" },
+          { url: "/hana-sleep/analysis", title: "— Sleep Analysis" },
+          { url: "/hana-sleep/cpap", title: "— CPAP Adherence Program" },
         ],
       },
       ...(isItalian ? [] : [{ url: "/case-studies", title: t.nav.caseStudies }]),

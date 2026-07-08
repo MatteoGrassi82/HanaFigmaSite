@@ -42,6 +42,8 @@ const STATIC_ROUTES = [
   '/hana-contact',
   '/hana-remote',
   '/hana-sleep',
+  '/hana-sleep/analysis',
+  '/hana-sleep/cpap',
   '/terms',
   '/aup',
   '/blog',
