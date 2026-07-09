@@ -1,17 +1,21 @@
-import { motion } from "motion/react";
+import { useState } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import { ChevronDown } from "lucide-react";
 import { Link } from "react-router";
 import { SEO, breadcrumbSchema } from "../components/SEO";
-// Canonical main-site origin. On the standalone sleep.html Vercel project the
-// sub-pages (/hana-sleep/analysis, /hana-sleep/cpap) don't exist as routes, so
-// the umbrella links out to the main site instead of using an in-app <Link>.
-const MAIN_SITE = "https://www.hana.health";
 import { Footer } from "../components/Footer";
 import { InlineImageHeader } from "../components/InlineImageHeader";
 import { LoopDiagram } from "../components/ui/loop-diagram";
+import { SafetyStack } from "../components/ui/safety-stack";
 import { NightSky } from "../components/ui/night-sky";
 import { Glyph, RI } from "../components/remote/CompassDashboard";
 
 const DEMO_URL = "https://calendly.com/matteowastaken/discoverycall";
+
+// Canonical main-site origin. On the standalone sleep.html Vercel project the
+// sub-pages (/hana-sleep/analysis, /hana-sleep/cpap) don't exist as routes, so
+// the umbrella links out to the main site instead of using an in-app <Link>.
+const MAIN_SITE = "https://www.hana.health";
 
 /**
  * HANA Sleep — the suite umbrella ("the overall hat"). HANA Sleep is a suite of
@@ -100,9 +104,69 @@ const SLEEP_LOOP_COPY = {
   },
 };
 
+// Suite-level proof — the numbers that hold across the family of solutions.
+const SUITE_STATS = [
+  { v: "96%", l: "of 10,000 patients said yes to an AI check-in — because it doesn't feel like a machine" },
+  { v: "~50% → ~22%", l: "CPAP non-adherence, in production, once follow-up actually shows up" },
+  { v: "4+", l: "wearables read out of the box — Apple Watch, Oura, Fitbit, Garmin" },
+  { v: "2.3×", l: "more patients followed per coordinator, without adding headcount" },
+];
+
+// Suite-level FAQ — the questions that apply to HANA Sleep as a whole, before a
+// visitor has picked a specific solution.
+const SUITE_FAQS = [
+  {
+    q: "Is HANA Sleep one product or several?",
+    a: "It's a suite. HANA Sleep is a family of solutions for sleep medicine and wellness — Sleep Analysis (wearable-agnostic hypnogram interpretation) and the CPAP Adherence Program (autonomous voice follow-up) today, with remote therapeutic monitoring on the roadmap. Each stands on its own; together they cover the night from read to follow-up.",
+  },
+  {
+    q: "Which one should I start with?",
+    a: "Start with the pain in front of you. If patients are falling off CPAP, the CPAP Adherence Program is the sharpest wedge. If you want clinically meaningful insight from the wearables patients already own, start with Sleep Analysis. They compose — the analysis can feed the follow-up.",
+  },
+  {
+    q: "Is any of this a medical device?",
+    a: "No. Every HANA Sleep solution is clinical decision support, not a medical device. HANA reads, reports, and follows up; the clinician decides. Every interpretation is presented for a clinician to agree with or override.",
+  },
+  {
+    q: "How does it handle patient data and privacy?",
+    a: "HANA runs on HIPAA-compliant channels — voice, SMS, fax — with patient consent, and can be sandboxed for closed systems like the VA and military health. Security is defense-in-depth; see the layers below.",
+  },
+];
+
+function SuiteFaqRow({ q, a, index }: { q: string; a: string; index: number }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div>
+      <button
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        className="group w-full flex items-center justify-between gap-4 py-5 text-left"
+      >
+        <span className="text-[17px] font-medium text-white transition-colors duration-200 group-hover:text-[#A7BCF5]">{q}</span>
+        <ChevronDown className={`w-5 h-5 text-[#A7BCF5] shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key={`suitefaq-${index}`}
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <p className="text-[15px] leading-[1.7] text-white/65 pb-5 pr-8 m-0">{a}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 // ── Page ─────────────────────────────────────────────────────────────────────
 
 export function HanaSleep({ standalone = false }: { standalone?: boolean } = {}) {
+  const reduce = useReducedMotion();
   return (
     <div className="bg-[#00122F] text-white font-sans overflow-x-hidden">
       <SEO
@@ -235,8 +299,47 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
         </div>
       </section>
 
+      {/* THE GAP — the problem the whole suite exists to close (suite-level) */}
+      <section className="relative overflow-hidden py-20 md:py-24 px-6 md:px-16" style={{ background: "linear-gradient(180deg, #081a38 0%, #0c1f40 100%)" }}>
+        <div className="relative max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <motion.div {...fadeUp}>
+            <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>The gap</p>
+            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-white mt-0 mb-5">
+              Diagnosis is solved. <em className="text-[#A7BCF5]">Everything after isn't.</em>
+            </h2>
+            <p className="text-[16px] leading-[1.7] text-white/70 m-0 max-w-[46ch]">
+              Sleep medicine is great at diagnosis and blind to everything after it. The patient goes home,
+              and no one is with them for the three to six months that decide whether treatment sticks.
+              Devices show usage and airflow — never the <em>why</em>: the mask leaks, it's uncomfortable,
+              they quietly unplugged it.
+            </p>
+            <p className="text-[18px] md:text-[20px] leading-[1.5] font-semibold text-white mt-7 max-w-[30ch]">
+              The problem was never the diagnosis. <span className="text-[#A7BCF5]">It's everything after.</span>
+            </p>
+          </motion.div>
+          <div className="flex flex-col gap-3">
+            {[
+              { v: "~50%", l: "of CPAP patients quit within the first three months — most never say so" },
+              { v: "3–6 mo", l: "the gap between prescription and treatment where no one is with the patient" },
+              { v: "20%", l: "all the engagement an app gets — patients won't open it" },
+              { v: "1 call", l: "the difference between a save and a patient lost to treatment" },
+            ].map((s, i) => (
+              <motion.div
+                key={s.v}
+                {...fadeUp}
+                transition={{ duration: 0.5, delay: 0.04 + i * 0.07 }}
+                className="flex items-center gap-5 rounded-2xl bg-white/[0.04] border border-white/10 p-5 md:p-6"
+              >
+                <div className="font-serif text-[34px] md:text-[44px] leading-[0.95] text-white shrink-0 w-[104px] md:w-[124px]">{s.v}</div>
+                <div className="text-[14px] leading-[1.55] text-white/65">{s.l}</div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* THE COMMON THREAD — one AI-driven engine under every solution */}
-      <section className="relative overflow-hidden py-20 md:py-24 px-6 md:px-16" style={{ background: "linear-gradient(180deg, #081a38 0%, #00122F 100%)" }}>
+      <section className="relative overflow-hidden py-20 md:py-24 px-6 md:px-16" style={{ background: "linear-gradient(180deg, #0c1f40 0%, #00122F 100%)" }}>
         <div className="relative max-w-[820px] mx-auto text-center">
           <motion.div {...fadeUp}>
             <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>The common thread</p>
@@ -255,8 +358,55 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
       {/* THE CLOSED LOOP — the shape shared across the suite */}
       <LoopDiagram copy={SLEEP_LOOP_COPY} pulses={1} />
 
+      {/* BY THE NUMBERS — suite-level proof; meets the navy Safety Stack below */}
+      <section className="py-20 md:py-24 px-6 md:px-16" style={{ background: "linear-gradient(180deg, #00122F 0%, #0a1c3e 50%, #00122F 100%)" }}>
+        <div className="max-w-[1200px] mx-auto">
+          <motion.div {...fadeUp} className="text-center mb-12 md:mb-14 max-w-[52ch] mx-auto">
+            <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>By the numbers</p>
+            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-white mx-auto max-w-[22ch]">
+              Follow-up you can <em className="text-[#A7BCF5]">measure.</em>
+            </h2>
+          </motion.div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+            {SUITE_STATS.map((s, i) => (
+              <motion.div
+                key={s.v}
+                initial={{ opacity: 0, y: reduce ? 0 : 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.5, delay: 0.04 + i * 0.08 }}
+                className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 md:p-7"
+              >
+                <div className="font-serif text-[38px] md:text-[46px] leading-[0.95] text-white">{s.v}</div>
+                <div className="text-[13.5px] leading-[1.55] text-white/65 mt-3">{s.l}</div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECURITY — reuse the home-page defense-in-depth Safety Stack */}
+      <SafetyStack />
+
       {/* HOW WE START — three-step go-live section, same as the homepage */}
       <InlineImageHeader />
+
+      {/* FAQ — suite-level questions */}
+      <section className="py-20 md:py-24 px-6 md:px-16 bg-[#00122F]">
+        <div className="max-w-[820px] mx-auto">
+          <motion.div {...fadeUp} className="text-center mb-10 md:mb-12">
+            <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>Questions? Answers.</p>
+            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-white">
+              The things everyone asks.
+            </h2>
+          </motion.div>
+          <div className="divide-y divide-white/10 border-t border-b border-white/10">
+            {SUITE_FAQS.map((f, i) => (
+              <SuiteFaqRow key={f.q} q={f.q} a={f.a} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* CTA */}
       <section className="bg-[#00122F] text-white py-24 px-6 md:px-16 text-center relative overflow-hidden">
