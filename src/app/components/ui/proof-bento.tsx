@@ -150,7 +150,10 @@ const TILES: Tile[] = [
   { k: "gauge", span: "col-span-1 lg:col-span-3", bg: NAVY2, v: "89", suf: "%", label: <>less time to<br />respond</> },
   // ── cluster 2 ──
   { k: "quote", span: "col-span-1 sm:col-span-2 lg:col-span-6 lg:row-span-2", company: "Care Coordination", name: "Fakhrudin Mohamed, MD", role: "Board-Certified Physician", img: AV.fakhrudin,
-    quote: "In care coordination the biggest bottleneck was always the touch-time documentation. Hana handles the monthly calls, captures the conversation in structured notes that go straight into the chart, and flags anyone who needs a same-day callback." },
+    // Trimmed with an ellipsis from the approved quote — the elided clause read as
+    // though HANA generates the billable touch time. See the guardrail note at the
+    // top of pages/HanaRemote.tsx.
+    quote: "Hana … captures the conversation in structured notes that go straight into the chart, and flags anyone who needs a same-day callback." },
   { k: "cta", span: "col-span-1 lg:col-span-3", text: "See all case studies", to: "/case-studies", img: AV.hospital },
   { k: "statDecor", span: "col-span-1 lg:col-span-3", bg: NAVY, decor: "squares", v: "3", suf: "x", label: <>more slots<br />filled</> },
   { k: "statDecor", span: "col-span-1 lg:col-span-3", bg: NAVY2, decor: "squares", v: "30", suf: "%", label: <>fewer<br />no-shows</> },
