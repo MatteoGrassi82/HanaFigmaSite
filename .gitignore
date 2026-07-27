@@ -44,3 +44,6 @@ content-drafts/
 
 # Sleep microsite build output
 dist-sleep/
+
+# Puppeteer Chrome download (project-local, see .puppeteerrc.cjs)
+.cache/
