@@ -4,10 +4,9 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "build": "vite build && node scripts/prerender.mjs",
+    "build": "npm run chrome:install || true && vite build && node scripts/prerender.mjs && npm run indexnow:ci",
     "build:bundle": "vite build",
     "chrome:install": "puppeteer browsers install chrome",
-    "vercel-build": "npm run chrome:install || true && npm run build && npm run indexnow:ci",
     "indexnow": "node scripts/indexnow.mjs",
     "indexnow:ci": "node -e \"process.exit(process.env.VERCEL_ENV==='production'?0:1)\" && npm run indexnow || true",
     "prerender": "node scripts/prerender.mjs",
