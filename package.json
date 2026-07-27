@@ -8,6 +8,7 @@
     "build:bundle": "vite build",
     "chrome:install": "puppeteer browsers install chrome",
     "indexnow": "node scripts/indexnow.mjs",
+    "seo:check": "node scripts/seo-check.mjs",
     "indexnow:ci": "node -e \"process.exit(process.env.VERCEL_ENV==='production'?0:1)\" && npm run indexnow || true",
     "prerender": "node scripts/prerender.mjs",
     "aeo:sync": "node scripts/aeo-schema-llms-sync.mjs",
