@@ -241,6 +241,25 @@ async function launchBrowser() {
       console.warn(`  ⚠ chrome launch (headless: ${String(headless)}) failed — ${err.message.split('\n')[0]}`);
     }
   }
+
+  // Fallback for the Vercel build image. `puppeteer browsers install chrome`
+  // downloads fine there but the binary dies with exit code 127 — Amazon Linux
+  // 2023 is missing the shared libraries (libnss3 and friends) a normal Chrome
+  // build links against, and there's no root to dnf them in. @sparticuz/chromium
+  // is a Chromium built for exactly this environment, libs included.
+  try {
+    const { default: chromium } = await import('@sparticuz/chromium');
+    const sparticuzPath = await chromium.executablePath();
+    console.log('  ↳ falling back to @sparticuz/chromium');
+    return await puppeteer.launch({
+      executablePath: sparticuzPath,
+      args: [...chromium.args, ...args],
+      headless: 'shell',
+    });
+  } catch (err) {
+    console.warn(`  ⚠ @sparticuz/chromium launch failed — ${err.message.split('\n')[0]}`);
+  }
+
   return null;
 }
 
