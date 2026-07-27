@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion, useInView } from "motion/react";
 import { Check, ChevronDown } from "lucide-react";
-import { SEO, breadcrumbSchema } from "../components/SEO";
+import { SEO, breadcrumbSchema, faqSchema } from "../components/SEO";
 import { Footer } from "../components/Footer";
 import { HanaBloomOrb } from "../components/ui/hana-bloom-orb";
 import { RecipesMarquee } from "../components/RecipesMarquee";
@@ -749,10 +749,16 @@ export function HanaRemote() {
         description="HANA Remote is the device-less engagement layer for remote care programs — CCM, APCM, BHI, RTM and ACCESS. Voice check-ins reach 85% of patients and produce structured documentation your clinician attests to, inside your EHR."
         path="/hana-remote"
         keywords="remote care engagement layer, device-less patient engagement, chronic care management software, APCM, behavioral health integration, remote therapeutic monitoring, CPAP adherence program, voice AI patient outreach, ACCESS program, RPM engagement layer"
-        jsonLd={breadcrumbSchema([
-          { name: "Home", url: "https://www.hana.health/" },
-          { name: "HANA Remote", url: "https://www.hana.health/hana-remote" },
-        ])}
+        // FAQPage as well as the breadcrumb: these six Q&As are the most
+        // directly citable content on the page — "Is this device-less RPM?"
+        // has a definitive answer that answer engines can lift verbatim.
+        jsonLd={[
+          breadcrumbSchema([
+            { name: "Home", url: "https://www.hana.health/" },
+            { name: "HANA Remote", url: "https://www.hana.health/hana-remote" },
+          ]),
+          faqSchema(R_FAQS.map((f) => ({ question: f.q, answer: f.a }))),
+        ]}
       />
 
       {/* HERO — centered and dominant (Contact-style) */}

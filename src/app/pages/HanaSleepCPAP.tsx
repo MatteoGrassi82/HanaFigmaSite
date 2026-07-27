@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion, useInView } from "motion/react";
 import { Check, ChevronDown } from "lucide-react";
-import { SEO, breadcrumbSchema } from "../components/SEO";
+import { SEO, breadcrumbSchema, faqSchema } from "../components/SEO";
 import { Footer } from "../components/Footer";
 import { HanaBloomOrb } from "../components/ui/hana-bloom-orb";
 import { InlineImageHeader } from "../components/InlineImageHeader";
@@ -567,11 +567,14 @@ export function HanaSleepCPAP() {
         description="The HANA Sleep CPAP Adherence Program calls your patients like a human would, holds them to the plan through the first 90 days, and documents every follow-up to the chart — the CPAP adherence follow-up that finally shows up. Clinical decision support, HIPAA-aware by design."
         path="/hana-sleep/cpap"
         keywords="CPAP adherence, CPAP follow-up, CPAP adherence program, RPM, RTM, remote therapeutic monitoring, sleep clinic AI, voice AI sleep medicine, DME adherence, sleep telehealth"
-        jsonLd={breadcrumbSchema([
+        jsonLd={[
+          breadcrumbSchema([
           { name: "Home", url: "https://www.hana.health/" },
           { name: "HANA Sleep", url: "https://www.hana.health/hana-sleep" },
           { name: "CPAP Adherence Program", url: "https://www.hana.health/hana-sleep/cpap" },
-        ])}
+        ]),
+          faqSchema(S_FAQS.map((f) => ({ question: f.q, answer: f.a }))),
+        ]}
       />
 
       {/* HERO — immersive night sky (starfield + aurora shader), melting into

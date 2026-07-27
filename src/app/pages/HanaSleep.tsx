@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { ChevronDown } from "lucide-react";
 import { Link } from "react-router";
-import { SEO, breadcrumbSchema } from "../components/SEO";
+import { SEO, breadcrumbSchema, faqSchema } from "../components/SEO";
 import { Footer } from "../components/Footer";
 import { InlineImageHeader } from "../components/InlineImageHeader";
 import { LoopDiagram } from "../components/ui/loop-diagram";
@@ -176,10 +176,13 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
         description="HANA Sleep is a suite of solutions for sleep medicine and wellness: wearable-agnostic sleep analysis, the CPAP Adherence Program, and remote therapeutic monitoring. Clinical decision support that reads any wearable and follows up like a human would — HIPAA-aware by design."
         path="/hana-sleep"
         keywords="HANA Sleep, sleep medicine AI, sleep wellness platform, CPAP adherence, wearable sleep analysis, hypnogram interpretation, remote therapeutic monitoring, RTM, sleep clinic AI, sleep telehealth"
-        jsonLd={breadcrumbSchema([
+        jsonLd={[
+          breadcrumbSchema([
           { name: "Home", url: "https://www.hana.health/" },
           { name: "HANA Sleep", url: "https://www.hana.health/hana-sleep" },
-        ])}
+        ]),
+          faqSchema(SUITE_FAQS.map((f) => ({ question: f.q, answer: f.a }))),
+        ]}
       />
 
       {/* HERO — immersive night sky, framing HANA Sleep as the suite */}

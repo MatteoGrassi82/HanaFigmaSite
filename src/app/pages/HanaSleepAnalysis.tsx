@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Check, ChevronDown } from "lucide-react";
-import { SEO, breadcrumbSchema } from "../components/SEO";
+import { SEO, breadcrumbSchema, faqSchema } from "../components/SEO";
 import { Footer } from "../components/Footer";
 import { InlineImageHeader } from "../components/InlineImageHeader";
 import { SafetyStack } from "../components/ui/safety-stack";
@@ -172,11 +172,14 @@ export function HanaSleepAnalysis() {
         description="HANA Sleep is a wearable-agnostic sleep analysis platform. A novel, AI-driven algorithm extracts clinically meaningful insight from the hypnogram consumer wearables and Type III/IV home testing already produce — bridging consumer sleep technology and clinical sleep medicine. Clinical decision support that complements HST and PSG."
         path="/hana-sleep/analysis"
         keywords="sleep analysis, wearable sleep analysis, hypnogram interpretation, wearable-agnostic sleep platform, Type III sleep testing, Type IV sleep testing, HST, PSG, longitudinal sleep assessment, clinical decision support sleep"
-        jsonLd={breadcrumbSchema([
+        jsonLd={[
+          breadcrumbSchema([
           { name: "Home", url: "https://www.hana.health/" },
           { name: "HANA Sleep", url: "https://www.hana.health/hana-sleep" },
           { name: "Sleep Analysis", url: "https://www.hana.health/hana-sleep/analysis" },
-        ])}
+        ]),
+          faqSchema(A_FAQS.map((f) => ({ question: f.q, answer: f.a }))),
+        ]}
       />
 
       {/* HERO — night sky, same immersive treatment as the CPAP page */}

@@ -30,10 +30,20 @@ export function Footer() {
           </div>
         </div>
 
+        {/* The product pages live in the navbar's "Solutions" dropdown, whose
+            submenu is only mounted once opened — so before this column existed,
+            not one of the 96 built pages contained a link to /hana-remote,
+            /hana-contact or /hana-sleep. They are the pages we most want crawled
+            and they had zero internal links. Keep them linked from here. */}
         <nav aria-label="Platform navigation">
           <h4 className="text-white font-medium mb-4">{t.footer.platform}</h4>
           <ul className="space-y-2 text-sm">
-            <li><a href="#integrations" className="inline-block py-2 hover:text-white transition-colors">{t.footer.integrations}</a></li>
+            <li><Link to="/hana-contact" className="inline-block py-2 hover:text-white transition-colors">HANA Contact</Link></li>
+            <li><Link to="/hana-remote" className="inline-block py-2 hover:text-white transition-colors">HANA Remote</Link></li>
+            <li><Link to="/hana-sleep" className="inline-block py-2 hover:text-white transition-colors">HANA Sleep</Link></li>
+            <li><Link to="/hana-sleep/analysis" className="inline-block py-2 hover:text-white transition-colors">Sleep Analysis</Link></li>
+            <li><Link to="/hana-sleep/cpap" className="inline-block py-2 hover:text-white transition-colors">CPAP Adherence Program</Link></li>
+            {!isItalian && <li><Link to="/access" className="inline-block py-2 hover:text-white transition-colors">CMS ACCESS Model</Link></li>}
             <li><a href="https://docs.hana.health/" target="_blank" rel="noopener noreferrer" className="inline-block py-2 hover:text-white transition-colors">{t.footer.sdk}</a></li>
           </ul>
         </nav>
