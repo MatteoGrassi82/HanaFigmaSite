@@ -34,10 +34,10 @@ const TASK_ROWS = [
   { initials: "MA", name: "M. Alvarez", program: "CPAP · Sleep", reason: "No check-in 3 days", level: "red", act: "Call now" },
   { initials: "DT", name: "D. Tran", program: "CHF · RPM", reason: "Weight +3 lbs / 48h — threshold", level: "red", act: "Escalate" },
   { initials: "RP", name: "R. Patel", program: "Post-op · RTM", reason: "Pain 8/10 on day-7 check-in", level: "red", act: "Review" },
-  { initials: "JC", name: "J. Chen", program: "Hypertension · RPM", reason: "BP 158/94 self-reported", level: "amber", act: "Review" },
+  { initials: "JC", name: "J. Chen", program: "Hypertension · CCM", reason: "Reported BP 158/94 on check-in", level: "amber", act: "Review" },
   { initials: "SB", name: "S. Bianchi", program: "Behavioral · CoCM", reason: "PHQ-9 = 14 · needs eyes", level: "amber", act: "Review" },
-  { initials: "EW", name: "E. Whitmore", program: "Diabetes · RTM", reason: "2 check-in days short of 99454", level: "amber", act: "Nudge" },
-  { initials: "LR", name: "L. Rossi", program: "CCM · Monthly", reason: "20-min threshold met", level: "green", act: "Ready to bill" },
+  { initials: "EW", name: "E. Whitmore", program: "Diabetes · RTM", reason: "Missed two scheduled check-ins", level: "amber", act: "Nudge" },
+  { initials: "LR", name: "L. Rossi", program: "CCM · Monthly", reason: "Care-plan review documented", level: "green", act: "Ready to attest" },
   { initials: "KO", name: "K. Okafor", program: "Diabetes · RTM", reason: "Glucose log captured by voice", level: "green", act: "Done" },
 ];
 
@@ -168,8 +168,10 @@ function Meter({ value, max, tone }: { value: number; max: number; tone: string 
 // BILLING — care-management + monitoring readiness. Per patient: progress toward
 // that program's requirement (device-days/minutes for RPM·RTM, care-management
 // minutes for CCM·CoCM, monthly enrollment for APCM·ACCESS), with a live status.
+// Status describes whether the program's *requirement* is met and the record is
+// ready for the clinician's attestation — never that HANA has billed anything.
 const BILL_STATUS = {
-  billable: { chip: "bg-emerald-50 text-emerald-600", label: "Billable" },
+  billable: { chip: "bg-emerald-50 text-emerald-600", label: "Ready to attest" },
   atrisk: { chip: "bg-amber-50 text-amber-600", label: "Short" },
   needtime: { chip: "bg-[#eef1fb] text-[#5b76d9]", label: "Needs time" },
 } as const;
@@ -191,7 +193,7 @@ function BillingPane() {
       {/* month-readiness summary strip */}
       <div className="grid grid-cols-3 border-b border-slate-100 bg-[#fbfcfe]">
         {[
-          { v: "218", l: "Ready to bill", c: "text-emerald-600" },
+          { v: "218", l: "Requirements met", c: "text-emerald-600" },
           { v: "34", l: "Short of threshold", c: "text-amber-600" },
           { v: "$142K", l: "Across RPM · RTM · CCM · APCM", c: "text-[#00122F]" },
         ].map((s, i) => (
@@ -252,8 +254,8 @@ function BillingPane() {
         })}
       </div>
       <div className="flex items-center justify-between px-4 py-3 mt-auto border-t border-slate-100 bg-[#fbfcfe]">
-        <span className="text-[12px] text-slate-600">One click generates the month's claim set — RPM, RTM, CCM &amp; APCM codes, docs attached.</span>
-        <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-white bg-[#1e2a3a] rounded-lg px-3 py-1.5 shrink-0">Generate claims</span>
+        <span className="text-[12px] text-slate-600">One click exports the month's documentation packet — attributed time, escalations &amp; consent, for your biller to work.</span>
+        <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-white bg-[#1e2a3a] rounded-lg px-3 py-1.5 shrink-0">Export documentation</span>
       </div>
     </div>
   );

@@ -150,9 +150,9 @@ const RECIPES_EN: Recipe[] = [
     steps: ["EHR detects 7-day med supply remaining", "HANA calls for adherence + side effect check", "Triggers refill via Surescripts if confirmed", "Updates med-rec status in chart"],
     systems: ["Surescripts","Athena","Epic"] },
 
-  { tag: "Outreach", flow: ["ehr","voice","ehr"], title: "Run CCM/APCM monthly care calls",
-    desc: "For enrolled chronic care patients, HANA runs structured 20-minute coordination calls each month, captures clinical updates, and auto-bills CPT codes 99490, 99491, or G0511.",
-    steps: ["CCM cohort flagged in EHR", "HANA conducts 20-min structured call", "Documents care plan updates + symptoms", "Auto-generates billable encounter"],
+  { tag: "Outreach", flow: ["ehr","voice","ehr"], title: "Support CCM/APCM monthly care calls",
+    desc: "For enrolled chronic care patients, HANA runs the structured monthly coordination call, captures clinical updates, and prepares the documentation your care-management staff review and attest to under CCM/APCM.",
+    steps: ["CCM cohort flagged in EHR", "HANA conducts structured check-in call", "Documents care plan updates + symptoms", "Routes to the named clinician to attest"],
     systems: ["CMS","Epic","Athena"] },
 
   { tag: "Pre-Op", flow: ["ehr","voice","ehr"], title: "Reconcile medications 48h before surgery",

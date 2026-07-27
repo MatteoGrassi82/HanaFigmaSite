@@ -67,8 +67,11 @@ const TILES_EN: Tile[] = [
   },
   {
     kind: "quote",
+    // Trimmed with an ellipsis from the approved quote — the elided clause read as
+    // though HANA generates the billable touch time. See the guardrail note at the
+    // top of pages/HanaRemote.tsx.
     quote:
-      "In care coordination the biggest bottleneck was always the touch time documentation. Hana handles the monthly calls, captures the conversation in structured notes that go straight into the chart, and flags anyone who needs a same day callback.",
+      "Hana … captures the conversation in structured notes that go straight into the chart, and flags anyone who needs a same day callback.",
     name: "Fakhrudin Mohamed, MD",
     role: "Board-Certified Physician",
     avatarUrl: "/avatars/fakhrudin.png",

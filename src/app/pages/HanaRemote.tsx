@@ -12,12 +12,27 @@ import { Stats } from "../components/ui/statistics-card";
 const DEMO_URL = "https://calendly.com/matteowastaken/discoverycall";
 
 /**
- * HANA Remote — product page for the device-less remote patient monitoring
- * platform (RTM / RPM / CCM / ACCESS / Sleep). Shares the design language and
- * interaction patterns of the HANA Contact page: light field, navy + periwinkle,
- * serif display type, slider calculator, tabbed explorer, stat band, FAQ.
- * Signature piece: an animated SaaS-dashboard mock (worklist / patient timeline /
- * billing) — the "full-stack system with a dash" proof no competitor shows.
+ * HANA Remote — product page for the engagement layer that sits on top of
+ * remote care programs (CCM / APCM / BHI / RTM / ACCESS / Sleep, plus RPM where
+ * the practice already has devices).
+ *
+ * POSITIONING GUARDRAIL — read before editing copy on this page.
+ * "Device-less RPM" is not a claim we make. RPM codes (99453/99454/99457) require
+ * an FDA-defined medical device that transmits data automatically; patient
+ * self-report does not qualify, and DOJ's first RPM False Claims settlement
+ * (Health Wealth Safe, $1.29M) was exactly this fact pattern. So:
+ *   - device-less = CCM / APCM / BHI / ACCESS (and RTM where a SaMD determination
+ *     applies). Voice check-ins are legitimately the covered activity there.
+ *   - RPM is supported as an *engagement layer* on top of the customer's existing
+ *     devices — device/wearable API data, never self-reported readings.
+ *   - HANA never "generates billable minutes" or "auto-bills". It prepares
+ *     structured documentation; a named clinician's time is what is billed, and
+ *     that clinician attests. Keep every billing string phrased that way.
+ *
+ * Shares the design language and interaction patterns of the HANA Contact page:
+ * light field, navy + periwinkle, serif display type, slider calculator, tabbed
+ * explorer, stat band, FAQ. Signature piece: an animated SaaS-dashboard mock
+ * (worklist / patient timeline / billing readiness).
  */
 
 const fadeUp = {
@@ -33,9 +48,9 @@ const eyebrow = "text-[13px] font-bold tracking-[2.5px] uppercase";
 // ── Content ──────────────────────────────────────────────────────────────────
 
 // The five-step monitoring flow (ported from Contact's five-step-flow pipeline,
-// applied to device-less RPM/RTM): enroll → check in → flag → escalate → document.
+// applied to device-free care management): enroll → check in → flag → escalate → document.
 const HOW_SOURCES = ["New enrollments", "Scheduled check-ins", "Wearable & device data", "Patient-reported symptoms"];
-const HOW_OUTCOMES = ["Higher adherence", "Every flag reviewed", "Reimbursement captured"];
+const HOW_OUTCOMES = ["Higher adherence", "Every flag reviewed", "Documentation that holds up"];
 
 const HOW_BLOCKS = [
   {
@@ -50,8 +65,8 @@ const HOW_BLOCKS = [
   {
     key: "Check in",
     title: "Check in on the right cadence",
-    short: "The conversation is the monitoring.",
-    detail: "Scheduled voice calls capture symptoms, adherence, and vitals in the patient's language, on the cadence their protocol needs. Wearable and connected-device data flows in via API alongside the voice data.",
+    short: "The conversation is the care contact.",
+    detail: "Scheduled voice calls capture symptoms, adherence, and how the plan is actually going, in the patient's language, on the cadence their protocol needs. Where a device is part of the program, its readings flow in via API alongside the conversation.",
     stat: "85%",
     statLabel: "pick up and engage — vs 20% for apps",
     proof: "Voice + wearable data",
@@ -77,10 +92,10 @@ const HOW_BLOCKS = [
   {
     key: "Document",
     title: "Document to the EHR",
-    short: "Structured data + codes, ready to attest.",
-    detail: "The moment the call ends, structured data is written back to your EHR with the interaction documented for attestation — RTM 98975–98981, CCM, APCM, and ACCESS Pathway 4, ready to bill. 150+ integrations.",
+    short: "Structured data, ready for your clinician to attest.",
+    detail: "The moment the call ends, structured data is written back to your EHR — attributed to the named clinician who owns the patient, ready for their review and attestation across CCM, APCM, BHI, RTM and ACCESS Pathway 4. 150+ integrations.",
     stat: "150+",
-    statLabel: "EHR integrations · RTM · CCM · APCM",
+    statLabel: "EHR integrations · CCM · APCM · RTM",
     proof: "Direct EHR write-back",
   },
 ];
@@ -96,19 +111,27 @@ const PROGRAM_WORKFLOW_TAGS = [
 const R_FAQS = [
   {
     q: "Do my patients need a device or an app?",
-    a: "No. HANA Remote is device-less by default — the phone call is the monitoring instrument. If your patients already use wearables or connected devices, that data flows in via API alongside the voice data. But nothing is shipped, downloaded, or charged.",
+    a: "Not for the programs HANA Remote runs device-free — CCM, APCM, behavioral health integration and ACCESS, where the covered activity is the care-management contact itself. Nothing is shipped, downloaded, or charged to the patient. If your patients already use wearables or connected devices, that device data flows in via API alongside the conversation.",
+  },
+  {
+    q: "Is this device-less RPM?",
+    a: "No, and we're deliberate about that. RPM codes (99453/99454/99457) require an FDA-defined medical device that transmits readings automatically — a patient reading a number to us over the phone does not satisfy them, and billing RPM that way is what the DOJ's first RPM False Claims settlement was about. On RPM, HANA Remote is the engagement layer on top of the devices you already use: the device transmits, HANA keeps the patient engaged and transmitting. The device-free programs are CCM, APCM, BHI and ACCESS.",
   },
   {
     q: "Does this replace my clinicians' billable time?",
-    a: "No — the opposite. We don't replace the clinician's billable interaction; we make it possible and make their time count. HANA Remote captures the data, drives the adherence, and documents every interaction so your clinician reviews a flagged worklist and attests, instead of chasing patients.",
+    a: "No — the opposite. We don't replace the clinician's billable interaction, and HANA's call time is not billed as clinical time. HANA captures the data, drives the adherence, and prepares the documentation so your clinician reviews a flagged worklist and attests, instead of chasing patients.",
   },
   {
     q: "How does the billing actually work?",
-    a: "HANA Remote is built around the billing architecture: RTM codes 98975–98981, CCM, APCM, and ACCESS Pathway 4. Every interaction is documented for the clinician's attestation, and structured billing documentation is generated as the program runs — it's part of the product, not an afterthought.",
+    a: "HANA Remote produces the documentation the codes require; your qualified staff supply and attest to the time. Every interaction is written back as a structured note attributed to a named clinician, across CCM, APCM, BHI, RTM (98975–98981) and ACCESS Pathway 4 — so the person who bills is the person who did the clinical work, with the record to show it.",
   },
   {
     q: "We already run RPM with devices. Why would we add this?",
-    a: "Because the devices aren't the problem — engagement is. HANA Remote is the engagement layer that keeps your existing RPM program transmitting: it handles the between-visit contact, chases the missing readings, and recovers the patients who've gone quiet.",
+    a: "Because the devices aren't the problem — engagement is. HANA Remote is the engagement layer that keeps your existing RPM program transmitting: it handles the between-visit contact, chases the days where the device went quiet, and recovers the patients who've drifted. The readings still come from the device, exactly as the codes require.",
+  },
+  {
+    q: "What happens if we get audited?",
+    a: "You export the month and hand it over. Every check-in stores its transcript and structured note, every care-management minute is attributed to the named clinician who supplied it, every escalation records who received it and what they did, and program consent is captured in the patient's own words on the enrollment call. That's the packet an auditor asks for — assembled as the program runs, not reconstructed afterwards.",
   },
   {
     q: "What is ACCESS, and can we use HANA Remote for it?",
@@ -540,6 +563,81 @@ function PatientAgentSection() {
   );
 }
 
+// ── Audit-proof section ──────────────────────────────────────────────────────
+
+// The enforcement wave around remote care (OIG's published remote-monitoring
+// audit work; DOJ's first remote-monitoring False Claims settlement) is a moat,
+// not a threat: the four things an auditor asks for are the four things HANA
+// records by default. Every claim here must stay literally true of the product —
+// this is the last section on the site that should ever be aspirational.
+const AUDIT_PILLARS = [
+  {
+    icon: RI.watch,
+    title: "Every minute attributed to a named clinician",
+    body: "HANA's own call time is never counted as clinical time. Care-management minutes are recorded against the qualified staff member who did the work, with a timestamped record of what they reviewed and when they attested.",
+  },
+  {
+    icon: RI.alert,
+    title: "Every escalation reaches a qualified human",
+    body: "Clinical flags route to a named clinician, not a shared queue. The record shows who received it, when it was opened, and what was done — so \"a clinician reviewed it\" is a fact you can produce, not a claim you make.",
+  },
+  {
+    icon: RI.phone,
+    title: "Consent recorded on the call",
+    body: "Program consent is captured in the patient's own words at enrollment — the program, the date, and the cost-sharing disclosure, stored with the recording. It's the first thing an auditor asks for and the thing practices most often can't produce.",
+  },
+  {
+    icon: RI.database,
+    title: "One-click audit export",
+    body: "Any month, any patient, any program: one export with transcripts, structured notes, time attribution, escalation trail, and attestations. Ready to hand to a payer, an auditor, or your counsel — without a chart-by-chart reconstruction.",
+  },
+];
+
+function AuditSection() {
+  return (
+    <section className="bg-[#00122F] text-white py-20 md:py-28 px-6 md:px-16">
+      <div className="max-w-[1200px] mx-auto">
+        <motion.div {...fadeUp} className="text-center mb-12 md:mb-16">
+          <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>Audit-ready by default</p>
+          <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch]">
+            Built for the audit <em className="text-[#A7BCF5]">you'll eventually get.</em>
+          </h2>
+          <p className="text-[17px] leading-[1.7] text-white/80 max-w-[62ch] mx-auto mt-5">
+            Remote care billing is under real scrutiny — OIG has published its remote-monitoring
+            audit work, and DOJ has already settled its first remote-monitoring False Claims case.
+            The four things an auditor asks for are the four things HANA records on every call,
+            for every patient, whether or not anyone ever asks.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+          {AUDIT_PILLARS.map((p, i) => (
+            <motion.div
+              key={p.title}
+              {...fadeUp}
+              transition={{ duration: 0.5, delay: 0.05 + i * 0.07 }}
+              className="rounded-2xl bg-white/[0.04] border border-white/[0.07] p-6 md:p-7 flex items-start gap-4"
+            >
+              <span className="flex items-center justify-center w-11 h-11 rounded-[12px] bg-[#2347e6]/20 text-[#A7BCF5] shrink-0">
+                <Glyph d={p.icon} className="w-5 h-5" />
+              </span>
+              <div>
+                <h3 className="text-[17px] md:text-[18px] font-semibold mt-0 mb-2 leading-snug">{p.title}</h3>
+                <p className="text-[14.5px] leading-[1.7] text-white/75 m-0">{p.body}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.p {...fadeUp} transition={{ duration: 0.5, delay: 0.35 }} className="text-[17px] md:text-[19px] leading-[1.6] text-white/90 text-center max-w-[54ch] mx-auto mt-12">
+          We don't bill, and we don't generate clinical time.{" "}
+          <span className="text-[#A7BCF5]">We produce the record that proves yours was real.</span>
+        </motion.p>
+      </div>
+    </section>
+  );
+}
+
 // ── Small shared bits (Contact patterns) ─────────────────────────────────────
 
 // A before→after outcome stat: the big "after" number, plus two length bars
@@ -645,12 +743,12 @@ export function HanaRemote() {
   return (
     <div className="bg-white text-[#00122F] font-sans overflow-x-hidden">
       <SEO
-        title="HANA Remote — Device-less Remote Patient Monitoring"
+        title="HANA Remote — The Engagement Layer for Remote Care"
         useExactTitle
         type="product"
-        description="HANA Remote is a device-less remote patient monitoring platform. We replace the hardware with a phone call — 85% patient engagement, reimbursable today, live inside your EHR."
+        description="HANA Remote is the device-less engagement layer for remote care programs — CCM, APCM, BHI, RTM and ACCESS. Voice check-ins reach 85% of patients and produce structured documentation your clinician attests to, inside your EHR."
         path="/hana-remote"
-        keywords="device-less remote patient monitoring, RTM platform, remote therapeutic monitoring, CPAP adherence program, chronic care management, voice AI monitoring, ACCESS program, RPM engagement"
+        keywords="remote care engagement layer, device-less patient engagement, chronic care management software, APCM, behavioral health integration, remote therapeutic monitoring, CPAP adherence program, voice AI patient outreach, ACCESS program, RPM engagement layer"
         jsonLd={breadcrumbSchema([
           { name: "Home", url: "https://www.hana.health/" },
           { name: "HANA Remote", url: "https://www.hana.health/hana-remote" },
@@ -677,8 +775,9 @@ export function HanaRemote() {
             transition={{ duration: 0.5, delay: 0.12 }}
             className="text-[17px] md:text-[19px] leading-[1.6] text-slate-700 mt-7 mb-0 mx-auto max-w-[54ch]"
           >
-            HANA keeps patients engaged across RPM, RTM, CCM, APCM &amp; ACCESS —
-            <em className="text-[#5b76d9] not-italic font-semibold"> documented to your EHR, reimbursable from day one.</em>
+            HANA keeps patients engaged across CCM, APCM, BHI, RTM &amp; ACCESS — and keeps the
+            devices in your existing RPM program transmitting.
+            <em className="text-[#5b76d9] not-italic font-semibold"> Documented to your EHR, ready for your clinician to attest.</em>
           </motion.p>
           <motion.a
             {...fadeUp}
@@ -716,9 +815,9 @@ export function HanaRemote() {
               The program dies before it pays for itself.
             </h2>
             <p className="text-[16px] leading-[1.7] text-slate-700 m-0">
-              Monitoring is reimbursable — RPM, RTM, CCM, ACCESS. The codes exist and the money is
-              there. Programs still fail for one reason: patients don't use the devices you ship or
-              open the apps you send. No engagement, no data, no reimbursement.
+              Remote care is reimbursable — CCM, APCM, BHI, RTM, RPM, ACCESS. The codes exist and the
+              money is there. Programs still fail for one reason: patients don't answer, don't use the
+              devices you ship, and don't open the apps you send. No engagement, no data, nothing to bill.
             </p>
           </motion.div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10 border-t border-slate-200 pt-10">
@@ -763,10 +862,10 @@ export function HanaRemote() {
 
             <QBlock
               q="What happens when something looks wrong?"
-              a="A tripped threshold routes to your worklist in real time — a clinician on every flag, not a log nobody reads."
+              a="A tripped threshold routes to your worklist in real time — a qualified human on every flag, not a log nobody reads."
             >
               <div className="flex items-center gap-2 text-[13px]">
-                <span className="font-mono text-slate-700 bg-white border border-slate-200 rounded-md px-2.5 py-1">BP 158/94 · self-reported</span>
+                <span className="font-mono text-slate-700 bg-white border border-slate-200 rounded-md px-2.5 py-1">&ldquo;My BP cuff read 158/94&rdquo;</span>
                 <span className="text-slate-400">→</span>
                 <motion.span
                   initial={{ opacity: 0.4 }}
@@ -782,21 +881,21 @@ export function HanaRemote() {
 
             <QBlock
               q="Does it actually count for billing?"
-              a="Every call writes structured data back for attestation the moment it ends — RTM, CCM, APCM, ACCESS."
+              a="HANA doesn't bill and doesn't generate clinical minutes. It writes the structured note the moment the call ends, so your clinician reviews and attests — CCM, APCM, BHI, RTM, ACCESS."
             >
               <div className="flex flex-wrap items-center gap-2 text-[12.5px]">
                 <span className="text-slate-500">Call ends</span>
                 <span className="text-slate-400">→</span>
                 <span className="inline-flex items-center gap-1.5 font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-2.5 py-1">
-                  <Check className="w-3 h-3" strokeWidth={3} /> 98977 · documented
+                  <Check className="w-3 h-3" strokeWidth={3} /> Structured note in the chart
                 </span>
-                <span className="font-semibold text-[#5b76d9] bg-[#eef1fb] rounded-full px-2.5 py-1">20 min tracked</span>
+                <span className="font-semibold text-[#5b76d9] bg-[#eef1fb] rounded-full px-2.5 py-1">Ready for Dr. Reyes to attest</span>
               </div>
             </QBlock>
 
             <QBlock
               q="Do I ship a device or make them download an app?"
-              a="Never. The phone call is the monitoring instrument — wearable data flows in via API only if they already have it."
+              a="Not for the device-free programs — CCM, APCM, BHI and ACCESS. The conversation is the care contact. Where a program requires a device, its data flows in via API."
             >
               <div className="flex flex-wrap gap-2 text-[13px] font-semibold text-[#00122F]">
                 {["No device", "No app", "No behavior change"].map((t) => (
@@ -851,7 +950,11 @@ export function HanaRemote() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-7">
             {[
               {
-                quote: "In care coordination the biggest bottleneck was always the touch-time documentation. Hana handles the monthly calls, captures the conversation in structured notes that go straight into the chart, and flags anyone who needs a same-day callback.",
+                // Trimmed with an ellipsis from the approved quote — the elided clause
+                // ("the biggest bottleneck was always the touch-time documentation…")
+                // read as though HANA generates the billable touch time. Words are his;
+                // confirm the shortened form with Dr. Mohamed before this ships.
+                quote: "Hana … captures the conversation in structured notes that go straight into the chart, and flags anyone who needs a same-day callback.",
                 name: "Fakhrudin Mohamed, MD",
                 role: "Board-Certified Physician",
                 avatar: "/avatars/fakhrudin.png",
@@ -937,6 +1040,9 @@ export function HanaRemote() {
 
 
 
+      {/* AUDIT — the enforcement wave as a selling point (see AUDIT_PILLARS) */}
+      <AuditSection />
+
       {/* HOW WE START — three-step go-live section, same as the homepage */}
       <InlineImageHeader />
 
@@ -976,7 +1082,7 @@ export function HanaRemote() {
           </a>
           {/* Transparent terms — true claims only; add real pricing terms when confirmed */}
           <div className="flex flex-wrap items-center justify-center gap-2.5 mt-8">
-            {["No devices to ship", "No app to download", "Reimbursable from day one", "Live in your EHR in days"].map((t) => (
+            {["No devices to ship", "No app to download", "Audit-ready from day one", "Live in your EHR in days"].map((t) => (
               <span key={t} className="inline-flex items-center gap-1.5 text-[13px] font-medium text-white/90 bg-white/[0.06] border border-white/10 rounded-full px-3.5 py-1.5">
                 <Check className="w-3.5 h-3.5 text-[#A7BCF5]" strokeWidth={3} /> {t}
               </span>

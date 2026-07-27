@@ -4,8 +4,11 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "build": "vite build && node scripts/prerender.mjs",
+    "build": "npm run chrome:install || true && vite build && node scripts/prerender.mjs && npm run indexnow:ci",
     "build:bundle": "vite build",
+    "chrome:install": "puppeteer browsers install chrome",
+    "indexnow": "node scripts/indexnow.mjs",
+    "indexnow:ci": "node -e \"process.exit(process.env.VERCEL_ENV==='production'?0:1)\" && npm run indexnow || true",
     "prerender": "node scripts/prerender.mjs",
     "aeo:sync": "node scripts/aeo-schema-llms-sync.mjs",
     "aeo:draft": "node scripts/aeo-content-drafter.mjs",
@@ -87,6 +90,7 @@
     "vaul": "1.1.2"
   },
   "devDependencies": {
+    "@sparticuz/chromium": "^149.0.0",
     "@tailwindcss/vite": "4.1.12",
     "@vercel/node": "^5.8.17",
     "@vitejs/plugin-react": "4.7.0",

@@ -25,6 +25,10 @@ HANA is infrastructure, not an app. Clinic partners build on it rather than buy 
 ## Key pages
 
 - Homepage: https://www.hana.health/
+- HANA Remote (engagement layer for remote care — CCM, APCM, BHI, RTM, ACCESS): https://www.hana.health/hana-remote
+- HANA Contact (AI front desk for clinics): https://www.hana.health/hana-contact
+- HANA Sleep (sleep medicine suite — analysis + CPAP adherence): https://www.hana.health/hana-sleep
+- CMS ACCESS Model program: https://www.hana.health/access
 - Case Studies: https://www.hana.health/case-studies
 - Whitepapers: https://www.hana.health/whitepapers
 - ADHD Intake Whitepaper: https://www.hana.health/whitepapers/adhd-intake
@@ -44,10 +48,10 @@ HANA is infrastructure, not an app. Clinic partners build on it rather than buy 
 ## Key clinical workflows
 
 1. **Post-discharge follow-up** — automated calls in the 48-hour window after discharge to catch deterioration before readmission
-2. **Chronic care management (APCM/CCM)** — monthly touchpoints that satisfy CMS billing requirements
+2. **Chronic care management (APCM/CCM)** — monthly touchpoints, documented for the clinician's review and attestation under CMS billing requirements
 3. **ADHD intake** — 3-module structured interview for pediatric and adult patients, integrates with Practice Q
 4. **Medication adherence** — proactive outreach to patients who miss refills or doses
-5. **Remote patient monitoring** — symptom check-ins that write back to the EHR
+5. **Remote care engagement** — symptom check-ins that write back to the EHR, and the engagement layer that keeps an existing device-based RPM program transmitting (HANA does not replace the device: RPM codes require an FDA-defined device that transmits automatically, so HANA's device-free programs are CCM, APCM, BHI and ACCESS)
 
 ## Blog topics (high-value content)
 

@@ -1,10 +1,22 @@
 import { Footer } from "../components/Footer";
+import { SEO } from "../components/SEO";
 import { getLocale } from "../../lib/i18n";
 
 export function Terms() {
   const it = getLocale() === "it";
   return (
     <>
+      {/* Without this the route inherited the homepage title and canonical —
+          i.e. Google was told /terms is a duplicate of the homepage. */}
+      <SEO
+        title={it ? "Termini di Servizio e Politica di Sicurezza | HANA Health" : "Terms of Service & Security Policy | HANA Health"}
+        description={
+          it
+            ? "Termini di Servizio e Politica di Sicurezza di HANA Health, Inc. — condizioni d'uso della piattaforma di coinvolgimento dei pazienti, impegni di sicurezza e trattamento dei dati."
+            : "HANA Health, Inc. Terms of Service & Security Policy — conditions of use for the patient engagement platform, security commitments, and data handling."
+        }
+        path="/terms"
+      />
       <div className="bg-white min-h-screen">
         {/* Hero */}
         <section className="bg-[#00122F] text-white py-20 px-4">
