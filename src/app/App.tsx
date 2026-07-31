@@ -9,7 +9,6 @@ function ScrollToTop() {
   return null;
 }
 import { Navbar } from "./components/Navbar";
-import { AnnouncementBar } from "./components/AnnouncementBar";
 import { getLocale } from "../lib/i18n";
 import { Home } from "./pages/Home";
 
@@ -235,7 +234,7 @@ function AppContent() {
   };
 
   // The Access page is a US-specific promo; it doesn't apply to the Italian
-  // site, so we drop its route and the announcement bar that links to it.
+  // site, so we drop its route.
   const isItalian = getLocale() === "it";
 
   return (
@@ -244,7 +243,6 @@ function AppContent() {
         <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 pb-12 relative">
           <Toaster position="top-center" />
 
-          {!isItalian && <AnnouncementBar />}
           <Navbar />
 
           <main>

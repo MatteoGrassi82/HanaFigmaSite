@@ -5,12 +5,11 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { cn } from "../../lib/utils";
-import { CheckCircle2, Play, Activity, CalendarCheck, ChevronLeft, ChevronRight } from "lucide-react";
+import { CheckCircle2, Play, Activity, ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslations, getLocale } from "../../lib/i18n";
 import { Player, type PlayerRef } from "@remotion/player";
 import { WorkflowBuilderComp } from "./remotion/WorkflowBuilderComp";
 import { SafetyMonitorComp } from "./remotion/SafetyMonitorComp";
-import { PatientContextComp } from "./remotion/PatientContextComp";
 
 // Add TypeScript declaration for custom element
 declare global {
@@ -73,11 +72,11 @@ const WistiaPlayer = memo(({ videoId }: { videoId: string }) => {
 
 WistiaPlayer.displayName = "WistiaPlayer";
 
-// Remotion-based animated player (used on Italian locale instead of Wistia)
+// Remotion-based animated player (used on Italian locale instead of Wistia).
+// Indexed by slide position, so it must stay the same length as SLIDES.
 const REMOTION_SLIDES = [
   { component: WorkflowBuilderComp, durationInFrames: 510 },
   { component: SafetyMonitorComp,    durationInFrames: 390 },
-  { component: PatientContextComp,   durationInFrames: 390 },
 ];
 
 function DemoPlayer({ component, durationInFrames }: { component: React.ComponentType; durationInFrames: number }) {
@@ -148,15 +147,6 @@ export function HowHanaWorks() {
       description: hw.tab1Body,
       videoId: "hf22mhjxbe",
       features: [hw.tab1f1, hw.tab1f2, hw.tab1f3],
-    },
-    {
-      id: "coordination",
-      label: hw.tab3,
-      icon: CalendarCheck,
-      title: hw.tab3SubHeading,
-      description: hw.tab3Body,
-      videoId: "qcn3w9ogd5",
-      features: [hw.tab3f1, hw.tab3f2, hw.tab3f3],
     },
   ];
   const [currentSlide, setCurrentSlide] = useState(0);
