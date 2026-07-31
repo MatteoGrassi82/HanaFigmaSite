@@ -40,6 +40,8 @@ import {
   STATIC_ROUTES,
   EN_ONLY_ROUTES,
 } from './lib/route-seo.mjs';
+import { staticRouteLastmod } from './lib/git-lastmod.mjs';
+import { readManifest } from './lastmod.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -165,9 +167,26 @@ async function writeHeadOnly(routes, shell, cache) {
   const found = Object.keys(pageMeta).length;
   console.log(`  ↳ read <SEO> props for ${found} routes from the page sources`);
 
+  // Static routes are dated from git (+ the committed manifest, for the history
+  // Vercel's --depth=10 clone can't see); blog posts are dated from Sanity below.
+  // Filtered to STATIC_ROUTES so the shared-chrome threshold is computed over the
+  // same route set as `npm run seo:lastmod` — otherwise en/it builds would
+  // disagree with the manifest and every build would report it stale.
+  const staticMeta = Object.fromEntries(
+    Object.entries(pageMeta).filter(([route]) => STATIC_ROUTES.includes(route))
+  );
+  const { lastmod, stale, shallow } = staticRouteLastmod(staticMeta, ROOT, await readManifest());
+  if (stale.length) {
+    console.warn(
+      `  ⚠ route-lastmod.json is behind git for ${stale.length} route(s): ${stale.join(', ')}\n` +
+      '    Using the git date for this build; run `npm run seo:lastmod` and commit.'
+    );
+  } else if (shallow) {
+    console.log('  ↳ shallow clone — static route dates came from route-lastmod.json');
+  }
+
   let written = 0;
   const unknown = [];
-  const lastmod = {};
   const indexable = [];
   for (const route of routes) {
     let m = pageMeta[route];
