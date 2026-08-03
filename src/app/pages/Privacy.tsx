@@ -66,6 +66,10 @@ type Copy = {
   s13Body: React.ReactNode;
   s14Title: string;
   s14Body: React.ReactNode;
+  gapiTitle: string;
+  gapiIntro: React.ReactNode;
+  gapiItems: React.ReactNode[];
+  gapiNote: React.ReactNode;
   s15Title: string;
   s15Body: React.ReactNode;
   s16Title: string;
@@ -86,7 +90,7 @@ const COPY_EN: Copy = {
     "How HANA Health, Inc. collects, uses, discloses, and protects personal information of visitors to the hana.health website, including your privacy rights under GDPR and US state law.",
   eyebrow: "HANA Health, Inc.",
   title: "Privacy Policy",
-  dates: "Effective Date: 14 June 2026  |  Last Updated: 14 June 2026",
+  dates: "Effective Date: 14 June 2026  |  Last Updated: 3 August 2026",
   intro: (
     <>
       HANA Health, Inc. (&ldquo;HANA,&rdquo; &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) respects your privacy. This Privacy Policy describes how we collect, use, disclose, and safeguard personal information when you visit or interact with the {strong("hana.health")} website and related pages (collectively, the &ldquo;Site&rdquo;), and the privacy rights and choices available to you. By using the Site, you agree to this Privacy Policy.
@@ -143,7 +147,7 @@ const COPY_EN: Copy = {
   s5ColProvider: "Provider",
   s5ColPurpose: "Purpose",
   s5Rows: [
-    { term: "Google LLC", meaning: "Website analytics and tag management (Google Analytics 4, Google Tag Manager)." },
+    { term: "Google LLC", meaning: "Website analytics and tag management (Google Analytics 4, Google Tag Manager); Google Calendar API for the optional calendar integration described in Section 15." },
     { term: "Calendly LLC", meaning: "Scheduling and booking of demo calls." },
     { term: "Typeform S.L. (VideoAsk)", meaning: "Embedded interactive video, where used." },
     { term: "FormSubmit", meaning: "Delivery of contact-form submissions to our team by email." },
@@ -220,6 +224,25 @@ const COPY_EN: Copy = {
       The Site may link to third-party websites and services (for example, scheduling, documentation, or social media). We are not responsible for their privacy practices, and we encourage you to review their privacy notices.
     </>
   ),
+  gapiTitle: "Google API Services & calendar data",
+  gapiIntro: (
+    <>
+      HANA offers an optional calendar integration that lets a healthcare practice connect its Google Calendar so that appointments booked through HANA appear on the practice&rsquo;s schedule. This section describes how we handle Google user data received through that integration.
+    </>
+  ),
+  gapiItems: [
+    <>{strong("What we access.")} When a practice administrator connects a Google account, HANA requests permission to view calendar availability and to create and manage calendar events (Google OAuth scopes: <code className="text-[13px]">calendar.events</code> and <code className="text-[13px]">calendar.readonly</code>), along with the account&rsquo;s basic profile (email address) to identify the connected account.</>,
+    <>{strong("How we use it.")} Calendar data is used solely to check availability and to create, update, or cancel appointment events on the connected calendar on the practice&rsquo;s behalf. We do not use Google user data for advertising, and we never sell it.</>,
+    <>{strong("What we store.")} We store only the OAuth refresh token, the connected account&rsquo;s email address, and the identifier and name of the selected calendar &mdash; the minimum needed to keep the connection working. We do not copy or archive the contents of your calendar.</>,
+    <>{strong("Sharing.")} Google user data is never shared with third parties, except the service providers that host our infrastructure, and only as needed to operate the service.</>,
+    <>{strong("Revoking access.")} A practice can disconnect its calendar at any time from the HANA dashboard, which deletes the stored token, or revoke HANA&rsquo;s access directly at <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">myaccount.google.com/permissions</a>.</>,
+  ],
+  gapiNote: (
+    <>
+      HANA&rsquo;s use and transfer of information received from Google APIs adheres to the{" "}
+      <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Google API Services User Data Policy</a>, including the Limited Use requirements.
+    </>
+  ),
   s15Title: "Changes to this Privacy Policy",
   s15Body: (
     <>
@@ -239,7 +262,7 @@ const COPY_IT: Copy = {
     "Come HANA Health, Inc. raccoglie, utilizza, divulga e protegge le informazioni personali dei visitatori del sito hana.health, inclusi i tuoi diritti in materia di privacy ai sensi del GDPR e delle leggi statali statunitensi.",
   eyebrow: "HANA Health, Inc.",
   title: "Informativa sulla Privacy",
-  dates: "Data di entrata in vigore: 14 giugno 2026  |  Ultimo aggiornamento: 14 giugno 2026",
+  dates: "Data di entrata in vigore: 14 giugno 2026  |  Ultimo aggiornamento: 3 agosto 2026",
   intro: (
     <>
       HANA Health, Inc. (&ldquo;HANA&rdquo;, &ldquo;noi&rdquo; o &ldquo;nostro&rdquo;) rispetta la tua privacy. La presente Informativa sulla Privacy descrive come raccogliamo, utilizziamo, divulghiamo e proteggiamo le informazioni personali quando visiti o interagisci con il sito {strong("hana.health")} e le pagine correlate (collettivamente, il &ldquo;Sito&rdquo;), nonché i diritti e le scelte in materia di privacy a tua disposizione. Utilizzando il Sito, accetti la presente Informativa sulla Privacy.
@@ -296,7 +319,7 @@ const COPY_IT: Copy = {
   s5ColProvider: "Fornitore",
   s5ColPurpose: "Finalità",
   s5Rows: [
-    { term: "Google LLC", meaning: "Analisi del sito web e gestione dei tag (Google Analytics 4, Google Tag Manager)." },
+    { term: "Google LLC", meaning: "Analisi del sito web e gestione dei tag (Google Analytics 4, Google Tag Manager); API di Google Calendar per l’integrazione facoltativa del calendario descritta nella Sezione 15." },
     { term: "Calendly LLC", meaning: "Pianificazione e prenotazione delle chiamate demo." },
     { term: "Typeform S.L. (VideoAsk)", meaning: "Video interattivo incorporato, ove utilizzato." },
     { term: "FormSubmit", meaning: "Recapito via email al nostro team delle richieste inviate tramite il modulo di contatto." },
@@ -371,6 +394,25 @@ const COPY_IT: Copy = {
   s14Body: (
     <>
       Il Sito può contenere link a siti web e servizi di terze parti (ad esempio, prenotazioni, documentazione o social media). Non siamo responsabili delle loro pratiche in materia di privacy e ti invitiamo a esaminare le rispettive informative sulla privacy.
+    </>
+  ),
+  gapiTitle: "Servizi API di Google e dati di calendario",
+  gapiIntro: (
+    <>
+      HANA offre un&rsquo;integrazione facoltativa del calendario che consente a una struttura sanitaria di collegare il proprio Google Calendar, così che gli appuntamenti prenotati tramite HANA compaiano nell&rsquo;agenda della struttura. Questa sezione descrive come trattiamo i dati utente di Google ricevuti attraverso tale integrazione.
+    </>
+  ),
+  gapiItems: [
+    <>{strong("A cosa accediamo.")} Quando un amministratore della struttura collega un account Google, HANA richiede l&rsquo;autorizzazione a visualizzare le disponibilità del calendario e a creare e gestire eventi di calendario (ambiti OAuth di Google: <code className="text-[13px]">calendar.events</code> e <code className="text-[13px]">calendar.readonly</code>), oltre al profilo di base dell&rsquo;account (indirizzo email) per identificare l&rsquo;account collegato.</>,
+    <>{strong("Come li utilizziamo.")} I dati di calendario sono utilizzati esclusivamente per verificare le disponibilità e per creare, aggiornare o annullare eventi di appuntamento sul calendario collegato, per conto della struttura. Non utilizziamo i dati utente di Google a fini pubblicitari e non li vendiamo mai.</>,
+    <>{strong("Cosa conserviamo.")} Conserviamo soltanto il refresh token OAuth, l&rsquo;indirizzo email dell&rsquo;account collegato e l&rsquo;identificativo e il nome del calendario selezionato &mdash; il minimo necessario per mantenere attiva la connessione. Non copiamo né archiviamo i contenuti del tuo calendario.</>,
+    <>{strong("Condivisione.")} I dati utente di Google non sono mai condivisi con terze parti, ad eccezione dei fornitori di servizi che ospitano la nostra infrastruttura, e solo nella misura necessaria a erogare il servizio.</>,
+    <>{strong("Revoca dell’accesso.")} La struttura può scollegare il proprio calendario in qualsiasi momento dalla dashboard HANA &mdash; operazione che elimina il token conservato &mdash; oppure revocare l&rsquo;accesso di HANA direttamente da <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">myaccount.google.com/permissions</a>.</>,
+  ],
+  gapiNote: (
+    <>
+      L&rsquo;utilizzo e il trasferimento da parte di HANA delle informazioni ricevute dalle API di Google sono conformi alla{" "}
+      <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Google API Services User Data Policy</a>, inclusi i requisiti di Limited Use (uso limitato).
     </>
   ),
   s15Title: "Modifiche alla presente Informativa sulla Privacy",
@@ -575,15 +617,26 @@ export function Privacy() {
             </p>
           </Section>
 
-          {/* 15 */}
-          <Section number="15" title={COPY.s15Title}>
+          {/* 15 — Google API Services disclosure (required for OAuth verification) */}
+          <Section number="15" title={COPY.gapiTitle}>
+            <p className="mb-4">{COPY.gapiIntro}</p>
+            <ul className="list-disc pl-6 space-y-2">
+              {COPY.gapiItems.map((item, i) => (
+                <li key={i}>{item}</li>
+              ))}
+            </ul>
+            <p className="mt-4">{COPY.gapiNote}</p>
+          </Section>
+
+          {/* 16 */}
+          <Section number="16" title={COPY.s15Title}>
             <p>
               {COPY.s15Body}
             </p>
           </Section>
 
-          {/* 16 */}
-          <Section number="16" title={COPY.s16Title}>
+          {/* 17 */}
+          <Section number="17" title={COPY.s16Title}>
             <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 text-[15px]">
               <p className="font-semibold text-[#1e2a3a] mb-1">{COPY.s16Company}</p>
               <p>{COPY.s16Privacy} <a href="mailto:privacy@hana.health" className="text-blue-600 hover:underline">privacy@hana.health</a></p>
