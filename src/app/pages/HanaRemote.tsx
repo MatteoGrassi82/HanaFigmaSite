@@ -135,7 +135,7 @@ const R_FAQS = [
   },
   {
     q: "What languages do you support?",
-    a: "HANA calls patients in 3+ languages, switching automatically per patient — no separate configuration or phone lines required.",
+    a: "HANA calls patients in 30+ languages, switching automatically per patient. No separate configuration or phone lines required.",
   },
 ];
 

@@ -25,7 +25,8 @@ import { ArrowRight } from "lucide-react";
  *    minutes"; HANA prepares documentation, a named clinician attests.
  *  - ACCESS is pulled from all public Remote copy (Matteo, 2026-08-04) — do
  *    not list it as a supported program here.
- *  - Language claim is "3+ languages", never "any language".
+ *  - Language claim is "30+ languages" (Matteo confirmed the number,
+ *    2026-08-04), never "any language".
  */
 
 type Row = { label: string; chip: string; tone: "positive" | "neutral" | "accent" };

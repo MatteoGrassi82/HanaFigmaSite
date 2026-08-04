@@ -80,7 +80,7 @@ export function IntegrationsSection() {
                 </p>
                 
                 <div className="flex flex-wrap gap-[10px]">
-                   {["Voice calls", "SMS", "WhatsApp", "iMessage", "3+ languages"].map(item => (
+                   {["Voice calls", "SMS", "WhatsApp", "iMessage", "30+ languages"].map(item => (
                      <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-slate-50 border border-slate-200 text-[13px] font-medium text-[#1e2a3a] transition-colors hover:bg-slate-100 hover:border-slate-300 tracking-[0.01em]">
                        <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-blue-500"></span>
                        {item}
