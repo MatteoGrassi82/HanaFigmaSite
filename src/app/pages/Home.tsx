@@ -7,6 +7,7 @@ import { useTranslations, getLocale } from "../../lib/i18n";
 const AgenticFrameworkCarousel = lazy(() => import("../components/AgenticFrameworkCarousel").then((m) => ({ default: m.AgenticFrameworkCarousel })));
 import { ComplianceSection } from "../components/ComplianceSection";
 import { PatientEngagement } from "../components/PatientEngagement";
+import { ProductsIntro } from "../components/ProductsIntro";
 import { CaseStudiesSection } from "../components/CaseStudiesSection";
 import { ProofBento } from "../components/ui/proof-bento";
 import { LoopDiagram } from "../components/ui/loop-diagram";
@@ -68,6 +69,9 @@ export function Home({
 
       {/* §1b — WHY HANA (animated bar columns + comparison) */}
       <WhyHana />
+
+      {/* §1c — THE TWO PRODUCTS (HANA Contact + HANA Remote → their pages) */}
+      <ProductsIntro />
 
       {/* §2 — HOW IT WORKS */}
       <LoopDiagram />

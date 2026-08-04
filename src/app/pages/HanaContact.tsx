@@ -30,7 +30,7 @@ const WITH_HANA = [
   "Staff focused on patients, not phones",
   "Automatic outbound follow-up & recall",
   "Structured notes written back to the EHR",
-  "Any language, any time of day",
+  "3+ languages, any time of day",
 ];
 const WITHOUT_HANA = [
   "Missed calls after hours and at lunch",
@@ -70,7 +70,7 @@ const FAQS = [
   },
   {
     q: "What languages do you support?",
-    a: "HANA handles calls in any language your patients speak, switching automatically based on the caller — no separate lines or configuration required.",
+    a: "HANA handles calls in 3+ languages, switching automatically based on the caller — no separate lines or configuration required.",
   },
   {
     q: "How does pricing work?",
@@ -85,7 +85,7 @@ export function HanaContact() {
         title="HANA Contact — AI Front Desk for Clinics"
         useExactTitle
         type="product"
-        description="HANA Contact handles every inbound call, outreach, and patient follow-up your team doesn't have time for — automatically, in any language, 24/7, and directly inside your EHR."
+        description="HANA Contact handles every inbound call, outreach, and patient follow-up your team doesn't have time for — automatically, in 3+ languages, 24/7, and directly inside your EHR."
         path="/hana-contact"
         keywords="AI front desk, clinic phone automation, patient call automation, AI receptionist, EHR integration, missed call recovery, patient outreach automation"
         jsonLd={breadcrumbSchema([
@@ -477,7 +477,7 @@ const PIPELINE_OUTCOMES = ["Fewer missed calls", "Staff hours saved", "Faster pa
 const PIPELINE_STAGES = [
   {
     key: "Answer",
-    short: "Picks up every call, text, and transfer instantly — in any language, 24/7.",
+    short: "Picks up every call, text, and transfer instantly — in 3+ languages, 24/7.",
     detail:
       "HANA answers on your existing phone lines the moment a patient reaches out — inbound calls, texts, staff transfers, and after-hours overflow. No hold music, no voicemail, no missed patient. It greets, listens, and stays on the line for as long as the patient needs.",
     stat: "30%",

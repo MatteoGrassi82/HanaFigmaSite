@@ -23,6 +23,7 @@ export function Preview() {
       />
 
       {/* ── Sections under construction ──────────────────────────────────── */}
+      {/* ProductsIntro graduated to Home §1c (2026-08-04). */}
       <LoopDiagram />
       <ClientFeedback />
 

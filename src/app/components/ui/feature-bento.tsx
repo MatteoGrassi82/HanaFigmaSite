@@ -227,11 +227,11 @@ function LanguageCard() {
       {/* copy */}
       <div className="mt-6 lg:mt-auto lg:pt-6">
         <div className="flex items-baseline gap-2">
-          <span className="font-serif text-4xl text-slate-900 leading-none">30+</span>
+          <span className="font-serif text-4xl text-slate-900 leading-none">3+</span>
           <span className="text-[15px] font-medium text-slate-400">languages</span>
         </div>
         <h3 className="mt-3 text-[19px] sm:text-[21px] font-semibold text-slate-900 leading-snug">
-          Speaks every patient&rsquo;s language
+          Speaks 3+ languages
         </h3>
         <p className="mt-2 text-[14.5px] leading-[1.6] text-slate-500">
           Detects the caller&rsquo;s language automatically and replies in it — switching mid-conversation, no interpreter line, no wait.

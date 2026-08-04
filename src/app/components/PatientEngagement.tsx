@@ -52,7 +52,7 @@ export function PatientEngagement() {
               </div>
             </Illustration>
             <Caption>
-              Speaks <Em>every</Em> patient&rsquo;s language, live on the call
+              Speaks <Em>3+ languages</Em>, live on the call
             </Caption>
           </Card>
 

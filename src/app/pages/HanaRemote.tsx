@@ -13,7 +13,7 @@ const DEMO_URL = "https://calendly.com/matteowastaken/discoverycall";
 
 /**
  * HANA Remote — product page for the engagement layer that sits on top of
- * remote care programs (CCM / APCM / BHI / RTM / ACCESS / Sleep, plus RPM where
+ * remote care programs (CCM / APCM / BHI / RTM / Sleep, plus RPM where
  * the practice already has devices).
  *
  * POSITIONING GUARDRAIL — read before editing copy on this page.
@@ -21,7 +21,7 @@ const DEMO_URL = "https://calendly.com/matteowastaken/discoverycall";
  * an FDA-defined medical device that transmits data automatically; patient
  * self-report does not qualify, and DOJ's first RPM False Claims settlement
  * (Health Wealth Safe, $1.29M) was exactly this fact pattern. So:
- *   - device-less = CCM / APCM / BHI / ACCESS (and RTM where a SaMD determination
+ *   - device-less = CCM / APCM / BHI (and RTM where a SaMD determination
  *     applies). Voice check-ins are legitimately the covered activity there.
  *   - RPM is supported as an *engagement layer* on top of the customer's existing
  *     devices — device/wearable API data, never self-reported readings.
@@ -93,7 +93,7 @@ const HOW_BLOCKS = [
     key: "Document",
     title: "Document to the EHR",
     short: "Structured data, ready for your clinician to attest.",
-    detail: "The moment the call ends, structured data is written back to your EHR — attributed to the named clinician who owns the patient, ready for their review and attestation across CCM, APCM, BHI, RTM and ACCESS Pathway 4. 150+ integrations.",
+    detail: "The moment the call ends, structured data is written back to your EHR — attributed to the named clinician who owns the patient, ready for their review and attestation across CCM, APCM, BHI and RTM. 150+ integrations.",
     stat: "150+",
     statLabel: "EHR integrations · CCM · APCM · RTM",
     proof: "Direct EHR write-back",
@@ -111,11 +111,11 @@ const PROGRAM_WORKFLOW_TAGS = [
 const R_FAQS = [
   {
     q: "Do my patients need a device or an app?",
-    a: "Not for the programs HANA Remote runs device-free — CCM, APCM, behavioral health integration and ACCESS, where the covered activity is the care-management contact itself. Nothing is shipped, downloaded, or charged to the patient. If your patients already use wearables or connected devices, that device data flows in via API alongside the conversation.",
+    a: "Not for the programs HANA Remote runs device-free — CCM, APCM and behavioral health integration, where the covered activity is the care-management contact itself. Nothing is shipped, downloaded, or charged to the patient. If your patients already use wearables or connected devices, that device data flows in via API alongside the conversation.",
   },
   {
     q: "Is this device-less RPM?",
-    a: "No, and we're deliberate about that. RPM codes (99453/99454/99457) require an FDA-defined medical device that transmits readings automatically — a patient reading a number to us over the phone does not satisfy them, and billing RPM that way is what the DOJ's first RPM False Claims settlement was about. On RPM, HANA Remote is the engagement layer on top of the devices you already use: the device transmits, HANA keeps the patient engaged and transmitting. The device-free programs are CCM, APCM, BHI and ACCESS.",
+    a: "No, and we're deliberate about that. RPM codes (99453/99454/99457) require an FDA-defined medical device that transmits readings automatically — a patient reading a number to us over the phone does not satisfy them, and billing RPM that way is what the DOJ's first RPM False Claims settlement was about. On RPM, HANA Remote is the engagement layer on top of the devices you already use: the device transmits, HANA keeps the patient engaged and transmitting. The device-free programs are CCM, APCM and BHI.",
   },
   {
     q: "Does this replace my clinicians' billable time?",
@@ -123,7 +123,7 @@ const R_FAQS = [
   },
   {
     q: "How does the billing actually work?",
-    a: "HANA Remote produces the documentation the codes require; your qualified staff supply and attest to the time. Every interaction is written back as a structured note attributed to a named clinician, across CCM, APCM, BHI, RTM (98975–98981) and ACCESS Pathway 4 — so the person who bills is the person who did the clinical work, with the record to show it.",
+    a: "HANA Remote produces the documentation the codes require; your qualified staff supply and attest to the time. Every interaction is written back as a structured note attributed to a named clinician, across CCM, APCM, BHI and RTM (98975–98981) — so the person who bills is the person who did the clinical work, with the record to show it.",
   },
   {
     q: "We already run RPM with devices. Why would we add this?",
@@ -134,12 +134,8 @@ const R_FAQS = [
     a: "You export the month and hand it over. Every check-in stores its transcript and structured note, every care-management minute is attributed to the named clinician who supplied it, every escalation records who received it and what they did, and program consent is captured in the patient's own words on the enrollment call. That's the packet an auditor asks for — assembled as the program runs, not reconstructed afterwards.",
   },
   {
-    q: "What is ACCESS, and can we use HANA Remote for it?",
-    a: "ACCESS is the CMS program launched in July 2026. HANA Remote is live inside ACCESS — if you're an enrolled participant or working toward enrollment, HANA Remote serves as your engagement layer under Pathway 4.",
-  },
-  {
     q: "What languages do you support?",
-    a: "HANA calls patients in any language they speak, switching automatically per patient — no separate configuration or phone lines required.",
+    a: "HANA calls patients in 3+ languages, switching automatically per patient — no separate configuration or phone lines required.",
   },
 ];
 
@@ -746,9 +742,9 @@ export function HanaRemote() {
         title="HANA Remote — The Engagement Layer for Remote Care"
         useExactTitle
         type="product"
-        description="HANA Remote is the device-less engagement layer for remote care programs — CCM, APCM, BHI, RTM and ACCESS. Voice check-ins reach 85% of patients and produce structured documentation your clinician attests to, inside your EHR."
+        description="HANA Remote is the device-less engagement layer for remote care programs — CCM, APCM, BHI and RTM. Voice check-ins reach 85% of patients and produce structured documentation your clinician attests to, inside your EHR."
         path="/hana-remote"
-        keywords="remote care engagement layer, device-less patient engagement, chronic care management software, APCM, behavioral health integration, remote therapeutic monitoring, CPAP adherence program, voice AI patient outreach, ACCESS program, RPM engagement layer"
+        keywords="remote care engagement layer, device-less patient engagement, chronic care management software, APCM, behavioral health integration, remote therapeutic monitoring, CPAP adherence program, voice AI patient outreach, RPM engagement layer"
         // FAQPage as well as the breadcrumb: these six Q&As are the most
         // directly citable content on the page — "Is this device-less RPM?"
         // has a definitive answer that answer engines can lift verbatim.
@@ -781,7 +777,7 @@ export function HanaRemote() {
             transition={{ duration: 0.5, delay: 0.12 }}
             className="text-[17px] md:text-[19px] leading-[1.6] text-slate-700 mt-7 mb-0 mx-auto max-w-[54ch]"
           >
-            HANA keeps patients engaged across CCM, APCM, BHI, RTM &amp; ACCESS — and keeps the
+            HANA keeps patients engaged across CCM, APCM, BHI &amp; RTM — and keeps the
             devices in your existing RPM program transmitting.
             <em className="text-[#5b76d9] not-italic font-semibold"> Documented to your EHR, ready for your clinician to attest.</em>
           </motion.p>
@@ -821,7 +817,7 @@ export function HanaRemote() {
               The program dies before it pays for itself.
             </h2>
             <p className="text-[16px] leading-[1.7] text-slate-700 m-0">
-              Remote care is reimbursable — CCM, APCM, BHI, RTM, RPM, ACCESS. The codes exist and the
+              Remote care is reimbursable — CCM, APCM, BHI, RTM, RPM. The codes exist and the
               money is there. Programs still fail for one reason: patients don't answer, don't use the
               devices you ship, and don't open the apps you send. No engagement, no data, nothing to bill.
             </p>
@@ -887,7 +883,7 @@ export function HanaRemote() {
 
             <QBlock
               q="Does it actually count for billing?"
-              a="HANA doesn't bill and doesn't generate clinical minutes. It writes the structured note the moment the call ends, so your clinician reviews and attests — CCM, APCM, BHI, RTM, ACCESS."
+              a="HANA doesn't bill and doesn't generate clinical minutes. It writes the structured note the moment the call ends, so your clinician reviews and attests — CCM, APCM, BHI, RTM."
             >
               <div className="flex flex-wrap items-center gap-2 text-[12.5px]">
                 <span className="text-slate-500">Call ends</span>
@@ -901,7 +897,7 @@ export function HanaRemote() {
 
             <QBlock
               q="Do I ship a device or make them download an app?"
-              a="Not for the device-free programs — CCM, APCM, BHI and ACCESS. The conversation is the care contact. Where a program requires a device, its data flows in via API."
+              a="Not for the device-free programs — CCM, APCM and BHI. The conversation is the care contact. Where a program requires a device, its data flows in via API."
             >
               <div className="flex flex-wrap gap-2 text-[13px] font-semibold text-[#00122F]">
                 {["No device", "No app", "No behavior change"].map((t) => (
@@ -941,7 +937,7 @@ export function HanaRemote() {
         tags={PROGRAM_WORKFLOW_TAGS}
         tag="The programs"
         heading="One platform. Every monitoring program."
-        body="RPM, RTM, chronic and behavioral care, post-op, ACCESS — every reimbursable program runs as a built-in call workflow, documented to the chart for attestation. Tap any card to see the steps."
+        body="RPM, RTM, chronic and behavioral care, post-op — every reimbursable program runs as a built-in call workflow, documented to the chart for attestation. Tap any card to see the steps."
       />
 
       {/* PROOF — two clinician testimonials (reused approved quotes), enlarged */}
@@ -1034,7 +1030,7 @@ export function HanaRemote() {
             </motion.div>
           </div>
           <motion.div {...fadeUp} className="flex flex-wrap gap-2.5 mt-10">
-            {["$1.4K recovered per patient", "150+ EHR integrations", "45+ clinical protocols", "4M+ patient interactions", "Live in the CMS ACCESS program"].map((c) => (
+            {["$1.4K recovered per patient", "150+ EHR integrations", "45+ clinical protocols", "4M+ patient interactions"].map((c) => (
               <span key={c} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200 text-[13px] font-medium text-[#00122F]">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#5b76d9]" aria-hidden="true" />
                 {c}
