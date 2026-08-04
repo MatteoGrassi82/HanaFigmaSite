@@ -11,8 +11,9 @@ import { ArrowRight } from "lucide-react";
  * Tile Health teardown: each card answers "is this for me?" — a photo of the
  * person it serves, the activity feed as the product's answer, a pain headline
  * in the visitor's words ("didn't get hired to be a call center / dialer"),
- * one line of copy, a proof stat, and an audio-flavored CTA. Kept deliberately
- * sparse (Matteo: "too busy too much text" on the fuller version — the cut
+ * one line of copy, a proof stat, and a CTA into the product page. Kept
+ * deliberately
+ * sparse (Matteo: "too busy too much text" on the fuller version. The cut
  * "this is you if" bullets live on in the product pages). A footer band
  * carries the shared one-engine line and the "What Hana never does" boundary.
  *
@@ -66,7 +67,7 @@ const PRODUCTS: Product[] = [
     ],
     stat: "53% fewer day-of cancellations · live in a week",
     href: "/hana-contact",
-    cta: "Hear it take a call",
+    cta: "Discover HANA Contact",
   },
   {
     eyebrow: "HANA Remote · Full-stack care coordination",
@@ -86,7 +87,7 @@ const PRODUCTS: Product[] = [
     ],
     stat: "2.3x the patients per coordinator · 340% more clinical data captured",
     href: "/hana-remote",
-    cta: "Hear it run a check-in",
+    cta: "Discover HANA Remote",
   },
 ];
 
