@@ -466,11 +466,23 @@ const SITE_AGENTS_IT: Record<string, { assistantEnv: string; fallback: string }>
   coordination: { assistantEnv: "VAPI_SITE_ASSISTANT_COORDINATION_IT", fallback: "c34a2840-d4da-4d47-991a-b23dc5562830" },
 };
 
-// Region → the Twilio from-number (SMS) + the Vapi phoneNumberId (caller-ID).
-// US covers US/Canada; EU uses the UK number.
-const SITE_REGIONS: Record<string, { fromEnv: string; fromFallback: string; vapiPhoneEnv: string; vapiPhoneFallback: string }> = {
-  US: { fromEnv: "TWILIO_SITE_FROM_US", fromFallback: "+14632170155", vapiPhoneEnv: "VAPI_SITE_PHONE_US", vapiPhoneFallback: "3f412051-5b3b-485c-92fc-eef207d55409" },
-  EU: { fromEnv: "TWILIO_SITE_FROM_UK", fromFallback: "+447897023174", vapiPhoneEnv: "VAPI_SITE_PHONE_UK", vapiPhoneFallback: "22c61779-ef10-4d09-9d41-0c71e4b6d81b" },
+// Region → the Twilio from-number (SMS) + the Vapi phoneNumberId (caller-ID) + the
+// Bland from-number (caller-ID on the Bland path). US covers US/Canada; EU uses the
+// UK number.
+//
+// The Bland leg needs its own entry because the two providers identify a caller-ID
+// differently: Vapi takes a phoneNumberId (an id for a number imported INTO Vapi),
+// Bland takes the E.164 number itself and will only accept one that exists in the
+// Bland account. So the same physical number has to be registered on both platforms
+// to be usable by both, and `blandFromEnv` is deliberately a separate value rather
+// than being derived from `fromEnv`.
+//
+// No fallback numbers here on purpose: a wrong-but-plausible Bland from-number fails
+// the call with "you might not own this number", so an unset secret should surface as
+// a missing-config error rather than silently dialing from the wrong region.
+const SITE_REGIONS: Record<string, { fromEnv: string; fromFallback: string; vapiPhoneEnv: string; vapiPhoneFallback: string; blandFromEnv: string }> = {
+  US: { fromEnv: "TWILIO_SITE_FROM_US", fromFallback: "+14632170155", vapiPhoneEnv: "VAPI_SITE_PHONE_US", vapiPhoneFallback: "3f412051-5b3b-485c-92fc-eef207d55409", blandFromEnv: "BLAND_SITE_FROM_US" },
+  EU: { fromEnv: "TWILIO_SITE_FROM_UK", fromFallback: "+447897023174", vapiPhoneEnv: "VAPI_SITE_PHONE_UK", vapiPhoneFallback: "22c61779-ef10-4d09-9d41-0c71e4b6d81b", blandFromEnv: "BLAND_SITE_FROM_EU" },
 };
 
 const E164 = /^\+[1-9]\d{7,14}$/;
@@ -544,6 +556,81 @@ async function placeVapiCall(assistantId: string, phoneNumberId: string, to: str
   const data = await res.json();
   if (!res.ok) throw new Error(`Vapi call failed (${res.status}): ${JSON.stringify(data).slice(0, 200)}`);
   return data?.id ?? data?.results?.[0]?.id ?? null;
+}
+
+// ── Bland: the second voice provider for the ENGLISH demo ───────────────────
+// Which provider dials is decided per call rather than globally, so a partial
+// rollout is a valid state: SITE_DEMO_PROVIDER=bland turns Bland on, and then only
+// for a use case that actually has a persona id set. Everything else falls through
+// to Vapi untouched — one use case on Bland and three on Vapi is fine.
+//
+// lang='it' NEVER goes to Bland: the voice this exists to use (Karen) is BTTS_V3,
+// which is English-only, so the Italian twins stay on Vapi regardless of the switch.
+const BLAND_PERSONA_ENV: Record<string, string> = {
+  monitoring:   "BLAND_SITE_PERSONA_MONITORING",
+  intake:       "BLAND_SITE_PERSONA_INTAKE",
+  outreach:     "BLAND_SITE_PERSONA_OUTREACH",
+  coordination: "BLAND_SITE_PERSONA_COORDINATION",
+};
+
+function blandPersonaFor(agentKey: string, lang: "en" | "it"): string | null {
+  if (Deno.env.get("SITE_DEMO_PROVIDER") !== "bland") return null;
+  if (lang !== "en") return null;
+  const envName = BLAND_PERSONA_ENV[agentKey];
+  return (envName ? Deno.env.get(envName) : null) || null;
+}
+
+// Place a Bland outbound call against a persona. Returns the call id.
+//
+// The report webhook is set PER CALL, not on the persona: /v1/calls documents a
+// `webhook` param, while the persona's call_config does not have one. It carries the
+// shared token in the URL because that is how the dashboard authenticates Bland
+// (its signing secret isn't exposed on every account) — without the token the
+// dashboard 401s every event and the demo call never appears.
+//
+// `request_data` is Bland's equivalent of Vapi's variableValues, and we send the
+// SAME contact keys, so the dashboard recovers the visitor's real name/email/phone
+// from either provider with no change on that end.
+async function placeBlandCall(
+  personaId: string,
+  to: string,
+  from: string | null,
+  vars: Record<string, string>,
+): Promise<string | null> {
+  const apiKey = Deno.env.get("BLAND_API_KEY");
+  if (!apiKey) throw new Error("Missing BLAND_API_KEY");
+  const token = Deno.env.get("BLAND_WEBHOOK_TOKEN");
+  if (!token) throw new Error("Missing BLAND_WEBHOOK_TOKEN — the dashboard rejects unauthenticated Bland events");
+  const appBase = (Deno.env.get("APP_BASE_URL") || "https://demoaccountdashboard.vercel.app").replace(/\/$/, "");
+
+  // A number imported from our own Twilio account (BYOT) is only dialable when this
+  // header rides along; harmless when the number is Bland's own.
+  const encryptedKey = Deno.env.get("BLAND_TWILIO_ENCRYPTED_KEY");
+
+  const res = await fetch("https://api.bland.ai/v1/calls", {
+    method: "POST",
+    headers: {
+      // Bland's call endpoints document a BARE key here — no "Bearer " prefix.
+      authorization: apiKey,
+      "content-type": "application/json",
+      ...(encryptedKey ? { encrypted_key: encryptedKey } : {}),
+    },
+    body: JSON.stringify({
+      persona_id: personaId,
+      phone_number: to,
+      ...(from ? { from } : {}),
+      webhook: `${appBase}/api/webhook/site?k=${token}`,
+      webhook_events: ["call"],
+      request_data: vars,
+    }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(`Bland call failed (${res.status}): ${JSON.stringify(data).slice(0, 200)}`);
+  // Bland can answer 200 with status:'error' — treat that as a failure, not a call.
+  if (data?.status && data.status !== "success") {
+    throw new Error(`Bland refused the call: ${data.message ?? data.status}`);
+  }
+  return data?.call_id ?? null;
 }
 
 // POST: start the demo — text the prospect the 4 options, record a pending row.
@@ -625,19 +712,34 @@ app.post("/make-server-77ada9a1/site-demo-sms-inbound", async (c) => {
       : (Deno.env.get(agent.assistantEnv) || agent.fallback);
     const phoneNumberId = Deno.env.get(reg.vapiPhoneEnv) || reg.vapiPhoneFallback;
 
+    // Forwarded so the dashboard saves the visitor's real contact details (the
+    // webhook reads these back from the end-of-call report). Identical for both
+    // providers — Vapi takes them as variableValues, Bland as request_data.
+    const callVars = {
+      customer_name: row.name || "there",
+      caller_name: row.name || "",
+      caller_email: row.email || "",
+      caller_phone: from,
+    };
+    const personaId = blandPersonaFor(agentKey, lang);
+    const provider = personaId ? "bland" : "vapi";
+
     try {
-      const callId = await placeVapiCall(assistantId, phoneNumberId, from, {
-        customer_name: row.name || "there",
-        // Forwarded so the dashboard saves the visitor's real contact details
-        // (the webhook reads these back from the end-of-call report).
-        caller_name: row.name || "",
-        caller_email: row.email || "",
-        caller_phone: from,
-      });
-      await kv.set(`sitedemo:${from}`, { ...row, status: "called", agent: agentKey, agent_label: agent.label, call_id: callId, updated_at: new Date().toISOString() });
+      // Bland dials from a number in the BLAND account, so the region map's Vapi
+      // phoneNumberId doesn't apply on that path — the region's Bland number picks
+      // the caller ID instead, so a European visitor is called from the UK number
+      // that texted them rather than a US one. BLAND_SITE_FROM stays supported as a
+      // single-number fallback (that was the whole config before regions existed).
+      // The SMS legs are untouched either way: the opener and the inbound reply are
+      // Twilio-direct and don't know which provider dials.
+      const blandFrom = Deno.env.get(reg.blandFromEnv) || Deno.env.get("BLAND_SITE_FROM") || null;
+      const callId = personaId
+        ? await placeBlandCall(personaId, from, blandFrom, callVars)
+        : await placeVapiCall(assistantId, phoneNumberId, from, callVars);
+      await kv.set(`sitedemo:${from}`, { ...row, status: "called", agent: agentKey, agent_label: agent.label, provider, call_id: callId, updated_at: new Date().toISOString() });
     } catch (err) {
-      console.error("[site-demo-sms-inbound] vapi call failed:", err);
-      await kv.set(`sitedemo:${from}`, { ...row, status: "failed", agent: agentKey, updated_at: new Date().toISOString() });
+      console.error(`[site-demo-sms-inbound] ${provider} call failed:`, err);
+      await kv.set(`sitedemo:${from}`, { ...row, status: "failed", agent: agentKey, provider, updated_at: new Date().toISOString() });
     }
     return xml(EMPTY_TWIML);
   } catch (error) {
