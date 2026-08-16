@@ -9,9 +9,9 @@ import { Check } from "lucide-react";
  * "partnership" bento. Built to the Hana design language (Instrument Serif
  * display via `font-serif`, DM Sans body, navy #00122F ink, #5b76d9 accent).
  */
-export function PatientEngagement() {
+export function PatientEngagement({ white = false }: { white?: boolean } = {}) {
   return (
-    <section className="bg-[#f6f7fb] py-20 sm:py-24 lg:py-[100px] px-5 sm:px-6 lg:px-8 font-sans">
+    <section className={`py-20 sm:py-24 lg:py-[100px] px-5 sm:px-6 lg:px-8 font-sans ${white ? "bg-white" : "bg-[#f6f7fb]"}`}>
       <div className="max-w-7xl mx-auto">
 
         {/* ── Header ── */}
@@ -71,7 +71,7 @@ export function PatientEngagement() {
               </svg>
             </Illustration>
             <Caption>
-              Clinical AI <Em>we run ourselves</Em> — not a wrapper
+              Clinical AI <Em>we run ourselves</Em>, not a wrapper
             </Caption>
           </Card>
 
@@ -106,7 +106,7 @@ export function PatientEngagement() {
               </div>
             </Illustration>
             <Caption>
-              Scored on <Em>every</Em> conversation — sentiment, QA, outcomes
+              Scored on <Em>every</Em> conversation: sentiment, QA, outcomes
             </Caption>
           </Card>
 

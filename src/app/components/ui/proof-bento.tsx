@@ -91,14 +91,14 @@ function Gauge() {
   );
 }
 
-function Stat({ v, suf, label }: { v: string; suf: string; label: React.ReactNode }) {
+function Stat({ v, suf, label, soft = false }: { v: string; suf: string; label: React.ReactNode; soft?: boolean }) {
   return (
     <div>
       <div className="flex items-baseline gap-1.5">
-        <span className="font-serif text-5xl leading-none text-white md:text-6xl">{v}</span>
-        <span className="font-serif text-3xl" style={{ color: ACCENT }}>{suf}</span>
+        <span className={`font-serif text-5xl leading-none md:text-6xl ${soft ? "text-[#0A1633]" : "text-white"}`}>{v}</span>
+        <span className="font-serif text-3xl" style={{ color: soft ? "#2563EB" : ACCENT }}>{suf}</span>
       </div>
-      <p className="mt-2 text-sm leading-snug" style={{ color: WHITE_DIM }}>{label}</p>
+      <p className="mt-2 text-sm leading-snug" style={{ color: soft ? "#475569" : WHITE_DIM }}>{label}</p>
     </div>
   );
 }
@@ -165,21 +165,42 @@ const TILES: Tile[] = [
   { k: "statDecor", span: "col-span-1 lg:col-span-3", bg: NAVY2, decor: "rects", v: "11", suf: "%", label: <>higher show<br />rate</> },
 ];
 
-function Cell({ t, i, timelineRef }: { t: Tile; i: number; timelineRef: React.RefObject<HTMLElement | null> }) {
+/* `soft` mode (used on /remote-v2): the same bento structure, but the stat tiles
+   swap the navy checkerboard for soft gradients and drop the geometric decor, so
+   each tile carries one number and nothing else. Default stays the navy look, so
+   the homepage is unaffected. */
+const SOFT_TILES = [
+  "bg-gradient-to-br from-[#F7F9FF] via-[#EEF2FC] to-[#E1E9F7] border border-slate-200/70",
+  "bg-gradient-to-br from-[#FAFAFF] via-[#F1EFFB] to-[#E7E3F7] border border-slate-200/70",
+  "bg-gradient-to-br from-[#FFFDF9] via-[#FBF4EC] to-[#F7E9DA] border border-slate-200/70",
+];
+
+/* `compact` (used on /remote-v2): drops the final row of four tiles (2×, Katie's
+   portrait, the 340% quote, 11% show rate) and moves Katie's portrait up into
+   the photo slot that held Lorri Hanes, so the grid ends on the two-quote
+   cluster and Katie still appears once. Home keeps the full 14-tile grid. */
+const COMPACT_TILES: Tile[] = TILES.slice(0, -4).map((t) =>
+  t.k === "video" && t.caption.startsWith("Lorri")
+    ? { ...t, caption: "Katie Murphy Psy.D. · Founder of Penry", img: AV.katie }
+    : t,
+);
+
+function Cell({ t, i, timelineRef, soft = false }: { t: Tile; i: number; timelineRef: React.RefObject<HTMLElement | null>; soft?: boolean }) {
   const tc = (cls: string) => ({ animationNum: i, customVariants: revealVariants, timelineRef, className: `overflow-hidden rounded-2xl ${cls}` });
+  const tileBg = (orig: string) => (soft ? SOFT_TILES[i % SOFT_TILES.length] : orig);
 
   if (t.k === "statDecor")
     return (
-      <TimelineContent {...tc(`${t.span} ${t.bg} flex flex-col p-6`)}>
-        <div className="min-h-0 flex-1"><GeoDecor variant={t.decor} /></div>
-        <Stat v={t.v} suf={t.suf} label={t.label} />
+      <TimelineContent {...tc(`${t.span} ${tileBg(t.bg)} flex flex-col p-6`)}>
+        <div className="min-h-0 flex-1">{!soft && <GeoDecor variant={t.decor} />}</div>
+        <Stat v={t.v} suf={t.suf} label={t.label} soft={soft} />
       </TimelineContent>
     );
   if (t.k === "gauge")
     return (
-      <TimelineContent {...tc(`${t.span} ${t.bg} flex flex-col justify-between p-6`)}>
-        <Gauge />
-        <Stat v={t.v} suf={t.suf} label={t.label} />
+      <TimelineContent {...tc(`${t.span} ${tileBg(t.bg)} flex flex-col justify-between p-6`)}>
+        {soft ? <span /> : <Gauge />}
+        <Stat v={t.v} suf={t.suf} label={t.label} soft={soft} />
       </TimelineContent>
     );
   if (t.k === "video")
@@ -228,14 +249,15 @@ function Cell({ t, i, timelineRef }: { t: Tile; i: number; timelineRef: React.Re
     );
   if (t.k === "label")
     return (
-      <TimelineContent {...tc(`${t.span} ${NAVY} flex items-center p-6`)}>
+      <TimelineContent {...tc(`${t.span} ${tileBg(NAVY)} flex items-center p-6`)}>
         <span className="font-sans text-5xl font-bold uppercase tracking-tight text-white md:text-6xl">{t.text}</span>
       </TimelineContent>
     );
-  return <TimelineContent {...tc(`${t.span} ${NAVY}`)}><span /></TimelineContent>;
+  return <TimelineContent {...tc(`${t.span} ${tileBg(NAVY)}`)}><span /></TimelineContent>;
 }
 
-export function ProofBento() {
+export function ProofBento({ soft = false, compact = false }: { soft?: boolean; compact?: boolean } = {}) {
+  const tiles = compact ? COMPACT_TILES : TILES;
   const timelineRef = useRef<HTMLDivElement>(null);
   const tc = (n: number, cls: string, as: "h2" | "p") => ({ animationNum: n, customVariants: revealVariants, timelineRef, className: cls, as });
   return (
@@ -251,8 +273,8 @@ export function ProofBento() {
         </div>
 
         <div className="grid grid-cols-1 gap-3 auto-rows-[minmax(180px,auto)] sm:grid-cols-2 sm:auto-rows-[minmax(215px,1fr)] lg:grid-cols-12">
-          {TILES.map((t, i) => (
-            <Cell key={i} t={t} i={i} timelineRef={timelineRef} />
+          {tiles.map((t, i) => (
+            <Cell key={i} t={t} i={i} timelineRef={timelineRef} soft={soft} />
           ))}
         </div>
       </div>

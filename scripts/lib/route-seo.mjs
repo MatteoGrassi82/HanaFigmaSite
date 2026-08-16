@@ -67,6 +67,53 @@ export const STATIC_ROUTES = [
 // through to <NotFound>, so they must not be prerendered or listed in its sitemap.
 export const EN_ONLY_ROUTES = ['/access', '/case-studies', '/state-of-ai', '/use-cases'];
 
+/**
+ * Real app routes that must answer 200 but must never be indexed.
+ *
+ * These are internal preview/sandbox pages (see the docblock at the top of each
+ * page component). They were never prerendered, so until now the vercel.json
+ * catch-all answered them with the full prerendered homepage — 200, homepage
+ * <title>, `canonical=https://www.hana.health/` — i.e. four more homepage
+ * duplicates for Google. Now that unknown paths return a real 404 (api/not-found.ts)
+ * they must be prerendered, or they would start 404ing instead.
+ *
+ * They get `robots: noindex, nofollow`, which also keeps them out of sitemap.xml
+ * (writeHeadOnly only sitemaps routes whose robots lack "noindex").
+ *
+ * /preview already asks for this itself via <SEO robots="noindex, nofollow">;
+ * /demo, /bento and /proof have no <SEO> block at all, so prerender.mjs forces it.
+ *
+ * NOT included, deliberately: /test-webhook. It fires a Supabase → Zapier test
+ * webhook on mount (src/app/components/TestWebhook.tsx), so a public 200 lets
+ * anyone inject test leads by loading the URL. Leaving it out of every route list
+ * means it now 404s in production while still working in `npm run dev`.
+ */
+// /remote-v2 is the in-progress rebuild of /hana-remote (src/app/pages/RemoteV2.tsx)
+// — remove it from here and from App.tsx when it replaces the live page.
+export const NOINDEX_ROUTES = ['/demo', '/preview', '/bento', '/proof', '/remote-v2'];
+
+/**
+ * Paths handled by a real server-side 301 in vercel.json.
+ *
+ * App.tsx also declares these as client-side <Navigate>, which only ever runs for
+ * in-app navigation — a crawler hitting /use-cases directly got the homepage at
+ * 200, not a redirect. Listed here so the App.tsx coverage check below knows they
+ * are accounted for rather than missing.
+ */
+export const REDIRECT_ROUTES = ['/research', '/use-cases'];
+
+/**
+ * Routes that exist in App.tsx for local development but must NOT be reachable in
+ * production. They are deliberately left out of every prerender list, so the
+ * vercel.json catch-all sends them to api/not-found.ts and they answer 404.
+ *
+ * /test-webhook fires a Supabase → Zapier test webhook from a useEffect on mount
+ * (src/app/components/TestWebhook.tsx), so while it answered 200 in production
+ * anyone who loaded the URL — or any crawler that executes JS — injected a test
+ * lead. `npm run dev` still serves it, which is the only place it is useful.
+ */
+export const DEV_ONLY_ROUTES = ['/test-webhook'];
+
 // Links surfaced in the <noscript> block so a non-JS crawler can still reach the
 // rest of the site from any page it lands on.
 export const NAV_LINKS = [

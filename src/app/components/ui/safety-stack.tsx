@@ -35,7 +35,7 @@ const LAYERS_EN: Layer[] = [
   {
     id: "observability",
     name: "Observability",
-    line: "Non-deterministic agents are continuously monitored — every decision logged, anomalies caught and circuit-broken.",
+    line: "Non-deterministic agents are continuously monitored: every decision logged, anomalies caught and circuit-broken.",
     icon: Activity,
     glass: "linear-gradient(150deg, rgba(0,18,47,0.82), rgba(8,20,70,0.82))",
     tx: 150,
@@ -53,7 +53,7 @@ const LAYERS_EN: Layer[] = [
   {
     id: "protocols",
     name: "Protocols",
-    line: "Hana acts only inside the clinical protocols and guardrails you define — never a model's own judgment.",
+    line: "Hana acts only inside the clinical protocols and guardrails you define, never a model's own judgment.",
     icon: BookLock,
     glass: "linear-gradient(150deg, rgba(59,130,246,0.80), rgba(12,58,158,0.80))",
     tx: -50,
@@ -172,7 +172,10 @@ const CSS = `
 /* Order the auto-cycle steps through, back → front. */
 const CYCLE_IDS = ["observability", "human", "protocols", "encryption"];
 
-export function SafetyStack() {
+/** `light` renders the section on white for pages that are light end to end.
+ *  The glass stack still needs a dark ground, so in light mode it sits inside a
+ *  navy tile while the heading and the layer list go light. */
+export function SafetyStack({ light = false }: { light?: boolean } = {}) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.3 });
   const [hovered, setHovered] = useState<string | null>(null);
@@ -214,12 +217,19 @@ export function SafetyStack() {
   };
 
   return (
-    <section className="relative w-full overflow-hidden py-20 md:py-28" style={{ backgroundColor: NAVY }}>
+    <section
+      className="relative w-full overflow-hidden py-20 md:py-28"
+      style={{ backgroundColor: light ? "#ffffff" : NAVY }}
+    >
       <style>{CSS}</style>
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-[-200px] z-0 h-[800px] w-[800px] -translate-x-1/2"
-        style={{ background: "radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%)" }}
+        style={{
+          background: light
+            ? "radial-gradient(circle, rgba(37,99,235,0.07) 0%, transparent 70%)"
+            : "radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%)",
+        }}
       />
       <div className="relative z-10 mx-auto px-4 md:px-8">
         <div ref={ref} className="relative mx-auto max-w-7xl">
@@ -227,9 +237,9 @@ export function SafetyStack() {
             aria-hidden
             className="pointer-events-none absolute inset-0"
             style={{
-              backgroundImage: `radial-gradient(${DOT_GRID} 0.6px, transparent 0.6px)`,
+              backgroundImage: `radial-gradient(${light ? "#0A1633" : DOT_GRID} 0.6px, transparent 0.6px)`,
               backgroundSize: "22px 22px",
-              opacity: 0.05,
+              opacity: light ? 0.06 : 0.05,
             }}
           />
 
@@ -240,7 +250,7 @@ export function SafetyStack() {
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0 }}
               transition={{ duration: 0.4 }}
               className="text-xs font-semibold uppercase tracking-[0.2em]"
-              style={{ color: SKY }}
+              style={{ color: light ? "#2563EB" : SKY }}
             >
               {COPY.eyebrow}
             </motion.span>
@@ -248,7 +258,7 @@ export function SafetyStack() {
               initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0 }}
               transition={{ duration: 0.5, delay: 0.08 }}
-              className="mt-4 font-serif text-3xl leading-tight text-white md:text-[2.6rem] md:leading-[1.15]"
+              className={`mt-4 font-serif text-3xl leading-tight md:text-[2.6rem] md:leading-[1.15] ${light ? "text-[#0A1633]" : "text-white"}`}
             >
               {COPY.heading}
             </motion.h2>
@@ -257,7 +267,7 @@ export function SafetyStack() {
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0 }}
               transition={{ duration: 0.5, delay: 0.16 }}
               className="mx-auto mt-5 max-w-xl text-base leading-relaxed"
-              style={{ color: INK_SOFT }}
+              style={{ color: light ? "#475569" : INK_SOFT }}
             >
               {COPY.intro}
             </motion.p>
@@ -269,7 +279,8 @@ export function SafetyStack() {
               initial={{ opacity: 0, scale: 0.94 }}
               animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0 }}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.25 }}
-              className="flex h-[520px] flex-1 items-center justify-center"
+              className={`flex h-[520px] flex-1 items-center justify-center ${light ? "rounded-[28px]" : ""}`}
+              style={light ? { backgroundColor: "#0A1633" } : undefined}
               onMouseMove={onMove}
               onMouseLeave={onLeave}
             >
@@ -311,6 +322,7 @@ export function SafetyStack() {
                     inView={inView}
                     hovered={hovered}
                     setHovered={setHovered}
+                    light={light}
                   />
                 );
               })}
@@ -318,7 +330,7 @@ export function SafetyStack() {
           </div>
 
           {/* ── Mobile: flat card stack ────────────────────────────────────── */}
-          <MobileLayers inView={inView} hovered={hovered} setHovered={setHovered} />
+          <MobileLayers inView={inView} hovered={hovered} setHovered={setHovered} light={light} />
         </div>
       </div>
 
@@ -343,10 +355,12 @@ function LayerRow({
   inView,
   hovered,
   setHovered,
+  light = false,
 }: {
   layer: Layer;
   index: number;
   inView: boolean;
+  light?: boolean;
   hovered: string | null;
   setHovered: (id: string | null) => void;
 }) {
@@ -362,23 +376,31 @@ function LayerRow({
       transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
       className="cursor-pointer rounded-2xl border p-4 transition-colors"
       style={{
-        backgroundColor: active ? "rgba(255,192,145,0.10)" : "rgba(255,255,255,0.03)",
-        borderColor: active ? "rgba(255,192,145,0.45)" : "rgba(255,255,255,0.08)",
+        backgroundColor: light
+          ? active ? "rgba(37,99,235,0.06)" : "#F8FAFC"
+          : active ? "rgba(255,192,145,0.10)" : "rgba(255,255,255,0.03)",
+        borderColor: light
+          ? active ? "rgba(37,99,235,0.35)" : "rgba(10,22,51,0.10)"
+          : active ? "rgba(255,192,145,0.45)" : "rgba(255,255,255,0.08)",
       }}
     >
       <div className="flex items-center gap-3">
         <span
           className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border"
           style={{
-            borderColor: active ? PEACH : "rgba(255,255,255,0.18)",
-            backgroundColor: active ? "rgba(255,192,145,0.18)" : "rgba(255,255,255,0.06)",
+            borderColor: light
+              ? active ? "#2563EB" : "rgba(10,22,51,0.16)"
+              : active ? PEACH : "rgba(255,255,255,0.18)",
+            backgroundColor: light
+              ? active ? "rgba(37,99,235,0.12)" : "#EFF3FF"
+              : active ? "rgba(255,192,145,0.18)" : "rgba(255,255,255,0.06)",
           }}
         >
           <Icon className="h-[18px] w-[18px]" strokeWidth={1.8} style={{ color: active ? PEACH : "#fff" }} />
         </span>
-        <h3 className="text-base font-semibold tracking-tight text-white">{layer.name}</h3>
+        <h3 className={`text-base font-semibold tracking-tight ${light ? "text-[#0A1633]" : "text-white"}`}>{layer.name}</h3>
       </div>
-      <motion.p animate={{ opacity: active ? 1 : 0.7 }} className="mt-2 text-[12px] leading-relaxed" style={{ color: INK_SOFT }}>
+      <motion.p animate={{ opacity: active ? 1 : 0.7 }} className="mt-2 text-[12px] leading-relaxed" style={{ color: light ? "#475569" : INK_SOFT }}>
         {layer.line}
       </motion.p>
     </motion.div>
@@ -390,10 +412,12 @@ function MobileLayers({
   inView,
   hovered,
   setHovered,
+  light = false,
 }: {
   inView: boolean;
   hovered: string | null;
   setHovered: (id: string | null) => void;
+  light?: boolean;
 }) {
   return (
     <div className="relative z-10 mx-auto flex w-full max-w-md flex-col gap-3 md:hidden">
@@ -412,23 +436,31 @@ function MobileLayers({
             transition={{ duration: 0.4, delay: 0.2 + i * 0.1 }}
             className="rounded-2xl border p-4 text-left"
             style={{
-              backgroundColor: isActive ? "rgba(255,192,145,0.10)" : "rgba(255,255,255,0.04)",
-              borderColor: isActive ? "rgba(255,192,145,0.45)" : "rgba(255,255,255,0.1)",
+              backgroundColor: light
+                ? isActive ? "rgba(37,99,235,0.06)" : "#F8FAFC"
+                : isActive ? "rgba(255,192,145,0.10)" : "rgba(255,255,255,0.04)",
+              borderColor: light
+                ? isActive ? "rgba(37,99,235,0.35)" : "rgba(10,22,51,0.10)"
+                : isActive ? "rgba(255,192,145,0.45)" : "rgba(255,255,255,0.1)",
             }}
           >
             <div className="flex items-center gap-3">
               <span
                 className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border"
                 style={{
-                  borderColor: isActive ? PEACH : "rgba(255,255,255,0.2)",
-                  backgroundColor: isActive ? "rgba(255,192,145,0.18)" : "rgba(255,255,255,0.06)",
+                  borderColor: light
+                    ? isActive ? "#2563EB" : "rgba(10,22,51,0.16)"
+                    : isActive ? PEACH : "rgba(255,255,255,0.2)",
+                  backgroundColor: light
+                    ? isActive ? "rgba(37,99,235,0.12)" : "#EFF3FF"
+                    : isActive ? "rgba(255,192,145,0.18)" : "rgba(255,255,255,0.06)",
                 }}
               >
                 <Icon className="h-5 w-5" strokeWidth={1.8} style={{ color: isActive ? PEACH : "#fff" }} />
               </span>
-              <span className="text-base font-semibold tracking-tight text-white">{layer.name}</span>
+              <span className={`text-base font-semibold tracking-tight ${light ? "text-[#0A1633]" : "text-white"}`}>{layer.name}</span>
             </div>
-            <p className="mt-2 text-[13px] leading-relaxed" style={{ color: INK_SOFT }}>
+            <p className="mt-2 text-[13px] leading-relaxed" style={{ color: light ? "#475569" : INK_SOFT }}>
               {layer.line}
             </p>
           </motion.button>

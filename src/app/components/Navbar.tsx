@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Menu, X, Sparkle } from "lucide-react";
 import { cn } from "../../lib/utils";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import logoImage from 'figma:asset/55130a9cc9a8f890dc08e580a5cf6dd0df0df413.png';
 import { useTranslations, getLocale } from "../../lib/i18n";
 
@@ -184,8 +184,19 @@ export const Navbar = (props: NavbarProps) => {
     };
   }, []);
 
+  // Routes with a full-height animated hero opt out of the sticky bar: an opaque
+  // sticky navbar slices the top of the hero artwork as soon as you scroll.
+  // Everywhere else the navbar stays sticky exactly as before.
+  const staticNavRoutes = ["/remote-v2"];
+  const isStaticNav = staticNavRoutes.includes(useLocation().pathname);
+
   return (
-    <section className="sticky top-0 z-[999] w-full border-b border-[#e2e8f0] bg-[#f5f6f8]/90 backdrop-blur-md">
+    <section
+      className={cn(
+        "top-0 z-[999] w-full border-b border-[#e2e8f0] bg-[#f5f6f8]/90 backdrop-blur-md",
+        isStaticNav ? "relative" : "sticky",
+      )}
+    >
       <div className="flex min-h-[80px] w-full max-w-7xl mx-auto items-center justify-between px-6 md:px-10 relative">
         
         {/* Left Side: Logo */}

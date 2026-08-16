@@ -11,13 +11,23 @@ import { useReducedMotion } from "motion/react";
 type Bar = { value: number; label: string; sub: string; highlight?: boolean };
 
 const BARS: Bar[] = [
-  { value: 58, label: "IVR phone tree", sub: "Touch-tone menus — most hang up before getting help" },
-  { value: 30, label: "Patient portals", sub: "Inbound only — the rest never log in" },
-  { value: 85, label: "3rd-gen voice AI", sub: "Natural, multi-turn — and the call actually finishes", highlight: true },
+  { value: 58, label: "IVR phone tree", sub: "Touch-tone menus. Most hang up before getting help" },
+  { value: 30, label: "Patient portals", sub: "Inbound only. The rest never log in" },
+  { value: 85, label: "3rd-gen voice AI", sub: "Natural, multi-turn, and the call actually finishes", highlight: true },
   { value: 33, label: "SMS reminders", sub: "One-turn texts that can't handle follow-up" },
 ];
 
-export function WhyHana() {
+/** The homepage renders this with its own copy; other pages can override the
+ *  header so the "What is Hana?" heading isn't duplicated across a single page. */
+export function WhyHana({
+  eyebrow = "Overview",
+  heading,
+  sub = "Share of patients actually reached, by channel. Legacy systems wait for the patient to act, and most never do. Hana reaches out, and the conversation finishes.",
+}: {
+  eyebrow?: string;
+  heading?: React.ReactNode;
+  sub?: string;
+} = {}) {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const [filled, setFilled] = useState(false);
@@ -57,14 +67,17 @@ export function WhyHana() {
       {/* Header */}
       <div className="max-w-[640px] mx-auto text-center">
         <div className="text-[12px] font-bold uppercase tracking-[2.5px] text-[#5b76d9] mb-5">
-          Overview
+          {eyebrow}
         </div>
         <h2 className="font-serif font-medium text-[38px] md:text-[56px] leading-[1.04] tracking-[-0.025em] text-[#00122F] m-0">
-          What is <span className="italic text-[#5b76d9]">Hana?</span>
+          {heading ?? (
+            <>
+              What is <span className="italic text-[#5b76d9]">Hana?</span>
+            </>
+          )}
         </h2>
         <p className="mt-5 mx-auto max-w-[540px] text-[16px] leading-[1.7] text-[#5b6472] tracking-[-0.01em]">
-          Share of patients actually reached, by channel. Legacy systems wait for the patient to
-          act — most never do. Hana reaches out, and the conversation finishes.
+          {sub}
         </p>
       </div>
 
