@@ -441,6 +441,36 @@ async function main() {
         }
         await new Promise((r) => setTimeout(r, 300));
 
+        // Fire every scroll-triggered reveal before capturing.
+        //
+        // 28 component files animate their sections in with motion's
+        // `whileInView`, which is an IntersectionObserver. Puppeteer's default
+        // viewport is 800x600 and nothing here ever scrolled, so every section
+        // below the first 600px never intersected, and motion left its initial
+        // `opacity: 0` inline in the serialized HTML. Measured before this fix:
+        // 52% of the homepage's text, 62% of /hana-remote and 79% of /remote-v2
+        // were captured inside an opacity-0 node — invisible in exactly the
+        // static files this whole pipeline exists to produce. The text is in the
+        // DOM, so seo-check's byte-count assertion passed the whole time.
+        //
+        // Scrolling the document in viewport-sized steps triggers the observers
+        // in order, the same way a reader would. Cheap, and it fixes all 28
+        // files at once without touching a single component.
+        await page.evaluate(async () => {
+          const step = window.innerHeight;
+          const height = () => document.documentElement.scrollHeight;
+          for (let y = 0; y < height(); y += step) {
+            window.scrollTo(0, y);
+            await new Promise((r) => setTimeout(r, 90));
+          }
+          window.scrollTo(0, height());
+          await new Promise((r) => setTimeout(r, 250));
+          window.scrollTo(0, 0);
+          await new Promise((r) => setTimeout(r, 120));
+        });
+        // Let the reveal transitions land on their final values.
+        await new Promise((r) => setTimeout(r, 500));
+
         let html = await page.content();
         // Strip the dev/preview origin if it leaked into any absolute URLs.
         html = html.replaceAll(base, DOMAIN);

@@ -14,6 +14,14 @@ import { cn } from "../../../lib/utils";
  * the first, the serif display heading, the rings and the reassurance row from
  * the second. Everything that was inline copy is now a prop with a default.
  *
+ * WHAT THE SWAP MUST CARRY (not defaults, so pass them)
+ * ReadyToUseSection is mounted on Home and reads t.cta.* from src/lib/i18n.ts,
+ * so it renders in Italian on ita.hana.health. This band hardcodes English, per
+ * the library rule against growing the dictionary. Home must therefore pass
+ * heading/body/buttons from `t` when it swaps, or the Italian home loses its
+ * translated close. It also carried a third button, "Read docs" ->
+ * https://docs.hana.health/; the default pair here does not, so pass three.
+ *
  * PRERENDER
  * The build snapshots every route in headless Chrome and never scrolls, so a
  * closing band is always below the fold when the HTML is captured. That rules
@@ -74,7 +82,7 @@ const TONES = {
   navy: {
     section: "bg-navy",
     eyebrow: "text-brand-soft",
-    heading: "text-white [&_em]:not-italic [&_em]:text-brand-soft",
+    heading: "text-white [&_em]:italic [&_em]:font-normal [&_em]:text-brand-soft",
     body: "text-white/75",
     ring: "border-white/10",
     glow: "bg-brand/25",
@@ -87,7 +95,7 @@ const TONES = {
   light: {
     section: "bg-paper border-t border-rule-soft",
     eyebrow: "text-brand",
-    heading: "text-navy [&_em]:not-italic [&_em]:text-brand",
+    heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-brand",
     body: "text-ink-soft",
     ring: "border-brand/15",
     glow: "bg-brand/10",
@@ -101,7 +109,7 @@ const TONES = {
 
 const BUTTON_BASE =
   "inline-flex items-center justify-center gap-2 rounded-pill px-7 py-3.5 text-[15px] font-semibold no-underline " +
-  "transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2";
+  "transition-colors duration-200 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2";
 
 function isRoute(href: string): boolean {
   return href.startsWith("/") && !href.startsWith("//");
@@ -151,7 +159,7 @@ export function CtaBand({
         <h2
           id={headingId}
           className={cn(
-            "font-serif font-normal text-[36px] sm:text-[46px] md:text-display leading-[1.04] tracking-[-0.01em] max-w-[18ch] mx-auto mt-0 mb-0",
+            "font-serif font-normal text-[36px] sm:text-[46px] md:text-display leading-[1.04] tracking-[-0.01em] max-w-[20ch] mx-auto mt-0 mb-0",
             c.heading
           )}
         >
@@ -166,14 +174,17 @@ export function CtaBand({
           <div className="mt-9 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
             {buttons.map((btn) => {
               const variant = btn.variant ?? "primary";
+              const external = isExternal(btn.href);
               const classes = cn(BUTTON_BASE, c.focus, variant === "primary" ? c.primary : c.ghost, "group");
               const label = (
                 <>
                   {btn.label}
+                  {/* A new tab is a change of context, so say so for screen readers. */}
+                  {external && <span className="sr-only"> (opens in a new tab)</span>}
                   {variant === "primary" && (
                     <ArrowRight
                       aria-hidden="true"
-                      className="w-[18px] h-[18px] transition-transform duration-200 group-hover:translate-x-1"
+                      className="w-[18px] h-[18px] transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
                     />
                   )}
                 </>
@@ -191,7 +202,7 @@ export function CtaBand({
                   key={btn.href + btn.label}
                   href={btn.href}
                   className={classes}
-                  {...(isExternal(btn.href) ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 >
                   {label}
                 </a>
