@@ -96,7 +96,7 @@ export function SleepTwoProducts() {
                   <motion.polyline
                     points={HYPNO_POINTS}
                     fill="none"
-                    stroke="#A7BCF5"
+                    stroke="var(--color-brand-soft)"
                     strokeWidth="2"
                     strokeLinejoin="round"
                     strokeLinecap="round"

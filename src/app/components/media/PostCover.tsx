@@ -15,10 +15,10 @@ type TopicKey = "voice" | "readmissions" | "infrastructure" | "engagement" | "in
 const TOPICS: { key: TopicKey; test: RegExp; label: string; accent: string; a: string; b: string }[] = [
   { key: "voice", test: /voice|outbound|\bagent|\bcall\b|inbound|receptionist/i, label: "Voice AI", accent: "#c4b5fd", a: "#7c6cf0", b: "#4338ca" },
   { key: "readmissions", test: /readmission|discharge|follow-?up|reminder|behav|communication/i, label: "Readmissions", accent: "#5eead4", a: "#22d3ee", b: "#0e7490" },
-  { key: "infrastructure", test: /architect|infrastructure|production|pilot|never reach|scale|89%|70%|11%|3\.7/i, label: "AI Infrastructure", accent: "#A7BCF5", a: "#5b76d9", b: "#3b3f8f" },
+  { key: "infrastructure", test: /architect|infrastructure|production|pilot|never reach|scale|89%|70%|11%|3\.7/i, label: "AI Infrastructure", accent: "var(--color-brand-soft)", a: "var(--color-brand)", b: "#3b3f8f" },
   { key: "engagement", test: /engage|patient|outreach/i, label: "Patient Engagement", accent: "#7dd3fc", a: "#38bdf8", b: "#1d4ed8" },
 ];
-const DEFAULT_TOPIC = { key: "insights" as TopicKey, label: "Insights", accent: "#A7BCF5", a: "#5b76d9", b: "#3b3f8f" };
+const DEFAULT_TOPIC = { key: "insights" as TopicKey, label: "Insights", accent: "var(--color-brand-soft)", a: "var(--color-brand)", b: "#3b3f8f" };
 
 function topicFor(post: Post) {
   const haystack = `${post.title} ${post.slug?.current ?? ""}`;

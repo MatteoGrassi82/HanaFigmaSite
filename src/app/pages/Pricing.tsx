@@ -165,7 +165,7 @@ function SlideTypeSelect({ value, onChange, onNext, nextLabel }: {
         ))}
       </div>
       <button onClick={onNext} disabled={!value}
-        className="w-full bg-[#00122F] text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors disabled:opacity-30 disabled:cursor-default">
+        className="w-full bg-navy text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors disabled:opacity-30 disabled:cursor-default">
         {nextLabel} <ArrowRight className="w-4 h-4" />
       </button>
     </div>
@@ -194,7 +194,7 @@ function SlideProviders({ value, onChange, onNext, onBack, nextLabel, backLabel 
       <p className="text-center text-sm text-slate-400 font-light mb-10">provider{value > 1 ? "s" : ""}</p>
       <div className="flex gap-3">
         <button onClick={onBack} className="border border-slate-200 rounded-lg px-5 py-3 text-sm text-slate-500 hover:border-slate-400 hover:text-slate-700 transition-colors">{backLabel}</button>
-        <button onClick={onNext} className="flex-1 bg-[#00122F] text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors">
+        <button onClick={onNext} className="flex-1 bg-navy text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors">
           {nextLabel} <ArrowRight className="w-4 h-4" />
         </button>
       </div>
@@ -248,7 +248,7 @@ function SlideMods({ mods, wfs, onChange, onNext, onBack, nextLabel, backLabel }
       <div className="flex gap-3">
         <button onClick={onBack} className="border border-slate-200 rounded-lg px-5 py-3 text-sm text-slate-500 hover:border-slate-400 hover:text-slate-700 transition-colors">{backLabel}</button>
         <button onClick={onNext} disabled={!anyMod}
-          className="flex-1 bg-[#00122F] text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors disabled:opacity-30 disabled:cursor-default">
+          className="flex-1 bg-navy text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors disabled:opacity-30 disabled:cursor-default">
           {nextLabel} <ArrowRight className="w-4 h-4" />
         </button>
       </div>
@@ -328,7 +328,7 @@ function SlideWorkflows({ mods, wfs, onChange, onNext, onBack, nextLabel, backLa
       <div className="flex gap-3">
         <button onClick={onBack} className="border border-slate-200 rounded-lg px-5 py-3 text-sm text-slate-500 hover:border-slate-400 hover:text-slate-700 transition-colors">{backLabel}</button>
         <button onClick={onNext} disabled={!anyWF}
-          className="flex-1 bg-[#00122F] text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors disabled:opacity-30 disabled:cursor-default">
+          className="flex-1 bg-navy text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors disabled:opacity-30 disabled:cursor-default">
           {nextLabel} <ArrowRight className="w-4 h-4" />
         </button>
       </div>
@@ -407,7 +407,7 @@ function SlideVolumes({ mods, wfs, vols, onChange, onNext, onBack, nextLabel, ba
       <div className="flex gap-3">
         <button onClick={onBack} className="border border-slate-200 rounded-lg px-5 py-3 text-sm text-slate-500 hover:border-slate-400 hover:text-slate-700 transition-colors">{backLabel}</button>
         <button onClick={onNext}
-          className="flex-1 bg-[#00122F] text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors">
+          className="flex-1 bg-navy text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors">
           {nextLabel} <ArrowRight className="w-4 h-4" />
         </button>
       </div>
@@ -447,7 +447,7 @@ function SlideResult({ providers, mods, wfs, vols, onBack, bookCallLabel, backTo
       <div className="rounded-xl overflow-hidden border border-slate-200 mb-5">
         <table className="w-full text-xs sm:text-sm">
           <thead>
-            <tr className="bg-[#00122F] text-slate-300">
+            <tr className="bg-navy text-slate-300">
               <th className="text-left px-2.5 sm:px-4 py-3 text-[10px] tracking-[1.5px] uppercase font-normal">Workflow</th>
               <th className="text-right px-2.5 sm:px-4 py-3 text-[10px] tracking-[1.5px] uppercase font-normal">HANA</th>
               <th className="text-right px-2.5 sm:px-4 py-3 text-[10px] tracking-[1.5px] uppercase font-normal">Current cost</th>
@@ -474,7 +474,7 @@ function SlideResult({ providers, mods, wfs, vols, onBack, bookCallLabel, backTo
         </table>
       </div>
 
-      <div className="bg-[#00122F] rounded-xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="bg-navy rounded-xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <p className="text-white font-medium text-sm mb-1">Ready to confirm your numbers?</p>
           <p className="text-slate-400 text-xs font-light leading-relaxed">Book a 20-minute call. We'll calculate your exact projection using your actual workflows before any commitment.</p>

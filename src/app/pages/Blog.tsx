@@ -30,7 +30,7 @@ export function Blog() {
       />
       <div className="bg-white min-h-screen">
         {/* Hero */}
-        <section className="bg-[#00122F] text-white py-20 px-4">
+        <section className="bg-navy text-white py-20 px-4">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-blue-400 text-sm font-semibold tracking-widest uppercase mb-4">Hana Health</p>
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl tracking-normal mb-4 leading-[1.1]">

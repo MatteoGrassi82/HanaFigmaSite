@@ -215,7 +215,7 @@ export const Navbar = (props: NavbarProps) => {
               <SmartLink
                 key={index}
                 href={navLink.url}
-                className="text-[15px] font-medium text-[#1e2a3a] hover:text-[#2d3f54] transition-colors font-sans"
+                className="text-[15px] font-medium text-navy-soft hover:text-[#2d3f54] transition-colors font-sans"
               >
                 {navLink.title}
               </SmartLink>
@@ -232,7 +232,7 @@ export const Navbar = (props: NavbarProps) => {
           
           <button
             ref={buttonRef}
-            className="flex items-center justify-center lg:hidden min-h-[44px] min-w-[44px] p-2 text-[#1e2a3a]"
+            className="flex items-center justify-center lg:hidden min-h-[44px] min-w-[44px] p-2 text-navy-soft"
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMobileMenuOpen}
@@ -260,7 +260,7 @@ export const Navbar = (props: NavbarProps) => {
                   <SmartLink
                     key={index}
                     href={navLink.url}
-                    className="text-lg font-medium text-[#1e2a3a] py-3 font-sans"
+                    className="text-lg font-medium text-navy-soft py-3 font-sans"
                   >
                     {navLink.title}
                   </SmartLink>
@@ -285,7 +285,7 @@ const SubMenu = ({ navLink, isMobile }: { navLink: NavLink; isMobile: boolean })
     return (
       <div className="flex flex-col">
         <button
-          className="flex w-full items-center justify-between text-lg font-medium text-[#1e2a3a] py-3 font-sans"
+          className="flex w-full items-center justify-between text-lg font-medium text-navy-soft py-3 font-sans"
           onClick={() => setIsDropdownOpen((prev) => !prev)}
         >
           <span>{navLink.title}</span>
@@ -303,7 +303,7 @@ const SubMenu = ({ navLink, isMobile }: { navLink: NavLink; isMobile: boolean })
                 <SmartLink
                   key={index}
                   href={subMenuLink.url}
-                  className="flex items-center min-h-[44px] py-3 text-[#718096] hover:text-[#1e2a3a] font-sans"
+                  className="flex items-center min-h-[44px] py-3 text-[#718096] hover:text-navy-soft font-sans"
                 >
                   {subMenuLink.title}
                 </SmartLink>
@@ -322,7 +322,7 @@ const SubMenu = ({ navLink, isMobile }: { navLink: NavLink; isMobile: boolean })
       onMouseLeave={() => setIsDropdownOpen(false)}
     >
       <button
-        className="flex items-center gap-1 text-[15px] font-medium text-[#1e2a3a] hover:text-[#2d3f54] transition-colors font-sans"
+        className="flex items-center gap-1 text-[15px] font-medium text-navy-soft hover:text-[#2d3f54] transition-colors font-sans"
       >
         <span>{navLink.title}</span>
         <ChevronDown className={cn("h-4 w-4 transition-transform duration-200", isDropdownOpen && "rotate-180")} />
@@ -341,7 +341,7 @@ const SubMenu = ({ navLink, isMobile }: { navLink: NavLink; isMobile: boolean })
                 <SmartLink
                   key={index}
                   href={subMenuLink.url}
-                  className="block px-4 py-2 text-sm text-[#718096] hover:bg-[#f5f6f8] hover:text-[#1e2a3a] rounded-lg transition-colors font-sans"
+                  className="block px-4 py-2 text-sm text-[#718096] hover:bg-[#f5f6f8] hover:text-navy-soft rounded-lg transition-colors font-sans"
                 >
                   {subMenuLink.title}
                 </SmartLink>
@@ -359,10 +359,10 @@ const Button = ({ className, title, variant = "primary", href, ...props }: Butto
     // Styles matching the "Book a demo" button from the other component
     const baseStyles = "inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-[15px] font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 min-h-[44px] group";
     const variants = {
-        primary: "bg-[#1e2a3a] text-white hover:bg-[#2d3f54] hover:-translate-y-[2px] shadow-sm hover:shadow-[0_8px_24px_rgba(30,42,58,0.2)]",
-        white: "bg-white text-[#1e2a3a] border border-[#e2e8f0] hover:bg-[#f5f6f8] hover:-translate-y-[2px] shadow-sm hover:shadow-[0_8px_24px_rgba(30,42,58,0.08)]",
-        secondary: "bg-[#f5f6f8] text-[#1e2a3a] hover:bg-[#e2e8f0]",
-        link: "text-[#1e2a3a] underline-offset-4 hover:underline",
+        primary: "bg-navy-soft text-white hover:bg-[#2d3f54] hover:-translate-y-[2px] shadow-sm hover:shadow-[0_8px_24px_rgba(30,42,58,0.2)]",
+        white: "bg-white text-navy-soft border border-[#e2e8f0] hover:bg-[#f5f6f8] hover:-translate-y-[2px] shadow-sm hover:shadow-[0_8px_24px_rgba(30,42,58,0.08)]",
+        secondary: "bg-[#f5f6f8] text-navy-soft hover:bg-[#e2e8f0]",
+        link: "text-navy-soft underline-offset-4 hover:underline",
     };
     // sparkle shown only on the white "Sign in" button (Book a Demo stays clean)
     const showSparkle = variant === 'white';

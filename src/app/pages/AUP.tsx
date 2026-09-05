@@ -6,7 +6,7 @@ function Section({ number, title, children }: { number?: string; title: string; 
   return (
     <div className="mb-10">
       <div className="border-b border-slate-200 pb-3 mb-6">
-        <h2 className="text-xl font-semibold text-[#1e2a3a] tracking-tight">
+        <h2 className="text-xl font-semibold text-navy-soft tracking-tight">
           {number ? `${number}. ${title}` : title}
         </h2>
       </div>
@@ -20,7 +20,7 @@ function Section({ number, title, children }: { number?: string; title: string; 
 function Sub({ number, title, children }: { number: string; title: string; children: React.ReactNode }) {
   return (
     <div className="mt-6">
-      <h3 className="text-base font-semibold text-[#1e2a3a] mb-3">{number} {title}</h3>
+      <h3 className="text-base font-semibold text-navy-soft mb-3">{number} {title}</h3>
       {children}
     </div>
   );
@@ -47,7 +47,7 @@ export function AUP() {
 
       <div className="bg-white min-h-screen">
         {/* Hero */}
-        <section className="bg-[#00122F] text-white py-20 px-4">
+        <section className="bg-navy text-white py-20 px-4">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-blue-400 text-sm font-semibold tracking-widest uppercase mb-4">HANA Health, Inc.</p>
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl tracking-normal mb-6 leading-[1.1]">
@@ -61,7 +61,7 @@ export function AUP() {
           </div>
         </section>
 
-        <div className="max-w-3xl mx-auto px-4 py-16 text-[#1e2a3a]">
+        <div className="max-w-3xl mx-auto px-4 py-16 text-navy-soft">
           <p className="text-[15px] leading-[1.8] text-[#718096] mb-12">
             {it
               ? 'La presente Politica di Uso Accettabile (la "AUP") descrive gli usi vietati e limitati dei servizi, dei prodotti e della piattaforma di HANA Health, Inc. (i "Servizi"). La presente AUP è incorporata mediante rinvio nel Contratto Quadro di Servizi HANA (il "Contratto") tra HANA e il Cliente. I termini con lettera maiuscola non definiti qui hanno il significato loro attribuito nel Contratto.'
@@ -84,9 +84,9 @@ export function AUP() {
           <Section number="2" title={it ? "Usi vietati" : "Prohibited uses"}>
             <p>
               {it ? (
-                <>Il Cliente e i suoi Utenti <strong className="text-[#1e2a3a]">non devono</strong>, e non devono consentire ad alcun terzo di:</>
+                <>Il Cliente e i suoi Utenti <strong className="text-navy-soft">non devono</strong>, e non devono consentire ad alcun terzo di:</>
               ) : (
-                <>Customer and its Users <strong className="text-[#1e2a3a]">must not</strong>, and must not allow any third party to:</>
+                <>Customer and its Users <strong className="text-navy-soft">must not</strong>, and must not allow any third party to:</>
               )}
             </p>
 
@@ -364,7 +364,7 @@ export function AUP() {
           <Section number="8" title={it ? "Contatti" : "Contact"}>
             <p>{it ? "Le domande relative alla presente AUP possono essere indirizzate a:" : "Questions regarding this AUP can be directed to:"}</p>
             <div className="mt-4 p-5 bg-slate-50 rounded-xl border border-slate-200 text-[15px]">
-              <p className="font-semibold text-[#1e2a3a] mb-1">HANA Health, Inc.</p>
+              <p className="font-semibold text-navy-soft mb-1">HANA Health, Inc.</p>
               <p>{it ? "Email: " : "Email: "}<a href="mailto:legal@hana.health" className="text-blue-600 hover:underline">legal@hana.health</a></p>
               <p>{it ? "Web: " : "Web: "}<a href="https://hana.health/aup" className="text-blue-600 hover:underline">hana.health/aup</a></p>
             </div>

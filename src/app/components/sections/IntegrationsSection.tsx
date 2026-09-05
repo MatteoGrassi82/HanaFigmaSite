@@ -8,7 +8,7 @@ export function IntegrationsSection() {
   const t = useTranslations();
   const i = t.integrations;
   return (
-    <section className="relative py-16 sm:py-20 lg:py-24 px-5 sm:px-6 lg:px-8 overflow-hidden bg-[#f5f6f8] text-[#1e2a3a]">
+    <section className="relative py-16 sm:py-20 lg:py-24 px-5 sm:px-6 lg:px-8 overflow-hidden bg-[#f5f6f8] text-navy-soft">
        {/* Ambient glow */}
        <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[400px] h-[400px] sm:w-[600px] sm:h-[600px] lg:w-[800px] lg:h-[800px] bg-[radial-gradient(circle,rgba(59,130,246,0.08)_0%,transparent_70%)] pointer-events-none z-0" />
 
@@ -21,7 +21,7 @@ export function IntegrationsSection() {
             ">
               {i.tag}
             </div>
-            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-normal leading-[1.1] text-[#1e2a3a] mb-5 tracking-normal">
+            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-normal leading-[1.1] text-navy-soft mb-5 tracking-normal">
               {i.heading} <em className="italic text-blue-600">{i.headingEmphasis}</em>
             </h2>
             <p className="text-lg leading-[1.65] text-[#718096] max-w-2xl mx-auto font-normal">
@@ -48,7 +48,7 @@ export function IntegrationsSection() {
                    </svg>
                 </div>
                 
-                <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">{i.ehr}</h3>
+                <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-navy-soft mb-2 tracking-normal">{i.ehr}</h3>
                 <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">{i.ehrTagline}</p>
                 <p className="text-[15px] leading-[1.7] text-[#718096] mb-8 font-normal">
                   {i.ehrBody}
@@ -56,7 +56,7 @@ export function IntegrationsSection() {
                 
                 <div className="flex flex-wrap gap-[10px]">
                    {["Athena Health", "Epic", "eClinicalWorks", "Redox", "95+ EHRs"].map(item => (
-                     <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-slate-50 border border-slate-200 text-[13px] font-medium text-[#1e2a3a] transition-colors hover:bg-slate-100 hover:border-slate-300 tracking-[0.01em]">
+                     <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-slate-50 border border-slate-200 text-[13px] font-medium text-navy-soft transition-colors hover:bg-slate-100 hover:border-slate-300 tracking-[0.01em]">
                        <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-blue-500"></span>
                        {item}
                      </span>
@@ -73,7 +73,7 @@ export function IntegrationsSection() {
                    </svg>
                 </div>
                 
-                <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">{i.channels}</h3>
+                <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-navy-soft mb-2 tracking-normal">{i.channels}</h3>
                 <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">{i.channelsTagline}</p>
                 <p className="text-[15px] leading-[1.7] text-[#718096] mb-8 font-normal">
                   {i.channelsBody}
@@ -81,7 +81,7 @@ export function IntegrationsSection() {
                 
                 <div className="flex flex-wrap gap-[10px]">
                    {["Voice calls", "SMS", "WhatsApp", "iMessage", "30+ languages"].map(item => (
-                     <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-slate-50 border border-slate-200 text-[13px] font-medium text-[#1e2a3a] transition-colors hover:bg-slate-100 hover:border-slate-300 tracking-[0.01em]">
+                     <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-slate-50 border border-slate-200 text-[13px] font-medium text-navy-soft transition-colors hover:bg-slate-100 hover:border-slate-300 tracking-[0.01em]">
                        <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-blue-500"></span>
                        {item}
                      </span>
@@ -98,7 +98,7 @@ export function IntegrationsSection() {
                    </svg>
                 </div>
                 
-                <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">{i.noEhr}</h3>
+                <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-navy-soft mb-2 tracking-normal">{i.noEhr}</h3>
                 <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">{i.noEhrTagline}</p>
                 <p className="text-[15px] leading-[1.7] text-[#718096] mb-8 font-normal">
                   {i.noEhrBody}
@@ -106,7 +106,7 @@ export function IntegrationsSection() {
                 
                 <div className="flex flex-wrap gap-[10px]">
                    {["Custom dashboards", "Agent control panel", "Works alongside your tools", "No tech requirements"].map(item => (
-                     <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-slate-50 border border-slate-200 text-[13px] font-medium text-[#1e2a3a] transition-colors hover:bg-slate-100 hover:border-slate-300 tracking-[0.01em]">
+                     <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-slate-50 border border-slate-200 text-[13px] font-medium text-navy-soft transition-colors hover:bg-slate-100 hover:border-slate-300 tracking-[0.01em]">
                        <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-blue-500"></span>
                        {item}
                      </span>
@@ -121,7 +121,7 @@ export function IntegrationsSection() {
                    <Code2 className="w-6 h-6" />
                 </div>
                 
-                <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">{i.sdk}</h3>
+                <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-navy-soft mb-2 tracking-normal">{i.sdk}</h3>
                 <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">{i.sdkTagline}</p>
                 <p className="text-[15px] leading-[1.7] text-[#718096] mb-8 font-normal">
                   {i.sdkBody}
@@ -129,7 +129,7 @@ export function IntegrationsSection() {
                 
                 <div className="flex flex-wrap gap-[10px] mb-8">
                    {["Full API", "White-label", "Custom dashboards", "Your branding", "SDK"].map(item => (
-                     <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-slate-50 border border-slate-200 text-[13px] font-medium text-[#1e2a3a] transition-colors hover:bg-slate-100 hover:border-slate-300 tracking-[0.01em]">
+                     <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-slate-50 border border-slate-200 text-[13px] font-medium text-navy-soft transition-colors hover:bg-slate-100 hover:border-slate-300 tracking-[0.01em]">
                        <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-blue-500"></span>
                        {item}
                      </span>
@@ -153,13 +153,13 @@ export function IntegrationsSection() {
                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                       </svg>
                    </div>
-                   <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-[#1e2a3a] mb-2 tracking-normal">{i.wearables}</h3>
+                   <h3 className="text-xl sm:text-2xl md:text-[26px] font-normal text-navy-soft mb-2 tracking-normal">{i.wearables}</h3>
                    <p className="text-[14px] leading-[1.5] text-blue-600 font-medium mb-4">{i.wearablesTagline}</p>
                    <p className="text-[15px] leading-[1.7] text-[#718096] font-normal max-w-[560px]">{i.wearablesBody}</p>
                 </div>
                 <div className="flex flex-wrap gap-[10px] md:max-w-[300px] md:justify-end">
                    {["Apple Watch", "Oura", "Fitbit", "Garmin"].map(item => (
-                     <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-slate-50 border border-slate-200 text-[13px] font-medium text-[#1e2a3a] transition-colors hover:bg-slate-100 hover:border-slate-300 tracking-[0.01em]">
+                     <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-slate-50 border border-slate-200 text-[13px] font-medium text-navy-soft transition-colors hover:bg-slate-100 hover:border-slate-300 tracking-[0.01em]">
                        <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-blue-500"></span>
                        {item}
                      </span>

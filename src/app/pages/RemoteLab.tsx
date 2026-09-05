@@ -117,7 +117,7 @@ const CLOCK = [
     when: "Day 0",
     title: "Setup",
     body: "Device delivered, patient trained, and the 90-day clock starts whether anyone is watching it or not.",
-    accent: "#5B76D9",
+    accent: "var(--color-brand)",
   },
   {
     when: "Days 1 – 7",
@@ -129,7 +129,7 @@ const CLOCK = [
     when: "Any 30 consecutive days",
     title: "21 of 30 nights, 4 hours or more",
     body: "That is the window Medicare actually scores. HANA tracks the running count and calls when the week starts slipping, while there is still time to recover it.",
-    accent: "#5B76D9",
+    accent: "var(--color-brand)",
   },
   {
     when: "Inside the same 90 days",
@@ -141,7 +141,7 @@ const CLOCK = [
     when: "Day 90",
     title: "The coverage decision",
     body: "Compliant, and the device is covered and resupply begins. Not compliant, and the machine can be recalled and the reimbursement is gone.",
-    accent: "#00122F",
+    accent: "var(--color-navy)",
   },
 ];
 

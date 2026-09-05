@@ -66,13 +66,13 @@ export function WhyHana({
     <section ref={ref} className="bg-white py-20 md:py-[120px] px-6 md:px-8">
       {/* Header */}
       <div className="max-w-[640px] mx-auto text-center">
-        <div className="text-[12px] font-bold uppercase tracking-[2.5px] text-[#5b76d9] mb-5">
+        <div className="text-[12px] font-bold uppercase tracking-[2.5px] text-brand mb-5">
           {eyebrow}
         </div>
-        <h2 className="font-serif font-medium text-[38px] md:text-[56px] leading-[1.04] tracking-[-0.025em] text-[#00122F] m-0">
+        <h2 className="font-serif font-medium text-[38px] md:text-[56px] leading-[1.04] tracking-[-0.025em] text-navy m-0">
           {heading ?? (
             <>
-              What is <span className="italic text-[#5b76d9]">Hana?</span>
+              What is <span className="italic text-brand">Hana?</span>
             </>
           )}
         </h2>
@@ -98,7 +98,7 @@ export function WhyHana({
                 className="absolute bottom-0 left-0 right-0 rounded-[20px] md:rounded-[32px]"
                 style={{
                   height: filled ? `${bar.value}%` : "0%",
-                  background: bar.highlight ? "#A7BCF5" : "rgba(0,18,47,0.82)",
+                  background: bar.highlight ? "var(--color-brand-soft)" : "rgba(0,18,47,0.82)",
                   transition: reduce ? undefined : "height 1s cubic-bezier(0.34,1.56,0.64,1)",
                 }}
               >
@@ -106,13 +106,13 @@ export function WhyHana({
                   {counts[i]}%
                 </div>
                 {bar.highlight && (
-                  <div className="absolute -top-[42px] left-1/2 -translate-x-1/2 bg-[#00122F] text-white text-[12px] md:text-[13px] font-semibold px-3 py-1.5 rounded-[10px] whitespace-nowrap">
+                  <div className="absolute -top-[42px] left-1/2 -translate-x-1/2 bg-navy text-white text-[12px] md:text-[13px] font-semibold px-3 py-1.5 rounded-[10px] whitespace-nowrap">
                     patients reached
                   </div>
                 )}
               </div>
             </div>
-            <p className="mt-4 mb-1 text-center text-[13px] md:text-[15px] font-semibold tracking-[-0.01em] text-[#00122F]">
+            <p className="mt-4 mb-1 text-center text-[13px] md:text-[15px] font-semibold tracking-[-0.01em] text-navy">
               {bar.label}
             </p>
             <p className="m-0 text-center text-[11px] md:text-[13px] leading-[1.45] tracking-[-0.01em] text-[#8a919c]">

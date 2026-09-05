@@ -45,7 +45,7 @@ function WhitepaperCard({ wp, index }: { wp: typeof WHITEPAPERS[0]; index: numbe
         to={wp.href}
         className="group flex flex-col h-full rounded-2xl border border-slate-200 bg-white hover:border-blue-200 hover:shadow-lg transition-all duration-200 overflow-hidden"
       >
-        <div className="bg-[#00122F] px-6 py-5 relative overflow-hidden">
+        <div className="bg-navy px-6 py-5 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-40 h-40 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
           <span className="text-blue-400 text-[10px] font-bold uppercase tracking-widest">{wp.badge} Whitepaper</span>
           <h2 className="text-white text-xl font-black mt-1 leading-tight">{wp.title}</h2>
@@ -80,7 +80,7 @@ export function Whitepapers() {
         path="/whitepapers"
       />
 
-      <div className="bg-[#00122F] border-b border-white/5 relative overflow-hidden">
+      <div className="bg-navy border-b border-white/5 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
         <div className="max-w-4xl mx-auto px-6 py-20 md:py-24 relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>

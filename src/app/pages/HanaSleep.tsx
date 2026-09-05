@@ -137,7 +137,7 @@ const SUITE_FAQS = [
 export function HanaSleep({ standalone = false }: { standalone?: boolean } = {}) {
   const reduce = useReducedMotion();
   return (
-    <div className="bg-[#00122F] text-white font-sans overflow-x-hidden">
+    <div className="bg-navy text-white font-sans overflow-x-hidden">
       <SEO
         title="HANA Sleep — A Suite of Solutions for Sleep Medicine & Wellness"
         useExactTitle
@@ -155,10 +155,10 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
       />
 
       {/* HERO — immersive night sky, framing HANA Sleep as the suite */}
-      <header className="relative overflow-hidden bg-[#00122F] text-white flex items-center min-h-[86vh] md:min-h-[760px] pt-32 pb-28 md:pt-36 md:pb-40">
+      <header className="relative overflow-hidden bg-navy text-white flex items-center min-h-[86vh] md:min-h-[760px] pt-32 pb-28 md:pt-36 md:pb-40">
         <NightSky />
         <div className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-16 text-center w-full">
-          <motion.p {...fadeUp} className={`${eyebrow} text-[#A7BCF5] m-0`}>
+          <motion.p {...fadeUp} className={`${eyebrow} text-brand-soft m-0`}>
             HANA Sleep · Sleep medicine & wellness
           </motion.p>
           <motion.h1
@@ -166,7 +166,7 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
             transition={{ duration: 0.5, delay: 0.05 }}
             className="font-serif font-normal text-[44px] sm:text-[60px] md:text-[80px] leading-[1.02] tracking-[-0.015em] mt-6 mb-0 mx-auto max-w-[16ch]"
           >
-            Sleep care that doesn't stop at the <em className="text-[#A7BCF5]">lab.</em>
+            Sleep care that doesn't stop at the <em className="text-brand-soft">lab.</em>
           </motion.h1>
           <motion.p
             {...fadeUp}
@@ -175,7 +175,7 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
           >
             A suite of solutions for sleep medicine and wellness — wearable-agnostic analysis, autonomous CPAP
             adherence follow-up, and remote monitoring.
-            <em className="text-[#A7BCF5] not-italic font-semibold"> One platform, from the night to the chart.</em>
+            <em className="text-brand-soft not-italic font-semibold"> One platform, from the night to the chart.</em>
           </motion.p>
           <motion.div
             {...fadeUp}
@@ -186,7 +186,7 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
               href={DEMO_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 bg-white text-[#00122F] text-[15px] font-semibold px-8 py-[15px] rounded-[10px] no-underline hover:opacity-90 transition-opacity"
+              className="inline-flex items-center gap-2.5 bg-white text-navy text-[15px] font-semibold px-8 py-[15px] rounded-[10px] no-underline hover:opacity-90 transition-opacity"
             >
               Book a demo →
             </a>
@@ -205,9 +205,9 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
       <section id="solutions" className="py-20 md:py-24 px-6 md:px-16 text-white" style={{ background: "linear-gradient(180deg, #00122F 0%, #081a38 100%)" }}>
         <div className="max-w-[1200px] mx-auto">
           <motion.div {...fadeUp} className="text-center mb-12 md:mb-16 max-w-[60ch] mx-auto">
-            <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>The suite</p>
+            <p className={`${eyebrow} text-brand-soft mt-0 mb-4`}>The suite</p>
             <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch]">
-              One suite. <em className="text-[#A7BCF5]">Purpose-built solutions.</em>
+              One suite. <em className="text-brand-soft">Purpose-built solutions.</em>
             </h2>
             <p className="text-[17px] leading-[1.7] text-white/70 m-0 mt-4">
               HANA Sleep isn't one product — it's a growing family of solutions for sleep medicine and wellness.
@@ -228,17 +228,17 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
                   }`}
                 >
                   <div className="flex items-center justify-between mb-5">
-                    <span className={`flex items-center justify-center w-12 h-12 rounded-[12px] bg-white/[0.06] border border-white/10 ${s.soon ? "text-white/40" : "text-[#A7BCF5]"}`}>
+                    <span className={`flex items-center justify-center w-12 h-12 rounded-[12px] bg-white/[0.06] border border-white/10 ${s.soon ? "text-white/40" : "text-brand-soft"}`}>
                       <Glyph d={s.icon} className="w-6 h-6" />
                     </span>
-                    <span className={`text-[11px] font-bold tracking-[2px] uppercase ${s.soon ? "text-white/35" : "text-[#A7BCF5]"}`}>{s.eyebrow}</span>
+                    <span className={`text-[11px] font-bold tracking-[2px] uppercase ${s.soon ? "text-white/35" : "text-brand-soft"}`}>{s.eyebrow}</span>
                   </div>
                   <h3 className="font-serif font-normal text-[24px] md:text-[26px] leading-[1.15] mt-0 mb-3 text-white">{s.title}</h3>
                   <p className="text-[14.5px] leading-[1.65] text-white/65 m-0">{s.body}</p>
                   <ul className="list-none p-0 mt-5 mb-6 space-y-2">
                     {s.points.map((p) => (
                       <li key={p} className="flex items-start gap-2.5 text-[13.5px] text-white/75">
-                        <span className={`mt-[7px] w-1.5 h-1.5 rounded-full shrink-0 ${s.soon ? "bg-white/30" : "bg-[#A7BCF5]"}`} aria-hidden="true" />
+                        <span className={`mt-[7px] w-1.5 h-1.5 rounded-full shrink-0 ${s.soon ? "bg-white/30" : "bg-brand-soft"}`} aria-hidden="true" />
                         {p}
                       </li>
                     ))}
@@ -247,7 +247,7 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
                     {s.soon ? (
                       <span className="inline-flex items-center gap-2 text-[13px] font-semibold text-white/45">Coming soon</span>
                     ) : (
-                      <span className="inline-flex items-center gap-2 text-[14px] font-semibold text-[#A7BCF5] group-hover:gap-3 transition-all">
+                      <span className="inline-flex items-center gap-2 text-[14px] font-semibold text-brand-soft group-hover:gap-3 transition-all">
                         {s.cta} <span aria-hidden="true">→</span>
                       </span>
                     )}
@@ -275,9 +275,9 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
       <section className="relative overflow-hidden py-20 md:py-24 px-6 md:px-16" style={{ background: "linear-gradient(180deg, #081a38 0%, #0c1f40 100%)" }}>
         <div className="relative max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <motion.div {...fadeUp}>
-            <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>The gap</p>
+            <p className={`${eyebrow} text-brand-soft mt-0 mb-4`}>The gap</p>
             <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-white mt-0 mb-5">
-              Diagnosis is solved. <em className="text-[#A7BCF5]">Everything after isn't.</em>
+              Diagnosis is solved. <em className="text-brand-soft">Everything after isn't.</em>
             </h2>
             <p className="text-[16px] leading-[1.7] text-white/70 m-0 max-w-[46ch]">
               Sleep medicine is great at diagnosis and blind to everything after it. The patient goes home,
@@ -286,7 +286,7 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
               they quietly unplugged it.
             </p>
             <p className="text-[18px] md:text-[20px] leading-[1.5] font-semibold text-white mt-7 max-w-[30ch]">
-              The problem was never the diagnosis. <span className="text-[#A7BCF5]">It's everything after.</span>
+              The problem was never the diagnosis. <span className="text-brand-soft">It's everything after.</span>
             </p>
           </motion.div>
           <div className="flex flex-col gap-3">
@@ -314,9 +314,9 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
       <section className="relative overflow-hidden py-20 md:py-24 px-6 md:px-16" style={{ background: "linear-gradient(180deg, #0c1f40 0%, #00122F 100%)" }}>
         <div className="relative max-w-[820px] mx-auto text-center">
           <motion.div {...fadeUp}>
-            <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>The common thread</p>
+            <p className={`${eyebrow} text-brand-soft mt-0 mb-4`}>The common thread</p>
             <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-white mt-0 mb-5 mx-auto max-w-[24ch]">
-              Redefining how sleep is understood — <em className="text-[#A7BCF5]">not by collecting more data.</em>
+              Redefining how sleep is understood — <em className="text-brand-soft">not by collecting more data.</em>
             </h2>
             <p className="text-[17px] leading-[1.75] text-white/70 m-0 mx-auto max-w-[62ch]">
               Every HANA Sleep solution runs on the same idea: extract clinically meaningful insight from the
@@ -334,9 +334,9 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
       <section className="py-20 md:py-24 px-6 md:px-16" style={{ background: "linear-gradient(180deg, #00122F 0%, #0a1c3e 50%, #00122F 100%)" }}>
         <div className="max-w-[1200px] mx-auto">
           <motion.div {...fadeUp} className="text-center mb-12 md:mb-14 max-w-[52ch] mx-auto">
-            <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>By the numbers</p>
+            <p className={`${eyebrow} text-brand-soft mt-0 mb-4`}>By the numbers</p>
             <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-white mx-auto max-w-[22ch]">
-              Follow-up you can <em className="text-[#A7BCF5]">measure.</em>
+              Follow-up you can <em className="text-brand-soft">measure.</em>
             </h2>
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
@@ -374,11 +374,11 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
       />
 
       {/* CTA */}
-      <section className="bg-[#00122F] text-white py-24 px-6 md:px-16 text-center relative overflow-hidden">
-        <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-[#A7BCF5]/[0.14] w-[520px] h-[520px] -bottom-[180px] pointer-events-none" />
-        <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-[#A7BCF5]/[0.14] w-[340px] h-[340px] -bottom-[110px] pointer-events-none" />
+      <section className="bg-navy text-white py-24 px-6 md:px-16 text-center relative overflow-hidden">
+        <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-brand-soft/[0.14] w-[520px] h-[520px] -bottom-[180px] pointer-events-none" />
+        <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-brand-soft/[0.14] w-[340px] h-[340px] -bottom-[110px] pointer-events-none" />
         <motion.div {...fadeUp} className="relative">
-          <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-6`}>Sleep medicine & wellness, one platform</p>
+          <p className={`${eyebrow} text-brand-soft mt-0 mb-6`}>Sleep medicine & wellness, one platform</p>
           <h2 className="font-serif font-normal text-[40px] sm:text-[52px] md:text-[60px] leading-[1.04] mx-auto mb-8 max-w-[15ch]">
             See HANA read a night. <em>Live.</em>
           </h2>
@@ -386,7 +386,7 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
             href={DEMO_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 bg-white text-[#00122F] rounded-[10px] font-semibold text-[15px] px-8 py-[15px] no-underline hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2.5 bg-white text-navy rounded-[10px] font-semibold text-[15px] px-8 py-[15px] no-underline hover:opacity-90 transition-opacity"
           >
             Book a demo →
           </a>

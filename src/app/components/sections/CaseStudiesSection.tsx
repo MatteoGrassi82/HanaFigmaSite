@@ -99,7 +99,7 @@ export function CaseStudiesSection() {
               rounded-3xl overflow-hidden p-8 md:p-10
               min-h-[450px] 
               flex flex-col lg:flex-row gap-8 items-stretch shadow-xl
-              ${study.theme === 'dark' ? 'bg-[#00122F] text-white' : ''}
+              ${study.theme === 'dark' ? 'bg-navy text-white' : ''}
               ${study.theme === 'peach' ? 'bg-[#FFC091] text-slate-900' : ''}
               ${study.theme === 'blue' ? 'bg-[#3B82F6] text-white' : ''}
             `}
@@ -159,7 +159,7 @@ export function CaseStudiesSection() {
       <div className="max-w-7xl mx-auto px-4 md:px-8 mt-12 md:mt-16 text-center">
         <Link
           to="/case-studies"
-          className="inline-flex items-center gap-2 px-8 py-[14px] bg-[#00122F] text-white rounded-full text-[15px] font-semibold hover:bg-[#011b48] hover:-translate-y-[2px] hover:shadow-[0_8px_24px_rgba(0,0,0,0.2)] transition-all duration-200 group"
+          className="inline-flex items-center gap-2 px-8 py-[14px] bg-navy text-white rounded-full text-[15px] font-semibold hover:bg-[#011b48] hover:-translate-y-[2px] hover:shadow-[0_8px_24px_rgba(0,0,0,0.2)] transition-all duration-200 group"
         >
           {cs.readMore}
           <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-[3px]" />

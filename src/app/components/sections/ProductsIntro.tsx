@@ -98,13 +98,13 @@ export function ProductsIntro() {
         {/* ── Header ── */}
         <div className="text-center mb-12 sm:mb-14">
           <div
-            className="inline-flex items-center gap-3.5 mb-5 text-[12px] font-bold tracking-[2.5px] uppercase text-[#5b76d9]
-              before:content-[''] before:w-7 before:h-px before:bg-[#5b76d9] before:opacity-50
-              after:content-[''] after:w-7 after:h-px after:bg-[#5b76d9] after:opacity-50"
+            className="inline-flex items-center gap-3.5 mb-5 text-[12px] font-bold tracking-[2.5px] uppercase text-brand
+              before:content-[''] before:w-7 before:h-px before:bg-brand before:opacity-50
+              after:content-[''] after:w-7 after:h-px after:bg-brand after:opacity-50"
           >
             Two products · one platform
           </div>
-          <h2 className="font-serif font-normal text-4xl sm:text-5xl lg:text-[60px] leading-[1.04] tracking-[-0.01em] text-[#00122F]">
+          <h2 className="font-serif font-normal text-4xl sm:text-5xl lg:text-[60px] leading-[1.04] tracking-[-0.01em] text-navy">
             The front desk, <Em>and the care programs.</Em>
           </h2>
         </div>
@@ -127,7 +127,7 @@ export function ProductsIntro() {
                 />
                 <div
                   aria-hidden
-                  className="absolute inset-0 bg-gradient-to-t from-[#00122F]/30 via-transparent to-transparent"
+                  className="absolute inset-0 bg-gradient-to-t from-navy/30 via-transparent to-transparent"
                 />
               </div>
 
@@ -140,7 +140,7 @@ export function ProductsIntro() {
                       i > 0 ? "border-t border-[#e8ebf2]" : ""
                     }`}
                   >
-                    <span className="text-[13.5px] text-[#00122F] truncate">{row.label}</span>
+                    <span className="text-[13.5px] text-navy truncate">{row.label}</span>
                     <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-[#475569] whitespace-nowrap">
                       <span
                         aria-hidden
@@ -149,7 +149,7 @@ export function ProductsIntro() {
                           (row.tone === "positive"
                             ? "bg-emerald-500"
                             : row.tone === "accent"
-                            ? "bg-[#5b76d9]"
+                            ? "bg-brand"
                             : "bg-amber-500")
                         }
                       />
@@ -160,13 +160,13 @@ export function ProductsIntro() {
               </div>
 
               <div className="px-8 sm:px-10 pt-7 pb-8 flex flex-col grow">
-                <div className="inline-flex items-center gap-3 mb-[18px] text-[11.5px] font-bold tracking-[2.5px] uppercase text-[#5b76d9]">
-                  <span className="w-6 h-px bg-[#5b76d9] opacity-60 shrink-0" />
+                <div className="inline-flex items-center gap-3 mb-[18px] text-[11.5px] font-bold tracking-[2.5px] uppercase text-brand">
+                  <span className="w-6 h-px bg-brand opacity-60 shrink-0" />
                   {p.eyebrow}
                 </div>
 
                 {/* the pain headline — the "is this for me?" hook */}
-                <h3 className="font-serif font-normal text-3xl sm:text-[36px] leading-[1.12] text-[#00122F] mb-3.5 max-w-[20ch]">
+                <h3 className="font-serif font-normal text-3xl sm:text-[36px] leading-[1.12] text-navy mb-3.5 max-w-[20ch]">
                   {p.headline}
                 </h3>
                 <p className="text-[15.5px] leading-[1.7] text-[#475569] mb-7 max-w-[52ch] text-pretty">
@@ -174,14 +174,14 @@ export function ProductsIntro() {
                 </p>
 
                 {/* proof stat — bottom-pinned with the CTA so cards align */}
-                <div className="mt-auto text-[13px] font-semibold text-[#00122F] mb-6">{p.stat}</div>
+                <div className="mt-auto text-[13px] font-semibold text-navy mb-6">{p.stat}</div>
 
                 <Link
                 to={p.href}
-                className="group inline-flex items-center gap-2 text-[15px] font-semibold text-[#00122F] hover:text-[#5b76d9] transition-colors"
+                className="group inline-flex items-center gap-2 text-[15px] font-semibold text-navy hover:text-brand transition-colors"
               >
                   {p.cta}
-                  <ArrowRight className="w-4 h-4 text-[#5b76d9] transition-transform group-hover:translate-x-0.5" strokeWidth={2.2} />
+                  <ArrowRight className="w-4 h-4 text-brand transition-transform group-hover:translate-x-0.5" strokeWidth={2.2} />
                 </Link>
               </div>
             </div>
@@ -190,11 +190,11 @@ export function ProductsIntro() {
 
         {/* ── One-engine footer band + the trust boundary ── */}
         <div className="mt-12 pt-9 border-t border-[#e8ebf2] text-center max-w-[720px] mx-auto">
-          <p className="text-[16px] leading-[1.7] font-medium text-[#00122F] m-0">
+          <p className="text-[16px] leading-[1.7] font-medium text-navy m-0">
             One engine. Same voice, same clinical guardrails, same note in the same chart.
           </p>
           <p className="mt-3 text-[15px] leading-[1.7] text-[#475569] m-0 text-pretty">
-            <strong className="font-semibold text-[#00122F]">What Hana never does:</strong> clinical
+            <strong className="font-semibold text-navy">What Hana never does:</strong> clinical
             judgment, bad news, or a patient who is upset. Those go to your clinician mid-call, with
             the full context already on screen.
           </p>
@@ -205,7 +205,7 @@ export function ProductsIntro() {
 }
 
 function Em({ children }: { children: React.ReactNode }) {
-  return <em className="italic text-[#5b76d9]">{children}</em>;
+  return <em className="italic text-brand">{children}</em>;
 }
 
 

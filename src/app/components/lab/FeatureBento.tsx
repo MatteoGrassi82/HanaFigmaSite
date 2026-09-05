@@ -350,7 +350,7 @@ function ObservabilityCard() {
             className="flex items-center gap-2.5 px-3.5 py-2.5 border-b border-slate-100 last:border-b-0"
           >
             <span className="text-[10px] font-semibold text-slate-300 w-3 shrink-0 tabular-nums">{i + 1}</span>
-            <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#eef1fb] text-[#5b76d9] text-[10px] font-bold shrink-0">
+            <span className="flex items-center justify-center w-7 h-7 rounded-full bg-brand-tint text-brand text-[10px] font-bold shrink-0">
               {r.initials}
             </span>
             <div className="min-w-0 flex-1">
@@ -402,8 +402,8 @@ function DashboardCard() {
               <p className="text-[9.5px] text-slate-400 leading-tight">Avg QA</p>
               <p className="font-serif text-[19px] leading-none text-slate-900 tabular-nums mt-0.5">96</p>
             </div>
-            <div className="rounded-lg bg-[#eef1fb] border border-blue-100 px-2.5 py-2">
-              <p className="text-[9.5px] text-[#5b76d9] leading-tight">Recovered</p>
+            <div className="rounded-lg bg-brand-tint border border-blue-100 px-2.5 py-2">
+              <p className="text-[9.5px] text-brand leading-tight">Recovered</p>
               <p className="font-serif text-[19px] leading-none text-[#3a55b8] tabular-nums mt-0.5">18</p>
             </div>
           </div>
@@ -420,7 +420,7 @@ function DashboardCard() {
                 key={c.name}
                 className="flex items-center gap-2 rounded-lg border border-slate-100 bg-white px-2 py-1.5"
               >
-                <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#eef1fb] text-[#5b76d9] text-[9px] font-bold shrink-0">
+                <span className="flex items-center justify-center w-6 h-6 rounded-full bg-brand-tint text-brand text-[9px] font-bold shrink-0">
                   {c.initials}
                 </span>
                 <span className="flex-1 truncate text-[11.5px] font-medium text-slate-700">

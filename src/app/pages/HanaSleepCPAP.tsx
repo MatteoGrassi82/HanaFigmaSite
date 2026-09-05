@@ -128,7 +128,7 @@ const S_FAQS = [
 function StageIcon({ stage, active }: { stage: number; active: boolean }) {
   const reduce = useReducedMotion();
   const anim = active && !reduce;
-  const fill = active ? "#fff" : "#A7BCF5";
+  const fill = active ? "#fff" : "var(--color-brand-soft)";
   if (stage === 0 || stage === 4) {
     return (
       <svg viewBox="0 0 64 64" className="w-12 h-12 md:w-14 md:h-14">
@@ -206,7 +206,7 @@ function HowItWorksFlow() {
       <div className="grid grid-cols-1 lg:grid-cols-[150px_1fr_150px] gap-6 lg:gap-5 items-stretch">
         {/* Sources */}
         <div className="hidden lg:flex flex-col justify-center gap-3 text-right">
-          <p className="text-[11px] font-bold tracking-[2px] uppercase text-[#A7BCF5] mb-1">Sources</p>
+          <p className="text-[11px] font-bold tracking-[2px] uppercase text-brand-soft mb-1">Sources</p>
           {HOW_SOURCES.map((s) => (
             <p key={s} className="text-[13.5px] text-white/70 leading-snug">{s}</p>
           ))}
@@ -245,7 +245,7 @@ function HowItWorksFlow() {
 
         {/* Outcomes */}
         <div className="hidden lg:flex flex-col justify-center gap-3">
-          <p className="text-[11px] font-bold tracking-[2px] uppercase text-[#A7BCF5] mb-1">Outcomes</p>
+          <p className="text-[11px] font-bold tracking-[2px] uppercase text-brand-soft mb-1">Outcomes</p>
           {HOW_OUTCOMES.map((o) => (
             <p key={o} className="text-[13.5px] text-white/70 leading-snug">{o}</p>
           ))}
@@ -264,7 +264,7 @@ function HowItWorksFlow() {
           >
             <h3 className="font-serif font-normal text-[26px] md:text-[30px] text-white mt-0 mb-3">{cur.title}</h3>
             <p className="text-[15px] leading-[1.7] text-white/65 m-0 max-w-[60ch]">{cur.detail}</p>
-            <p className="text-[12px] font-semibold tracking-[1.5px] uppercase text-[#A7BCF5] mt-5">{cur.proof}</p>
+            <p className="text-[12px] font-semibold tracking-[1.5px] uppercase text-brand-soft mt-5">{cur.proof}</p>
           </motion.div>
         </AnimatePresence>
 
@@ -290,7 +290,7 @@ function HowItWorksFlow() {
             key={b.key}
             onClick={() => setActive(i)}
             aria-label={`Show ${b.title}`}
-            className={`h-2 rounded-full transition-all duration-500 ${i === active ? "w-8 bg-[#A7BCF5]" : "w-2 bg-white/25 hover:bg-white/40"}`}
+            className={`h-2 rounded-full transition-all duration-500 ${i === active ? "w-8 bg-brand-soft" : "w-2 bg-white/25 hover:bg-white/40"}`}
           />
         ))}
       </div>
@@ -326,7 +326,7 @@ const AGENT_PILLARS = [
 function PatientAgentSection() {
   const reduce = useReducedMotion();
   return (
-    <section className="relative overflow-hidden bg-[#00122F] py-20 md:py-28 px-6 md:px-16">
+    <section className="relative overflow-hidden bg-navy py-20 md:py-28 px-6 md:px-16">
       {/* soft periwinkle wash + the bloom orb behind the conversation (lower-left,
           low-opacity so it never fights the heading text) */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
@@ -344,9 +344,9 @@ function PatientAgentSection() {
 
       <div className="relative max-w-[1200px] mx-auto">
         <motion.div {...fadeUp} className="text-center mb-12 md:mb-16">
-          <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>The patient agent</p>
+          <p className={`${eyebrow} text-brand-soft mt-0 mb-4`}>The patient agent</p>
           <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch] text-white">
-            Not just a monitor. <em className="text-[#A7BCF5]">The reason they stick with it.</em>
+            Not just a monitor. <em className="text-brand-soft">The reason they stick with it.</em>
           </h2>
           <p className="text-[17px] leading-[1.7] text-white/70 max-w-[58ch] mx-auto mt-4">
             Device data alone doesn't change behavior. A patient who feels seen does. HANA is the voice
@@ -365,7 +365,7 @@ function PatientAgentSection() {
           >
             <div className="rounded-[24px] bg-white/[0.06] backdrop-blur-sm border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.4)] p-5 md:p-6">
               <div className="flex items-center gap-2.5 pb-4 mb-2 border-b border-white/10">
-                <span className="relative flex items-center justify-center w-9 h-9 rounded-full bg-white/10 text-[#A7BCF5]">
+                <span className="relative flex items-center justify-center w-9 h-9 rounded-full bg-white/10 text-brand-soft">
                   <Glyph d={RI.phone} className="w-4 h-4" />
                   <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-[#0a1c3d]" />
                 </span>
@@ -387,7 +387,7 @@ function PatientAgentSection() {
                     <div
                       className={`max-w-[82%] rounded-2xl px-3.5 py-2.5 text-[13.5px] leading-[1.55] ${
                         turn.who === "hana"
-                          ? "bg-[#5b76d9] text-white rounded-bl-md"
+                          ? "bg-brand text-white rounded-bl-md"
                           : "bg-white/[0.08] text-white/90 border border-white/10 rounded-br-md"
                       }`}
                     >
@@ -418,7 +418,7 @@ function PatientAgentSection() {
                 transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
                 className="flex items-start gap-4"
               >
-                <span className="flex items-center justify-center w-11 h-11 rounded-[12px] bg-white/[0.06] border border-white/10 text-[#A7BCF5] shrink-0">
+                <span className="flex items-center justify-center w-11 h-11 rounded-[12px] bg-white/[0.06] border border-white/10 text-brand-soft shrink-0">
                   <Glyph d={p.icon} className="w-5 h-5" />
                 </span>
                 <div>
@@ -429,7 +429,7 @@ function PatientAgentSection() {
             ))}
             <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.3 }} className="pt-2">
               <p className="font-serif text-[20px] md:text-[22px] leading-[1.3] text-white m-0">
-                96% of 10,000 patients said yes to an AI check-in — <em className="text-[#A7BCF5]">because it doesn't feel like a machine.</em>
+                96% of 10,000 patients said yes to an AI check-in — <em className="text-brand-soft">because it doesn't feel like a machine.</em>
               </p>
             </motion.div>
           </div>
@@ -451,17 +451,17 @@ function SDeltaStat({ big, suffix, label, rows }: { big: string; suffix?: string
       <div className="sm:w-[150px] shrink-0">
         <div className="font-serif text-[52px] md:text-[64px] leading-[0.9] text-white">
           {big}
-          {suffix && <span className="text-[28px] md:text-[34px] text-[#A7BCF5]">{suffix}</span>}
+          {suffix && <span className="text-[28px] md:text-[34px] text-brand-soft">{suffix}</span>}
         </div>
         <div className="text-[14px] text-white/60 leading-[1.5] mt-2">{label}</div>
       </div>
       <div className="flex-1 min-w-0 space-y-2.5">
         {rows.map((r) => (
           <div key={r.k} className="flex items-center gap-3">
-            <span className={`w-[76px] shrink-0 text-[12px] ${r.hi ? "font-semibold text-[#A7BCF5]" : "text-white/55"}`}>{r.k}</span>
+            <span className={`w-[76px] shrink-0 text-[12px] ${r.hi ? "font-semibold text-brand-soft" : "text-white/55"}`}>{r.k}</span>
             <div className="flex-1 h-2.5 rounded-full bg-white/10 overflow-hidden">
               <motion.div
-                className={`h-full rounded-full ${r.hi ? "bg-[#A7BCF5]" : "bg-white/25"}`}
+                className={`h-full rounded-full ${r.hi ? "bg-brand-soft" : "bg-white/25"}`}
                 initial={{ width: reduce ? `${r.pct}%` : 0 }}
                 whileInView={{ width: `${r.pct}%` }}
                 viewport={{ once: true }}
@@ -495,7 +495,7 @@ function Hypnogram() {
       <motion.polyline
         points={points}
         fill="none"
-        stroke="#A7BCF5"
+        stroke="var(--color-brand-soft)"
         strokeWidth="2"
         strokeLinejoin="round"
         strokeLinecap="round"
@@ -530,7 +530,7 @@ const SLEEP_LOOP_COPY = {
 
 export function HanaSleepCPAP() {
   return (
-    <div className="bg-[#00122F] text-white font-sans overflow-x-hidden">
+    <div className="bg-navy text-white font-sans overflow-x-hidden">
       <SEO
         title="HANA Sleep CPAP Adherence Program — Follow-Up That Finally Shows Up"
         useExactTitle
@@ -550,10 +550,10 @@ export function HanaSleepCPAP() {
 
       {/* HERO — immersive night sky (starfield + aurora shader), melting into
           the dark five-step section below */}
-      <header className="relative overflow-hidden bg-[#00122F] text-white flex items-center min-h-[86vh] md:min-h-[760px] pt-32 pb-28 md:pt-36 md:pb-40">
+      <header className="relative overflow-hidden bg-navy text-white flex items-center min-h-[86vh] md:min-h-[760px] pt-32 pb-28 md:pt-36 md:pb-40">
         <NightSky />
         <div className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-16 text-center w-full">
-          <motion.p {...fadeUp} className={`${eyebrow} text-[#A7BCF5] m-0`}>
+          <motion.p {...fadeUp} className={`${eyebrow} text-brand-soft m-0`}>
             HANA Sleep · CPAP Adherence Program
           </motion.p>
           <motion.h1
@@ -561,7 +561,7 @@ export function HanaSleepCPAP() {
             transition={{ duration: 0.5, delay: 0.05 }}
             className="font-serif font-normal text-[44px] sm:text-[60px] md:text-[80px] leading-[1.02] tracking-[-0.015em] mt-6 mb-0 mx-auto max-w-[16ch]"
           >
-            CPAP care that doesn't stop at the <em className="text-[#A7BCF5]">setup.</em>
+            CPAP care that doesn't stop at the <em className="text-brand-soft">setup.</em>
           </motion.h1>
           <motion.p
             {...fadeUp}
@@ -569,7 +569,7 @@ export function HanaSleepCPAP() {
             className="text-[17px] md:text-[19px] leading-[1.6] text-white/75 mt-7 mb-0 mx-auto max-w-[52ch]"
           >
             HANA calls your CPAP patients like a human would through the first 90 days, holds them to the plan, and tells you
-            <em className="text-[#A7BCF5] not-italic font-semibold"> what the device data can't.</em>
+            <em className="text-brand-soft not-italic font-semibold"> what the device data can't.</em>
           </motion.p>
           <motion.a
             {...fadeUp}
@@ -577,7 +577,7 @@ export function HanaSleepCPAP() {
             href={DEMO_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 bg-white text-[#00122F] text-[15px] font-semibold px-8 py-[15px] rounded-[10px] no-underline hover:opacity-90 transition-opacity mt-9 md:mt-10"
+            className="inline-flex items-center gap-2.5 bg-white text-navy text-[15px] font-semibold px-8 py-[15px] rounded-[10px] no-underline hover:opacity-90 transition-opacity mt-9 md:mt-10"
           >
             Book a demo →
           </motion.a>
@@ -591,9 +591,9 @@ export function HanaSleepCPAP() {
       <section className="py-20 md:py-24 px-6 md:px-16 text-white" style={{ background: "linear-gradient(180deg, #00122F 0%, #081a38 100%)" }}>
         <div className="max-w-[1200px] mx-auto">
           <motion.div {...fadeUp} className="text-center mb-10 md:mb-14">
-            <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>The five-step flow</p>
+            <p className={`${eyebrow} text-brand-soft mt-0 mb-4`}>The five-step flow</p>
             <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[26ch]">
-              From a night's data to a documented follow-up — <em className="text-[#A7BCF5]">in five steps.</em>
+              From a night's data to a documented follow-up — <em className="text-brand-soft">in five steps.</em>
             </h2>
           </motion.div>
           <HowItWorksFlow />
@@ -606,9 +606,9 @@ export function HanaSleepCPAP() {
         <div className="relative max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left — the writing */}
           <motion.div {...fadeUp}>
-            <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>The gap</p>
+            <p className={`${eyebrow} text-brand-soft mt-0 mb-4`}>The gap</p>
             <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-white mt-0 mb-5">
-              Diagnosis is solved. <em className="text-[#A7BCF5]">Everything after isn't.</em>
+              Diagnosis is solved. <em className="text-brand-soft">Everything after isn't.</em>
             </h2>
             <p className="text-[16px] leading-[1.7] text-white/70 m-0 max-w-[46ch]">
               Sleep medicine is great at diagnosis and blind to everything after it. The patient goes
@@ -617,7 +617,7 @@ export function HanaSleepCPAP() {
               uncomfortable, they quietly unplugged it.
             </p>
             <p className="text-[18px] md:text-[20px] leading-[1.5] font-semibold text-white mt-7 max-w-[30ch]">
-              The problem was never the diagnosis. <span className="text-[#A7BCF5]">It was the follow-up.</span>
+              The problem was never the diagnosis. <span className="text-brand-soft">It was the follow-up.</span>
             </p>
           </motion.div>
 
@@ -648,9 +648,9 @@ export function HanaSleepCPAP() {
       <section className="relative overflow-hidden py-20 md:py-24 px-6 md:px-16" style={{ background: "linear-gradient(180deg, #0c1f40 0%, #00122F 100%)" }}>
         <div className="relative max-w-[1200px] mx-auto">
           <motion.div {...fadeUp} className="text-center mb-12 md:mb-14 max-w-[62ch] mx-auto">
-            <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>Connect any wearable</p>
+            <p className={`${eyebrow} text-brand-soft mt-0 mb-4`}>Connect any wearable</p>
             <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-white mt-0 mb-4 mx-auto max-w-[22ch]">
-              You bring the wearable. <em className="text-[#A7BCF5]">We handle the connection.</em>
+              You bring the wearable. <em className="text-brand-soft">We handle the connection.</em>
             </h2>
             <p className="text-[17px] leading-[1.7] text-white/70 m-0">
               Your patients already sleep with a device that scores the night. HANA connects to it,
@@ -662,11 +662,11 @@ export function HanaSleepCPAP() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-center">
             {/* Left — whatever they already wear */}
             <motion.div {...fadeUp}>
-              <p className="text-[12px] font-semibold tracking-[1.5px] uppercase text-[#A7BCF5] mb-4">Whatever they already wear</p>
+              <p className="text-[12px] font-semibold tracking-[1.5px] uppercase text-brand-soft mb-4">Whatever they already wear</p>
               <div className="grid grid-cols-2 gap-3">
                 {["Apple Watch", "Oura", "Fitbit", "Garmin"].map((d) => (
                   <div key={d} className="flex items-center gap-3 rounded-xl bg-white/[0.04] border border-white/10 px-4 py-3.5">
-                    <span className="flex items-center justify-center w-9 h-9 rounded-lg bg-white/[0.06] text-[#A7BCF5] shrink-0">
+                    <span className="flex items-center justify-center w-9 h-9 rounded-lg bg-white/[0.06] text-brand-soft shrink-0">
                       <Glyph d={RI.watch} className="w-[18px] h-[18px]" />
                     </span>
                     <span className="text-[14px] font-medium text-white/90">{d}</span>
@@ -681,7 +681,7 @@ export function HanaSleepCPAP() {
             {/* Right — the hypnogram it already recorded; HANA interprets it */}
             <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.08 }} className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 md:p-7">
               <div className="flex items-center justify-between mb-4">
-                <span className="text-[12px] font-semibold tracking-[1.5px] uppercase text-[#A7BCF5]">The night it already recorded</span>
+                <span className="text-[12px] font-semibold tracking-[1.5px] uppercase text-brand-soft">The night it already recorded</span>
                 <span className="inline-flex items-center gap-1.5 text-[11px] text-white/45">
                   <Glyph d={RI.activity} className="w-3.5 h-3.5" /> Hypnogram · via API
                 </span>
@@ -712,14 +712,14 @@ export function HanaSleepCPAP() {
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left — the writing + proof chips */}
           <motion.div {...fadeUp}>
-            <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-3`}>By the numbers</p>
+            <p className={`${eyebrow} text-brand-soft mt-0 mb-3`}>By the numbers</p>
             <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.05] mt-0 mb-6 max-w-[16ch] text-white">
               Follow-up you can measure.
             </h2>
             <div className="flex flex-wrap gap-2.5">
               {["Reads Apple Watch · Oura · Fitbit · Garmin", "Clinically-guided interpretation", "Built-in memory across calls", "HIPAA-aware by design", "Clinical decision support — not a device"].map((c) => (
                 <span key={c} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 text-[13px] font-medium text-white/90">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#A7BCF5]" aria-hidden="true" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-soft" aria-hidden="true" />
                   {c}
                 </span>
               ))}
@@ -748,9 +748,9 @@ export function HanaSleepCPAP() {
       <section className="relative overflow-hidden py-20 md:py-24 px-6 md:px-16" style={{ background: "linear-gradient(180deg, #0a1c3e 0%, #00122F 100%)" }}>
         <div className="relative max-w-[820px] mx-auto text-center">
           <motion.div {...fadeUp}>
-            <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>Where it fits</p>
+            <p className={`${eyebrow} text-brand-soft mt-0 mb-4`}>Where it fits</p>
             <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-white mt-0 mb-5 mx-auto max-w-[20ch]">
-              It sits <em className="text-[#A7BCF5]">under</em> your care. Not in front of it.
+              It sits <em className="text-brand-soft">under</em> your care. Not in front of it.
             </h2>
             <p className="text-[17px] leading-[1.75] text-white/70 m-0 mx-auto max-w-[62ch]">
               HANA Sleep is clinical decision support, not a medical device. It reads, reports, and
@@ -778,11 +778,11 @@ export function HanaSleepCPAP() {
       />
 
       {/* CTA */}
-      <section className="bg-[#00122F] text-white py-24 px-6 md:px-16 text-center relative overflow-hidden">
-        <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-[#A7BCF5]/[0.14] w-[520px] h-[520px] -bottom-[180px] pointer-events-none" />
-        <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-[#A7BCF5]/[0.14] w-[340px] h-[340px] -bottom-[110px] pointer-events-none" />
+      <section className="bg-navy text-white py-24 px-6 md:px-16 text-center relative overflow-hidden">
+        <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-brand-soft/[0.14] w-[520px] h-[520px] -bottom-[180px] pointer-events-none" />
+        <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-brand-soft/[0.14] w-[340px] h-[340px] -bottom-[110px] pointer-events-none" />
         <motion.div {...fadeUp} className="relative">
-          <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-6`}>See the follow-up that finally shows up</p>
+          <p className={`${eyebrow} text-brand-soft mt-0 mb-6`}>See the follow-up that finally shows up</p>
           <h2 className="font-serif font-normal text-[40px] sm:text-[52px] md:text-[60px] leading-[1.04] mx-auto mb-8 max-w-[15ch]">
             See HANA call a sleep patient. <em>Live.</em>
           </h2>
@@ -790,7 +790,7 @@ export function HanaSleepCPAP() {
             href={DEMO_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 bg-white text-[#00122F] rounded-[10px] font-semibold text-[15px] px-8 py-[15px] no-underline hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2.5 bg-white text-navy rounded-[10px] font-semibold text-[15px] px-8 py-[15px] no-underline hover:opacity-90 transition-opacity"
           >
             Book a demo →
           </a>
@@ -798,7 +798,7 @@ export function HanaSleepCPAP() {
           <div className="flex flex-wrap items-center justify-center gap-2.5 mt-8">
             {["Reads any wearable", "No app to download", "HIPAA-aware by design", "Clinical decision support"].map((t) => (
               <span key={t} className="inline-flex items-center gap-1.5 text-[13px] font-medium text-white/90 bg-white/[0.06] border border-white/10 rounded-full px-3.5 py-1.5">
-                <Check className="w-3.5 h-3.5 text-[#A7BCF5]" strokeWidth={3} /> {t}
+                <Check className="w-3.5 h-3.5 text-brand-soft" strokeWidth={3} /> {t}
               </span>
             ))}
           </div>

@@ -169,7 +169,7 @@ export default function RadialOrbitalTimeline({
 
   return (
     <div
-      className="w-full min-h-screen py-12 md:py-24 flex flex-col items-center justify-start bg-[#00122F] overflow-hidden relative"
+      className="w-full min-h-screen py-12 md:py-24 flex flex-col items-center justify-start bg-navy overflow-hidden relative"
       ref={containerRef}
       onClick={handleContainerClick}
     >
@@ -215,7 +215,7 @@ export default function RadialOrbitalTimeline({
                 <div className="flex items-center gap-4 px-4 py-4">
                   <div className={cn(
                     "w-10 h-10 rounded-full flex items-center justify-center border-2 shrink-0 transition-colors",
-                    isExpanded ? "bg-[#00122F] text-white border-white" : "bg-white text-slate-600 border-slate-300"
+                    isExpanded ? "bg-navy text-white border-white" : "bg-white text-slate-600 border-slate-300"
                   )}>
                     <Icon className="w-5 h-5" strokeWidth={2} />
                   </div>
@@ -307,7 +307,7 @@ export default function RadialOrbitalTimeline({
                   className={cn(
                     "w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 transform shadow-sm",
                     isExpanded
-                      ? "bg-[#00122F] text-white border-white shadow-md"
+                      ? "bg-navy text-white border-white shadow-md"
                       : isRelated
                       ? "bg-white text-slate-900 border-blue-500"
                       : "bg-white text-slate-600 border-slate-300"

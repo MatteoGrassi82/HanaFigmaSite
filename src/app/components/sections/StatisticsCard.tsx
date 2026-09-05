@@ -72,7 +72,7 @@ const Stats = () => {
             {
               value: 85,
               label: t.barHana,
-              className: "bg-[#A7BCF5]",
+              className: "bg-brand-soft",
               showToolTip: true,
               delay: 0.6,
             },
@@ -147,20 +147,20 @@ const BarChart = ({
           transition={{ duration: 0.5, type: "spring", damping: 15, delay }}
           className={cn(
             "absolute -top-14 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-[90vw] rounded-xl bg-zinc-800 px-3 py-2 text-white font-bold text-sm shadow-xl z-50 md:px-6 md:py-3 md:text-lg md:whitespace-nowrap",
-            className.includes("bg-[#A7BCF5]") ? "bg-[#A7BCF5]" : "bg-zinc-800",
+            className.includes("bg-brand-soft") ? "bg-brand-soft" : "bg-zinc-800",
           )}
         >
           <div
             className={cn(
               "absolute -bottom-9 left-1/2 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-inherit transition-all duration-300 ease-in-out",
-              className.includes("bg-[#A7BCF5]") ? "bg-[#A7BCF5]" : "bg-zinc-800",
+              className.includes("bg-brand-soft") ? "bg-brand-soft" : "bg-zinc-800",
             )}
           />
           <svg
             className={cn(
               "absolute -bottom-2 left-1/2 -translate-x-1/2",
-              className.includes("bg-[#A7BCF5]")
-                ? "text-[#A7BCF5]"
+              className.includes("bg-brand-soft")
+                ? "text-brand-soft"
                 : "text-zinc-800",
             )}
             width="10"

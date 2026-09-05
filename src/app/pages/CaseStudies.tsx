@@ -217,7 +217,7 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
   return (
     <>
       {/* Dark hero */}
-      <section className="bg-[#00122F] text-white pt-32 pb-20 px-4">
+      <section className="bg-navy text-white pt-32 pb-20 px-4">
         <div className="max-w-4xl mx-auto">
           <p className="text-blue-400 text-xs font-semibold tracking-[3px] uppercase mb-6">Case Studies</p>
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] mb-6">
@@ -274,7 +274,7 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
             href="https://calendly.com/matteowastaken/discoverycall"
             target="_blank"
             rel="noopener noreferrer"
-            className="group bg-[#00122F] text-left p-8 flex flex-col gap-6 hover:bg-[#001a3d] transition-colors"
+            className="group bg-navy text-left p-8 flex flex-col gap-6 hover:bg-[#001a3d] transition-colors"
           >
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-bold tracking-[2px] uppercase text-blue-400">Your organisation</span>
@@ -291,7 +291,7 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
         </div>
 
         {/* Bottom CTA */}
-        <div className="mt-16 bg-[#00122F] rounded-2xl p-6 sm:p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="mt-16 bg-navy rounded-2xl p-6 sm:p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h3 className="font-serif text-3xl text-white mb-2">Every workflow is different.<br />That's the point.</h3>
             <p className="text-slate-400 text-sm">Book a demo. We'll show you a workflow built for how you work.</p>
@@ -300,7 +300,7 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
             href="https://calendly.com/matteowastaken/discoverycall"
             target="_blank"
             rel="noopener noreferrer"
-            className="shrink-0 bg-white text-[#00122F] font-semibold px-8 py-4 rounded-full text-sm hover:bg-slate-100 transition-colors"
+            className="shrink-0 bg-white text-navy font-semibold px-8 py-4 rounded-full text-sm hover:bg-slate-100 transition-colors"
           >
             Book a demo →
           </a>
@@ -324,7 +324,7 @@ function DetailView({
   return (
     <div>
       {/* Dark header */}
-      <div className="bg-[#00122F] text-white pt-24 pb-20 px-4">
+      <div className="bg-navy text-white pt-24 pb-20 px-4">
         <div className="max-w-4xl mx-auto">
           <button
             onClick={onBack}
@@ -419,7 +419,7 @@ function DetailView({
         </div>
 
         {/* In numbers — dark, centered */}
-        <div className="bg-[#00122F] px-6 md:px-12 py-16 md:py-24 text-center">
+        <div className="bg-navy px-6 md:px-12 py-16 md:py-24 text-center">
           <div className="max-w-3xl mx-auto">
             <p className="text-[10px] font-bold tracking-[3px] uppercase text-slate-500 mb-10">In numbers</p>
             <div className="font-serif text-6xl sm:text-7xl md:text-[120px] leading-none tracking-tight mb-4" style={{ color: c.color }}>

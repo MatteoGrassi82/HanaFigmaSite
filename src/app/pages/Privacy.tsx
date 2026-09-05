@@ -98,7 +98,7 @@ type Copy = {
  */
 const EU_REPRESENTATIVE: { name: string; address: string; email: string } | null = null;
 
-const strong = (children: React.ReactNode) => <strong className="text-[#1e2a3a]">{children}</strong>;
+const strong = (children: React.ReactNode) => <strong className="text-navy-soft">{children}</strong>;
 const mail = (addr: string) => (
   <a href={`mailto:${addr}`} className="text-blue-600 hover:underline">{addr}</a>
 );
@@ -496,7 +496,7 @@ export function Privacy() {
 
       <div className="bg-white min-h-screen">
         {/* Hero */}
-        <section className="bg-[#00122F] text-white py-20 px-4">
+        <section className="bg-navy text-white py-20 px-4">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-blue-400 text-sm font-semibold tracking-widest uppercase mb-4">{COPY.eyebrow}</p>
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl tracking-normal mb-6 leading-[1.1]">
@@ -508,7 +508,7 @@ export function Privacy() {
           </div>
         </section>
 
-        <div className="max-w-3xl mx-auto px-4 py-16 text-[#1e2a3a]">
+        <div className="max-w-3xl mx-auto px-4 py-16 text-navy-soft">
           <p className="text-[15px] leading-[1.8] text-[#718096] mb-6">
             {COPY.intro}
           </p>
@@ -528,8 +528,8 @@ export function Privacy() {
               <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
                 <thead>
                   <tr className="bg-slate-50">
-                    <th className="text-left px-4 py-3 font-semibold text-[#1e2a3a] border-b border-slate-200 w-1/3">{COPY.s2ColCategory}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-[#1e2a3a] border-b border-slate-200">{COPY.s2ColExamples}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200 w-1/3">{COPY.s2ColCategory}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{COPY.s2ColExamples}</th>
                   </tr>
                 </thead>
                 <tbody className="text-[#718096]">
@@ -581,8 +581,8 @@ export function Privacy() {
               <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
                 <thead>
                   <tr className="bg-slate-50">
-                    <th className="text-left px-4 py-3 font-semibold text-[#1e2a3a] border-b border-slate-200 w-2/5">{COPY.s5ColProvider}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-[#1e2a3a] border-b border-slate-200">{COPY.s5ColPurpose}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200 w-2/5">{COPY.s5ColProvider}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{COPY.s5ColPurpose}</th>
                   </tr>
                 </thead>
                 <tbody className="text-[#718096]">
@@ -640,15 +640,15 @@ export function Privacy() {
 
           {/* 11 */}
           <Section number="11" title={COPY.s11Title}>
-            <h4 className="font-semibold text-[#1e2a3a] mb-3">{COPY.s11_1Title}</h4>
+            <h4 className="font-semibold text-navy-soft mb-3">{COPY.s11_1Title}</h4>
             <p className="mb-3">{COPY.s11_1Body}</p>
 
-            <h4 className="font-semibold text-[#1e2a3a] mb-3">{COPY.s11_2Title}</h4>
+            <h4 className="font-semibold text-navy-soft mb-3">{COPY.s11_2Title}</h4>
             <p className="mb-3">
               {COPY.s11_2Body}
             </p>
 
-            <h4 className="font-semibold text-[#1e2a3a] mb-3">{COPY.s11_3Title}</h4>
+            <h4 className="font-semibold text-navy-soft mb-3">{COPY.s11_3Title}</h4>
             <p>
               {COPY.s11_3Body}
             </p>
@@ -710,7 +710,7 @@ export function Privacy() {
           {/* 19 */}
           <Section number="19" title={COPY.s16Title}>
             <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 text-[15px]">
-              <p className="font-semibold text-[#1e2a3a] mb-1">{COPY.s16Company}</p>
+              <p className="font-semibold text-navy-soft mb-1">{COPY.s16Company}</p>
               <p>{COPY.s16Privacy} <a href="mailto:privacy@hana.health" className="text-blue-600 hover:underline">privacy@hana.health</a></p>
               <p>{COPY.s16General} <a href="mailto:hello@hana.health" className="text-blue-600 hover:underline">hello@hana.health</a></p>
               <p>{COPY.s16Security} <a href="mailto:security@hana.health" className="text-blue-600 hover:underline">security@hana.health</a></p>
@@ -728,7 +728,7 @@ export function Privacy() {
 function Section({ number, title, children }: { number: string; title: string; children: React.ReactNode }) {
   return (
     <section className="mb-12">
-      <h3 className="text-xl font-semibold text-[#1e2a3a] mb-4 tracking-tight">
+      <h3 className="text-xl font-semibold text-navy-soft mb-4 tracking-tight">
         {number}. {title}
       </h3>
       <div className="text-[15px] leading-[1.8] text-[#718096]">
@@ -742,7 +742,7 @@ function Section({ number, title, children }: { number: string; title: string; c
 function DefRow({ term, meaning }: { term: string; meaning: string }) {
   return (
     <tr className="border-b border-slate-100 last:border-0">
-      <td className="px-4 py-3 font-medium text-[#1e2a3a] align-top">{term}</td>
+      <td className="px-4 py-3 font-medium text-navy-soft align-top">{term}</td>
       <td className="px-4 py-3">{meaning}</td>
     </tr>
   );

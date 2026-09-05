@@ -31,13 +31,13 @@ const t = (en: string, it: string) => (IT ? it : en);
    Deep brand navy card so the gradient rails + white nodes pop. FLAT, no glow:
    drama from the dark field, polish from restraint. White/light text, white
    elevated nodes, navy→blue→sky rails. */
-const NAVY = "#00122F"; // primary brand navy (the surface)
+const NAVY = "var(--color-navy)"; // primary brand navy (the surface)
 const BLUE = "#3B82F6"; // Hana blue accent
 const SKY = "#7CC4F0"; // sky accent
 const PEACH = "#FFC091"; // warm brand accent — the one thing in motion (pulse)
-const CANVAS_TOP = "#00122F"; // matches the section field — no card seam
-const CANVAS_BOT = "#00122F"; // pure brand navy, same as Reasoning Engine
-const FIELD = "#00122F"; // section field — identical to Reasoning Engine bg
+const CANVAS_TOP = "var(--color-navy)"; // matches the section field — no card seam
+const CANVAS_BOT = "var(--color-navy)"; // pure brand navy, same as Reasoning Engine
+const FIELD = "var(--color-navy)"; // section field — identical to Reasoning Engine bg
 
 const RAIL_REST = "#1C3A60"; // resting rail — muted navy-blue (visible on dark)
 const INK = "#FFFFFF"; // primary text — white
@@ -603,7 +603,7 @@ export function LoopDiagram({
                         textAnchor="middle"
                         fontSize="13"
                         fontWeight="600"
-                        style={{ fontFamily: "var(--font-sans)", fill: light ? "#5b76d9" : SKY }}
+                        style={{ fontFamily: "var(--font-sans)", fill: light ? "var(--color-brand)" : SKY }}
                         initial={{ opacity: 0, y: 4 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -4 }}

@@ -108,7 +108,7 @@ const eyebrow = "text-[13px] font-bold tracking-[2.5px] uppercase";
 // ships 400. Fraunces is variable across 100-900, so that half is now moot.)
 const homeTitleFix =
   "[&_h2]:font-normal [&_h2]:tracking-normal [&_h2]:leading-[1.1] [&_h2]:text-[32px] sm:[&_h2]:text-[40px] md:[&_h2]:text-[46px]";
-const homeTitleFixLight = `${homeTitleFix} [&_h2]:text-[#00122F]`;
+const homeTitleFixLight = `${homeTitleFix} [&_h2]:text-navy`;
 
 // ── Content ──────────────────────────────────────────────────────────────────
 
@@ -1209,10 +1209,10 @@ function WhatIsHanaCompare() {
       <div className="max-w-[1200px] mx-auto">
         {/* Retell-style header: heading left, one-liner right */}
         <motion.div {...fadeUp} className="md:flex md:items-start md:justify-between md:gap-12 mb-10 md:mb-14">
-          <h2 className="font-serif font-normal text-[36px] sm:text-[44px] md:text-[52px] leading-[1.05] tracking-[-0.015em] text-[#00122F] m-0">
+          <h2 className="font-serif font-normal text-[36px] sm:text-[44px] md:text-[52px] leading-[1.05] tracking-[-0.015em] text-navy m-0">
             Three ways to run care management.
             <br />
-            <em className="text-[#5b76d9]">One of them makes the calls.</em>
+            <em className="text-brand">One of them makes the calls.</em>
           </h2>
           {/* The "only one of them actually picks up the phone" one-liner came out
               here (Matteo 2026-08-25): the HANA card's first bullet already says
@@ -1226,9 +1226,9 @@ function WhatIsHanaCompare() {
             transition={{ duration: 0.5, delay: 0.05 }}
             className="rounded-xl bg-[#f6f7fb] p-8 md:p-9 flex flex-col md:min-h-[620px]"
           >
-            <p className="text-[13px] font-semibold text-[#00122F] m-0">One way</p>
+            <p className="text-[13px] font-semibold text-navy m-0">One way</p>
             <div className="h-10 md:h-[220px]" aria-hidden />
-            <h3 className="font-serif font-normal text-[26px] md:text-[28px] leading-[1.2] text-[#00122F] m-0">
+            <h3 className="font-serif font-normal text-[26px] md:text-[28px] leading-[1.2] text-navy m-0">
               Care management software
             </h3>
             <p className="text-[15px] leading-[1.6] text-slate-600 mt-10 md:mt-auto md:pt-10 mb-0">
@@ -1243,18 +1243,18 @@ function WhatIsHanaCompare() {
             transition={{ duration: 0.5, delay: 0.13 }}
             className="rounded-xl bg-[#f6f7fb] p-8 md:p-9 flex flex-col md:min-h-[620px]"
           >
-            <p className="text-[13px] font-semibold text-[#00122F] m-0">Another way</p>
+            <p className="text-[13px] font-semibold text-navy m-0">Another way</p>
             <div className="h-10 md:h-[220px]" aria-hidden />
-            <h3 className="font-serif font-normal text-[26px] md:text-[28px] leading-[1.2] text-[#00122F] m-0">
+            <h3 className="font-serif font-normal text-[26px] md:text-[28px] leading-[1.2] text-navy m-0">
               Outsourced care management
             </h3>
-            <p className="text-[16px] leading-[1.5] text-[#00122F] mt-6 mb-0">
+            <p className="text-[16px] leading-[1.5] text-navy mt-6 mb-0">
               Based on contracted staff and staffing agencies
             </p>
             <ul className="list-none p-0 mt-5 mb-0 space-y-4">
               {CMP_OUTSOURCED_POINTS.map((p) => (
                 <li key={p} className="flex items-start gap-3 text-[15px] leading-[1.5] text-slate-700">
-                  <span className="shrink-0 w-5 h-5 rounded-full bg-[#00122F] text-white grid place-items-center text-[9px] font-bold mt-0.5">✕</span>
+                  <span className="shrink-0 w-5 h-5 rounded-full bg-navy text-white grid place-items-center text-[9px] font-bold mt-0.5">✕</span>
                   {p}
                 </li>
               ))}
@@ -1265,7 +1265,7 @@ function WhatIsHanaCompare() {
           <motion.div
             {...fadeUp}
             transition={{ duration: 0.5, delay: 0.21 }}
-            className="rounded-xl bg-[#00122F] p-8 md:p-9 flex flex-col md:min-h-[620px] shadow-[0_28px_70px_-26px_rgba(0,18,47,0.55)]"
+            className="rounded-xl bg-navy p-8 md:p-9 flex flex-col md:min-h-[620px] shadow-[0_28px_70px_-26px_rgba(0,18,47,0.55)]"
           >
             <p className="text-[13px] font-semibold text-white m-0">Our way</p>
             <div className="h-10 md:h-[220px]" aria-hidden />
@@ -1326,7 +1326,7 @@ function BuiltByClinicians() {
   return (
     <section ref={ref} className="bg-white py-24 md:py-36 px-6 overflow-hidden">
       <div className="max-w-[1200px] mx-auto">
-        <h2 className="font-serif font-normal text-[#00122F] leading-[1.04] tracking-[-0.02em] m-0 text-[48px] sm:text-[80px] md:text-[112px]">
+        <h2 className="font-serif font-normal text-navy leading-[1.04] tracking-[-0.02em] m-0 text-[48px] sm:text-[80px] md:text-[112px]">
           <span className="flex items-center justify-center gap-[0.35em] whitespace-nowrap">
             <motion.span style={{ x: xLeft, opacity }} className="inline-block">Built</motion.span>
             {/* Three overlapping faces (Matteo 2026-08-25, mock A "recommended"):
@@ -1411,7 +1411,7 @@ export function RemoteV2({
   handleEndWebCall,
 }: RemoteV2Props) {
   return (
-    <div className="bg-white text-[#00122F] font-sans overflow-x-hidden">
+    <div className="bg-white text-navy font-sans overflow-x-hidden">
       <SEO
         title="HANA · Draft"
         useExactTitle

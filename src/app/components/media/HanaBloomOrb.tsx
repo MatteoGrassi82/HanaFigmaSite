@@ -9,7 +9,7 @@ const PETALS = [
   { rotate: 72,  w: 150, h: 216, bg: "#3f86cf", opacity: 0.78, morph: "hana-morph2", dur: "7.4s", delay: "-1.8s" },
   { rotate: 144, w: 156, h: 222, bg: "#9fcdf0", opacity: 0.76, morph: "hana-morph3", dur: "6.8s", delay: "-3.4s" },
   { rotate: 216, w: 152, h: 218, bg: "#1c4e93", opacity: 0.8,  morph: "hana-morph1", dur: "7.8s", delay: "-2.6s" },
-  { rotate: 288, w: 150, h: 214, bg: "#A7BCF5", opacity: 0.76, morph: "hana-morph2", dur: "6.2s", delay: "-4.4s" },
+  { rotate: 288, w: 150, h: 214, bg: "var(--color-brand-soft)", opacity: 0.76, morph: "hana-morph2", dur: "6.2s", delay: "-4.4s" },
 ];
 
 export function HanaBloomOrb() {

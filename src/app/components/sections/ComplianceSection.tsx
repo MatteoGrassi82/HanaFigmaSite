@@ -72,7 +72,7 @@ export function ComplianceSection({ white = false }: { white?: boolean } = {}) {
                       ${isRightCol ? '' : 'md:border-r border-slate-200 dark:border-slate-800'}
                     `}
                   >
-                    <div className="h-10 w-10 text-[#00122F] dark:text-white mb-2">
+                    <div className="h-10 w-10 text-navy dark:text-white mb-2">
                       <cert.icon strokeWidth={1.5} className="w-full h-full" />
                     </div>
                     <h3 className="text-xl font-medium text-slate-900 dark:text-white">

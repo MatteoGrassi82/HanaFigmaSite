@@ -12,7 +12,7 @@ import { getLocale } from "../../../lib/i18n";
    glass stack + a flat interactive list; mobile = a clean flat card stack (no
    3D). Sits above ComplianceSection (which keeps the cert grid). */
 
-const NAVY = "#00122F";
+const NAVY = "var(--color-navy)";
 const SKY = "#7CC4F0";
 const PEACH = "#FFC091";
 const INK_SOFT = "#9DB2CE";

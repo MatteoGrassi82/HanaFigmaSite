@@ -43,7 +43,7 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
       <div className="w-full relative overflow-hidden min-h-[90dvh] md:min-h-[850px] flex flex-col items-center justify-center pt-10 pb-20 md:py-0">
 
         {/* Animated mesh gradient — orbs float on the brand navy base */}
-        <div className="absolute inset-0 z-0 bg-[#00122F] overflow-hidden">
+        <div className="absolute inset-0 z-0 bg-navy overflow-hidden">
           {/* Blue orb — #3B82F6 */}
           <div
             className="absolute w-[70%] h-[90%] -left-[8%] top-[0%] rounded-full blur-[90px] bg-[#3B82F6]/50"

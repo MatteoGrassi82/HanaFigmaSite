@@ -33,7 +33,7 @@ type Tint = "blue" | "peach" | "mint" | "sky";
 const TINT: Record<Tint, string> = {
   blue: "bg-[#3B82F6] text-white",
   peach: "bg-[#FFC091] text-slate-900",
-  mint: "bg-[#00122F] text-white",
+  mint: "bg-navy text-white",
   sky: "bg-[#7CC4F0] text-slate-900",
 };
 

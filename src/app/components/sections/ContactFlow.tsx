@@ -84,7 +84,7 @@ const BURST_GAP = 0.32; // spacing between packets within one input's burst
 function NodeGlyph({ cx, cy, icon }: { cx: number; cy: number; icon: string }) {
   return (
     <g transform={`translate(${cx - 7.4}, ${cy - 7.4}) scale(0.62)`}>
-      <path d={icon} fill="none" stroke="#5b76d9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={icon} fill="none" stroke="var(--color-brand)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </g>
   );
 }
@@ -95,9 +95,9 @@ function NodeCard({ x, y, label, icon }: { x: number; y: number; label: string; 
   return (
     <g>
       <rect x={x} y={y} width="220" height="48" rx="12" fill="#fff" stroke="#e2e6f0" strokeWidth="1" />
-      <circle cx={x + 26} cy={y + 24} r="14" fill="#eef1fb" />
+      <circle cx={x + 26} cy={y + 24} r="14" fill="var(--color-brand-tint)" />
       <NodeGlyph cx={x + 26} cy={y + 24} icon={icon} />
-      <text x={x + 52} y={y + 29} fontFamily="var(--font-sans)" fontSize="13" fill="#00122F" fontWeight="500">{label}</text>
+      <text x={x + 52} y={y + 29} fontFamily="var(--font-sans)" fontSize="13" fill="var(--color-navy)" fontWeight="500">{label}</text>
     </g>
   );
 }
@@ -112,7 +112,7 @@ function FrontDeskDiagram() {
     <motion.circle
       key={id}
       r={r}
-      fill="#5b76d9"
+      fill="var(--color-brand)"
       filter="url(#packetGlow)"
       initial={{ offsetDistance: "0%", opacity: 0 }}
       whileInView={{
@@ -142,7 +142,7 @@ function FrontDeskDiagram() {
     >
       <defs>
         <marker id="arr" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
-          <polygon points="0 0, 7 3, 0 6" fill="#5b76d9" opacity="0.7" />
+          <polygon points="0 0, 7 3, 0 6" fill="var(--color-brand)" opacity="0.7" />
         </marker>
         {/* Soft glow used by packets and the hub core — makes light bleed. */}
         <filter id="packetGlow" x="-200%" y="-200%" width="500%" height="500%">
@@ -155,7 +155,7 @@ function FrontDeskDiagram() {
       </defs>
 
       {/* Connector lines — draw inbound first, then outbound, via pathLength */}
-      <g stroke="#5b76d9" strokeWidth="1.5" fill="none" opacity="0.55" markerEnd="url(#arr)">
+      <g stroke="var(--color-brand)" strokeWidth="1.5" fill="none" opacity="0.55" markerEnd="url(#arr)">
         {INBOUND_PATHS.map((d, i) => (
           <motion.path
             key={d}
@@ -220,7 +220,7 @@ function FrontDeskDiagram() {
             cx="470"
             cy="155"
             fill="none"
-            stroke="#5b76d9"
+            stroke="var(--color-brand)"
             strokeWidth="1.5"
             initial={{ r: 20, opacity: 0 }}
             whileInView={{ r: [20, 110], opacity: [0.4, 0] }}
@@ -263,9 +263,9 @@ function FrontDeskDiagram() {
               transition={reduce ? { duration: 0 } : { delay: hit, duration: 1.0, times: [0, 0.35, 1], ease: "easeOut" }}
             />
             {/* Icon well + icon (shared look with inputs) */}
-            <circle cx="746" cy={n.y + 24} r="14" fill="#eef1fb" />
+            <circle cx="746" cy={n.y + 24} r="14" fill="var(--color-brand-tint)" />
             <NodeGlyph cx={746} cy={n.y + 24} icon={n.icon} />
-            <text x="772" y={n.y + 29} fontFamily="var(--font-sans)" fontSize="13" fill="#00122F" fontWeight="500">{n.label}</text>
+            <text x="772" y={n.y + 29} fontFamily="var(--font-sans)" fontSize="13" fill="var(--color-navy)" fontWeight="500">{n.label}</text>
             {/* Confirmation check — pops in at the right edge as the action completes */}
             <motion.g
               initial={{ opacity: reduce ? 1 : 0, scale: reduce ? 1 : 0 }}
@@ -274,7 +274,7 @@ function FrontDeskDiagram() {
               transition={reduce ? { duration: 0 } : { delay: hit + 0.2, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               style={{ transformOrigin: `926px ${n.y + 24}px`, transformBox: "fill-box" }}
             >
-              <circle cx="926" cy={n.y + 24} r="7" fill="#5b76d9" />
+              <circle cx="926" cy={n.y + 24} r="7" fill="var(--color-brand)" />
               <path
                 d={`M ${926 - 3},${n.y + 24} l 1.9,2 l 3.7,-4`}
                 fill="none"
@@ -349,17 +349,17 @@ function FrontDeskDiagramMobile() {
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.45, delay: reduce ? 0 : i * 0.08 }}
       className={`flex items-center gap-2.5 rounded-xl border px-3 py-3 ${
-        done ? "bg-[#5b76d9]/10 border-[#dfe3ee]" : "bg-white border-[#e2e6f0]"
+        done ? "bg-brand/10 border-[#dfe3ee]" : "bg-white border-[#e2e6f0]"
       }`}
     >
-      <span className="flex items-center justify-center w-8 h-8 rounded-full bg-[#eef1fb] shrink-0">
-        <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="#5b76d9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <span className="flex items-center justify-center w-8 h-8 rounded-full bg-brand-tint shrink-0">
+        <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="var(--color-brand)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d={icon} />
         </svg>
       </span>
-      <span className="text-[13px] font-medium text-[#00122F] leading-tight flex-1">{label}</span>
+      <span className="text-[13px] font-medium text-navy leading-tight flex-1">{label}</span>
       {done && (
-        <span className="flex items-center justify-center w-5 h-5 rounded-full bg-[#5b76d9] shrink-0">
+        <span className="flex items-center justify-center w-5 h-5 rounded-full bg-brand shrink-0">
           <Check className="w-3 h-3 text-white" strokeWidth={3} />
         </span>
       )}
@@ -373,7 +373,7 @@ function FrontDeskDiagramMobile() {
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.5, delay: reduce ? 0 : delay }}
       style={{ transformOrigin: "top" }}
-      className="w-px h-8 bg-gradient-to-b from-[#5b76d9]/20 via-[#5b76d9]/60 to-[#5b76d9]/20 my-1"
+      className="w-px h-8 bg-gradient-to-b from-brand/20 via-brand/60 to-brand/20 my-1"
       aria-hidden="true"
     />
   );

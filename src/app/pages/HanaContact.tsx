@@ -81,7 +81,7 @@ const FAQS = [
 
 export function HanaContact() {
   return (
-    <div className="bg-white text-[#00122F] font-sans overflow-x-hidden">
+    <div className="bg-white text-navy font-sans overflow-x-hidden">
       <SEO
         title="HANA Contact — AI Front Desk for Clinics"
         useExactTitle
@@ -101,7 +101,7 @@ export function HanaContact() {
         <div className="max-w-[1200px] mx-auto px-6 md:px-16 text-center">
           <motion.p
             {...fadeUp}
-            className={`${eyebrow} text-[#5b76d9] m-0`}
+            className={`${eyebrow} text-brand m-0`}
           >
             HANA Contact · Better than an IVR
           </motion.p>
@@ -112,7 +112,7 @@ export function HanaContact() {
           >
             Your phones answer themselves.
             <br />
-            <em className="text-[#5b76d9]">So your front desk can focus on care.</em>
+            <em className="text-brand">So your front desk can focus on care.</em>
           </motion.h1>
           <motion.a
             {...fadeUp}
@@ -120,7 +120,7 @@ export function HanaContact() {
             href={DEMO_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 bg-[#1e2a3a] text-white text-[15px] font-semibold px-8 py-[15px] rounded-[10px] no-underline hover:opacity-90 transition-opacity mt-10 md:mt-12"
+            className="inline-flex items-center gap-2.5 bg-navy-soft text-white text-[15px] font-semibold px-8 py-[15px] rounded-[10px] no-underline hover:opacity-90 transition-opacity mt-10 md:mt-12"
           >
             Book a demo →
           </motion.a>
@@ -140,9 +140,9 @@ export function HanaContact() {
       <section className="py-20 md:py-24 bg-[#f6f7fb]">
         <div className="max-w-[1200px] mx-auto px-6 md:px-16 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
           <motion.div {...fadeUp}>
-            <p className={`${eyebrow} text-[#5b76d9] mt-0 mb-6`}>The problem</p>
-            <div className="font-serif text-[76px] md:text-[100px] leading-[0.9] text-[#00122F] mb-5">30%</div>
-            <p className="text-lg leading-[1.6] text-[#00122F] m-0 max-w-[28ch]">
+            <p className={`${eyebrow} text-brand mt-0 mb-6`}>The problem</p>
+            <div className="font-serif text-[76px] md:text-[100px] leading-[0.9] text-navy mb-5">30%</div>
+            <p className="text-lg leading-[1.6] text-navy m-0 max-w-[28ch]">
               of calls are missed after hours. Each missed call is a missed patient.
             </p>
           </motion.div>
@@ -240,9 +240,9 @@ export function HanaContact() {
       <section className="py-20 md:py-24 px-6 md:px-16 bg-[#f6f7fb]">
         <div className="max-w-[1200px] mx-auto">
           <motion.div {...fadeUp} className="text-center mb-12 md:mb-16">
-            <p className={`${eyebrow} text-[#5b76d9] mt-0 mb-4`}>The missed-call math</p>
-            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch] text-[#00122F]">
-              How many calls slip through <em className="text-[#5b76d9]">every month?</em>
+            <p className={`${eyebrow} text-brand mt-0 mb-4`}>The missed-call math</p>
+            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch] text-navy">
+              How many calls slip through <em className="text-brand">every month?</em>
             </h2>
             <p className="text-[17px] leading-[1.7] text-slate-500 max-w-[52ch] mx-auto mt-4">
               Every missed call is a patient who doesn't book. Here's what that leak looks like for you.
@@ -253,10 +253,10 @@ export function HanaContact() {
       </section>
 
       {/* THE FIVE-STEP FLOW — interactive stage pipeline (step-by-step detail) */}
-      <section className="bg-[#00122F] text-white py-20 md:py-24">
+      <section className="bg-navy text-white py-20 md:py-24">
         <div className="max-w-[1200px] mx-auto px-6 md:px-16">
           <motion.div {...fadeUp} className="text-center mb-10 md:mb-14">
-            <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>The five-step flow</p>
+            <p className={`${eyebrow} text-brand-soft mt-0 mb-4`}>The five-step flow</p>
             <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch]">
               From ringing phone to done — in five steps.
             </h2>
@@ -270,7 +270,7 @@ export function HanaContact() {
       <section className="py-16 md:py-[72px] px-6 md:px-16 bg-[#f6f7fb]">
         <div className="max-w-[1200px] mx-auto">
           <motion.div {...fadeUp}>
-            <p className={`${eyebrow} text-[#5b76d9] mt-0 mb-3`}>By the numbers</p>
+            <p className={`${eyebrow} text-brand mt-0 mb-3`}>By the numbers</p>
             <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.05] mt-0 mb-10 md:mb-[52px] max-w-[22ch]">
               The front desk, running itself.
             </h2>
@@ -296,19 +296,19 @@ export function HanaContact() {
       <section className="py-20 md:py-24 px-6 md:px-16 bg-white">
         <div className="max-w-[1000px] mx-auto">
           <motion.div {...fadeUp} className="text-center mb-12 md:mb-14">
-            <p className={`${eyebrow} text-[#5b76d9] mt-0 mb-4`}>A tale of two front desks</p>
-            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch] text-[#00122F]">
+            <p className={`${eyebrow} text-brand mt-0 mb-4`}>A tale of two front desks</p>
+            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch] text-navy">
               HANA Contact vs. the status quo.
             </h2>
           </motion.div>
           <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.1 }} className="grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden border border-slate-200">
             {/* With */}
             <div className="bg-[#f6f7fb] p-7 md:p-9">
-              <p className={`${eyebrow} text-[#5b76d9] mt-0 mb-6`}>With HANA Contact</p>
+              <p className={`${eyebrow} text-brand mt-0 mb-6`}>With HANA Contact</p>
               <ul className="space-y-4 m-0 p-0 list-none">
                 {WITH_HANA.map((t) => (
-                  <li key={t} className="flex items-start gap-3 text-[15px] text-[#00122F]">
-                    <Check className="w-5 h-5 text-[#5b76d9] shrink-0 mt-0.5" />
+                  <li key={t} className="flex items-start gap-3 text-[15px] text-navy">
+                    <Check className="w-5 h-5 text-brand shrink-0 mt-0.5" />
                     {t}
                   </li>
                 ))}
@@ -389,9 +389,9 @@ export function HanaContact() {
       <section className="py-20 md:py-24 px-6 md:px-16 bg-white">
         <div className="max-w-[1200px] mx-auto">
           <motion.div {...fadeUp} className="text-center mb-12 md:mb-16">
-            <p className={`${eyebrow} text-[#5b76d9] mt-0 mb-4`}>How we start</p>
-            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch] text-[#00122F]">
-              Three steps. <em className="text-[#5b76d9]">You're live in 3 weeks.</em>
+            <p className={`${eyebrow} text-brand mt-0 mb-4`}>How we start</p>
+            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch] text-navy">
+              Three steps. <em className="text-brand">You're live in 3 weeks.</em>
             </h2>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
@@ -402,10 +402,10 @@ export function HanaContact() {
                 transition={{ duration: 0.5, delay: 0.05 + i * 0.1 }}
                 className="rounded-2xl bg-[#f6f7fb] border border-slate-200 p-7 md:p-8"
               >
-                <div className="flex items-center justify-center w-11 h-11 rounded-full bg-[#1e2a3a] text-white font-serif text-[20px]">
+                <div className="flex items-center justify-center w-11 h-11 rounded-full bg-navy-soft text-white font-serif text-[20px]">
                   {i + 1}
                 </div>
-                <h3 className="font-serif font-normal text-[24px] leading-[1.2] mt-5 mb-3 text-[#00122F]">{s.title}</h3>
+                <h3 className="font-serif font-normal text-[24px] leading-[1.2] mt-5 mb-3 text-navy">{s.title}</h3>
                 <p className="text-[15px] leading-[1.7] text-slate-500 m-0">{s.desc}</p>
               </motion.div>
             ))}
@@ -434,11 +434,11 @@ export function HanaContact() {
       />
 
       {/* CTA */}
-      <section className="bg-[#00122F] text-white py-24 px-6 md:px-16 text-center relative overflow-hidden">
-        <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-[#A7BCF5]/[0.14] w-[520px] h-[520px] -bottom-[180px] pointer-events-none" />
-        <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-[#A7BCF5]/[0.14] w-[340px] h-[340px] -bottom-[110px] pointer-events-none" />
+      <section className="bg-navy text-white py-24 px-6 md:px-16 text-center relative overflow-hidden">
+        <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-brand-soft/[0.14] w-[520px] h-[520px] -bottom-[180px] pointer-events-none" />
+        <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-brand-soft/[0.14] w-[340px] h-[340px] -bottom-[110px] pointer-events-none" />
         <motion.div {...fadeUp} className="relative">
-          <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-6`}>Ready to stop missing calls?</p>
+          <p className={`${eyebrow} text-brand-soft mt-0 mb-6`}>Ready to stop missing calls?</p>
           <h2 className="font-serif font-normal text-[40px] sm:text-[52px] md:text-[60px] leading-[1.04] mx-auto mb-8 max-w-[16ch]">
             Book a demo — <em>live in days.</em>
           </h2>
@@ -446,7 +446,7 @@ export function HanaContact() {
             href={DEMO_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 bg-white text-[#00122F] rounded-[10px] font-semibold text-[15px] px-8 py-[15px] no-underline hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2.5 bg-white text-navy rounded-[10px] font-semibold text-[15px] px-8 py-[15px] no-underline hover:opacity-90 transition-opacity"
           >
             Book a demo →
           </a>
@@ -522,7 +522,7 @@ const PIPELINE_STAGES = [
 function StageIcon({ stage, active }: { stage: number; active: boolean }) {
   const reduce = useReducedMotion();
   const anim = active && !reduce;
-  const fill = active ? "#fff" : "#A7BCF5";
+  const fill = active ? "#fff" : "var(--color-brand-soft)";
   // 0 Answer: pulsing rings (a call landing). 1 Understand: dot grid settling.
   // 2 Act: scattered dots converging. 3 Sync: dots snapping to a grid. 4 Follow up: ring orbit.
   if (stage === 0 || stage === 4) {
@@ -606,7 +606,7 @@ function FrontDeskPipeline() {
       <div className="grid grid-cols-1 lg:grid-cols-[140px_1fr_150px] gap-6 lg:gap-5 items-stretch">
         {/* Sources */}
         <div className="hidden lg:flex flex-col justify-center gap-3 text-right">
-          <p className="text-[11px] font-bold tracking-[2px] uppercase text-[#A7BCF5] mb-1">Sources</p>
+          <p className="text-[11px] font-bold tracking-[2px] uppercase text-brand-soft mb-1">Sources</p>
           {PIPELINE_SOURCES.map((s) => (
             <p key={s} className="text-[13.5px] text-white/70 leading-snug">{s}</p>
           ))}
@@ -652,7 +652,7 @@ function FrontDeskPipeline() {
 
         {/* Outcomes */}
         <div className="hidden lg:flex flex-col justify-center gap-3">
-          <p className="text-[11px] font-bold tracking-[2px] uppercase text-[#A7BCF5] mb-1">Outcomes</p>
+          <p className="text-[11px] font-bold tracking-[2px] uppercase text-brand-soft mb-1">Outcomes</p>
           {PIPELINE_OUTCOMES.map((o) => (
             <p key={o} className="text-[13.5px] text-white/70 leading-snug">{o}</p>
           ))}
@@ -671,7 +671,7 @@ function FrontDeskPipeline() {
           >
             <h3 className="font-serif font-normal text-[26px] md:text-[30px] text-white mt-0 mb-3">{cur.key}</h3>
             <p className="text-[15px] leading-[1.7] text-white/65 m-0 max-w-[60ch]">{cur.detail}</p>
-            <p className="text-[12px] font-semibold tracking-[1.5px] uppercase text-[#A7BCF5] mt-5">{cur.proof}</p>
+            <p className="text-[12px] font-semibold tracking-[1.5px] uppercase text-brand-soft mt-5">{cur.proof}</p>
           </motion.div>
         </AnimatePresence>
 
@@ -697,7 +697,7 @@ function FrontDeskPipeline() {
             key={st.key}
             onClick={() => setActive(i)}
             aria-label={`Show ${st.key}`}
-            className={`h-2 rounded-full transition-all duration-500 ${i === active ? "w-8 bg-[#A7BCF5]" : "w-2 bg-white/25 hover:bg-white/40"}`}
+            className={`h-2 rounded-full transition-all duration-500 ${i === active ? "w-8 bg-brand-soft" : "w-2 bg-white/25 hover:bg-white/40"}`}
           />
         ))}
       </div>
@@ -757,7 +757,7 @@ function RoiCalculator() {
     <div>
       <div className="flex items-center justify-between gap-3">
         <span className="text-[13px] text-slate-500">{label}</span>
-        <div className="flex items-center rounded-lg border border-slate-300 bg-white px-2.5 py-1 focus-within:border-[#5b76d9] focus-within:ring-2 focus-within:ring-[#5b76d9]/20 transition shrink-0">
+        <div className="flex items-center rounded-lg border border-slate-300 bg-white px-2.5 py-1 focus-within:border-brand focus-within:ring-2 focus-within:ring-brand/20 transition shrink-0">
           {opts.prefix && <span className="text-slate-400 text-[13px] mr-0.5">{opts.prefix}</span>}
           <input
             type="number"
@@ -765,7 +765,7 @@ function RoiCalculator() {
             min={opts.min}
             step={opts.step}
             onChange={(e) => set(Math.max(0, Number(e.target.value) || 0))}
-            className="w-[64px] bg-transparent outline-none text-[15px] font-semibold text-[#00122F] text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            className="w-[64px] bg-transparent outline-none text-[15px] font-semibold text-navy text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           />
           {opts.suffix && <span className="text-slate-400 text-[13px] ml-0.5">{opts.suffix}</span>}
         </div>
@@ -778,7 +778,7 @@ function RoiCalculator() {
         max={opts.max}
         step={opts.step ?? 1}
         onChange={(e) => set(Number(e.target.value))}
-        className="mt-3 w-full h-1.5 cursor-pointer accent-[#5b76d9]"
+        className="mt-3 w-full h-1.5 cursor-pointer accent-brand"
       />
     </div>
   );
@@ -791,7 +791,7 @@ function RoiCalculator() {
     >
       {/* Inputs */}
       <div className="bg-white p-7 md:p-9">
-        <p className={`${eyebrow} text-[#5b76d9] mt-0 mb-5`}>Your practice</p>
+        <p className={`${eyebrow} text-brand mt-0 mb-5`}>Your practice</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5">
           {field("Number of locations", locations, setLocations, { min: 1, max: 50 })}
           {field("Avg monthly calls / location", monthlyCalls, setMonthlyCalls, { min: 100, max: 6000, step: 100 })}
@@ -800,12 +800,12 @@ function RoiCalculator() {
         </div>
         <p className="text-[12px] text-slate-400 mt-5 leading-[1.6]">
           Estimates only, for illustration. Assumes ~35% of missed calls would have booked a visit, and
-          HANA recovers ~70% of them. <a href={DEMO_URL} target="_blank" rel="noopener noreferrer" className="text-[#5b76d9] underline">Get a tailored assessment →</a>
+          HANA recovers ~70% of them. <a href={DEMO_URL} target="_blank" rel="noopener noreferrer" className="text-brand underline">Get a tailored assessment →</a>
         </p>
       </div>
       {/* Result — the leak, then what HANA plugs back */}
-      <div className="bg-[#00122F] text-white p-7 md:p-9 flex flex-col justify-center">
-        <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-3`}>Calls you're missing</p>
+      <div className="bg-navy text-white p-7 md:p-9 flex flex-col justify-center">
+        <p className={`${eyebrow} text-brand-soft mt-0 mb-3`}>Calls you're missing</p>
         <div className="font-serif text-[56px] md:text-[72px] leading-[0.95]">
           ≈ {count(missedPerMonth)}
           <span className="font-sans text-[18px] md:text-[22px] font-medium text-white/50"> / month</span>
@@ -816,12 +816,12 @@ function RoiCalculator() {
         <div className="mt-6 pt-6 border-t border-white/10">
           <p className="text-[15px] leading-[1.6] text-white/60 m-0">
             HANA Contact answers every one of them — recovering roughly{" "}
-            <span className="font-semibold text-[#A7BCF5]">{money(recovered)}/year</span> your front desk can't get to today.
+            <span className="font-semibold text-brand-soft">{money(recovered)}/year</span> your front desk can't get to today.
           </p>
           {/* Recovered vs. lost — visual share of the leak HANA plugs back */}
           <div className="mt-5 h-2 rounded-full bg-white/10 overflow-hidden">
             <motion.div
-              className="h-full rounded-full bg-[#A7BCF5]"
+              className="h-full rounded-full bg-brand-soft"
               initial={{ width: 0 }}
               whileInView={{ width: `${HANA_RECOVERY_RATE * 100}%` }}
               viewport={{ once: true }}
@@ -865,9 +865,9 @@ function ContactIntegrations() {
     <section className="py-20 md:py-24 px-6 md:px-16 bg-white">
       <div className="max-w-[1200px] mx-auto">
         <motion.div {...fadeUp} className="text-center mb-12 md:mb-16">
-          <p className={`${eyebrow} text-[#5b76d9] mt-0 mb-4`}>Plugs into what you run</p>
-          <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[26ch] text-[#00122F]">
-            Your phone system. Your EHR. <em className="text-[#5b76d9]">No rip-and-replace.</em>
+          <p className={`${eyebrow} text-brand mt-0 mb-4`}>Plugs into what you run</p>
+          <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[26ch] text-navy">
+            Your phone system. Your EHR. <em className="text-brand">No rip-and-replace.</em>
           </h2>
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
@@ -878,21 +878,21 @@ function ContactIntegrations() {
               transition={{ duration: 0.5, delay: 0.05 + i * 0.1 }}
               className="group rounded-2xl bg-[#f6f7fb] border border-slate-200 p-7 md:p-9 transition-all duration-300 hover:border-[#c2cef6] hover:shadow-[0_16px_44px_rgba(0,18,47,0.10)]"
             >
-              <span className="flex items-center justify-center w-12 h-12 rounded-[14px] bg-[#eef1fb] mb-6 transition-colors group-hover:bg-[#e2e8fb]">
-                <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="#5b76d9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <span className="flex items-center justify-center w-12 h-12 rounded-[14px] bg-brand-tint mb-6 transition-colors group-hover:bg-[#e2e8fb]">
+                <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="var(--color-brand)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d={p.icon} />
                 </svg>
               </span>
-              <h3 className="font-serif font-normal text-[24px] md:text-[26px] leading-[1.15] mt-0 mb-1.5 text-[#00122F]">{p.title}</h3>
-              <p className="text-[14px] font-medium text-[#5b76d9] mt-0 mb-4">{p.tagline}</p>
+              <h3 className="font-serif font-normal text-[24px] md:text-[26px] leading-[1.15] mt-0 mb-1.5 text-navy">{p.title}</h3>
+              <p className="text-[14px] font-medium text-brand mt-0 mb-4">{p.tagline}</p>
               <p className="text-[15px] leading-[1.7] text-slate-500 mt-0 mb-7">{p.body}</p>
               <div className="flex flex-wrap gap-2.5">
                 {p.chips.map((c) => (
                   <span
                     key={c}
-                    className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200 text-[13px] font-medium text-[#00122F] transition-colors hover:border-[#A7BCF5] hover:bg-[#eef1fb]"
+                    className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200 text-[13px] font-medium text-navy transition-colors hover:border-brand-soft hover:bg-brand-tint"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#5b76d9]" aria-hidden="true" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand" aria-hidden="true" />
                     {c}
                   </span>
                 ))}
@@ -923,7 +923,7 @@ function StatCell({
     <div className={`px-5 md:px-11 ${first ? "" : "lg:border-l lg:border-[#dfe3ee]"}`}>
       <div className="font-serif text-[56px] md:text-[84px] leading-[0.95] mb-3">
         {value}
-        {suffix && <span className="text-[28px] md:text-[40px] text-[#5b76d9]">{suffix}</span>}
+        {suffix && <span className="text-[28px] md:text-[40px] text-brand">{suffix}</span>}
       </div>
       <div className="text-[15px] text-slate-500 leading-[1.5]">{children}</div>
     </div>

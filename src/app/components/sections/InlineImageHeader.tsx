@@ -72,7 +72,7 @@ function LiveAnimation() {
       {[0, 1, 2].map((i) => (
         <div
           key={i}
-          className="absolute rounded-full border border-[#A7BCF5]"
+          className="absolute rounded-full border border-brand-soft"
           style={{
             width: `${(i + 1) * 33}%`,
             height: `${(i + 1) * 33}%`,
@@ -81,7 +81,7 @@ function LiveAnimation() {
           }}
         />
       ))}
-      <div className="w-2.5 h-2.5 rounded-full bg-[#A7BCF5]" />
+      <div className="w-2.5 h-2.5 rounded-full bg-brand-soft" />
       <style>{`
         @keyframes ripple {
           0% { opacity: 0.8; transform: scale(0.6); }

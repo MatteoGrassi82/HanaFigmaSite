@@ -75,9 +75,9 @@ const ANALYTICS_KPIS = [
 // monthly adherence % trend (12 pts) — climbs as the program matures
 const ANALYTICS_TREND = [38, 44, 49, 55, 58, 63, 68, 71, 74, 78, 81, 85];
 const ANALYTICS_MIX = [
-  { label: "RPM", pct: 31, color: "#5b76d9" },
+  { label: "RPM", pct: 31, color: "var(--color-brand)" },
   { label: "RTM", pct: 27, color: "#7c92e6" },
-  { label: "CCM", pct: 21, color: "#A7BCF5" },
+  { label: "CCM", pct: 21, color: "var(--color-brand-soft)" },
   { label: "APCM", pct: 13, color: "#c1cdf5" },
   { label: "CoCM", pct: 8, color: "#d7defa" },
 ];
@@ -96,7 +96,7 @@ function actClasses(level: string, primary: boolean) {
   if (level === "green") return "bg-emerald-50 text-emerald-600 border border-emerald-100";
   if (level === "amber") return "bg-amber-50 text-amber-600 border border-amber-100";
   return primary
-    ? "bg-[#5b76d9] text-white border border-[#5b76d9]" // red → the one you act on
+    ? "bg-brand text-white border border-brand" // red → the one you act on
     : "bg-red-50 text-red-500 border border-red-100";
 }
 
@@ -121,7 +121,7 @@ function TaskQueuePane({ compact = false }: { compact?: boolean }) {
           className="flex items-center gap-3 px-4 py-3 border-b border-slate-100 hover:bg-[#fafbfe] transition-colors"
         >
           <span className="text-[11px] font-semibold text-slate-300 w-4 shrink-0 tabular-nums">{i + 1}</span>
-          <span className="flex items-center justify-center w-8 h-8 rounded-full bg-[#eef1fb] text-[#5b76d9] text-[11px] font-bold shrink-0">
+          <span className="flex items-center justify-center w-8 h-8 rounded-full bg-brand-tint text-brand text-[11px] font-bold shrink-0">
             {r.initials}
           </span>
           <div className="min-w-0 flex-1">
@@ -146,7 +146,7 @@ function TaskQueuePane({ compact = false }: { compact?: boolean }) {
 function Meter({ value, max, tone }: { value: number; max: number; tone: string }) {
   const reduce = useReducedMotion();
   const pct = Math.min(100, (value / max) * 100);
-  const color = tone === "billable" ? "#10b981" : tone === "atrisk" ? "#f59e0b" : "#5b76d9";
+  const color = tone === "billable" ? "#10b981" : tone === "atrisk" ? "#f59e0b" : "var(--color-brand)";
   return (
     <div className="flex items-center gap-2">
       <div className="h-1.5 flex-1 rounded-full bg-slate-100 overflow-hidden min-w-[52px]">
@@ -173,12 +173,12 @@ function Meter({ value, max, tone }: { value: number; max: number; tone: string 
 const BILL_STATUS = {
   billable: { chip: "bg-emerald-50 text-emerald-600", label: "Ready to attest" },
   atrisk: { chip: "bg-amber-50 text-amber-600", label: "Short" },
-  needtime: { chip: "bg-[#eef1fb] text-[#5b76d9]", label: "Needs time" },
+  needtime: { chip: "bg-brand-tint text-brand", label: "Needs time" },
 } as const;
 
 // Per-program accent for the code chip — keeps the six programs visually distinct.
 const PROGRAM_CHIP: Record<BillProgram, string> = {
-  RPM:    "bg-[#eef1fb] text-[#5b76d9]",
+  RPM:    "bg-brand-tint text-brand",
   RTM:    "bg-[#eaf3fb] text-[#3b82c4]",
   CCM:    "bg-[#eafaf1] text-emerald-600",
   CoCM:   "bg-[#f3eefb] text-[#8b5cf6]",
@@ -195,7 +195,7 @@ function BillingPane() {
         {[
           { v: "218", l: "Requirements met", c: "text-emerald-600" },
           { v: "34", l: "Short of threshold", c: "text-amber-600" },
-          { v: "$142K", l: "Across RPM · RTM · CCM · APCM", c: "text-[#00122F]" },
+          { v: "$142K", l: "Across RPM · RTM · CCM · APCM", c: "text-navy" },
         ].map((s, i) => (
           <div key={s.l} className={`px-4 py-3.5 ${i > 0 ? "border-l border-slate-100" : ""}`}>
             <div className={`font-serif text-[24px] leading-none ${s.c}`}>{s.v}</div>
@@ -213,11 +213,11 @@ function BillingPane() {
       <div className="flex-1">
         {BILLING_ROWS.map((b) => {
           const st = BILL_STATUS[b.status as keyof typeof BILL_STATUS];
-          const tone = b.status === "billable" ? "#10b981" : b.status === "needtime" ? "#5b76d9" : "#f59e0b";
+          const tone = b.status === "billable" ? "#10b981" : b.status === "needtime" ? "var(--color-brand)" : "#f59e0b";
           return (
             <div key={b.name} className="grid grid-cols-[1fr_auto] md:grid-cols-[1.5fr_1.1fr_1.4fr_0.9fr] gap-3 items-center px-4 py-3 border-b border-slate-100 hover:bg-[#fafbfe] transition-colors">
               <div className="flex items-center gap-2.5 min-w-0">
-                <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#eef1fb] text-[#5b76d9] text-[10px] font-bold shrink-0">{b.initials}</span>
+                <span className="flex items-center justify-center w-7 h-7 rounded-full bg-brand-tint text-brand text-[10px] font-bold shrink-0">{b.initials}</span>
                 <div className="min-w-0">
                   <div className="text-[13px] font-semibold text-slate-900 truncate">{b.name}</div>
                   <div className="text-[11px] text-slate-500 md:hidden">{b.program} · {b.codes}</div>
@@ -255,7 +255,7 @@ function BillingPane() {
       </div>
       <div className="flex items-center justify-between px-4 py-3 mt-auto border-t border-slate-100 bg-[#fbfcfe]">
         <span className="text-[12px] text-slate-600">One click exports the month's documentation packet — attributed time, escalations &amp; consent, for your biller to work.</span>
-        <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-white bg-[#1e2a3a] rounded-lg px-3 py-1.5 shrink-0">Export documentation</span>
+        <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-white bg-navy-soft rounded-lg px-3 py-1.5 shrink-0">Export documentation</span>
       </div>
     </div>
   );
@@ -279,7 +279,7 @@ function AnalyticsPane() {
           <div key={k.label} className="rounded-xl border border-slate-100 bg-white p-3.5">
             <div className="text-[10.5px] font-semibold uppercase tracking-[0.5px] text-slate-500">{k.label}</div>
             <div className="flex items-baseline gap-1.5 mt-1">
-              <span className="font-serif text-[28px] leading-none text-[#00122F]">{k.value}</span>
+              <span className="font-serif text-[28px] leading-none text-navy">{k.value}</span>
               {k.trend === "up" && <span className="text-[11px] font-semibold text-emerald-500">▲</span>}
               {k.trend === "down" && <span className="text-[11px] font-semibold text-emerald-500">▼</span>}
             </div>
@@ -297,8 +297,8 @@ function AnalyticsPane() {
           <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="w-full flex-1 min-h-0" aria-label="Adherence climbing to 85% over 12 months">
             <defs>
               <linearGradient id="analyticsFill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#5b76d9" stopOpacity="0.22" />
-                <stop offset="100%" stopColor="#5b76d9" stopOpacity="0" />
+                <stop offset="0%" stopColor="var(--color-brand)" stopOpacity="0.22" />
+                <stop offset="100%" stopColor="var(--color-brand)" stopOpacity="0" />
               </linearGradient>
             </defs>
             <motion.polygon
@@ -312,7 +312,7 @@ function AnalyticsPane() {
             <motion.polyline
               points={pts}
               fill="none"
-              stroke="#5b76d9"
+              stroke="var(--color-brand)"
               strokeWidth="1"
               vectorEffect="non-scaling-stroke"
               strokeLinecap="round"
@@ -323,7 +323,7 @@ function AnalyticsPane() {
               transition={{ duration: reduce ? 0 : 0.6, ease: "easeOut", delay: 0.2 }}
             />
           </svg>
-          <div className="flex justify-between text-[10px] text-slate-500 mt-1 shrink-0"><span>38%</span><span className="text-[#5b76d9] font-semibold">85% now</span></div>
+          <div className="flex justify-between text-[10px] text-slate-500 mt-1 shrink-0"><span>38%</span><span className="text-brand font-semibold">85% now</span></div>
         </div>
         {/* Program mix */}
         <div className="rounded-xl border border-slate-100 bg-white p-4 flex flex-col">
@@ -397,7 +397,7 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
         <div className="hidden sm:flex flex-col w-52 lg:w-56 shrink-0 bg-[#fbfcfe] border-r border-slate-100">
           <div className="flex items-center gap-2.5 px-4 h-14 border-b border-slate-100">
             {/* Compass app mark — three ascending bars in a periwinkle tile */}
-            <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-[#5b76d9] to-[#3f57c0] shadow-sm">
+            <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-brand to-[#3f57c0] shadow-sm">
               <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true">
                 <path d="M6 15v3 M12 9v9 M18 5v13" />
               </svg>
@@ -416,12 +416,12 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
                 disabled={!onNav}
                 aria-pressed={i === active}
                 className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] font-medium transition-colors text-left mb-0.5 ${
-                  i === active ? "bg-[#eef1fb] text-[#5b76d9]" : `text-slate-600 ${onNav ? "hover:bg-slate-100 cursor-pointer" : "cursor-default"}`
+                  i === active ? "bg-brand-tint text-brand" : `text-slate-600 ${onNav ? "hover:bg-slate-100 cursor-pointer" : "cursor-default"}`
                 }`}
               >
                 <Glyph d={n.icon} className="w-[18px] h-[18px]" />
                 {n.label}
-                {i === active && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#5b76d9]" />}
+                {i === active && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-brand" />}
               </button>
             ))}
             {/* KPI mini-cards */}
@@ -430,14 +430,14 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
                 <div key={k.label} className="rounded-lg border border-slate-100 bg-white px-3 py-2.5">
                   <div className="text-[10px] font-semibold uppercase tracking-[0.5px] text-slate-500">{k.label}</div>
                   <div className="flex items-baseline gap-1.5 mt-0.5">
-                    <span className="text-[18px] font-semibold text-[#00122F] leading-none">{k.value}</span>
+                    <span className="text-[18px] font-semibold text-navy leading-none">{k.value}</span>
                     {k.trend === "up" && <span className="text-[11px] font-semibold text-emerald-500">▲</span>}
                   </div>
                 </div>
               ))}
             </div>
             <div className="mt-auto flex items-center gap-2 pt-4 border-t border-slate-100">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#eef1fb] text-[#5b76d9] text-[10px] font-bold">DR</span>
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-brand-tint text-brand text-[10px] font-bold">DR</span>
               <div className="min-w-0">
                 <div className="text-[12px] font-medium text-slate-700 truncate">Dr. Reyes</div>
                 <div className="text-[10.5px] text-slate-500">412 monitored</div>
@@ -449,14 +449,14 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
         {/* Main column: app top bar + scrolling view */}
         <div className="flex-1 min-w-0 flex flex-col bg-white">
           <div className="flex items-center gap-3 px-5 h-14 border-b border-slate-100 shrink-0">
-            <span className="text-[15px] font-semibold text-[#00122F]">{DASH_NAV[active].label}</span>
+            <span className="text-[15px] font-semibold text-navy">{DASH_NAV[active].label}</span>
             <div className="ml-auto hidden md:flex items-center gap-2 bg-[#f6f7fb] border border-slate-200 rounded-lg px-3 py-1.5 text-[12px] text-slate-500 w-56">
               <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
               Search patients…
             </div>
             <span className="relative flex items-center justify-center w-8 h-8 rounded-lg hover:bg-slate-50 text-slate-500" aria-hidden="true">
               <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" /><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" /></svg>
-              <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-[#5b76d9]" />
+              <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-brand" />
             </span>
           </div>
           <div className="flex-1 min-h-0 overflow-hidden">{children}</div>
@@ -494,14 +494,14 @@ function DashboardTour() {
                 onClick={() => setTab(i)}
                 aria-pressed={tab === i}
                 className={`relative overflow-hidden px-4 sm:px-5 py-2 rounded-full text-[12.5px] sm:text-[13px] font-semibold transition-colors ${
-                  tab === i ? "bg-white text-[#00122F]" : "text-white/80 hover:text-white/90"
+                  tab === i ? "bg-white text-navy" : "text-white/80 hover:text-white/90"
                 }`}
               >
                 {tab === i && !reduce && !paused && (
                   <motion.span
                     key={`fill-${tab}`}
                     aria-hidden
-                    className="absolute inset-0 bg-[#5b76d9]/15"
+                    className="absolute inset-0 bg-brand/15"
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{ duration: 4.5, ease: "linear" }}

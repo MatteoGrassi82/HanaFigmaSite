@@ -19,7 +19,7 @@ export function Terms() {
       />
       <div className="bg-white min-h-screen">
         {/* Hero */}
-        <section className="bg-[#00122F] text-white py-20 px-4">
+        <section className="bg-navy text-white py-20 px-4">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-blue-400 text-sm font-semibold tracking-widest uppercase mb-4">HANA Health</p>
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl tracking-normal mb-6 leading-[1.1]">
@@ -31,7 +31,7 @@ export function Terms() {
           </div>
         </section>
 
-        <div className="max-w-3xl mx-auto px-4 py-16 text-[#1e2a3a]">
+        <div className="max-w-3xl mx-auto px-4 py-16 text-navy-soft">
           <p className="text-[15px] leading-[1.8] text-[#718096] mb-12">
             {it
               ? "I presenti Termini disciplinano l'accesso e l'uso della piattaforma di coinvolgimento dei pazienti HANA da parte degli operatori sanitari (Clienti) e dei loro pazienti (Utenti Finali). Un separato Accordo sul Trattamento dei Dati (DPA) disciplina gli obblighi di protezione dei dati ed è incorporato mediante rinvio."
@@ -40,7 +40,7 @@ export function Terms() {
 
           {/* PART A */}
           <div className="border-b border-slate-200 pb-4 mb-10">
-            <h2 className="text-2xl font-semibold text-[#1e2a3a] tracking-tight">{it ? "PARTE A — TERMINI DI SERVIZIO" : "PART A — TERMS OF SERVICE"}</h2>
+            <h2 className="text-2xl font-semibold text-navy-soft tracking-tight">{it ? "PARTE A — TERMINI DI SERVIZIO" : "PART A — TERMS OF SERVICE"}</h2>
           </div>
 
           {/* 1. Definitions */}
@@ -49,8 +49,8 @@ export function Terms() {
               <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
                 <thead>
                   <tr className="bg-slate-50">
-                    <th className="text-left px-4 py-3 font-semibold text-[#1e2a3a] border-b border-slate-200 w-1/3">{it ? "Termine" : "Term"}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-[#1e2a3a] border-b border-slate-200">{it ? "Significato" : "Meaning"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200 w-1/3">{it ? "Termine" : "Term"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Significato" : "Meaning"}</th>
                   </tr>
                 </thead>
                 <tbody className="text-[#718096]">
@@ -87,7 +87,7 @@ export function Terms() {
 
           {/* 3. Client Obligations */}
           <Section number="3" title={it ? "Obblighi del Cliente" : "Client Obligations"}>
-            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "3.1 Autorizzazioni e Responsabilità Clinica" : "3.1 Licensing and Clinical Responsibility"}</h4>
+            <h4 className="font-semibold text-navy-soft mb-3">{it ? "3.1 Autorizzazioni e Responsabilità Clinica" : "3.1 Licensing and Clinical Responsibility"}</h4>
             <ul className="list-disc pl-6 space-y-2 mb-6">
               <li>{it ? "I Clienti devono essere in possesso di tutte le licenze e le autorizzazioni regolatorie pertinenti necessarie per erogare servizi sanitari nella loro giurisdizione" : "Clients must hold all relevant licences and regulatory approvals required to deliver healthcare services in their jurisdiction"}</li>
               <li>{it ? "I Clienti conservano la piena responsabilità clinica e professionale per tutte le decisioni di cura dei pazienti, indipendentemente dagli output generati dall'AI" : "Clients retain full clinical and professional responsibility for all patient care decisions, regardless of AI-generated outputs"}</li>
@@ -95,7 +95,7 @@ export function Terms() {
               <li>{it ? "I Clienti devono assicurare che la propria implementazione di HANA sia conforme a tutte le normative sanitarie nazionali e locali applicabili" : "Clients must ensure their deployment of HANA complies with all applicable national and local healthcare regulations"}</li>
             </ul>
 
-            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "3.2 Consenso del Paziente" : "3.2 Patient Consent"}</h4>
+            <h4 className="font-semibold text-navy-soft mb-3">{it ? "3.2 Consenso del Paziente" : "3.2 Patient Consent"}</h4>
             <ul className="list-disc pl-6 space-y-2 mb-6">
               <li>{it ? "I Clienti sono responsabili dell'ottenimento del consenso informato dei pazienti prima di attivare i flussi di lavoro di coinvolgimento HANA" : "Clients are responsible for obtaining informed consent from patients prior to deploying HANA engagement workflows"}</li>
               <li>{it ? "Il consenso deve includere: la notifica che le interazioni sono mediate dall'AI; la spiegazione dell'uso dei dati; il diritto di opt-out; le procedure di escalation" : "Consent must include: notification that interactions are AI-mediated; explanation of data use; right to opt out; escalation procedures"}</li>
@@ -103,7 +103,7 @@ export function Terms() {
               <li>{it ? "I Clienti devono fornire ai pazienti l'accesso all'Informativa sulla Privacy di HANA al momento dell'onboarding" : "Clients must provide patients with access to HANA's Privacy Policy at onboarding"}</li>
             </ul>
 
-            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "3.3 Uso Appropriato" : "3.3 Appropriate Use"}</h4>
+            <h4 className="font-semibold text-navy-soft mb-3">{it ? "3.3 Uso Appropriato" : "3.3 Appropriate Use"}</h4>
             <ul className="list-disc pl-6 space-y-2">
               <li>{it ? "HANA può essere utilizzata esclusivamente per finalità cliniche e operative sanitarie legittime" : "HANA may only be used for legitimate clinical and healthcare operational purposes"}</li>
               <li>{it ? "I Clienti non devono utilizzare HANA per attività di marketing, profilazione commerciale o comunicazioni non cliniche" : "Clients must not use HANA for marketing, commercial profiling, or non-clinical communications"}</li>
@@ -153,8 +153,8 @@ export function Terms() {
               <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
                 <thead>
                   <tr className="bg-slate-50">
-                    <th className="text-left px-4 py-3 font-semibold text-[#1e2a3a] border-b border-slate-200 w-2/5">{it ? "Metrica" : "Metric"}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-[#1e2a3a] border-b border-slate-200">{it ? "Impegno" : "Commitment"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200 w-2/5">{it ? "Metrica" : "Metric"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Impegno" : "Commitment"}</th>
                   </tr>
                 </thead>
                 <tbody className="text-[#718096]">
@@ -176,7 +176,7 @@ export function Terms() {
                 : "HANA's liability to Clients is limited to the total fees paid by the Client in the 12 months preceding the claim, except in cases of gross negligence, wilful misconduct, or breach of data protection obligations."}
             </p>
 
-            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "8.1 HANA non è responsabile per:" : "8.1 HANA is not liable for:"}</h4>
+            <h4 className="font-semibold text-navy-soft mb-3">{it ? "8.1 HANA non è responsabile per:" : "8.1 HANA is not liable for:"}</h4>
             <ul className="list-disc pl-6 space-y-2 mb-6">
               <li>{it ? "Le decisioni cliniche prese dai clinici del Cliente, indipendentemente dal fatto che siano stati consultati output generati dall'AI" : "Clinical decisions made by Client clinicians, regardless of whether AI-generated outputs were consulted"}</li>
               <li>{it ? "I danni derivanti dalla mancata revisione degli avvisi di escalation da parte del Cliente" : "Harm resulting from the Client's failure to review escalation alerts"}</li>
@@ -184,7 +184,7 @@ export function Terms() {
               <li>{it ? "Gli esiti in implementazioni in cui i protocolli clinici di HANA sono stati modificati in modo sostanziale senza l'approvazione di HANA" : "Outcomes in deployments where HANA's clinical protocols have been materially modified without HANA's approval"}</li>
             </ul>
 
-            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "8.2 Manleva del Cliente" : "8.2 Client Indemnification"}</h4>
+            <h4 className="font-semibold text-navy-soft mb-3">{it ? "8.2 Manleva del Cliente" : "8.2 Client Indemnification"}</h4>
             <p>
               {it
                 ? "I Clienti si impegnano a manlevare HANA da pretese derivanti da: esercizio non autorizzato della pratica clinica; mancato ottenimento del consenso del paziente; violazione dei presenti Termini; uso improprio della piattaforma per finalità non cliniche."
@@ -224,7 +224,7 @@ export function Terms() {
                 : "This disclaimer does not limit the express commitments HANA makes in Section 7 (Service Levels), Part B (Security Policy), or the Business Associate Agreement, which remain fully binding."}
             </p>
 
-            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "11.1 Nessun parere medico" : "11.1 No medical advice"}</h4>
+            <h4 className="font-semibold text-navy-soft mb-3">{it ? "11.1 Nessun parere medico" : "11.1 No medical advice"}</h4>
             <p>
               {it
                 ? "La piattaforma non è un dispositivo medico e non fornisce pareri medici, diagnosi o trattamenti. Gli output generati dall'AI hanno carattere informativo e sono destinati a supportare, non a sostituire, il giudizio professionale di un clinico abilitato. Il Cliente resta l'unico responsabile di ogni decisione clinica. Si veda la Sezione 5."
@@ -240,28 +240,28 @@ export function Terms() {
                 : "HANA places and receives automated voice calls and messages on behalf of the Client. Responsibility for consent is allocated as follows."}
             </p>
 
-            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "12.1 Responsabilità del Cliente" : "12.1 Client responsibility"}</h4>
+            <h4 className="font-semibold text-navy-soft mb-3">{it ? "12.1 Responsabilità del Cliente" : "12.1 Client responsibility"}</h4>
             <p className="mb-6">
               {it
                 ? "Il Cliente è l'unica parte titolare di un rapporto con il paziente. Il Cliente dichiara e garantisce che, per ogni contatto che fornisce o autorizza, ha ottenuto e documentato tutti i consensi richiesti dalla normativa applicabile, incluso il Telephone Consumer Protection Act (TCPA), le leggi statali in materia di telemarketing e chiamate, e le leggi applicabili sulle intercettazioni e sulla registrazione delle chiamate. Il Cliente è responsabile del rispetto delle revoche del consenso, delle richieste di iscrizione ai registri delle opposizioni e delle fasce orarie consentite per le chiamate, nonché della tenuta dei propri registri di opposizione."
                 : "The Client is the only party with a relationship to the patient. The Client represents and warrants that, for every patient contact record it supplies or authorises, it has obtained and documented all consents required by applicable law, including the Telephone Consumer Protection Act (TCPA), state telemarketing and calling laws, and applicable wiretap and call-recording laws. The Client is responsible for honouring revocations of consent, do-not-call requests, and permitted calling hours, and for maintaining its own do-not-call records."}
             </p>
 
-            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "12.2 Registrazione e monitoraggio" : "12.2 Recording and monitoring"}</h4>
+            <h4 className="font-semibold text-navy-soft mb-3">{it ? "12.2 Registrazione e monitoraggio" : "12.2 Recording and monitoring"}</h4>
             <p className="mb-6">
               {it
                 ? "Le chiamate effettuate tramite la piattaforma possono essere registrate e trascritte per erogare il servizio, per produrre documentazione clinica e per finalità di revisione della qualità e della sicurezza. Nelle giurisdizioni che richiedono il consenso di tutte le parti, HANA fornisce un'informativa configurabile all'inizio di ogni chiamata. Il Cliente è responsabile di attivare e mantenere tale informativa in conformità alle leggi applicabili a sé e ai propri pazienti."
                 : "Calls conducted through the platform may be recorded and transcribed to deliver the service, to produce clinical documentation, and for quality and safety review. In jurisdictions that require all-party consent, HANA provides a configurable disclosure at the start of each call. The Client is responsible for enabling and maintaining that disclosure in line with the laws applicable to it and to its patients."}
             </p>
 
-            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "12.3 Informativa sull'AI" : "12.3 AI disclosure"}</h4>
+            <h4 className="font-semibold text-navy-soft mb-3">{it ? "12.3 Informativa sull'AI" : "12.3 AI disclosure"}</h4>
             <p className="mb-6">
               {it
                 ? "All'inizio di ogni chiamata i pazienti vengono informati che stanno parlando con un assistente automatizzato, in coerenza con la Sezione 5 e con le normative applicabili in materia di trasparenza dell'AI, tra cui la California AB 3030 e disposizioni statali analoghe."
                 : "Patients are told at the start of each call that they are speaking with an automated assistant, consistent with Section 5 and with applicable AI disclosure laws, including California AB 3030 and comparable state statutes."}
             </p>
 
-            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "12.4 Opt-out e manleva" : "12.4 Opt-out and indemnity"}</h4>
+            <h4 className="font-semibold text-navy-soft mb-3">{it ? "12.4 Opt-out e manleva" : "12.4 Opt-out and indemnity"}</h4>
             <p>
               {it
                 ? "I pazienti possono rinunciare al contatto automatizzato in qualsiasi momento tramite i meccanismi descritti nella Sezione 4. Al ricevimento di una richiesta di opt-out, HANA sospende ogni ulteriore contatto automatizzato verso quel paziente e ne informa il Cliente. Le pretese derivanti dal mancato ottenimento o dal mancato mantenimento di un consenso richiesto sono coperte dalla manleva del Cliente di cui alla Sezione 8.2."
@@ -277,28 +277,28 @@ export function Terms() {
                 : "This Section supplements the arbitration provisions in Section 10 and applies to Clients. It does not apply to patients (End Users), who are not required to arbitrate."}
             </p>
 
-            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "13.1 Solo su base individuale" : "13.1 Individual basis only"}</h4>
+            <h4 className="font-semibold text-navy-soft mb-3">{it ? "13.1 Solo su base individuale" : "13.1 Individual basis only"}</h4>
             <p className="mb-6">
               {it
                 ? "Il Cliente e HANA convengono che ciascuna parte potrà proporre pretese nei confronti dell'altra esclusivamente a titolo individuale, e non in qualità di attore o membro di una classe in un procedimento collettivo, consolidato o rappresentativo. L'arbitro non potrà riunire le pretese di più parti né presiedere alcuna forma di procedimento collettivo o rappresentativo."
                 : "The Client and HANA agree that each may bring claims against the other only in an individual capacity, and not as a plaintiff or class member in any purported class, collective, consolidated, or representative proceeding. The arbitrator may not consolidate the claims of more than one party and may not preside over any form of class or representative proceeding."}
             </p>
 
-            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "13.2 Rinuncia al giudizio con giuria" : "13.2 Jury trial waiver"}</h4>
+            <h4 className="font-semibold text-navy-soft mb-3">{it ? "13.2 Rinuncia al giudizio con giuria" : "13.2 Jury trial waiver"}</h4>
             <p className="mb-6">
               {it
                 ? "Nella misura in cui una controversia sia trattata in sede giudiziale anziché arbitrale, ciascuna parte rinuncia consapevolmente e volontariamente a ogni diritto a un giudizio con giuria."
                 : "To the extent any dispute proceeds in court rather than arbitration, each party knowingly and voluntarily waives any right to a trial by jury."}
             </p>
 
-            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "13.3 Preavviso di controversia" : "13.3 Pre-arbitration notice"}</h4>
+            <h4 className="font-semibold text-navy-soft mb-3">{it ? "13.3 Preavviso di controversia" : "13.3 Pre-arbitration notice"}</h4>
             <p className="mb-6">
               {it
                 ? "Prima di avviare un arbitrato, la parte che agisce deve inviare all'altra un avviso scritto di controversia che descriva la pretesa e il rimedio richiesto. Le parti tenteranno in buona fede di risolvere la questione nei 30 giorni successivi."
                 : "Before initiating arbitration, the claiming party must send the other party a written notice of dispute describing the claim and the relief sought. The parties will then attempt in good faith to resolve it for 30 days."}
             </p>
 
-            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "13.4 Autonomia delle clausole e diritto di opt-out" : "13.4 Severability and right to opt out"}</h4>
+            <h4 className="font-semibold text-navy-soft mb-3">{it ? "13.4 Autonomia delle clausole e diritto di opt-out" : "13.4 Severability and right to opt out"}</h4>
             <p>
               {it
                 ? "Qualora la Sezione 13.1 risulti inefficace rispetto a una determinata pretesa o richiesta di rimedio, tale pretesa o richiesta sarà scorporata e trattata dinanzi al giudice competente, mentre le restanti previsioni delle Sezioni 10 e 13 rimarranno in vigore. Il Cliente può rinunciare all'applicazione delle Sezioni 10 e 13 mediante comunicazione scritta a legal@hana.health entro 30 giorni dalla prima accettazione dei presenti Termini. L'esercizio di tale facoltà non incide su alcuna altra previsione."
@@ -308,21 +308,21 @@ export function Terms() {
 
           {/* 14. Additional United States Notices */}
           <Section number="14" title={it ? "Ulteriori Avvisi per gli Stati Uniti" : "Additional United States Notices"}>
-            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "14.1 Avviso per i residenti in California" : "14.1 Notice for California users"}</h4>
+            <h4 className="font-semibold text-navy-soft mb-3">{it ? "14.1 Avviso per i residenti in California" : "14.1 Notice for California users"}</h4>
             <p className="mb-6">
               {it
                 ? "Ai sensi della Sezione 1789.3 del California Civil Code, i residenti in California hanno diritto al seguente avviso. Il fornitore di questo servizio è HANA Health, Inc. I reclami possono essere inviati a legal@hana.health. I residenti in California possono inoltre contattare la Complaint Assistance Unit della Division of Consumer Services del California Department of Consumer Affairs per iscritto all'indirizzo 1625 North Market Blvd., Suite N 112, Sacramento, CA 95834, oppure telefonicamente al numero (800) 952-5210."
                 : "Under California Civil Code Section 1789.3, California residents are entitled to the following notice. The provider of this service is HANA Health, Inc. Complaints may be sent to legal@hana.health. California residents may also contact the Complaint Assistance Unit of the Division of Consumer Services of the California Department of Consumer Affairs in writing at 1625 North Market Blvd., Suite N 112, Sacramento, CA 95834, or by telephone at (800) 952-5210."}
             </p>
 
-            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "14.2 Diritti limitati del Governo degli Stati Uniti" : "14.2 U.S. Government restricted rights"}</h4>
+            <h4 className="font-semibold text-navy-soft mb-3">{it ? "14.2 Diritti limitati del Governo degli Stati Uniti" : "14.2 U.S. Government restricted rights"}</h4>
             <p className="mb-6">
               {it
                 ? "La piattaforma e la relativa documentazione costituiscono “commercial products” ai sensi del 48 C.F.R. 2.101, composti da “commercial computer software” e “commercial computer software documentation”. Ogni uso, modifica, riproduzione o divulgazione da parte o per conto del Governo degli Stati Uniti è disciplinato esclusivamente dai presenti Termini, in coerenza con il 48 C.F.R. 12.212 e il 48 C.F.R. 227.7202."
                 : "The platform and its documentation are “commercial products” as defined in 48 C.F.R. 2.101, consisting of “commercial computer software” and “commercial computer software documentation”. Any use, modification, reproduction, or disclosure by or on behalf of the U.S. Government is governed solely by these Terms, consistent with 48 C.F.R. 12.212 and 48 C.F.R. 227.7202."}
             </p>
 
-            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "14.3 Conformità in materia di esportazioni" : "14.3 Export compliance"}</h4>
+            <h4 className="font-semibold text-navy-soft mb-3">{it ? "14.3 Conformità in materia di esportazioni" : "14.3 Export compliance"}</h4>
             <p>
               {it
                 ? "Ciascuna parte si conforma alle normative statunitensi applicabili in materia di controllo delle esportazioni e sanzioni. Il Cliente dichiara di non essere situato in un paese soggetto a embargo statunitense, di non essere un soggetto sottoposto a restrizioni, e di non consentire l'accesso alla piattaforma da tali paesi o a tali soggetti."
@@ -332,7 +332,7 @@ export function Terms() {
 
           {/* PART B */}
           <div className="border-b border-slate-200 pb-4 mb-10 mt-16">
-            <h2 className="text-2xl font-semibold text-[#1e2a3a] tracking-tight">{it ? "PARTE B — POLITICA DI SICUREZZA" : "PART B — SECURITY POLICY"}</h2>
+            <h2 className="text-2xl font-semibold text-navy-soft tracking-tight">{it ? "PARTE B — POLITICA DI SICUREZZA" : "PART B — SECURITY POLICY"}</h2>
           </div>
 
           {/* 11. Security Governance */}
@@ -343,14 +343,14 @@ export function Terms() {
                 : "HANA maintains a formal Information Security Management System (ISMS) aligned with ISO 27001 principles. Security governance is the joint responsibility of the CTO and Privacy Lead, with quarterly reviews by the leadership team."}
             </p>
 
-            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "Sintesi del Quadro di Conformità" : "Compliance Framework Summary"}</h4>
+            <h4 className="font-semibold text-navy-soft mb-3">{it ? "Sintesi del Quadro di Conformità" : "Compliance Framework Summary"}</h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
                 <thead>
                   <tr className="bg-slate-50">
-                    <th className="text-left px-4 py-3 font-semibold text-[#1e2a3a] border-b border-slate-200">{it ? "Quadro Normativo" : "Framework"}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-[#1e2a3a] border-b border-slate-200">{it ? "Stato" : "Status"}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-[#1e2a3a] border-b border-slate-200">{it ? "Ambito" : "Scope"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Quadro Normativo" : "Framework"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Stato" : "Status"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Ambito" : "Scope"}</th>
                   </tr>
                 </thead>
                 <tbody className="text-[#718096]">
@@ -364,7 +364,7 @@ export function Terms() {
                     ["ISO 27001", "Aligned", it ? "ISMS implementato; roadmap di certificazione formale in corso" : "ISMS implemented; formal certification roadmap in progress"],
                   ].map(([fw, status, scope]) => (
                     <tr key={fw} className="border-b border-slate-100 last:border-0">
-                      <td className="px-4 py-3 font-medium text-[#1e2a3a]">{fw}</td>
+                      <td className="px-4 py-3 font-medium text-navy-soft">{fw}</td>
                       <td className="px-4 py-3">
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                           status === "Compliant" || status === "Completed" ? "bg-green-50 text-green-700" :
@@ -394,8 +394,8 @@ export function Terms() {
               <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
                 <thead>
                   <tr className="bg-slate-50">
-                    <th className="text-left px-4 py-3 font-semibold text-[#1e2a3a] border-b border-slate-200 w-2/5">{it ? "Contesto" : "Context"}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-[#1e2a3a] border-b border-slate-200">{it ? "Standard" : "Standard"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200 w-2/5">{it ? "Contesto" : "Context"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Standard" : "Standard"}</th>
                   </tr>
                 </thead>
                 <tbody className="text-[#718096]">
@@ -438,8 +438,8 @@ export function Terms() {
               <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
                 <thead>
                   <tr className="bg-slate-50">
-                    <th className="text-left px-4 py-3 font-semibold text-[#1e2a3a] border-b border-slate-200 w-2/5">{it ? "Fase" : "Phase"}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-[#1e2a3a] border-b border-slate-200">{it ? "Impegno di HANA" : "HANA Commitment"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200 w-2/5">{it ? "Fase" : "Phase"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Impegno di HANA" : "HANA Commitment"}</th>
                   </tr>
                 </thead>
                 <tbody className="text-[#718096]">
@@ -515,8 +515,8 @@ export function Terms() {
               <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
                 <thead>
                   <tr className="bg-slate-50">
-                    <th className="text-left px-4 py-3 font-semibold text-[#1e2a3a] border-b border-slate-200 w-2/5">{it ? "Tipo di Contatto" : "Contact Type"}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-[#1e2a3a] border-b border-slate-200">{it ? "Dettagli" : "Details"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200 w-2/5">{it ? "Tipo di Contatto" : "Contact Type"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Dettagli" : "Details"}</th>
                   </tr>
                 </thead>
                 <tbody className="text-[#718096]">
@@ -546,7 +546,7 @@ export function Terms() {
 function Section({ number, title, children }: { number: string; title: string; children: React.ReactNode }) {
   return (
     <section className="mb-12">
-      <h3 className="text-xl font-semibold text-[#1e2a3a] mb-4 tracking-tight">
+      <h3 className="text-xl font-semibold text-navy-soft mb-4 tracking-tight">
         {number}. {title}
       </h3>
       <div className="text-[15px] leading-[1.8] text-[#718096]">
@@ -560,7 +560,7 @@ function Section({ number, title, children }: { number: string; title: string; c
 function DefRow({ term, meaning }: { term: string; meaning: string }) {
   return (
     <tr className="border-b border-slate-100 last:border-0">
-      <td className="px-4 py-3 font-medium text-[#1e2a3a]">{term}</td>
+      <td className="px-4 py-3 font-medium text-navy-soft">{term}</td>
       <td className="px-4 py-3">{meaning}</td>
     </tr>
   );

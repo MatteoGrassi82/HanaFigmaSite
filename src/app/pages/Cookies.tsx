@@ -23,7 +23,7 @@ export function Cookies() {
 
       <div className="bg-white min-h-screen">
         {/* Hero */}
-        <section className="bg-[#00122F] text-white py-20 px-4">
+        <section className="bg-navy text-white py-20 px-4">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-blue-400 text-sm font-semibold tracking-widest uppercase mb-4">HANA Health, Inc.</p>
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl tracking-normal mb-6 leading-[1.1]">
@@ -37,16 +37,16 @@ export function Cookies() {
           </div>
         </section>
 
-        <div className="max-w-3xl mx-auto px-4 py-16 text-[#1e2a3a]">
+        <div className="max-w-3xl mx-auto px-4 py-16 text-navy-soft">
           <p className="text-[15px] leading-[1.8] text-[#718096] mb-12">
             {it ? (
               <>
-                La presente Cookie Policy spiega come HANA Health, Inc. (&ldquo;HANA,&rdquo; &ldquo;noi,&rdquo; &ldquo;ci&rdquo;) utilizza i cookie e tecnologie simili (come pixel, SDK e archiviazione locale) sul sito web <strong className="text-[#1e2a3a]">hana.health</strong> (il &ldquo;Sito&rdquo;) e come puoi gestirli. Integra la nostra{" "}
+                La presente Cookie Policy spiega come HANA Health, Inc. (&ldquo;HANA,&rdquo; &ldquo;noi,&rdquo; &ldquo;ci&rdquo;) utilizza i cookie e tecnologie simili (come pixel, SDK e archiviazione locale) sul sito web <strong className="text-navy-soft">hana.health</strong> (il &ldquo;Sito&rdquo;) e come puoi gestirli. Integra la nostra{" "}
                 <a href="/privacy" className="text-blue-600 hover:underline">Informativa sulla Privacy</a>.
               </>
             ) : (
               <>
-                This Cookie Policy explains how HANA Health, Inc. (&ldquo;HANA,&rdquo; &ldquo;we,&rdquo; &ldquo;us&rdquo;) uses cookies and similar technologies (such as pixels, SDKs, and local storage) on the <strong className="text-[#1e2a3a]">hana.health</strong> website (the &ldquo;Site&rdquo;), and how you can control them. It supplements our{" "}
+                This Cookie Policy explains how HANA Health, Inc. (&ldquo;HANA,&rdquo; &ldquo;we,&rdquo; &ldquo;us&rdquo;) uses cookies and similar technologies (such as pixels, SDKs, and local storage) on the <strong className="text-navy-soft">hana.health</strong> website (the &ldquo;Site&rdquo;), and how you can control them. It supplements our{" "}
                 <a href="/privacy" className="text-blue-600 hover:underline">Privacy Policy</a>.
               </>
             )}
@@ -66,15 +66,15 @@ export function Cookies() {
             <ul className="list-disc pl-6 space-y-2">
               {it ? (
                 <>
-                  <li><strong className="text-[#1e2a3a]">Strettamente necessari</strong> &mdash; richiesti affinché il Sito si carichi e funzioni. Non richiedono il consenso.</li>
-                  <li><strong className="text-[#1e2a3a]">Analitici / di performance</strong> &mdash; ci aiutano a misurare il traffico e a migliorare il Sito (ad es. Google Analytics).</li>
-                  <li><strong className="text-[#1e2a3a]">Funzionali</strong> &mdash; abilitano funzionalità integrate come la prenotazione e il video interattivo.</li>
+                  <li><strong className="text-navy-soft">Strettamente necessari</strong> &mdash; richiesti affinché il Sito si carichi e funzioni. Non richiedono il consenso.</li>
+                  <li><strong className="text-navy-soft">Analitici / di performance</strong> &mdash; ci aiutano a misurare il traffico e a migliorare il Sito (ad es. Google Analytics).</li>
+                  <li><strong className="text-navy-soft">Funzionali</strong> &mdash; abilitano funzionalità integrate come la prenotazione e il video interattivo.</li>
                 </>
               ) : (
                 <>
-                  <li><strong className="text-[#1e2a3a]">Strictly necessary</strong> &mdash; required for the Site to load and function. These do not require consent.</li>
-                  <li><strong className="text-[#1e2a3a]">Analytics / performance</strong> &mdash; help us measure traffic and improve the Site (e.g., Google Analytics).</li>
-                  <li><strong className="text-[#1e2a3a]">Functional</strong> &mdash; enable embedded features such as scheduling and interactive video.</li>
+                  <li><strong className="text-navy-soft">Strictly necessary</strong> &mdash; required for the Site to load and function. These do not require consent.</li>
+                  <li><strong className="text-navy-soft">Analytics / performance</strong> &mdash; help us measure traffic and improve the Site (e.g., Google Analytics).</li>
+                  <li><strong className="text-navy-soft">Functional</strong> &mdash; enable embedded features such as scheduling and interactive video.</li>
                 </>
               )}
             </ul>
@@ -91,10 +91,10 @@ export function Cookies() {
               <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
                 <thead>
                   <tr className="bg-slate-50">
-                    <th className="text-left px-4 py-3 font-semibold text-[#1e2a3a] border-b border-slate-200">{it ? "Nome / fornitore" : "Name / provider"}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-[#1e2a3a] border-b border-slate-200">{it ? "Finalità" : "Purpose"}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-[#1e2a3a] border-b border-slate-200">{it ? "Durata" : "Duration"}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-[#1e2a3a] border-b border-slate-200">{it ? "Categoria" : "Category"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Nome / fornitore" : "Name / provider"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Finalità" : "Purpose"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Durata" : "Duration"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Categoria" : "Category"}</th>
                   </tr>
                 </thead>
                 <tbody className="text-[#718096]">
@@ -139,17 +139,17 @@ export function Cookies() {
             <ul className="list-disc pl-6 space-y-2">
               {it ? (
                 <>
-                  <li><strong className="text-[#1e2a3a]">Controlli del consenso:</strong> Ove richiesto, forniamo un banner sui cookie / centro preferenze che ti consente di accettare o rifiutare i cookie non essenziali prima che vengano impostati, e di modificare la tua scelta in seguito.</li>
-                  <li><strong className="text-[#1e2a3a]">Impostazioni del browser:</strong> La maggior parte dei browser ti consente di bloccare o eliminare i cookie e di avvisarti quando vengono impostati. Il blocco di alcuni cookie può influire sul funzionamento del Sito.</li>
-                  <li><strong className="text-[#1e2a3a]">Opt-out di Google Analytics:</strong> Puoi installare il componente aggiuntivo del browser per la disattivazione di Google Analytics.</li>
-                  <li><strong className="text-[#1e2a3a]">Global Privacy Control (GPC):</strong> Ove richiesto dalla legge, rispettiamo i segnali GPC come opt-out dalla “vendita”/“condivisione” dei dati personali.</li>
+                  <li><strong className="text-navy-soft">Controlli del consenso:</strong> Ove richiesto, forniamo un banner sui cookie / centro preferenze che ti consente di accettare o rifiutare i cookie non essenziali prima che vengano impostati, e di modificare la tua scelta in seguito.</li>
+                  <li><strong className="text-navy-soft">Impostazioni del browser:</strong> La maggior parte dei browser ti consente di bloccare o eliminare i cookie e di avvisarti quando vengono impostati. Il blocco di alcuni cookie può influire sul funzionamento del Sito.</li>
+                  <li><strong className="text-navy-soft">Opt-out di Google Analytics:</strong> Puoi installare il componente aggiuntivo del browser per la disattivazione di Google Analytics.</li>
+                  <li><strong className="text-navy-soft">Global Privacy Control (GPC):</strong> Ove richiesto dalla legge, rispettiamo i segnali GPC come opt-out dalla “vendita”/“condivisione” dei dati personali.</li>
                 </>
               ) : (
                 <>
-                  <li><strong className="text-[#1e2a3a]">Consent controls:</strong> Where required, we provide a cookie banner / preference center that lets you accept or reject non-essential cookies before they are set, and to change your choice later.</li>
-                  <li><strong className="text-[#1e2a3a]">Browser settings:</strong> Most browsers let you block or delete cookies and notify you when cookies are set. Blocking some cookies may affect how the Site works.</li>
-                  <li><strong className="text-[#1e2a3a]">Google Analytics opt-out:</strong> You can install Google&rsquo;s Analytics Opt-out Browser Add-on.</li>
-                  <li><strong className="text-[#1e2a3a]">Global Privacy Control (GPC):</strong> Where required by law, we honor GPC signals as an opt-out of the &ldquo;sale&rdquo;/&ldquo;sharing&rdquo; of personal information.</li>
+                  <li><strong className="text-navy-soft">Consent controls:</strong> Where required, we provide a cookie banner / preference center that lets you accept or reject non-essential cookies before they are set, and to change your choice later.</li>
+                  <li><strong className="text-navy-soft">Browser settings:</strong> Most browsers let you block or delete cookies and notify you when cookies are set. Blocking some cookies may affect how the Site works.</li>
+                  <li><strong className="text-navy-soft">Google Analytics opt-out:</strong> You can install Google&rsquo;s Analytics Opt-out Browser Add-on.</li>
+                  <li><strong className="text-navy-soft">Global Privacy Control (GPC):</strong> Where required by law, we honor GPC signals as an opt-out of the &ldquo;sale&rdquo;/&ldquo;sharing&rdquo; of personal information.</li>
                 </>
               )}
             </ul>
@@ -163,7 +163,7 @@ export function Cookies() {
                 : "We may update this Cookie Policy to reflect changes to the technologies we use or to applicable law. We will post the updated version here with a new &ldquo;Last Updated&rdquo; date."}
             </p>
             <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 text-[15px]">
-              <p className="font-semibold text-[#1e2a3a] mb-1">HANA Health, Inc.</p>
+              <p className="font-semibold text-navy-soft mb-1">HANA Health, Inc.</p>
               <p>{it ? "Privacy: " : "Privacy: "}<a href="mailto:privacy@hana.health" className="text-blue-600 hover:underline">privacy@hana.health</a></p>
               <p>{it ? "Correlato: " : "Related: "}<a href="/privacy" className="text-blue-600 hover:underline">{it ? "Informativa sulla Privacy" : "Privacy Policy"}</a></p>
             </div>
@@ -178,7 +178,7 @@ export function Cookies() {
 function Section({ number, title, children }: { number: string; title: string; children: React.ReactNode }) {
   return (
     <section className="mb-12">
-      <h3 className="text-xl font-semibold text-[#1e2a3a] mb-4 tracking-tight">
+      <h3 className="text-xl font-semibold text-navy-soft mb-4 tracking-tight">
         {number}. {title}
       </h3>
       <div className="text-[15px] leading-[1.8] text-[#718096]">
@@ -191,7 +191,7 @@ function Section({ number, title, children }: { number: string; title: string; c
 function Row({ a, b, c, d }: { a: string; b: string; c: string; d: string }) {
   return (
     <tr className="border-b border-slate-100 last:border-0">
-      <td className="px-4 py-3 font-medium text-[#1e2a3a] align-top">{a}</td>
+      <td className="px-4 py-3 font-medium text-navy-soft align-top">{a}</td>
       <td className="px-4 py-3 align-top">{b}</td>
       <td className="px-4 py-3 align-top whitespace-nowrap">{c}</td>
       <td className="px-4 py-3 align-top">{d}</td>

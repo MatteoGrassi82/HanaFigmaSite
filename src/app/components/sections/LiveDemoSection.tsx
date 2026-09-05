@@ -99,10 +99,10 @@ export function LiveDemoSection({
 
   const inputClass = (err?: string) =>
     cn(
-      "w-full bg-transparent border-0 border-b-[1.5px] py-2 text-[#00122f] text-[17px] placeholder:text-[#b3bdcc] focus:outline-none transition-colors",
-      err ? "border-red-400" : "border-[#dfe3ee] focus:border-[#5b76d9]"
+      "w-full bg-transparent border-0 border-b-[1.5px] py-2 text-navy text-[17px] placeholder:text-[#b3bdcc] focus:outline-none transition-colors",
+      err ? "border-red-400" : "border-[#dfe3ee] focus:border-brand"
     );
-  const labelClass = "block text-[12px] font-bold uppercase tracking-[2.2px] text-[#5b76d9] mb-3";
+  const labelClass = "block text-[12px] font-bold uppercase tracking-[2.2px] text-brand mb-3";
 
   /* The working form and its call states. Kept in one place so another section
      can host the real thing through `bare` instead of copying the logic. */
@@ -164,7 +164,7 @@ export function LiveDemoSection({
                         headline and the sub, so the card does not repeat them
                         (Matteo 2026-09-02). Home keeps both. */}
                     <div className={bare ? "hidden" : undefined}>
-                      <p className="text-[24px] leading-[1.42] text-[#00122f] font-normal max-w-[30ch] mb-3">
+                      <p className="text-[24px] leading-[1.42] text-navy font-normal max-w-[30ch] mb-3">
                         {ld.formHeading}
                       </p>
                       <p className="text-[15px] leading-[1.7] text-[#64748b] max-w-[42ch]">
@@ -206,7 +206,7 @@ export function LiveDemoSection({
                         there to get. The page carries the four options because a
                         screen has room to explain them and a text message does not. */}
                     <div className="rounded-xl border border-[#dfe5f0] bg-[#f7f9fd] p-4">
-                      <p className="text-[14px] font-semibold text-[#1e2a3a]">{ld.textInHeading}</p>
+                      <p className="text-[14px] font-semibold text-navy-soft">{ld.textInHeading}</p>
                       <p className="mt-1 text-[12px] leading-snug text-[#5c6879]">{ld.textInBody}</p>
                       <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
                         {TEXT_IN_OPTIONS.map((o) => (
@@ -214,9 +214,9 @@ export function LiveDemoSection({
                             key={o.keyword}
                             href={`sms:${TEXT_IN_NUMBERS[region]}?&body=${encodeURIComponent(o.keyword)}`}
                             onClick={() => captureLead(`live-demo-textin-${o.keyword.toLowerCase()}`)}
-                            className="block rounded-lg border border-[#dfe5f0] bg-white px-3 py-2.5 text-left transition-all hover:-translate-y-0.5 hover:border-[#1e2a3a] hover:shadow-[0_6px_16px_rgba(0,18,47,0.10)]"
+                            className="block rounded-lg border border-[#dfe5f0] bg-white px-3 py-2.5 text-left transition-all hover:-translate-y-0.5 hover:border-navy-soft hover:shadow-[0_6px_16px_rgba(0,18,47,0.10)]"
                           >
-                            <span className="block text-[13px] font-semibold text-[#1e2a3a]">{ld[o.labelKey]}</span>
+                            <span className="block text-[13px] font-semibold text-navy-soft">{ld[o.labelKey]}</span>
                             <span className="block mt-0.5 text-[11px] leading-snug text-[#6b7789]">{ld[o.subKey]}</span>
                             <span className="block mt-1 text-[10px] font-mono tracking-wide text-[#8b95a5]">{o.keyword}</span>
                           </a>
@@ -226,7 +226,7 @@ export function LiveDemoSection({
                           keyword have to be readable and copyable, not just tappable. */}
                       <p className="mt-3 text-[11px] text-[#6b7789]">
                         {ld.textInFallback}{" "}
-                        <span className="font-semibold text-[#1e2a3a]">{TEXT_IN_NUMBERS[region]}</span>
+                        <span className="font-semibold text-navy-soft">{TEXT_IN_NUMBERS[region]}</span>
                       </p>
                     </div>
 
@@ -241,9 +241,9 @@ export function LiveDemoSection({
                     <button
                       onClick={handleWebCallClick}
                       disabled={webCallStatus !== "idle"}
-                      className="w-full inline-flex items-center justify-center gap-2.5 bg-white border border-[#dfe3ee] text-[#00122f] text-[16px] font-semibold rounded-xl py-[18px] transition-all hover:-translate-y-0.5 hover:border-[#c7cfe0] hover:shadow-[0_10px_24px_rgba(0,18,47,0.08)] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                      className="w-full inline-flex items-center justify-center gap-2.5 bg-white border border-[#dfe3ee] text-navy text-[16px] font-semibold rounded-xl py-[18px] transition-all hover:-translate-y-0.5 hover:border-[#c7cfe0] hover:shadow-[0_10px_24px_rgba(0,18,47,0.08)] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
                     >
-                      <Globe className="w-[18px] h-[18px] text-[#5b76d9]" />
+                      <Globe className="w-[18px] h-[18px] text-brand" />
                       {ld.webCallButton}
                     </button>
                   </motion.div>
@@ -291,7 +291,7 @@ export function LiveDemoSection({
 
             {/* live caption */}
             <div className="absolute bottom-10 left-0 right-0 flex items-center justify-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#5b76d9]" style={{ animation: "hana-glow 2.4s ease-in-out infinite" }} />
+              <span className="w-2 h-2 rounded-full bg-brand" style={{ animation: "hana-glow 2.4s ease-in-out infinite" }} />
               <span className="text-[12px] font-bold tracking-[2.5px] uppercase text-[#64748b]">{ld.listeningLabel}</span>
             </div>
           </div>

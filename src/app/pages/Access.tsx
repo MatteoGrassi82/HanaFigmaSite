@@ -141,7 +141,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
       <div className="min-h-screen bg-white">
 
         {/* ── Hero ──────────────────────────────────────────────────────────── */}
-        <section className="bg-[#00122F] text-white pt-32 pb-24 px-4">
+        <section className="bg-navy text-white pt-32 pb-24 px-4">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 mb-8">
               <span className="w-2 h-2 rounded-full bg-slate-400 animate-pulse" />
@@ -159,7 +159,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                 href="https://calendly.com/matteowastaken/discoverycall"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-slate-100 text-[#00122F] rounded-full font-semibold text-[15px] transition-all hover:-translate-y-0.5 group"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-slate-100 text-navy rounded-full font-semibold text-[15px] transition-all hover:-translate-y-0.5 group"
               >
                 Book a 20-min call
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -241,7 +241,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
             </div>
 
             {/* The mandate */}
-            <div className="bg-[#00122F] rounded-2xl p-8 md:p-10">
+            <div className="bg-navy rounded-2xl p-8 md:p-10">
               <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-400 mb-4">Software, not staff</p>
               <h3 className="font-serif text-2xl md:text-3xl text-white leading-tight mb-4">
                 CMS set the rates this low on purpose
@@ -472,7 +472,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
             </div>
 
             {/* What Hana does — one compact block */}
-            <div className="bg-[#00122F] rounded-2xl p-8 md:p-10">
+            <div className="bg-navy rounded-2xl p-8 md:p-10">
               <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-400 mb-4">What Hana does</p>
               <p className="text-white text-[17px] leading-relaxed mb-4">
                 Hana handles the whole thing with one call, on time.
@@ -556,7 +556,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
               </div>
 
               {/* Success fee */}
-              <div className="bg-[#00122F] border border-white/10 rounded-2xl p-8 text-white">
+              <div className="bg-navy border border-white/10 rounded-2xl p-8 text-white">
                 <p className="text-[10px] font-bold tracking-[2px] uppercase text-blue-400 mb-4">Success fee</p>
                 <div className="font-serif text-5xl text-white mb-2">+10%</div>
                 <div className="text-slate-400 text-sm mb-6">of the held-back money CMS pays you back</div>
@@ -606,7 +606,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
         </section>
 
         {/* ── Calculator ───────────────────────────────────────────────────── */}
-        <section className="px-4 py-20 bg-[#00122F]" id="calculator">
+        <section className="px-4 py-20 bg-navy" id="calculator">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-14">
               <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-400 mb-4">ROI Calculator</p>
@@ -893,7 +893,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
         />
 
         {/* ── Bottom CTA ────────────────────────────────────────────────────── */}
-        <section className="bg-[#00122F] px-4 py-24">
+        <section className="bg-navy px-4 py-24">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-400 mb-4">July 5 is close</p>
@@ -939,7 +939,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                   />
                   <button
                     type="submit"
-                    className="w-full sm:w-auto px-6 py-3 bg-white text-[#00122F] rounded-xl font-semibold text-[14px] hover:bg-slate-100 transition-colors shrink-0"
+                    className="w-full sm:w-auto px-6 py-3 bg-white text-navy rounded-xl font-semibold text-[14px] hover:bg-slate-100 transition-colors shrink-0"
                   >
                     Send it
                   </button>

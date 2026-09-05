@@ -162,7 +162,7 @@ export function SonicDemoSection({
         >
           <span className="inline-flex items-center gap-2.5 rounded-full bg-white/70 border border-[#e2e6f4] backdrop-blur-sm px-4 py-1.5">
             <span
-              className="w-2 h-2 rounded-full bg-[#5b76d9]"
+              className="w-2 h-2 rounded-full bg-brand"
               style={{ animation: "hana-glow 2.4s ease-in-out infinite" }}
             />
             <span className="text-[13px] font-medium text-slate-600">
