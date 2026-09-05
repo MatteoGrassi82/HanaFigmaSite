@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { PaletteSwitcher } from "../components/lab/PaletteSwitcher";
 import { motion, useInView } from "motion/react";
 import { Check, ChevronRight } from "lucide-react";
 import { SEO } from "../components/SEO";
@@ -587,6 +588,7 @@ export function RemoteLab() {
       <LabBar>§2 Sleep · variant B — the ninety day clock</LabBar>
       <SleepNinetyDayClock />
 
+      <PaletteSwitcher />
       <Footer />
     </>
   );

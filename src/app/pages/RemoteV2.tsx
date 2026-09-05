@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { PaletteSwitcher } from "../components/lab/PaletteSwitcher";
 import { motion, AnimatePresence, useReducedMotion, useInView, useScroll, useTransform } from "motion/react";
 import { Check, ChevronRight, Minus, Plus } from "lucide-react";
 import { SEO } from "../components/SEO";
@@ -1617,6 +1618,7 @@ export function RemoteV2({
         </motion.div>
       </section>
 
+      <PaletteSwitcher />
       <Footer />
     </div>
   );

@@ -21,23 +21,6 @@ const IT_DEMO_AGENT_ID: string | null = null;
 // (mirrors the "agent_" prefix that routes to ElevenLabs).
 const DEMO_AGENT_ID = "squad:91b2273e-a3b2-46df-af20-193b50054921";
 
-// Text-in demo. The visitor texts a keyword to our Telnyx number and the Pipecat
-// agent rings them back on it. Keywords are matched server-side against the agent's
-// own persona keys (kat-clinic/agents/sitedemo.json), so these four strings must stay
-// spelled exactly as the persona keys are — change one here and the reply silently
-// falls through to the default persona.
-// Region-aware: an EU visitor asked to text a US number pays international rates and
-// reads it as spam. The UK number is Twilio, the US one Telnyx — the bot works out
-// which carrier sent a webhook from the request itself, so both drive the same flow.
-// EU numbers cannot be bought on Telnyx without local address + ID documentation
-// (Ofcom/ComReg/AGCOM all require it), which a Delaware corporation cannot supply.
-const TEXT_IN_NUMBERS = { US: "+13135146395", EU: "+447897023174" } as const;
-const TEXT_IN_OPTIONS = [
-  { keyword: "MONITORING",   labelKey: "optMonitoring",   subKey: "optMonitoringSub" },
-  { keyword: "INTAKE",       labelKey: "optIntake",       subKey: "optIntakeSub" },
-  { keyword: "OUTREACH",     labelKey: "optOutreach",     subKey: "optOutreachSub" },
-  { keyword: "COORDINATION", labelKey: "optCoordination", subKey: "optCoordinationSub" },
-] as const;
 
 interface LiveDemoSectionProps {
   activeAgentId: string | null;
@@ -67,9 +50,7 @@ export function LiveDemoSection({
   const [email, setEmail] = useState("");
   const [fieldErrors, setFieldErrors] = useState<{ name?: string; email?: string }>({});
 
-  // Region only picks which number the visitor texts; nothing is sent from here.
   // Italian site serves EU only (UK/EU agent); US/Canada is not offered there.
-  const [region, setRegion] = useState<"US" | "EU">(isItalian ? "EU" : "US");
 
 
   // Lead notification → Resend (via our Vercel function), not Zapier.
@@ -198,46 +179,9 @@ export function LiveDemoSection({
                       {fieldErrors.email && <p className="mt-1 text-xs text-red-500">{fieldErrors.email}</p>}
                     </div>
   
-                    {/* Text-in demo — the path that works in the US today.
-                        The visitor sends the keyword, so there is NO outbound SMS in
-                        this flow and nothing for A2P 10DLC to gate. It also verifies
-                        the number for free: you cannot text from a number you do not
-                        hold, which is the same proof the old outbound round-trip was
-                        there to get. The page carries the four options because a
-                        screen has room to explain them and a text message does not. */}
-                    <div className="rounded-xl border border-[#dfe5f0] bg-[#f7f9fd] p-4">
-                      <p className="text-[14px] font-semibold text-navy-soft">{ld.textInHeading}</p>
-                      <p className="mt-1 text-[12px] leading-snug text-[#5c6879]">{ld.textInBody}</p>
-                      <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        {TEXT_IN_OPTIONS.map((o) => (
-                          <a
-                            key={o.keyword}
-                            href={`sms:${TEXT_IN_NUMBERS[region]}?&body=${encodeURIComponent(o.keyword)}`}
-                            onClick={() => captureLead(`live-demo-textin-${o.keyword.toLowerCase()}`)}
-                            className="block rounded-lg border border-[#dfe5f0] bg-white px-3 py-2.5 text-left transition-all hover:-translate-y-0.5 hover:border-navy-soft hover:shadow-[0_6px_16px_rgba(0,18,47,0.10)]"
-                          >
-                            <span className="block text-[13px] font-semibold text-navy-soft">{ld[o.labelKey]}</span>
-                            <span className="block mt-0.5 text-[11px] leading-snug text-[#6b7789]">{ld[o.subKey]}</span>
-                            <span className="block mt-1 text-[10px] font-mono tracking-wide text-[#8b95a5]">{o.keyword}</span>
-                          </a>
-                        ))}
-                      </div>
-                      {/* sms: links do nothing on most desktops, so the number and the
-                          keyword have to be readable and copyable, not just tappable. */}
-                      <p className="mt-3 text-[11px] text-[#6b7789]">
-                        {ld.textInFallback}{" "}
-                        <span className="font-semibold text-navy-soft">{TEXT_IN_NUMBERS[region]}</span>
-                      </p>
-                    </div>
-
-                    {/* Divider */}
-                    <div className="flex items-center gap-4 my-0.5">
-                      <span className="h-px flex-1 bg-[#e8ebf2]" />
-                      <span className="text-[12px] font-semibold uppercase tracking-[2px] text-[#94a3b8]">{ld.or}</span>
-                      <span className="h-px flex-1 bg-[#e8ebf2]" />
-                    </div>
-  
-                    {/* Secondary — simple web call */}
+                    {/* The only action while the phone flow waits on carrier registration.
+                        The numbers stay wired server-side — texting them still works — the
+                        page just does not advertise them yet. */}
                     <button
                       onClick={handleWebCallClick}
                       disabled={webCallStatus !== "idle"}
