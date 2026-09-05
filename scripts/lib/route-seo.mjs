@@ -95,6 +95,7 @@ export const NOINDEX_ROUTES = [
   // The reference programme page. Live at its real URL for review, deliberately
   // not indexed: it renders five open billing questions on the page, and those
   // are answered before it moves to STATIC_ROUTES. Moving it is the publish step.
+  '/programs',
   '/programs/chronic-care-management',
   '/programs/advanced-primary-care-management',
   '/programs/behavioral-health-integration',

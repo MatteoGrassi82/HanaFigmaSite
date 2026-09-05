@@ -44,6 +44,7 @@ const BentoShowcase = lazy(() => import("./pages/BentoShowcase").then((m) => ({ 
 const ProofShowcase = lazy(() => import("./pages/ProofShowcase").then((m) => ({ default: m.ProofShowcase })));
 const RemoteV2 = lazy(() => import("./pages/RemoteV2").then((m) => ({ default: m.RemoteV2 })));
 const RemoteLab = lazy(() => import("./pages/RemoteLab").then((m) => ({ default: m.RemoteLab })));
+const Programs = lazy(() => import("./pages/Programs").then((m) => ({ default: m.Programs })));
 const ChronicCareManagement = lazy(() =>
   import("./pages/ChronicCareManagement").then((m) => ({ default: m.ChronicCareManagement }))
 );
@@ -297,6 +298,7 @@ function AppContent() {
               <Route path="/bento" element={<BentoShowcase />} />
               <Route path="/proof" element={<ProofShowcase />} />
               <Route path="/remote-lab" element={<RemoteLab />} />
+              <Route path="/programs" element={<Programs />} />
               <Route path="/programs/chronic-care-management" element={<ChronicCareManagement />} />
               <Route path="/programs/advanced-primary-care-management" element={<AdvancedPrimaryCareManagement />} />
               <Route path="/programs/behavioral-health-integration" element={<BehavioralHealthIntegration />} />

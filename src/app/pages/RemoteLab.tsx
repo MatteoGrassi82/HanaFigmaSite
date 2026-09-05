@@ -36,7 +36,7 @@ import { CtaBand } from "../components/sections/CtaBand";
 import { CaseloadSlider } from "../components/lab/interactive/CaseloadSlider";
 import { EligibilityGap } from "../components/lab/interactive/EligibilityGap";
 import { RevenueEstimator } from "../components/sections/RevenueEstimator";
-import { ProgrammeChooser } from "../components/lab/interactive/ProgrammeChooser";
+import { ProgrammeChooser } from "../components/sections/ProgrammeChooser";
 
 /**
  * /remote-lab — a design sandbox for /remote-v2 sections.

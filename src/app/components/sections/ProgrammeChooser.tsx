@@ -1,11 +1,11 @@
 import React, { useCallback, useId, useRef } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { Arithmetic, BigStat, Note, Panel, useUrlState } from "./kit";
-import type { ArithmeticPart } from "./kit";
-import { MARKET } from "./rates";
-import { PROGRAMS, PROGRAM_FOOTNOTE } from "../ProgramsStack";
-import type { Program } from "../ProgramsStack";
-import { cn } from "../../../../lib/utils";
+import { Arithmetic, BigStat, Note, Panel, useUrlState } from "../lab/interactive/kit";
+import type { ArithmeticPart } from "../lab/interactive/kit";
+import { MARKET } from "../lab/interactive/rates";
+import { PROGRAMS, PROGRAM_FOOTNOTE } from "../lab/ProgramsStack";
+import type { Program } from "../lab/ProgramsStack";
+import { cn } from "../../../lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
  * ProgrammeChooser — which program is this patient?
