@@ -50,6 +50,12 @@ const ChronicCareManagement = lazy(() =>
 const AdvancedPrimaryCareManagement = lazy(() =>
   import("./pages/AdvancedPrimaryCareManagement").then((m) => ({ default: m.AdvancedPrimaryCareManagement }))
 );
+const BehavioralHealthIntegration = lazy(() =>
+  import("./pages/BehavioralHealthIntegration").then((m) => ({ default: m.BehavioralHealthIntegration }))
+);
+const RemoteTherapeuticMonitoring = lazy(() =>
+  import("./pages/RemoteTherapeuticMonitoring").then((m) => ({ default: m.RemoteTherapeuticMonitoring }))
+);
 
 // Configuration
 const VAPI_PUBLIC_KEY = "5dfc26c6-90a6-4efe-907b-7bd0d690dc6e";
@@ -293,6 +299,8 @@ function AppContent() {
               <Route path="/remote-lab" element={<RemoteLab />} />
               <Route path="/programs/chronic-care-management" element={<ChronicCareManagement />} />
               <Route path="/programs/advanced-primary-care-management" element={<AdvancedPrimaryCareManagement />} />
+              <Route path="/programs/behavioral-health-integration" element={<BehavioralHealthIntegration />} />
+              <Route path="/programs/remote-therapeutic-monitoring" element={<RemoteTherapeuticMonitoring />} />
               <Route path="/remote-v2" element={
                 <RemoteV2
                   activeAgentId={activeAgentId}

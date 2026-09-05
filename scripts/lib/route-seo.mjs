@@ -97,6 +97,8 @@ export const NOINDEX_ROUTES = [
   // are answered before it moves to STATIC_ROUTES. Moving it is the publish step.
   '/programs/chronic-care-management',
   '/programs/advanced-primary-care-management',
+  '/programs/behavioral-health-integration',
+  '/programs/remote-therapeutic-monitoring',
 ];
 
 /**
