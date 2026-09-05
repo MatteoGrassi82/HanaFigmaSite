@@ -1,0 +1,93 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+ * tokens.css — the design tokens. One source of truth for colour, radius,
+ * shadow and the type scale. Fonts are the two lines in theme.css (@theme
+ * --font-sans / --font-serif); they already follow this pattern.
+ *
+ * HOW THIS WORKS
+ * Tailwind 4 turns every `--color-*` here into utilities (bg-navy, text-ink,
+ * border-rule, …) that compile to `var(--color-…)`. Because the value is read
+ * at the element, a scope that redefines the variable reskins every utility
+ * inside it and nothing outside it. That is what `.cobalt` below does.
+ *
+ * THE TWO PALETTES, AND WHY THIS FILE EXISTS
+ * The site currently carries two design systems in hardcoded hex:
+ *   legacy  #00122F navy + #5B76D9 periwinkle, DM Sans + Instrument Serif   (every page)
+ *   cobalt  #0A1633 navy + #2563EB blue, IBM Plex Sans + Fraunces, warm paper (/remote-v2)
+ * Expressed as tokens, the sitewide decision becomes a values change in :root,
+ * not a rewrite of 50 files, and shared sections render correctly in both
+ * scopes in the meantime instead of leaking cobalt hex onto legacy pages.
+ *
+ * MIGRATION RULE
+ * New code uses tokens, never raw hex. Existing hex migrates section by
+ * section, with a visual check, not in one sweep. Do not add new colours here
+ * without a role name; a token is a decision, not a swatch.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+@theme {
+  /* ── Brand ─────────────────────────────────────────────────────────────── */
+  --color-navy: #00122f;          /* headlines, dark surfaces */
+  --color-navy-soft: #1e2a3a;     /* nav text, secondary dark */
+  --color-brand: #5b76d9;         /* the blue: links, eyebrows, CTAs, focus */
+  --color-brand-soft: #a7bcf5;    /* tints of the blue on dark grounds */
+  --color-brand-tint: #eef1fb;    /* the blue as a surface wash */
+
+  /* ── Surfaces ──────────────────────────────────────────────────────────── */
+  --color-paper: #ffffff;         /* page ground */
+  --color-paper-2: #f6f7fb;       /* alternating band */
+  --color-paper-bright: #fbfcfe;  /* cards and chips that lift off the band */
+  --color-rule: #e8ebf2;          /* borders */
+  --color-rule-soft: #e2e6f4;     /* hairlines */
+
+  /* ── Ink ───────────────────────────────────────────────────────────────── */
+  --color-ink: #00122f;           /* body on light */
+  --color-ink-soft: #475569;      /* secondary body; never lighter than this for prose */
+  --color-ink-mute: #718096;      /* captions, meta; 4.6:1 on white, labels only */
+
+  /* ── Signals (never for series or decoration) ──────────────────────────── */
+  --color-signal-amber: #e8a06a;
+  --color-signal-green: #10b981;
+  --color-signal-sky: #7cc4f0;
+
+  /* ── Radius ────────────────────────────────────────────────────────────── */
+  --radius-card: 20px;
+  --radius-tile: 14px;
+  --radius-pill: 9999px;
+
+  /* ── Shadow ────────────────────────────────────────────────────────────── */
+  --shadow-card: 0 1px 2px rgba(0, 18, 47, 0.06), 0 8px 24px rgba(0, 18, 47, 0.06);
+  --shadow-float: 0 24px 64px rgba(0, 18, 47, 0.10);
+
+  /* ── Type scale (sizes; weight and tracking live in the section) ───────── */
+  --text-eyebrow: 13px;
+  --text-eyebrow--letter-spacing: 2.5px;
+  --text-eyebrow--line-height: 1.2;
+  --text-lead: 20px;
+  --text-lead--line-height: 1.55;
+  --text-h3: 26px;
+  --text-h3--line-height: 1.2;
+  --text-h2: 46px;
+  --text-h2--line-height: 1.08;
+  --text-display: 64px;
+  --text-display--line-height: 1.02;
+}
+
+/* The cobalt experiment as an override of the same tokens. Fonts are already
+   overridden in cobalt-type.css; when sections have migrated to tokens the
+   selector-based utility overrides in that file can be deleted. */
+.cobalt {
+  --color-navy: #0a1633;
+  --color-navy-soft: #1a1715;
+  --color-brand: #2563eb;
+  --color-brand-soft: #93b4f5;
+  --color-brand-tint: #eaf0fd;
+
+  --color-paper: #f8f7f3;
+  --color-paper-2: #ecebe5;
+  --color-paper-bright: #fdfcf9;
+  --color-rule: #d4cdb8;
+  --color-rule-soft: #e5dfd0;
+
+  --color-ink: #1a1715;
+  --color-ink-soft: #3a332d;
+  --color-ink-mute: #6b6151;
+}
