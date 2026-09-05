@@ -1,17 +1,7 @@
 import type { ReactNode } from "react";
 import { SEO, breadcrumbSchema, faqSchema } from "../components/SEO";
-import { Footer } from "../components/layout/Footer";
-import { Hero } from "../components/sections/Hero";
-import { EligibilityCheck } from "../components/sections/EligibilityCheck";
-import { CodeTable } from "../components/sections/CodeTable";
-import { WhoDoesWhat } from "../components/sections/WhoDoesWhat";
-import { HowItWorksLoop } from "../components/sections/HowItWorksLoop";
-import { RecipesMarquee } from "../components/sections/RecipesMarquee";
-import { RevenueEstimator } from "../components/sections/RevenueEstimator";
-import { FaqSection } from "../components/sections/FaqSection";
-import { CtaBand } from "../components/sections/CtaBand";
+import { ProgrammePage } from "../components/templates/ProgrammePage";
 import { programmeById } from "../../content/programmes/index";
-import { PROGRAM_CARDS } from "../../content/programmes";
 
 /**
  * /programs/chronic-care-management — THE REFERENCE PROGRAMME PAGE.
@@ -70,8 +60,6 @@ const HERO_HEADLINE: ReactNode = (
   </>
 );
 
-/* The four CCM workflows already fact-checked in src/content/programmes.ts. */
-const CCM_WORKFLOWS = PROGRAM_CARDS.filter((c) => c.tag === "CCM");
 
 /* Answerable from the sourced data and nothing else. Every answer below traces to
    src/content/programmes/index.ts or to rates.ts. Questions that need a fact we do
@@ -134,94 +122,14 @@ export function ChronicCareManagement() {
         ]}
       />
 
-      {/* 0. The claim. Single column: there is no product animation for a
-             programme page, and a half-empty visual slot reads as unfinished. */}
-      <Hero
-        eyebrow={`${CCM.code} · ${CCM.codes}`}
+      <ProgrammePage
+        data={CCM}
         headline={HERO_HEADLINE}
-        body={CCM.rule}
-        primaryCta={{ label: "Talk to HANA", href: "/demo" }}
-        secondaryCta={{ label: "See what it pays", href: "#codes" }}
-        trustLine="Your team reviews. Your provider signs."
+        faqs={CCM_FAQS}
+        openQuestions={OPEN_QUESTIONS}
+        workflowsHeading="What a CCM month actually looks like"
+        workflowsBody="Four of the workflows HANA runs inside chronic care management. Each one ends in the record, not in a spreadsheet."
       />
-
-      {/* 1. Is this me? */}
-      <EligibilityCheck data={CCM} id="eligibility" />
-
-      {/* 2. What does it pay? The basis travels with every figure. */}
-      <CodeTable id="codes" tone="band" />
-
-      {/* 3. What do I have to do? The section the page is really for. */}
-      <WhoDoesWhat data={CCM} id="who-does-what" />
-
-      {/* 4. How does it run, month to month. */}
-      <HowItWorksLoop id="how-it-works" />
-
-      {/* 4b. The programme's own workflows, filtered to CCM. */}
-      <RecipesMarquee
-        soft
-        tag="CCM"
-        items={CCM_WORKFLOWS}
-        heading="What a CCM month actually looks like"
-        body="Four of the workflows HANA runs inside chronic care management. Each one ends in the record, not in a spreadsheet."
-      />
-
-      {/* 5. What is it worth on my panel. Locked to CCM: the four-programme
-             selector belongs on the hub, not on a page about one programme.
-             NO PROOF SECTION HERE. ProofBento carries generic HANA proof and
-             quotes that are not about chronic care management, so on this page it
-             would be borrowed credibility. It goes back when there is a CCM
-             case study to put in it. */}
-      <RevenueEstimator programme="ccm" id="what-it-is-worth" />
-
-      <FaqSection
-        items={CCM_FAQS}
-        eyebrow="Questions practices ask"
-        heading={<>Before you <em>start.</em></>}
-      />
-
-      {/* 6. The gaps, stated. This section comes out before the page is indexed. */}
-      <section id="open" className="scroll-mt-24 bg-band border-y border-rule py-16 md:py-20 px-6 md:px-16">
-        <div className="max-w-[820px] mx-auto">
-          <p className="text-eyebrow font-bold uppercase text-ink-mute m-0 mb-4">
-            Not answered on this page yet
-          </p>
-          <h2 className="font-serif text-h2 text-ink m-0 mb-4">
-            Five things we will not guess at.
-          </h2>
-          <p className="text-[16.5px] leading-[1.7] text-ink-soft m-0 mb-8 max-w-[62ch]">
-            These are billing rules, and a plausible-sounding answer is worse than
-            no answer. Each one is confirmed before this page is published.
-          </p>
-          <ul className="m-0 p-0 list-none grid gap-3">
-            {OPEN_QUESTIONS.map((o) => (
-              <li key={o.q} className="rounded-tile border border-rule bg-paper-bright p-5">
-                <p className="text-[16px] font-semibold text-ink m-0">{o.q}</p>
-                <p className="text-[14.5px] leading-[1.6] text-ink-soft m-0 mt-1.5">{o.needs}</p>
-              </li>
-            ))}
-          </ul>
-          <p className="text-[14px] leading-[1.6] text-ink-mute m-0 mt-6">
-            Medicare rules as they stand in August 2026. Figures are CY2026.
-          </p>
-        </div>
-      </section>
-
-      <CtaBand
-        heading={<>Hear it make the call. <em>Then decide.</em></>}
-        body="Drop your number and HANA calls you. The agent works out the right demo as you talk."
-        buttons={[
-          { label: "Talk to HANA", href: "/demo" },
-          { label: "Book a demo", href: "/contact", variant: "ghost" },
-        ]}
-        reassurances={[
-          "Your patients, your claim",
-          "Your team reviews and attests",
-          "Nothing bills until a person approves",
-        ]}
-      />
-
-      <Footer />
     </div>
   );
 }
