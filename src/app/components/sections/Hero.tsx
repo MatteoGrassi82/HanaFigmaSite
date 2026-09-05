@@ -320,7 +320,13 @@ export function Hero({
       <div
         className={cn(
           "grid grid-cols-1 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)]",
-          !compact && "lg:min-h-[calc(100vh-80px)]"
+          // A floor, not a viewport lock. This was calc(100vh-80px), which
+          // hardcoded the height of the site chrome and assumed the announcement
+          // bar was present: without it the hero over-reserved and opened with a
+          // large empty gap above the headline. A 100vh opener also pushes the
+          // rest of the page out of the first frame, which is the one a reader
+          // and a link preview both get. Content sets the height now.
+          !compact && "lg:min-h-[600px]"
         )}
       >
         <div
