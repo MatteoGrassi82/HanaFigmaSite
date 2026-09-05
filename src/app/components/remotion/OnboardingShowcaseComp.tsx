@@ -28,13 +28,13 @@ const SANS = "'IBM Plex Sans', system-ui, sans-serif";
    headless, where the page's custom properties do not exist. */
 const BLUE = "#2536E6"; // brand, ultramarine. Spent on the one live thing per frame
 const ORANGE = "#E8A06A"; // signal-amber (normalised from #F59E42)
-const INK = "#16130F"; // ink
-const SUB = "#6F6659"; // ink-mute: captions, labels, meta
-const BODY = "#4A4239"; // ink-soft: secondary prose
-const PAPER_BRIGHT = "#FDFCFA"; // paper-bright: the product surface
-const ROW_BG = "#F0EDE6"; // paper-2: the row ground
-const HAIRLINE = "#D9D3C7"; // rule-soft
-const RULE = "#CCC4B4"; // rule
+const INK = "#00122f"; // ink
+const SUB = "#64748b"; // ink-mute: captions, labels, meta
+const BODY = "#475569"; // ink-soft: secondary prose
+const PAPER_BRIGHT = "#ffffff"; // paper-bright: the product surface
+const ROW_BG = "#f6f7fb"; // paper-2: the row ground
+const HAIRLINE = "#e2e8f0"; // rule-soft
+const RULE = "#cfd8e6"; // rule
 const GREEN = "#10B981"; // signal-green (normalised from #22A15C)
 
 export const ONBOARDING_CHAPTER_LEN = 170;
@@ -78,7 +78,7 @@ function Window({ title, children }: { title: string; children: React.ReactNode 
         borderRadius: 20,
         background: PAPER_BRIGHT, // paper-bright
         border: `1px solid ${RULE}`, // rule
-        boxShadow: "0 30px 70px -28px rgba(22,19,15,0.22)", // warm ink shadow
+        boxShadow: "0 30px 70px -28px rgba(0, 18, 47,0.22)", // warm ink shadow
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
@@ -298,7 +298,7 @@ function Academy({ frame, fps, t0 }: { frame: number; fps: number; t0: number })
                 width: 22,
                 height: 22,
                 borderRadius: 7,
-                background: "linear-gradient(150deg, #141210 0%, #353029 100%)", // navy → navy-soft
+                background: "linear-gradient(150deg, #00122f 0%, #1e2a3a 100%)", // navy → navy-soft
                 display: "grid",
                 placeItems: "center",
                 fontSize: 11,
@@ -342,7 +342,7 @@ function Cohort({ frame, fps, t0 }: { frame: number; fps: number; t0: number }) 
                 style={{
                   height: `${grown}%`,
                   borderRadius: "8px 8px 3px 3px",
-                  background: i < 2 ? "#E0DBD0" : BLUE, // band before, ultramarine once it holds
+                  background: i < 2 ? "#e4eaf3" : BLUE, // band before, ultramarine once it holds
                 }}
               />
             </div>

@@ -35,12 +35,12 @@ const IT = LOC === "it";
 const SANS = "'IBM Plex Sans', system-ui, sans-serif";
 const MONO = "ui-monospace, 'SF Mono', 'JetBrains Mono', monospace";
 
-const INK = "#16130F"; // ink
-const SLATE = "#4A4239"; // ink-soft
-const MUTED = "#6F6659"; // ink-mute
-const HAIRLINE = "#D9D3C7"; // rule-soft
-const HAIRLINE_STRONG = "#CCC4B4"; // rule
-const CANVAS = "#F0EDE6"; // paper-2, the ground the whole comp sits on
+const INK = "#00122f"; // ink
+const SLATE = "#475569"; // ink-soft
+const MUTED = "#64748b"; // ink-mute
+const HAIRLINE = "#e2e8f0"; // rule-soft
+const HAIRLINE_STRONG = "#cfd8e6"; // rule
+const CANVAS = "#f6f7fb"; // paper-2, the ground the whole comp sits on
 const ACCENT = "#2536E6"; // brand (ultramarine)
 const ACCENT_DEEP = "#1B27A8"; // brand, one step darker for gradient depth
 const SUCCESS = "#10B981"; // signal green: done / adherent
@@ -48,29 +48,29 @@ const DANGER = "#FF453A"; // signal red: the END CALL control, left alone
 const WARNING = "#E8A06A"; // signal amber: care gap needing attention
 
 /* Action/tool nodes wear the dark ink ramp; the accent is spent elsewhere. */
-const PURPLE = "#353029"; // navy-soft
-const PURPLE_DEEP = "#141210"; // navy
+const PURPLE = "#1e2a3a"; // navy-soft
+const PURPLE_DEEP = "#00122f"; // navy
 /* The focus ring is the one thing that is always ultramarine: it marks the
    active step, one per frame. */
 const FOCUS_GLOW = "#2536E6"; // brand
 /* Console is the genuinely dark surface: navy, warmed, not blue-black. */
-const CONSOLE_BG = "#141210"; // navy
+const CONSOLE_BG = "#00122f"; // navy
 const CONSOLE_BG2 = "#1D1A16"; // navy stepped toward navy-soft
 const CONSOLE_LINE = "rgba(253,252,250,0.08)"; // paper-bright hairline on dark
 const SYN_VERB = "#A9B4FF"; // brand-soft: the accent on a dark ground
 const SYN_PATH = "rgba(253,252,250,0.72)"; // paper-bright, secondary
 const SYN_KEY = "rgba(253,252,250,0.60)"; // paper-bright, label weight
-const SYN_STR = "#FDFCFA"; // paper-bright: the values you actually read
+const SYN_STR = "#ffffff"; // paper-bright: the values you actually read
 const SYN_COMMENT = "rgba(253,252,250,0.48)"; // paper-bright, dimmest readable tier
 const SYN_OK = "#10B981"; // signal green
 const DIM = 0.42; // desaturated/dimmed node + stub-edge opacity floor
 
 /* Layered, realistic elevation — contact + ambient + glassy top edge. */
 const CARD_SHADOW =
-  "0 1px 2px rgba(22,19,15,0.05), 0 8px 22px -10px rgba(22,19,15,0.13), 0 26px 50px -28px rgba(22,19,15,0.18)";
+  "0 1px 2px rgba(0, 18, 47,0.05), 0 8px 22px -10px rgba(0, 18, 47,0.13), 0 26px 50px -28px rgba(0, 18, 47,0.18)";
 const CARD_INSET = "inset 0 1px 0 rgba(253,252,250,0.72)"; // paper-bright
 /* paper-bright lifting off paper-2 */
-const CARD_BG = "linear-gradient(180deg, #FDFCFA 0%, #F6F3EC 100%)";
+const CARD_BG = "linear-gradient(180deg, #ffffff 0%, #F6F3EC 100%)";
 
 /* ---- World / camera geometry ----------------------------------------------- */
 const WORLD_W = 1760;
@@ -1106,7 +1106,7 @@ export function WorkflowBuilderComp() {
             position: "absolute",
             inset: 0,
             backgroundImage:
-              "radial-gradient(rgba(22,19,15,0.055) 1px, transparent 1px)" /* ink dots */,
+              "radial-gradient(rgba(0, 18, 47,0.055) 1px, transparent 1px)" /* ink dots */,
             backgroundSize: "26px 26px",
             backgroundPosition: "-1px -1px",
             opacity: 0.7,
@@ -1224,7 +1224,7 @@ function EdgeLayer({ frame }: { frame: number }) {
             <g key={e.id} opacity={DIM}>
               <path
                 d={d}
-                stroke="rgba(22,19,15,0.22)"
+                stroke="rgba(0, 18, 47,0.22)"
                 strokeWidth={1.8}
                 fill="none"
                 strokeLinecap="round"
@@ -1235,19 +1235,19 @@ function EdgeLayer({ frame }: { frame: number }) {
                 cy={e.to.y}
                 r={5}
                 fill="none"
-                stroke="rgba(22,19,15,0.28)"
+                stroke="rgba(0, 18, 47,0.28)"
                 strokeWidth={1.4}
               />
             </g>
           );
         }
         const lit = clamp01(p);
-        const portStroke = lit > 0.08 ? ACCENT : "rgba(22,19,15,0.22)";
+        const portStroke = lit > 0.08 ? ACCENT : "rgba(0, 18, 47,0.22)";
         return (
           <g key={e.id}>
             <path
               d={d}
-              stroke="rgba(22,19,15,0.16)"
+              stroke="rgba(0, 18, 47,0.16)"
               strokeWidth={2}
               fill="none"
               strokeLinecap="round"
@@ -1266,7 +1266,7 @@ function EdgeLayer({ frame }: { frame: number }) {
               cx={e.from.x}
               cy={e.from.y}
               r={3.5}
-              fill="#FDFCFA"
+              fill="#ffffff"
               stroke={portStroke}
               strokeWidth={1.5}
             />
@@ -1274,7 +1274,7 @@ function EdgeLayer({ frame }: { frame: number }) {
               cx={e.to.x}
               cy={e.to.y}
               r={3.5}
-              fill="#FDFCFA"
+              fill="#ffffff"
               stroke={portStroke}
               strokeWidth={1.5}
             />
@@ -1338,7 +1338,7 @@ function FlowNode({ node, frame }: { node: NodeDef; frame: number }) {
       >
         <span
           style={{
-            color: "#FDFCFA", // paper-bright on the dark title bar
+            color: "#ffffff", // paper-bright on the dark title bar
             fontSize: 12.5,
             fontWeight: 600,
             letterSpacing: "-0.2px",
@@ -1399,7 +1399,7 @@ function BranchChip({ chip }: { chip: ChipDef }) {
      the speak-node title bar. */
   const MARK = PURPLE; // navy-soft
   const base = chip.warn ? WARNING : MARK;
-  const dotColor = chip.dim ? mix(base, "#FAF8F4", 0.45) : base; // toward paper
+  const dotColor = chip.dim ? mix(base, "#ffffff", 0.45) : base; // toward paper
   return (
     <div
       style={{
@@ -1408,7 +1408,7 @@ function BranchChip({ chip }: { chip: ChipDef }) {
         gap: 9,
         padding: "6px 10px",
         borderRadius: 9,
-        background: chip.dim ? "rgba(22,19,15,0.02)" : "#F6F3EC", // paper ramp
+        background: chip.dim ? "rgba(0, 18, 47,0.02)" : "#F6F3EC", // paper ramp
         border: `1px solid ${chip.dim ? HAIRLINE : HAIRLINE_STRONG}`,
         opacity: chip.dim ? DIM : 1,
       }}
@@ -1445,7 +1445,7 @@ function BranchChip({ chip }: { chip: ChipDef }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          border: `1.5px solid ${chip.dim ? "rgba(22,19,15,0.16)" : MARK}`,
+          border: `1.5px solid ${chip.dim ? "rgba(0, 18, 47,0.16)" : MARK}`,
           background: chip.dim ? "transparent" : MARK,
           flexShrink: 0,
         }}
@@ -1455,7 +1455,7 @@ function BranchChip({ chip }: { chip: ChipDef }) {
             width: 4.5,
             height: 4.5,
             borderRadius: "50%",
-            background: chip.dim ? "rgba(22,19,15,0.22)" : "#FDFCFA",
+            background: chip.dim ? "rgba(0, 18, 47,0.22)" : "#ffffff",
           }}
         />
       </div>
@@ -1701,7 +1701,7 @@ function StateCard({
     <div
       style={{
         position: "relative",
-        background: "#F0EDE6", // paper-2
+        background: "#f6f7fb", // paper-2
         borderRadius: 12,
         border: `1px solid ${HAIRLINE}`,
         boxShadow: "inset 0 1px 0 rgba(253,252,250,0.6)",
@@ -1789,13 +1789,13 @@ function AgentBubble({
       <div
         style={{
           maxWidth: 196,
-          background: "linear-gradient(180deg, #FDFCFA 0%, #F0EDE6 100%)",
+          background: "linear-gradient(180deg, #ffffff 0%, #f6f7fb 100%)",
           border: `1px solid ${HAIRLINE_STRONG}`,
           borderRadius: 14,
           borderTopLeftRadius: 5,
           padding: "8px 11px",
           boxShadow:
-            "inset 0 1px 0 rgba(253,252,250,0.6), 0 1px 2px rgba(22,19,15,0.04)",
+            "inset 0 1px 0 rgba(253,252,250,0.6), 0 1px 2px rgba(0, 18, 47,0.04)",
         }}
       >
         <p
@@ -1840,17 +1840,17 @@ function UserBubble({
         style={{
           maxWidth: 192,
           /* navy-soft -> navy: the caller is the dark counterpart to HANA */
-          background: "linear-gradient(180deg, #353029 0%, #141210 100%)",
+          background: "linear-gradient(180deg, #1e2a3a 0%, #00122f 100%)",
           borderRadius: 14,
           borderTopRightRadius: 5,
           padding: "8px 11px",
-          boxShadow: "0 1px 2px rgba(22,19,15,0.22), 0 6px 16px -10px rgba(22,19,15,0.45)",
+          boxShadow: "0 1px 2px rgba(0, 18, 47,0.22), 0 6px 16px -10px rgba(0, 18, 47,0.45)",
         }}
       >
         <p
           style={{
             fontSize: 11.5,
-            color: "#FDFCFA", // paper-bright on navy
+            color: "#ffffff", // paper-bright on navy
             lineHeight: 1.45,
             margin: 0,
             fontFamily: SANS,
@@ -1907,7 +1907,7 @@ function ToolConsole({
         borderRadius: 12,
         border: `1px solid ${CONSOLE_LINE}`,
         boxShadow:
-          "0 1px 2px rgba(22,19,15,0.35), 0 14px 30px -16px rgba(22,19,15,0.55), inset 0 1px 0 rgba(253,252,250,0.06)",
+          "0 1px 2px rgba(0, 18, 47,0.35), 0 14px 30px -16px rgba(0, 18, 47,0.55), inset 0 1px 0 rgba(253,252,250,0.06)",
         overflow: "hidden",
       }}
     >
@@ -1935,7 +1935,7 @@ function ToolConsole({
                     fontSize: 9.5,
                     fontWeight: 600,
                     letterSpacing: "0.3px",
-                    color: "#FDFCFA", // paper-bright
+                    color: "#ffffff", // paper-bright
                   }}
                 >
                   TOOL: {block.call.tool}
@@ -2033,7 +2033,7 @@ function ConsoleLineView({
             height: 10,
             marginLeft: 1,
             marginBottom: -1,
-            background: "#FDFCFA", // paper-bright caret
+            background: "#ffffff", // paper-bright caret
             verticalAlign: "baseline",
           }}
         />
@@ -2057,13 +2057,13 @@ function Avatar({ kind }: { kind: "robot" | "person" }) {
         justifyContent: "center",
         background: isRobot
           ? "linear-gradient(180deg, #F4F5FC 0%, #ECEDFB 100%)" // brand-tint wash
-          : "linear-gradient(180deg, #353029 0%, #141210 100%)", // navy-soft -> navy
+          : "linear-gradient(180deg, #1e2a3a 0%, #00122f 100%)", // navy-soft -> navy
         border: isRobot
           ? "1px solid rgba(37,54,230,0.16)"
           : "1px solid rgba(253,252,250,0.14)",
         boxShadow: isRobot
           ? "inset 0 1px 0 rgba(253,252,250,0.7)"
-          : "0 1px 3px rgba(22,19,15,0.34)",
+          : "0 1px 3px rgba(0, 18, 47,0.34)",
       }}
     >
       {isRobot ? <RobotGlyph /> : <PersonGlyph />}
@@ -2180,7 +2180,7 @@ function BackgroundTexture() {
           position: "absolute",
           inset: 0,
           background:
-            "radial-gradient(120% 90% at 50% 40%, transparent 60%, rgba(22,19,15,0.05) 100%)",
+            "radial-gradient(120% 90% at 50% 40%, transparent 60%, rgba(0, 18, 47,0.05) 100%)",
         }}
       />
     </div>
@@ -2219,10 +2219,10 @@ function RobotGlyph() {
 function PersonGlyph() {
   return (
     <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-      <circle cx="8" cy="5.4" r="2.6" stroke="#FDFCFA" strokeWidth="1.4" />
+      <circle cx="8" cy="5.4" r="2.6" stroke="#ffffff" strokeWidth="1.4" />
       <path
         d="M3.2 13 C3.2 10 5.4 9 8 9 C10.6 9 12.8 10 12.8 13"
-        stroke="#FDFCFA"
+        stroke="#ffffff"
         strokeWidth="1.4"
         fill="none"
         strokeLinecap="round"

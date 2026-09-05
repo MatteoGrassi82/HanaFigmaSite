@@ -28,18 +28,18 @@ import { getLocale } from "../../../lib/i18n";
 /* ---- Brand tokens (Newsprint Ultramarine) --------------------------- */
 /*  Literal hex, not var(): this comp is rendered headlessly for video    */
 /*  export, where the page's CSS custom properties do not exist.          */
-const INK = "#16130F"; /* ink */
-const INK_DEEP = "#141210"; /* navy — the one genuinely dark ground */
-const NAVY_SOFT = "#353029"; /* navy-soft */
-const SLATE = "#4A4239"; /* ink-soft — secondary type on paper */
-const SLATE_2 = "#353029"; /* navy-soft — the big calendar numeral */
-const MUTED = "#6F6659"; /* ink-mute — captions, labels, meta */
-const CANVAS = "#FAF8F4"; /* paper — warm uncoated stock */
-const PAPER_2 = "#F0EDE6"; /* paper-2 */
-const PAPER_BRIGHT = "#FDFCFA"; /* paper-bright — cards and surfaces */
-const BAND = "#E0DBD0"; /* band — the tinted step below paper-2 */
-const HAIRLINE = "#D9D3C7"; /* rule-soft */
-const HAIRLINE_2 = "#CCC4B4"; /* rule */
+const INK = "#00122f"; /* ink */
+const INK_DEEP = "#00122f"; /* navy — the one genuinely dark ground */
+const NAVY_SOFT = "#1e2a3a"; /* navy-soft */
+const SLATE = "#475569"; /* ink-soft — secondary type on paper */
+const SLATE_2 = "#1e2a3a"; /* navy-soft — the big calendar numeral */
+const MUTED = "#64748b"; /* ink-mute — captions, labels, meta */
+const CANVAS = "#ffffff"; /* paper — warm uncoated stock */
+const PAPER_2 = "#f6f7fb"; /* paper-2 */
+const PAPER_BRIGHT = "#ffffff"; /* paper-bright — cards and surfaces */
+const BAND = "#e4eaf3"; /* band — the tinted step below paper-2 */
+const HAIRLINE = "#e2e8f0"; /* rule-soft */
+const HAIRLINE_2 = "#cfd8e6"; /* rule */
 const BLUE = "#2536E6"; /* brand — ultramarine, the accent */
 const BLUE_SOFT = "#A9B4FF"; /* brand-soft — the accent on a dark ground */
 const SUCCESS = "#10B981"; /* signal green — done, adherent */
@@ -55,14 +55,14 @@ const SANS = "'IBM Plex Sans', system-ui, sans-serif";
 const MONO = "ui-monospace, 'SF Mono', 'JetBrains Mono', monospace";
 
 /* Layered, realistic shadows ---------------------------------------- */
-/*  Shadow alphas are warm ink (#16130F), not neutral black, so the lift
+/*  Shadow alphas are warm ink (#00122f), not neutral black, so the lift
     off warm paper stays in the same family as the ground. */
 const CARD_SHADOW =
-  "0 1px 2px rgba(22,19,15,0.06), 0 8px 24px -10px rgba(22,19,15,0.14), 0 24px 48px -28px rgba(22,19,15,0.14)";
+  "0 1px 2px rgba(0, 18, 47,0.06), 0 8px 24px -10px rgba(0, 18, 47,0.14), 0 24px 48px -28px rgba(0, 18, 47,0.14)";
 const CARD_SHADOW_SOFT =
-  "0 1px 2px rgba(22,19,15,0.05), 0 6px 18px -10px rgba(22,19,15,0.12), 0 18px 40px -28px rgba(22,19,15,0.12)";
+  "0 1px 2px rgba(0, 18, 47,0.05), 0 6px 18px -10px rgba(0, 18, 47,0.12), 0 18px 40px -28px rgba(0, 18, 47,0.12)";
 const PANEL_SHADOW =
-  "0 1px 2px rgba(22,19,15,0.08), 0 12px 34px -12px rgba(22,19,15,0.30), 0 30px 60px -30px rgba(22,19,15,0.35)";
+  "0 1px 2px rgba(0, 18, 47,0.08), 0 12px 34px -12px rgba(0, 18, 47,0.30), 0 30px 60px -30px rgba(0, 18, 47,0.35)";
 const TOP_INNER_HIGHLIGHT = "inset 0 1px 0 rgba(253,252,250,0.80)"; /* paper-bright */
 
 /* ---- Motion helpers ------------------------------------------------ */
@@ -488,7 +488,7 @@ export function PatientContextComp() {
         style={{
           backgroundImage:
             /* ink at low alpha, so the grain is warm like the stock */
-            "radial-gradient(rgba(22,19,15,0.045) 1px, transparent 1.2px)",
+            "radial-gradient(rgba(0, 18, 47,0.045) 1px, transparent 1.2px)",
           backgroundSize: "22px 22px",
           backgroundPosition: "0 0",
           opacity: 0.6,
@@ -505,7 +505,7 @@ export function PatientContextComp() {
       {/* subtle vignette so the canvas isn't dead-flat */}
       <AbsoluteFill
         style={{
-          boxShadow: "inset 0 0 140px rgba(22,19,15,0.06)" /* ink */,
+          boxShadow: "inset 0 0 140px rgba(0, 18, 47,0.06)" /* ink */,
           pointerEvents: "none",
         }}
       />
@@ -586,7 +586,7 @@ export function PatientContextComp() {
               /* paper-bright → paper-2 */
               background: `linear-gradient(180deg, ${PAPER_BRIGHT} 0%, ${PAPER_2} 100%)`,
               border: `1px solid ${HAIRLINE_2}`,
-              boxShadow: "0 1px 2px rgba(22,19,15,0.07), " + TOP_INNER_HIGHLIGHT,
+              boxShadow: "0 1px 2px rgba(0, 18, 47,0.07), " + TOP_INNER_HIGHLIGHT,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -626,7 +626,7 @@ export function PatientContextComp() {
               borderRadius: "50%",
               background: SUCCESS,
               border: `2px solid ${PAPER_BRIGHT}`,
-              boxShadow: "0 0 0 0.5px rgba(22,19,15,0.06)",
+              boxShadow: "0 0 0 0.5px rgba(0, 18, 47,0.06)",
             }}
           />
         </div>
@@ -1277,7 +1277,7 @@ export function PatientContextComp() {
             borderRadius: 9,
             padding: "7px 15px",
             boxShadow:
-              "0 1px 2px rgba(22,19,15,0.14), 0 6px 14px -8px rgba(255,59,48,0.55), inset 0 1px 0 rgba(253,252,250,0.30)",
+              "0 1px 2px rgba(0, 18, 47,0.14), 0 6px 14px -8px rgba(255,59,48,0.55), inset 0 1px 0 rgba(253,252,250,0.30)",
           }}
         >
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -1309,10 +1309,10 @@ function ChannelChip({ channel }: { channel: Channel }) {
   const bg = channelTint(channel);
   const fg = channelFg(channel);
   const glow = isWA
-    ? "0 1px 2px rgba(22,19,15,0.12), 0 6px 14px -8px rgba(16,185,129,0.45), inset 0 1px 0 rgba(253,252,250,0.35)"
+    ? "0 1px 2px rgba(0, 18, 47,0.12), 0 6px 14px -8px rgba(16,185,129,0.45), inset 0 1px 0 rgba(253,252,250,0.35)"
     : isCall
-    ? "0 1px 2px rgba(22,19,15,0.12), 0 6px 14px -8px rgba(37,54,230,0.45), inset 0 1px 0 rgba(253,252,250,0.35)"
-    : "0 1px 2px rgba(22,19,15,0.12), 0 6px 14px -8px rgba(232,160,106,0.45), inset 0 1px 0 rgba(253,252,250,0.35)";
+    ? "0 1px 2px rgba(0, 18, 47,0.12), 0 6px 14px -8px rgba(37,54,230,0.45), inset 0 1px 0 rgba(253,252,250,0.35)"
+    : "0 1px 2px rgba(0, 18, 47,0.12), 0 6px 14px -8px rgba(232,160,106,0.45), inset 0 1px 0 rgba(253,252,250,0.35)";
   const it = getLocale() === "it";
   const label = isWA
     ? "WhatsApp"
@@ -1383,7 +1383,7 @@ function ContextCaption({
           borderRadius: 999,
           background: "rgba(253,252,250,0.85)" /* paper-bright */,
           border: `1px solid ${HAIRLINE_2}`,
-          boxShadow: "0 1px 2px rgba(22,19,15,0.06), inset 0 1px 0 rgba(253,252,250,0.7)",
+          boxShadow: "0 1px 2px rgba(0, 18, 47,0.06), inset 0 1px 0 rgba(253,252,250,0.7)",
           backdropFilter: "blur(6px)",
           WebkitBackdropFilter: "blur(6px)",
         }}

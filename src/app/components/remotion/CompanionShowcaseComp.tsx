@@ -31,15 +31,15 @@ const SANS = "'IBM Plex Sans', system-ui, sans-serif";
 const BRAND = "#2536E6";        /* brand: ultramarine, the accent on light */
 const BRAND_SOFT = "#A9B4FF";   /* brand-soft: the accent on a dark ground */
 const BRAND_TINT = "#ECEDFB";   /* brand-tint: the accent as a wash */
-const INK = "#16130F";          /* ink: primary type on light */
-const INK_SOFT = "#4A4239";     /* ink-soft: secondary type */
-const SUB = "#6F6659";          /* ink-mute: captions, labels, meta */
-const PAPER_2 = "#F0EDE6";      /* paper-2: the alternating band */
-const PAPER_BRIGHT = "#FDFCFA"; /* paper-bright: cards and surfaces */
-const BAND = "#E0DBD0";         /* band: a tinted ground */
-const RULE = "#CCC4B4";         /* rule: borders */
-const HAIRLINE = "#D9D3C7";     /* rule-soft: hairlines */
-const NAVY = "#141210";         /* navy: the true dark ground */
+const INK = "#00122f";          /* ink: primary type on light */
+const INK_SOFT = "#475569";     /* ink-soft: secondary type */
+const SUB = "#64748b";          /* ink-mute: captions, labels, meta */
+const PAPER_2 = "#f6f7fb";      /* paper-2: the alternating band */
+const PAPER_BRIGHT = "#ffffff"; /* paper-bright: cards and surfaces */
+const BAND = "#e4eaf3";         /* band: a tinted ground */
+const RULE = "#cfd8e6";         /* rule: borders */
+const HAIRLINE = "#e2e8f0";     /* rule-soft: hairlines */
+const NAVY = "#00122f";         /* navy: the true dark ground */
 /* Signals, deliberately outside the palette. GREEN = answer the call,
    RED = decline it. Both are states, not decoration. */
 const GREEN = "#10B981";
@@ -131,7 +131,7 @@ function PhoneFrame({ width, children }: { width: number; children: React.ReactN
    and keeps the asset ours. */
 type AppIcon = { label: string; bg: string; glyph: React.ReactNode };
 
-const g = (d: string, color = "#FDFCFA") => (
+const g = (d: string, color = "#ffffff") => (
   <svg viewBox="0 0 24 24" width="58%" height="58%">
     <path d={d} fill={color} />
   </svg>
@@ -140,32 +140,32 @@ const g = (d: string, color = "#FDFCFA") => (
 const APPS: AppIcon[] = [
   { label: "Phone", bg: "linear-gradient(160deg,#5CD672,#1FA94A)", glyph: g("M6.6 10.8c1.5 2.9 3.8 5.2 6.7 6.7l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.3c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.3 0 .7-.2 1l-2.1 2.3z") },
   { label: "Messages", bg: "linear-gradient(160deg,#6FE07C,#25B34C)", glyph: g("M12 3C6.9 3 3 6.4 3 10.6c0 2.4 1.3 4.5 3.4 5.9-.2 1.2-.8 2.4-1.7 3.4 1.7-.2 3.3-.9 4.6-1.9.8.2 1.7.3 2.7.3 5.1 0 9-3.4 9-7.7S17.1 3 12 3z") },
-  { label: "Calendar", bg: "#FDFCFA" /* paper-bright, was pure #FFFFFF */, glyph: (
+  { label: "Calendar", bg: "#ffffff" /* paper-bright, was pure #FFFFFF */, glyph: (
     <svg viewBox="0 0 24 24" width="72%" height="72%">
       <text x="12" y="9" textAnchor="middle" fontSize="6" fontWeight="700" fill="#E5544B" fontFamily="var(--font-sans)">MON</text>
-      <text x="12" y="20" textAnchor="middle" fontSize="11" fontWeight="500" fill="#16130F" fontFamily="var(--font-sans)">6</text>
+      <text x="12" y="20" textAnchor="middle" fontSize="11" fontWeight="500" fill="#00122f" fontFamily="var(--font-sans)">6</text>
     </svg>
   ) },
   /* cool slate icon → the warm ink ramp: ink-mute into navy-soft */
-  { label: "Camera", bg: "linear-gradient(160deg,#6F6659,#353029)", glyph: g("M12 8.5A3.5 3.5 0 1 0 12 15.5 3.5 3.5 0 0 0 12 8.5zM20 6h-3l-1.2-1.6a1 1 0 0 0-.8-.4H9a1 1 0 0 0-.8.4L7 6H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1zm-8 11.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z") },
+  { label: "Camera", bg: "linear-gradient(160deg,#64748b,#1e2a3a)", glyph: g("M12 8.5A3.5 3.5 0 1 0 12 15.5 3.5 3.5 0 0 0 12 8.5zM20 6h-3l-1.2-1.6a1 1 0 0 0-.8-.4H9a1 1 0 0 0-.8.4L7 6H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1zm-8 11.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z") },
   /* the one blue on the home screen is now our blue: brand-soft into brand */
   { label: "Mail", bg: "linear-gradient(160deg,#A9B4FF,#2536E6)", glyph: g("M3 6.5A1.5 1.5 0 0 1 4.5 5h15A1.5 1.5 0 0 1 21 6.5v11A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5v-11zm2 .8v.4l7 4.4 7-4.4v-.4l-7 4.3L5 7.3z") },
   { label: "Notes", bg: "linear-gradient(160deg,#FFE79A,#F4C64A)", glyph: g("M5 4h14a1 1 0 0 1 1 1v10l-5 5H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm2 5h10v1.6H7V9zm0 4h7v1.6H7V13z", "#6B4E12") },
   /* #F0435F stays: it is the alert red, not decoration */
-  { label: "Health", bg: "#FDFCFA" /* paper-bright, was pure #FFFFFF */, glyph: g("M12 20s-7-4.4-7-9.2A4 4 0 0 1 12 8a4 4 0 0 1 7 2.8C19 15.6 12 20 12 20z", "#F0435F") },
-  { label: "Clock", bg: "#141210" /* navy */, glyph: (
+  { label: "Health", bg: "#ffffff" /* paper-bright, was pure #FFFFFF */, glyph: g("M12 20s-7-4.4-7-9.2A4 4 0 0 1 12 8a4 4 0 0 1 7 2.8C19 15.6 12 20 12 20z", "#F0435F") },
+  { label: "Clock", bg: "#00122f" /* navy */, glyph: (
     <svg viewBox="0 0 24 24" width="72%" height="72%">
-      <circle cx="12" cy="12" r="9" fill="none" stroke="#FDFCFA" strokeWidth="1.4" />
-      <path d="M12 7v5.4l3.6 2.1" stroke="#FDFCFA" strokeWidth="1.6" fill="none" strokeLinecap="round" />
+      <circle cx="12" cy="12" r="9" fill="none" stroke="#ffffff" strokeWidth="1.4" />
+      <path d="M12 7v5.4l3.6 2.1" stroke="#ffffff" strokeWidth="1.6" fill="none" strokeLinecap="round" />
     </svg>
   ) },
   /* cool slate icon → the warm ramp: rule into ink-mute */
-  { label: "Settings", bg: "linear-gradient(160deg,#CCC4B4,#6F6659)", glyph: g("M12 8.6A3.4 3.4 0 1 0 12 15.4 3.4 3.4 0 0 0 12 8.6zm9-1.1-1.5.6a7.6 7.6 0 0 0-.9-1.6l.9-1.3-1.7-1.7-1.3.9a7.6 7.6 0 0 0-1.6-.9L14.3 2h-2.4l-.6 1.5c-.6.2-1.1.5-1.6.9L8.4 3.5 6.7 5.2l.9 1.3c-.4.5-.7 1-.9 1.6L5 8.7v2.4l1.7.6c.2.6.5 1.1.9 1.6l-.9 1.3 1.7 1.7 1.3-.9c.5.4 1 .7 1.6.9l.6 1.7h2.4l.6-1.7c.6-.2 1.1-.5 1.6-.9l1.3.9 1.7-1.7-.9-1.3c.4-.5.7-1 .9-1.6L21 11V7.5z") },
+  { label: "Settings", bg: "linear-gradient(160deg,#cfd8e6,#64748b)", glyph: g("M12 8.6A3.4 3.4 0 1 0 12 15.4 3.4 3.4 0 0 0 12 8.6zm9-1.1-1.5.6a7.6 7.6 0 0 0-.9-1.6l.9-1.3-1.7-1.7-1.3.9a7.6 7.6 0 0 0-1.6-.9L14.3 2h-2.4l-.6 1.5c-.6.2-1.1.5-1.6.9L8.4 3.5 6.7 5.2l.9 1.3c-.4.5-.7 1-.9 1.6L5 8.7v2.4l1.7.6c.2.6.5 1.1.9 1.6l-.9 1.3 1.7 1.7 1.3-.9c.5.4 1 .7 1.6.9l.6 1.7h2.4l.6-1.7c.6-.2 1.1-.5 1.6-.9l1.3.9 1.7-1.7-.9-1.3c.4-.5.7-1 .9-1.6L21 11V7.5z") },
   /* the cool cyan stop was the largest remaining blue in the grid: green
-     land into rule #CCC4B4, which still reads as a map */
-  { label: "Maps", bg: "linear-gradient(160deg,#8FD98F,#CCC4B4)", glyph: g("M12 3a6 6 0 0 0-6 6c0 4.4 6 12 6 12s6-7.6 6-12a6 6 0 0 0-6-6zm0 8.4A2.4 2.4 0 1 1 12 6.6a2.4 2.4 0 0 1 0 4.8z") },
+     land into rule #cfd8e6, which still reads as a map */
+  { label: "Maps", bg: "linear-gradient(160deg,#8FD98F,#cfd8e6)", glyph: g("M12 3a6 6 0 0 0-6 6c0 4.4 6 12 6 12s6-7.6 6-12a6 6 0 0 0-6-6zm0 8.4A2.4 2.4 0 1 1 12 6.6a2.4 2.4 0 0 1 0 4.8z") },
   { label: "Music", bg: "linear-gradient(160deg,#FF7A8A,#E8324F)", glyph: g("M9 18.2a2.6 2.6 0 1 1-1.7-2.45V7.4L18 5.2v8.9a2.6 2.6 0 1 1-1.7-2.45V8.1L9 9.6v8.6z") },
-  { label: "Photos", bg: "#FDFCFA" /* paper-bright, was pure #FFFFFF */, glyph: (
+  { label: "Photos", bg: "#ffffff" /* paper-bright, was pure #FFFFFF */, glyph: (
     <svg viewBox="0 0 24 24" width="70%" height="70%">
       {[
         ["#F0435F", 0], ["#F8A23C", 60], ["#F5D046", 120],
@@ -195,7 +195,7 @@ function HomeScreen({ frame, fps, t0 }: { frame: number; fps: number; t0: number
       <div style={{ display: "flex", justifyContent: "space-between", padding: "12px 20px 0", fontFamily: SANS, fontSize: 11, fontWeight: 700, color: INK }}>
         <span>9:41</span>
         <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-          <span style={{ width: 14, height: 8, borderRadius: 2, border: "1px solid rgba(22,19,15,0.55)" /* ink */ }} />
+          <span style={{ width: 14, height: 8, borderRadius: 2, border: "1px solid rgba(0, 18, 47,0.55)" /* ink */ }} />
         </span>
       </div>
 
@@ -212,7 +212,7 @@ function HomeScreen({ frame, fps, t0 }: { frame: number; fps: number; t0: number
             display: "flex",
             alignItems: "center",
             gap: 10,
-            boxShadow: "0 10px 24px -8px rgba(22,19,15,0.5)",
+            boxShadow: "0 10px 24px -8px rgba(0, 18, 47,0.5)",
           }}
         >
           <span
@@ -275,7 +275,7 @@ function HomeScreen({ frame, fps, t0 }: { frame: number; fps: number; t0: number
                 aspectRatio: "1",
                 borderRadius: 13,
                 background: app.bg,
-                boxShadow: "0 1px 3px rgba(22,19,15,0.2)",
+                boxShadow: "0 1px 3px rgba(0, 18, 47,0.2)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -288,7 +288,7 @@ function HomeScreen({ frame, fps, t0 }: { frame: number; fps: number; t0: number
                 fontFamily: SANS,
                 fontSize: 6.5,
                 fontWeight: 500,
-                color: "rgba(22,19,15,0.72)", /* ink */
+                color: "rgba(0, 18, 47,0.72)", /* ink */
                 letterSpacing: 0.1,
                 whiteSpace: "nowrap",
               }}
@@ -320,7 +320,7 @@ function CallerId({ frame, fps, t0 }: { frame: number; fps: number; t0: number }
             fontFamily: SANS,
             fontSize: 12.5,
             color: INK_SOFT,
-            boxShadow: "0 8px 22px -12px rgba(22,19,15,0.35)",
+            boxShadow: "0 8px 22px -12px rgba(0, 18, 47,0.35)",
           }}
         >
           {/* #B03A2E stays: it marks the bad state, it is not decoration */}
@@ -336,7 +336,7 @@ function CallerId({ frame, fps, t0 }: { frame: number; fps: number; t0: number }
           top: 132,
           left: "50%",
           marginLeft: -186,
-          filter: "drop-shadow(0 30px 50px rgba(22,19,15,0.30))",
+          filter: "drop-shadow(0 30px 50px rgba(0, 18, 47,0.30))",
         }}
       >
         <PhoneFrame width={372}>
@@ -365,7 +365,7 @@ function Attempts({ frame, fps, t0 }: { frame: number; fps: number; t0: number }
         border: `1px solid ${RULE}`,
         borderRadius: 20,
         padding: 22,
-        boxShadow: "0 24px 50px -22px rgba(22,19,15,0.3)",
+        boxShadow: "0 24px 50px -22px rgba(0, 18, 47,0.3)",
         fontFamily: SANS,
       }}
     >
@@ -570,7 +570,7 @@ function Memory({ frame, fps, t0 }: { frame: number; fps: number; t0: number }) 
     border: `1px solid ${RULE}`,
     borderRadius: 17,
     padding: "16px 18px",
-    boxShadow: "0 18px 40px -20px rgba(22,19,15,0.28)",
+    boxShadow: "0 18px 40px -20px rgba(0, 18, 47,0.28)",
     fontFamily: SANS,
     textAlign: "left",
   };

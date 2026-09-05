@@ -220,15 +220,15 @@ const R_FAQS = [
 // The shader component animates unconditionally, so reduced-motion users get a
 // still gradient approximating it rather than a paused canvas. It also pauses
 // itself off-screen and on tab blur, and caps DPR and total pixels internally.
-/* The reduced-motion still of the hero dune. Same four-stop light-to-dark fall
-   as the shader, on the warm ramp: paper-2, band, rule-strong, navy-soft. */
+/* The reduced-motion still of the hero dune: the same four-stop light-to-dark
+   fall the shader animates, so a reduced-motion visitor sees the same image. */
 const SHADER_STILL =
-  "linear-gradient(180deg, #F0EDE6 0%, #E0DBD0 42%, #8F8672 74%, #353029 100%)";
+  "linear-gradient(180deg, #C6D4EC 0%, #7FA0D4 42%, #2A4A86 74%, #0E1E3C 100%)";
 
 function DuneTexture() {
   const reduce = useReducedMotion();
   return (
-    <div aria-hidden className="absolute inset-0 overflow-hidden bg-navy-soft">
+    <div aria-hidden className="absolute inset-0 overflow-hidden bg-[#1B2A4A]">
       {reduce ? (
         <div className="absolute inset-0" style={{ background: SHADER_STILL }} />
       ) : (

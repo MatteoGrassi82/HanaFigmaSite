@@ -43,16 +43,16 @@ const FONT_MONO =
   "ui-monospace, 'SF Mono', 'JetBrains Mono', 'Menlo', monospace";
 
 const COLOR = {
-  canvas: "#FAF8F4", // paper: the warm uncoated stock the page sits on
-  ink: "#16130F", // ink
-  ink2: "#16130F", // ink
-  slate: "#4A4239", // ink-soft: transcript prose
-  slate2: "#6F6659", // ink-mute: labels, speaker tags, meta
-  muted: "#6F6659", // ink-mute
-  faint: "#6F6659", // ink-mute: never lighter than this for readable type
-  hairline: "#D9D3C7", // rule-soft
-  hairlineStrong: "#CCC4B4", // rule
-  panel: "#FDFCFA", // paper-bright: product surfaces
+  canvas: "#ffffff", // paper: the warm uncoated stock the page sits on
+  ink: "#00122f", // ink
+  ink2: "#00122f", // ink
+  slate: "#475569", // ink-soft: transcript prose
+  slate2: "#64748b", // ink-mute: labels, speaker tags, meta
+  muted: "#64748b", // ink-mute
+  faint: "#64748b", // ink-mute: never lighter than this for readable type
+  hairline: "#e2e8f0", // rule-soft
+  hairlineStrong: "#cfd8e6", // rule
+  panel: "#ffffff", // paper-bright: product surfaces
   accent: "#2536E6", // brand: ultramarine, spent only where it means Hana
   accentDeep: "#1B27A6", // brand, one step darker for gradient depth only
   danger: "#FF3B30", // signal red: protected, a genuine alert state
@@ -65,18 +65,18 @@ const COLOR = {
 };
 
 /* Console chip on the navy ground, matching the Workflow Builder. */
-const CONSOLE_BG = "#141210"; // navy
-const CONSOLE_BG2 = "#353029"; // navy-soft
-const SYN_PATH = "#FDFCFA"; // paper-bright, type on the dark chip
+const CONSOLE_BG = "#00122f"; // navy
+const CONSOLE_BG2 = "#1e2a3a"; // navy-soft
+const SYN_PATH = "#ffffff"; // paper-bright, type on the dark chip
 const SYN_OK = "#10B981"; // signal green
-const SYN_COMMENT = "#6F6659"; // ink-mute: the "//" prefix sits on the LIGHT
+const SYN_COMMENT = "#64748b"; // ink-mute: the "//" prefix sits on the LIGHT
 // footer tag, not on the dark chip, so it must be ink, never paper.
 
 /* Stacked, realistic elevation: tight contact shadow + soft ambient layers. */
 const SHADOW_MODAL =
-  "0 1px 2px rgba(22,19,15,0.06), 0 12px 32px -10px rgba(22,19,15,0.16), 0 36px 72px -28px rgba(22,19,15,0.18)";
+  "0 1px 2px rgba(0, 18, 47,0.06), 0 12px 32px -10px rgba(0, 18, 47,0.16), 0 36px 72px -28px rgba(0, 18, 47,0.18)";
 const SHADOW_CARD =
-  "0 1px 2px rgba(22,19,15,0.05), 0 8px 24px -12px rgba(22,19,15,0.10)";
+  "0 1px 2px rgba(0, 18, 47,0.05), 0 8px 24px -12px rgba(0, 18, 47,0.10)";
 const INNER_HIGHLIGHT = "inset 0 1px 0 rgba(255,255,255,0.75)";
 
 const TAU = Math.PI * 2;
@@ -270,7 +270,7 @@ function CheckGlyph({ size = 11 }: { size?: number }) {
     <svg width={size} height={size} viewBox="0 0 12 12" fill="none">
       <polyline
         points="2.5,6.4 4.9,8.8 9.5,3.4"
-        stroke="#FDFCFA"
+        stroke="#ffffff"
         strokeWidth={1.8}
         fill="none"
         strokeLinecap="round"
@@ -286,7 +286,7 @@ function HanaGlyph({ size = 11 }: { size?: number }) {
     <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
       <path
         d="M8 2.2 L9.3 6.5 L13.6 8 L9.3 9.5 L8 13.8 L6.7 9.5 L2.4 8 L6.7 6.5 Z"
-        fill="#FDFCFA"
+        fill="#ffffff"
         opacity={0.96}
       />
     </svg>
@@ -541,7 +541,7 @@ export function SafetyMonitorComp() {
         // Subtle radial glow + faint dot grid so the canvas isn't dead-flat.
         backgroundImage: `
           radial-gradient(130% 95% at 50% -12%, rgba(224,219,208,0.55), rgba(224,219,208,0) 56%),
-          radial-gradient(rgba(22,19,15,0.028) 1px, transparent 1px)
+          radial-gradient(rgba(0, 18, 47,0.028) 1px, transparent 1px)
         `,
         backgroundSize: "auto, 24px 24px",
         backgroundPosition: "center, center",
@@ -599,7 +599,7 @@ export function SafetyMonitorComp() {
           inset: 0,
           pointerEvents: "none",
           background:
-            "radial-gradient(115% 85% at 50% 48%, rgba(22,19,15,0) 50%, rgba(22,19,15,0.07) 100%)",
+            "radial-gradient(115% 85% at 50% 48%, rgba(0, 18, 47,0) 50%, rgba(0, 18, 47,0.07) 100%)",
           opacity: backdrop,
         }}
       />
@@ -617,7 +617,7 @@ export function SafetyMonitorComp() {
           transformOrigin: "center center",
           opacity: modalOpacity,
           filter: `blur(${modalBlur}px)`,
-          background: "linear-gradient(180deg, #FDFCFA 0%, #FAF8F4 100%)",
+          background: "linear-gradient(180deg, #ffffff 0%, #ffffff 100%)",
           borderRadius: 20,
           border: `1px solid ${COLOR.hairline}`,
           boxShadow: `${SHADOW_MODAL}, ${INNER_HIGHLIGHT}`,
@@ -799,7 +799,7 @@ export function SafetyMonitorComp() {
           </div>
           <div
             style={{
-              background: "#FAF8F4", // paper, an inset step below the panel
+              background: "#ffffff", // paper, an inset step below the panel
               borderRadius: 14,
               border: `1px solid ${COLOR.hairline}`,
               boxShadow: INNER_HIGHLIGHT,
@@ -1026,7 +1026,7 @@ export function SafetyMonitorComp() {
                       borderRadius: "50%",
                       background: "linear-gradient(180deg, #10B981, #0A7A5A)",
                       boxShadow:
-                        "0 1px 2px rgba(22,19,15,0.16), inset 0 1px 0 rgba(255,255,255,0.4)",
+                        "0 1px 2px rgba(0, 18, 47,0.16), inset 0 1px 0 rgba(255,255,255,0.4)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -1133,7 +1133,7 @@ export function SafetyMonitorComp() {
                 borderRadius: "50%",
                 background: "linear-gradient(180deg, #10B981, #0A7A5A)",
                 boxShadow:
-                  "0 1px 2px rgba(22,19,15,0.16), inset 0 1px 0 rgba(255,255,255,0.4)",
+                  "0 1px 2px rgba(0, 18, 47,0.16), inset 0 1px 0 rgba(255,255,255,0.4)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -1261,7 +1261,7 @@ function RiskMeter({
           // Top pips run hotter (warning -> red) to read as "climbing".
           const hot = i >= 5;
           const pipColor = !on
-            ? "#D9D3C7" // rule-soft
+            ? "#e2e8f0" // rule-soft
             : hot
             ? COLOR.danger
             : COLOR.warning;
@@ -1306,7 +1306,7 @@ function TranscriptLine({
 }) {
   const isHana = turn.who === "hana";
   const tagColor = isHana ? COLOR.accent : COLOR.slate2;
-  const tagBg = isHana ? "rgba(37,54,230,0.08)" : "rgba(22,19,15,0.05)";
+  const tagBg = isHana ? "rgba(37,54,230,0.08)" : "rgba(0, 18, 47,0.05)";
   const tagBorder = isHana
     ? "1px solid rgba(37,54,230,0.20)"
     : `1px solid ${COLOR.hairlineStrong}`;

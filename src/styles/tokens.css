@@ -9,26 +9,32 @@
  * at the element, a scope that redefines the variable reskins every utility
  * inside it and nothing outside it.
  *
- * THE PALETTE: NEWSPRINT ULTRAMARINE (chosen 2026-09-05)
- * Warm uncoated paper, warm near-black type, and one electric ultramarine that
- * is allowed to appear about three times on a page. The greys, not the colour,
- * carry the page.
+ * THE PALETTE (2026-09-05)
+ * White paper, navy ink, and one ultramarine accent. Cool, not warm.
  *
- * TWO RULES THAT COME WITH IT, both measured rather than stylistic:
- *   1. LINKS ARE UNDERLINED. The accent is 2.42:1 against the body ink, and WCAG
+ * A warm-paper system (Newsprint Ultramarine) was applied and then reverted the
+ * same day: Matteo looked at it on the page and did not want a beige ground or a
+ * warm hero. What survives from that exercise is the ACCENT and the two rules
+ * below, both of which were the real findings.
+ *
+ * The accent moved from #5B76D9 periwinkle to #2536E6 ultramarine, because the
+ * periwinkle measured 4.17:1 on white, under the 4.5:1 body-text minimum. The
+ * ultramarine is 7.64:1 and is the same blue the hero art already used, so the
+ * page and its artwork finally agree.
+ *
+ * TWO RULES, both measured rather than stylistic:
+ *   1. LINKS ARE UNDERLINED. The accent is 2.44:1 against the body ink, and WCAG
  *      wants 3:1 where colour is the only cue. Colour cannot mark a link here.
- *   2. NO DARK BANDS MID-PAGE. A section separates on --color-band, a tinted
- *      stock at 1.30:1 from paper with a hairline rule, not by reversing out a
- *      dark block. --color-navy stays genuinely dark and is for the footer, the
- *      announcement bar and filled buttons only.
+ *   2. NO DARK BANDS MID-PAGE. A section separates on --color-band, at 1.21:1
+ *      from paper, not by reversing out a dark block. --color-navy stays dark and
+ *      is for the footer, the announcement bar and filled buttons only.
  *
  * HOW IT GOT HERE
- * The site carried two systems in hardcoded hex: legacy #00122F navy + #5B76D9
- * periwinkle on white, and a #0A1633 + #2563EB warm-paper variant on the
- * /remote-v2 rebuild. Both are gone. The periwinkle measured 4.17:1 on white,
- * below the 4.5:1 body-text threshold, which settled it on evidence rather than
- * taste. 552 hardcoded values were moved onto these tokens first (8feb67a), so
- * this palette landed as a values edit rather than a 40-file rewrite.
+ * The site carried two systems in hardcoded hex: #00122F navy + #5B76D9
+ * periwinkle on white, and a #0A1633 + #2563EB variant on the /remote-v2 rebuild.
+ * 552 hardcoded values were moved onto tokens first (8feb67a), then 1,379 grey
+ * utilities (8a32f6b), then 597 artwork values (be82a5d). That is why a whole
+ * palette can now be swapped by editing this block.
  *
  * MIGRATION RULE
  * New code uses tokens, never raw hex. Existing hex migrates section by
@@ -38,29 +44,28 @@
 
 @theme {
   /* ── Brand ─────────────────────────────────────────────────────────────── */
-  --color-navy: #141210;          /* the true dark: buttons, footer, announcement bar */
-  --color-navy-soft: #353029;     /* nav text, secondary dark, hover on dark buttons */
-  --color-brand: #2536e6;         /* ultramarine: the CTA fill, links, focus rings */
-  --color-brand-soft: #a9b4ff;    /* the accent on a dark ground, where brand goes muddy */
+  --color-navy: #00122f;          /* the true dark: footer, announcement bar, filled buttons */
+  --color-navy-soft: #1e2a3a;     /* nav text, secondary dark, hover on dark buttons */
+  --color-brand: #2536e6;         /* ultramarine: the CTA fill, links, focus rings. 7.64:1 */
+  --color-brand-soft: #a9b4ff;    /* the accent on a dark ground. 9.45:1 on navy */
   --color-brand-tint: #ecedfb;    /* the accent as a surface wash */
 
   /* ── Surfaces ──────────────────────────────────────────────────────────── */
-  --color-paper: #faf8f4;         /* warm uncoated stock, not white */
-  --color-paper-2: #f0ede6;       /* the alternating band */
-  --color-paper-bright: #fdfcfa;  /* cards and chips that lift off the band */
-  --color-band: #e0dbd0;          /* the tinted stock a section sits on, in place
-                                     of reversing out a dark block */
-  --color-rule: #ccc4b4;          /* borders */
-  --color-rule-soft: #d9d3c7;     /* hairlines */
-  --color-rule-strong: #8f8672;   /* 3.0:1 on paper. The ONLY border allowed to be
-                                     the sole affordance of a control: input
-                                     outlines, checkbox and radio edges. WCAG 1.4.11
-                                     needs 3:1 there, and --color-rule is 1.63. */
+  --color-paper: #ffffff;         /* the page ground */
+  --color-paper-2: #f6f7fb;       /* the alternating band */
+  --color-paper-bright: #ffffff;  /* cards; they separate by rule and shadow, not tone */
+  --color-band: #e4eaf3;          /* a section ground, in place of a dark block.
+                                     1.21:1 off paper, ink 15.4:1 on it */
+  --color-rule: #cfd8e6;          /* borders. 1.44:1, the floor for a visible line */
+  --color-rule-soft: #e2e8f0;     /* hairlines inside a container */
+  --color-rule-strong: #8b95a5;   /* 3.03:1. The ONLY border allowed to be the sole
+                                     affordance of a control: input outlines,
+                                     checkbox and radio edges, per WCAG 1.4.11. */
 
   /* ── Ink ───────────────────────────────────────────────────────────────── */
-  --color-ink: #16130f;           /* body and headings on light. 17.46:1 on paper */
-  --color-ink-soft: #4a4239;      /* secondary prose. 9.30:1. Never lighter for text */
-  --color-ink-mute: #6f6659;      /* captions, labels, meta. 5.32:1, labels ONLY */
+  --color-ink: #00122f;           /* body and headings on light. 18.62:1 */
+  --color-ink-soft: #475569;      /* secondary prose. 7.58:1. Never lighter for text */
+  --color-ink-mute: #64748b;      /* captions, labels, meta. 4.76:1, labels ONLY */
 
   /* ── Signals (never for series or decoration) ──────────────────────────── */
   --color-signal-amber: #e8a06a;
@@ -73,8 +78,8 @@
   --radius-pill: 9999px;
 
   /* ── Shadow ────────────────────────────────────────────────────────────── */
-  --shadow-card: 0 1px 2px rgba(22, 19, 15, 0.07), 0 8px 24px rgba(22, 19, 15, 0.07);
-  --shadow-float: 0 24px 64px rgba(22, 19, 15, 0.12);
+  --shadow-card: 0 1px 2px rgba(0, 18, 47, 0.06), 0 8px 24px rgba(0, 18, 47, 0.07);
+  --shadow-float: 0 24px 64px rgba(0, 18, 47, 0.10);
 
   /* ── Type scale (sizes; weight and tracking live in the section) ───────── */
   --text-eyebrow: 13px;

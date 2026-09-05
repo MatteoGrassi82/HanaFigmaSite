@@ -18,16 +18,16 @@ import { getLocale } from "../../../lib/i18n";
 /* Newsprint Ultramarine, as literal hex with the token name beside it. Written
    literally rather than as var() because this scene is also captured headlessly
    (canvas / video export), where the page's custom properties do not resolve. */
-const PAPER = "#FAF8F4";                     /* paper: the section ground, light */
-const NAVY = "#141210";                      /* navy: the section ground, dark */
-const INK = "#16130F";                       /* ink: type on light */
-const INK_SOFT = "#4A4239";                  /* ink-soft: secondary type on light */
-const PAPER_BRIGHT = "#FDFCFA";              /* paper-bright: type + marks on navy */
+const PAPER = "#ffffff";                     /* paper: the section ground, light */
+const NAVY = "#00122f";                      /* navy: the section ground, dark */
+const INK = "#00122f";                       /* ink: type on light */
+const INK_SOFT = "#475569";                  /* ink-soft: secondary type on light */
+const PAPER_BRIGHT = "#ffffff";              /* paper-bright: type + marks on navy */
 const DARK_SOFT = "rgba(253,252,250,0.70)";  /* paper-bright 70%: secondary type on navy */
-const RULE = "#CCC4B4";                      /* rule: borders */
+const RULE = "#cfd8e6";                      /* rule: borders */
 const ACCENT = "#2536E6";                    /* brand: the accent on light */
 const ACCENT_DARK = "#A9B4FF";               /* brand-soft: the accent on a dark ground */
-const DOT_GRID = "#FDFCFA";                  /* paper-bright: the dot grid on navy */
+const DOT_GRID = "#ffffff";                  /* paper-bright: the dot grid on navy */
 
 type Layer = {
   id: string;
@@ -328,7 +328,7 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
                         "radial-gradient(60% 55% at 18% 12%, rgba(224,219,208,0.55) 0%, rgba(224,219,208,0) 60%)",  /* band */
                         "radial-gradient(65% 60% at 88% 22%, rgba(204,196,180,0.50) 0%, rgba(204,196,180,0) 62%)",  /* rule */
                         "radial-gradient(70% 60% at 16% 92%, rgba(217,211,199,0.60) 0%, rgba(217,211,199,0) 62%)",  /* rule-soft */
-                        "linear-gradient(150deg, #FDFCFA 0%, #F0EDE6 60%, #E0DBD0 100%)",  /* paper-bright → paper-2 → band */
+                        "linear-gradient(150deg, #ffffff 0%, #f6f7fb 60%, #e4eaf3 100%)",  /* paper-bright → paper-2 → band */
                       ].join(", "),
                     }
                   : undefined
@@ -342,14 +342,14 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
                   style={
                     (light
                       ? {
-                          "--ss-edge": "rgba(22,19,15,0.14)",              /* ink 14% */
+                          "--ss-edge": "rgba(0, 18, 47,0.14)",              /* ink 14% */
                           "--ss-edge-active": ACCENT,                      /* brand */
-                          "--ss-shadow": "0 24px 48px rgba(22,19,15,0.16)",
+                          "--ss-shadow": "0 24px 48px rgba(0, 18, 47,0.16)",
                           "--ss-active-filter": "brightness(1.05) saturate(1.02)",
                           "--ss-sheen-blend": "overlay",
                           "--ss-sheen-op": ".40",
                           "--ss-ico-bg": "rgba(253,252,250,0.62)",         /* paper-bright 62% */
-                          "--ss-ico-edge": "rgba(22,19,15,0.14)",
+                          "--ss-ico-edge": "rgba(0, 18, 47,0.14)",
                         }
                       : {
                           "--ss-edge": "rgba(253,252,250,0.20)",           /* paper-bright 20% */
@@ -458,7 +458,7 @@ function LayerRow({
       className="cursor-pointer rounded-2xl border p-4 transition-colors"
       style={{
         backgroundColor: light
-          ? active ? "rgba(37,54,230,0.06)" : "#F0EDE6"          /* brand 6% / paper-2 */
+          ? active ? "rgba(37,54,230,0.06)" : "#f6f7fb"          /* brand 6% / paper-2 */
           : active ? "rgba(169,180,255,0.10)" : "rgba(253,252,250,0.03)",  /* brand-soft 10% */
         borderColor: light
           ? active ? "rgba(37,54,230,0.35)" : RULE               /* brand 35% / rule */
@@ -524,7 +524,7 @@ function MobileLayers({
             className="rounded-2xl border p-4 text-left"
             style={{
               backgroundColor: light
-                ? isActive ? "rgba(37,54,230,0.06)" : "#F0EDE6"        /* brand 6% / paper-2 */
+                ? isActive ? "rgba(37,54,230,0.06)" : "#f6f7fb"        /* brand 6% / paper-2 */
                 : isActive ? "rgba(169,180,255,0.10)" : "rgba(253,252,250,0.04)",
               borderColor: light
                 ? isActive ? "rgba(37,54,230,0.35)" : RULE             /* brand 35% / rule */

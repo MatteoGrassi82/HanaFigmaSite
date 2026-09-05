@@ -32,26 +32,26 @@ const SANS = "'IBM Plex Sans', system-ui, sans-serif";
    the signal for a flag or an escalation, not decoration.
    Literal hex rather than var(): this comp can be rendered headlessly for
    video, where the page's CSS custom properties do not exist. */
-const NAVY = "#141210"; // navy, the true dark ground
+const NAVY = "#00122f"; // navy, the true dark ground
 const BRAND = "#2536E6"; // brand, ultramarine, the accent
 const AMBER = "#E8A06A"; // signal-amber: a flag, an escalation
-const CARD_BG = "#FDFCFA"; // paper-bright
-const ROW_BG = "#E0DBD0"; // band, the placeholder bars inside a card
-const ROW_INNER = "#F0EDE6"; // paper-2, inset rows
+const CARD_BG = "#ffffff"; // paper-bright
+const ROW_BG = "#e4eaf3"; // band, the placeholder bars inside a card
+const ROW_INNER = "#f6f7fb"; // paper-2, inset rows
 const CHIP_BG = BRAND;
-const CHIP_INK = "#FDFCFA"; // paper-bright
-const T_TITLE = "#16130F"; // ink
-const T_SUB = "#6F6659"; // ink-mute, labels and meta only
-const T_BODY = "#4A4239"; // ink-soft
-const HAIRLINE = "#D9D3C7"; // rule-soft
-const RULE = "#CCC4B4"; // rule
+const CHIP_INK = "#ffffff"; // paper-bright
+const T_TITLE = "#00122f"; // ink
+const T_SUB = "#64748b"; // ink-mute, labels and meta only
+const T_BODY = "#475569"; // ink-soft
+const HAIRLINE = "#e2e8f0"; // rule-soft
+const RULE = "#cfd8e6"; // rule
 // Rail + coda dashes: rule-toned, so they hold on the warm ground.
 const DASH_LINE = RULE;
 
 // Cards sit on a LIGHT canvas, so they need a hairline as well as a shadow.
 const CARD_BORDER = `1px solid ${HAIRLINE}`;
 const CARD_SHADOW =
-  "0 1px 3px rgba(22,19,15,0.06), 0 18px 44px -14px rgba(22,19,15,0.16)";
+  "0 1px 3px rgba(0, 18, 47,0.06), 0 18px 44px -14px rgba(0, 18, 47,0.16)";
 
 const EASE = Easing.bezier(0.22, 1, 0.36, 1);
 const EASE_IO = Easing.bezier(0.65, 0, 0.35, 1);
@@ -338,7 +338,7 @@ function Chip({ frame, fps, chip }: { frame: number; fps: number; chip: (typeof 
         borderRadius: 6,
         /* flat when parked — depth only while airborne (reference look) */
         boxShadow:
-          lift > 0.02 ? `0 ${lift * 18}px ${6 + lift * 30}px rgba(22,19,15,${0.14 + lift * 0.2})` : "none",
+          lift > 0.02 ? `0 ${lift * 18}px ${6 + lift * 30}px rgba(0, 18, 47,${0.14 + lift * 0.2})` : "none",
         whiteSpace: "nowrap",
         zIndex: 3,
       }}
@@ -532,7 +532,7 @@ function Rail({ frame, fps }: { frame: number; fps: number }) {
                 borderRadius: 12,
                 border: CARD_BORDER,
                 padding: "11px 15px 9px",
-                boxShadow: `0 ${5 + lift * 12}px ${16 + lift * 26}px rgba(22,19,15,${0.1 + lift * 0.1})`,
+                boxShadow: `0 ${5 + lift * 12}px ${16 + lift * 26}px rgba(0, 18, 47,${0.1 + lift * 0.1})`,
               }}
             >
               {ringT > 0 && ringT < 1 && (
@@ -563,7 +563,7 @@ function Rail({ frame, fps }: { frame: number; fps: number }) {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  boxShadow: "0 3px 8px rgba(22,19,15,0.18)",
+                  boxShadow: "0 3px 8px rgba(0, 18, 47,0.18)",
                 }}
               >
                 <Star size={15} color={star} />
@@ -608,7 +608,7 @@ function Coda({ frame, fps }: { frame: number; fps: number }) {
     color: CHIP_INK,
     padding: "11px 20px",
     borderRadius: 8,
-    boxShadow: "0 8px 22px rgba(22,19,15,0.18)",
+    boxShadow: "0 8px 22px rgba(0, 18, 47,0.18)",
   };
 
   return (
@@ -637,7 +637,7 @@ function Coda({ frame, fps }: { frame: number; fps: number }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          boxShadow: "0 18px 44px rgba(22,19,15,0.22)",
+          boxShadow: "0 18px 44px rgba(0, 18, 47,0.22)",
           opacity: at(26),
           transform: `scale(${0.7 + Math.min(at(26), 1) * 0.3})`,
         }}

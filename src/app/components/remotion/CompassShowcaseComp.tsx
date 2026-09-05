@@ -34,14 +34,14 @@ const BRAND_TINT = "#ECEDFB"; /* brand-tint — the accent as a wash */
 const AMBER = "#E8A06A";      /* signal-amber — a flag, needs attention */
 const AMBER_WASH = "rgba(232,160,106,0.22)"; /* signal-amber at 22% */
 const AMBER_EDGE = "rgba(232,160,106,0.75)"; /* signal-amber at 75% */
-const INK = "#16130F";        /* ink */
-const SUB = "#6F6659";        /* ink-mute — labels, meta */
-const BODY = "#4A4239";       /* ink-soft — secondary prose */
-const PAPER = "#FAF8F4";      /* paper — the window ground */
-const PAPER_2 = "#F0EDE6";    /* paper-2 — tracks, chips, sidebar */
-const PAPER_BRIGHT = "#FDFCFA"; /* paper-bright — cards that lift off it */
-const RULE = "#CCC4B4";       /* rule — borders */
-const RULE_SOFT = "#D9D3C7";  /* rule-soft — hairlines */
+const INK = "#00122f";        /* ink */
+const SUB = "#64748b";        /* ink-mute — labels, meta */
+const BODY = "#475569";       /* ink-soft — secondary prose */
+const PAPER = "#ffffff";      /* paper — the window ground */
+const PAPER_2 = "#f6f7fb";    /* paper-2 — tracks, chips, sidebar */
+const PAPER_BRIGHT = "#ffffff"; /* paper-bright — cards that lift off it */
+const RULE = "#cfd8e6";       /* rule — borders */
+const RULE_SOFT = "#e2e8f0";  /* rule-soft — hairlines */
 const GREEN = "#10B981";      /* signal-green — done, attested */
 
 export const COMPASS_CHAPTER_LEN = 170;
@@ -121,7 +121,7 @@ function CheckDot({ color = GREEN, size = 16 }: { color?: string; size?: number 
     >
       <svg viewBox="0 0 24 24" width={size * 0.6} height={size * 0.6}>
         {/* the check reads paper-bright on the signal-green fill */}
-        <path d="M5 13l4 4L19 7" stroke="#FDFCFA" strokeWidth={3.6} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M5 13l4 4L19 7" stroke="#ffffff" strokeWidth={3.6} fill="none" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </span>
   );
@@ -356,7 +356,7 @@ export const CompassShowcaseComp = () => {
           borderRadius: 18,
           background: PAPER,
           border: `1px solid ${RULE}`,
-          boxShadow: "0 2px 8px rgba(22,19,15,0.07), 0 30px 70px -20px rgba(22,19,15,0.22)",
+          boxShadow: "0 2px 8px rgba(0, 18, 47,0.07), 0 30px 70px -20px rgba(0, 18, 47,0.22)",
           overflow: "hidden",
           opacity: Math.min(winIn, 1),
           transform: `translateY(${(1 - winIn) * 18}px)`,

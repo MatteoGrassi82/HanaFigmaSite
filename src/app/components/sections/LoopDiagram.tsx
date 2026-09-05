@@ -34,17 +34,17 @@ const t = (en: string, it: string) => (IT ? it : en);
    pulse and the station it is lighting — plus the eyebrow. Literal hex with
    the token name beside it, because this artwork is also read outside the
    page's CSS scope. */
-const NAVY = "#141210"; // navy — the true dark ground
-const NAVY_SOFT = "#353029"; // navy-soft — the resting rail on dark
-const INK = "#16130F"; // ink — primary type on light
-const INK_SOFT = "#4A4239"; // ink-soft — secondary type on light
-const INK_MUTE = "#6F6659"; // ink-mute — captions, labels, meta
-const PAPER = "#FAF8F4"; // paper — the page ground
-const PAPER_2 = "#F0EDE6"; // paper-2 — the alternating band
-const PAPER_BRIGHT = "#FDFCFA"; // paper-bright — node discs, cards, type on navy
-const RULE = "#CCC4B4"; // rule — borders on light
-const RULE_SOFT = "#D9D3C7"; // rule-soft — hairlines on light
-const RULE_STRONG = "#8F8672"; // rule-strong — the rail at its darkest on light
+const NAVY = "#00122f"; // navy — the true dark ground
+const NAVY_SOFT = "#1e2a3a"; // navy-soft — the resting rail on dark
+const INK = "#00122f"; // ink — primary type on light
+const INK_SOFT = "#475569"; // ink-soft — secondary type on light
+const INK_MUTE = "#64748b"; // ink-mute — captions, labels, meta
+const PAPER = "#ffffff"; // paper — the page ground
+const PAPER_2 = "#f6f7fb"; // paper-2 — the alternating band
+const PAPER_BRIGHT = "#ffffff"; // paper-bright — node discs, cards, type on navy
+const RULE = "#cfd8e6"; // rule — borders on light
+const RULE_SOFT = "#e2e8f0"; // rule-soft — hairlines on light
+const RULE_STRONG = "#8b95a5"; // rule-strong — the rail at its darkest on light
 const BRAND = "#2536E6"; // brand — ultramarine, the accent on light
 const BRAND_SOFT = "#A9B4FF"; // brand-soft — the accent on a dark ground
 const BRAND_TINT = "#ECEDFB"; // brand-tint — the accent as a wash

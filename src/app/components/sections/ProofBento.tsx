@@ -14,17 +14,17 @@ import { TimelineContent } from "../ui/timeline-animation";
 
 /* Newsprint Ultramarine, as literal hex with the token name beside it. This is
    artwork, so the values have to hold up outside the page's CSS scope. */
-const DECOR = "#E0DBD0";                    /* band: the geometric shapes on navy */
-const DECOR_2 = "#FDFCFA";                  /* paper-bright: the shape overlapping it */
+const DECOR = "#e4eaf3";                    /* band: the geometric shapes on navy */
+const DECOR_2 = "#ffffff";                  /* paper-bright: the shape overlapping it */
 const FAINT = "rgba(253,252,250,0.45)";     /* paper-bright: hairlines on navy */
 const WHITE_DIM = "rgba(253,252,250,0.72)"; /* paper-bright: secondary type on navy */
 const SUF_DARK = "rgba(253,252,250,0.55)";  /* paper-bright: the unit after a stat */
-const INK = "#16130F";                      /* ink */
-const SUB = "#4A4239";                      /* ink-soft */
-const MUTE = "#6F6659";                     /* ink-mute: labels only */
+const INK = "#00122f";                      /* ink */
+const SUB = "#475569";                      /* ink-soft */
+const MUTE = "#64748b";                     /* ink-mute: labels only */
 const BRAND_SOFT = "#A9B4FF";               /* brand-soft: the accent on a dark ground */
-const DUOTONE_PLATE = "#353029";            /* navy-soft: the silhouette fallback */
-const DUOTONE_TINT = "#6F6659";             /* ink-mute: a near-neutral warm duotone */
+const DUOTONE_PLATE = "#1e2a3a";            /* navy-soft: the silhouette fallback */
+const DUOTONE_TINT = "#64748b";             /* ink-mute: a near-neutral warm duotone */
 
 const AV = {
   jonathan: "/avatars/jonathan.jpg",
@@ -106,7 +106,7 @@ function Stat({ v, suf, label, soft = false }: { v: string; suf: string; label: 
   return (
     <div>
       <div className="flex items-baseline gap-1.5">
-        <span className={`font-serif text-5xl leading-none md:text-6xl ${soft ? "text-navy" : "text-[#FDFCFA]"}`}>{v}</span>
+        <span className={`font-serif text-5xl leading-none md:text-6xl ${soft ? "text-navy" : "text-[#ffffff]"}`}>{v}</span>
         <span className="font-serif text-3xl" style={{ color: soft ? MUTE : SUF_DARK }}>{suf}</span>
       </div>
       <p className="mt-2 text-sm leading-snug" style={{ color: soft ? SUB : WHITE_DIM }}>{label}</p>
@@ -119,7 +119,7 @@ function Stat({ v, suf, label, soft = false }: { v: string; suf: string; label: 
 function Duotone({ src }: { src: string | null }) {
   if (!src) return null;
   return (
-    <div className="relative h-[116px] w-[100px] shrink-0 overflow-hidden rounded-xl bg-[#141210]">
+    <div className="relative h-[116px] w-[100px] shrink-0 overflow-hidden rounded-xl bg-[#00122f]">
       {src ? (
         <>
           <img
@@ -153,8 +153,8 @@ type Tile =
   | { k: "label"; span: string; text: string }
   | { k: "empty"; span: string };
 
-const NAVY = "bg-[#141210]";   /* navy */
-const NAVY2 = "bg-[#353029]";  /* navy-soft: the second step of the checkerboard */
+const NAVY = "bg-[#00122f]";   /* navy */
+const NAVY2 = "bg-[#1e2a3a]";  /* navy-soft: the second step of the checkerboard */
 
 const TILES: Tile[] = [
   // ── cluster 1 ──
@@ -189,9 +189,9 @@ const TILES: Tile[] = [
 /* Three steps of the paper ramp instead of three hues, so the depth is stock and
    not colour: paper-bright / paper / paper-2 / band / rule-soft. */
 const SOFT_TILES = [
-  "bg-gradient-to-br from-[#FDFCFA] via-[#FAF8F4] to-[#F0EDE6] border border-rule/70",
-  "bg-gradient-to-br from-[#FAF8F4] via-[#F0EDE6] to-[#E0DBD0] border border-rule/70",
-  "bg-gradient-to-br from-[#FDFCFA] via-[#F0EDE6] to-[#D9D3C7] border border-rule/70",
+  "bg-gradient-to-br from-[#ffffff] via-[#ffffff] to-[#f6f7fb] border border-rule/70",
+  "bg-gradient-to-br from-[#ffffff] via-[#f6f7fb] to-[#e4eaf3] border border-rule/70",
+  "bg-gradient-to-br from-[#ffffff] via-[#f6f7fb] to-[#e2e8f0] border border-rule/70",
 ];
 
 /* `compact` (used on /remote-v2): drops the final row of four tiles (2×, Katie's
@@ -265,13 +265,13 @@ function Cell({ t, i, timelineRef, soft = false }: { t: Tile; i: number; timelin
           className="absolute inset-0 h-full w-full object-cover"
           style={t.pos ? { objectPosition: t.pos } : undefined}
         />
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#141210]/60 to-transparent" />
-        <span className="absolute bottom-5 left-5 text-sm font-medium text-[#FDFCFA]">{t.caption}</span>
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#00122f]/60 to-transparent" />
+        <span className="absolute bottom-5 left-5 text-sm font-medium text-[#ffffff]">{t.caption}</span>
       </TimelineContent>
     );
   if (t.k === "quote")
     return (
-      <TimelineContent {...tc(`${t.span} flex flex-col justify-between p-8 bg-[#E0DBD0]`)}>
+      <TimelineContent {...tc(`${t.span} flex flex-col justify-between p-8 bg-[#e4eaf3]`)}>
         <div className="flex items-center gap-4">
           <Duotone src={t.img} />
           <div>
@@ -287,7 +287,7 @@ function Cell({ t, i, timelineRef, soft = false }: { t: Tile; i: number; timelin
     );
   if (t.k === "quoteMini")
     return (
-      <TimelineContent {...tc(`${t.span} flex flex-col justify-center p-6 bg-[#E0DBD0]`)}>
+      <TimelineContent {...tc(`${t.span} flex flex-col justify-center p-6 bg-[#e4eaf3]`)}>
         <p className="text-[15px] leading-relaxed" style={{ color: INK }}>&ldquo;{t.quote}&rdquo;</p>
       </TimelineContent>
     );
@@ -320,7 +320,7 @@ function Cell({ t, i, timelineRef, soft = false }: { t: Tile; i: number; timelin
   if (t.k === "label")
     return (
       <TimelineContent {...tc(`${t.span} ${tileBg(NAVY)} flex items-center p-6`)}>
-        <span className={`font-sans text-5xl font-bold uppercase tracking-tight md:text-6xl ${soft ? "text-ink" : "text-[#FDFCFA]"}`}>{t.text}</span>
+        <span className={`font-sans text-5xl font-bold uppercase tracking-tight md:text-6xl ${soft ? "text-ink" : "text-[#ffffff]"}`}>{t.text}</span>
       </TimelineContent>
     );
   return <TimelineContent {...tc(`${t.span} ${tileBg(NAVY)}`)}><span /></TimelineContent>;
