@@ -25,6 +25,7 @@ import { SleepTwoProducts } from "../components/lab/SleepTwoProducts";
 // Interactive block experiments (2026-09-05). The rule for all of them: one
 // input, one number, the arithmetic visible, and a default state that is true
 // before anyone touches it — because the prerender snapshot is what gets read.
+import { PalettePreview } from "../components/lab/PalettePreview";
 import { CaseloadSlider } from "../components/lab/interactive/CaseloadSlider";
 import { EligibilityGap } from "../components/lab/interactive/EligibilityGap";
 import { RevenueEstimator } from "../components/lab/interactive/RevenueEstimator";
@@ -475,6 +476,9 @@ export function RemoteLab() {
           pairs answered "unsettled", so the modal outcome taught the visitor
           that the site does not know things. Its one real fact (CCM and APCM
           cannot be billed in the same month) belongs in the Chooser footnote. */}
+      <LabBar>Palette · pick the accent where it actually has to work</LabBar>
+      <PalettePreview />
+
       <LabBar>Interactive · 1 — caseload math. Minutes lead, caseload follows</LabBar>
       <CaseloadSlider />
 
