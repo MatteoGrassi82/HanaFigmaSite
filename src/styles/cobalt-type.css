@@ -1,0 +1,108 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+ * cobalt-type.css — TYPE + PAPER EXPERIMENT. Scoped to /remote-v2 only.
+ *
+ * Lifted off usecobalt.com (scraped 2026-08-29): Fraunces as the display serif
+ * driven hard on its variable axes, IBM Plex Sans as the body sans, and their
+ * warm greige paper scale in place of white + cold slate. Colour values are
+ * their :root verbatim.
+ *
+ * Everything hangs off `.cobalt`, set on the RemoteV2 root element, so no other
+ * route sees any of it. To revert: drop the class and the import in
+ * RemoteV2.tsx, delete this file.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap");
+
+.cobalt {
+  /* usecobalt.com :root, verbatim */
+  --paper: #f8f7f3;
+  --paper-bright: #fdfcf9;
+  --paper-card: #ecebe5;
+  --rule: #d4cdb8;
+  --rule-soft: #e5dfd0;
+  --ink: #1a1715;
+  --ink-soft: #3a332d;
+  --ink-mute: #7a6e5d;
+
+  /* Tailwind resolves these per element, so redefining them here reskins every
+     font-sans / font-serif utility inside this subtree and nowhere else. */
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-serif: "Fraunces", Georgia, serif;
+
+  background-color: var(--paper);
+  letter-spacing: -0.003em; /* Cobalt sets this on body */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Display serif ──────────────────────────────────────────────────────────
+ * Fraunces at its default optical size reads as a chunky Cooper-ish serif;
+ * "opsz" 144 is what produces the hairline contrast. Weight 300 goes only where
+ * the type is genuinely large (h1/h2 run 28-112px here, and the serif stat
+ * numerals are divs/spans at 44-64px) so the 19-27px serif — h3, blockquote,
+ * the serif pull paragraphs — stays at 400 and stays readable. */
+.cobalt :is(h1, h2, h3, .font-serif) {
+  font-variation-settings: "opsz" 144, "SOFT" 50;
+}
+.cobalt :is(h1, h2),
+.cobalt :is(div, span).font-serif {
+  font-weight: 300;
+}
+/* Cobalt's accent italic: a softer axis on <em> inside a display heading. */
+.cobalt :is(h1, h2, .font-serif) :is(em, i) {
+  font-style: italic;
+  font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 100;
+}
+
+/* ── Paper, in place of white ───────────────────────────────────────────────
+ * Section grounds take the page paper; cards, chips and inputs take the
+ * brighter paper so they still lift off it — the same relationship Cobalt uses.
+ * bg-white/<alpha> compiles to its own class, so the translucent overlays on
+ * the dark navy sections are untouched. */
+.cobalt :is(section, header, footer).bg-white {
+  background-color: var(--paper);
+}
+.cobalt :is(div, span, li, article, aside, button, td, th, form, label, input).bg-white {
+  background-color: var(--paper-bright);
+}
+/* the cold near-whites this page alternates its bands with */
+.cobalt .bg-\[\#f6f7fb\],
+.cobalt .bg-\[\#f8f9fc\],
+.cobalt .bg-\[\#fdfdfa\],
+.cobalt .bg-slate-100 {
+  background-color: var(--paper-card);
+}
+.cobalt .bg-slate-200 { background-color: #e0dbcb; }
+.cobalt .bg-slate-300 { background-color: var(--rule); }
+
+/* ── Warm rules and warm ink ────────────────────────────────────────────────
+ * Cold slate borders and body copy are what make a warm ground look like a
+ * mistake, so both move onto Cobalt's scale. The brand navy (#00122F/#0A1633)
+ * used for headings is deliberately left alone. */
+.cobalt .border-slate-100 { border-color: #efeade; }
+.cobalt .border-slate-200 { border-color: var(--rule-soft); }
+.cobalt .border-slate-300 { border-color: var(--rule); }
+
+.cobalt .text-slate-700 { color: var(--ink-soft); }   /* 11.6:1 on paper */
+.cobalt .text-slate-600 { color: #4a4239; }           /*  9.2:1, vs 7.6 for slate-600 on white */
+/* Cobalt's own --ink-mute (#7a6e5d) lands at 4.65:1 here, a hair under the
+   slate-500 it replaces. Darkened one notch to 5.7:1 rather than shipping a
+   lighter secondary than the page had. */
+.cobalt .text-slate-500 { color: #6b6151; }
+
+/* One section (SafetyStack) paints its ground with an inline style, which no
+   ordinary rule can reach. Matching the serialized attribute keeps this exact:
+   it hits only elements explicitly set to pure white, so the same component's
+   navy variant elsewhere is untouched. */
+.cobalt [style*="background-color: rgb(255, 255, 255)"] {
+  background-color: var(--paper) !important;
+}
+
+/* RecipesMarquee sets font-family inline, so its whole section would otherwise
+   stay on DM Sans while everything around it moved to Plex. Same trick: match
+   the serialized attribute rather than editing a component other pages share. */
+.cobalt [style*="DM Sans"] {
+  font-family: var(--font-sans) !important;
+}

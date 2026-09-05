@@ -103,7 +103,10 @@ function Stat({ v, suf, label, soft = false }: { v: string; suf: string; label: 
   );
 }
 
+/* A quote tile with `img: null` renders no portrait at all. Before, a null src
+   still drew the empty navy plate, which read as a missing image. */
 function Duotone({ src }: { src: string | null }) {
+  if (!src) return null;
   return (
     <div className="relative h-[116px] w-[100px] shrink-0 overflow-hidden rounded-xl bg-[#0f2b56]">
       {src ? (
@@ -129,10 +132,10 @@ function Duotone({ src }: { src: string | null }) {
 type Tile =
   | { k: "statDecor"; span: string; bg: string; decor: "bar" | "squares" | "circle" | "rects"; v: string; suf: string; label: React.ReactNode }
   | { k: "gauge"; span: string; bg: string; v: string; suf: string; label: React.ReactNode }
-  | { k: "video"; span: string; caption: string; img: string }
+  | { k: "video"; span: string; caption: string; img: string; pos?: string }
   | { k: "quote"; span: string; company: string; quote: string; name: string; role: string; img: string | null }
   | { k: "quoteMini"; span: string; quote: string }
-  | { k: "cta"; span: string; text: string; to: string; img: string }
+  | { k: "cta"; span: string; text: string; to: string; img: string; pos?: string }
   | { k: "label"; span: string; text: string }
   | { k: "empty"; span: string };
 
@@ -179,11 +182,44 @@ const SOFT_TILES = [
    portrait, the 340% quote, 11% show rate) and moves Katie's portrait up into
    the photo slot that held Lorri Hanes, so the grid ends on the two-quote
    cluster and Katie still appears once. Home keeps the full 14-tile grid. */
-const COMPACT_TILES: Tile[] = TILES.slice(0, -4).map((t) =>
-  t.k === "video" && t.caption.startsWith("Lorri")
-    ? { ...t, caption: "Katie Murphy Psy.D. · Founder of Penry", img: AV.katie }
-    : t,
-);
+/* Matteo 2026-08-20, on top of that: no portraits on the two quote cards (Archie
+   and Fakhrudin), one fewer percentage tile, and the two photographs that stay
+   are Oprandi and Katie. Dropping "3x more slots filled" is also what keeps the
+   grid full: Katie's photo widens to six columns and closes the last row, so
+   there is no hole where the stat used to be. */
+const NARROW = "col-span-1 lg:col-span-3";
+const WIDE = "col-span-1 sm:col-span-2 lg:col-span-6";
+
+const COMPACT_TILES: Tile[] = (() => {
+  const t: Tile[] = TILES.slice(0, -4)
+    .filter((x) => !(x.k === "statDecor" && x.v === "3"))
+    .map((x) => (x.k === "quote" ? { ...x, img: null } : x));
+
+  /* Matteo 2026-08-20: swap the two photographic tiles. Katie moves into the
+     narrow slot the case-studies card had, and the case-studies card drops to
+     the wide slot at the bottom, where it gets the bigger button. `pos` pulls
+     both crops upward so nobody is cut off at the forehead. */
+  const iKatie = t.findIndex((x) => x.k === "video" && x.caption.startsWith("Lorri"));
+  const iCta = t.findIndex((x) => x.k === "cta");
+  const katie = t[iKatie] as Extract<Tile, { k: "video" }>;
+  const cta = t[iCta] as Extract<Tile, { k: "cta" }>;
+
+  t[iCta] = {
+    ...katie,
+    caption: "Katie Murphy Psy.D. · Founder of Penry",
+    img: AV.katie,
+    span: NARROW,
+    pos: "50% 22%",
+  };
+  t[iKatie] = { ...cta, span: WIDE, pos: "50% 38%" };
+
+  /* Oprandi sits in the top row and was cropped at the hairline. */
+  const iOprandi = t.findIndex((x) => x.k === "video" && x.caption.startsWith("Dr. G. Oprandi"));
+  if (iOprandi >= 0)
+    t[iOprandi] = { ...(t[iOprandi] as Extract<Tile, { k: "video" }>), pos: "50% 22%" };
+
+  return t;
+})();
 
 function Cell({ t, i, timelineRef, soft = false }: { t: Tile; i: number; timelineRef: React.RefObject<HTMLElement | null>; soft?: boolean }) {
   const tc = (cls: string) => ({ animationNum: i, customVariants: revealVariants, timelineRef, className: `overflow-hidden rounded-2xl ${cls}` });
@@ -206,7 +242,13 @@ function Cell({ t, i, timelineRef, soft = false }: { t: Tile; i: number; timelin
   if (t.k === "video")
     return (
       <TimelineContent {...tc(`${t.span} relative`)}>
-        <img src={t.img} alt="" className="absolute inset-0 h-full w-full object-cover" />
+        {/* `pos` moves the crop focus so a portrait is not beheaded by object-cover */}
+        <img
+          src={t.img}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+          style={t.pos ? { objectPosition: t.pos } : undefined}
+        />
         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/55 to-transparent" />
         <span className="absolute bottom-5 left-5 text-sm font-medium text-white">{t.caption}</span>
       </TimelineContent>
@@ -233,20 +275,31 @@ function Cell({ t, i, timelineRef, soft = false }: { t: Tile; i: number; timelin
         <p className="text-[15px] leading-relaxed" style={{ color: INK }}>&ldquo;{t.quote}&rdquo;</p>
       </TimelineContent>
     );
-  if (t.k === "cta")
+  if (t.k === "cta") {
+    /* A wide cta tile gets a bigger button: at six columns the small pill looks
+       lost in the corner. Home's cta is three columns and keeps the small one. */
+    const wide = t.span.includes("lg:col-span-6");
     return (
       <TimelineContent {...tc(`${t.span} relative`)}>
-        <img src={t.img} alt="" className="absolute inset-0 h-full w-full object-cover" />
+        <img
+          src={t.img}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+          style={t.pos ? { objectPosition: t.pos } : undefined}
+        />
         <Link
           to={t.to}
-          className="group absolute bottom-5 left-5 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium shadow-md transition-colors hover:bg-blue-50"
+          className={`group absolute inline-flex items-center rounded-full bg-white font-medium shadow-md transition-colors hover:bg-blue-50 ${
+            wide ? "bottom-7 left-7 gap-2.5 px-6 py-3.5 text-base" : "bottom-5 left-5 gap-2 px-4 py-2 text-sm"
+          }`}
           style={{ color: INK }}
         >
           {t.text}
-          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+          <ArrowRight className={`transition-transform group-hover:translate-x-0.5 ${wide ? "h-4 w-4" : "h-3.5 w-3.5"}`} />
         </Link>
       </TimelineContent>
     );
+  }
   if (t.k === "label")
     return (
       <TimelineContent {...tc(`${t.span} ${tileBg(NAVY)} flex items-center p-6`)}>

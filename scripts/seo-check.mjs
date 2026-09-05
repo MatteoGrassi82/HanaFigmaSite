@@ -78,6 +78,76 @@ async function pool(items, worker, limit) {
   return results;
 }
 
+/**
+ * Assert that unknown paths really 404, and that the routes which must stay
+ * reachable still do.
+ *
+ * The catch-all rewrite used to answer every unknown path with HTTP 200 and the
+ * whole prerendered homepage, so /demo, /blog/deleted-post and every typo looked
+ * to Google like a duplicate of "/". That is fixed by routing unmatched paths to
+ * api/not-found.ts. The risk of the fix is the mirror image — a real page that
+ * nobody remembered to prerender now 404s — so check both directions.
+ */
+async function checkNotFound() {
+  const problems = [];
+
+  const shouldFail = [
+    '/this-page-does-not-exist-seocheck',
+    '/blog/this-post-does-not-exist-seocheck',
+    '/a/b/c/nope-seocheck',
+  ];
+  const shouldWork = ['/', '/pricing', '/blog', '/hana-remote', '/demo', '/preview'];
+  const shouldRedirect = [
+    ['/research', '/labs'],
+    ['/use-cases', '/case-studies'],
+  ];
+
+  for (const path of shouldFail) {
+    try {
+      const res = await fetch(`${BASE}${path}`, { redirect: 'manual' });
+      if (res.status !== 404) {
+        problems.push(
+          `${path} returned HTTP ${res.status}, expected 404. If it is 200, the ` +
+          'vercel.json catch-all is serving the SPA shell again and every unknown ' +
+          'URL is a homepage duplicate.'
+        );
+      }
+    } catch (err) {
+      problems.push(`${path}: fetch failed: ${err.message}`);
+    }
+  }
+
+  for (const path of shouldWork) {
+    try {
+      const res = await fetch(`${BASE}${path}`, { redirect: 'manual' });
+      if (res.status !== 200) {
+        problems.push(
+          `${path} returned HTTP ${res.status}, expected 200. A real route lost its ` +
+          'prerendered file — add it to STATIC_ROUTES or NOINDEX_ROUTES in scripts/lib/route-seo.mjs.'
+        );
+      }
+    } catch (err) {
+      problems.push(`${path}: fetch failed: ${err.message}`);
+    }
+  }
+
+  for (const [path, target] of shouldRedirect) {
+    try {
+      const res = await fetch(`${BASE}${path}`, { redirect: 'manual' });
+      const loc = res.headers.get('location') ?? '';
+      if (res.status !== 301 && res.status !== 308) {
+        problems.push(`${path} returned HTTP ${res.status}, expected a permanent redirect.`);
+      } else if (!loc.endsWith(target)) {
+        problems.push(`${path} redirects to "${loc}", expected ${target}.`);
+      }
+    } catch (err) {
+      problems.push(`${path}: fetch failed: ${err.message}`);
+    }
+  }
+
+  return problems;
+}
+
 async function main() {
   console.log(`▸ SEO check: ${BASE}\n`);
 
@@ -123,10 +193,18 @@ async function main() {
     if (list.length > 5) console.log(`    … and ${list.length - 5} more`);
   }
 
+  const notFoundProblems = await checkNotFound();
+  for (const p of notFoundProblems) console.log(`✗ ${p}`);
+
   const ok = results.length - failed.length;
   console.log(`\n▸ ${ok}/${results.length} URLs pass; ${duplicates.length} duplicate-title group(s).`);
+  console.log(
+    notFoundProblems.length
+      ? `▸ 404 handling: ${notFoundProblems.length} problem(s).`
+      : '▸ 404 handling: unknown paths 404, real routes 200, legacy paths 301.'
+  );
 
-  if (failed.length || duplicates.length) {
+  if (failed.length || duplicates.length || notFoundProblems.length) {
     console.log('  A page under the byte threshold with the homepage canonical means the');
     console.log('  prerender step failed — check the build log for "Full prerender SKIPPED".');
     process.exit(1);

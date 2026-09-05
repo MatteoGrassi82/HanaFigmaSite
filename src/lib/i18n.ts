@@ -147,6 +147,30 @@ export interface Translations {
     fieldPhoneFormat: string;
     networkError: string;
     callFailed: string;
+    // A2P 10DLC campaign review requires the opt-in disclosure to live on the
+    // form itself: express consent, frequency, rates, STOP/HELP, and direct
+    // links to Terms and Privacy. Do not shorten these without re-reading
+    // scratchpad/10dlc/campaign.json — the registered messageFlow quotes them.
+    // Text-in demo: the visitor texts a keyword and HANA rings them back. No
+    // outbound SMS anywhere in this path, so it needs no A2P campaign — which is
+    // why it works in the US while the registered campaign sits in MNO review.
+    textInHeading: string;
+    textInBody: string;
+    textInNumber: string;
+    textInFallback: string;
+    optMonitoring: string;
+    optMonitoringSub: string;
+    optIntake: string;
+    optIntakeSub: string;
+    optOutreach: string;
+    optOutreachSub: string;
+    optCoordination: string;
+    optCoordinationSub: string;
+    smsConsentLabel: string;
+    smsConsentFinePrint: string;
+    termsLinkLabel: string;
+    privacyLinkLabel: string;
+    fieldConsentRequired: string;
   };
   // How Hana Works carousel
   howHanaWorks: {
@@ -363,6 +387,9 @@ export interface Translations {
     emailLabel: string;
     officeLabel: string;
     officeCompany: string;
+    // Registered business address. Must match the address on the A2P 10DLC brand
+    // record — campaign reviewers compare the site against the registration.
+    officeAddress: string;
     officeNote: string;
     getStartedTitle: string;
     getStartedBody: string;
@@ -526,7 +553,7 @@ const en: Translations = {
     subheading: "Drop your number and Hana calls you right now — the agent works out the right demo as you talk.",
     listeningLabel: "Hana is listening",
     formHeading: "Hear Hana handle a real patient conversation.",
-    formSubheading: "Enter your details and Hana texts you first to confirm, then calls within seconds — so you can experience the AI live.",
+    formSubheading: "Enter your details. Hana texts you to confirm, then calls within seconds, so you can hear it for yourself.",
     nameLabel: "Name",
     namePlaceholder: "Your name",
     emailLabel: "Email",
@@ -549,6 +576,23 @@ const en: Translations = {
     fieldPhoneFormat: "Enter your number in international format, e.g. +1 555 123 4567.",
     networkError: "Network error. Please try again.",
     callFailed: "We couldn't place the call. Please try again.",
+    textInHeading: "Pick a demo — Hana calls you back",
+    textInBody: "Tap one and we'll open a text. Send it, and your phone rings in a few seconds.",
+    textInNumber: "+1 313 514 6395",
+    textInFallback: "On a computer? Text the word to",
+    optMonitoring: "Weekly check-in",
+    optMonitoringSub: "Between-visit monitoring, with a red-flag stop",
+    optIntake: "New patient intake",
+    optIntakeSub: "Everything the front desk needs, before the visit",
+    optOutreach: "Been-a-while outreach",
+    optOutreachSub: "Reactivating a lapsed patient",
+    optCoordination: "Rebook a missed visit",
+    optCoordinationSub: "No-show recovery that finds the real reason",
+    smsConsentLabel: "Text me the demo options.",
+    smsConsentFinePrint: "Message frequency may vary. Message and data rates may apply. Reply STOP to opt out, HELP for help.",
+    termsLinkLabel: "Terms",
+    privacyLinkLabel: "Privacy Policy",
+    fieldConsentRequired: "Tick the box so we can text you the options.",
   },
   howHanaWorks: {
     heading: "Watch HANA in Action",
@@ -766,6 +810,7 @@ const en: Translations = {
     emailLabel: "Email",
     officeLabel: "Office",
     officeCompany: "HANA Health, Inc.",
+    officeAddress: "1432 Seyburn Street, Detroit, MI 48214, United States",
     officeNote: "Remote-first team",
     getStartedTitle: "Ready to get started?",
     getStartedBody: "Skip the queue and schedule a direct demo with our product specialists.",
@@ -948,6 +993,23 @@ const it: Translations = {
     fieldPhoneFormat: "Inserisci il numero in formato internazionale, es. +39 02 1234 5678.",
     networkError: "Errore di rete. Riprova.",
     callFailed: "Non siamo riusciti a effettuare la chiamata. Riprova.",
+    textInHeading: "Scegli una demo — Hana ti richiama",
+    textInBody: "Tocca un'opzione e apriamo un SMS. Invialo e il telefono squilla in pochi secondi.",
+    textInNumber: "+1 313 514 6395",
+    textInFallback: "Sei al computer? Invia la parola al",
+    optMonitoring: "Check-in settimanale",
+    optMonitoringSub: "Monitoraggio tra una visita e l'altra, con stop per i segnali d'allarme",
+    optIntake: "Accoglienza nuovo paziente",
+    optIntakeSub: "Tutto ciò che serve alla reception, prima della visita",
+    optOutreach: "Contatto dopo tanto tempo",
+    optOutreachSub: "Riattivare un paziente che non si vede da un po'",
+    optCoordination: "Riprenota una visita saltata",
+    optCoordinationSub: "Recupero dei no-show, trovando il motivo reale",
+    smsConsentLabel: "Inviami le opzioni della demo via SMS.",
+    smsConsentFinePrint: "La frequenza dei messaggi può variare. Possono applicarsi tariffe per messaggi e dati. Rispondi STOP per annullare l'iscrizione, HELP per assistenza.",
+    termsLinkLabel: "Termini",
+    privacyLinkLabel: "Informativa sulla privacy",
+    fieldConsentRequired: "Seleziona la casella per ricevere l'SMS con le opzioni.",
   },
   howHanaWorks: {
     heading: "Guarda HANA in Azione",
@@ -1166,6 +1228,7 @@ const it: Translations = {
     emailLabel: "Email",
     officeLabel: "Ufficio",
     officeCompany: "HANA Health, Inc.",
+    officeAddress: "1432 Seyburn Street, Detroit, MI 48214, Stati Uniti",
     officeNote: "Team distribuito",
     getStartedTitle: "Pronto a iniziare?",
     getStartedBody: "Salta la fila e prenota una demo diretta con i nostri specialisti di prodotto.",

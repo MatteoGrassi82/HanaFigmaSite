@@ -8,7 +8,15 @@ import {
 } from "lucide-react";
 import { useTranslations } from "../../lib/i18n";
 
-export function ComplianceSection() {
+/**
+ * The credentials view: certifications plus the deployment note.
+ *
+ * `white` is opt-in for pages that standardise on a white background (Remote):
+ * it drops the grey section fill. The certification grid already carries its own
+ * hairline and shadow, so it still reads as a panel on white. Home passes
+ * nothing and is unchanged.
+ */
+export function ComplianceSection({ white = false }: { white?: boolean } = {}) {
   const t = useTranslations();
   const certifications = [
     { icon: Shield,      title: t.compliance.iso,    description: t.compliance.isoDesc },
@@ -19,7 +27,11 @@ export function ComplianceSection() {
     { icon: Plus,        title: t.compliance.pipeda, description: t.compliance.pipedaDesc },
   ];
   return (
-    <section className="py-16 sm:py-20 lg:py-24 bg-[#F5F5F5] dark:bg-slate-950">
+    <section
+      className={`py-16 sm:py-20 lg:py-24 ${
+        white ? "bg-white dark:bg-slate-950" : "bg-[#F5F5F5] dark:bg-slate-950"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="flex flex-col lg:flex-row gap-10 sm:gap-12 lg:gap-24">
 

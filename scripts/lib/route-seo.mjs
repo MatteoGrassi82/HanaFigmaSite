@@ -21,7 +21,7 @@
  */
 
 import { readFileSync, readdirSync } from 'node:fs';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 
 export const SITE_NAME = 'Hana Voice AI';
 export const EN_DOMAIN = 'https://www.hana.health';
@@ -90,7 +90,7 @@ export const EN_ONLY_ROUTES = ['/access', '/case-studies', '/state-of-ai', '/use
  */
 // /remote-v2 is the in-progress rebuild of /hana-remote (src/app/pages/RemoteV2.tsx)
 // — remove it from here and from App.tsx when it replaces the live page.
-export const NOINDEX_ROUTES = ['/demo', '/preview', '/bento', '/proof', '/remote-v2'];
+export const NOINDEX_ROUTES = ['/demo', '/preview', '/bento', '/proof', '/remote-v2', '/remote-lab'];
 
 /**
  * Paths handled by a real server-side 301 in vercel.json.
@@ -526,15 +526,24 @@ export function injectHead(shell, m) {
     : html.replace('</head>', `  ${canonicalTag}\n  </head>`);
 
   // hreflang pair (en ↔ it), matching what <SEO> sets at runtime.
-  const alternates = [
-    ['en', `${EN_DOMAIN}${m.path}`],
-    ['it', `${IT_DOMAIN}${m.path}`],
-    ['x-default', `${EN_DOMAIN}${m.path}`],
-  ]
-    .map(([lang, href]) => `  <link rel="alternate" hreflang="${lang}" href="${esc(href)}" />`)
-    .join('\n');
+  //
+  // Only for routes that actually exist in BOTH locales. EN_ONLY_ROUTES are
+  // filtered out of the Italian build (see prerender.mjs), so emitting
+  // hreflang="it" for /access, /case-studies and /state-of-ai pointed Google at
+  // three ita.hana.health URLs that do not exist — an unreciprocated hreflang,
+  // which Google discards and which fed the "alternate page"/duplicate buckets.
+  // NOINDEX_ROUTES are internal previews with no translated counterpart either.
   html = html.replace(/\s*<link\s+rel="alternate"[^>]*>/gi, '');
-  html = html.replace('</head>', `${alternates}\n  </head>`);
+  if (!EN_ONLY_ROUTES.includes(m.path) && !NOINDEX_ROUTES.includes(m.path)) {
+    const alternates = [
+      ['en', `${EN_DOMAIN}${m.path}`],
+      ['it', `${IT_DOMAIN}${m.path}`],
+      ['x-default', `${EN_DOMAIN}${m.path}`],
+    ]
+      .map(([lang, href]) => `  <link rel="alternate" hreflang="${lang}" href="${esc(href)}" />`)
+      .join('\n');
+    html = html.replace('</head>', `${alternates}\n  </head>`);
+  }
 
   // A crawlable skeleton for the no-JS case. Overwritten wholesale when the
   // headless-Chrome snapshot succeeds; this is the floor, not the goal.
@@ -553,4 +562,145 @@ ${nav}
   html = html.replace('<div id="root"></div>', `${noscript}\n      <div id="root"></div>`);
 
   return html;
+}
+
+/**
+ * Last line of defence over a layer-2 (headless Chrome) snapshot.
+ *
+ * Layer 2 captures whatever the running app put in <head>. A page that renders no
+ * <SEO> block puts nothing there — and because `vite preview` answers unknown
+ * paths with dist/index.html, the snapshot then carries the HOMEPAGE's canonical
+ * and robots. That is how /demo, /bento and /proof ended up claiming
+ * `canonical=https://www.hana.health/` with `index, follow`: silently, and only
+ * for the pages that happened to lack an <SEO> block.
+ *
+ * So don't trust the snapshot. Assert the three tags that decide indexing, and
+ * repair them from the route's own metadata when they disagree.
+ *
+ * @returns {{ html: string, fixed: string[] }} fixed is empty when the snapshot was right.
+ */
+export function verifyAndFixHead(html, m) {
+  const locale = m.locale === 'it' ? 'it' : 'en';
+  const domain = locale === 'it' ? IT_DOMAIN : EN_DOMAIN;
+  const expectedCanonical = `${domain}${m.path === '/' ? '/' : m.path}`;
+  const expectedRobots = m.robots || 'index, follow';
+  const fixed = [];
+
+  const canonical = html.match(/<link[^>]+rel="canonical"[^>]+href="([^"]+)"/i)?.[1] ?? null;
+  if (canonical !== expectedCanonical) {
+    fixed.push(`canonical ${canonical ?? '(missing)'} → ${expectedCanonical}`);
+    const tag = `<link rel="canonical" href="${esc(expectedCanonical)}" />`;
+    html = /<link[^>]+rel="canonical"[^>]*>/i.test(html)
+      ? html.replace(/<link[^>]+rel="canonical"[^>]*>/i, tag)
+      : html.replace('</head>', `  ${tag}\n  </head>`);
+  }
+
+  const robots = html.match(/<meta[^>]+name="robots"[^>]+content="([^"]+)"/i)?.[1] ?? null;
+  if (robots !== expectedRobots) {
+    fixed.push(`robots ${robots ?? '(missing)'} → ${expectedRobots}`);
+    html = setMetaTag(html, 'name', 'robots', expectedRobots);
+  }
+
+  // Titles are deliberately NOT forced to match layer 1. A page's runtime <SEO>
+  // may legitimately word its title differently — every blog post renders
+  // "… | Hana Health" while fullTitle() here computes "… | Hana Voice AI" — and
+  // overwriting the rendered one would silently retitle the whole blog.
+  //
+  // The failure that actually matters is a page inheriting the HOMEPAGE's title,
+  // which is what a missing <SEO> block produces. Check only for that.
+  const title = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1]?.trim() ?? null;
+  const looksInherited = m.path !== '/' && m.homeTitle && title === m.homeTitle;
+  if (m.title && (!title || looksInherited)) {
+    fixed.push(`title "${title ?? '(missing)'}" → "${m.title}"`);
+    html = html.replace(/<title[^>]*>[\s\S]*?<\/title>/i, `<title>${esc(m.title)}</title>`);
+  }
+
+  return { html, fixed };
+}
+
+/**
+ * Every literal `<Route path="…">` declared in App.tsx.
+ *
+ * Dynamic segments (`/blog/:slug`) and the catch-all (`*`) are dropped — they are
+ * not prerenderable as literals and are handled separately.
+ */
+export function collectAppRoutes(appTsxPath) {
+  const src = readFileSync(appTsxPath, 'utf8');
+  const out = new Set();
+  const re = /<Route\s+[^>]*path="([^"]+)"/g;
+  let m;
+  while ((m = re.exec(src))) {
+    const p = m[1];
+    if (p === '*' || p.includes(':')) continue;
+    out.add(p);
+  }
+  return [...out];
+}
+
+/**
+ * Fail the build when App.tsx and the route lists here drift apart.
+ *
+ * This matters much more than it used to. Unknown paths used to be answered with
+ * the homepage at HTTP 200, so forgetting to add a route here was invisible —
+ * merely bad for SEO. Now vercel.json rewrites anything without a prerendered file
+ * to api/not-found.ts, so the same omission makes a real, working page return 404
+ * in production while continuing to work perfectly in `npm run dev`. That is
+ * exactly the class of bug nobody notices until Search Console does.
+ *
+ * Returns a list of human-readable problems; empty means the lists agree.
+ */
+export function checkRouteCoverage(appTsxPath) {
+  const declared = collectAppRoutes(appTsxPath);
+  const accounted = new Set([
+    ...STATIC_ROUTES,
+    ...NOINDEX_ROUTES,
+    ...REDIRECT_ROUTES,
+    ...DEV_ONLY_ROUTES,
+  ]);
+  const problems = [];
+
+  for (const route of declared) {
+    if (!accounted.has(route)) {
+      problems.push(
+        `App.tsx declares <Route path="${route}"> but it is in neither STATIC_ROUTES, ` +
+        'NOINDEX_ROUTES nor REDIRECT_ROUTES in scripts/lib/route-seo.mjs. It would be ' +
+        'served a 404 in production. Add it to one of them.'
+      );
+    }
+  }
+
+  const declaredSet = new Set(declared);
+  for (const route of [...STATIC_ROUTES, ...NOINDEX_ROUTES]) {
+    if (!declaredSet.has(route)) {
+      problems.push(
+        `route-seo.mjs prerenders "${route}" but App.tsx has no <Route path="${route}">. ` +
+        'It would render as <NotFound> inside a page Google is told to index.'
+      );
+    }
+  }
+
+  // EN_ONLY_ROUTES is duplicated as EN_ONLY_PATHS in src/app/components/SEO.tsx —
+  // that file runs in the browser and cannot import this one (node:fs). The two
+  // decide hreflang for the prerendered head and the rendered head respectively,
+  // so a silent drift would put back exactly the unreciprocated hreflang we just
+  // removed, on half the pages.
+  const seoTsx = join(dirname(appTsxPath), 'components', 'SEO.tsx');
+  const seoSrc = readFileSync(seoTsx, 'utf8');
+  const enOnlyLiteral = seoSrc.match(/const\s+EN_ONLY_PATHS\s*=\s*\[([^\]]*)\]/);
+  if (!enOnlyLiteral) {
+    problems.push(`Could not find EN_ONLY_PATHS in ${seoTsx} — the hreflang drift check cannot run.`);
+  } else {
+    const inTsx = [...enOnlyLiteral[1].matchAll(/"([^"]+)"|'([^']+)'/g)]
+      .map((mm) => mm[1] ?? mm[2])
+      .sort();
+    const inMjs = [...EN_ONLY_ROUTES].sort();
+    if (inTsx.join(',') !== inMjs.join(',')) {
+      problems.push(
+        `EN_ONLY_PATHS in SEO.tsx (${inTsx.join(', ')}) does not match EN_ONLY_ROUTES in ` +
+        `route-seo.mjs (${inMjs.join(', ')}). Keep them identical.`
+      );
+    }
+  }
+
+  return problems;
 }

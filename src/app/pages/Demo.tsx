@@ -4,6 +4,7 @@ import { WorkflowBuilderComp } from "../components/remotion/WorkflowBuilderComp"
 import { SafetyMonitorComp } from "../components/remotion/SafetyMonitorComp";
 import { PatientContextComp } from "../components/remotion/PatientContextComp";
 import { Footer } from "../components/Footer";
+import { SEO } from "../components/SEO";
 import { getLocale } from "../../lib/i18n";
 
 const it = getLocale() === "it";
@@ -44,6 +45,13 @@ export function Demo() {
 
   return (
     <div className="min-h-screen bg-[#F5F5F5] dark:bg-slate-950">
+      {/* Internal preview: must never be indexed. See the note in BentoShowcase. */}
+      <SEO
+        title={it ? "Anteprima interna: /demo" : "Internal preview: /demo"}
+        description="Internal preview route. Not part of the public site."
+        path="/demo"
+        robots="noindex, nofollow"
+      />
       <div className="max-w-6xl mx-auto px-6 py-20">
         <div className="mb-12">
           <span className="text-xs font-semibold uppercase tracking-widest text-blue-600">Demo Lab</span>

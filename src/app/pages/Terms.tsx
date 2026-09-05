@@ -26,7 +26,7 @@ export function Terms() {
               {it ? <>Termini di Servizio<br />e Politica di Sicurezza</> : <>Terms of Service<br />& Security Policy</>}
             </h1>
             <p className="text-slate-400 text-base">
-              {it ? "Data di Efficacia: 14 giugno 2026" : "Effective Date: 14 June 2026"} &nbsp;|&nbsp; {it ? "Versione" : "Version"}: 2.1
+              {it ? "Data di Efficacia: 14 giugno 2026" : "Effective Date: 14 June 2026"} &nbsp;|&nbsp; {it ? "Ultimo aggiornamento: 14 agosto 2026" : "Last Updated: 14 August 2026"} &nbsp;|&nbsp; {it ? "Versione" : "Version"}: 2.2
             </p>
           </div>
         </section>
@@ -211,13 +211,132 @@ export function Terms() {
             </p>
           </Section>
 
+          {/* 11. Disclaimer of Warranties */}
+          <Section number="11" title={it ? "Esclusione di Garanzie" : "Disclaimer of Warranties"}>
+            <p className="mb-4">
+              {it
+                ? "La piattaforma è fornita “così com'è” e “come disponibile”. Nella misura massima consentita dalla legge, HANA esclude ogni garanzia, espressa, implicita o di legge, incluse le garanzie implicite di commerciabilità, idoneità per uno scopo specifico, titolarità e non violazione di diritti di terzi. HANA non garantisce che la piattaforma sarà ininterrotta, priva di errori o esente da componenti dannosi, né che ogni difetto verrà corretto."
+                : "The platform is provided on an “as is” and “as available” basis. To the fullest extent permitted by law, HANA disclaims all warranties, whether express, implied, or statutory, including the implied warranties of merchantability, fitness for a particular purpose, title, and non-infringement. HANA does not warrant that the platform will be uninterrupted, error-free, or free of harmful components, or that every defect will be corrected."}
+            </p>
+            <p className="mb-4">
+              {it
+                ? "La presente esclusione non limita gli impegni espressi assunti da HANA nella Sezione 7 (Livelli di Servizio), nella Parte B (Politica di Sicurezza) o nel Business Associate Agreement, che restano pienamente vincolanti."
+                : "This disclaimer does not limit the express commitments HANA makes in Section 7 (Service Levels), Part B (Security Policy), or the Business Associate Agreement, which remain fully binding."}
+            </p>
+
+            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "11.1 Nessun parere medico" : "11.1 No medical advice"}</h4>
+            <p>
+              {it
+                ? "La piattaforma non è un dispositivo medico e non fornisce pareri medici, diagnosi o trattamenti. Gli output generati dall'AI hanno carattere informativo e sono destinati a supportare, non a sostituire, il giudizio professionale di un clinico abilitato. Il Cliente resta l'unico responsabile di ogni decisione clinica. Si veda la Sezione 5."
+                : "The platform is not a medical device and does not provide medical advice, diagnosis, or treatment. AI-generated output is informational and is intended to support, not replace, the professional judgment of a licensed clinician. The Client remains solely responsible for all clinical decisions. See Section 5."}
+            </p>
+          </Section>
+
+          {/* 12. Patient Contact, Call Recording, and Consent */}
+          <Section number="12" title={it ? "Contatto dei Pazienti, Registrazione delle Chiamate e Consenso" : "Patient Contact, Call Recording, and Consent"}>
+            <p className="mb-4">
+              {it
+                ? "HANA effettua e riceve chiamate e messaggi vocali automatizzati per conto del Cliente. La responsabilità del consenso è ripartita come segue."
+                : "HANA places and receives automated voice calls and messages on behalf of the Client. Responsibility for consent is allocated as follows."}
+            </p>
+
+            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "12.1 Responsabilità del Cliente" : "12.1 Client responsibility"}</h4>
+            <p className="mb-6">
+              {it
+                ? "Il Cliente è l'unica parte titolare di un rapporto con il paziente. Il Cliente dichiara e garantisce che, per ogni contatto che fornisce o autorizza, ha ottenuto e documentato tutti i consensi richiesti dalla normativa applicabile, incluso il Telephone Consumer Protection Act (TCPA), le leggi statali in materia di telemarketing e chiamate, e le leggi applicabili sulle intercettazioni e sulla registrazione delle chiamate. Il Cliente è responsabile del rispetto delle revoche del consenso, delle richieste di iscrizione ai registri delle opposizioni e delle fasce orarie consentite per le chiamate, nonché della tenuta dei propri registri di opposizione."
+                : "The Client is the only party with a relationship to the patient. The Client represents and warrants that, for every patient contact record it supplies or authorises, it has obtained and documented all consents required by applicable law, including the Telephone Consumer Protection Act (TCPA), state telemarketing and calling laws, and applicable wiretap and call-recording laws. The Client is responsible for honouring revocations of consent, do-not-call requests, and permitted calling hours, and for maintaining its own do-not-call records."}
+            </p>
+
+            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "12.2 Registrazione e monitoraggio" : "12.2 Recording and monitoring"}</h4>
+            <p className="mb-6">
+              {it
+                ? "Le chiamate effettuate tramite la piattaforma possono essere registrate e trascritte per erogare il servizio, per produrre documentazione clinica e per finalità di revisione della qualità e della sicurezza. Nelle giurisdizioni che richiedono il consenso di tutte le parti, HANA fornisce un'informativa configurabile all'inizio di ogni chiamata. Il Cliente è responsabile di attivare e mantenere tale informativa in conformità alle leggi applicabili a sé e ai propri pazienti."
+                : "Calls conducted through the platform may be recorded and transcribed to deliver the service, to produce clinical documentation, and for quality and safety review. In jurisdictions that require all-party consent, HANA provides a configurable disclosure at the start of each call. The Client is responsible for enabling and maintaining that disclosure in line with the laws applicable to it and to its patients."}
+            </p>
+
+            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "12.3 Informativa sull'AI" : "12.3 AI disclosure"}</h4>
+            <p className="mb-6">
+              {it
+                ? "All'inizio di ogni chiamata i pazienti vengono informati che stanno parlando con un assistente automatizzato, in coerenza con la Sezione 5 e con le normative applicabili in materia di trasparenza dell'AI, tra cui la California AB 3030 e disposizioni statali analoghe."
+                : "Patients are told at the start of each call that they are speaking with an automated assistant, consistent with Section 5 and with applicable AI disclosure laws, including California AB 3030 and comparable state statutes."}
+            </p>
+
+            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "12.4 Opt-out e manleva" : "12.4 Opt-out and indemnity"}</h4>
+            <p>
+              {it
+                ? "I pazienti possono rinunciare al contatto automatizzato in qualsiasi momento tramite i meccanismi descritti nella Sezione 4. Al ricevimento di una richiesta di opt-out, HANA sospende ogni ulteriore contatto automatizzato verso quel paziente e ne informa il Cliente. Le pretese derivanti dal mancato ottenimento o dal mancato mantenimento di un consenso richiesto sono coperte dalla manleva del Cliente di cui alla Sezione 8.2."
+                : "Patients may opt out of automated contact at any time through the mechanisms described in Section 4. On receipt of an opt-out, HANA suppresses further automated contact for that patient and notifies the Client. Claims arising from the Client's failure to obtain or maintain a required consent are covered by the Client indemnity in Section 8.2."}
+            </p>
+          </Section>
+
+          {/* 13. Class Action and Jury Trial Waiver */}
+          <Section number="13" title={it ? "Rinuncia alle Azioni Collettive e al Giudizio con Giuria" : "Class Action and Jury Trial Waiver"}>
+            <p className="mb-6">
+              {it
+                ? "La presente Sezione integra le disposizioni sull'arbitrato di cui alla Sezione 10 e si applica ai Clienti. Non si applica ai pazienti (Utenti Finali), che non sono tenuti a ricorrere all'arbitrato."
+                : "This Section supplements the arbitration provisions in Section 10 and applies to Clients. It does not apply to patients (End Users), who are not required to arbitrate."}
+            </p>
+
+            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "13.1 Solo su base individuale" : "13.1 Individual basis only"}</h4>
+            <p className="mb-6">
+              {it
+                ? "Il Cliente e HANA convengono che ciascuna parte potrà proporre pretese nei confronti dell'altra esclusivamente a titolo individuale, e non in qualità di attore o membro di una classe in un procedimento collettivo, consolidato o rappresentativo. L'arbitro non potrà riunire le pretese di più parti né presiedere alcuna forma di procedimento collettivo o rappresentativo."
+                : "The Client and HANA agree that each may bring claims against the other only in an individual capacity, and not as a plaintiff or class member in any purported class, collective, consolidated, or representative proceeding. The arbitrator may not consolidate the claims of more than one party and may not preside over any form of class or representative proceeding."}
+            </p>
+
+            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "13.2 Rinuncia al giudizio con giuria" : "13.2 Jury trial waiver"}</h4>
+            <p className="mb-6">
+              {it
+                ? "Nella misura in cui una controversia sia trattata in sede giudiziale anziché arbitrale, ciascuna parte rinuncia consapevolmente e volontariamente a ogni diritto a un giudizio con giuria."
+                : "To the extent any dispute proceeds in court rather than arbitration, each party knowingly and voluntarily waives any right to a trial by jury."}
+            </p>
+
+            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "13.3 Preavviso di controversia" : "13.3 Pre-arbitration notice"}</h4>
+            <p className="mb-6">
+              {it
+                ? "Prima di avviare un arbitrato, la parte che agisce deve inviare all'altra un avviso scritto di controversia che descriva la pretesa e il rimedio richiesto. Le parti tenteranno in buona fede di risolvere la questione nei 30 giorni successivi."
+                : "Before initiating arbitration, the claiming party must send the other party a written notice of dispute describing the claim and the relief sought. The parties will then attempt in good faith to resolve it for 30 days."}
+            </p>
+
+            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "13.4 Autonomia delle clausole e diritto di opt-out" : "13.4 Severability and right to opt out"}</h4>
+            <p>
+              {it
+                ? "Qualora la Sezione 13.1 risulti inefficace rispetto a una determinata pretesa o richiesta di rimedio, tale pretesa o richiesta sarà scorporata e trattata dinanzi al giudice competente, mentre le restanti previsioni delle Sezioni 10 e 13 rimarranno in vigore. Il Cliente può rinunciare all'applicazione delle Sezioni 10 e 13 mediante comunicazione scritta a legal@hana.health entro 30 giorni dalla prima accettazione dei presenti Termini. L'esercizio di tale facoltà non incide su alcuna altra previsione."
+                : "If Section 13.1 is found unenforceable as to a particular claim or request for relief, that claim or request will be severed and heard in a court of competent jurisdiction, and the remainder of Sections 10 and 13 will remain in force. A Client may opt out of Sections 10 and 13 by written notice to legal@hana.health within 30 days of first accepting these Terms. Opting out does not affect any other provision."}
+            </p>
+          </Section>
+
+          {/* 14. Additional United States Notices */}
+          <Section number="14" title={it ? "Ulteriori Avvisi per gli Stati Uniti" : "Additional United States Notices"}>
+            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "14.1 Avviso per i residenti in California" : "14.1 Notice for California users"}</h4>
+            <p className="mb-6">
+              {it
+                ? "Ai sensi della Sezione 1789.3 del California Civil Code, i residenti in California hanno diritto al seguente avviso. Il fornitore di questo servizio è HANA Health, Inc. I reclami possono essere inviati a legal@hana.health. I residenti in California possono inoltre contattare la Complaint Assistance Unit della Division of Consumer Services del California Department of Consumer Affairs per iscritto all'indirizzo 1625 North Market Blvd., Suite N 112, Sacramento, CA 95834, oppure telefonicamente al numero (800) 952-5210."
+                : "Under California Civil Code Section 1789.3, California residents are entitled to the following notice. The provider of this service is HANA Health, Inc. Complaints may be sent to legal@hana.health. California residents may also contact the Complaint Assistance Unit of the Division of Consumer Services of the California Department of Consumer Affairs in writing at 1625 North Market Blvd., Suite N 112, Sacramento, CA 95834, or by telephone at (800) 952-5210."}
+            </p>
+
+            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "14.2 Diritti limitati del Governo degli Stati Uniti" : "14.2 U.S. Government restricted rights"}</h4>
+            <p className="mb-6">
+              {it
+                ? "La piattaforma e la relativa documentazione costituiscono “commercial products” ai sensi del 48 C.F.R. 2.101, composti da “commercial computer software” e “commercial computer software documentation”. Ogni uso, modifica, riproduzione o divulgazione da parte o per conto del Governo degli Stati Uniti è disciplinato esclusivamente dai presenti Termini, in coerenza con il 48 C.F.R. 12.212 e il 48 C.F.R. 227.7202."
+                : "The platform and its documentation are “commercial products” as defined in 48 C.F.R. 2.101, consisting of “commercial computer software” and “commercial computer software documentation”. Any use, modification, reproduction, or disclosure by or on behalf of the U.S. Government is governed solely by these Terms, consistent with 48 C.F.R. 12.212 and 48 C.F.R. 227.7202."}
+            </p>
+
+            <h4 className="font-semibold text-[#1e2a3a] mb-3">{it ? "14.3 Conformità in materia di esportazioni" : "14.3 Export compliance"}</h4>
+            <p>
+              {it
+                ? "Ciascuna parte si conforma alle normative statunitensi applicabili in materia di controllo delle esportazioni e sanzioni. Il Cliente dichiara di non essere situato in un paese soggetto a embargo statunitense, di non essere un soggetto sottoposto a restrizioni, e di non consentire l'accesso alla piattaforma da tali paesi o a tali soggetti."
+                : "Each party will comply with applicable U.S. export control and sanctions laws. The Client represents that it is not located in a country subject to U.S. embargo, is not a denied or restricted party, and will not permit access to the platform from such countries or by such parties."}
+            </p>
+          </Section>
+
           {/* PART B */}
           <div className="border-b border-slate-200 pb-4 mb-10 mt-16">
             <h2 className="text-2xl font-semibold text-[#1e2a3a] tracking-tight">{it ? "PARTE B — POLITICA DI SICUREZZA" : "PART B — SECURITY POLICY"}</h2>
           </div>
 
           {/* 11. Security Governance */}
-          <Section number="11" title={it ? "Governance della Sicurezza" : "Security Governance"}>
+          <Section number="15" title={it ? "Governance della Sicurezza" : "Security Governance"}>
             <p className="mb-6">
               {it
                 ? "HANA mantiene un Sistema di Gestione della Sicurezza delle Informazioni (ISMS) formale, allineato ai principi della norma ISO 27001. La governance della sicurezza è responsabilità congiunta del CTO e del Responsabile Privacy, con revisioni trimestrali da parte del team dirigenziale."
@@ -270,7 +389,7 @@ export function Terms() {
           </Section>
 
           {/* 12. Data Encryption */}
-          <Section number="12" title={it ? "Crittografia dei Dati" : "Data Encryption"}>
+          <Section number="16" title={it ? "Crittografia dei Dati" : "Data Encryption"}>
             <div className="overflow-x-auto">
               <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
                 <thead>
@@ -291,7 +410,7 @@ export function Terms() {
           </Section>
 
           {/* 13. Access Control */}
-          <Section number="13" title={it ? "Controllo degli Accessi" : "Access Control"}>
+          <Section number="17" title={it ? "Controllo degli Accessi" : "Access Control"}>
             <ul className="list-disc pl-6 space-y-2">
               <li>{it ? "Controllo degli accessi basato sui ruoli (RBAC) applicato a tutti i componenti della piattaforma" : "Role-based access control (RBAC) applied to all platform components"}</li>
               <li>{it ? "I clinici accedono esclusivamente ai dati dei propri pazienti; l'isolamento dei dati tra cliniche è imposto a livello di infrastruttura" : "Clinicians access only their own patients' data; cross-clinic data isolation enforced at infrastructure level"}</li>
@@ -303,7 +422,7 @@ export function Terms() {
           </Section>
 
           {/* 14. Vulnerability Management */}
-          <Section number="14" title={it ? "Gestione delle Vulnerabilità" : "Vulnerability Management"}>
+          <Section number="18" title={it ? "Gestione delle Vulnerabilità" : "Vulnerability Management"}>
             <ul className="list-disc pl-6 space-y-2">
               <li>{it ? "Scansione automatizzata delle vulnerabilità: quotidiana su tutta l'infrastruttura di produzione" : "Automated vulnerability scanning: daily on all production infrastructure"}</li>
               <li>{it ? "Penetration test: pentest esterno annuale condotto da terze parti; risultati esaminati entro 5 giorni lavorativi" : "Penetration testing: annual third-party external pentest; results reviewed within 5 business days"}</li>
@@ -314,7 +433,7 @@ export function Terms() {
           </Section>
 
           {/* 15. Incident Response */}
-          <Section number="15" title={it ? "Risposta agli Incidenti" : "Incident Response"}>
+          <Section number="19" title={it ? "Risposta agli Incidenti" : "Incident Response"}>
             <div className="overflow-x-auto">
               <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
                 <thead>
@@ -336,7 +455,7 @@ export function Terms() {
           </Section>
 
           {/* 16. Subprocessor Security */}
-          <Section number="16" title={it ? "Sicurezza dei Sub-responsabili" : "Subprocessor Security"}>
+          <Section number="20" title={it ? "Sicurezza dei Sub-responsabili" : "Subprocessor Security"}>
             <p className="mb-4">
               {it
                 ? "Tutti i sub-responsabili del trattamento con accesso a dati personali o sanitari devono soddisfare i seguenti standard minimi prima dell'incarico:"
@@ -357,7 +476,7 @@ export function Terms() {
           </Section>
 
           {/* 17. Business Continuity and Disaster Recovery */}
-          <Section number="17" title={it ? "Continuità Operativa e Disaster Recovery" : "Business Continuity and Disaster Recovery"}>
+          <Section number="21" title={it ? "Continuità Operativa e Disaster Recovery" : "Business Continuity and Disaster Recovery"}>
             <ul className="list-disc pl-6 space-y-2">
               <li>{it ? "Recovery Time Objective (RTO): 4 ore per un guasto della piattaforma di livello P1" : "Recovery Time Objective (RTO): 4 hours for P1 platform failure"}</li>
               <li>{it ? "Recovery Point Objective (RPO): 1 ora (replica continua; recupero point-in-time disponibile)" : "Recovery Point Objective (RPO): 1 hour (continuous replication; point-in-time recovery available)"}</li>
@@ -368,7 +487,7 @@ export function Terms() {
           </Section>
 
           {/* 18. AI-Specific Security Measures */}
-          <Section number="18" title={it ? "Misure di Sicurezza Specifiche per l'AI" : "AI-Specific Security Measures"}>
+          <Section number="22" title={it ? "Misure di Sicurezza Specifiche per l'AI" : "AI-Specific Security Measures"}>
             <p className="mb-4">{it ? "Data l'architettura di HANA basata sull'AI, si applicano i seguenti controlli di sicurezza aggiuntivi:" : "Given HANA's AI-driven architecture, the following additional security controls apply:"}</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>{it ? "Prevenzione del prompt injection: tutti gli input dei pazienti vengono sanificati e validati prima di raggiungere i modelli di AI" : "Prompt injection prevention: all patient inputs are sanitised and validated before reaching AI models"}</li>
@@ -381,7 +500,7 @@ export function Terms() {
           </Section>
 
           {/* 19. Physical Security */}
-          <Section number="19" title={it ? "Sicurezza Fisica" : "Physical Security"}>
+          <Section number="23" title={it ? "Sicurezza Fisica" : "Physical Security"}>
             <ul className="list-disc pl-6 space-y-2">
               <li>{it ? "HANA è un'azienda cloud-native; nessun dato dei pazienti viene trattato sui dispositivi dei dipendenti" : "HANA is a cloud-native company; no patient data is processed on employee devices"}</li>
               <li>{it ? "Per i deployment on-premise (Italia, Medio Oriente): l'accesso fisico ai server è controllato dall'istituzione sanitaria partner, con HANA che fornisce configurazioni server irrobustite e audit logging" : "For on-premise deployments (Italy, Middle East): physical server access is controlled by the healthcare institution partner, with HANA providing hardened server configurations and audit logging"}</li>
@@ -391,7 +510,7 @@ export function Terms() {
           </Section>
 
           {/* 20. Security Contact */}
-          <Section number="20" title={it ? "Contatto per la Sicurezza" : "Security Contact"}>
+          <Section number="24" title={it ? "Contatto per la Sicurezza" : "Security Contact"}>
             <div className="overflow-x-auto">
               <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
                 <thead>

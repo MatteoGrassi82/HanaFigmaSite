@@ -34,7 +34,7 @@ const GREEN = "#3FBB5A";
 const RED = "#E5544B";
 
 export const COMPANION_CHAPTER_LEN = 150;
-export const COMPANION_DURATION = 600; // 4 chapters, 20s @30fps
+export const COMPANION_DURATION = 450; // 3 chapters, 15s @30fps (CallerId · Memory · Languages; Attempts and Conversation are parked below)
 
 const EASE = Easing.bezier(0.22, 1, 0.36, 1);
 
@@ -218,7 +218,7 @@ function HomeScreen({ frame, fps, t0 }: { frame: number; fps: number; t0: number
           <div style={{ flex: 1, minWidth: 0, textAlign: "left", fontFamily: SANS }}>
             <div style={{ fontSize: 9, color: "#98A1B2", letterSpacing: 0.3 }}>Incoming call</div>
             <div style={{ fontSize: 12, color: "#fff", fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-              Dr. Reyes' Office
+              Your Practice
             </div>
           </div>
           <div style={{ display: "flex", gap: 6 }}>
@@ -394,7 +394,7 @@ function Conversation({ frame, fps, t0 }: { frame: number; fps: number; t0: numb
     { who: "p", text: "Sorry, say that again?" },
     { who: "h", text: "Of course. Your ankles. Any swelling this week?" },
     { who: "p", text: "A bit in the evenings. Shoes feel tight." },
-    { who: "h", text: "Thank you. I'll note that for Dr. Reyes." },
+    { who: "h", text: "Thank you. I'll note that for your care team." },
   ];
   return (
     <div style={{ width: 360, fontFamily: SANS }}>
@@ -442,6 +442,94 @@ function Conversation({ frame, fps, t0 }: { frame: number; fps: number; t0: numb
 }
 
 /* ---- Chapter 3: it remembers -------------------------------------------- */
+/* Chapter 5: the language changes, the protocol does not. Matteo 2026-08-25:
+   30+ languages was buried in a clause inside chapter 3, so it becomes its own
+   chapter and its own accordion row. The claim is "30+ languages", never "any
+   language" (see the copy guardrails). */
+function Languages({ frame, fps, t0 }: { frame: number; fps: number; t0: number }) {
+  // The cycle uses languages from the in-production list Matteo gave on
+  // 2026-08-25 (English, Spanish, Chinese, Tagalog, Russian make the cut here:
+  // the top patient languages in the US market).
+  const lines = [
+    { lang: "English", q: "Any swelling in your ankles this week?" },
+    { lang: "Español", q: "¿Ha tenido hinchazón en los tobillos esta semana?" },
+    { lang: "中文", q: "这周您的脚踝有肿胀吗？" },
+    { lang: "Tagalog", q: "Namaga ba ang inyong bukung-bukong ngayong linggo?" },
+    { lang: "Русский", q: "Были ли отёки лодыжек на этой неделе?" },
+  ];
+  const rtlLangs: string[] = [];
+  // one line at a time, each holding for ~24 frames
+  const step = 24;
+  const active = Math.min(lines.length - 1, Math.max(0, Math.floor((frame - t0 - 8) / step)));
+  const cur = lines[active];
+  const rtl = rtlLangs.includes(cur.lang);
+  return (
+    <div style={{ width: 380, fontFamily: SANS, textAlign: "center" }}>
+      <div style={{ ...riseStyle(frame, fps, t0 + 4, 10), fontSize: 11.5, fontWeight: 800, letterSpacing: 1.4, textTransform: "uppercase", color: SUB }}>
+        The same question, the same protocol
+      </div>
+
+      <div
+        key={active}
+        style={{
+          ...pop(frame, fps, t0 + 8 + active * step),
+          marginTop: 18,
+          minHeight: 108,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 10,
+          background: "rgba(255,255,255,0.96)",
+          border: `1px solid ${HAIRLINE}`,
+          borderRadius: 18,
+          padding: "18px 20px",
+        }}
+      >
+        <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1.2, textTransform: "uppercase", color: BLUE }}>
+          {cur.lang}
+        </span>
+        <span style={{ fontSize: 15, lineHeight: 1.45, color: INK, direction: rtl ? "rtl" : "ltr" }}>
+          {cur.q}
+        </span>
+      </div>
+
+      <div style={{ display: "flex", justifyContent: "center", gap: 6, marginTop: 14 }}>
+        {lines.map((l, i) => (
+          <span
+            key={l.lang}
+            style={{
+              width: i === active ? 18 : 6,
+              height: 6,
+              borderRadius: 999,
+              background: i === active ? BLUE : "rgba(10,22,51,0.16)",
+              transition: "none",
+            }}
+          />
+        ))}
+      </div>
+
+      <div
+        style={{
+          ...pop(frame, fps, t0 + 122),
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 7,
+          marginTop: 16,
+          fontSize: 11.5,
+          fontWeight: 700,
+          color: BLUE,
+          background: "rgba(37,99,235,0.10)",
+          borderRadius: 999,
+          padding: "6px 12px",
+        }}
+      >
+        30+ languages · switched per patient, one number
+      </div>
+    </div>
+  );
+}
+
 function Memory({ frame, fps, t0 }: { frame: number; fps: number; t0: number }) {
   const quoteGlow = interpolate(frame, [t0 + 72, t0 + 84, t0 + 116], [0, 1, 0.55], {
     extrapolateLeft: "clamp",
@@ -497,7 +585,6 @@ export const CompanionShowcaseComp = () => {
   const c0 = chapterStyle(frame, 0);
   const c1 = chapterStyle(frame, 1);
   const c2 = chapterStyle(frame, 2);
-  const c3 = chapterStyle(frame, 3);
 
   return (
     <AbsoluteFill style={{ fontFamily: SANS, overflow: "hidden" }}>
@@ -509,21 +596,14 @@ export const CompanionShowcaseComp = () => {
       {c1 && (
         <div style={c1}>
           <div style={CENTERED}>
-            <Attempts frame={frame} fps={fps} t0={COMPANION_CHAPTER_LEN} />
+            <Memory frame={frame} fps={fps} t0={COMPANION_CHAPTER_LEN} />
           </div>
         </div>
       )}
       {c2 && (
         <div style={c2}>
           <div style={CENTERED}>
-            <Conversation frame={frame} fps={fps} t0={2 * COMPANION_CHAPTER_LEN} />
-          </div>
-        </div>
-      )}
-      {c3 && (
-        <div style={c3}>
-          <div style={CENTERED}>
-            <Memory frame={frame} fps={fps} t0={3 * COMPANION_CHAPTER_LEN} />
+            <Languages frame={frame} fps={fps} t0={2 * COMPANION_CHAPTER_LEN} />
           </div>
         </div>
       )}

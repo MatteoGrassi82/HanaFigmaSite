@@ -55,7 +55,9 @@ export function Footer() {
             <li><Link to="/blog" className="inline-block py-2 hover:text-white transition-colors">{t.footer.blog}</Link></li>
             <li><Link to="/labs" className="inline-block py-2 hover:text-white transition-colors">{t.footer.labs}</Link></li>
             {!isItalian && <li><Link to="/state-of-ai" className="inline-block py-2 hover:text-white transition-colors">{t.footer.stateOfVoiceAI}</Link></li>}
-            {!isItalian && <li><Link to="/use-cases" className="inline-block py-2 hover:text-white transition-colors">{t.footer.useCases}</Link></li>}
+            {/* Links straight to /case-studies: /use-cases is now a server-side 301
+                (vercel.json), so pointing at it made every page link through a redirect. */}
+            {!isItalian && <li><Link to="/case-studies" className="inline-block py-2 hover:text-white transition-colors">{t.footer.useCases}</Link></li>}
           </ul>
         </nav>
 

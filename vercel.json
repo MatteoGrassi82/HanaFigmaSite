@@ -1,9 +1,15 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build",
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/research", "destination": "/labs", "permanent": true },
+    { "source": "/use-cases", "destination": "/case-studies", "permanent": true }
+  ],
   "rewrites": [
     {
       "source": "/((?!api/|assets/|.*\\.[a-zA-Z0-9]+$).*)",
-      "destination": "/index.html"
+      "destination": "/api/not-found"
     }
   ],
   "headers": [

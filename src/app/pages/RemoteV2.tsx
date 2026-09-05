@@ -1,59 +1,73 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion, useInView, useScroll, useTransform } from "motion/react";
-import { Check, ChevronDown, Clock, Loader2, MessageSquare, Minus, Phone, Plus } from "lucide-react";
+import { Check, ChevronDown, ChevronRight, Clock, Loader2, MessageSquare, Minus, Phone, Plus } from "lucide-react";
 import { SEO } from "../components/SEO";
 import { projectId, publicAnonKey } from "../../../utils/supabase/info";
 import { Footer } from "../components/Footer";
 import { HanaBloomOrb } from "../components/ui/hana-bloom-orb";
 import { RecipesMarquee } from "../components/RecipesMarquee";
+import { PROGRAM_CARDS } from "../components/remote/program-cards";
+import { SleepNoteBeforeTime } from "../components/remote/SleepNoteBeforeTime";
 import { InlineImageHeader } from "../components/InlineImageHeader";
-import { LiveDemoSection } from "../components/LiveDemoSection";
+import { SonicDemoSection } from "../components/remote/SonicDemoSection";
+import { GetYouLive } from "../components/remote/GetYouLive";
+import { AnnouncementBar } from "../components/remote/AnnouncementBar";
 import { SafetyStack } from "../components/ui/safety-stack";
+import { ComplianceSection } from "../components/ComplianceSection";
+import { LatestPosts } from "../components/LatestPosts";
+import { AskAiAboutUs } from "../components/AskAiAboutUs";
 import { CompassDashboard, Glyph, RI } from "../components/remote/CompassDashboard";
 import { Player, type PlayerRef } from "@remotion/player";
 import { CareJourneyComp, CARE_JOURNEY_DURATION } from "../components/remotion/CareJourneyComp";
 import { CompassShowcaseComp, COMPASS_CHAPTER_LEN, COMPASS_DURATION } from "../components/remotion/CompassShowcaseComp";
 import { CompanionShowcaseComp, COMPANION_CHAPTER_LEN, COMPANION_DURATION } from "../components/remotion/CompanionShowcaseComp";
 import { LoopDiagram } from "../components/ui/loop-diagram";
-import { WhyHana } from "../components/WhyHana";
 import { ProofBento } from "../components/ui/proof-bento";
-import { PatientEngagement } from "../components/PatientEngagement";
 import { PhoneCarousel } from "../components/ui/phone-mockups-1-utils/phone-carousel";
 import OrbitingCirclesGlobe from "../components/ui/orbiting-circles-02";
 import { ShaderBackground } from "../components/ui/waves-shaders-homlu-ui";
 import { HANA_PHONE_SCREENS } from "../components/ui/phone-mockups-1";
+// Type + paper experiment lifted off usecobalt.com. Scoped entirely to the
+// `cobalt` class on this page's root; delete both to revert.
+import "../../styles/cobalt-type.css";
 
 const DEMO_URL = "https://calendly.com/matteowastaken/discoverycall";
 
 /**
- * /remote-v2 — DRAFT rebuild of the HANA Remote page. NOT linked from any nav,
+ * /remote-v2 — DRAFT rebuild of the HANA page. NOT linked from any nav,
  * noindex (see NOINDEX_ROUTES in scripts/lib/route-seo.mjs). Working canvas:
  * iterate here, then replace HanaRemote.tsx wholesale when approved, and
  * remove this route.
  *
- * Skeleton v3 (2026-08-12): the care-journey motion graphic graduated from a
- * mid-page section to the HERO (Federato-style split), so the old centered
- * light hero and the standalone §7 section are both gone.
- *   1  Hero: split — claim left, CareJourneyComp on a textured canvas right
- *   2  "What is Hana?" three-way comparison (Matteo's mock 2026-08-12: care
- *      management software / outsourced care management / HANA agentic care
- *      coordination — replaced the WhyHana channel bars)
- *   3  LoopDiagram "Read. Engage. Document. Every call." (from Home)
- *   4  Economics: coordinator math (absorbs the old "cost of doing nothing")
- *   5  Live demo ("take the call", from Home; agent is still the front-desk
- *      scenario — swap in a Remote check-in scenario when one exists)
- *   5b "Built by clinicians" giant inline-image statement (reference screenshot;
- *      scroll-linked convergence; hero stays as-is per Matteo 2026-08-12)
- *   6  ProofBento "Proven by the teams running care at scale" (from Home —
- *      replaces the two-quote testimonial section; both quotes live inside it)
- *   7  (empty — the care journey is now the hero. NOTE: §3 LoopDiagram is now
- *      almost certainly redundant, since the hero tells the how-it-works story)
- *   8  Compass  9  Patient agent  10  Programs marquee
- *   11 PatientEngagement "Every patient conversation, handled" (from Home)
- *   12 Adherence calculator (OPEN: keep here / move to Sleep / rebuild as CCM)
- *   13 Numbers band (85%-vs-apps row removed; §2 owns it now)
- *   14 Audit-ready  15 SafetyStack (from Home — clinical trust after billing trust)
- *   16 Go-live · FAQ (+2 new) · CTA
+ * Skeleton v4 (2026-08-19, after Matteo's call with Sthita). Remote is what
+ * this page sells; Sleep gets one hand-off section and nothing more. The page was
+ * running too long, so five sections came off.
+ *   1  Hero: split, claim left, CareJourneyComp on a textured canvas right
+ *   2  "What is Hana?" three-way comparison (care management software /
+ *      outsourced care management / HANA AI care coordination). This is the
+ *      section that explains what it IS, so it stays first.
+ *   3  The loop: "Reach. Flag. Document. Bill. Every month."
+ *   3b "Built by clinicians" giant inline-image statement
+ *   4  Talk to HANA (the live demo, the one interactive thing worth keeping)
+ *   5  Our team (clinicians, AI researchers, care operators)
+ *   6  ProofBento "Proven by the teams running care at scale"
+ *   7  Compass, the control panel
+ *   8  The patient companion (phone mockup + accordion)
+ *   9  Programs: the CCM / APCM / BHI / RTM stack
+ *   10 Integrations (EHR logos orbiting the core)
+ *   11 Numbers band
+ *   12 HANA Sleep, one section, labelled New, links to /hana-sleep
+ *   13 Audit-ready  14 SafetyStack  15 FAQ · CTA
+ *
+ * PULLED on 2026-08-19, all still in the file or one import away:
+ *   - the 85% reached-by-channel column (§2 already does the comparing, and
+ *     comparing channels is a Contact argument)
+ *   - the coordinator math and the Monday-morning call list (too long; nobody
+ *     clicks through an animated call list)
+ *   - Home's "Every patient conversation, handled" (the companion says it)
+ *   - the sleep/DME adherence calculator (moving to its own page as a
+ *     multi-step interactive calculator)
+ *   - the badged programs marquee, in favour of the scannable stack
  * CUT vs live page: "The questions every clinic asks" QBlocks (each block
  * duplicated a surviving section); the standalone testimonials (folded into §6).
  *
@@ -115,7 +129,7 @@ const HOW_BLOCKS = [
     key: "Enroll",
     title: "Enroll by phone, on day one",
     short: "Consent and onboarding on a call — no app to download.",
-    detail: "HANA Remote calls the patient, explains the program, captures consent, and sets up the right clinical protocol for their condition. No device to ship, no app to download, no behavior change asked of the patient.",
+    detail: "HANA calls the patient, explains the program, captures consent, and sets up the right clinical protocol for their condition. No device to ship, no app to download, no behavior change asked of the patient.",
     stat: "Day 1",
     statLabel: "consent + onboarding, entirely by phone",
     proof: "Consent captured on the call",
@@ -158,20 +172,23 @@ const HOW_BLOCKS = [
   },
 ];
 
-// Clinical / monitoring-program workflow tags for the marquee (incl. Italian twins).
-const PROGRAM_WORKFLOW_TAGS = [
-  "Outreach", "Behavioral Health", "Surgery", "Testing", "ADHD",
-  "Cronicità", "Salute Mentale", "Chirurgia", "Esami", "Aderenza", "Prevenzione",
+// The care-coordination tag filter for the workflow marquee. Kept for the day the
+// marquee comes back (it was replaced by ProgramsStack on 2026-08-19): these are
+// the tags that made it show care-coordination workflows only, Italian twins
+// included so it filtered in either locale.
+const CARE_COORDINATION_TAGS = [
+  "Outreach", "Behavioral Health", "ADHD", "Testing", "Reactivation",
+  "Cronicità", "Salute Mentale", "Aderenza", "Prevenzione", "Recupero", "Esami",
 ];
 
 const R_FAQS = [
   {
     q: "Do my patients need a device or an app?",
-    a: "Not for the programs HANA Remote runs device-free: CCM, APCM and behavioral health integration, where the covered activity is the care-management contact itself. Nothing is shipped, downloaded, or charged to the patient. If your patients already use wearables or connected devices, that device data flows in via API alongside the conversation.",
+    a: "Not for the programs HANA runs device-free: CCM, APCM and behavioral health integration, where the covered activity is the care-management contact itself. Nothing is shipped, downloaded, or charged to the patient. If your patients already use wearables or connected devices, that device data flows in via API alongside the conversation.",
   },
   {
     q: "Is this device-less RPM?",
-    a: "No, and we're deliberate about that. RPM codes (99453/99454/99457) require an FDA-defined medical device that transmits readings automatically. A patient reading a number to us over the phone does not satisfy them, and billing RPM that way is what the DOJ's first RPM False Claims settlement was about. On RPM, HANA Remote is the engagement layer on top of the devices you already use: the device transmits, HANA keeps the patient engaged and transmitting. The device-free programs are CCM, APCM and BHI.",
+    a: "No, and we're deliberate about that. RPM codes (99453/99454/99457) require an FDA-defined medical device that transmits readings automatically. A patient reading a number to us over the phone does not satisfy them, and billing RPM that way is what the DOJ's first RPM False Claims settlement was about. On RPM, HANA is the engagement layer on top of the devices you already use: the device transmits, HANA keeps the patient engaged and transmitting. The device-free programs are CCM, APCM and BHI.",
   },
   {
     q: "Does this replace my clinicians' billable time?",
@@ -179,15 +196,15 @@ const R_FAQS = [
   },
   {
     q: "How does the billing actually work?",
-    a: "HANA Remote produces the documentation the codes require; your qualified staff supply and attest to the time. Every interaction is written back as a structured note attributed to a named clinician, across CCM, APCM, BHI and RTM (98975–98981), so the person who bills is the person who did the clinical work, with the record to show it.",
+    a: "HANA produces the documentation the codes require; your qualified staff supply and attest to the time. Every interaction is written back as a structured note attributed to a named clinician, across CCM, APCM, BHI and RTM (98975–98981), so the person who bills is the person who did the clinical work, with the record to show it.",
   },
   {
     q: "How is this different from care management software?",
-    a: "Care management software is a co-pilot for your care manager: conversation guides, call summaries, auto-populated care plans, a dialer. Every feature makes a human's call better, and none of them makes the call. HANA does the call itself, then writes the note, so your care manager supervises a panel instead of phoning through a list. A co-pilot makes one nurse somewhat faster. Removing the dialing is what changes how many patients one nurse can hold.",
+    a: "Care management software is a co-pilot for your care manager: conversation guides, call summaries, auto-populated care plans, a dialer. Every feature makes a human's call better, and none of them makes the call. HANA does the call itself, then writes the note, so your care manager supervises a panel instead of phoning through a list. A co-pilot makes one person somewhat faster. Removing the dialing is what changes how many patients one person can hold.",
   },
   {
     q: "We already run RPM with devices. Why would we add this?",
-    a: "Because the devices aren't the problem. Engagement is. HANA Remote is the engagement layer that keeps your existing RPM program transmitting: it handles the between-visit contact, chases the days where the device went quiet, and recovers the patients who've drifted. The readings still come from the device, exactly as the codes require.",
+    a: "Because the devices aren't the problem. Engagement is. HANA is the engagement layer that keeps your existing RPM program transmitting: it handles the between-visit contact, chases the days where the device went quiet, and recovers the patients who've drifted. The readings still come from the device, exactly as the codes require.",
   },
   {
     q: "What happens if we get audited?",
@@ -200,6 +217,23 @@ const R_FAQS = [
   {
     q: "What languages do you support?",
     a: "HANA calls patients in 30+ languages, switching automatically per patient. No separate configuration or phone lines required.",
+  },
+  // The four objections the Site Build Brief names as compulsory (2026-08-25).
+  {
+    q: "We already have a care management vendor. Why change?",
+    a: "Most vendors in this category supply the staff as well as the software, and the CY2027 proposal pays for remote monitoring only when the clinical staff are direct employees of the billing practice. If that is finalized as written, the contracted-staffing model stops being billable for those codes. HANA is the other shape: your own employed clinicians own the patients and the attestation, and HANA is the capacity that makes the calling possible. You can also run us alongside an existing vendor on a different cohort and compare the documentation.",
+  },
+  {
+    q: "My staff has no bandwidth to take this on.",
+    a: "That is the objection the whole program is built around, and it is why onboarding is a named person rather than a login. One owner takes your clinic live, the protocols come pre-built, and the learning is short courses your staff can do in the gaps rather than a manual. The calling itself is the part that consumed the bandwidth, and that is the part HANA does.",
+  },
+  {
+    q: "Is there a long contract?",
+    a: "No multi-year lock-in. Start on one program and one cohort, keep the documentation either way, and expand when the numbers hold up. If a pilot does not clear the bar you set at the start, you should not be signing anything longer.",
+  },
+  {
+    q: "What does it cost?",
+    a: "Usage-based, per actively managed patient per month, so the cost moves with the panel you actually run rather than with a seat count or a platform tier. We will put the number in front of you on the call, along with the arithmetic against a coordinator's fully loaded cost, because that is the comparison that decides it.",
   },
 ];
 
@@ -644,10 +678,10 @@ function CareJourneyPipeline() {
         <AnimatePresence mode="wait">
           {stage === 0 && (
             <VCard key="v0" className="left-[6%] top-[16%] w-[88%] md:left-[10%] md:w-[42%]">
-              <VHeader icon={RI.phone} title="HANA · enrollment call" sub="CPAP program · Dr. Reyes' office" />
+              <VHeader icon={RI.phone} title="HANA · enrollment call" sub="CPAP program · your doctor's office" />
               <div className="mb-2"><VSlot w="w-24" /></div>
               <div className="rounded-2xl rounded-bl-md bg-[#1e2a3a] text-white px-3.5 py-2.5 text-[13px] leading-[1.5] max-w-[92%]">
-                Hi Maria, it's HANA calling from Dr. Reyes' office to set up your CPAP check-ins. Is now a good time?
+                Hi Maria, it's HANA calling from your doctor's office to set up your CPAP check-ins. Is now a good time?
               </div>
               <div className="flex items-center gap-2 mt-3 text-[11.5px] text-slate-500">
                 <Check className="w-3.5 h-3.5 text-emerald-500" strokeWidth={3} />
@@ -699,7 +733,7 @@ function CareJourneyPipeline() {
                   <VSlot w="w-20" />
                   <VSlot w="w-32" />
                   <span className="ml-auto inline-flex items-center gap-1.5 text-[11px] font-semibold text-rose-600 bg-rose-50 border border-rose-100 rounded-full px-2.5 py-1 whitespace-nowrap">
-                    <span className="w-1.5 h-1.5 rounded-full bg-rose-500" /> Escalated → Dr. Reyes
+                    <span className="w-1.5 h-1.5 rounded-full bg-rose-500" /> Escalated → named owner
                   </span>
                 </div>
               </div>
@@ -718,7 +752,7 @@ function CareJourneyPipeline() {
               </div>
               <div className="flex items-center gap-2 mt-4 pt-3 border-t border-slate-200 text-[12px] font-semibold text-emerald-600">
                 <Check className="w-3.5 h-3.5" strokeWidth={3} />
-                Ready for Dr. Reyes to attest
+                Ready for your clinician to attest
               </div>
             </VCard>
           )}
@@ -940,10 +974,10 @@ function CareJourneySplit() {
             <AnimatePresence mode="wait">
               {stage === 0 && (
                 <VCard key="v0" className="left-[4%] top-[10%] w-[92%] md:left-[6%] md:w-[60%]">
-                  <VHeader icon={RI.phone} title="HANA · enrollment call" sub="CPAP program · Dr. Reyes' office" />
+                  <VHeader icon={RI.phone} title="HANA · enrollment call" sub="CPAP program · your doctor's office" />
                   <div className="mb-2"><VSlot w="w-24" /></div>
                   <div className="rounded-2xl rounded-bl-md bg-[#1e2a3a] text-white px-3.5 py-2.5 text-[13px] leading-[1.5] max-w-[92%]">
-                    Hi Maria, it's HANA calling from Dr. Reyes' office to set up your CPAP check-ins. Is now a good time?
+                    Hi Maria, it's HANA calling from your doctor's office to set up your CPAP check-ins. Is now a good time?
                   </div>
                   <div className="flex items-center gap-2 mt-3 text-[11.5px] text-slate-500">
                     <Check className="w-3.5 h-3.5 text-emerald-500" strokeWidth={3} />
@@ -995,7 +1029,7 @@ function CareJourneySplit() {
                       <VSlot w="w-20" />
                       <VSlot w="w-32" />
                       <span className="ml-auto inline-flex items-center gap-1.5 text-[11px] font-semibold text-rose-600 bg-rose-50 border border-rose-100 rounded-full px-2.5 py-1 whitespace-nowrap">
-                        <span className="w-1.5 h-1.5 rounded-full bg-rose-500" /> Escalated → Dr. Reyes
+                        <span className="w-1.5 h-1.5 rounded-full bg-rose-500" /> Escalated → named owner
                       </span>
                     </div>
                   </div>
@@ -1014,7 +1048,7 @@ function CareJourneySplit() {
                   </div>
                   <div className="flex items-center gap-2 mt-4 pt-3 border-t border-slate-200 text-[12px] font-semibold text-emerald-600">
                     <Check className="w-3.5 h-3.5" strokeWidth={3} />
-                    Ready for Dr. Reyes to attest
+                    Ready for your clinician to attest
                   </div>
                 </VCard>
               )}
@@ -1112,21 +1146,28 @@ function HeroCareJourney() {
     // navbar made the bar vanish into the page (Matteo: "the nav bar is hiding").
     // The hero now starts below the navbar, whose bottom hairline separates them.
     <header ref={ref} className="bg-white text-[#0A1633] overflow-hidden border-b border-slate-200/80">
-      {/* 50/50 split, like the reference — 46/54 let the video panel dominate */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 lg:min-h-[calc(100vh-80px)]">
+      {/* The claim gets the larger half: 58/42. It ran 43/57 before, which let the
+          motion panel dominate a hero whose job is the headline. */}
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.16fr)_minmax(0,0.84fr)] lg:min-h-[calc(100vh-40px)]">
         {/* LEFT — the claim, static */}
         <div className="px-6 md:px-16 py-20 md:py-24 lg:py-28 flex flex-col justify-center">
+          {/* Hero copy set by Matteo 2026-08-26. Only the HANDWRITING EFFECT was
+              reverted, not the words: the third line is the serif italic accent,
+              the same treatment as every other accent line on the page.
+              <HandwritingText> is still in components/ui if it finds a home. */}
           <p className={`${eyebrow} text-[#2563EB] mt-0 mb-6`}>
-            HANA Remote · The engagement layer for remote care
+            AI care coordination that reaches every patient
           </p>
-          <h1 className="font-serif font-normal text-[40px] sm:text-[50px] md:text-[56px] lg:text-[60px] leading-[1.05] tracking-[-0.015em] m-0">
-            Built by clinicians.
+          <h1 className="font-serif font-normal text-[42px] sm:text-[54px] md:text-[64px] lg:text-[74px] leading-[1.02] tracking-[-0.018em] m-0">
+            More patients.
             <br />
-            <em className="text-[#2563EB]">Supervised by yours.</em>
+            Same team.
+            <br />
+            <em className="text-[#2563EB]">Better outcomes.</em>
           </h1>
-          <p className="text-[16px] md:text-[17.5px] leading-[1.65] text-slate-600 mt-7 mb-0 max-w-[46ch]">
-            HANA does the phone work behind CCM, APCM, BHI &amp; RTM: enrollment, check-ins,
-            escalation, documentation. Your team reviews a flagged worklist and attests the work.
+          <p className="text-[16px] md:text-[17.5px] leading-[1.65] text-slate-600 mt-7 mb-0 max-w-[48ch]">
+            Every reimbursable care program, run in house from enrollment to billing. HANA's AI
+            does the calls and the documentation. Your clinicians review and sign.
           </p>
           <a
             href={DEMO_URL}
@@ -1141,13 +1182,13 @@ function HeroCareJourney() {
         {/* RIGHT — textured canvas with the motion graphic. Texture fills the
             whole panel (including behind the navbar); the Player is inset by
             pt-20 so no part of the animation sits under the bar. */}
-        <div className="relative min-h-[420px] sm:min-h-[520px] lg:min-h-0">
+        <div className="relative min-h-[480px] sm:min-h-[620px] lg:min-h-[740px]">
           <DuneTexture />
           {/* Both dimensions set → the Player CONTAIN-fits inside the panel and
               can never overflow it. This is the real fix for the rail badges
               being clipped at the top: width-only sizing let the comp grow
               taller than the panel on shorter viewports. */}
-          <div className="absolute inset-0 flex items-center justify-center px-3 md:px-6 py-8">
+          <div className="absolute inset-0 flex items-center justify-center px-2 md:px-4 py-4">
             <Player
               ref={playerRef}
               component={CareJourneyComp}
@@ -1162,7 +1203,7 @@ function HeroCareJourney() {
               clickToPlay={false}
               doubleClickToFullscreen={false}
               spaceKeyToPlayOrPause={false}
-              style={{ width: "100%", height: "100%", maxWidth: 900 }}
+              style={{ width: "100%", height: "100%", maxWidth: 1040 }}
             />
           </div>
         </div>
@@ -1291,15 +1332,15 @@ function IntegrationsSection() {
 const COMPASS_ITEMS = [
   {
     title: "One flagged worklist, not a phone queue",
-    body: "Every check-in HANA completes is scored against the protocol. Your team sees only the flags, each with the full context of the call and a named owner.",
+    body: "Every call is scored against your protocol. Only the flags surface, each with the call behind it and a named owner.",
   },
   {
     title: "Billing documentation, ready to attest",
-    body: "Structured notes are written the moment calls end, and minutes are attributed to the named clinician who did the work. Compass shows what's ready for attestation across CCM, APCM, BHI and RTM.",
+    body: "The note is written the moment the call ends, and the minutes are attributed to whoever earned them. You see what is ready to sign, across every program you run.",
   },
   {
     title: "An audit trail that assembles itself",
-    body: "Who was flagged, who received it, what they did, and when they attested. Any month, any patient: one export, no chart-by-chart reconstruction.",
+    body: "Who was flagged, who got it, what they did, when they signed. Any month, any patient, one export.",
   },
 ];
 
@@ -1345,15 +1386,19 @@ function CompassShowcase() {
   };
 
   return (
-    <div ref={ref} className="grid grid-cols-1 lg:grid-cols-[minmax(0,42%)_minmax(0,1fr)] gap-12 lg:gap-16 items-center">
-      {/* LEFT — heading + synced accordion */}
+    <div ref={ref}>
+      {/* Heading on top, shared with the patient companion below so the two
+          product sections read as a pair (Matteo 2026-08-25). */}
+      <motion.div {...fadeUp} className="mb-12 md:mb-16">
+        <p className={`${eyebrow} text-[#2563EB] mt-0 mb-4`}>For your clinic</p>
+        <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-[#0A1633] m-0 max-w-[16ch]">
+          Your team sees four patients. <em className="text-[#2563EB]">HANA called two hundred.</em>
+        </h2>
+      </motion.div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,42%)_minmax(0,1fr)] gap-12 lg:gap-16 items-center">
+      {/* LEFT — synced accordion */}
       <div>
-        <motion.div {...fadeUp}>
-          <p className={`${eyebrow} text-[#2563EB] mt-0 mb-4`}>Compass · the control panel</p>
-          <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-[#0A1633] mt-0 mb-10 max-w-[16ch]">
-            Your team reviews what matters. <em className="text-[#2563EB]">The rest is handled.</em>
-          </h2>
-        </motion.div>
         <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.08 }} className="border-t border-slate-200">
           {COMPASS_ITEMS.map((item, i) => {
             const open = chapter === i;
@@ -1426,6 +1471,7 @@ function CompassShowcase() {
           />
         </div>
       </motion.div>
+      </div>
     </div>
   );
 }
@@ -1436,22 +1482,38 @@ function CompassShowcase() {
 // to the billing guardrail: call DURATION can be shown ("Answered · 21 min"),
 // but HANA never "logs billable minutes" — the transcript beat ends on "note
 // ready to attest", and the mock's "billable clinical time" lines are gone.
+// Cut to THREE rows (Matteo 2026-08-25: "there should just be three in the
+// patient companion", languages definitely one of them). His added idea —
+// "before they want to call, we can answer" — folds into the caller-ID row:
+// the number is the practice's, and it answers when rung back. The dropped
+// rows (call timing, the conversation finishing) live on in the FAQ.
+// LANGUAGE COUNT: confirmed 30+ (Matteo 2026-08-25, closing the earlier "65").
+// The nine below are the ones he named as in production. "Indian" in his list
+// is written as Hindi here — confirm that is the language he means.
+const LANGS_IN_PRODUCTION = [
+  { flag: "🇺🇸", name: "English" },
+  { flag: "🇪🇸", name: "Spanish" },
+  { flag: "🇮🇹", name: "Italian" },
+  { flag: "🇫🇷", name: "French" },
+  { flag: "🇵🇹", name: "Portuguese" },
+  { flag: "🇨🇳", name: "Chinese" },
+  { flag: "🇷🇺", name: "Russian" },
+  { flag: "🇵🇭", name: "Tagalog" },
+  { flag: "🇮🇳", name: "Hindi" },
+];
 const COMPANION_ITEMS = [
   {
     title: "Your patients see your practice, not an unknown number",
-    body: "Calls go out with your practice's name and verified caller ID, so a patient in her seventies sees the clinic she trusts instead of a number she's been told to ignore. A call that isn't answered is worth nothing, which makes this the gate on everything else.",
-  },
-  {
-    title: "Calls go out when the patient is actually free",
-    body: "A coordinator calls between nine and five, once, then moves on. Your patient is at dialysis on Tuesday morning and picks up at seven in the evening. HANA tries mornings, evenings and Saturdays until someone answers, with text as a fallback. The conversation is the care contact, so reaching them is the whole job.",
-  },
-  {
-    title: "The conversation finishes, not just starts",
-    body: "Hearing loss, a landline, a question that needs repeating, an answer that wanders somewhere else entirely. HANA slows down, repeats itself, follows the tangent, and still completes the protocol, in 30+ languages. A half-finished call helps nobody and documents nothing.",
+    body: "Your name on the caller ID, not a number she has been told to ignore. And it works the other way: she rings that number back and HANA answers, any hour, and writes that conversation up too.",
   },
   {
     title: "It calls back next month, and it remembers",
-    body: "Every call opens where the last one ended and references what the patient actually said. Most patients drift out of programs within a few months. Continuity is what keeps them in, and it's worth more than any new enrollment.",
+    body: "Every call opens where the last one ended, in the patient's own words. Most patients drift out of a program within months. Remembering is what keeps them in.",
+  },
+  {
+    title: "It works in the language they actually speak",
+    body: "30+ languages, switched per patient, same number and same protocol. Nothing to configure, no second line, no interpreter to book. The patients who get a worse call everywhere else get the same call here.",
+    flags: true,
   },
 ];
 
@@ -1478,7 +1540,7 @@ function CompanionShowcase() {
     const retry = setTimeout(() => playerRef.current?.play(), 350);
     const id = setInterval(() => {
       const f = playerRef.current?.getCurrentFrame() ?? 0;
-      setChapter(Math.min(3, Math.floor(f / COMPANION_CHAPTER_LEN)));
+      setChapter(Math.min(2, Math.floor(f / COMPANION_CHAPTER_LEN)));
     }, 250);
     return () => {
       clearTimeout(retry);
@@ -1497,15 +1559,16 @@ function CompanionShowcase() {
   return (
     <div ref={ref}>
       <motion.div {...fadeUp} className="mb-12 md:mb-16">
-        <p className={`${eyebrow} text-[#2563EB] mt-0 mb-4`}>The patient companion</p>
+        <p className={`${eyebrow} text-[#2563EB] mt-0 mb-4`}>For your patients</p>
         <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-[#0A1633] m-0 max-w-[16ch]">
-          Built for the one call that actually <em className="text-[#2563EB]">gets answered.</em>
+          The call your patient <em className="text-[#2563EB]">actually picks up.</em>
         </h2>
       </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,42%)] gap-12 lg:gap-16 items-center">
-        {/* LEFT — motion graphic on the warm pastel tile (mock's stage) */}
-        <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.08 }} className="order-2 lg:order-1">
+      {/* Same arrangement as Compass above: accordion left, motion graphic right */}
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,42%)_minmax(0,1fr)] gap-12 lg:gap-16 items-center">
+        {/* RIGHT in source order, second column on screen — the motion graphic */}
+        <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.08 }} className="order-2">
           <div
             className="rounded-[28px] overflow-hidden"
             style={{
@@ -1537,7 +1600,7 @@ function CompanionShowcase() {
         </motion.div>
 
         {/* RIGHT — synced accordion */}
-        <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.12 }} className="order-1 lg:order-2 border-t border-slate-200 self-start">
+        <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.12 }} className="order-1 border-t border-slate-200 self-start">
           {COMPANION_ITEMS.map((item, i) => {
             const open = chapter === i;
             return (
@@ -1569,6 +1632,22 @@ function CompanionShowcase() {
                       className="overflow-hidden"
                     >
                       <p className="text-[15px] leading-[1.7] text-slate-600 pb-5 pr-8 m-0">{item.body}</p>
+                      {"flags" in item && item.flags && (
+                        <div className="flex flex-wrap gap-2 pb-6 pr-6">
+                          {LANGS_IN_PRODUCTION.map((l) => (
+                            <span
+                              key={l.name}
+                              className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[12.5px] text-slate-700"
+                            >
+                              <span aria-hidden>{l.flag}</span>
+                              {l.name}
+                            </span>
+                          ))}
+                          <span className="inline-flex items-center rounded-full bg-[#EFF3FF] text-[#2563EB] px-2.5 py-1 text-[12.5px] font-semibold">
+                            +21 more
+                          </span>
+                        </div>
+                      )}
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -2145,7 +2224,7 @@ function CallListSim() {
             ? who === "staff"
               ? "Answered · 20 min on the call"
               : patient.flags
-                ? "Answered · flagged for your nurse"
+                ? "Answered · flagged for your team"
                 : "Answered · contact documented"
             : patient.fails[rn - 1] ?? "No answer",
         };
@@ -2539,6 +2618,314 @@ function CallListSim() {
   );
 }
 
+// ── §6b Our team ─────────────────────────────────────────────────────────────
+// Pill badge, mission statement, CTA, overlapping oval portraits, three stats
+// with pill captions.
+//
+// PROVENANCE: the mission statement, the roster and all three figures below came
+// from Matteo directly (2026-08-16). "75 years combined" and "100+ peer reviewed
+// publications" are HIS assertions about his own team, not derived from anything
+// in this repo; "45+ care protocols" matches what the rest of the site claims.
+// The "+20" chip is a headcount claim and should be checked before this ships.
+//
+// Roster is HANA's own people only. Oprandi, Katie Murphy and Lorri Hanes appear
+// elsewhere on the site as CUSTOMERS and must never be listed here.
+//
+// PHOTOS: only Dr. Mohamed has one in /public/avatars. The rest render as
+// monograms, which is a deliberate fallback. Archie's old portrait was hotlinked
+// from ResearchGate and now 403s, so it isn't used.
+type TeamMember = {
+  name: string;
+  role: string;
+  photo?: string;
+  w: number;
+  h: number;
+  offset: number;
+  z: number;
+};
+
+// Roster set 2026-08-25 (Matteo): Grassi, Archie, Sthita and Massimo, with real
+// photographs to come — drop each into /public/avatars and fill `photo`. Until
+// then the initials tiles render. Fakhrudin and Priyanka came off with this cut;
+// one line each to restore. Massimiliano's surname and exact title need
+// confirming with him before launch (brand doc: agree titles before a team page).
+const TEAM: TeamMember[] = [
+  { name: "Sthita Pujari", role: "Engineering & applied AI", photo: "/avatars/sthita.jpg", w: 98, h: 142, offset: 48, z: 1 },
+  { name: "Archie Defillo, MD", role: "Neuroscience, sleep & behavioral health", photo: "/avatars/archie.jpg", w: 112, h: 164, offset: 18, z: 2 },
+  { name: "Matteo Grassi", role: "Founder · behavioral psychologist", photo: "/avatars/matteo.jpg", w: 138, h: 202, offset: 0, z: 4 },
+  { name: "Massimiliano", role: "Clinical psychologist · sleep", photo: "/avatars/massimo.jpg", w: 108, h: 156, offset: 26, z: 3 },
+];
+
+const TEAM_STATS = [
+  { v: "75", l: "years of combined experience in medicine and clinical AI" },
+  { v: "100+", l: "peer reviewed publications" },
+  { v: "45+", l: "care protocols deployed" },
+];
+
+function initials(name: string) {
+  return name
+    .replace(/,.*$/, "")
+    .split(" ")
+    .filter((w) => !/^(MD|Dr\.?)$/i.test(w))
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("");
+}
+
+function TeamSection() {
+  return (
+    <section className="bg-white py-24 md:py-32 px-6 md:px-16">
+      <div className="max-w-[1200px] mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,50%)_minmax(0,1fr)] gap-14 lg:gap-8 items-center">
+          {/* left: badge, mission, CTA */}
+          <div>
+            <motion.span
+              {...fadeUp}
+              className="inline-flex items-center gap-2.5 rounded-full bg-[#0A1633] pl-3.5 pr-4 py-2"
+            >
+              <span className="w-2 h-2 rounded-full bg-[#2563EB]" />
+              <span className="text-[13px] font-medium text-white">Our team</span>
+            </motion.span>
+
+            <motion.h2
+              {...fadeUp}
+              transition={{ duration: 0.5, delay: 0.06 }}
+              className="font-serif font-normal text-[27px] sm:text-[32px] md:text-[36px] leading-[1.24] tracking-[-0.01em] text-[#0A1633] mt-7 mb-0"
+            >
+              Our team of clinicians, AI researchers and care operators is united by one belief: the
+              care that decides outcomes happens between visits, and it is lost for the most ordinary
+              reason. <em className="text-[#2563EB]">Nobody had the hours to call.</em>
+            </motion.h2>
+
+            <motion.a
+              {...fadeUp}
+              transition={{ duration: 0.5, delay: 0.12 }}
+              href="/about"
+              className="group inline-flex items-center gap-2 bg-[#2563EB] text-white text-[15px] font-semibold pl-6 pr-5 py-3.5 rounded-full no-underline hover:opacity-90 transition-opacity mt-9"
+            >
+              About us
+              <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" strokeWidth={2.4} />
+            </motion.a>
+          </div>
+
+          {/* right: overlapping oval portraits */}
+          <div className="flex items-start justify-start lg:justify-end overflow-x-auto lg:overflow-visible pb-2 pt-2">
+            {TEAM.map((m, i) => (
+              <motion.div
+                key={m.name}
+                initial={{ opacity: 0, y: 18, scale: 0.94 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.55, delay: 0.05 + i * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                style={{ marginTop: m.offset, marginLeft: i === 0 ? 0 : -20, zIndex: m.z }}
+                className="relative shrink-0"
+                title={`${m.name} · ${m.role}`}
+              >
+                <div
+                  style={{ width: m.w, height: m.h }}
+                  className="relative rounded-full overflow-hidden bg-[#EFF3FF] ring-[5px] ring-white"
+                >
+                  <span
+                    className="absolute inset-0 grid place-items-center font-serif text-[#2563EB]"
+                    style={{
+                      fontSize: Math.round(m.w * 0.33),
+                      background:
+                        "radial-gradient(120% 90% at 30% 15%, rgba(37,99,235,0.16) 0%, rgba(37,99,235,0) 62%), linear-gradient(160deg, #F4F7FF 0%, #E7EDFA 100%)",
+                    }}
+                  >
+                    {initials(m.name)}
+                  </span>
+                  {m.photo && (
+                    <img
+                      src={m.photo}
+                      alt={m.name}
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-cover"
+                      /* the roster lists photos that are not in the repo yet;
+                         until each lands, the initials tile shows instead of a
+                         broken image */
+                      onError={(e) => { e.currentTarget.style.display = "none"; }}
+                    />
+                  )}
+                </div>
+              </motion.div>
+            ))}
+
+            {/* the wider team */}
+            <motion.div
+              initial={{ opacity: 0, y: 18, scale: 0.94 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.55, delay: 0.42, ease: [0.16, 1, 0.3, 1] }}
+              style={{ marginTop: 70, marginLeft: -20, zIndex: 0 }}
+              className="relative shrink-0"
+              title="Plus the wider team"
+            >
+              <div className="w-[78px] h-[112px] rounded-full ring-[5px] ring-white bg-[#0A1633] grid place-items-center">
+                <span className="font-serif text-[22px] text-white">+20</span>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* stats */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-6 mt-20 md:mt-24 max-w-[900px]">
+          {TEAM_STATS.map((s, i) => (
+            <motion.div key={s.l} {...fadeUp} transition={{ duration: 0.5, delay: 0.05 + i * 0.08 }}>
+              <p className="font-serif text-[54px] md:text-[66px] leading-[0.9] text-[#0A1633] m-0">{s.v}</p>
+              <span className="inline-block mt-5 rounded-full bg-[#F1F4FA] px-4 py-2 text-[13px] leading-snug text-slate-600">
+                {s.l}
+              </span>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── §13b HANA Sleep: the CPAP week, written up ──────────────────────────────────
+// Reference layout: one large photographic card, pill badge top-left, serif
+// headline and body over a scrim on the left, and a glass panel floating right
+// holding the artefact itself.
+//
+// The artefact here is the structured note, so the copy stays on the right side
+// of two guardrails: HANA SUMMARISES what was said and checks it against a
+// clinician-set threshold (never interprets or concludes — that's the
+// medical-device line), and the action is "Review and attest", because the
+// clinician's time is the billable time, never HANA's.
+const SLEEP_NIGHTS = [
+  { n: "Night 1", hrs: "2h 10m", pct: 26, note: "Mask felt tight. She took it off.", call: false },
+  { n: "Night 2", hrs: "1h 40m", pct: 20, note: "HANA calls. Loosen the top strap one notch.", call: true },
+  { n: "Night 4", hrs: "4h 20m", pct: 52, note: "Over the threshold for the first time.", call: false },
+  { n: "Night 7", hrs: "5h 05m", pct: 61, note: "Habit forming. Cadence drops to weekly.", call: false },
+];
+
+function NoteBeforeVisit() {
+  return (
+    <section className="bg-white py-24 md:py-32 px-6 md:px-16">
+      <div className="max-w-[1240px] mx-auto">
+        <motion.div {...fadeUp} className="relative rounded-[28px] overflow-hidden bg-[#0A1633]">
+          <img
+            src="/products/contact-front-desk.webp"
+            alt="Two clinicians reviewing a patient's chart on a tablet"
+            className="absolute inset-0 w-full h-full object-cover"
+            loading="lazy"
+          />
+          <div
+            aria-hidden
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(5,12,26,0.90) 0%, rgba(5,12,26,0.72) 38%, rgba(5,12,26,0.34) 72%, rgba(5,12,26,0.22) 100%)",
+            }}
+          />
+
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[minmax(0,50%)_minmax(0,1fr)] gap-12 lg:gap-10 items-center p-8 sm:p-10 md:p-14 lg:min-h-[600px]">
+            {/* left: badge, headline, body */}
+            <div>
+              <span className="inline-flex items-center gap-2.5 rounded-full bg-white/[0.14] backdrop-blur-md border border-white/15 pl-3.5 pr-4 py-2">
+                <span className="w-2 h-2 rounded-full bg-[#5B93FF]" />
+                <span className="text-[13px] font-medium text-white">HANA Sleep</span>
+              </span>
+
+              <h2 className="font-serif font-normal text-[36px] sm:text-[46px] md:text-[54px] leading-[1.05] tracking-[-0.015em] text-white mt-8 mb-0 max-w-[16ch]">
+                The CPAP week, written up before you open the chart.
+              </h2>
+
+              <p className="text-[16px] md:text-[17px] leading-[1.65] text-white/75 mt-7 mb-0 max-w-[52ch]">
+                HANA calls sleep patients on the cadence their protocol needs, coaches the fit
+                problems that make people quit in week one, and writes the week back as a structured
+                note in your EHR. Your clinician reviews it and attests. HANA's call time is never
+                billed as clinical time.
+              </p>
+
+              <a
+                href="/hana-sleep"
+                className="group inline-flex items-center gap-2 text-[15px] font-semibold text-white no-underline mt-7 border-b border-white/30 pb-1 hover:border-white transition-colors"
+              >
+                See HANA Sleep
+                <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" strokeWidth={2.4} />
+              </a>
+            </div>
+
+            {/* right: the note itself, on glass */}
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.12 }}
+              className="w-full lg:justify-self-end lg:max-w-[460px] rounded-[22px] bg-white/[0.13] backdrop-blur-xl border border-white/20 p-7 md:p-8 shadow-[0_30px_70px_-24px_rgba(0,0,0,0.55)]"
+            >
+              {/* HANA mark, same gradient + waveform as the Talk to HANA card */}
+              <span
+                className="relative w-10 h-10 rounded-xl overflow-hidden grid place-items-center"
+                style={{
+                  background:
+                    "radial-gradient(80% 70% at 20% 15%, rgba(96,165,250,0.95) 0%, rgba(96,165,250,0) 60%), radial-gradient(80% 70% at 85% 80%, rgba(245,158,66,0.85) 0%, rgba(245,158,66,0) 62%), linear-gradient(150deg, #2563EB 0%, #4F46E5 60%, #7C3AED 100%)",
+                }}
+              >
+                <span aria-hidden className="flex items-end gap-[2px] h-3.5">
+                  {[6, 11, 14, 10, 7].map((h, i) => (
+                    <span key={i} className="w-[2px] rounded-full bg-white/90" style={{ height: h }} />
+                  ))}
+                </span>
+              </span>
+
+              <div className="flex items-baseline justify-between mt-6">
+                <p className="text-[11.5px] font-bold uppercase tracking-[1.3px] text-white/60 m-0">
+                  An example week · Maria R.
+                </p>
+                <p className="text-[11.5px] text-white/50 m-0">4h threshold</p>
+              </div>
+
+              <div className="mt-5 space-y-4">
+                {SLEEP_NIGHTS.map((x, i) => (
+                  <div key={x.n}>
+                    <div className="flex items-baseline justify-between gap-4">
+                      <span className="text-[13px] font-semibold text-white">{x.n}</span>
+                      <span
+                        className="text-[13.5px] font-semibold tabular-nums"
+                        style={{ color: x.pct >= 48 ? "#7BE0A8" : "#F0B183" }}
+                      >
+                        {x.hrs}
+                      </span>
+                    </div>
+                    <div className="relative mt-1.5 h-2 rounded-full bg-white/15 overflow-hidden">
+                      {/* the four-hour threshold, at 48% of an eight-hour night */}
+                      <span aria-hidden className="absolute inset-y-0 left-[48%] w-[2px] bg-white/45 z-10" />
+                      <motion.div
+                        className="h-full rounded-full"
+                        style={{ background: x.pct >= 48 ? "#4ECB8B" : "#E8A06A" }}
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${x.pct}%` }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, delay: 0.25 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                      />
+                    </div>
+                    <p className={`text-[12.5px] leading-[1.5] mt-1.5 mb-0 ${x.call ? "text-[#9EC1FF] font-semibold" : "text-white/60"}`}>
+                      {x.note}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <p className="text-[12.5px] text-white/60 mt-6 mb-0 pt-5 border-t border-white/15">
+                The week is written to the chart, attributed to the treating clinician.
+              </p>
+
+              <span className="inline-flex items-center gap-2 bg-white text-[#0A1633] text-[14px] font-semibold px-5 py-2.5 rounded-full mt-5">
+                <Check className="w-3.5 h-3.5 text-[#2F8F6B]" strokeWidth={3.2} />
+                Review and attest
+              </span>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 // ── §3 How it works: the care coordination loop ──────────────────────────────
 // From Matteo's HTML mock (2026-08-13), replacing the imported LoopDiagram. The
 // point of this version is the WHO on every step: each beat says what HANA does
@@ -2559,17 +2946,17 @@ const LOOP_LEFT: LoopStep[] = [
         Hana calls · <b className="text-[#0A1633]">you set the protocol</b>
       </>
     ),
-    body: "From your number, until they answer. Then twenty minutes on medications, symptoms and what changed.",
+    body: "It calls from your number until someone picks up. Then medications, symptoms, and what changed.",
   },
   {
     n: "2",
     name: "Flag",
     role: (
       <>
-        Hana routes · <b className="text-[#0A1633]">your nurse decides</b>
+        Hana routes · <b className="text-[#0A1633]">your team decides</b>
       </>
     ),
-    body: "Anything clinical goes to your nurse, with the reason and the transcript attached.",
+    body: "Anything clinical goes to your team, with the reason and the transcript attached.",
   },
 ];
 
@@ -2582,7 +2969,7 @@ const LOOP_RIGHT: LoopStep[] = [
         <b className="text-[#0A1633]">Your clinician reviews</b> · Hana writes
       </>
     ),
-    body: "Time, note and care plan revision, in the chart, under that patient, not in a spreadsheet.",
+    body: "The note is in the chart before your team opens it. Under that patient, not in a spreadsheet.",
   },
   {
     n: "4",
@@ -2592,7 +2979,7 @@ const LOOP_RIGHT: LoopStep[] = [
         <b className="text-[#0A1633]">You submit</b> · Hana supplies the evidence
       </>
     ),
-    body: "The month's documentation per patient, every minute attributed to the clinician who supplied it, ready to attest on the first.",
+    body: "Every minute attributed to the person who earned it, ready to attest on the first.",
   },
 ];
 
@@ -2606,6 +2993,30 @@ const LOOP_DUR = "10s";
    them, as keyTimes [riseStart, peak, fadeEnd]. The path runs centre → left-top
    → left-bottom → centre → right-top → right-bottom → centre, so the four nodes
    sit at roughly 12%, 37%, 62% and 87% of the loop. */
+// The arithmetic under the loop. Published range for coordinator time per
+// patient per month, the caseload it caps at, and where HANA is built to take it.
+// Order matters: minutes, then caseload.
+const LOOP_MATH = [
+  {
+    v: "45-60",
+    suf: "min",
+    label: "per patient, per month, today",
+    body: "What a coordinator spends on one enrolled patient when the calling, the chasing and the note are all done by hand.",
+  },
+  {
+    v: "120-160",
+    suf: "",
+    label: "the caseload that caps at",
+    body: "Which is why most programs stall well short of what the panel could support.",
+  },
+  {
+    v: "29",
+    suf: "min",
+    label: "what HANA is built for",
+    body: "Same coordinator, same hours, toward 250 patients. HANA makes the calls; your team reviews and attests.",
+  },
+];
+
 const LOOP_NODES = [
   {
     name: "reach",
@@ -2685,17 +3096,14 @@ function HowItWorksLoop() {
         <motion.div {...fadeUp} className="text-center">
           <p className={`${eyebrow} text-[#2563EB] mt-0 mb-6`}>How it works</p>
           <h2 className="font-serif font-normal text-[34px] sm:text-[44px] md:text-[52px] leading-[1.08] tracking-[-0.015em] text-[#0A1633] m-0">
-            Reach. Flag. Document. Bill.
+            Forty-five minutes a patient.
             <br />
-            <em className="text-[#2563EB]">Every month.</em>
+            <em className="text-[#2563EB]">We take it under thirty.</em>
           </h2>
           <p className="text-[17px] leading-[1.62] text-slate-600 max-w-[600px] mx-auto mt-6 mb-0">
-            This is your care coordination loop. HANA runs the part your team has no hours for, and
-            hands the rest to your clinician.
+            One coordinator. Same hours. Two hundred and fifty patients instead of a hundred and fifty.
           </p>
-          <p className="text-[15.5px] leading-[1.6] text-slate-500 max-w-[520px] mx-auto mt-3.5 mb-0">
-            Reaching the patient is the step that fails. It's the step HANA doesn't stop at.
-          </p>
+
         </motion.div>
 
         {/* the loop */}
@@ -2787,8 +3195,37 @@ function HowItWorksLoop() {
 
         <motion.p {...fadeUp} className="max-w-[820px] mx-auto mt-16 mb-0 text-center text-[14.5px] leading-[1.6] text-slate-500">
           <b className="font-medium text-slate-600">You set the escalation rules.</b> A person on
-          every clinical flag, a full audit trail on every call, and the minutes totalled per
-          patient rather than per program.
+          every clinical flag, an audit trail on every call, minutes totalled per patient.
+        </motion.p>
+
+        {/* The arithmetic, folded in here rather than given its own section
+            (Matteo 2026-08-25). Minutes first and caseload second, never caseload
+            alone, because a competitor already claims 250. */}
+        <motion.div
+          {...fadeUp}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="mt-14 md:mt-16 pt-12 border-t border-slate-200 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 text-center"
+        >
+          {LOOP_MATH.map((m) => (
+            <div key={m.label}>
+              <p className="font-serif font-normal text-[44px] md:text-[54px] leading-none text-[#0A1633] m-0">
+                {m.v}
+                <span className="text-[#2563EB] text-[0.4em] align-super ml-1">{m.suf}</span>
+              </p>
+              <p className="text-[15px] font-semibold text-[#0A1633] mt-4 mb-1.5">{m.label}</p>
+              <p className="text-[14px] leading-[1.6] text-slate-600 m-0 max-w-[30ch] mx-auto">{m.body}</p>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* The human step. The brief says this one never gets cut for length. */}
+        <motion.p
+          {...fadeUp}
+          transition={{ duration: 0.5, delay: 0.16 }}
+          className="text-[17px] leading-[1.6] text-[#0A1633] mt-12 mb-0 max-w-[62ch] mx-auto text-center"
+        >
+          Your team reviews it. Your provider signs it.{" "}
+          <b className="font-semibold">Nothing is billed until a person on your team approves it.</b>
         </motion.p>
       </div>
     </section>
@@ -2802,20 +3239,23 @@ function HowItWorksLoop() {
 //   - CY2027 cell on the HANA card rewritten from "Software is explicitly
 //     permitted" (unverified clause) to the defensible mechanism; every 2027
 //     mention stays "proposed" until the final rule (~Nov 2026).
-//   - "Agentic care coordination" keeps the category noun away from "software".
+//   - "AI care coordination" keeps the category noun away from "software", and
+//     drops "agentic" (deprecated in the brand architecture, and the Site Build
+//     Brief is explicit that the behaviour goes on the site and the label does
+//     not). Matteo 2026-08-25: the AI has to stay visible, only the buzzword goes.
 
 const CMP_OUTSOURCED_POINTS = [
-  "Capacity capped by whatever staff they can hire",
-  "$20–30 per patient per month, the price their own market set",
+  "They do the calling. You pay for their hours.",
+  "Capacity capped by whoever they can hire",
   "Notes handed back to you, not written in your chart",
-  "Proposed CY2027 rule would ban non-employee staff from furnishing RPM and RTM",
+  "From January, Medicare may not pay you back for them",
 ];
 
 const CMP_HANA_POINTS = [
-  "Makes every call itself, in 30+ languages",
-  "85% of patients reached weekly, against a 15–20% benchmark",
-  "Structured note written to your EHR, ready for your clinician to attest",
-  "Unaffected by the proposed CY2027 rule: HANA isn't clinical staff",
+  "It dials, it listens, it writes the note",
+  "Every patient, every month, in 30+ languages",
+  "The note lands in your chart, ready to sign",
+  "Not clinical staff, so the proposed CY2027 rule leaves it standing",
 ];
 
 function WhatIsHanaCompare() {
@@ -2825,12 +3265,13 @@ function WhatIsHanaCompare() {
         {/* Retell-style header: heading left, one-liner right */}
         <motion.div {...fadeUp} className="md:flex md:items-start md:justify-between md:gap-12 mb-10 md:mb-14">
           <h2 className="font-serif font-normal text-[36px] sm:text-[44px] md:text-[52px] leading-[1.05] tracking-[-0.015em] text-[#00122F] m-0">
-            What is <em className="text-[#5b76d9]">Hana</em>?
+            Three ways to run care management.
+            <br />
+            <em className="text-[#5b76d9]">One of them makes the calls.</em>
           </h2>
-          <p className="text-[16px] md:text-[17px] leading-[1.55] text-slate-600 md:max-w-[380px] mt-5 md:mt-2 mb-0">
-            Every option here costs money and takes work to run. Only one of them actually picks
-            up the phone and talks to your patient.
-          </p>
+          {/* The "only one of them actually picks up the phone" one-liner came out
+              here (Matteo 2026-08-25): the HANA card's first bullet already says
+              it, so the header was making the point twice. */}
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -2840,7 +3281,7 @@ function WhatIsHanaCompare() {
             transition={{ duration: 0.5, delay: 0.05 }}
             className="rounded-xl bg-[#f6f7fb] p-8 md:p-9 flex flex-col md:min-h-[620px]"
           >
-            <p className="text-[13px] font-semibold text-[#00122F] m-0">Another solution</p>
+            <p className="text-[13px] font-semibold text-[#00122F] m-0">One way</p>
             <div className="h-10 md:h-[220px]" aria-hidden />
             <h3 className="font-serif font-normal text-[26px] md:text-[28px] leading-[1.2] text-[#00122F] m-0">
               Care management software
@@ -2857,13 +3298,13 @@ function WhatIsHanaCompare() {
             transition={{ duration: 0.5, delay: 0.13 }}
             className="rounded-xl bg-[#f6f7fb] p-8 md:p-9 flex flex-col md:min-h-[620px]"
           >
-            <p className="text-[13px] font-semibold text-[#00122F] m-0">Another solution</p>
+            <p className="text-[13px] font-semibold text-[#00122F] m-0">Another way</p>
             <div className="h-10 md:h-[220px]" aria-hidden />
             <h3 className="font-serif font-normal text-[26px] md:text-[28px] leading-[1.2] text-[#00122F] m-0">
               Outsourced care management
             </h3>
             <p className="text-[16px] leading-[1.5] text-[#00122F] mt-6 mb-0">
-              Based on contracted nurses and staffing agencies
+              Based on contracted staff and staffing agencies
             </p>
             <ul className="list-none p-0 mt-5 mb-0 space-y-4">
               {CMP_OUTSOURCED_POINTS.map((p) => (
@@ -2881,10 +3322,10 @@ function WhatIsHanaCompare() {
             transition={{ duration: 0.5, delay: 0.21 }}
             className="rounded-xl bg-[#00122F] p-8 md:p-9 flex flex-col md:min-h-[620px] shadow-[0_28px_70px_-26px_rgba(0,18,47,0.55)]"
           >
-            <p className="text-[13px] font-semibold text-white m-0">Our solution</p>
+            <p className="text-[13px] font-semibold text-white m-0">Our way</p>
             <div className="h-10 md:h-[220px]" aria-hidden />
             <h3 className="font-serif font-normal text-[26px] md:text-[28px] leading-[1.2] text-white m-0">
-              Agentic care coordination
+              AI care coordination
             </h3>
             <p className="text-[16px] leading-[1.5] text-white/90 mt-6 mb-0">
               Based on clinician-built protocols
@@ -2900,15 +3341,10 @@ function WhatIsHanaCompare() {
           </motion.div>
         </div>
 
-        <motion.p
-          {...fadeUp}
-          className="font-serif text-[22px] md:text-[28px] leading-[1.42] text-[#00122F] text-center max-w-[780px] mx-auto mt-14 md:mt-[62px] mb-0"
-        >
-          Hana is the only one that does the calling <em className="text-[#5b76d9]">and</em> hands
-          your clinician a note ready to sign.
-        </motion.p>
-        <motion.p {...fadeUp} className="text-[13px] text-slate-500 text-center mt-6 mb-0">
-          Your care team keeps the relationship, the judgment and the signature. Hana does the dialing.
+        {/* The "only one that does the calling" line came out 2026-09-02: the
+            headline says it now, and the cards prove it. This is the keeper. */}
+        <motion.p {...fadeUp} className="text-[15px] leading-[1.6] text-slate-600 text-center mt-10 mb-0 max-w-[62ch] mx-auto">
+          Your team keeps the relationship, the judgment and the signature. HANA does the dialing.
         </motion.p>
       </div>
     </section>
@@ -2923,6 +3359,14 @@ function WhatIsHanaCompare() {
 // with a blue/violet cast and a warm glow, approximating the reference's
 // blurred-silhouette look. No subline (removed per Matteo 2026-08-12); the hero
 // keeps "Built by clinicians. Supervised by yours." alongside this section.
+// The three clinicians in the headline. Order is left to right; `pos` is the
+// crop focus once the real photo lands.
+const BUILT_BY_FACES = [
+  { src: "/avatars/archie.jpg", pos: "50% 25%" },
+  { src: "/avatars/fakhrudin.png", pos: "50% 20%" },
+  { src: "/avatars/matteo.jpg", pos: "50% 25%" },
+];
+
 function BuiltByClinicians() {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
@@ -2940,38 +3384,40 @@ function BuiltByClinicians() {
         <h2 className="font-serif font-normal text-[#00122F] leading-[1.04] tracking-[-0.02em] m-0 text-[48px] sm:text-[80px] md:text-[112px]">
           <span className="flex items-center justify-center gap-[0.35em] whitespace-nowrap">
             <motion.span style={{ x: xLeft, opacity }} className="inline-block">Built</motion.span>
+            {/* Three overlapping faces (Matteo 2026-08-25, mock A "recommended"):
+                the claim and its proof in the same line. Round crops, tight
+                overlap, sized to the cap height so the line still reads as type.
+                Each circle carries a drawn silhouette and, layered over it, a
+                photo that appears when its file lands in /public/avatars —
+                fakhrudin.png exists today, archie.jpg and matteo.jpg are pending
+                (same lazy-photo pattern as the team section). */}
             <motion.span
               aria-hidden
               style={{ scale: chipScale, opacity }}
-              className="relative inline-block w-[1.1em] h-[1.1em] rounded-[0.16em] overflow-hidden shrink-0 shadow-[0_12px_40px_rgba(0,18,47,0.22)]"
+              className="relative inline-flex items-center shrink-0 h-[1.06em]"
             >
-              {/* luminous blue chip with a warm aurora glow; the blurred photo
-                  sits on top at low opacity only to hint a figure (reference look) */}
-              <span
-                className="absolute inset-0"
-                style={{ background: "linear-gradient(150deg, #2a55c0 0%, #16336f 55%, #0d2150 100%)" }}
-              />
-              <span
-                className="absolute inset-0"
-                style={{
-                  background: "radial-gradient(40% 40% at 25% 18%, rgba(120,170,255,0.55) 0%, transparent 70%)",
-                  mixBlendMode: "screen",
-                }}
-              />
-              <span
-                className="absolute inset-0"
-                style={{
-                  background: "radial-gradient(58% 56% at 68% 45%, rgba(255,160,115,0.95) 0%, rgba(235,120,170,0.45) 50%, transparent 76%)",
-                  mixBlendMode: "screen",
-                }}
-              />
-              <img
-                src="/products/remote-patient-call.webp"
-                alt=""
-                className="absolute inset-0 w-full h-full object-cover blur-[10px] scale-125 opacity-40"
-                style={{ mixBlendMode: "soft-light" }}
-                loading="lazy"
-              />
+              {BUILT_BY_FACES.map((f, i) => (
+                <span
+                  key={f.src}
+                  className="relative inline-block w-[1.06em] h-[1.06em] rounded-full overflow-hidden ring-[0.045em] ring-white shadow-[0_10px_30px_rgba(0,18,47,0.20)]"
+                  style={{ marginLeft: i === 0 ? 0 : "-0.38em", zIndex: 3 - i, background: "#DFE8F8" }}
+                >
+                  {/* the silhouette, always there */}
+                  <svg viewBox="0 0 40 40" className="absolute inset-0 w-full h-full">
+                    <circle cx="20" cy="15" r="7" fill="#8FA8D8" />
+                    <path d="M6 38c1.8-8.3 7.4-12.5 14-12.5S32.2 29.7 34 38Z" fill="#8FA8D8" />
+                  </svg>
+                  {/* the photo, when its file exists */}
+                  <img
+                    src={f.src}
+                    alt=""
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover"
+                    style={{ objectPosition: f.pos }}
+                    onError={(e) => { e.currentTarget.style.display = "none"; }}
+                  />
+                </span>
+              ))}
             </motion.span>
             <motion.span style={{ x: xRight, opacity }} className="inline-block">by</motion.span>
           </span>
@@ -3189,7 +3635,7 @@ function SleepCalculator() {
           {field("Reimbursement per adherent patient", perPatient, setPerPatient, { min: 500, max: 3000, step: 100, prefix: "$" })}
         </div>
         <p className="text-[12px] text-slate-500 mt-5 leading-[1.6]">
-          Estimates only, for illustration. Assumes HANA Remote brings non-adherence to ~22%, its
+          Estimates only, for illustration. Assumes HANA brings non-adherence to ~22%, its
           production figure. 46–83% of new CPAP patients fail Medicare's 90-day threshold today.{" "}
           <a href={DEMO_URL} target="_blank" rel="noopener noreferrer" className="text-[#5b76d9] underline">Get a tailored assessment →</a>
         </p>
@@ -3379,13 +3825,16 @@ export function RemoteV2({
   handleEndWebCall,
 }: RemoteV2Props) {
   return (
-    <div className="bg-white text-[#00122F] font-sans overflow-x-hidden">
+    <div className="cobalt bg-white text-[#00122F] font-sans overflow-x-hidden">
       <SEO
-        title="HANA Remote · Draft"
+        title="HANA · Draft"
         useExactTitle
         path="/remote-v2"
         robots="noindex, nofollow"
       />
+
+      {/* §0 ANNOUNCEMENT — above everything (Matteo 2026-09-02) */}
+      <AnnouncementBar />
 
       {/* §1 HERO — Federato-style split: claim left, motion graphic right */}
       <HeroCareJourney />
@@ -3394,59 +3843,55 @@ export function RemoteV2({
           replaces the WhyHana channel bars, which are one import away if wanted back */}
       <WhatIsHanaCompare />
 
-      {/* §2b REACHED-BY-CHANNEL — the 85% column, imported from Home. Header
-          overridden so the page doesn't carry two "What is Hana?" headings. */}
-      <WhyHana
-        eyebrow="The proof"
-        heading={
-          <>
-            They don't answer apps. <span className="italic text-[#2563EB]">They answer HANA.</span>
-          </>
-        }
-        sub="Share of patients actually reached, by channel. Legacy systems wait for the patient to act, and most never do. HANA reaches out, and the conversation finishes."
-      />
-
-      {/* §3 HOW IT WORKS — the care coordination loop, with who-does-what on every
-          step (replaced the imported LoopDiagram, whose Read/Reason/Engage/Write-Back
-          stations didn't carry the practice-vs-HANA split) */}
-      <HowItWorksLoop />
-
-      {/* §4 ECONOMICS — the coordinator math (replaces "cost of doing nothing") */}
-      <EconomicsSection />
-
-      {/* §4b THE CALL LIST — the coordinator math, played out */}
-      <CallListSim />
-
-      {/* §5 TALK TO HANA — the live call, framed as a photo banner (replaced the
-          imported LiveDemoSection; same Vapi squad, so the call behaves the same) */}
-      <TalkToHanaBanner
-        activeAgentId={activeAgentId}
-        webCallStatus={webCallStatus}
-        handleStartWebCall={handleStartWebCall}
-        handleEndWebCall={handleEndWebCall}
-      />
-
-      {/* §5b BUILT BY CLINICIANS — giant inline-image statement (from reference) */}
-      <BuiltByClinicians />
-
-      {/* §6 PROOF — the bento, kept as-is structurally (Matteo 2026-08-12: keep the
+      {/* §2c PROOF — directly under What is Hana? (Matteo 2026-08-25) — the bento, kept as-is structurally (Matteo 2026-08-12: keep the
           same structure) but rendered in `soft` mode: gradient tiles instead of the
           navy checkerboard, and the decorative doodles dropped. */}
       <div className={homeTitleFixLight}>
         <ProofBento soft compact />
       </div>
 
-      {/* §7 was the standalone care-journey section — it graduated to the hero
-          (§1) on 2026-08-12, so nothing renders here now. */}
 
-      {/* §8 COMPASS — the care team's side */}
+      {/* §3 HOW IT WORKS — the care coordination loop, with who-does-what on every
+          step (replaced the imported LoopDiagram, whose Read/Reason/Engage/Write-Back
+          stations didn't carry the practice-vs-HANA split) */}
+      <HowItWorksLoop />
+
+      {/* §3c was the 85% reached-by-channel column. Pulled 2026-08-19 (call):
+          §2's three-way comparison already does the comparing, and comparing
+          channels is a HANA Contact argument. The import is one line away in
+          ../components/WhyHana if it comes back. */}
+
+      {/* §4 and §4b were the coordinator math and the Monday-morning call list.
+          Both pulled 2026-08-19 (call): the page ran too long, and the animated
+          call list asked the reader to click through something they won't. The
+          2.3x number survives in the §13 numbers band. EconomicsSection and
+          CallListSim are still in this file, unmounted, for a separate page. */}
+
+      {/* §5 TALK TO HANA — the same headline and the same working form, on the
+          sonic-waveform canvas (Matteo 2026-08-20, variant 10a from the lab).
+          The form is not a copy: SonicDemoSection renders Home's LiveDemoSection
+          in `bare` mode, so validation, endpoints, the callback flow and the Vapi
+          handlers are the same code Home runs. */}
+      <SonicDemoSection
+        activeAgentId={activeAgentId}
+        webCallStatus={webCallStatus}
+        handleStartWebCall={handleStartWebCall}
+        handleEndWebCall={handleEndWebCall}
+      />
+
+      {/* §6 COMPASS — the care team's side */}
       <section className="bg-white text-[#0A1633] py-24 md:py-32 px-6 md:px-16">
         <div className="max-w-[1200px] mx-auto">
           <CompassShowcase />
         </div>
       </section>
 
-      {/* §9 THE PATIENT COMPANION — the patient's side (Retell accordion pattern
+      {/* §7 BUILT BY CLINICIANS — giant inline-image statement. Sits between the
+          two product views (Matteo 2026-08-20): Compass is what your team gets,
+          the statement, then what the patient gets. */}
+      <BuiltByClinicians />
+
+      {/* §8 THE PATIENT COMPANION — the patient's side (Retell accordion pattern
           + Remotion, twin of §8 Compass; replaced PatientAgentSection, which is
           kept below for revert) */}
       <section className="bg-white py-24 md:py-32 px-6 md:px-16">
@@ -3455,13 +3900,31 @@ export function RemoteV2({
         </div>
       </section>
 
-      {/* §10 THE PROGRAMS — workflow marquee */}
+      {/* §9 THE PROGRAMS — the moving cards, badged by billable program
+          (Matteo 2026-08-20, brought over from /remote-lab and placed directly
+          under the patient companion). Chips read CCM / APCM / BHI / RTM. `tags`
+          is still passed so an Italian visitor keeps the filtered Italian
+          recipes, because PROGRAM_CARDS is US Medicare and English only.
+          ProgramsStack, the scannable accordion version, is still in
+          components/remote and is a one-line swap. */}
       <RecipesMarquee
-        tags={PROGRAM_WORKFLOW_TAGS}
-        tag="The programs"
-        heading="Every program. The same phone call."
-        body="RPM, RTM, chronic and behavioral care, post-op. Every reimbursable program runs as a built-in call workflow, documented to the chart for attestation. Tap any card to see the steps."
+        soft
+        items={PROGRAM_CARDS}
+        tags={CARE_COORDINATION_TAGS}
+        tag="Programs"
+        heading="Every program is a phone call somebody has to make."
+        body="Any program where the same patient needs a call next month. CCM, APCM, BHI, RTM, RPM, the ACCESS Model. Different rules, same phone call. Tap any card to see the steps it runs."
       />
+
+      {/* §9a THE MONTH, ALREADY WRITTEN UP — what a program month produces:
+          the time log is full before the clinician starts their own clock
+          (Matteo 2026-08-20: below the programs). */}
+      <SleepNoteBeforeTime />
+
+      {/* §10a2 GETTING LIVE — onboarding and the academy (Matteo + Dr Mohamed,
+          2026-08-25). The answer to "my staff has no bandwidth", which is the
+          objection that sells the staffing model CY2027 is closing. */}
+      <GetYouLive />
 
       {/* §10b INTEGRATIONS — EHR logos orbiting the HANA core. Replaced the phone
           carousel version ("The phone they have. The chart you use."), which is
@@ -3474,9 +3937,8 @@ export function RemoteV2({
               It lands in the chart <em className="text-[#2563EB]">you already use.</em>
             </h2>
             <p className="text-[17px] leading-[1.7] text-slate-600 max-w-[54ch] mx-auto mt-5 mb-0">
-              150+ EHR integrations, plus an API and webhooks where you'd rather build the
-              connection yourself. The structured note is written the moment the call ends,
-              attributed to the clinician who owns the patient.
+              Your EHR. Your phone system. Nothing to rip out. The note is written the moment the
+              call ends, attributed to whoever owns the patient.
             </p>
           </motion.div>
         </div>
@@ -3485,61 +3947,30 @@ export function RemoteV2({
         </motion.div>
       </section>
 
-      {/* §11 PATIENT ENGAGEMENT — "Every patient conversation, handled" (from Home) */}
-      <div className={homeTitleFixLight}>
-        <PatientEngagement white />
-      </div>
+      {/* §11 was Home's "Every patient conversation, handled". Pulled 2026-08-19
+          (call): §9's patient companion makes the same argument with the phone
+          mockup, so this was the duplicate. PatientEngagement import removed. */}
 
-      {/* §12 CALCULATOR — sleep/CPAP recovery. OPEN DECISION: keep here, move to
-          /hana-sleep, or rebuild as a CCM coordinator calculator. */}
-      <section className="py-24 md:py-32 px-6 md:px-16 bg-white">
-        <div className="max-w-[1200px] mx-auto">
-          <motion.div {...fadeUp} className="text-center mb-12 md:mb-16">
-            <p className={`${eyebrow} text-[#5b76d9] mt-0 mb-4`}>The adherence math</p>
-            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch] text-[#00122F]">
-              Non-adherence has a price. <em className="text-[#5b76d9]">Here's yours.</em>
-            </h2>
-            <p className="text-[17px] leading-[1.7] text-slate-600 max-w-[52ch] mx-auto mt-4">
-              Run the numbers for a sleep or DME program. The sharpest case for the device-free model.
-            </p>
-          </motion.div>
-          <SleepCalculator />
-        </div>
-      </section>
+      {/* §7 was the standalone care-journey section — it graduated to the hero
+          (§1) on 2026-08-12, so nothing renders here now. */}
 
-      {/* §13 THE NUMBERS — 85%-vs-apps row removed (§2 owns the engagement stat) */}
-      <section className="py-24 md:py-32 px-6 md:px-16 bg-white">
-        <div className="max-w-[1200px] mx-auto">
-          <motion.div {...fadeUp}>
-            <p className={`${eyebrow} text-[#5b76d9] mt-0 mb-3`}>By the numbers</p>
-            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.05] mt-0 mb-10 md:mb-[52px] max-w-[22ch] text-[#00122F]">
-              Engagement you can bill against.
-            </h2>
-          </motion.div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <motion.div {...fadeUp}>
-              <RDeltaStat big="22" suffix="%" label="CPAP non-adherence, in production" rows={[{ k: "Before", pct: 50, v: "50%" }, { k: "HANA", pct: 22, v: "22%", hi: true }]} />
-            </motion.div>
-            <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.06 }}>
-              <RDeltaStat big="85" suffix="%" label="CPAP adherence after 12 months on program" rows={[{ k: "Month 1", pct: 38, v: "38%" }, { k: "Month 12", pct: 85, v: "85%", hi: true }]} />
-            </motion.div>
-            <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.12 }}>
-              <RDeltaStat big="2.3" suffix="×" label="More patients per care coordinator" rows={[{ k: "Baseline", pct: 43, v: "1×" }, { k: "With HANA", pct: 100, v: "2.3×", hi: true }]} />
-            </motion.div>
-          </div>
-          <motion.div {...fadeUp} className="flex flex-wrap gap-2.5 mt-10">
-            {["$1.4K recovered per patient", "150+ EHR integrations", "45+ clinical protocols", "4M+ patient interactions"].map((c) => (
-              <span key={c} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200 text-[13px] font-medium text-[#00122F]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#5b76d9]" aria-hidden="true" />
-                {c}
-              </span>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+      {/* §12 was the sleep/DME adherence calculator. Pulled 2026-08-19 (call):
+          it is sleep economics on a care-coordination page, and it is being
+          replaced by a multi-step interactive calculator on its own page. The
+          SleepCalculator component is still in this file, unmounted. */}
 
-      {/* §14 AUDIT — billing trust */}
-      <AuditSection />
+      {/* §13 was the numbers band, "Engagement you can bill against" (22% / 85%
+          / 2.3x). Pulled 2026-08-20. RDeltaStat is still in this file, and the
+          surviving numeric proof on the page is the §11 bento. */}
+
+      {/* §13b was the HANA Sleep hand-off band. Pulled 2026-08-20. SleepBand is
+          in components/remote and is a one-line re-add. NOTE: §9's "written up
+          before you start your time" is still badged HANA Sleep, so it is now
+          the only sleep-flavoured section on the page. */}
+
+      {/* §14 was the audit-proof section, "Built for the audit you'll eventually
+          get". Pulled 2026-08-20. AuditSection is still in this file; the FAQ
+          carries the CY2027 answer. */}
 
       {/* §15 SAFETY — clinical trust after billing trust. Imported from Home as-is:
           SafetyStack is dark by design (white type on translucent glass panels
@@ -3547,10 +3978,20 @@ export function RemoteV2({
           A light variant would mean rewriting its whole palette. */}
       <SafetyStack light />
 
+      {/* §15b OUR TEAM — moved under Security & Safety (Matteo 2026-08-25) — the credential behind Built by clinicians, which now
+          sits up at §3b. Say the word and the roster follows it up there. */}
+      <TeamSection />
+
+
       {/* §16a HOW WE START — pulled 2026-08-12 for the same reason as SafetyStack:
           InlineImageHeader is dark by design (its three step animations are white
           artwork on navy, so they wash out on a light ground). It now takes a
           `light` prop, but the artwork needs recoloring before it can come back. */}
+
+      {/* §15b COMPLIANCE — the credentials view, imported from Home as-is
+          (Matteo 2026-08-20). Sits right after SafetyStack, same pairing as Home:
+          the defense-in-depth argument, then the certifications behind it. */}
+      <ComplianceSection white />
 
       {/* §16b FAQ */}
       <section className="py-24 md:py-32 px-6 md:px-16 bg-white">
@@ -3569,14 +4010,21 @@ export function RemoteV2({
         </div>
       </section>
 
+      {/* §16b2 FROM THE BLOG and ASK AI — imported from Home as-is
+          (Matteo 2026-08-20), in Home's order: the three most recent posts, then
+          the ask-AI box, then the closing CTA. */}
+      <LatestPosts />
+
+      <AskAiAboutUs className="py-12 md:py-16" />
+
       {/* §16c CTA */}
       <section className="bg-white text-[#0A1633] py-28 md:py-32 px-6 md:px-16 text-center relative overflow-hidden">
         <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-[#2563EB]/[0.12] w-[520px] h-[520px] -bottom-[180px] pointer-events-none" />
         <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-[#2563EB]/[0.12] w-[340px] h-[340px] -bottom-[110px] pointer-events-none" />
         <motion.div {...fadeUp} className="relative">
-          <p className={`${eyebrow} text-[#2563EB] mt-0 mb-6`}>Ready to run a monitoring program that actually works?</p>
+          <p className={`${eyebrow} text-[#2563EB] mt-0 mb-6`}>See it on your own patients.</p>
           <h2 className="font-serif font-normal text-[40px] sm:text-[52px] md:text-[60px] leading-[1.04] mx-auto mb-8 max-w-[16ch]">
-            Book a demo. <em>Live in days.</em>
+            Book a demo.
           </h2>
           <a
             href={DEMO_URL}
@@ -3587,7 +4035,7 @@ export function RemoteV2({
             Book a demo →
           </a>
           <div className="flex flex-wrap items-center justify-center gap-2.5 mt-8">
-            {["No devices to ship", "No app to download", "Audit-ready from day one", "Live in your EHR in days"].map((t) => (
+            {["No devices to ship", "No app to download", "Audit-ready from day one", "Runs in the EHR you already use"].map((t) => (
               <span key={t} className="inline-flex items-center gap-1.5 text-[13px] font-medium text-[#0A1633] bg-white border border-slate-200 rounded-full px-3.5 py-1.5">
                 <Check className="w-3.5 h-3.5 text-[#2563EB]" strokeWidth={3} /> {t}
               </span>

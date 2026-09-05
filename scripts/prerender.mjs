@@ -32,6 +32,7 @@ import {
   injectHead,
   buildSitemap,
   stripFallbackNoscript,
+  verifyAndFixHead,
   fullTitle,
   DEFAULT_TITLE,
   DEFAULT_DESCRIPTION,
@@ -39,6 +40,8 @@ import {
   IT_DOMAIN,
   STATIC_ROUTES,
   EN_ONLY_ROUTES,
+  NOINDEX_ROUTES,
+  checkRouteCoverage,
 } from './lib/route-seo.mjs';
 import { staticRouteLastmod } from './lib/git-lastmod.mjs';
 import { readManifest } from './lastmod.mjs';
@@ -61,12 +64,31 @@ const PORT = 4178;
  * using the same "ita." test as src/lib/i18n.ts detectLocale().
  */
 const PROJECT_HOST = process.env.VERCEL_PROJECT_PRODUCTION_URL || '';
-const LOCALE =
+const EXPLICIT_LOCALE =
   process.env.SITE_LOCALE === 'it' || process.env.SITE_LOCALE === 'en'
     ? process.env.SITE_LOCALE
-    : PROJECT_HOST.startsWith('ita.') || PROJECT_HOST.includes('hanafigmasite-ita')
-      ? 'it'
-      : 'en';
+    : null;
+
+// Getting this wrong is silent and expensive: falling back to 'en' on the Italian
+// project bakes https://www.hana.health canonicals onto every Italian page, which
+// tells Google the whole Italian site is a duplicate of the English one. The
+// inference below reads VERCEL_PROJECT_PRODUCTION_URL, which Vercel injects during
+// a normal build — but NOT when the build output is produced elsewhere and shipped
+// with `vercel deploy --prebuilt`. In that case the variable is empty and we would
+// quietly choose 'en'. On a Vercel production build, refuse instead of guessing.
+if (!EXPLICIT_LOCALE && !PROJECT_HOST && process.env.VERCEL_ENV === 'production') {
+  console.error(
+    '✗ Cannot determine the build locale.\n' +
+    '  VERCEL_PROJECT_PRODUCTION_URL is empty and SITE_LOCALE is not set, so this build\n' +
+    '  would default to English — which on the Italian project would point every\n' +
+    '  canonical at www.hana.health. Set SITE_LOCALE=en or SITE_LOCALE=it explicitly.'
+  );
+  process.exit(1);
+}
+
+const LOCALE =
+  EXPLICIT_LOCALE ??
+  (PROJECT_HOST.startsWith('ita.') || PROJECT_HOST.includes('hanafigmasite-ita') ? 'it' : 'en');
 const DOMAIN = LOCALE === 'it' ? IT_DOMAIN : EN_DOMAIN;
 // Hostname headless Chrome must appear to be on for detectLocale() to agree.
 const RENDER_HOST = LOCALE === 'it' ? 'ita.hana.health' : 'www.hana.health';
@@ -188,6 +210,9 @@ async function writeHeadOnly(routes, shell, cache) {
   let written = 0;
   const unknown = [];
   const indexable = [];
+  // The resolved metadata per route, handed to layer 2 so the rendered snapshot
+  // can be checked against it (see verifyAndFixHead).
+  const resolved = {};
   for (const route of routes) {
     let m = pageMeta[route];
 
@@ -206,13 +231,28 @@ async function writeHeadOnly(routes, shell, cache) {
     }
 
     if (!m) {
-      unknown.push(route);
-      m = { title: DEFAULT_TITLE, description: DEFAULT_DESCRIPTION, type: 'website', robots: 'index, follow' };
+      // Internal preview routes are expected to have no <SEO> block — don't warn
+      // about them, and don't let them inherit the homepage's generic title.
+      if (NOINDEX_ROUTES.includes(route)) {
+        m = { title: fullTitle(`Internal preview: ${route}`), description: DEFAULT_DESCRIPTION, type: 'website' };
+      } else {
+        unknown.push(route);
+        m = { title: DEFAULT_TITLE, description: DEFAULT_DESCRIPTION, type: 'website', robots: 'index, follow' };
+      }
     }
+
+    // Force noindex on the internal preview routes whatever the page declares.
+    // /preview already sets it via <SEO robots="noindex, nofollow">; /demo, /bento
+    // and /proof have no <SEO> at all and would otherwise default to index,follow.
+    // This is also what keeps them out of sitemap.xml (see `indexable` below).
+    if (NOINDEX_ROUTES.includes(route)) m = { ...m, robots: 'noindex, nofollow' };
+
+    const meta = { ...m, path: route, locale: LOCALE };
+    resolved[route] = meta;
 
     const file = routeToFile(route);
     await mkdir(dirname(file), { recursive: true });
-    await writeFile(file, injectHead(shell, { ...m, path: route, locale: LOCALE }), 'utf8');
+    await writeFile(file, injectHead(shell, meta), 'utf8');
     written++;
     if (!/noindex/i.test(m.robots || '')) indexable.push(route);
   }
@@ -231,6 +271,7 @@ async function writeHeadOnly(routes, shell, cache) {
     'utf8'
   );
   console.log(`▸ sitemap.xml written: ${indexable.length} URLs on ${DOMAIN}.`);
+  return resolved;
 }
 
 /** Launch headless Chrome, ignoring a stale PUPPETEER_EXECUTABLE_PATH. */
@@ -288,11 +329,22 @@ async function main() {
     process.exit(1);
   }
 
+  // Unknown paths now return a real 404 (vercel.json → api/not-found.ts), so a
+  // route that exists in App.tsx but is missing from the lists below is no longer
+  // a quiet SEO problem — it is a live page returning 404. Fail loudly instead.
+  const coverage = checkRouteCoverage(join(ROOT, 'src', 'app', 'App.tsx'));
+  if (coverage.length) {
+    console.error('✗ Route coverage check failed:\n' + coverage.map((p) => `  • ${p}`).join('\n'));
+    process.exit(1);
+  }
+
   console.log('▸ Prerender: collecting routes…');
   const { routes: blogRoutes, cache } = await getBlogDataOrFail();
   const staticRoutes =
     LOCALE === 'it' ? STATIC_ROUTES.filter((r) => !EN_ONLY_ROUTES.includes(r)) : STATIC_ROUTES;
-  const routes = [...staticRoutes, ...blogRoutes];
+  // Internal preview pages: prerendered so they keep answering 200, forced to
+  // noindex below so they never enter the index or the sitemap.
+  const routes = [...staticRoutes, ...NOINDEX_ROUTES, ...blogRoutes];
   console.log(`▸ ${routes.length} routes to prerender (locale: ${LOCALE}, ${DOMAIN}).`);
 
   // Layer 1: always, no browser. Read the shell first — later layer-2 writes
@@ -307,7 +359,7 @@ async function main() {
     );
     process.exit(1);
   }
-  await writeHeadOnly(routes, shell, cache);
+  const routeMeta = await writeHeadOnly(routes, shell, cache);
 
   // Serve the built dist with vite preview (SPA fallback to index.html).
   const server = await preview({
@@ -337,6 +389,7 @@ async function main() {
 
   let ok = 0;
   let failed = 0;
+  const headFixes = [];
   try {
     for (const route of routes) {
       const page = await browser.newPage();
@@ -395,6 +448,18 @@ async function main() {
         // fallback means the skeleton in hand is the homepage's, not this route's).
         html = stripFallbackNoscript(html);
 
+        // Never trust the snapshot's <head>. A page that renders no <SEO> block
+        // leaves the homepage's canonical and robots in place, because vite
+        // preview answers unknown paths with dist/index.html.
+        const { html: checked, fixed } = verifyAndFixHead(html, {
+          ...routeMeta[route],
+          homeTitle: routeMeta['/']?.title,
+        });
+        if (fixed.length) {
+          headFixes.push(`${route}: ${fixed.join('; ')}`);
+          html = checked;
+        }
+
         const file = routeToFile(route);
         await mkdir(dirname(file), { recursive: true });
         await writeFile(file, html, 'utf8');
@@ -413,6 +478,13 @@ async function main() {
   }
 
   console.log(`▸ Prerender complete: ${ok} rendered, ${failed} left at head-only.`);
+  if (headFixes.length) {
+    console.warn(
+      `  ⚠ repaired the <head> of ${headFixes.length} snapshot(s) that came back with the\n` +
+      '    wrong canonical/robots/title — usually a page with no <SEO> block:\n' +
+      headFixes.map((f) => `      • ${f}`).join('\n')
+    );
+  }
   // Layer 1 already wrote every route, so a partial layer 2 is a degradation, not
   // a broken build. Only a total failure means the browser path is misconfigured.
   if (ok === 0) {

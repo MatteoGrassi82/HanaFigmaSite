@@ -108,9 +108,9 @@ export function Contact() {
                   </div>
                   <div>
                     <h4 className="font-medium text-slate-900 dark:text-white mb-1">{t.contact.officeLabel}</h4>
-                    {/* TODO: insert real registered business address (needed as the GDPR/CCPA controller address) */}
                     <p className="text-slate-600 dark:text-slate-400">
                       {t.contact.officeCompany}<br />
+                      {t.contact.officeAddress}<br />
                       {t.contact.officeNote}
                     </p>
                   </div>

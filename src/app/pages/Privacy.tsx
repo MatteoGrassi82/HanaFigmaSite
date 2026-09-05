@@ -36,6 +36,9 @@ type Copy = {
   s4Lead: string;
   s4Items: React.ReactNode[];
   s4Note: string;
+  // Required near-verbatim by A2P 10DLC campaign review. Carriers check the
+  // live policy page for it; reword only if the campaign is re-registered.
+  s4Sms: string;
   s5Title: string;
   s5ColProvider: string;
   s5ColPurpose: string;
@@ -66,6 +69,10 @@ type Copy = {
   s13Body: React.ReactNode;
   s14Title: string;
   s14Body: React.ReactNode;
+  euRepTitle: string;
+  euRepBody: React.ReactNode;
+  discloseTitle: string;
+  discloseBody: React.ReactNode;
   gapiTitle: string;
   gapiIntro: React.ReactNode;
   gapiItems: React.ReactNode[];
@@ -76,8 +83,20 @@ type Copy = {
   s16Company: string;
   s16Privacy: string;
   s16General: string;
+  s16Security: string;
   s16Web: string;
 };
+
+/**
+ * GDPR Article 27 representative.
+ *
+ * Because hana.health is offered in Italian and targets EEA data subjects, HANA
+ * (a US controller with no EU establishment) must designate a representative in
+ * the Union and name it in this policy. Set this to the appointed firm once
+ * counsel confirms it; while it is null, Section 15 renders the direct-contact
+ * fallback instead of asserting a representative we have not appointed.
+ */
+const EU_REPRESENTATIVE: { name: string; address: string; email: string } | null = null;
 
 const strong = (children: React.ReactNode) => <strong className="text-[#1e2a3a]">{children}</strong>;
 const mail = (addr: string) => (
@@ -90,7 +109,7 @@ const COPY_EN: Copy = {
     "How HANA Health, Inc. collects, uses, discloses, and protects personal information of visitors to the hana.health website, including your privacy rights under GDPR and US state law.",
   eyebrow: "HANA Health, Inc.",
   title: "Privacy Policy",
-  dates: "Effective Date: 14 June 2026  |  Last Updated: 3 August 2026",
+  dates: "Effective Date: 14 June 2026  |  Last Updated: 14 August 2026",
   intro: (
     <>
       HANA Health, Inc. (&ldquo;HANA,&rdquo; &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) respects your privacy. This Privacy Policy describes how we collect, use, disclose, and safeguard personal information when you visit or interact with the {strong("hana.health")} website and related pages (collectively, the &ldquo;Site&rdquo;), and the privacy rights and choices available to you. By using the Site, you agree to this Privacy Policy.
@@ -143,6 +162,7 @@ const COPY_EN: Copy = {
     <>{strong("A successor entity")} in connection with a merger, acquisition, financing, or sale of assets, subject to this Privacy Policy.</>,
   ],
   s4Note: "See Section 8 regarding analytics “sharing” for cross-context behavioral advertising and your choices.",
+  s4Sms: "We will not share your opt-in to an SMS campaign with any third party for purposes unrelated to providing you with the services of that campaign. All of the categories above exclude text messaging originator opt-in data and consent; this information will not be shared with any third parties.",
   s5Title: "Service providers we use",
   s5ColProvider: "Provider",
   s5ColPurpose: "Purpose",
@@ -224,6 +244,22 @@ const COPY_EN: Copy = {
       The Site may link to third-party websites and services (for example, scheduling, documentation, or social media). We are not responsible for their privacy practices, and we encourage you to review their privacy notices.
     </>
   ),
+  euRepTitle: "EEA and UK representative",
+  euRepBody: EU_REPRESENTATIVE ? (
+    <>
+      HANA Health, Inc. has designated {strong(EU_REPRESENTATIVE.name)} as its representative in the European Union under Article 27 of the GDPR. Data subjects in the EEA may contact the representative on any matter relating to the processing of their personal information, at {EU_REPRESENTATIVE.address}, or by email at {mail(EU_REPRESENTATIVE.email)}. Contacting the representative does not affect your right to contact us directly at {mail("privacy@hana.health")}, or to lodge a complaint with your supervisory authority.
+    </>
+  ) : (
+    <>
+      HANA Health, Inc. is established in the United States. Data subjects in the EEA, the United Kingdom, and Switzerland may raise any matter relating to the processing of their personal information directly with us at {mail("privacy@hana.health")}, and we will respond within the timeframes set by the GDPR and UK GDPR. You may also lodge a complaint with your local supervisory authority. In Italy, this is the Garante per la protezione dei dati personali (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">garanteprivacy.it</a>); in the United Kingdom, the Information Commissioner&rsquo;s Office (<a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">ico.org.uk</a>).
+    </>
+  ),
+  discloseTitle: "Reporting a security or privacy issue",
+  discloseBody: (
+    <>
+      We welcome reports of suspected vulnerabilities and privacy issues, and we will not pursue legal action against researchers who report in good faith, act only against their own accounts or test data, avoid privacy violations and service degradation, and give us a reasonable period to remediate before disclosing publicly. Send reports to {mail("security@hana.health")}. Please include enough detail to reproduce the issue. We acknowledge reports within three business days. Do not include PHI or other sensitive personal data in a report.
+    </>
+  ),
   gapiTitle: "Google API Services & calendar data",
   gapiIntro: (
     <>
@@ -253,6 +289,7 @@ const COPY_EN: Copy = {
   s16Company: "HANA Health, Inc.",
   s16Privacy: "Privacy:",
   s16General: "General:",
+  s16Security: "Security:",
   s16Web: "Web:",
 };
 
@@ -262,7 +299,7 @@ const COPY_IT: Copy = {
     "Come HANA Health, Inc. raccoglie, utilizza, divulga e protegge le informazioni personali dei visitatori del sito hana.health, inclusi i tuoi diritti in materia di privacy ai sensi del GDPR e delle leggi statali statunitensi.",
   eyebrow: "HANA Health, Inc.",
   title: "Informativa sulla Privacy",
-  dates: "Data di entrata in vigore: 14 giugno 2026  |  Ultimo aggiornamento: 3 agosto 2026",
+  dates: "Data di entrata in vigore: 14 giugno 2026  |  Ultimo aggiornamento: 14 agosto 2026",
   intro: (
     <>
       HANA Health, Inc. (&ldquo;HANA&rdquo;, &ldquo;noi&rdquo; o &ldquo;nostro&rdquo;) rispetta la tua privacy. La presente Informativa sulla Privacy descrive come raccogliamo, utilizziamo, divulghiamo e proteggiamo le informazioni personali quando visiti o interagisci con il sito {strong("hana.health")} e le pagine correlate (collettivamente, il &ldquo;Sito&rdquo;), nonché i diritti e le scelte in materia di privacy a tua disposizione. Utilizzando il Sito, accetti la presente Informativa sulla Privacy.
@@ -315,6 +352,7 @@ const COPY_IT: Copy = {
     <>{strong("Un soggetto subentrante")} nell&rsquo;ambito di una fusione, acquisizione, finanziamento o cessione di beni, nel rispetto della presente Informativa sulla Privacy.</>,
   ],
   s4Note: "Consulta la Sezione 8 in merito alla “condivisione” a fini di analisi per la pubblicità comportamentale cross-context e alle tue scelte.",
+  s4Sms: "Non condivideremo il tuo consenso a una campagna SMS con terze parti per finalità estranee alla fornitura dei servizi di tale campagna. Tutte le categorie sopra indicate escludono i dati di consenso e di adesione del mittente dei messaggi di testo; tali informazioni non saranno condivise con terze parti.",
   s5Title: "Fornitori di servizi che utilizziamo",
   s5ColProvider: "Fornitore",
   s5ColPurpose: "Finalità",
@@ -396,6 +434,22 @@ const COPY_IT: Copy = {
       Il Sito può contenere link a siti web e servizi di terze parti (ad esempio, prenotazioni, documentazione o social media). Non siamo responsabili delle loro pratiche in materia di privacy e ti invitiamo a esaminare le rispettive informative sulla privacy.
     </>
   ),
+  euRepTitle: "Rappresentante per il SEE e il Regno Unito",
+  euRepBody: EU_REPRESENTATIVE ? (
+    <>
+      HANA Health, Inc. ha designato {strong(EU_REPRESENTATIVE.name)} quale proprio rappresentante nell&rsquo;Unione Europea ai sensi dell&rsquo;articolo 27 del GDPR. Gli interessati nel SEE possono rivolgersi al rappresentante per qualsiasi questione relativa al trattamento delle proprie informazioni personali, all&rsquo;indirizzo {EU_REPRESENTATIVE.address}, oppure via email a {mail(EU_REPRESENTATIVE.email)}. Il ricorso al rappresentante non pregiudica il tuo diritto di contattarci direttamente all&rsquo;indirizzo {mail("privacy@hana.health")}, né di presentare un reclamo alla tua autorità di controllo.
+    </>
+  ) : (
+    <>
+      HANA Health, Inc. è stabilita negli Stati Uniti. Gli interessati nel SEE, nel Regno Unito e in Svizzera possono sottoporci direttamente qualsiasi questione relativa al trattamento delle proprie informazioni personali scrivendo a {mail("privacy@hana.health")}, e risponderemo entro i termini previsti dal GDPR e dal GDPR del Regno Unito. Puoi inoltre presentare un reclamo alla tua autorità di controllo locale. In Italia si tratta del Garante per la protezione dei dati personali (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">garanteprivacy.it</a>); nel Regno Unito, dell&rsquo;Information Commissioner&rsquo;s Office (<a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">ico.org.uk</a>).
+    </>
+  ),
+  discloseTitle: "Segnalare un problema di sicurezza o di privacy",
+  discloseBody: (
+    <>
+      Accogliamo con favore le segnalazioni di vulnerabilità e di problemi di privacy e non intraprenderemo azioni legali nei confronti dei ricercatori che segnalano in buona fede, operano esclusivamente sui propri account o su dati di test, evitano violazioni della privacy e degradi del servizio e ci concedono un periodo ragionevole per porre rimedio prima di una divulgazione pubblica. Invia le segnalazioni a {mail("security@hana.health")}, includendo dettagli sufficienti a riprodurre il problema. Confermiamo la ricezione entro tre giorni lavorativi. Ti preghiamo di non includere PHI o altri dati personali sensibili nella segnalazione.
+    </>
+  ),
   gapiTitle: "Servizi API di Google e dati di calendario",
   gapiIntro: (
     <>
@@ -425,6 +479,7 @@ const COPY_IT: Copy = {
   s16Company: "HANA Health, Inc.",
   s16Privacy: "Privacy:",
   s16General: "Generale:",
+  s16Security: "Sicurezza:",
   s16Web: "Web:",
 };
 
@@ -514,6 +569,9 @@ export function Privacy() {
             </ul>
             <p className="mt-4">
               {COPY.s4Note}
+            </p>
+            <p className="mt-4">
+              {COPY.s4Sms}
             </p>
           </Section>
 
@@ -617,8 +675,22 @@ export function Privacy() {
             </p>
           </Section>
 
-          {/* 15 — Google API Services disclosure (required for OAuth verification) */}
-          <Section number="15" title={COPY.gapiTitle}>
+          {/* 15 */}
+          <Section number="15" title={COPY.euRepTitle}>
+            <p>
+              {COPY.euRepBody}
+            </p>
+          </Section>
+
+          {/* 16 */}
+          <Section number="16" title={COPY.discloseTitle}>
+            <p>
+              {COPY.discloseBody}
+            </p>
+          </Section>
+
+          {/* 17 — Google API Services disclosure (required for OAuth verification) */}
+          <Section number="17" title={COPY.gapiTitle}>
             <p className="mb-4">{COPY.gapiIntro}</p>
             <ul className="list-disc pl-6 space-y-2">
               {COPY.gapiItems.map((item, i) => (
@@ -628,19 +700,20 @@ export function Privacy() {
             <p className="mt-4">{COPY.gapiNote}</p>
           </Section>
 
-          {/* 16 */}
-          <Section number="16" title={COPY.s15Title}>
+          {/* 18 */}
+          <Section number="18" title={COPY.s15Title}>
             <p>
               {COPY.s15Body}
             </p>
           </Section>
 
-          {/* 17 */}
-          <Section number="17" title={COPY.s16Title}>
+          {/* 19 */}
+          <Section number="19" title={COPY.s16Title}>
             <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 text-[15px]">
               <p className="font-semibold text-[#1e2a3a] mb-1">{COPY.s16Company}</p>
               <p>{COPY.s16Privacy} <a href="mailto:privacy@hana.health" className="text-blue-600 hover:underline">privacy@hana.health</a></p>
               <p>{COPY.s16General} <a href="mailto:hello@hana.health" className="text-blue-600 hover:underline">hello@hana.health</a></p>
+              <p>{COPY.s16Security} <a href="mailto:security@hana.health" className="text-blue-600 hover:underline">security@hana.health</a></p>
               <p>{COPY.s16Web} <a href="https://hana.health/privacy" className="text-blue-600 hover:underline">hana.health/privacy</a></p>
             </div>
           </Section>

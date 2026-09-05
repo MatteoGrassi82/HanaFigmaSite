@@ -173,8 +173,9 @@ const CSS = `
 const CYCLE_IDS = ["observability", "human", "protocols", "encryption"];
 
 /** `light` renders the section on white for pages that are light end to end.
- *  The glass stack still needs a dark ground, so in light mode it sits inside a
- *  navy tile while the heading and the layer list go light. */
+ *  The glass stack sat on a navy tile until 2026-08-25 (Matteo: remove the blue
+ *  background); it now sits on the same soft pastel gradient tile as the Compass
+ *  sections, so light pages have no dark panel here at all. */
 export function SafetyStack({ light = false }: { light?: boolean } = {}) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.3 });
@@ -280,7 +281,18 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
               animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0 }}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.25 }}
               className={`flex h-[520px] flex-1 items-center justify-center ${light ? "rounded-[28px]" : ""}`}
-              style={light ? { backgroundColor: "#0A1633" } : undefined}
+              style={
+                light
+                  ? {
+                      background: [
+                        "radial-gradient(60% 55% at 18% 12%, rgba(245,158,66,0.16) 0%, rgba(245,158,66,0) 60%)",
+                        "radial-gradient(65% 60% at 88% 22%, rgba(37,99,235,0.20) 0%, rgba(37,99,235,0) 62%)",
+                        "radial-gradient(70% 60% at 16% 92%, rgba(139,92,246,0.18) 0%, rgba(139,92,246,0) 62%)",
+                        "linear-gradient(150deg, #FAFBFF 0%, #F0F3FA 60%, #EDF0F8 100%)",
+                      ].join(", "),
+                    }
+                  : undefined
+              }
               onMouseMove={onMove}
               onMouseLeave={onLeave}
             >

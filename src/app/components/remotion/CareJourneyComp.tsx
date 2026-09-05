@@ -676,7 +676,7 @@ export const CareJourneyComp = () => {
       {s0 && (
         <Card x={130} y={360} w={540} style={s0}>
           <Rise frame={frame} fps={fps} at={t0 + 4}>
-            <Header d={P_PHONE} title="HANA · enrollment call" sub="CPAP program · Dr. Reyes' office" />
+            <Header d={P_PHONE} title="HANA · enrollment call" sub="CPAP program · your doctor's office" />
           </Rise>
           <Rise frame={frame} fps={fps} at={t0 + 14}>
             <div style={{ marginBottom: 10 }}>
@@ -684,7 +684,7 @@ export const CareJourneyComp = () => {
             </div>
           </Rise>
           <Rise frame={frame} fps={fps} at={t0 + 22}>
-            <Bubble who="hana">Hi Maria, it's HANA calling from Dr. Reyes' office to set up your CPAP check-ins. Is now a good time?</Bubble>
+            <Bubble who="hana">Hi Maria, it's HANA calling from your doctor's office to set up your CPAP check-ins. Is now a good time?</Bubble>
           </Rise>
           <Rise frame={frame} fps={fps} at={t0 + 34}>
             <div style={{ marginTop: 10 }}>
@@ -808,7 +808,7 @@ export const CareJourneyComp = () => {
                 }}
               >
                 <span style={{ width: 6, height: 6, borderRadius: 999, background: "#E2703A" }} />
-                Escalated → Dr. Reyes
+                Escalated → named owner
               </span>
             </div>
           </Rise>
@@ -858,7 +858,7 @@ export const CareJourneyComp = () => {
           </div>
           <Rise frame={frame} fps={fps} at={t4 + 46}>
             <div style={{ marginTop: 14, paddingTop: 11, borderTop: `1px solid ${HAIRLINE}` }}>
-              <CheckLine text="Ready for Dr. Reyes to attest" color={BLUE} />
+              <CheckLine text="Ready for your clinician to attest" color={BLUE} />
             </div>
           </Rise>
         </Card>

@@ -7,6 +7,7 @@ const app = new Hono();
 const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
 const MAX_REQUESTS_PER_WINDOW = 5; // Max 5 calls per hour per IP
 const MAX_REQUESTS_PER_EMAIL = 3; // Max 3 calls per hour per email
+const DEMO_COOLDOWN_MS = 24 * 60 * 60 * 1000; // one site demo per phone number per day
 
 // Email blacklist - block specific spam emails permanently
 const EMAIL_BLACKLIST = new Set([
@@ -646,7 +647,32 @@ app.post("/make-server-77ada9a1/site-demo-start", async (c) => {
 
     if (!E164.test(to)) return c.json({ error: "Enter a valid phone number in international format, e.g. +15551234567" }, 400);
 
-    const rateLimit = await checkRateLimit(ip);
+    // Abuse gate. The SMS round-trip is the main control — it proves the caller
+    // controls the number they typed — but it can't be the ONLY one, so:
+    //  · the blocklist and the per-email limit now apply here too. They were
+    //    already wired into /leads and /outbound-call and simply weren't passed
+    //    on this path, which made the demo the softest way into the dialer.
+    //  · one demo per number per 24h. The KV row used to be overwritten on every
+    //    request, so the same number could re-trigger a call indefinitely and only
+    //    a (trivially rotated) IP stood in the way.
+    if (email && EMAIL_BLACKLIST.has(email.toLowerCase().trim())) {
+      console.warn(`[site-demo-start] blocklisted email ${email} from ip ${ip}`);
+      return c.json({ error: "Unable to process request" }, 403);
+    }
+
+    const prior = await kv.get(`sitedemo:${to}`);
+    if (prior?.updated_at && Date.now() - Date.parse(prior.updated_at) < DEMO_COOLDOWN_MS) {
+      // "texted" and still fresh means their opener is already sitting on the
+      // handset — resending would just spam them. "called" means they've had it.
+      if (prior.status === "called") {
+        return c.json({ error: "This number already had a demo call today. Reply to the text if you'd like another agent." }, 429);
+      }
+      if (prior.status === "texted") {
+        return c.json({ ok: true, status: "texted" });
+      }
+    }
+
+    const rateLimit = await checkRateLimit(ip, email);
     if (!rateLimit.allowed) return c.json({ error: "Too many requests. Please try again later.", retryAfter: Math.ceil(RATE_LIMIT_WINDOW_MS / 1000 / 60) }, 429);
 
     const reg = SITE_REGIONS[region];
@@ -658,15 +684,22 @@ app.post("/make-server-77ada9a1/site-demo-start", async (c) => {
         `• MONITORING — check-in settimanale\n• INTAKE — info pre-visita\n• OUTREACH — check-in "è passato un po'"\n• COORDINATION — riprenota una visita saltata`
       : `Hi${name ? ` ${name}` : ""}, it's Hana. Reply with the agent you want to experience and I'll call you:\n` +
         `• MONITORING — weekly check-in\n• INTAKE — pre-visit info\n• OUTREACH — "been a while" check-in\n• COORDINATION — rebook a missed visit`;
+    // Required on the first message of a registered A2P campaign, and quoted as
+    // sample1 in the campaign registration. Keep the wording in step with both.
+    const disclosure = lang === "it"
+      ? `\nLa frequenza dei messaggi può variare. Possono applicarsi tariffe. Rispondi STOP per annullare, HELP per assistenza.`
+      : `\nMsg frequency may vary. Msg & data rates may apply. Reply STOP to opt out, HELP for help.`;
 
     try {
-      await sendTwilioSms(to, from, opener);
+      await sendTwilioSms(to, from, opener + disclosure);
     } catch (err) {
       console.error("[site-demo-start] sms failed:", err);
       return c.json({ error: "Could not send the text. Please double-check the number." }, 502);
     }
 
-    await kv.set(`sitedemo:${to}`, { phone: to, region, lang, name: name || null, email: email || null, status: "texted", agent: null, call_id: null, updated_at: new Date().toISOString() });
+    // consented_at is the audit trail a carrier asks for: which number ticked the
+    // box, and when. The form cannot reach here without the box ticked.
+    await kv.set(`sitedemo:${to}`, { phone: to, region, lang, name: name || null, email: email || null, status: "texted", agent: null, call_id: null, consented_at: body.consent === true ? new Date().toISOString() : null, updated_at: new Date().toISOString() });
     return c.json({ ok: true, status: "texted" });
   } catch (error) {
     console.error("site-demo-start error:", error);
@@ -696,6 +729,20 @@ app.post("/make-server-77ada9a1/site-demo-sms-inbound", async (c) => {
     }
 
     const from = (params.From || "").trim();
+
+    // HELP must name the brand and give a reachable support contact — a campaign
+    // requirement, and Twilio's built-in reply is generic. STOP is deliberately
+    // NOT handled here: Twilio intercepts it, blocks the number and sends the
+    // standard confirmation, so answering it ourselves would double-reply to
+    // someone who just asked us to stop. replyToAgentKey already refuses to match
+    // opt-out words, so no call is placed either way.
+    if (/^(help|info)\b/i.test((params.Body || "").trim())) {
+      return xml('<?xml version="1.0" encoding="UTF-8"?><Response><Message>'
+        + 'Hana Health demo support: matteo@usehana.com or +1 517 300 7189. '
+        + 'Msg &amp; data rates may apply. Reply STOP to opt out.'
+        + '</Message></Response>');
+    }
+
     const agentKey = replyToAgentKey(params.Body || "");
     if (!from || !agentKey) return xml(EMPTY_TWIML); // not a recognizable choice
 

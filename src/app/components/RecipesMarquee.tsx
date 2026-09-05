@@ -13,7 +13,7 @@ const CHANNELS = {
   cal:   { label: "Schedule",      dot: "#5A5A72" },
 } as const;
 
-type Channel = keyof typeof CHANNELS;
+export type Channel = keyof typeof CHANNELS;
 
 // Product-style icons — each a distinct mark with its own color palette
 const ICONS: Record<Channel, React.FC<{ size?: number }>> = {
@@ -80,7 +80,7 @@ const ICONS: Record<Channel, React.FC<{ size?: number }>> = {
   ),
 };
 
-interface Recipe {
+export interface Recipe {
   tag: string;
   title: string;
   flow: Channel[];
@@ -339,7 +339,51 @@ const RECIPES_IT: Recipe[] = [
 
 
 
-function RecipeCard({ recipe, onClick }: { recipe: Recipe; onClick: () => void }) {
+function RecipeCard({ recipe, onClick, soft = false }: { recipe: Recipe; onClick: () => void; soft?: boolean }) {
+  const it = getLocale() === "it";
+  if (soft) {
+    /* Refined variant used on /remote-v2: white card on a hairline, a tag chip,
+       and an explicit footer so the card reads as tappable and says what you get
+       when you tap it (the steps the workflow runs). */
+    return (
+      <button
+        onClick={onClick}
+        className="group flex-shrink-0 w-[290px] text-left bg-white rounded-[20px] p-5 cursor-pointer border border-slate-200 hover:border-slate-300 hover:-translate-y-[3px] hover:shadow-[0_18px_40px_-20px_rgba(10,22,51,0.28)] transition-all duration-300 flex flex-col justify-between min-h-[196px]"
+      >
+        <div>
+          <span className="inline-block text-[11px] font-bold uppercase tracking-[1.1px] text-[#2563EB] bg-[#EFF3FF] rounded-full px-2.5 py-1">
+            {recipe.tag}
+          </span>
+          <div className="text-[19px] font-normal text-[#0A1633] leading-snug tracking-[-0.2px] mt-3.5">
+            {recipe.title}
+          </div>
+        </div>
+        <div>
+          <div className="flex items-center gap-2 mt-4">
+            {recipe.flow.slice(0, 4).map((ch, i) => (
+              <span key={i} className="flex-shrink-0">
+                {React.createElement(ICONS[ch], { size: 30 })}
+              </span>
+            ))}
+            {recipe.flow.length > 4 && (
+              <span className="text-[12px] text-slate-500 font-medium">+{recipe.flow.length - 4}</span>
+            )}
+          </div>
+          <div className="flex items-center justify-between mt-4 pt-3.5 border-t border-slate-100">
+            <span className="text-[12.5px] text-slate-500">
+              {recipe.steps.length} {it ? "passaggi" : "steps"}
+            </span>
+            <span className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-[#2563EB]">
+              {it ? "Guarda" : "See them"}
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" className="transition-transform duration-300 group-hover:translate-x-0.5">
+                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />
+              </svg>
+            </span>
+          </div>
+        </div>
+      </button>
+    );
+  }
   return (
     <button
       onClick={onClick}
@@ -449,10 +493,25 @@ function Modal({ recipe, onClose }: { recipe: Recipe; onClose: () => void }) {
 
 export function RecipesMarquee({
   tags,
+  items,
+  itemsIt,
   tag: tagOverride,
   heading: headingOverride,
   body: bodyOverride,
-}: { tags?: string[]; tag?: string; heading?: string; body?: string } = {}) {
+  soft = false,
+}: {
+  tags?: string[];
+  /** Caller-supplied cards, replacing the built-in recipe list. Used by Remote
+   *  to show its billable programs (CCM, APCM, BHI, RTM) instead of generic
+   *  workflow tags. Pass itemsIt for the Italian set; without it, an Italian
+   *  visitor falls back to the built-in Italian recipes. */
+  items?: Recipe[];
+  itemsIt?: Recipe[];
+  tag?: string;
+  heading?: string;
+  body?: string;
+  soft?: boolean;
+} = {}) {
   const t = useTranslations();
   const rm = {
     tag: tagOverride ?? t.recipesMarquee.tag,
@@ -467,7 +526,8 @@ export function RecipesMarquee({
   // Optional tag filter so product pages can show only their relevant workflows
   // (e.g. HANA Contact shows front-desk recipes, not clinical-program ones).
   const ALL_RECIPES = isItalian ? RECIPES_IT : RECIPES_EN;
-  const RECIPES = tags ? ALL_RECIPES.filter((r) => tags.includes(r.tag)) : ALL_RECIPES;
+  const supplied = isItalian ? itemsIt : items;
+  const RECIPES = supplied ?? (tags ? ALL_RECIPES.filter((r) => tags.includes(r.tag)) : ALL_RECIPES);
   // Channel legend labels — localized (and de-US-ified: PDMP -> "Verifica ricetta").
   const channelLabel = (key: Channel): string => {
     if (!isItalian) return CHANNELS[key].label;
@@ -511,7 +571,7 @@ export function RecipesMarquee({
           onPointerUp={(e) => ((e.currentTarget as HTMLDivElement).style.animationPlayState = "running")}
         >
           {doubled.map((r, i) => (
-            <RecipeCard key={i} recipe={r} onClick={() => select(r)} />
+            <RecipeCard key={i} recipe={r} onClick={() => select(r)} soft={soft} />
           ))}
         </div>
       </div>
@@ -542,7 +602,9 @@ export function RecipesMarquee({
           {rm.body}
         </p>
         <div className="flex flex-wrap justify-center gap-4 mt-6">
-          {(Object.keys(CHANNELS) as Channel[]).map((key) => (
+          {(Object.keys(CHANNELS) as Channel[])
+            .filter((key) => RECIPES.some((r) => r.flow.includes(key)))
+            .map((key) => (
             <div key={key} className="flex items-center gap-2 text-[12px] text-slate-500">
               <span className="flex-shrink-0">{React.createElement(ICONS[key], { size: 20 })}</span>
               {channelLabel(key)}

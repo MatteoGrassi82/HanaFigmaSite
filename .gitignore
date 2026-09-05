@@ -47,3 +47,4 @@ dist-sleep/
 
 # Puppeteer Chrome download (project-local, see .puppeteerrc.cjs)
 .cache/
+.env*

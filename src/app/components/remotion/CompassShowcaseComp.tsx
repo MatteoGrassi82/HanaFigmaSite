@@ -121,7 +121,7 @@ function CheckDot({ color = GREEN, size = 16 }: { color?: string; size?: number 
 function Worklist({ frame, fps, t0 }: { frame: number; fps: number; t0: number }) {
   const rows = [
     { name: "James T.", program: "CCM", status: "Reviewed", flag: false },
-    { name: "Maria R.", program: "RTM · Sleep", status: "Escalated → Dr. Reyes", flag: true },
+    { name: "Maria R.", program: "RTM · Sleep", status: "Escalated → named owner", flag: true },
     { name: "Dorothy K.", program: "BHI", status: "Reviewed", flag: false },
     { name: "Albert N.", program: "CCM", status: "No concern", flag: false },
   ];
@@ -262,7 +262,7 @@ function Timeline({ frame, fps, t0 }: { frame: number; fps: number; t0: number }
   const entries = [
     { text: "Evening check-in completed", time: "6:42 PM", color: BLUE },
     { text: "Flag raised · usage below threshold", time: "6:43 PM", color: ORANGE },
-    { text: "Reviewed by Dr. Reyes", time: "8:05 AM", color: BLUE },
+    { text: "Reviewed by your clinician", time: "8:05 AM", color: BLUE },
     { text: "Note attested", time: "8:07 AM", color: GREEN, check: true },
   ];
   const lineH = interpolate(frame, [t0 + 20, t0 + 96], [0, entries.length * 52 - 40], {

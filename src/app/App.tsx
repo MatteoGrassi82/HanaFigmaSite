@@ -43,6 +43,7 @@ const NotFound = lazy(() => import("./pages/NotFound").then((m) => ({ default: m
 const BentoShowcase = lazy(() => import("./pages/BentoShowcase").then((m) => ({ default: m.BentoShowcase })));
 const ProofShowcase = lazy(() => import("./pages/ProofShowcase").then((m) => ({ default: m.ProofShowcase })));
 const RemoteV2 = lazy(() => import("./pages/RemoteV2").then((m) => ({ default: m.RemoteV2 })));
+const RemoteLab = lazy(() => import("./pages/RemoteLab").then((m) => ({ default: m.RemoteLab })));
 
 // Configuration
 const VAPI_PUBLIC_KEY = "5dfc26c6-90a6-4efe-907b-7bd0d690dc6e";
@@ -283,6 +284,7 @@ function AppContent() {
               <Route path="/preview" element={<Preview />} />
               <Route path="/bento" element={<BentoShowcase />} />
               <Route path="/proof" element={<ProofShowcase />} />
+              <Route path="/remote-lab" element={<RemoteLab />} />
               <Route path="/remote-v2" element={
                 <RemoteV2
                   activeAgentId={activeAgentId}
