@@ -235,7 +235,7 @@ function CornerLabel({
           {station.label}
         </span>
       </div>
-      <p className="mt-2 text-sm leading-relaxed" style={{ color: light ? "#64748b" : INK_SOFT }}>
+      <p className="mt-2 text-sm leading-relaxed" style={{ color: light ? "var(--color-ink-mute)" : INK_SOFT }}>
         {station.body}
       </p>
     </motion.div>
@@ -348,7 +348,7 @@ export function LoopDiagram({
   return (
     <section
       className={`relative w-full overflow-hidden ${bare ? "py-10 md:py-14" : "py-20 md:py-28"}`}
-      style={{ backgroundColor: light ? "#f6f7fb" : FIELD }}
+      style={{ backgroundColor: light ? "var(--color-paper-2)" : FIELD }}
     >
       {/* blue radial glow at top — matches the Reasoning Engine section so the
           two read as one continuous block (dark theme only) */}
@@ -400,7 +400,7 @@ export function LoopDiagram({
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0 }}
               transition={{ duration: 0.5, delay: 0.16 }}
               className="mx-auto mt-5 max-w-xl text-base leading-relaxed"
-              style={{ color: light ? "#475569" : INK_SOFT }}
+              style={{ color: light ? "var(--color-ink-soft)" : INK_SOFT }}
             >
               {c.sub}
             </motion.p>
@@ -510,7 +510,7 @@ export function LoopDiagram({
                         fontSize="11.5"
                         fontWeight="700"
                         letterSpacing="1.5"
-                        style={{ fill: light ? "#94a3b8" : "rgba(255,255,255,0.38)", textTransform: "uppercase" }}
+                        style={{ fill: light ? "var(--color-ink-mute)" : "rgba(255,255,255,0.38)", textTransform: "uppercase" }}
                         initial={{ opacity: 0 }}
                         animate={inView ? { opacity: 1 } : { opacity: 0 }}
                         transition={{ delay: 2, duration: 0.6 }}
@@ -583,7 +583,7 @@ export function LoopDiagram({
                   animate={inView ? { opacity: 1 } : { opacity: 0 }}
                   transition={{ delay: 1.8, duration: 0.6 }}
                 >
-                  <ellipse cx={CX} cy={CY} rx={172} ry={52} fill={light ? "#f6f7fb" : CANVAS_BOT} />
+                  <ellipse cx={CX} cy={CY} rx={172} ry={52} fill={light ? "var(--color-paper-2)" : CANVAS_BOT} />
                   <text
                     x={CX}
                     y={CY - 4}
@@ -755,7 +755,7 @@ function MobileTimeline({
                 </motion.span>
                 <span className="text-base font-semibold tracking-tight" style={{ color: light ? NAVY : "#FFFFFF" }}>{s.label}</span>
               </div>
-              <p className="mt-1.5 text-[13px] leading-relaxed" style={{ color: light ? "#64748b" : INK_SOFT }}>
+              <p className="mt-1.5 text-[13px] leading-relaxed" style={{ color: light ? "var(--color-ink-mute)" : INK_SOFT }}>
                 {s.body}
               </p>
             </motion.div>

@@ -215,7 +215,7 @@ function LanguageCard() {
 
       {/* flag wall */}
       <div className="mt-3">
-        <p className="text-[11px] font-medium text-slate-400 uppercase tracking-[0.06em] mb-2 px-1">
+        <p className="text-[11px] font-medium text-ink-mute uppercase tracking-[0.06em] mb-2 px-1">
           30+ languages, one agent
         </p>
         <div className="space-y-2.5">
@@ -228,7 +228,7 @@ function LanguageCard() {
       <div className="mt-6 lg:mt-auto lg:pt-6">
         <div className="flex items-baseline gap-2">
           <span className="font-serif text-4xl text-ink leading-none">30+</span>
-          <span className="text-[15px] font-medium text-slate-400">languages</span>
+          <span className="text-[15px] font-medium text-ink-mute">languages</span>
         </div>
         <h3 className="mt-3 text-[19px] sm:text-[21px] font-semibold text-ink leading-snug">
           Speaks 30+ languages
@@ -282,7 +282,7 @@ function InfraCard() {
                 </span>
               </div>
               {i < STACK.length - 1 && (
-                <ArrowRight className="w-3.5 h-3.5 text-slate-300 -mt-4" />
+                <ArrowRight className="w-3.5 h-3.5 text-rule -mt-4" />
               )}
             </React.Fragment>
           );
@@ -325,7 +325,7 @@ function ObservabilityCard() {
 
       <div className="rounded-2xl border border-rule-soft overflow-hidden bg-paper-bright">
         {/* stat strip */}
-        <div className="grid grid-cols-3 border-b border-rule-soft bg-[#fbfcfe]">
+        <div className="grid grid-cols-3 border-b border-rule-soft bg-paper-bright">
           {[
             { v: "412", l: "calls today" },
             { v: "38", l: "need action" },
@@ -339,7 +339,7 @@ function ObservabilityCard() {
         </div>
 
         {/* queue header */}
-        <div className="px-3.5 py-2 text-[10px] font-semibold uppercase tracking-[1px] text-ink-mute border-b border-rule-soft bg-[#fbfcfe]">
+        <div className="px-3.5 py-2 text-[10px] font-semibold uppercase tracking-[1px] text-ink-mute border-b border-rule-soft bg-paper-bright">
           Priority queue · ranked by risk
         </div>
 
@@ -349,7 +349,7 @@ function ObservabilityCard() {
             key={r.name}
             className="flex items-center gap-2.5 px-3.5 py-2.5 border-b border-rule-soft last:border-b-0"
           >
-            <span className="text-[10px] font-semibold text-slate-300 w-3 shrink-0 tabular-nums">{i + 1}</span>
+            <span className="text-[10px] font-semibold text-ink-mute w-3 shrink-0 tabular-nums">{i + 1}</span>
             <span className="flex items-center justify-center w-7 h-7 rounded-full bg-brand-tint text-brand text-[10px] font-bold shrink-0">
               {r.initials}
             </span>
@@ -390,16 +390,16 @@ function DashboardCard() {
           <span className="w-2 h-2 rounded-full bg-rule-soft" />
           <span className="w-2 h-2 rounded-full bg-rule-soft" />
           <span className="w-2 h-2 rounded-full bg-rule-soft" />
-          <span className="ml-2 text-[10px] text-slate-400">yourclinic.hana.health</span>
+          <span className="ml-2 text-[10px] text-ink-mute">yourclinic.hana.health</span>
         </div>
         <div className="p-3.5">
           <div className="grid grid-cols-3 gap-2 mb-3">
-            <div className="rounded-lg bg-[#fbfcfe] border border-rule-soft px-2.5 py-2">
-              <p className="text-[9.5px] text-slate-400 leading-tight">Calls today</p>
+            <div className="rounded-lg bg-paper-bright border border-rule-soft px-2.5 py-2">
+              <p className="text-[9.5px] text-ink-mute leading-tight">Calls today</p>
               <p className="font-serif text-[19px] leading-none text-ink tabular-nums mt-0.5">142</p>
             </div>
-            <div className="rounded-lg bg-[#fbfcfe] border border-rule-soft px-2.5 py-2">
-              <p className="text-[9.5px] text-slate-400 leading-tight">Avg QA</p>
+            <div className="rounded-lg bg-paper-bright border border-rule-soft px-2.5 py-2">
+              <p className="text-[9.5px] text-ink-mute leading-tight">Avg QA</p>
               <p className="font-serif text-[19px] leading-none text-ink tabular-nums mt-0.5">96</p>
             </div>
             <div className="rounded-lg bg-brand-tint border border-blue-100 px-2.5 py-2">
@@ -409,7 +409,7 @@ function DashboardCard() {
           </div>
 
           <div className="flex items-center justify-between mb-1.5">
-            <p className="text-[9.5px] font-medium text-slate-400 uppercase tracking-[0.06em]">
+            <p className="text-[9.5px] font-medium text-ink-mute uppercase tracking-[0.06em]">
               Recent calls
             </p>
             <span className="text-[9.5px] text-blue-600 font-medium">Review all</span>
@@ -426,7 +426,7 @@ function DashboardCard() {
                 <span className="flex-1 truncate text-[11.5px] font-medium text-ink-soft">
                   {c.name}
                 </span>
-                <span className="text-[10.5px] text-slate-400 tabular-nums">{c.dur}</span>
+                <span className="text-[10.5px] text-ink-mute tabular-nums">{c.dur}</span>
                 <span
                   className={
                     "text-[10px] font-medium px-1.5 py-0.5 rounded-full " +
@@ -482,7 +482,7 @@ function WhiteGloveCard() {
           />
           <div>
             <p className="text-[14px] font-semibold text-ink">Katie R. · Success lead</p>
-            <p className="text-[12.5px] text-slate-400">Named contact, not a ticket queue</p>
+            <p className="text-[12.5px] text-ink-soft">Named contact, not a ticket queue</p>
           </div>
         </div>
         <div className="mt-4 space-y-2">

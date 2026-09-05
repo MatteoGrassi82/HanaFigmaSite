@@ -224,7 +224,7 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
             What happens when<br />
             <span className="text-blue-400">the routine gets handled</span>
           </h1>
-          <p className="text-slate-400 text-lg md:text-xl max-w-xl leading-relaxed">
+          <p className="text-white/75 text-lg md:text-xl max-w-xl leading-relaxed">
             Five deployments. Real numbers. And the live agents you can call to hear it yourself.
           </p>
         </div>
@@ -248,7 +248,7 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
                 >
                   {c.tag}
                 </span>
-                <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-ink group-hover:translate-x-1 transition-all" />
+                <ArrowRight className="w-4 h-4 text-rule group-hover:text-ink group-hover:translate-x-1 transition-all" />
               </div>
 
               {/* Title */}
@@ -262,7 +262,7 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
                 {c.stats.map(([n, l]) => (
                   <div key={l}>
                     <div className="text-xl font-semibold text-ink leading-none mb-1">{n}</div>
-                    <div className="text-[10px] text-slate-400 leading-tight uppercase tracking-wide">{l}</div>
+                    <div className="text-[10px] text-ink-mute leading-tight uppercase tracking-wide">{l}</div>
                   </div>
                 ))}
               </div>
@@ -282,7 +282,7 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
             </div>
             <div>
               <h2 className="font-serif text-3xl text-white leading-tight mb-2">Your clinic, next.</h2>
-              <p className="text-sm text-slate-400">Every deployment is different. Book a call — we'll show you what this looks like for how your team actually works.</p>
+              <p className="text-sm text-white/75">Every deployment is different. Book a call — we'll show you what this looks like for how your team actually works.</p>
             </div>
             <div className="mt-auto pt-4 border-t border-white/10">
               <span className="text-sm font-semibold text-white group-hover:underline">Book a demo →</span>
@@ -294,7 +294,7 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
         <div className="mt-16 bg-navy rounded-2xl p-6 sm:p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h3 className="font-serif text-3xl text-white mb-2">Every workflow is different.<br />That's the point.</h3>
-            <p className="text-slate-400 text-sm">Book a demo. We'll show you a workflow built for how you work.</p>
+            <p className="text-white/75 text-sm">Book a demo. We'll show you a workflow built for how you work.</p>
           </div>
           <a
             href="https://calendly.com/matteowastaken/discoverycall"
@@ -328,18 +328,18 @@ function DetailView({
         <div className="max-w-4xl mx-auto">
           <button
             onClick={onBack}
-            className="inline-flex items-center gap-2 text-ink-mute hover:text-white text-sm mb-12 transition-colors"
+            className="inline-flex items-center gap-2 text-white/75 hover:text-white text-sm mb-12 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> All case studies
           </button>
 
           <div className="flex items-center gap-3 mb-5">
             <span className="text-[11px] font-bold tracking-[2.5px] uppercase" style={{ color: c.color }}>{c.tag}</span>
-            <span className="text-ink-soft text-xs">{idx + 1} / {total}</span>
+            <span className="text-white/60 text-xs">{idx + 1} / {total}</span>
           </div>
 
           <h1 className="font-serif text-4xl sm:text-5xl md:text-[3.5rem] leading-[1.05] mb-5 max-w-3xl">{c.title}</h1>
-          <p className="text-slate-400 text-lg max-w-2xl leading-relaxed mb-10">{c.sub}</p>
+          <p className="text-white/75 text-lg max-w-2xl leading-relaxed mb-10">{c.sub}</p>
 
           {/* Workflow chips */}
           <div className="flex flex-wrap gap-2 mb-14">
@@ -359,7 +359,7 @@ function DetailView({
             {c.stats.map(([n, l]) => (
               <div key={l} className="px-6 py-6 bg-paper-bright/[0.03]">
                 <div className="text-[2rem] font-semibold text-white mb-1.5 leading-none">{n}</div>
-                <div className="text-[10px] text-ink-mute uppercase tracking-widest">{l}</div>
+                <div className="text-[10px] text-white/60 uppercase tracking-widest">{l}</div>
               </div>
             ))}
           </div>
@@ -400,7 +400,7 @@ function DetailView({
               {c.stats.map(([n, l]) => (
                 <div key={l}>
                   <div className="font-serif text-2xl sm:text-[2rem] leading-none mb-1.5" style={{ color: c.color }}>{n}</div>
-                  <div className="text-[10px] text-slate-400 uppercase tracking-widest leading-snug">{l}</div>
+                  <div className="text-[10px] text-ink-mute uppercase tracking-widest leading-snug">{l}</div>
                 </div>
               ))}
             </div>
@@ -421,13 +421,13 @@ function DetailView({
         {/* In numbers — dark, centered */}
         <div className="bg-navy px-6 md:px-12 py-16 md:py-24 text-center">
           <div className="max-w-3xl mx-auto">
-            <p className="text-[10px] font-bold tracking-[3px] uppercase text-ink-mute mb-10">In numbers</p>
+            <p className="text-[10px] font-bold tracking-[3px] uppercase text-white/60 mb-10">In numbers</p>
             <div className="font-serif text-6xl sm:text-7xl md:text-[120px] leading-none tracking-tight mb-4" style={{ color: c.color }}>
               {c.stats[0][0]}
             </div>
-            <div className="text-[10px] text-ink-mute uppercase tracking-[3px] mb-12">{c.stats[0][1]}</div>
+            <div className="text-[10px] text-white/60 uppercase tracking-[3px] mb-12">{c.stats[0][1]}</div>
             <div className="w-12 h-px bg-paper-bright/10 mx-auto mb-12" />
-            <p className="text-[16px] md:text-[17px] leading-[1.9] text-slate-400 max-w-2xl mx-auto">{c.inNumbers}</p>
+            <p className="text-[16px] md:text-[17px] leading-[1.9] text-white/75 max-w-2xl mx-auto">{c.inNumbers}</p>
           </div>
         </div>
 
@@ -439,7 +439,7 @@ function DetailView({
               <h2 className="font-serif text-3xl md:text-4xl text-white leading-tight mb-3">
                 These are the actual agents from this deployment.
               </h2>
-              <p className="text-ink-mute text-sm">No app. No login. Just click to call.</p>
+              <p className="text-white/75 text-sm">No app. No login. Just click to call.</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {c.agents.map((a) => {
@@ -465,11 +465,11 @@ function DetailView({
         {/* Nav */}
         <div className="bg-paper-bright border-t border-rule-soft">
           <div className="max-w-4xl mx-auto px-6 md:px-12 py-10 flex items-center justify-between">
-            <button onClick={onPrev} className="flex items-center gap-2 py-2 -my-2 text-[13px] text-slate-400 hover:text-ink transition-colors">
+            <button onClick={onPrev} className="flex items-center gap-2 py-2 -my-2 text-[13px] text-ink-soft hover:text-ink transition-colors">
               <ArrowLeft className="w-3.5 h-3.5" /> Previous
             </button>
-            <button onClick={onBack} className="py-2 -my-2 text-[13px] text-slate-400 hover:text-ink transition-colors">All case studies</button>
-            <button onClick={onNext} className="flex items-center gap-2 py-2 -my-2 text-[13px] text-slate-400 hover:text-ink transition-colors">
+            <button onClick={onBack} className="py-2 -my-2 text-[13px] text-ink-soft hover:text-ink transition-colors">All case studies</button>
+            <button onClick={onNext} className="flex items-center gap-2 py-2 -my-2 text-[13px] text-ink-soft hover:text-ink transition-colors">
               Next <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -507,7 +507,7 @@ function AgentCard({ a, color, status, isOtherActive, onStart, onEnd }: {
 
       <div className="flex-1">
         <p className="text-[14px] font-semibold text-white mb-1.5 leading-tight">{a.name}</p>
-        <p className="text-xs text-slate-400 leading-relaxed">{a.desc}</p>
+        <p className="text-xs text-white/75 leading-relaxed">{a.desc}</p>
       </div>
 
       {isActive ? (
@@ -524,7 +524,7 @@ function AgentCard({ a, color, status, isOtherActive, onStart, onEnd }: {
           className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-semibold transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:opacity-80"
           style={
             isOtherActive || isConnecting
-              ? { color: '#475569', border: '1px solid rgba(255,255,255,0.08)', backgroundColor: 'transparent' }
+              ? { color: 'var(--color-ink-soft)', border: '1px solid rgba(255,255,255,0.08)', backgroundColor: 'transparent' }
               : { color: color, border: `1px solid ${color}50`, backgroundColor: `${color}12` }
           }
         >

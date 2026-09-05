@@ -37,7 +37,7 @@ export function ComplianceSection({ white = false }: { white?: boolean } = {}) {
 
           {/* Left Content */}
           <div className="flex-1 lg:max-w-sm space-y-8 lg:sticky lg:top-24 self-start">
-            <div className="inline-flex items-center rounded-full border border-rule dark:border-navy-soft bg-paper-bright dark:bg-navy px-4 py-1.5 text-sm font-medium text-ink-soft dark:text-slate-300 shadow-sm">
+            <div className="inline-flex items-center rounded-full border border-rule dark:border-navy-soft bg-paper-bright dark:bg-navy px-4 py-1.5 text-sm font-medium text-ink-soft dark:text-white/75 shadow-sm">
               {t.compliance.tag}
             </div>
 
@@ -50,7 +50,7 @@ export function ComplianceSection({ white = false }: { white?: boolean } = {}) {
               <h3 className="text-base font-semibold text-ink dark:text-white">
                 {t.compliance.environmentsTitle}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink-soft dark:text-slate-400">
+              <p className="mt-2 text-sm leading-relaxed text-ink-soft dark:text-white/75">
                 {t.compliance.environments}
               </p>
             </div>
@@ -78,7 +78,7 @@ export function ComplianceSection({ white = false }: { white?: boolean } = {}) {
                     <h3 className="text-xl font-medium text-ink dark:text-white">
                       {cert.title}
                     </h3>
-                    <p className="text-ink-soft dark:text-slate-400 leading-relaxed text-sm">
+                    <p className="text-ink-soft dark:text-white/75 leading-relaxed text-sm">
                       {cert.description}
                     </p>
                   </div>

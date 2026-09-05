@@ -98,7 +98,7 @@ function Stat({ v, suf, label, soft = false }: { v: string; suf: string; label: 
         <span className={`font-serif text-5xl leading-none md:text-6xl ${soft ? "text-navy" : "text-white"}`}>{v}</span>
         <span className="font-serif text-3xl" style={{ color: soft ? "var(--color-brand)" : ACCENT }}>{suf}</span>
       </div>
-      <p className="mt-2 text-sm leading-snug" style={{ color: soft ? "#475569" : WHITE_DIM }}>{label}</p>
+      <p className="mt-2 text-sm leading-snug" style={{ color: soft ? "var(--color-ink-soft)" : WHITE_DIM }}>{label}</p>
     </div>
   );
 }

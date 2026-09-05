@@ -325,7 +325,7 @@ function ModuleCard({ mod, index }: { mod: typeof MODULES[0]; index: number }) {
           <p className="text-base font-semibold text-ink">{mod.title}</p>
           <p className="text-sm text-ink-mute mt-1 leading-relaxed">{mod.description}</p>
         </div>
-        <span className="shrink-0 text-slate-400">{open ? <ChevronUp size={18} /> : <ChevronDown size={18} />}</span>
+        <span className="shrink-0 text-ink-mute">{open ? <ChevronUp size={18} /> : <ChevronDown size={18} />}</span>
       </button>
 
       <AnimatePresence>
@@ -365,7 +365,7 @@ function ModuleCard({ mod, index }: { mod: typeof MODULES[0]; index: number }) {
               </div>
               {mod.sample && (
                 <div className="mt-5 border-l-4 border-blue-500 pl-4">
-                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">{IT ? "Esempio di apertura" : "Opening sample"}</p>
+                  <p className="text-xs font-semibold text-ink-mute uppercase tracking-wider mb-1.5">{IT ? "Esempio di apertura" : "Opening sample"}</p>
                   <p className="text-sm text-ink-mute italic leading-relaxed">{mod.sample}</p>
                 </div>
               )}
@@ -403,9 +403,9 @@ function EHRStep({ step, index }: { step: typeof EHR_STEPS[0]; index: number }) 
           {step.desc && <p className="text-xs text-ink-mute mt-0.5">{step.desc}</p>}
         </div>
         <div className="flex items-center gap-3 shrink-0">
-          <span className="text-xs text-slate-400">{done}/{step.steps.length}</span>
+          <span className="text-xs text-ink-mute">{done}/{step.steps.length}</span>
           {done === step.steps.length && <CheckCircle2 size={16} className="text-blue-500" />}
-          {open ? <ChevronUp size={16} className="text-slate-400" /> : <ChevronDown size={16} className="text-slate-400" />}
+          {open ? <ChevronUp size={16} className="text-ink-mute" /> : <ChevronDown size={16} className="text-ink-mute" />}
         </div>
       </button>
 
@@ -432,7 +432,7 @@ function EHRStep({ step, index }: { step: typeof EHR_STEPS[0]; index: number }) 
                   }`}>
                     {checked[i] && <CheckCircle2 size={12} className="text-white" />}
                   </span>
-                  <span className={`text-sm leading-relaxed transition-colors ${checked[i] ? "text-slate-400 line-through" : "text-ink-soft"}`}>
+                  <span className={`text-sm leading-relaxed transition-colors ${checked[i] ? "text-ink-mute line-through" : "text-ink-soft"}`}>
                     {s}
                   </span>
                 </button>
@@ -556,8 +556,8 @@ export function WhitepaperADHD() {
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-black mb-3 leading-none tracking-tight text-white">HANA</h1>
             <h2 className="text-3xl md:text-4xl font-black text-blue-400 mb-8 leading-tight">{IT ? "WORKFLOW DI ACCOGLIENZA ADHD" : "ADHD INTAKE WORKFLOW"}</h2>
             <div className="w-16 h-0.5 bg-blue-500 mb-8" />
-            <p className="text-lg text-slate-300 mb-3 font-light">{IT ? "Una Guida Completa per Cliniche Partner Potenziali" : "A Complete Walkthrough for Prospective Clinic Partners"}</p>
-            <p className="text-sm text-ink-mute">
+            <p className="text-lg text-white/75 mb-3 font-light">{IT ? "Una Guida Completa per Cliniche Partner Potenziali" : "A Complete Walkthrough for Prospective Clinic Partners"}</p>
+            <p className="text-sm text-white/60">
               {IT
                 ? <>Contenuti: architettura dell'intervista a 3 moduli &nbsp;·&nbsp; flussi di accoglienza pediatrici &amp; adulti &nbsp;·&nbsp; integrazione Practice Q</>
                 : <>Covering: 3-module interview architecture &nbsp;·&nbsp; pediatric &amp; adult intake flows &nbsp;·&nbsp; Practice Q integration</>}
@@ -587,7 +587,7 @@ export function WhitepaperADHD() {
                 <p className="text-3xl font-black text-white mb-1">
                   <Counter target={s.val} suffix={s.suffix} />
                 </p>
-                <p className="text-xs text-ink-mute leading-snug">{s.label}</p>
+                <p className="text-xs text-white/60 leading-snug">{s.label}</p>
               </div>
             ))}
           </motion.div>
@@ -602,7 +602,7 @@ export function WhitepaperADHD() {
             {/* Sticky TOC */}
             <aside className="hidden lg:block w-52 shrink-0">
               <div className="sticky top-28">
-                <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">{IT ? "Indice" : "Contents"}</p>
+                <p className="text-xs font-bold uppercase tracking-widest text-ink-mute mb-4">{IT ? "Indice" : "Contents"}</p>
                 <nav className="space-y-0.5">
                   {SECTIONS.map(s => (
                     <button
@@ -729,7 +729,7 @@ export function WhitepaperADHD() {
               <section ref={setRef("interview-architecture")} id="interview-architecture">
                 <SectionHeader label={IT ? "L'Architettura dell'Intervista: Tre Moduli" : "The Interview Architecture: Three Modules"} />
                 <p className="text-ink-soft leading-relaxed mb-8">{IT ? "L'intervista ADHD di HANA è organizzata in tre moduli sequenziali. Ogni modulo ha una finalità clinica definita e insieme producono un quadro completo della presentazione del paziente, della compromissione funzionale, dell'anamnesi evolutiva e del contesto di trattamento." : "The HANA ADHD interview is organized into three sequential modules. Each module has a defined clinical purpose and together they produce a complete picture of the patient's presentation, functional impairment, developmental history, and treatment context."}</p>
-                <p className="text-xs text-slate-400 mb-4 uppercase tracking-wider font-semibold">{IT ? "Clicca un modulo per espanderlo" : "Click a module to expand"}</p>
+                <p className="text-xs text-ink-mute mb-4 uppercase tracking-wider font-semibold">{IT ? "Clicca un modulo per espanderlo" : "Click a module to expand"}</p>
                 <div className="space-y-3">
                   {MODULES.map((mod, i) => <ModuleCard key={mod.key} mod={mod} index={i} />)}
                 </div>
@@ -776,12 +776,12 @@ export function WhitepaperADHD() {
                             ? "Il paziente completa direttamente l'intervista HANA, integrata da scale di valutazione normalizzate per adulti. HANA adatta linguaggio, ritmo e strategia di approfondimento ai rispondenti adulti."
                             : "The patient completes the HANA interview directly, supplemented by adult-normed rating scales. HANA adapts language, pacing, and probe strategy for adult respondents.")}
                     </p>
-                    <p className="text-xs text-slate-400 mb-3 uppercase tracking-wider font-semibold">{IT ? "Clicca un passo per espanderlo" : "Click a step to expand"}</p>
+                    <p className="text-xs text-ink-mute mb-3 uppercase tracking-wider font-semibold">{IT ? "Clicca un passo per espanderlo" : "Click a step to expand"}</p>
                     <JourneyGrid steps={journeyTab === "pediatric" ? PEDIATRIC_STEPS : ADULT_STEPS} />
 
                     {journeyTab === "pediatric" && (
                       <div className="mt-5 bg-paper-bright border border-rule rounded-xl p-4 shadow-sm">
-                        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">{IT ? "Strumenti di valutazione inviati" : "Assessment instruments dispatched"}</p>
+                        <p className="text-xs font-semibold text-ink-mute uppercase tracking-wider mb-2">{IT ? "Strumenti di valutazione inviati" : "Assessment instruments dispatched"}</p>
                         <ul className="text-sm text-ink-soft space-y-1">
                           {(IT
                             ? ["NICHQ Vanderbilt Assessment Scales (moduli Genitore e Insegnante)", "BASC-3: Behavior Assessment System for Children, 3ª edizione", "Conners 3rd Edition (C3) — moduli Genitore, Insegnante e Autovalutazione", "BRIEF-2: Behavior Rating Inventory of Executive Function, 2ª edizione"]
@@ -876,7 +876,7 @@ export function WhitepaperADHD() {
                   <div className="absolute bottom-0 left-0 w-60 h-60 bg-indigo-600/15 rounded-full blur-[60px] pointer-events-none" />
                   <div className="relative z-10">
                     <p className="text-2xl font-bold text-white mb-2">{IT ? "Pronto a trasformare il tuo workflow di accoglienza ADHD?" : "Ready to transform your ADHD intake workflow?"}</p>
-                    <p className="text-slate-400 text-sm mb-8">{IT ? "Prenota una demo o avvia una conversazione sul programma pilota" : "Schedule a demo or start a pilot conversation"}</p>
+                    <p className="text-white/75 text-sm mb-8">{IT ? "Prenota una demo o avvia una conversazione sul programma pilota" : "Schedule a demo or start a pilot conversation"}</p>
                     <div className="flex flex-col sm:flex-row gap-3 justify-center">
                       <a
                         href="https://calendly.com/matteowastaken/discoverycall"
@@ -888,12 +888,12 @@ export function WhitepaperADHD() {
                       </a>
                       <a
                         href="mailto:matteo@usehana.com"
-                        className="inline-flex items-center gap-2 border border-white/20 text-slate-300 hover:text-white hover:border-white/40 px-6 py-3 rounded-full font-semibold text-sm transition-colors"
+                        className="inline-flex items-center gap-2 border border-white/20 text-white/75 hover:text-white hover:border-white/40 px-6 py-3 rounded-full font-semibold text-sm transition-colors"
                       >
                         matteo@usehana.com <ArrowUpRight size={14} />
                       </a>
                     </div>
-                    <p className="text-xs text-ink-soft mt-6">{IT ? "Riservato — preparato esclusivamente per le potenziali cliniche partner di HANA" : "Confidential — prepared exclusively for prospective HANA clinic partners"}</p>
+                    <p className="text-xs text-white/60 mt-6">{IT ? "Riservato — preparato esclusivamente per le potenziali cliniche partner di HANA" : "Confidential — prepared exclusively for prospective HANA clinic partners"}</p>
                   </div>
                 </div>
               </section>

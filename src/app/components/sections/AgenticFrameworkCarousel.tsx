@@ -208,7 +208,7 @@ export function AgenticFrameworkCarousel() {
           <h2 className="text-3xl md:text-5xl font-serif font-normal tracking-normal text-ink dark:text-white max-w-2xl leading-[1.1]">
             {it ? "Costruito su come lavora la tua clinica." : "Built around how your clinic works."}
           </h2>
-          <p className="text-xl md:text-2xl text-ink-soft dark:text-slate-400 max-w-3xl leading-relaxed md:mt-4 font-sans">
+          <p className="text-xl md:text-2xl text-ink-soft dark:text-white/75 max-w-3xl leading-relaxed md:mt-4 font-sans">
             {it ? "Dai flussi semplici ai percorsi di cura complessi. Attivo in 3 settimane." : "Simple workflows to complex care pathways. Live in 3 weeks."}
           </p>
         </div>
@@ -242,7 +242,7 @@ export function AgenticFrameworkCarousel() {
                         <h3 className="text-2xl font-medium text-ink dark:text-white mb-3">
                             {slide.title}
                         </h3>
-                        <p className="text-ink-soft dark:text-slate-400 leading-relaxed text-base max-w-xl">
+                        <p className="text-ink-soft dark:text-white/75 leading-relaxed text-base max-w-xl">
                             {slide.description}
                         </p>
                     </div>
@@ -258,7 +258,7 @@ export function AgenticFrameworkCarousel() {
                 <button 
                     onClick={previous}
                     disabled={currentSlide === 0}
-                    className="w-11 h-11 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-paper-2 dark:bg-navy text-ink-soft dark:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-rule-soft dark:hover:bg-navy-soft transition-colors"
+                    className="w-11 h-11 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-paper-2 dark:bg-navy text-ink-soft dark:text-white/75 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-rule-soft dark:hover:bg-navy-soft transition-colors"
                     aria-label={it ? "Slide precedente" : "Previous slide"}
                 >
                     <ChevronLeft className="w-5 h-5" />
@@ -283,7 +283,7 @@ export function AgenticFrameworkCarousel() {
                             "transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center",
                             currentSlide === index
                                 ? "text-ink dark:text-white"
-                                : "text-slate-400 dark:text-ink-soft hover:text-ink-soft dark:hover:text-slate-400"
+                                : "text-ink-mute dark:text-white/60 hover:text-ink-soft dark:hover:text-white/75"
                         )}
                     >
                         {index + 1}

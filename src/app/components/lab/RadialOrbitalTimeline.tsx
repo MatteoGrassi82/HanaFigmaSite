@@ -193,7 +193,7 @@ export default function RadialOrbitalTimeline({
             </h2>
           )}
           {description && (
-            <p className="text-lg leading-[1.65] text-slate-300 max-w-2xl mx-auto font-normal">
+            <p className="text-lg leading-[1.65] text-white/75 max-w-2xl mx-auto font-normal">
               {description}
             </p>
           )}
@@ -220,15 +220,15 @@ export default function RadialOrbitalTimeline({
                     <Icon className="w-5 h-5" strokeWidth={2} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className={cn("font-serif text-base font-medium", isExpanded ? "text-white" : "text-slate-300")}>
+                    <p className={cn("font-serif text-base font-medium", isExpanded ? "text-white" : "text-white/75")}>
                       {item.title}
                     </p>
-                    <p className="text-xs text-ink-mute font-mono">{item.date}</p>
+                    <p className="text-xs text-white/60 font-mono">{item.date}</p>
                   </div>
-                  <span className="text-ink-mute text-sm">{isExpanded ? "−" : "+"}</span>
+                  <span className="text-white/60 text-sm">{isExpanded ? "−" : "+"}</span>
                 </div>
                 {isExpanded && (
-                  <div className="px-4 pb-4 text-sm text-slate-400 leading-relaxed border-t border-white/10 pt-3">
+                  <div className="px-4 pb-4 text-sm text-white/75 leading-relaxed border-t border-white/10 pt-3">
                     {item.content}
                   </div>
                 )}
@@ -320,7 +320,7 @@ export default function RadialOrbitalTimeline({
                 <div
                   className={cn(
                     "absolute bottom-20 left-1/2 -translate-x-1/2 whitespace-nowrap text-lg font-serif font-medium tracking-wide transition-all duration-300",
-                    isExpanded ? "text-white" : "text-slate-400"
+                    isExpanded ? "text-white" : "text-white/75"
                   )}
                 >
                   {item.title}

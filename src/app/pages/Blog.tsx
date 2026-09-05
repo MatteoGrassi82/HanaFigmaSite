@@ -36,7 +36,7 @@ export function Blog() {
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl tracking-normal mb-4 leading-[1.1]">
               {t.blog.heading}
             </h1>
-            <p className="text-slate-400 text-base">
+            <p className="text-white/75 text-base">
               {t.blog.subheading}
             </p>
           </div>
@@ -56,7 +56,7 @@ export function Blog() {
             </div>
           ) : posts.length === 0 ? (
             <div className="text-center py-24">
-              <p className="text-slate-400 text-lg">{t.blog.noPosts}</p>
+              <p className="text-ink-soft text-lg">{t.blog.noPosts}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -76,7 +76,7 @@ export function Blog() {
                         </span>
                       ))}
                       {post.publishedAt && (
-                        <span className="text-[12px] text-slate-400">{formatDate(post.publishedAt)}</span>
+                        <span className="text-[12px] text-ink-mute">{formatDate(post.publishedAt)}</span>
                       )}
                     </div>
 

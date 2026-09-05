@@ -107,7 +107,7 @@ function TaskQueuePane({ compact = false }: { compact?: boolean }) {
   const rows = compact ? TASK_ROWS.slice(0, 4) : TASK_ROWS;
   return (
     <div>
-      <div className="flex items-center justify-between px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[1px] text-ink-mute border-b border-rule-soft bg-[#fbfcfe]">
+      <div className="flex items-center justify-between px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[1px] text-ink-mute border-b border-rule-soft bg-paper-bright">
         <span>Priority queue · 38 of 412 need action</span>
         {!compact && <span className="hidden sm:block">Ranked by risk + billing</span>}
       </div>
@@ -120,7 +120,7 @@ function TaskQueuePane({ compact = false }: { compact?: boolean }) {
           transition={{ duration: 0.35, delay: reduce ? 0 : 0.15 + i * 0.08 }}
           className="flex items-center gap-3 px-4 py-3 border-b border-rule-soft hover:bg-[#fafbfe] transition-colors"
         >
-          <span className="text-[11px] font-semibold text-slate-300 w-4 shrink-0 tabular-nums">{i + 1}</span>
+          <span className="text-[11px] font-semibold text-ink-mute w-4 shrink-0 tabular-nums">{i + 1}</span>
           <span className="flex items-center justify-center w-8 h-8 rounded-full bg-brand-tint text-brand text-[11px] font-bold shrink-0">
             {r.initials}
           </span>
@@ -191,7 +191,7 @@ function BillingPane() {
   return (
     <div className="flex flex-col h-full">
       {/* month-readiness summary strip */}
-      <div className="grid grid-cols-3 border-b border-rule-soft bg-[#fbfcfe]">
+      <div className="grid grid-cols-3 border-b border-rule-soft bg-paper-bright">
         {[
           { v: "218", l: "Requirements met", c: "text-emerald-600" },
           { v: "34", l: "Short of threshold", c: "text-amber-600" },
@@ -204,7 +204,7 @@ function BillingPane() {
         ))}
       </div>
       {/* column header */}
-      <div className="hidden md:grid grid-cols-[1.5fr_1.1fr_1.4fr_0.9fr] gap-3 px-4 py-2 text-[10px] font-bold uppercase tracking-[1px] text-slate-300 border-b border-rule-soft">
+      <div className="hidden md:grid grid-cols-[1.5fr_1.1fr_1.4fr_0.9fr] gap-3 px-4 py-2 text-[10px] font-bold uppercase tracking-[1px] text-ink-mute border-b border-rule-soft">
         <span>Patient</span>
         <span>Program · codes</span>
         <span>Requirement met</span>
@@ -253,7 +253,7 @@ function BillingPane() {
           );
         })}
       </div>
-      <div className="flex items-center justify-between px-4 py-3 mt-auto border-t border-rule-soft bg-[#fbfcfe]">
+      <div className="flex items-center justify-between px-4 py-3 mt-auto border-t border-rule-soft bg-paper-bright">
         <span className="text-[12px] text-ink-soft">One click exports the month's documentation packet — attributed time, escalations &amp; consent, for your biller to work.</span>
         <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-white bg-navy-soft rounded-lg px-3 py-1.5 shrink-0">Export documentation</span>
       </div>
@@ -394,7 +394,7 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
           reads as a full desktop screen without cramping on phones. */}
       <div className="flex items-stretch h-[440px] sm:h-auto sm:aspect-[16/10] sm:max-h-[640px]">
         {/* Left rail */}
-        <div className="hidden sm:flex flex-col w-52 lg:w-56 shrink-0 bg-[#fbfcfe] border-r border-rule-soft">
+        <div className="hidden sm:flex flex-col w-52 lg:w-56 shrink-0 bg-paper-bright border-r border-rule-soft">
           <div className="flex items-center gap-2.5 px-4 h-14 border-b border-rule-soft">
             {/* Compass app mark — three ascending bars in a periwinkle tile */}
             <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-brand to-[#3f57c0] shadow-sm">
@@ -408,7 +408,7 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
             </div>
           </div>
           <div className="px-3 py-4 flex flex-col flex-1">
-            <p className="px-2.5 mb-1.5 text-[10px] font-bold uppercase tracking-[1.5px] text-slate-300">Care team</p>
+            <p className="px-2.5 mb-1.5 text-[10px] font-bold uppercase tracking-[1.5px] text-ink-mute">Care team</p>
             {DASH_NAV.map((n, i) => (
               <button
                 key={n.label}
@@ -450,7 +450,7 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
         <div className="flex-1 min-w-0 flex flex-col bg-paper-bright">
           <div className="flex items-center gap-3 px-5 h-14 border-b border-rule-soft shrink-0">
             <span className="text-[15px] font-semibold text-navy">{DASH_NAV[active].label}</span>
-            <div className="ml-auto hidden md:flex items-center gap-2 bg-[#f6f7fb] border border-rule rounded-lg px-3 py-1.5 text-[12px] text-ink-mute w-56">
+            <div className="ml-auto hidden md:flex items-center gap-2 bg-paper-2 border border-rule rounded-lg px-3 py-1.5 text-[12px] text-ink-mute w-56">
               <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
               Search patients…
             </div>

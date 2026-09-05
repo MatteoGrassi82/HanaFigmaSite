@@ -160,7 +160,7 @@ export function SonicDemoSection({
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="text-center"
         >
-          <span className="inline-flex items-center gap-2.5 rounded-full bg-paper-bright/70 border border-[#e2e6f4] backdrop-blur-sm px-4 py-1.5">
+          <span className="inline-flex items-center gap-2.5 rounded-full bg-paper-bright/70 border border-rule-soft backdrop-blur-sm px-4 py-1.5">
             <span
               className="w-2 h-2 rounded-full bg-brand"
               style={{ animation: "hana-glow 2.4s ease-in-out infinite" }}
@@ -189,7 +189,7 @@ export function SonicDemoSection({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full max-w-[560px] rounded-[24px] bg-paper-bright/85 backdrop-blur-xl border border-[#e8ebf2] p-7 sm:p-9 shadow-[0_30px_70px_-24px_rgba(0,18,47,0.22)]"
+          className="w-full max-w-[560px] rounded-[24px] bg-paper-bright/85 backdrop-blur-xl border border-rule p-7 sm:p-9 shadow-[0_30px_70px_-24px_rgba(0,18,47,0.22)]"
         >
           <LiveDemoSection
             bare

@@ -79,13 +79,13 @@ export function CaseStudiesSection() {
     <section className="py-12 md:py-24 bg-[#F5F5F5] dark:bg-navy" id="case-studies">
       {/* Section Header */}
       <div className="max-w-7xl mx-auto px-4 md:px-8 text-center mb-12 md:mb-16">
-        <p className="text-[11px] font-semibold uppercase tracking-[2.5px] text-slate-400 mb-4">
+        <p className="text-[11px] font-semibold uppercase tracking-[2.5px] text-ink-mute mb-4">
           {cs.tag}
         </p>
         <h2 className="font-serif text-4xl md:text-5xl text-ink dark:text-white leading-tight max-w-3xl mx-auto">
           {cs.heading}
         </h2>
-        <p className="text-lg text-ink-mute dark:text-slate-400 max-w-xl mx-auto mt-4 leading-relaxed">
+        <p className="text-lg text-ink-mute dark:text-white/75 max-w-xl mx-auto mt-4 leading-relaxed">
           {cs.body}
         </p>
       </div>
@@ -124,7 +124,7 @@ export function CaseStudiesSection() {
                  {study.author && (
                   <div className="flex flex-col gap-1">
                     <span className={`font-bold text-lg ${study.theme === 'peach' ? 'text-ink' : 'text-white'}`}>{study.author.name}</span>
-                    <span className={`text-sm font-medium uppercase tracking-wide opacity-80 ${study.theme === 'peach' ? 'text-ink' : 'text-slate-300'}`}>{study.author.role}</span>
+                    <span className={`text-sm font-medium uppercase tracking-wide opacity-80 ${study.theme === 'peach' ? 'text-ink' : 'text-white/75'}`}>{study.author.role}</span>
                   </div>
                 )}
 
@@ -164,7 +164,7 @@ export function CaseStudiesSection() {
           {cs.readMore}
           <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-[3px]" />
         </Link>
-        <p className="text-[13px] text-ink-mute dark:text-slate-400 mt-[14px]">
+        <p className="text-[13px] text-ink-mute dark:text-white/60 mt-[14px]">
           {cs.readMoreSub}
         </p>
       </div>

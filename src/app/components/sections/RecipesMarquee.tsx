@@ -437,7 +437,7 @@ function Modal({ recipe, onClose }: { recipe: Recipe; onClose: () => void }) {
             <React.Fragment key={i}>
               {React.createElement(ICONS[ch], { size: 36 })}
               {i < recipe.flow.length - 1 && (
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="text-slate-300">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="text-rule">
                   <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
                 </svg>
               )}
@@ -450,12 +450,12 @@ function Modal({ recipe, onClose }: { recipe: Recipe; onClose: () => void }) {
           {/* Left column: what it does + connects to */}
           <div className="flex flex-col gap-6">
             <div>
-              <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-slate-400 mb-2">{L.whatItDoes}</div>
+              <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-ink-mute mb-2">{L.whatItDoes}</div>
               <p className="text-[15px] leading-relaxed text-ink-soft">{recipe.desc}</p>
             </div>
 
             <div className="border-t border-navy/10 pt-5">
-              <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-slate-400 mb-3">{L.connectsTo}</div>
+              <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-ink-mute mb-3">{L.connectsTo}</div>
               <div className="flex flex-wrap gap-2">
                 {recipe.systems.map((sys) => (
                   <span key={sys} className="text-[12px] text-ink-soft bg-paper-bright/70 border border-navy/10 px-3 py-1.5 rounded-full">{sys}</span>
@@ -466,7 +466,7 @@ function Modal({ recipe, onClose }: { recipe: Recipe; onClose: () => void }) {
 
           {/* Right column: how it works */}
           <div className="border-t border-navy/10 pt-5 mt-6 md:mt-0 md:border-t-0 md:pt-0">
-            <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-slate-400 mb-3">{L.howItWorks}</div>
+            <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-ink-mute mb-3">{L.howItWorks}</div>
             <ol className="space-y-0">
               {recipe.steps.map((step, i) => (
                 <li key={i} className="flex gap-3 py-3 border-b border-navy/8 last:border-0 text-[14px] text-ink-soft leading-snug">
@@ -592,7 +592,7 @@ export function RecipesMarquee({
       `}</style>
 
       <div className="text-center px-6 mb-10">
-        <p className="text-[11px] font-semibold uppercase tracking-[2.5px] text-slate-400 mb-4">
+        <p className="text-[11px] font-semibold uppercase tracking-[2.5px] text-ink-mute mb-4">
           {rm.tag}
         </p>
         <h2 className="font-serif text-4xl md:text-5xl text-ink leading-tight mb-4">

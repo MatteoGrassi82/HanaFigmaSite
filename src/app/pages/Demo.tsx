@@ -74,7 +74,7 @@ export function Demo() {
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                 active === i
                   ? "bg-navy text-white dark:bg-paper-bright dark:text-ink"
-                  : "bg-paper-bright text-ink-soft hover:bg-paper-2 dark:bg-navy dark:text-slate-300 dark:hover:bg-navy-soft border border-rule dark:border-navy-soft"
+                  : "bg-paper-bright text-ink-soft hover:bg-paper-2 dark:bg-navy dark:text-white/75 dark:hover:bg-navy-soft border border-rule dark:border-navy-soft"
               }`}
             >
               {c.title}
@@ -103,7 +103,7 @@ export function Demo() {
             <h2 className="text-xl font-semibold text-ink dark:text-white">{comp.title}</h2>
             <p className="mt-1 text-ink-mute text-base">{comp.description}</p>
           </div>
-          <div className="text-xs text-slate-400 bg-paper-2 dark:bg-navy rounded-lg px-3 py-2 shrink-0 font-mono">
+          <div className="text-xs text-ink-mute dark:text-white/60 bg-paper-2 dark:bg-navy rounded-lg px-3 py-2 shrink-0 font-mono">
             {comp.durationInFrames / 30}s @ 30fps
           </div>
         </div>
@@ -111,7 +111,7 @@ export function Demo() {
         {/* Dev note */}
         <div className="mt-16 p-6 bg-blue-50 dark:bg-navy rounded-2xl border border-blue-100 dark:border-navy-soft">
           <h3 className="font-semibold text-ink dark:text-white mb-2">{it ? "Informazioni su questa pagina" : "About this page"}</h3>
-          <p className="text-sm text-ink-soft dark:text-slate-400 leading-relaxed">
+          <p className="text-sm text-ink-soft dark:text-white/75 leading-relaxed">
             {it ? (
               <>
                 Queste animazioni sono componenti React che usano il Remotion Player. Sostituiscono screenshot statici e registrazioni dello schermo su S3 con demo del prodotto accurate al fotogramma e coerenti con il brand.

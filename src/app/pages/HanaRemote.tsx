@@ -451,7 +451,7 @@ const AGENT_PILLARS = [
 function PatientAgentSection() {
   const reduce = useReducedMotion();
   return (
-    <section className="relative overflow-hidden bg-[#f6f7fb] py-20 md:py-28 px-6 md:px-16">
+    <section className="relative overflow-hidden bg-paper-2 py-20 md:py-28 px-6 md:px-16">
       {/* soft periwinkle wash + the bloom orb behind the conversation (lower-left,
           low-opacity so it never fights the heading text) */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
@@ -729,7 +729,7 @@ export function HanaRemote() {
       />
 
       {/* HERO — centered and dominant (Contact-style) */}
-      <header className="bg-[#f6f7fb] pt-32 pb-16 md:pt-40 md:pb-20">
+      <header className="bg-paper-2 pt-32 pb-16 md:pt-40 md:pb-20">
         <div className="max-w-[1200px] mx-auto px-6 md:px-16 text-center">
           <motion.p {...fadeUp} className={`${eyebrow} text-brand m-0`}>
             HANA Remote · The engagement layer for remote care
@@ -816,7 +816,7 @@ export function HanaRemote() {
       <Stats />
 
       {/* WHAT HANA REMOTE DOES — question-framed feature blocks (Tile pattern) */}
-      <section className="py-20 md:py-24 px-6 md:px-16 bg-[#f6f7fb]">
+      <section className="py-20 md:py-24 px-6 md:px-16 bg-paper-2">
         <div className="max-w-[1200px] mx-auto">
           <motion.div {...fadeUp} className="text-center mb-10 md:mb-14">
             <p className={`${eyebrow} text-brand mt-0 mb-4`}>The questions every clinic asks</p>
@@ -978,7 +978,7 @@ export function HanaRemote() {
       </section>
 
       {/* THE NUMBERS — stat band */}
-      <section className="py-16 md:py-[72px] px-6 md:px-16 bg-[#f6f7fb]">
+      <section className="py-16 md:py-[72px] px-6 md:px-16 bg-paper-2">
         <div className="max-w-[1200px] mx-auto">
           <motion.div {...fadeUp}>
             <p className={`${eyebrow} text-brand mt-0 mb-3`}>By the numbers</p>

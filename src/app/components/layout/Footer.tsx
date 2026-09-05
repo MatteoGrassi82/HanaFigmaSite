@@ -8,7 +8,7 @@ export function Footer() {
   // State of Voice AI + Case Studies (via /use-cases) are US-specific; dropped on Italian.
   const isItalian = getLocale() === "it";
   return (
-    <footer className="bg-[rgb(0,18,47)] text-slate-400 py-12 px-4" role="contentinfo">
+    <footer className="bg-[rgb(0,18,47)] text-white/75 py-12 px-4" role="contentinfo">
       <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-8 mb-8">
         <div className="col-span-2 md:col-span-1">
           <Link to="/" aria-label="Hana Health Home">
@@ -20,7 +20,7 @@ export function Footer() {
               height="32"
             />
           </Link>
-          <p className="text-sm text-ink-mute mb-4">
+          <p className="text-sm text-white/75 mb-4">
             {t.footer.tagline}
           </p>
           <div className="flex gap-4">
@@ -83,13 +83,13 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-ink-mute">
+      <div className="max-w-7xl mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/60">
         <p>&copy; {new Date().getFullYear()} {t.footer.allRightsReserved}</p>
         <div className="flex gap-6">
-          <Link to="/privacy" className="py-2 hover:text-slate-400 transition-colors">{t.footer.privacy}</Link>
-          <Link to="/terms" className="py-2 hover:text-slate-400 transition-colors">{t.footer.terms}</Link>
-          <Link to="/cookies" className="py-2 hover:text-slate-400 transition-colors">{t.footer.cookies}</Link>
-          <Link to="/aup" className="py-2 hover:text-slate-400 transition-colors">{t.footer.aup}</Link>
+          <Link to="/privacy" className="py-2 hover:text-white transition-colors">{t.footer.privacy}</Link>
+          <Link to="/terms" className="py-2 hover:text-white transition-colors">{t.footer.terms}</Link>
+          <Link to="/cookies" className="py-2 hover:text-white transition-colors">{t.footer.cookies}</Link>
+          <Link to="/aup" className="py-2 hover:text-white transition-colors">{t.footer.aup}</Link>
         </div>
       </div>
     </footer>

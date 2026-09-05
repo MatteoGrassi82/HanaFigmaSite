@@ -61,7 +61,7 @@ const Stats = () => {
             {t.headingLine1} <br className="hidden md:inline" />
             <span className="italic">{t.headingLine2}</span>
           </h2>
-          <p className="text-lg text-ink-mute dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
+          <p className="text-lg text-ink-mute dark:text-white/75 max-w-xl mx-auto leading-relaxed">
             {t.subheading}
           </p>
         </div>
@@ -95,7 +95,7 @@ const Stats = () => {
           ))}
         </div>
         <div className="mt-12 text-center">
-             <p className="text-sm font-medium text-ink-mute dark:text-slate-400 uppercase tracking-wider">{t.caption}</p>
+             <p className="text-sm font-medium text-ink-mute dark:text-white/60 uppercase tracking-wider">{t.caption}</p>
         </div>
       </div>
     </section>
@@ -177,7 +177,7 @@ const BarChart = ({
           {t.tooltip}
         </motion.div>
       </motion.div>
-      <p className="mx-auto mt-3 md:mt-4 w-fit tracking-tight text-xs md:text-base text-ink-mute dark:text-slate-400 font-medium">
+      <p className="mx-auto mt-3 md:mt-4 w-fit tracking-tight text-xs md:text-base text-ink-mute dark:text-white/60 font-medium">
         {label}
       </p>
     </div>

@@ -145,13 +145,13 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 mb-8">
               <span className="w-2 h-2 rounded-full bg-rule animate-pulse" />
-              <span className="text-slate-400 text-xs font-semibold tracking-[3px] uppercase">CMS ACCESS Model · July 5 Launch</span>
+              <span className="text-white/60 text-xs font-semibold tracking-[3px] uppercase">CMS ACCESS Model · July 5 Launch</span>
             </div>
             <h1 className="font-serif text-4xl sm:text-5xl md:text-[3.5rem] leading-[1.05] mb-6 mx-auto max-w-3xl">
               50% of your ACCESS revenue is withheld.{" "}
-              <span className="text-slate-300">Getting it back depends on whether your patients responded.</span>
+              <span className="text-white/75">Getting it back depends on whether your patients responded.</span>
             </h1>
-            <p className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10">
+            <p className="text-white/75 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10">
               Hana calls and texts your patients, collects the measures CMS needs, and sends the data over in the right format. That's how you hit the threshold and get your money back. Five dollars a patient, a month.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -177,7 +177,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
         {/* ── What is ACCESS ───────────────────────────────────────────────── */}
         <section className="bg-paper-bright border-t border-rule-soft px-4 py-12">
           <div className="max-w-4xl mx-auto">
-            <p className="text-[10px] font-bold tracking-[3px] uppercase text-slate-400 mb-8 text-center">What is ACCESS?</p>
+            <p className="text-[10px] font-bold tracking-[3px] uppercase text-ink-mute mb-8 text-center">What is ACCESS?</p>
             <p className="text-ink-soft text-[16px] leading-relaxed text-center max-w-2xl mx-auto mb-10">
               ACCESS is a new CMS program that starts July 5. You get paid every month for each patient you enroll. But CMS keeps half of it for up to a year. You earn that half back only if enough of your patients complete their check-ins.
             </p>
@@ -190,7 +190,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                 <div key={term} className="bg-paper-bright p-6 flex flex-col gap-2">
                   <div className="flex items-baseline gap-2 mb-1">
                     <span className="font-serif text-[24px] text-ink leading-none">{term}</span>
-                    <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">{full}</span>
+                    <span className="text-[11px] font-semibold text-ink-mute uppercase tracking-wider">{full}</span>
                   </div>
                   <p className="text-[13px] text-ink-mute leading-relaxed">{def}</p>
                 </div>
@@ -217,7 +217,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
               {/* before */}
               <div className="bg-paper-bright p-8 flex flex-col gap-2">
                 <div className="font-serif text-4xl text-ink leading-none">~$216</div>
-                <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Remote monitoring / patient / month</div>
+                <div className="text-[11px] font-semibold text-ink-mute uppercase tracking-wider">Remote monitoring / patient / month</div>
                 <p className="text-[13px] text-ink-mute leading-relaxed">
                   What a chronic-care patient brings in today.
                 </p>
@@ -225,7 +225,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
               {/* after */}
               <div className="bg-paper-bright p-8 flex flex-col gap-2">
                 <div className="font-serif text-4xl text-blue-600 leading-none">~$35</div>
-                <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">ACCESS CKM / patient / month</div>
+                <div className="text-[11px] font-semibold text-ink-mute uppercase tracking-wider">ACCESS CKM / patient / month</div>
                 <p className="text-[13px] text-ink-mute leading-relaxed">
                   The top ACCESS rate. Most tracks pay $15 to $30 a month.
                 </p>
@@ -233,7 +233,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
               {/* withheld */}
               <div className="bg-paper-bright p-8 flex flex-col gap-2">
                 <div className="font-serif text-4xl text-ink leading-none">50%</div>
-                <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Held back up to 12 months</div>
+                <div className="text-[11px] font-semibold text-ink-mute uppercase tracking-wider">Held back up to 12 months</div>
                 <p className="text-[13px] text-ink-mute leading-relaxed">
                   You only earn it back once your patients complete their check-ins.
                 </p>
@@ -246,10 +246,10 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
               <h3 className="font-serif text-2xl md:text-3xl text-white leading-tight mb-4">
                 CMS set the rates this low on purpose
               </h3>
-              <p className="text-slate-300 text-[16px] leading-relaxed mb-4">
+              <p className="text-white/75 text-[16px] leading-relaxed mb-4">
                 At $15 to $35 a patient, you can't pay a person to chase down follow-ups. The math only works if software does it. That's the whole idea behind the program.
               </p>
-              <p className="text-slate-400 text-[15px] leading-relaxed">
+              <p className="text-white/75 text-[15px] leading-relaxed">
                 Hana is how you get the held-back half. It runs the outreach for you, gets your completion rate over the line, and the money comes back.
               </p>
             </div>
@@ -279,7 +279,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                   Half or more of your patients finished their check-ins. CMS pays back the whole held-back amount.
                 </p>
                 <div className="mt-auto pt-4 border-t border-rule-soft">
-                  <span className="text-[11px] text-slate-400">1,000 CKM patients → $210K released</span>
+                  <span className="text-[11px] text-ink-mute">1,000 CKM patients → $210K released</span>
                 </div>
               </div>
 
@@ -295,7 +295,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                   Fall short of 50% and your payout drops to match. At 40%, you get 80% of the held-back money back.
                 </p>
                 <div className="mt-auto pt-4 border-t border-rule-soft">
-                  <span className="text-[11px] text-slate-400">1,000 CKM patients → $168K released</span>
+                  <span className="text-[11px] text-ink-mute">1,000 CKM patients → $168K released</span>
                 </div>
               </div>
 
@@ -311,7 +311,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                   Even in a bad year, you keep at least half of the held-back money. That's the floor.
                 </p>
                 <div className="mt-auto pt-4 border-t border-rule-soft">
-                  <span className="text-[11px] text-slate-400">1,000 CKM patients → $105K released</span>
+                  <span className="text-[11px] text-ink-mute">1,000 CKM patients → $105K released</span>
                 </div>
               </div>
             </div>
@@ -381,7 +381,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
             </div>
 
             {/* Honesty note — kept short */}
-            <p className="text-[13px] text-slate-400 leading-relaxed text-center max-w-2xl mx-auto">
+            <p className="text-[13px] text-ink-soft leading-relaxed text-center max-w-2xl mx-auto">
               Those numbers come from studies where people made the calls. Our own 85% is a{" "}
               <span className="text-ink-mute font-medium">goal we're working toward</span>, not a promise. We'd rather show you why phone outreach works than throw a number at you.
             </p>
@@ -477,7 +477,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
               <p className="text-white text-[17px] leading-relaxed mb-4">
                 Hana handles the whole thing with one call, on time.
               </p>
-              <p className="text-slate-300 text-[15px] leading-relaxed">
+              <p className="text-white/75 text-[15px] leading-relaxed">
                 It calls inside the window, gets the consent, confirms the details, takes a fresh reading if needed, and writes it all back to the chart with a timestamp. Your team only sees the few patients who didn't pick up, with time to spare.
               </p>
             </div>
@@ -542,7 +542,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
               {/* Base fee */}
               <div className="bg-paper-bright border border-rule rounded-2xl p-8">
-                <p className="text-[10px] font-bold tracking-[2px] uppercase text-slate-400 mb-4">Base fee</p>
+                <p className="text-[10px] font-bold tracking-[2px] uppercase text-ink-mute mb-4">Base fee</p>
                 <div className="font-serif text-5xl text-ink mb-2">$5</div>
                 <div className="text-ink-mute text-sm mb-6">per patient / per month</div>
                 <ul className="space-y-2">
@@ -559,8 +559,8 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
               <div className="bg-navy border border-white/10 rounded-2xl p-8 text-white">
                 <p className="text-[10px] font-bold tracking-[2px] uppercase text-blue-400 mb-4">Success fee</p>
                 <div className="font-serif text-5xl text-white mb-2">+10%</div>
-                <div className="text-slate-400 text-sm mb-6">of the held-back money CMS pays you back</div>
-                <p className="text-[13px] text-slate-400 leading-relaxed">
+                <div className="text-white/60 text-sm mb-6">of the held-back money CMS pays you back</div>
+                <p className="text-[13px] text-white/75 leading-relaxed">
                   You only pay this when CMS pays you back. If the money doesn't come back, neither does our fee.
                 </p>
                 <div className="mt-6 pt-6 border-t border-white/10">
@@ -613,7 +613,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
               <h2 className="font-serif text-3xl md:text-4xl text-white leading-tight mb-3">
                 Run the numbers for your cohort.
               </h2>
-              <p className="text-slate-300 text-[15px]">
+              <p className="text-white/75 text-[15px]">
                 Adjust your patient count, track, and response rate. See exactly what's at stake.
               </p>
             </div>
@@ -626,7 +626,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                 {/* Patient count */}
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <label className="text-[11px] font-bold tracking-[2px] uppercase text-slate-300">Patients enrolled</label>
+                    <label className="text-[11px] font-bold tracking-[2px] uppercase text-white/60">Patients enrolled</label>
                     <span className="font-serif text-2xl text-white">{calcPatients.toLocaleString()}</span>
                   </div>
                   <input
@@ -639,14 +639,14 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                       background: `linear-gradient(to right, #3B82F6 ${((calcPatients - 100) / 4900) * 100}%, rgba(255,255,255,0.1) ${((calcPatients - 100) / 4900) * 100}%)`
                     }}
                   />
-                  <div className="flex justify-between text-[11px] text-slate-400 mt-1.5">
+                  <div className="flex justify-between text-[11px] text-white/60 mt-1.5">
                     <span>100</span><span>5,000</span>
                   </div>
                 </div>
 
                 {/* Track */}
                 <div>
-                  <label className="text-[11px] font-bold tracking-[2px] uppercase text-slate-300 block mb-3">Track</label>
+                  <label className="text-[11px] font-bold tracking-[2px] uppercase text-white/60 block mb-3">Track</label>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {(["eCKM", "CKM", "BH", "MSK"] as const).map(t => (
                       <button
@@ -655,14 +655,14 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                         className="py-2.5 rounded-xl text-[13px] font-semibold transition-all border"
                         style={calcTrack === t
                           ? { backgroundColor: "#3B82F6", color: "#fff", borderColor: "#3B82F6" }
-                          : { backgroundColor: "transparent", color: "#cbd5e1", borderColor: "rgba(255,255,255,0.08)" }
+                          : { backgroundColor: "transparent", color: "var(--color-rule)", borderColor: "rgba(255,255,255,0.08)" }
                         }
                       >
                         {t}
                       </button>
                     ))}
                   </div>
-                  <p className="text-[11px] text-slate-300 mt-2">
+                  <p className="text-[11px] text-white/75 mt-2">
                     CMS pays ${OAP_RATES[calcTrack]}/patient/mo · Hana base fee ${BASE_FEES[calcTrack]}/patient/mo{calcTrack === "BH" ? " (more check-ins)" : ""}
                   </p>
                 </div>
@@ -670,7 +670,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                 {/* OAR slider — the key one */}
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <label className="text-[11px] font-bold tracking-[2px] uppercase text-slate-300">
+                    <label className="text-[11px] font-bold tracking-[2px] uppercase text-white/60">
                       Expected response rate
                     </label>
                     <div className="flex items-center gap-2">
@@ -697,9 +697,9 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                     }}
                   />
                   <div className="flex justify-between text-[11px] mt-1.5">
-                    <span className="text-slate-400">10%</span>
+                    <span className="text-white/60">10%</span>
                     <span className="text-blue-400 font-semibold">← 50% line →</span>
-                    <span className="text-slate-400">90%</span>
+                    <span className="text-white/60">90%</span>
                   </div>
                 </div>
               </div>
@@ -737,8 +737,8 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                     ["Total Hana cost", `$${Math.round(hanaTotal).toLocaleString()}`],
                   ].map(([label, value, color]) => (
                     <div key={String(label)} className="flex items-baseline justify-between gap-4">
-                      <span className="text-[13px] text-slate-300">{label}</span>
-                      <span className="text-[14px] font-semibold tabular-nums" style={{ color: color as string || "#f1f5f9" }}>{value}</span>
+                      <span className="text-[13px] text-white/60">{label}</span>
+                      <span className="text-[14px] font-semibold tabular-nums" style={{ color: color as string || "var(--color-paper-2)" }}>{value}</span>
                     </div>
                   ))}
                   <div className="border-t border-white/[0.07] pt-4 flex items-center justify-between">
@@ -781,7 +781,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                   className="px-5 py-3 sm:py-2.5 rounded-lg text-[13px] font-semibold transition-all"
                   style={activeTrack === t.key
                     ? { backgroundColor: t.color, color: "#fff" }
-                    : { color: "#64748b", backgroundColor: "transparent" }
+                    : { color: "var(--color-ink-mute)", backgroundColor: "transparent" }
                   }
                 >
                   {t.label}
@@ -795,7 +795,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                 <div className="flex items-center gap-2 mb-1">
                   <h3 className="font-serif text-2xl text-ink">{track.label}</h3>
                 </div>
-                <p className="text-slate-400 text-sm mb-6">{track.subtitle} · OAP {track.oap}</p>
+                <p className="text-ink-mute text-sm mb-6">{track.subtitle} · OAP {track.oap}</p>
                 <p className="text-[10px] font-bold tracking-[2px] uppercase mb-4" style={{ color: track.color }}>Required measures</p>
                 <div className="space-y-3">
                   {track.measures.map(m => (
@@ -803,7 +803,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                       <div className="w-1.5 h-1.5 rounded-full mt-2 shrink-0" style={{ backgroundColor: track.color }} />
                       <div>
                         <span className="text-[14px] font-semibold text-ink">{m.name}</span>
-                        <span className="text-[13px] text-slate-400 ml-2">{m.note}</span>
+                        <span className="text-[13px] text-ink-soft ml-2">{m.note}</span>
                       </div>
                     </div>
                   ))}
@@ -867,14 +867,14 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                   <h3 className="font-semibold text-ink text-[15px] mb-3">{title}</h3>
                   <p className="text-[14px] text-ink-soft leading-relaxed mb-5">{what}</p>
                   <div className="pt-4 border-t border-rule-soft">
-                    <p className="text-[10px] font-bold tracking-[2px] uppercase text-slate-400 mb-2">Where it stops</p>
+                    <p className="text-[10px] font-bold tracking-[2px] uppercase text-ink-mute mb-2">Where it stops</p>
                     <p className="text-[13px] text-ink-mute leading-relaxed">{not}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            <p className="text-center text-[13px] text-slate-400 leading-relaxed max-w-2xl mx-auto mt-10">
+            <p className="text-center text-[13px] text-ink-soft leading-relaxed max-w-2xl mx-auto mt-10">
               None of this is live yet, and none of it changes what CMS pays. If another vendor tells you they can "fix" your numbers here, ask them to show you the rules.
             </p>
           </div>
@@ -900,7 +900,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
               <h2 className="font-serif text-4xl md:text-5xl text-white leading-tight mb-4">
                 Get set up before<br />the program starts.
               </h2>
-              <p className="text-slate-400 text-[16px] max-w-xl mx-auto leading-relaxed mb-10">
+              <p className="text-white/75 text-[16px] max-w-xl mx-auto leading-relaxed mb-10">
                 Twenty minutes. We'll show you what the calls sound like for your patients and walk through your numbers.
               </p>
               <a
@@ -916,9 +916,9 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
 
             {/* PDF lead capture */}
             <div className="border-t border-white/[0.07] pt-12 max-w-xl mx-auto text-center">
-              <p className="text-[10px] font-bold tracking-[3px] uppercase text-ink-mute mb-3">Free one-pager</p>
+              <p className="text-[10px] font-bold tracking-[3px] uppercase text-white/60 mb-3">Free one-pager</p>
               <p className="text-white font-semibold text-[15px] mb-2">ACCESS Pricing & ROI Calculator</p>
-              <p className="text-ink-mute text-[13px] mb-6">The numbers for each track, with your patient count filled in.</p>
+              <p className="text-white/75 text-[13px] mb-6">The numbers for each track, with your patient count filled in.</p>
               {submitted ? (
                 <div className="flex items-center justify-center gap-2 text-emerald-400 text-[14px] font-semibold py-3">
                   <div className="w-2 h-2 rounded-full bg-emerald-400" />
@@ -935,7 +935,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     placeholder="you@company.com"
-                    className="flex-1 px-4 py-3 rounded-xl bg-paper-bright/[0.06] border border-white/[0.1] text-white placeholder-ink-mute text-[14px] focus:outline-none focus:border-blue-500/60"
+                    className="flex-1 px-4 py-3 rounded-xl bg-paper-bright/[0.06] border border-white/[0.1] text-white placeholder-white/60 text-[14px] focus:outline-none focus:border-blue-500/60"
                   />
                   <button
                     type="submit"

@@ -88,7 +88,7 @@ export function WhyHana({
             <div
               className="relative overflow-hidden rounded-[20px] md:rounded-[32px] h-[260px] md:h-[420px]"
               style={{
-                backgroundColor: "#f6f7fb",
+                backgroundColor: "var(--color-paper-2)",
                 backgroundImage:
                   "linear-gradient(135deg, #eef0f7 25%, transparent 25.5%, transparent 50%, #eef0f7 50.5%, #eef0f7 75%, transparent 75.5%, transparent)",
                 backgroundSize: "12px 12px",

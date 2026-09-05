@@ -17,8 +17,8 @@ import { ArrowRight } from "lucide-react";
  * "this is you if" bullets live on in the product pages). A footer band
  * carries the shared one-engine line and the "What Hana never does" boundary.
  *
- * Built to the Hana design language (Instrument Serif display via `font-serif`,
- * DM Sans body, navy #00122F ink, #5b76d9 accent, white cards on #f6f7fb).
+ * Built to the Hana design language (Fraunces display via `font-serif`,
+ * body sans, warm near-black ink, ultramarine accent, cards on the paper-2 band).
  *
  * COPY GUARDRAILS —
  *  - HANA Remote follows the positioning rules documented at the top of
@@ -93,7 +93,7 @@ const PRODUCTS: Product[] = [
 
 export function ProductsIntro() {
   return (
-    <section className="bg-[#f6f7fb] py-20 sm:py-24 lg:py-[100px] px-5 sm:px-6 lg:px-8 font-sans">
+    <section className="bg-paper-2 py-20 sm:py-24 lg:py-[100px] px-5 sm:px-6 lg:px-8 font-sans">
       <div className="max-w-7xl mx-auto">
         {/* ── Header ── */}
         <div className="text-center mb-12 sm:mb-14">
@@ -114,7 +114,7 @@ export function ProductsIntro() {
           {PRODUCTS.map((p) => (
             <div
               key={p.href}
-              className={`${cardHover} bg-paper-bright border border-[#e8ebf2] rounded-[18px] overflow-hidden flex flex-col`}
+              className={`${cardHover} bg-paper-bright border border-rule rounded-[18px] overflow-hidden flex flex-col`}
             >
               {/* photo header — real people, the human side of each product */}
               <div className="relative">
@@ -132,16 +132,16 @@ export function ProductsIntro() {
               </div>
 
               {/* activity feed — floats up over the photo's bottom edge */}
-              <div className="relative z-10 mx-6 sm:mx-8 -mt-14 bg-paper-bright rounded-[12px] border border-[#e8ebf2] shadow-[0_12px_30px_rgba(0,18,47,0.14)] px-5 py-1.5">
+              <div className="relative z-10 mx-6 sm:mx-8 -mt-14 bg-paper-bright rounded-[12px] border border-rule shadow-[0_12px_30px_rgba(0,18,47,0.14)] px-5 py-1.5">
                 {p.rows.map((row, i) => (
                   <div
                     key={row.label}
                     className={`flex items-center justify-between gap-3 py-3 ${
-                      i > 0 ? "border-t border-[#e8ebf2]" : ""
+                      i > 0 ? "border-t border-rule" : ""
                     }`}
                   >
                     <span className="text-[13.5px] text-navy truncate">{row.label}</span>
-                    <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-[#475569] whitespace-nowrap">
+                    <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-ink-soft whitespace-nowrap">
                       <span
                         aria-hidden
                         className={
@@ -169,7 +169,7 @@ export function ProductsIntro() {
                 <h3 className="font-serif font-normal text-3xl sm:text-[36px] leading-[1.12] text-navy mb-3.5 max-w-[20ch]">
                   {p.headline}
                 </h3>
-                <p className="text-[15.5px] leading-[1.7] text-[#475569] mb-7 max-w-[52ch] text-pretty">
+                <p className="text-[15.5px] leading-[1.7] text-ink-soft mb-7 max-w-[52ch] text-pretty">
                   {p.body}
                 </p>
 
@@ -189,11 +189,11 @@ export function ProductsIntro() {
         </div>
 
         {/* ── One-engine footer band + the trust boundary ── */}
-        <div className="mt-12 pt-9 border-t border-[#e8ebf2] text-center max-w-[720px] mx-auto">
+        <div className="mt-12 pt-9 border-t border-rule text-center max-w-[720px] mx-auto">
           <p className="text-[16px] leading-[1.7] font-medium text-navy m-0">
             One engine. Same voice, same clinical guardrails, same note in the same chart.
           </p>
-          <p className="mt-3 text-[15px] leading-[1.7] text-[#475569] m-0 text-pretty">
+          <p className="mt-3 text-[15px] leading-[1.7] text-ink-soft m-0 text-pretty">
             <strong className="font-semibold text-navy">What Hana never does:</strong> clinical
             judgment, bad news, or a patient who is upset. Those go to your clinician mid-call, with
             the full context already on screen.

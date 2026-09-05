@@ -1225,7 +1225,7 @@ function WhatIsHanaCompare() {
           <motion.div
             {...fadeUp}
             transition={{ duration: 0.5, delay: 0.05 }}
-            className="rounded-xl bg-[#f6f7fb] p-8 md:p-9 flex flex-col md:min-h-[620px]"
+            className="rounded-xl bg-paper-2 p-8 md:p-9 flex flex-col md:min-h-[620px]"
           >
             <p className="text-[13px] font-semibold text-navy m-0">One way</p>
             <div className="h-10 md:h-[220px]" aria-hidden />
@@ -1242,7 +1242,7 @@ function WhatIsHanaCompare() {
           <motion.div
             {...fadeUp}
             transition={{ duration: 0.5, delay: 0.13 }}
-            className="rounded-xl bg-[#f6f7fb] p-8 md:p-9 flex flex-col md:min-h-[620px]"
+            className="rounded-xl bg-paper-2 p-8 md:p-9 flex flex-col md:min-h-[620px]"
           >
             <p className="text-[13px] font-semibold text-navy m-0">Another way</p>
             <div className="h-10 md:h-[220px]" aria-hidden />

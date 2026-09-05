@@ -57,7 +57,7 @@ function WhitepaperCard({ wp, index }: { wp: typeof WHITEPAPERS[0]; index: numbe
           <div className="absolute top-0 right-0 w-40 h-40 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
           <span className="text-blue-400 text-[10px] font-bold uppercase tracking-widest">{wp.badge} Whitepaper</span>
           <h2 className="text-white text-xl font-black mt-1 leading-tight">{wp.title}</h2>
-          <p className="text-slate-400 text-xs mt-1">{wp.subtitle}</p>
+          <p className="text-white/75 text-xs mt-1">{wp.subtitle}</p>
         </div>
 
         {/* Body */}
@@ -66,7 +66,7 @@ function WhitepaperCard({ wp, index }: { wp: typeof WHITEPAPERS[0]; index: numbe
             {wp.tags.map(t => (
               <span key={t} className="text-[10px] font-semibold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">{t}</span>
             ))}
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 bg-paper-2 px-2 py-0.5 rounded-full">{wp.year}</span>
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-mute bg-paper-2 px-2 py-0.5 rounded-full">{wp.year}</span>
           </div>
           <p className="text-sm text-ink-soft leading-relaxed flex-1">{wp.description}</p>
           <div className="mt-5 flex items-center gap-1.5 text-blue-600 text-sm font-semibold group-hover:gap-2.5 transition-all">
@@ -95,7 +95,7 @@ function BlogCard({ post, index }: { post: Post; index: number }) {
             <span key={c.title} className="text-[10px] font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">{c.title}</span>
           ))}
           {post.publishedAt && (
-            <span className="text-[11px] text-slate-400">{formatDate(post.publishedAt)}</span>
+            <span className="text-[11px] text-ink-mute">{formatDate(post.publishedAt)}</span>
           )}
         </div>
         <h2 className="font-serif text-lg text-ink leading-snug group-hover:text-blue-700 transition-colors flex-1">
@@ -126,7 +126,7 @@ function ResearchCard({ item, index }: { item: typeof RESEARCH_ITEMS[0]; index: 
       >
         <div className="flex items-start justify-between gap-3 mb-3">
           <h2 className="text-lg font-bold text-ink group-hover:text-blue-700 transition-colors">{item.title}</h2>
-          {!item.internal && <ExternalLink size={15} className="text-slate-400 shrink-0 mt-0.5" />}
+          {!item.internal && <ExternalLink size={15} className="text-ink-mute shrink-0 mt-0.5" />}
         </div>
         <p className="text-sm text-ink-soft leading-relaxed flex-1">{item.desc}</p>
         <div className="mt-5 flex items-center gap-1.5 text-blue-600 text-sm font-semibold group-hover:gap-2.5 transition-all">
@@ -165,7 +165,7 @@ export function Resources() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <p className="text-blue-400 text-xs font-bold uppercase tracking-widest mb-4">Hana Health</p>
             <h1 className="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">Resources</h1>
-            <p className="text-slate-400 text-lg max-w-xl">
+            <p className="text-white/75 text-lg max-w-xl">
               Whitepapers, clinical research, and insights on voice AI in healthcare.
             </p>
           </motion.div>
@@ -217,9 +217,9 @@ export function Resources() {
                     transition={{ duration: 0.4, delay: 0.15 }}
                     className="rounded-2xl border-2 border-dashed border-rule bg-paper-bright/50 flex flex-col items-center justify-center p-8 text-center min-h-[220px]"
                   >
-                    <FileText size={28} className="text-slate-300 mb-3" />
-                    <p className="text-sm font-semibold text-slate-400">More whitepapers coming</p>
-                    <p className="text-xs text-slate-400 mt-1">Depression screening, chronic care, and more</p>
+                    <FileText size={28} className="text-rule mb-3" />
+                    <p className="text-sm font-semibold text-ink-soft">More whitepapers coming</p>
+                    <p className="text-xs text-ink-mute mt-1">Depression screening, chronic care, and more</p>
                   </motion.div>
                 </div>
               </motion.div>
@@ -237,7 +237,7 @@ export function Resources() {
                   </div>
                 ) : posts.length === 0 ? (
                   <div className="text-center py-24">
-                    <p className="text-slate-400">No posts yet — check back soon.</p>
+                    <p className="text-ink-soft">No posts yet — check back soon.</p>
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

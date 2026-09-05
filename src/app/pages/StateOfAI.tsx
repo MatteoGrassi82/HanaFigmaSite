@@ -121,7 +121,7 @@ function CompanyDetail({ company, onClose }: { company: Company; onClose: () => 
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={onClose}>
       <div className="w-[90%] max-w-md bg-paper-bright rounded-2xl shadow-2xl p-6 sm:p-8 relative" onClick={(e) => e.stopPropagation()}>
-        <button onClick={onClose} className="absolute top-4 right-4 p-2.5 rounded-full hover:bg-paper-2 transition-colors text-slate-400 hover:text-ink-soft">
+        <button onClick={onClose} className="absolute top-4 right-4 p-2.5 rounded-full hover:bg-paper-2 transition-colors text-ink-mute hover:text-ink-soft">
           <X className="w-5 h-5" />
         </button>
         <h3 className="font-serif text-2xl text-ink mb-1 pr-8">{company.n}</h3>
@@ -149,7 +149,7 @@ function BucketSection({ name, companies, layer, searchTerm, onCompanyClick }: {
     <div className="mb-6">
       <div className="flex items-center gap-2 mb-3">
         <span className={layer.color}>{BUCKET_ICONS[name]}</span>
-        <span className="text-xs font-semibold text-slate-400 uppercase tracking-widest">{name}</span>
+        <span className="text-xs font-semibold text-ink-mute uppercase tracking-widest">{name}</span>
         <span className={`text-xs font-medium ${layer.color}`}>{filtered.length}</span>
       </div>
       <div className="flex flex-wrap -m-0.5">
@@ -256,7 +256,7 @@ export function StateOfAI() {
               <div key={i} className="text-center">
                 <div className="font-serif text-4xl md:text-5xl text-blue-400 mb-1">{stat.number}</div>
                 <div className="text-xs font-semibold text-white uppercase tracking-wider">{stat.label}</div>
-                {stat.sub && <div className="text-xs text-slate-400 mt-0.5">{stat.sub}</div>}
+                {stat.sub && <div className="text-xs text-white/60 mt-0.5">{stat.sub}</div>}
               </div>
             ))}
           </div>
@@ -285,17 +285,17 @@ export function StateOfAI() {
           <FadeIn>
             <div className="flex gap-4 items-center flex-wrap mb-8">
               <div className="flex items-center gap-2 border border-rule bg-paper-bright rounded-full px-4 py-2.5 flex-[1_1_280px] max-w-sm shadow-sm">
-                <Search className="w-4 h-4 text-slate-400" />
+                <Search className="w-4 h-4 text-ink-mute" />
                 <input
                   type="text"
                   placeholder="Search companies..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="border-none outline-none bg-transparent w-full text-sm text-ink placeholder:text-slate-400"
+                  className="border-none outline-none bg-transparent w-full text-sm text-ink placeholder:text-ink-mute"
                 />
                 {searchTerm && (
                   <button onClick={() => setSearchTerm("")} className="p-0.5 hover:bg-paper-2 rounded-full transition-colors">
-                    <X className="w-4 h-4 text-slate-400" />
+                    <X className="w-4 h-4 text-ink-mute" />
                   </button>
                 )}
               </div>
@@ -324,7 +324,7 @@ export function StateOfAI() {
 
           {/* Section label */}
           <FadeIn>
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">The Ecosystem Map</p>
+            <p className="text-xs font-semibold text-ink-mute uppercase tracking-widest mb-6">The Ecosystem Map</p>
           </FadeIn>
 
           {/* The Map */}
@@ -338,7 +338,7 @@ export function StateOfAI() {
       <section className="px-6 pb-20">
         <FadeIn>
           <div className="max-w-5xl mx-auto bg-navy rounded-2xl p-6 sm:p-8 md:p-12">
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">Key Observations</p>
+            <p className="text-xs font-semibold text-white/60 uppercase tracking-widest mb-3">Key Observations</p>
             <h2 className="font-serif text-3xl md:text-4xl text-white mb-6">What the map reveals</h2>
             <div className="h-px w-full bg-paper-bright/10 mb-8" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-x-12">
@@ -351,7 +351,7 @@ export function StateOfAI() {
                 <FadeIn key={i} delay={i * 0.05}>
                   <div>
                     <h3 className="text-base font-medium text-blue-300 mb-2 leading-snug">{title}</h3>
-                    <p className="text-sm text-slate-400 leading-relaxed">{body}</p>
+                    <p className="text-sm text-white/75 leading-relaxed">{body}</p>
                   </div>
                 </FadeIn>
               ))}

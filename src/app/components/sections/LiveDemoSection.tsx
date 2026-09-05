@@ -148,7 +148,7 @@ export function LiveDemoSection({
                       <p className="text-[24px] leading-[1.42] text-navy font-normal max-w-[30ch] mb-3">
                         {ld.formHeading}
                       </p>
-                      <p className="text-[15px] leading-[1.7] text-[#64748b] max-w-[42ch]">
+                      <p className="text-[15px] leading-[1.7] text-ink-mute max-w-[42ch]">
                         {ld.formSubheading}
                       </p>
                     </div>
@@ -204,7 +204,7 @@ export function LiveDemoSection({
         id="live-demo-section"
         className={
           bareSurface === "panel"
-            ? "rounded-[20px] bg-[#f6f7fb] border border-[#e8ebf2] p-7 sm:p-10 flex flex-col justify-center"
+            ? "rounded-[20px] bg-paper-2 border border-rule p-7 sm:p-10 flex flex-col justify-center"
             : "flex flex-col justify-center"
         }
       >
@@ -225,7 +225,7 @@ export function LiveDemoSection({
         </p>
 
         {/* Two-column card */}
-        <div className="flex flex-col lg:flex-row gap-0 border border-[#e8ebf2] rounded-[20px] overflow-hidden shadow-[0_24px_64px_rgba(0,18,47,0.10)]">
+        <div className="flex flex-col lg:flex-row gap-0 border border-rule rounded-[20px] overflow-hidden shadow-[0_24px_64px_rgba(0,18,47,0.10)]">
 
           {/* Left — fluid bloom orb */}
           <div className="relative lg:w-1/2 bg-paper-bright overflow-hidden flex items-center justify-center min-h-[320px] lg:min-h-[520px] px-12 py-16">
@@ -236,12 +236,12 @@ export function LiveDemoSection({
             {/* live caption */}
             <div className="absolute bottom-10 left-0 right-0 flex items-center justify-center gap-2">
               <span className="w-2 h-2 rounded-full bg-brand" style={{ animation: "hana-glow 2.4s ease-in-out infinite" }} />
-              <span className="text-[12px] font-bold tracking-[2.5px] uppercase text-[#64748b]">{ld.listeningLabel}</span>
+              <span className="text-[12px] font-bold tracking-[2.5px] uppercase text-ink-mute">{ld.listeningLabel}</span>
             </div>
           </div>
 
           {/* Right — form / call */}
-          <div className="lg:w-1/2 bg-[#f6f7fb] border-t lg:border-t-0 lg:border-l border-[#e8ebf2] p-7 sm:p-10 lg:p-14 flex flex-col justify-center">
+          <div className="lg:w-1/2 bg-paper-2 border-t lg:border-t-0 lg:border-l border-rule p-7 sm:p-10 lg:p-14 flex flex-col justify-center">
             {formPanel}
           </div>
         </div>

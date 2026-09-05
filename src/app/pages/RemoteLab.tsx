@@ -151,7 +151,7 @@ const CLOCK = [
 
 function SleepNinetyDayClock() {
   return (
-    <section className="bg-[#f6f7fb] py-24 md:py-32 px-6 md:px-16">
+    <section className="bg-paper-2 py-24 md:py-32 px-6 md:px-16">
       <div className="max-w-[1200px] mx-auto">
         <motion.div {...fadeUp} className="text-center">
           <span className="inline-flex items-center gap-2.5 rounded-full bg-navy pl-3.5 pr-4 py-2">

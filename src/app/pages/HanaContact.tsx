@@ -97,7 +97,7 @@ export function HanaContact() {
 
       {/* HERO */}
       {/* HERO + digital-front-desk diagram — one dominant light block */}
-      <header className="bg-[#f6f7fb] pt-32 pb-16 md:pt-40 md:pb-20">
+      <header className="bg-paper-2 pt-32 pb-16 md:pt-40 md:pb-20">
         <div className="max-w-[1200px] mx-auto px-6 md:px-16 text-center">
           <motion.p
             {...fadeUp}
@@ -130,14 +130,14 @@ export function HanaContact() {
       {/* Front-desk flow — blended into the hero (no heading, orb is the center).
           The wide SVG is illegible at phone widths, so below md we render a
           vertical stacked variant instead. */}
-      <section className="bg-[#f6f7fb] pb-24 md:pb-28">
+      <section className="bg-paper-2 pb-24 md:pb-28">
         <div className="max-w-[1200px] mx-auto px-6 md:px-16">
           <ContactFlow />
         </div>
       </section>
 
       {/* PROBLEM — stat left / text right */}
-      <section className="py-20 md:py-24 bg-[#f6f7fb]">
+      <section className="py-20 md:py-24 bg-paper-2">
         <div className="max-w-[1200px] mx-auto px-6 md:px-16 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
           <motion.div {...fadeUp}>
             <p className={`${eyebrow} text-brand mt-0 mb-6`}>The problem</p>
@@ -231,13 +231,13 @@ export function HanaContact() {
           </div>
         </motion.div>
 
-        <p className="text-xs font-bold tracking-[1.5px] uppercase text-slate-400 mt-12">
+        <p className="text-xs font-bold tracking-[1.5px] uppercase text-ink-mute mt-12">
           % of inbound calls resolved without a human · voice AI vs. legacy phone systems
         </p>
       </section>
 
       {/* ROI CALCULATOR — "Run the numbers" */}
-      <section className="py-20 md:py-24 px-6 md:px-16 bg-[#f6f7fb]">
+      <section className="py-20 md:py-24 px-6 md:px-16 bg-paper-2">
         <div className="max-w-[1200px] mx-auto">
           <motion.div {...fadeUp} className="text-center mb-12 md:mb-16">
             <p className={`${eyebrow} text-brand mt-0 mb-4`}>The missed-call math</p>
@@ -267,7 +267,7 @@ export function HanaContact() {
       </section>
 
       {/* STAT BAND */}
-      <section className="py-16 md:py-[72px] px-6 md:px-16 bg-[#f6f7fb]">
+      <section className="py-16 md:py-[72px] px-6 md:px-16 bg-paper-2">
         <div className="max-w-[1200px] mx-auto">
           <motion.div {...fadeUp}>
             <p className={`${eyebrow} text-brand mt-0 mb-3`}>By the numbers</p>
@@ -303,7 +303,7 @@ export function HanaContact() {
           </motion.div>
           <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.1 }} className="grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden border border-rule">
             {/* With */}
-            <div className="bg-[#f6f7fb] p-7 md:p-9">
+            <div className="bg-paper-2 p-7 md:p-9">
               <p className={`${eyebrow} text-brand mt-0 mb-6`}>With HANA Contact</p>
               <ul className="space-y-4 m-0 p-0 list-none">
                 {WITH_HANA.map((t) => (
@@ -316,11 +316,11 @@ export function HanaContact() {
             </div>
             {/* Without */}
             <div className="bg-paper-bright p-7 md:p-9 border-t md:border-t-0 md:border-l border-rule">
-              <p className={`${eyebrow} text-slate-400 mt-0 mb-6`}>Without</p>
+              <p className={`${eyebrow} text-ink-mute mt-0 mb-6`}>Without</p>
               <ul className="space-y-4 m-0 p-0 list-none">
                 {WITHOUT_HANA.map((t) => (
                   <li key={t} className="flex items-start gap-3 text-[15px] text-ink-mute">
-                    <X className="w-5 h-5 text-slate-300 shrink-0 mt-0.5" />
+                    <X className="w-5 h-5 text-ink-mute shrink-0 mt-0.5" />
                     {t}
                   </li>
                 ))}
@@ -400,7 +400,7 @@ export function HanaContact() {
                 key={s.title}
                 {...fadeUp}
                 transition={{ duration: 0.5, delay: 0.05 + i * 0.1 }}
-                className="rounded-2xl bg-[#f6f7fb] border border-rule p-7 md:p-8"
+                className="rounded-2xl bg-paper-2 border border-rule p-7 md:p-8"
               >
                 <div className="flex items-center justify-center w-11 h-11 rounded-full bg-navy-soft text-white font-serif text-[20px]">
                   {i + 1}
@@ -450,7 +450,7 @@ export function HanaContact() {
           >
             Book a demo →
           </a>
-          <p className="text-sm text-slate-400 mt-[18px]">
+          <p className="text-sm text-white/60 mt-[18px]">
             HIPAA-compliant · BAA available · 150+ EHR integrations
           </p>
         </motion.div>
@@ -758,7 +758,7 @@ function RoiCalculator() {
       <div className="flex items-center justify-between gap-3">
         <span className="text-[13px] text-ink-mute">{label}</span>
         <div className="flex items-center rounded-lg border border-rule bg-paper-bright px-2.5 py-1 focus-within:border-brand focus-within:ring-2 focus-within:ring-brand/20 transition shrink-0">
-          {opts.prefix && <span className="text-slate-400 text-[13px] mr-0.5">{opts.prefix}</span>}
+          {opts.prefix && <span className="text-ink-mute text-[13px] mr-0.5">{opts.prefix}</span>}
           <input
             type="number"
             value={value}
@@ -767,7 +767,7 @@ function RoiCalculator() {
             onChange={(e) => set(Math.max(0, Number(e.target.value) || 0))}
             className="w-[64px] bg-transparent outline-none text-[15px] font-semibold text-navy text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           />
-          {opts.suffix && <span className="text-slate-400 text-[13px] ml-0.5">{opts.suffix}</span>}
+          {opts.suffix && <span className="text-ink-mute text-[13px] ml-0.5">{opts.suffix}</span>}
         </div>
       </div>
       <input
@@ -798,7 +798,7 @@ function RoiCalculator() {
           {field("Average missed-call rate", missedRate, setMissedRate, { min: 0, max: 50, suffix: "%" })}
           {field("Average visit value", visitValue, setVisitValue, { min: 50, max: 500, step: 10, prefix: "$" })}
         </div>
-        <p className="text-[12px] text-slate-400 mt-5 leading-[1.6]">
+        <p className="text-[12px] text-ink-soft mt-5 leading-[1.6]">
           Estimates only, for illustration. Assumes ~35% of missed calls would have booked a visit, and
           HANA recovers ~70% of them. <a href={DEMO_URL} target="_blank" rel="noopener noreferrer" className="text-brand underline">Get a tailored assessment →</a>
         </p>
@@ -876,7 +876,7 @@ function ContactIntegrations() {
               key={p.title}
               {...fadeUp}
               transition={{ duration: 0.5, delay: 0.05 + i * 0.1 }}
-              className="group rounded-2xl bg-[#f6f7fb] border border-rule p-7 md:p-9 transition-all duration-300 hover:border-[#c2cef6] hover:shadow-[0_16px_44px_rgba(0,18,47,0.10)]"
+              className="group rounded-2xl bg-paper-2 border border-rule p-7 md:p-9 transition-all duration-300 hover:border-[#c2cef6] hover:shadow-[0_16px_44px_rgba(0,18,47,0.10)]"
             >
               <span className="flex items-center justify-center w-12 h-12 rounded-[14px] bg-brand-tint mb-6 transition-colors group-hover:bg-[#e2e8fb]">
                 <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="var(--color-brand)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -897,7 +897,7 @@ function ContactIntegrations() {
                   </span>
                 ))}
               </div>
-              <p className="text-[13px] font-semibold text-slate-400 mt-7 mb-0 pt-5 border-t border-rule">{p.foot}</p>
+              <p className="text-[13px] font-semibold text-ink-soft mt-7 mb-0 pt-5 border-t border-rule">{p.foot}</p>
             </motion.div>
           ))}
         </div>

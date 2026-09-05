@@ -49,14 +49,14 @@ function WhitepaperCard({ wp, index }: { wp: typeof WHITEPAPERS[0]; index: numbe
           <div className="absolute top-0 right-0 w-40 h-40 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
           <span className="text-blue-400 text-[10px] font-bold uppercase tracking-widest">{wp.badge} Whitepaper</span>
           <h2 className="text-white text-xl font-black mt-1 leading-tight">{wp.title}</h2>
-          <p className="text-slate-400 text-xs mt-1">{wp.subtitle}</p>
+          <p className="text-white/75 text-xs mt-1">{wp.subtitle}</p>
         </div>
         <div className="flex flex-col flex-1 p-6">
           <div className="flex flex-wrap gap-1.5 mb-4">
             {wp.tags.map(t => (
               <span key={t} className="text-[10px] font-semibold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">{t}</span>
             ))}
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 bg-paper-2 px-2 py-0.5 rounded-full">{wp.year}</span>
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-mute bg-paper-2 px-2 py-0.5 rounded-full">{wp.year}</span>
           </div>
           <p className="text-sm text-ink-soft leading-relaxed flex-1">{wp.description}</p>
           <div className="mt-5 flex items-center gap-1.5 text-blue-600 text-sm font-semibold group-hover:gap-2.5 transition-all">
@@ -86,7 +86,7 @@ export function Whitepapers() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <p className="text-blue-400 text-xs font-bold uppercase tracking-widest mb-4">Hana Health</p>
             <h1 className="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">{it ? "Whitepaper" : "Whitepapers"}</h1>
-            <p className="text-slate-400 text-lg max-w-xl">
+            <p className="text-white/75 text-lg max-w-xl">
               {it
                 ? "Flussi di lavoro clinici approfonditi e guide all'integrazione per i partner HANA."
                 : "Deep-dive clinical workflows and integration guides for HANA partners."}
@@ -104,9 +104,9 @@ export function Whitepapers() {
               transition={{ duration: 0.4, delay: 0.15 }}
               className="rounded-2xl border-2 border-dashed border-rule bg-paper-bright/50 flex flex-col items-center justify-center p-8 text-center min-h-[220px]"
             >
-              <FileText size={28} className="text-slate-300 mb-3" />
-              <p className="text-sm font-semibold text-slate-400">{it ? "Altri whitepaper in arrivo" : "More whitepapers coming"}</p>
-              <p className="text-xs text-slate-400 mt-1">{it ? "Screening depressione, gestione delle cure croniche e altro ancora" : "Depression screening, chronic care, and more"}</p>
+              <FileText size={28} className="text-rule mb-3" />
+              <p className="text-sm font-semibold text-ink-soft">{it ? "Altri whitepaper in arrivo" : "More whitepapers coming"}</p>
+              <p className="text-xs text-ink-mute mt-1">{it ? "Screening depressione, gestione delle cure croniche e altro ancora" : "Depression screening, chronic care, and more"}</p>
             </motion.div>
           </div>
         </div>

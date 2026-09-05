@@ -193,7 +193,7 @@ export const Navbar = (props: NavbarProps) => {
   return (
     <section
       className={cn(
-        "top-0 z-[999] w-full border-b border-[#e2e8f0] bg-[#f5f6f8]/90 backdrop-blur-md",
+        "top-0 z-[999] w-full border-b border-rule bg-[#f5f6f8]/90 backdrop-blur-md",
         isStaticNav ? "relative" : "sticky",
       )}
     >
@@ -250,7 +250,7 @@ export const Navbar = (props: NavbarProps) => {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="border-t border-[#e2e8f0] bg-[#f5f6f8] overflow-hidden lg:hidden"
+            className="border-t border-rule bg-[#f5f6f8] overflow-hidden lg:hidden"
           >
             <div ref={menuRef} className="flex flex-col p-6 gap-4 max-h-[calc(100dvh-80px)] overflow-y-auto">
               {navLinks.map((navLink, index) =>
@@ -266,7 +266,7 @@ export const Navbar = (props: NavbarProps) => {
                   </SmartLink>
                 )
               )}
-              <div className="mt-4 pt-4 border-t border-[#e2e8f0] flex flex-col gap-3">
+              <div className="mt-4 pt-4 border-t border-rule flex flex-col gap-3">
                 <Button {...signInButton} className="w-full justify-center" />
                 <Button {...button} className="w-full justify-center" />
               </div>
@@ -297,7 +297,7 @@ const SubMenu = ({ navLink, isMobile }: { navLink: NavLink; isMobile: boolean })
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              className="flex flex-col pl-4 border-l-2 border-[#e2e8f0] ml-2 overflow-hidden"
+              className="flex flex-col pl-4 border-l-2 border-rule ml-2 overflow-hidden"
             >
               {navLink.subMenuLinks?.map((subMenuLink, index) => (
                 <SmartLink
@@ -336,7 +336,7 @@ const SubMenu = ({ navLink, isMobile }: { navLink: NavLink; isMobile: boolean })
             transition={{ duration: 0.2 }}
             className="absolute left-1/2 -translate-x-1/2 top-full pt-4 z-50"
           >
-            <div className="w-48 rounded-xl bg-paper-bright border border-[#e2e8f0] shadow-lg p-2 overflow-hidden">
+            <div className="w-48 rounded-xl bg-paper-bright border border-rule shadow-lg p-2 overflow-hidden">
               {navLink.subMenuLinks?.map((subMenuLink, index) => (
                 <SmartLink
                   key={index}
@@ -360,8 +360,8 @@ const Button = ({ className, title, variant = "primary", href, ...props }: Butto
     const baseStyles = "inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-[15px] font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 min-h-[44px] group";
     const variants = {
         primary: "bg-navy-soft text-white hover:bg-[#2d3f54] hover:-translate-y-[2px] shadow-sm hover:shadow-[0_8px_24px_rgba(30,42,58,0.2)]",
-        white: "bg-paper-bright text-navy-soft border border-[#e2e8f0] hover:bg-[#f5f6f8] hover:-translate-y-[2px] shadow-sm hover:shadow-[0_8px_24px_rgba(30,42,58,0.08)]",
-        secondary: "bg-[#f5f6f8] text-navy-soft hover:bg-[#e2e8f0]",
+        white: "bg-paper-bright text-navy-soft border border-rule hover:bg-[#f5f6f8] hover:-translate-y-[2px] shadow-sm hover:shadow-[0_8px_24px_rgba(30,42,58,0.08)]",
+        secondary: "bg-[#f5f6f8] text-navy-soft hover:bg-rule",
         link: "text-navy-soft underline-offset-4 hover:underline",
     };
     // sparkle shown only on the white "Sign in" button (Book a Demo stays clean)

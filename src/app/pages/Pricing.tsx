@@ -160,7 +160,7 @@ function SlideTypeSelect({ value, onChange, onNext, nextLabel }: {
               value === pt.id ? "border-2 border-blue-500 bg-blue-50" : "border border-rule bg-paper-bright hover:border-blue-400 hover:bg-blue-50 hover:-translate-y-0.5"
             )}>
             <div className="text-sm font-medium text-ink mb-1">{pt.name}</div>
-            <div className="text-xs text-slate-400 font-light leading-snug">{pt.sub}</div>
+            <div className="text-xs text-ink-soft font-light leading-snug">{pt.sub}</div>
           </button>
         ))}
       </div>
@@ -191,7 +191,7 @@ function SlideProviders({ value, onChange, onNext, onBack, nextLabel, backLabel 
           <Plus className="w-4 h-4" />
         </button>
       </div>
-      <p className="text-center text-sm text-slate-400 font-light mb-10">provider{value > 1 ? "s" : ""}</p>
+      <p className="text-center text-sm text-ink-mute font-light mb-10">provider{value > 1 ? "s" : ""}</p>
       <div className="flex gap-3">
         <button onClick={onBack} className="border border-rule rounded-lg px-5 py-3 text-sm text-ink-mute hover:border-rule-strong hover:text-ink-soft transition-colors">{backLabel}</button>
         <button onClick={onNext} className="flex-1 bg-navy text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-navy transition-colors">
@@ -235,7 +235,7 @@ function SlideMods({ mods, wfs, onChange, onNext, onBack, nextLabel, backLabel }
                 </div>
                 <span className="text-sm font-medium text-ink">{m.name}</span>
               </div>
-              <div className="text-xs text-slate-400 font-light leading-snug mb-2">{m.sub}</div>
+              <div className="text-xs text-ink-soft font-light leading-snug mb-2">{m.sub}</div>
               {sel && cnt > 0 && (
                 <div className="text-[10px] bg-blue-100 text-blue-600 rounded-full px-2 py-0.5 inline-block font-medium">
                   {cnt} workflow{cnt > 1 ? "s" : ""} selected
@@ -295,7 +295,7 @@ function SlideWorkflows({ mods, wfs, onChange, onNext, onBack, nextLabel, backLa
                 <span className="text-sm font-medium text-ink">{m.name}</span>
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] bg-blue-100 text-blue-600 rounded-full px-2.5 py-0.5 font-medium">{selCount} selected</span>
-                  <ChevronDown className={cn("w-4 h-4 text-slate-400 transition-transform duration-200", isOpen && "rotate-180")} />
+                  <ChevronDown className={cn("w-4 h-4 text-ink-mute transition-transform duration-200", isOpen && "rotate-180")} />
                 </div>
               </button>
               {isOpen && (
@@ -313,7 +313,7 @@ function SlideWorkflows({ mods, wfs, onChange, onNext, onBack, nextLabel, backLa
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="text-xs font-medium text-ink">{w.name}</div>
-                          <div className="text-xs text-slate-400 font-light leading-snug mt-0.5">{w.sub}</div>
+                          <div className="text-xs text-ink-soft font-light leading-snug mt-0.5">{w.sub}</div>
                         </div>
                       </button>
                     );
@@ -363,7 +363,7 @@ function SlideVolumes({ mods, wfs, vols, onChange, onNext, onBack, nextLabel, ba
           hasAny = true;
           return (
             <div key={m.id} className="mb-5">
-              <div className="text-[10px] tracking-[1.5px] uppercase text-slate-400 font-medium mb-2 pb-1.5 border-b border-rule-soft">{m.name}</div>
+              <div className="text-[10px] tracking-[1.5px] uppercase text-ink-mute font-medium mb-2 pb-1.5 border-b border-rule-soft">{m.name}</div>
               {wfsWithVol.map(id => {
                 const w = WORKFLOWS[id];
                 const val = vols[id] ?? w.def ?? 0;
@@ -371,7 +371,7 @@ function SlideVolumes({ mods, wfs, vols, onChange, onNext, onBack, nextLabel, ba
                   <div key={id} className="flex items-center justify-between py-3.5 border-b border-rule-soft last:border-0">
                     <div className="flex-1">
                       <div className="text-sm text-ink-soft">{w.name}</div>
-                      <div className="text-xs text-slate-400 font-light">{w.unit}</div>
+                      <div className="text-xs text-ink-mute font-light">{w.unit}</div>
                     </div>
                     <div className="flex items-center gap-2.5">
                       <button onClick={() => onChange(id, Math.max(w.min ?? 0, val - (w.step ?? 1)))}
@@ -400,7 +400,7 @@ function SlideVolumes({ mods, wfs, vols, onChange, onNext, onBack, nextLabel, ba
           );
         })}
         {!hasAny && (
-          <p className="text-center text-sm text-slate-400 italic py-8">Only flat-fee workflows selected — no volume inputs needed.</p>
+          <p className="text-center text-sm text-ink-soft italic py-8">Only flat-fee workflows selected — no volume inputs needed.</p>
         )}
       </div>
 
@@ -432,14 +432,14 @@ function SlideResult({ providers, mods, wfs, vols, onBack, bookCallLabel, backTo
       <div className="text-center mb-6 pb-6 border-b border-rule">
         <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-1">Your estimated monthly saving</div>
         <div className="font-serif text-5xl sm:text-6xl font-medium text-blue-500">{fmt(saving)}</div>
-        <div className="text-sm text-slate-400 mt-1 font-light">{pct}% less than your current practice cost for the same tasks</div>
+        <div className="text-sm text-ink-soft mt-1 font-light">{pct}% less than your current practice cost for the same tasks</div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
         {[{ val: fmt(hana), label: "HANA / month" }, { val: fmt(human), label: "Current practice cost" }, { val: fmt(annual), label: "Annual saving" }].map(m => (
           <div key={m.label} className="bg-paper-bright border border-rule rounded-lg p-4 text-center">
             <div className="font-serif text-xl font-medium text-ink">{m.val}</div>
-            <div className="text-xs text-slate-400 mt-1 font-light">{m.label}</div>
+            <div className="text-xs text-ink-mute mt-1 font-light">{m.label}</div>
           </div>
         ))}
       </div>
@@ -447,7 +447,7 @@ function SlideResult({ providers, mods, wfs, vols, onBack, bookCallLabel, backTo
       <div className="rounded-xl overflow-hidden border border-rule mb-5">
         <table className="w-full text-xs sm:text-sm">
           <thead>
-            <tr className="bg-navy text-slate-300">
+            <tr className="bg-navy text-white/60">
               <th className="text-left px-2.5 sm:px-4 py-3 text-[10px] tracking-[1.5px] uppercase font-normal">Workflow</th>
               <th className="text-right px-2.5 sm:px-4 py-3 text-[10px] tracking-[1.5px] uppercase font-normal">HANA</th>
               <th className="text-right px-2.5 sm:px-4 py-3 text-[10px] tracking-[1.5px] uppercase font-normal">Current cost</th>
@@ -458,7 +458,7 @@ function SlideResult({ providers, mods, wfs, vols, onBack, bookCallLabel, backTo
               <tr key={i}>
                 <td className="px-2.5 sm:px-4 py-3 text-ink-soft font-light">{r.label}</td>
                 <td className="px-2.5 sm:px-4 py-3 text-right text-blue-600 font-medium">{fmt(r.hana)}</td>
-                <td className="px-2.5 sm:px-4 py-3 text-right text-slate-400 line-through">{fmt(r.curr)}</td>
+                <td className="px-2.5 sm:px-4 py-3 text-right text-ink-soft line-through">{fmt(r.curr)}</td>
               </tr>
             ))}
             <tr className="border-t-2 border-rule">
@@ -477,7 +477,7 @@ function SlideResult({ providers, mods, wfs, vols, onBack, bookCallLabel, backTo
       <div className="bg-navy rounded-xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <p className="text-white font-medium text-sm mb-1">Ready to confirm your numbers?</p>
-          <p className="text-slate-400 text-xs font-light leading-relaxed">Book a 20-minute call. We'll calculate your exact projection using your actual workflows before any commitment.</p>
+          <p className="text-white/75 text-xs font-light leading-relaxed">Book a 20-minute call. We'll calculate your exact projection using your actual workflows before any commitment.</p>
         </div>
         <a href="https://calendly.com/matteowastaken/discoverycall" target="_blank" rel="noopener noreferrer"
           className="flex-shrink-0 bg-blue-500 text-white rounded-lg px-6 py-3 text-sm font-medium hover:bg-blue-600 transition-colors whitespace-nowrap">
@@ -486,7 +486,7 @@ function SlideResult({ providers, mods, wfs, vols, onBack, bookCallLabel, backTo
       </div>
 
       <div className="text-center mt-4">
-        <button onClick={onBack} className="text-sm text-slate-400 hover:text-ink-soft transition-colors flex items-center gap-1 mx-auto">
+        <button onClick={onBack} className="text-sm text-ink-mute hover:text-ink-soft transition-colors flex items-center gap-1 mx-auto">
           <ArrowLeft className="w-3 h-3" /> {backToVolumesLabel}
         </button>
       </div>

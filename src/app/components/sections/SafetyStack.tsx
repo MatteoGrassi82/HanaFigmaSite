@@ -268,7 +268,7 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0 }}
               transition={{ duration: 0.5, delay: 0.16 }}
               className="mx-auto mt-5 max-w-xl text-base leading-relaxed"
-              style={{ color: light ? "#475569" : INK_SOFT }}
+              style={{ color: light ? "var(--color-ink-soft)" : INK_SOFT }}
             >
               {COPY.intro}
             </motion.p>
@@ -389,7 +389,7 @@ function LayerRow({
       className="cursor-pointer rounded-2xl border p-4 transition-colors"
       style={{
         backgroundColor: light
-          ? active ? "rgba(37,99,235,0.06)" : "#F8FAFC"
+          ? active ? "rgba(37,99,235,0.06)" : "var(--color-paper-2)"
           : active ? "rgba(255,192,145,0.10)" : "rgba(255,255,255,0.03)",
         borderColor: light
           ? active ? "rgba(37,99,235,0.35)" : "rgba(10,22,51,0.10)"
@@ -412,7 +412,7 @@ function LayerRow({
         </span>
         <h3 className={`text-base font-semibold tracking-tight ${light ? "text-navy" : "text-white"}`}>{layer.name}</h3>
       </div>
-      <motion.p animate={{ opacity: active ? 1 : 0.7 }} className="mt-2 text-[12px] leading-relaxed" style={{ color: light ? "#475569" : INK_SOFT }}>
+      <motion.p animate={{ opacity: active ? 1 : 0.7 }} className="mt-2 text-[12px] leading-relaxed" style={{ color: light ? "var(--color-ink-soft)" : INK_SOFT }}>
         {layer.line}
       </motion.p>
     </motion.div>
@@ -449,7 +449,7 @@ function MobileLayers({
             className="rounded-2xl border p-4 text-left"
             style={{
               backgroundColor: light
-                ? isActive ? "rgba(37,99,235,0.06)" : "#F8FAFC"
+                ? isActive ? "rgba(37,99,235,0.06)" : "var(--color-paper-2)"
                 : isActive ? "rgba(255,192,145,0.10)" : "rgba(255,255,255,0.04)",
               borderColor: light
                 ? isActive ? "rgba(37,99,235,0.35)" : "rgba(10,22,51,0.10)"
@@ -472,7 +472,7 @@ function MobileLayers({
               </span>
               <span className={`text-base font-semibold tracking-tight ${light ? "text-navy" : "text-white"}`}>{layer.name}</span>
             </div>
-            <p className="mt-2 text-[13px] leading-relaxed" style={{ color: light ? "#475569" : INK_SOFT }}>
+            <p className="mt-2 text-[13px] leading-relaxed" style={{ color: light ? "var(--color-ink-soft)" : INK_SOFT }}>
               {layer.line}
             </p>
           </motion.button>

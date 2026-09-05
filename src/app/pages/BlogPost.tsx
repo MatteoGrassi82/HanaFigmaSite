@@ -26,7 +26,7 @@ const portableTextComponents = {
             className="w-full rounded-xl"
           />
           {value.caption && (
-            <figcaption className="text-center text-sm text-slate-400 mt-2">{value.caption}</figcaption>
+            <figcaption className="text-center text-sm text-ink-mute mt-2">{value.caption}</figcaption>
           )}
         </figure>
       );
@@ -75,7 +75,7 @@ export function BlogPost() {
   if (loading) {
     return (
       <div className="min-h-screen bg-paper-bright flex items-center justify-center">
-        <div className="animate-pulse text-slate-400">{it ? "Caricamento..." : "Loading..."}</div>
+        <div className="animate-pulse text-ink-soft">{it ? "Caricamento..." : "Loading..."}</div>
       </div>
     );
   }
@@ -131,7 +131,7 @@ export function BlogPost() {
       <div className="bg-paper-bright min-h-screen">
         {/* Cover */}
         <div className="max-w-2xl mx-auto px-4 py-12">
-          <Link to="/blog" className="inline-flex items-center gap-1 text-sm text-slate-400 hover:text-ink-soft mb-8 transition-colors">
+          <Link to="/blog" className="inline-flex items-center gap-1 text-sm text-ink-mute hover:text-ink-soft mb-8 transition-colors">
             <ArrowLeft className="w-4 h-4" /> {it ? "Tutti gli articoli" : "All posts"}
           </Link>
 
@@ -146,7 +146,7 @@ export function BlogPost() {
               </span>
             ))}
             {post.publishedAt && (
-              <span className="text-sm text-slate-400">{formatDate(post.publishedAt)}</span>
+              <span className="text-sm text-ink-mute">{formatDate(post.publishedAt)}</span>
             )}
           </div>
 

@@ -85,7 +85,7 @@ function Defs() {
         <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
       </filter>
       {[
-        { id: "a-slate", c: "#94a3b8" },
+        { id: "a-slate", c: "var(--color-ink-mute)" },
         { id: "a-blue",  c: "#3b82f6" },
         { id: "a-indigo",c: "#6366f1" },
         { id: "a-violet",c: "#8b5cf6" },
@@ -145,25 +145,25 @@ const JOURNEY_CARDS = IT ? JOURNEY_CARDS_IT : JOURNEY_CARDS_EN;
 // Connector paths
 const jPaths = [
   // Row 1 →→→
-  { d:`M${jCardX(0)+J.cw+6},${jMidY(1)} L${jCardX(1)-6},${jMidY(1)}`,       stroke:"#94a3b8", marker:"a-slate", delay:0.4 },
-  { d:`M${jCardX(1)+J.cw+6},${jMidY(1)} L${jCardX(2)-6},${jMidY(1)}`,       stroke:"#94a3b8", marker:"a-slate", delay:0.6 },
-  { d:`M${jCardX(2)+J.cw+6},${jMidY(1)} L${jCardX(3)-6},${jMidY(1)}`,       stroke:"#94a3b8", marker:"a-slate", delay:0.8 },
+  { d:`M${jCardX(0)+J.cw+6},${jMidY(1)} L${jCardX(1)-6},${jMidY(1)}`,       stroke:"var(--color-ink-mute)", marker:"a-slate", delay:0.4 },
+  { d:`M${jCardX(1)+J.cw+6},${jMidY(1)} L${jCardX(2)-6},${jMidY(1)}`,       stroke:"var(--color-ink-mute)", marker:"a-slate", delay:0.6 },
+  { d:`M${jCardX(2)+J.cw+6},${jMidY(1)} L${jCardX(3)-6},${jMidY(1)}`,       stroke:"var(--color-ink-mute)", marker:"a-slate", delay:0.8 },
   // Snake down (right side of col 3)
   { d:`M${jMidX(3)},${jRowY(1)+J.ch+6} L${jMidX(3)},${jRowY(2)-6}`,         stroke:"#3b82f6", marker:"a-blue",  delay:1.0 },
   // Row 2 ←←← (right to left)
-  { d:`M${jCardX(3)-6},${jMidY(2)} L${jCardX(2)+J.cw+6},${jMidY(2)}`,       stroke:"#94a3b8", marker:"a-slate", delay:1.2 },
-  { d:`M${jCardX(2)-6},${jMidY(2)} L${jCardX(1)+J.cw+6},${jMidY(2)}`,       stroke:"#94a3b8", marker:"a-slate", delay:1.4 },
-  { d:`M${jCardX(1)-6},${jMidY(2)} L${jCardX(0)+J.cw+6},${jMidY(2)}`,       stroke:"#94a3b8", marker:"a-slate", delay:1.6 },
+  { d:`M${jCardX(3)-6},${jMidY(2)} L${jCardX(2)+J.cw+6},${jMidY(2)}`,       stroke:"var(--color-ink-mute)", marker:"a-slate", delay:1.2 },
+  { d:`M${jCardX(2)-6},${jMidY(2)} L${jCardX(1)+J.cw+6},${jMidY(2)}`,       stroke:"var(--color-ink-mute)", marker:"a-slate", delay:1.4 },
+  { d:`M${jCardX(1)-6},${jMidY(2)} L${jCardX(0)+J.cw+6},${jMidY(2)}`,       stroke:"var(--color-ink-mute)", marker:"a-slate", delay:1.6 },
 ];
 
 const jDots = [
-  { d:`M${jCardX(0)+J.cw},${jMidY(1)} L${jCardX(1)},${jMidY(1)}`,           fill:"#94a3b8", dur:"1.4s", begin:"2.0s" },
-  { d:`M${jCardX(1)+J.cw},${jMidY(1)} L${jCardX(2)},${jMidY(1)}`,           fill:"#94a3b8", dur:"1.4s", begin:"2.3s" },
-  { d:`M${jCardX(2)+J.cw},${jMidY(1)} L${jCardX(3)},${jMidY(1)}`,           fill:"#94a3b8", dur:"1.4s", begin:"2.6s" },
+  { d:`M${jCardX(0)+J.cw},${jMidY(1)} L${jCardX(1)},${jMidY(1)}`,           fill:"var(--color-ink-mute)", dur:"1.4s", begin:"2.0s" },
+  { d:`M${jCardX(1)+J.cw},${jMidY(1)} L${jCardX(2)},${jMidY(1)}`,           fill:"var(--color-ink-mute)", dur:"1.4s", begin:"2.3s" },
+  { d:`M${jCardX(2)+J.cw},${jMidY(1)} L${jCardX(3)},${jMidY(1)}`,           fill:"var(--color-ink-mute)", dur:"1.4s", begin:"2.6s" },
   { d:`M${jMidX(3)},${jRowY(1)+J.ch} L${jMidX(3)},${jRowY(2)}`,             fill:"#3b82f6", dur:"1.0s", begin:"2.8s" },
-  { d:`M${jCardX(3)},${jMidY(2)} L${jCardX(2)+J.cw},${jMidY(2)}`,           fill:"#94a3b8", dur:"1.4s", begin:"3.0s" },
-  { d:`M${jCardX(2)},${jMidY(2)} L${jCardX(1)+J.cw},${jMidY(2)}`,           fill:"#94a3b8", dur:"1.4s", begin:"3.2s" },
-  { d:`M${jCardX(1)},${jMidY(2)} L${jCardX(0)+J.cw},${jMidY(2)}`,           fill:"#94a3b8", dur:"1.4s", begin:"3.4s" },
+  { d:`M${jCardX(3)},${jMidY(2)} L${jCardX(2)+J.cw},${jMidY(2)}`,           fill:"var(--color-ink-mute)", dur:"1.4s", begin:"3.0s" },
+  { d:`M${jCardX(2)},${jMidY(2)} L${jCardX(1)+J.cw},${jMidY(2)}`,           fill:"var(--color-ink-mute)", dur:"1.4s", begin:"3.2s" },
+  { d:`M${jCardX(1)},${jMidY(2)} L${jCardX(0)+J.cw},${jMidY(2)}`,           fill:"var(--color-ink-mute)", dur:"1.4s", begin:"3.4s" },
 ];
 
 function JourneyDiagram({ visible }: { visible: boolean }) {
@@ -193,8 +193,8 @@ function JourneyDiagram({ visible }: { visible: boolean }) {
         return (
           <g key={c.num}>
             <motion.rect x={x} y={y} width={J.cw} height={J.ch} rx={12}
-              fill={c.hana ? "#1d4ed8" : "#1e293b"}
-              stroke={c.hana ? "#3b82f6" : "#334155"}
+              fill={c.hana ? "#1d4ed8" : "var(--color-ink)"}
+              stroke={c.hana ? "#3b82f6" : "var(--color-ink-soft)"}
               strokeWidth={c.hana ? 1.5 : 1}
               filter={c.hana ? "url(#cardglow)" : undefined}
               initial={{ opacity:0, scale:0.88 }}
@@ -204,19 +204,19 @@ function JourneyDiagram({ visible }: { visible: boolean }) {
             />
             {/* Step number */}
             <motion.text x={x+14} y={y+22} fontSize={10} fontWeight="700" letterSpacing="0.08em"
-              fill={c.hana ? "#93c5fd" : "#475569"}
+              fill={c.hana ? "#93c5fd" : "var(--color-ink-soft)"}
               initial={{ opacity:0 }} animate={visible?{opacity:1}:{}} transition={{ delay: i*0.08+0.18 }}>
               {c.num}
             </motion.text>
             {/* Title */}
             <motion.text x={x+14} y={y+40} fontSize={13} fontWeight="700"
-              fill={c.hana ? "white" : "#f1f5f9"}
+              fill={c.hana ? "white" : "var(--color-paper-2)"}
               initial={{ opacity:0 }} animate={visible?{opacity:1}:{}} transition={{ delay: i*0.08+0.22 }}>
               {c.title}
             </motion.text>
             {/* Divider */}
             <motion.line x1={x+14} y1={y+50} x2={x+J.cw-14} y2={y+50}
-              stroke={c.hana ? "#3b82f6" : "#334155"} strokeWidth={0.8}
+              stroke={c.hana ? "#3b82f6" : "var(--color-ink-soft)"} strokeWidth={0.8}
               initial={{ scaleX:0 }} animate={visible?{scaleX:1}:{}}
               transition={{ delay: i*0.08+0.26 }}
               style={{ transformOrigin: `${x+14}px ${y+50}px` }}
@@ -224,7 +224,7 @@ function JourneyDiagram({ visible }: { visible: boolean }) {
             {/* Desc */}
             <motion.g initial={{ opacity:0 }} animate={visible?{opacity:1}:{}} transition={{ delay: i*0.08+0.3 }}>
               <WrapText x={x+14} y={y+65} text={c.desc} maxChars={22} lineH={14}
-                fontSize={10} fill={c.hana ? "#bfdbfe" : "#94a3b8"} />
+                fontSize={10} fill={c.hana ? "#bfdbfe" : "var(--color-ink-mute)"} />
             </motion.g>
           </g>
         );
@@ -296,13 +296,13 @@ function ArchDiagram({ visible }: { visible: boolean }) {
     <g>
       {/* Trigger */}
       <motion.rect x={A.trigX} y={A.trigY} width={A.trigW} height={A.trigH} rx={26}
-        fill="#0f172a" stroke="#334155" strokeWidth={1.5}
+        fill="var(--color-ink)" stroke="var(--color-ink-soft)" strokeWidth={1.5}
         initial={{ opacity:0, scale:0.9 }} animate={visible?{opacity:1,scale:1}:{}}
         transition={{ duration:0.4 }}
         style={{ transformOrigin:`${trigCX}px ${A.trigY+A.trigH/2}px` }}
       />
       <motion.text x={trigCX} y={A.trigY+18} textAnchor="middle" fontSize={9} fontWeight="700"
-        fill="#475569" letterSpacing="0.12em"
+        fill="var(--color-ink-soft)" letterSpacing="0.12em"
         initial={{ opacity:0 }} animate={visible?{opacity:1}:{}} transition={{ delay:0.2 }}>
         {IT ? "IL PAZIENTE CONTATTA LO STUDIO" : "PATIENT CONTACTS PRACTICE"}
       </motion.text>
@@ -371,14 +371,14 @@ function ArchDiagram({ visible }: { visible: boolean }) {
 
       {/* Report node */}
       <motion.rect x={repCX} y={A.repY} width={A.repW} height={A.repH} rx={14}
-        fill="#0f172a" stroke="#334155" strokeWidth={1.5}
+        fill="var(--color-ink)" stroke="var(--color-ink-soft)" strokeWidth={1.5}
         filter="url(#reportglow)"
         initial={{ opacity:0, scale:0.9 }} animate={visible?{opacity:1,scale:1}:{}}
         transition={{ duration:0.4, delay:1.8 }}
         style={{ transformOrigin:`${repCXmid}px ${A.repY+A.repH/2}px` }}
       />
       <motion.text x={repCXmid} y={A.repY+20} textAnchor="middle" fontSize={9} fontWeight="700"
-        fill="#475569" letterSpacing="0.12em"
+        fill="var(--color-ink-soft)" letterSpacing="0.12em"
         initial={{ opacity:0 }} animate={visible?{opacity:1}:{}} transition={{ delay:2.0 }}>
         {IT ? "OUTPUT" : "OUTPUT"}
       </motion.text>
@@ -386,7 +386,7 @@ function ArchDiagram({ visible }: { visible: boolean }) {
         initial={{ opacity:0 }} animate={visible?{opacity:1}:{}} transition={{ delay:2.05 }}>
         {IT ? "Referto Clinico Strutturato" : "Structured Clinical Report"}
       </motion.text>
-      <motion.text x={repCXmid} y={A.repY+55} textAnchor="middle" fontSize={10} fill="#64748b"
+      <motion.text x={repCXmid} y={A.repY+55} textAnchor="middle" fontSize={10} fill="var(--color-ink-mute)"
         initial={{ opacity:0 }} animate={visible?{opacity:1}:{}} transition={{ delay:2.1 }}>
         {IT ? "Consegnato in Practice Q prima dell'appuntamento" : "Delivered to Practice Q before appointment"}
       </motion.text>
@@ -433,10 +433,10 @@ export function WhitepaperFlows() {
             {tab === "journey" ? (
               <svg viewBox={`0 0 ${J_W} ${J_H}`} className="w-full" xmlns="http://www.w3.org/2000/svg">
                 <Defs />
-                <rect width="100%" height="100%" fill="#0f172a" />
+                <rect width="100%" height="100%" fill="var(--color-ink)" />
                 {/* Subtle grid */}
                 <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M40,0 L0,0 L0,40" fill="none" stroke="#1e293b" strokeWidth="0.5" />
+                  <path d="M40,0 L0,0 L0,40" fill="none" stroke="var(--color-ink)" strokeWidth="0.5" />
                 </pattern>
                 <rect width="100%" height="100%" fill="url(#grid)" />
                 <JourneyDiagram visible={visible} />
@@ -444,9 +444,9 @@ export function WhitepaperFlows() {
             ) : (
               <svg viewBox={`0 0 ${A.svgW} ${A_H}`} className="w-full" xmlns="http://www.w3.org/2000/svg">
                 <Defs />
-                <rect width="100%" height="100%" fill="#0f172a" />
+                <rect width="100%" height="100%" fill="var(--color-ink)" />
                 <pattern id="grid2" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M40,0 L0,0 L0,40" fill="none" stroke="#1e293b" strokeWidth="0.5" />
+                  <path d="M40,0 L0,0 L0,40" fill="none" stroke="var(--color-ink)" strokeWidth="0.5" />
                 </pattern>
                 <rect width="100%" height="100%" fill="url(#grid2)" />
                 <ArchDiagram visible={visible} />

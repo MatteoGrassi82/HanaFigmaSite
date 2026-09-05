@@ -239,7 +239,7 @@ export function HowHanaWorks() {
                                     {slide.features.map((feature, idx) => (
                                         <span
                                           key={idx}
-                                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full bg-paper-bright dark:bg-navy text-ink-soft dark:text-slate-300 ring-1 ring-rule dark:ring-navy-soft"
+                                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full bg-paper-bright dark:bg-navy text-ink-soft dark:text-white/75 ring-1 ring-rule dark:ring-navy-soft"
                                         >
                                             <CheckCircle2 size={12} className="text-blue-500 flex-shrink-0" />
                                             {feature}
@@ -259,7 +259,7 @@ export function HowHanaWorks() {
                 <button 
                     onClick={previous}
                     disabled={currentSlide === 0}
-                    className="w-10 h-10 flex items-center justify-center rounded-full bg-paper-2 dark:bg-navy text-ink-soft dark:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-rule-soft dark:hover:bg-navy-soft transition-colors"
+                    className="w-10 h-10 flex items-center justify-center rounded-full bg-paper-2 dark:bg-navy text-ink-soft dark:text-white/75 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-rule-soft dark:hover:bg-navy-soft transition-colors"
                     aria-label={hw.prevSlide}
                 >
                     <ChevronLeft className="w-5 h-5" />
@@ -284,7 +284,7 @@ export function HowHanaWorks() {
                             "transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center",
                             currentSlide === index
                                 ? "text-ink dark:text-white"
-                                : "text-slate-400 dark:text-ink-soft hover:text-ink-soft dark:hover:text-slate-400"
+                                : "text-ink-mute dark:text-white/60 hover:text-ink-soft dark:hover:text-white/75"
                         )}
                     >
                         {index + 1}

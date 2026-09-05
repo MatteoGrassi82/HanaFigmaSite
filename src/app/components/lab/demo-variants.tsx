@@ -189,7 +189,7 @@ function DemoShell({ left, caption }: { left: React.ReactNode; caption: string }
 
             <div className="flex items-center gap-3 my-5">
               <span className="flex-1 h-px bg-[#e2e6f4]" />
-              <span className="text-[11px] font-bold uppercase tracking-[1.6px] text-slate-400">or</span>
+              <span className="text-[11px] font-bold uppercase tracking-[1.6px] text-ink-mute">or</span>
               <span className="flex-1 h-px bg-[#e2e6f4]" />
             </div>
 
@@ -297,7 +297,7 @@ export function DemoWithPhone() {
                   </motion.div>
                 ))}
                 {c.idx < 0 && (
-                  <p className="text-[12.5px] text-slate-400 text-center mt-10">
+                  <p className="text-[12.5px] text-ink-soft text-center mt-10">
                     Press play to watch the call arrive.
                   </p>
                 )}
@@ -386,7 +386,7 @@ export function DemoWithCaptions() {
               </p>
             </motion.div>
           ) : (
-            <p className="font-serif text-[24px] md:text-[28px] leading-[1.32] text-slate-400 m-0">
+            <p className="font-serif text-[24px] md:text-[28px] leading-[1.32] text-ink-soft m-0">
               A monthly check-in, in the patient's own words. Press play.
             </p>
           )}
@@ -1064,7 +1064,7 @@ function SonicHeroForm({ theme }: { theme: SonicTheme }) {
 
           <div className="flex items-center gap-3 my-5">
             <span className={`flex-1 h-px ${dark ? "bg-paper-bright/15" : "bg-[#e2e6f4]"}`} />
-            <span className={`text-[11px] font-bold uppercase tracking-[1.6px] ${dark ? "text-white/45" : "text-slate-400"}`}>or</span>
+            <span className={`text-[11px] font-bold uppercase tracking-[1.6px] ${dark ? "text-white/45" : "text-ink-mute"}`}>or</span>
             <span className={`flex-1 h-px ${dark ? "bg-paper-bright/15" : "bg-[#e2e6f4]"}`} />
           </div>
 
@@ -1089,7 +1089,7 @@ function SonicHeroForm({ theme }: { theme: SonicTheme }) {
             <span className={`text-[13px] ${dark ? "text-white/60" : "text-ink-mute"}`}>
               {c.current ? c.current.text.slice(0, 54) + "…" : "Hear a monthly check-in first"}
             </span>
-            <span className={`text-[12.5px] tabular-nums ml-auto ${dark ? "text-white/45" : "text-slate-400"}`}>
+            <span className={`text-[12.5px] tabular-nums ml-auto ${dark ? "text-white/45" : "text-ink-mute"}`}>
               {mmss(c.time)} / {mmss(DURATION)}
             </span>
           </div>

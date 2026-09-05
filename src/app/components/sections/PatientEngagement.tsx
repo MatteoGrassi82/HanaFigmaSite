@@ -11,7 +11,7 @@ import { Check } from "lucide-react";
  */
 export function PatientEngagement({ white = false }: { white?: boolean } = {}) {
   return (
-    <section className={`py-20 sm:py-24 lg:py-[100px] px-5 sm:px-6 lg:px-8 font-sans ${white ? "bg-paper-bright" : "bg-[#f6f7fb]"}`}>
+    <section className={`py-20 sm:py-24 lg:py-[100px] px-5 sm:px-6 lg:px-8 font-sans ${white ? "bg-paper-bright" : "bg-paper-2"}`}>
       <div className="max-w-7xl mx-auto">
 
         {/* ── Header ── */}
@@ -100,7 +100,7 @@ export function PatientEngagement({ white = false }: { white?: boolean } = {}) {
                         {row.score}
                       </span>
                     </span>
-                    {i < arr.length - 1 && <span className="border-t border-[#e8ebf2]" />}
+                    {i < arr.length - 1 && <span className="border-t border-rule" />}
                   </div>
                 ))}
               </div>
@@ -114,11 +114,11 @@ export function PatientEngagement({ white = false }: { white?: boolean } = {}) {
           <Card>
             <Illustration>
               <span className="w-[232px] border-[1.5px] border-navy rounded-xl overflow-hidden bg-paper-bright block">
-                <span className="flex items-center gap-1.5 px-3 py-[9px] border-b-[1.5px] border-[#e8ebf2]">
+                <span className="flex items-center gap-1.5 px-3 py-[9px] border-b-[1.5px] border-rule">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#c3cbdb]" />
                   <span className="w-1.5 h-1.5 rounded-full bg-[#c3cbdb]" />
                   <span className="w-1.5 h-1.5 rounded-full bg-[#c3cbdb]" />
-                  <span className="ml-1.5 text-[10.5px] text-[#94a3b8]">yourclinic.hana.health</span>
+                  <span className="ml-1.5 text-[10.5px] text-ink-mute">yourclinic.hana.health</span>
                 </span>
                 <span className="flex gap-2 px-3 py-3.5">
                   {[
@@ -126,8 +126,8 @@ export function PatientEngagement({ white = false }: { white?: boolean } = {}) {
                     { label: "Avg QA", value: "96", accent: false },
                     { label: "Recovered", value: "18", accent: true },
                   ].map((s) => (
-                    <span key={s.label} className="flex-1 border border-[#e8ebf2] rounded-[7px] px-[9px] py-2 block">
-                      <span className="block text-[9px] text-[#94a3b8] mb-[3px]">{s.label}</span>
+                    <span key={s.label} className="flex-1 border border-rule rounded-[7px] px-[9px] py-2 block">
+                      <span className="block text-[9px] text-ink-mute mb-[3px]">{s.label}</span>
                       <span className={"font-serif text-[17px] block " + (s.accent ? "text-brand" : "text-navy")}>
                         {s.value}
                       </span>
@@ -144,7 +144,7 @@ export function PatientEngagement({ white = false }: { white?: boolean } = {}) {
         </div>
 
         {/* ── Partnership · long bento ── */}
-        <div className={`${cardHover} mt-6 bg-paper-bright border border-[#e8ebf2] rounded-[18px] overflow-hidden grid grid-cols-1 md:grid-cols-[0.72fr_1.28fr] items-center`}>
+        <div className={`${cardHover} mt-6 bg-paper-bright border border-rule rounded-[18px] overflow-hidden grid grid-cols-1 md:grid-cols-[0.72fr_1.28fr] items-center`}>
           {/* founders */}
           <div className="flex flex-col items-center justify-center gap-4 px-8 md:pl-12 md:pr-8 pt-10 md:py-12">
             <img
@@ -155,7 +155,7 @@ export function PatientEngagement({ white = false }: { white?: boolean } = {}) {
             />
             <div className="text-center">
               <div className="text-[15px] font-semibold text-navy">Matteo &amp; Sthita</div>
-              <div className="text-[13.5px] text-[#64748b] mt-[3px]">Co-founders of Hana</div>
+              <div className="text-[13.5px] text-ink-mute mt-[3px]">Co-founders of Hana</div>
             </div>
           </div>
           {/* copy */}
@@ -167,7 +167,7 @@ export function PatientEngagement({ white = false }: { white?: boolean } = {}) {
             <h3 className="font-serif font-normal text-3xl sm:text-[38px] leading-[1.08] text-navy mb-3.5">
               A partnership, <Em>not a purchase</Em>
             </h3>
-            <p className="text-[15.5px] leading-[1.7] text-[#64748b] mb-6 max-w-[42ch] text-pretty">
+            <p className="text-[15.5px] leading-[1.7] text-ink-mute mb-6 max-w-[42ch] text-pretty">
               You get a team, not a license key. We stand up your workflows and stay in the loop as they evolve.
             </p>
             <div className="flex flex-col gap-3.5">
@@ -194,7 +194,7 @@ export function PatientEngagement({ white = false }: { white?: boolean } = {}) {
 
 function Card({ children }: { children: React.ReactNode }) {
   return (
-    <div className={`${cardHover} bg-paper-bright border border-[#e8ebf2] rounded-[18px] px-8 pt-9 pb-8 flex flex-col items-center`}>
+    <div className={`${cardHover} bg-paper-bright border border-rule rounded-[18px] px-8 pt-9 pb-8 flex flex-col items-center`}>
       {children}
     </div>
   );
