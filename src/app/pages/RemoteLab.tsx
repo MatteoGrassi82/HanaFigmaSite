@@ -22,6 +22,13 @@ import {
   DemoWithCaptions,
 } from "../components/lab/demo-variants";
 import { SleepTwoProducts } from "../components/lab/SleepTwoProducts";
+// Interactive block experiments (2026-09-05). The rule for all of them: one
+// input, one number, the arithmetic visible, and a default state that is true
+// before anyone touches it — because the prerender snapshot is what gets read.
+import { CaseloadSlider } from "../components/lab/interactive/CaseloadSlider";
+import { EligibilityGap } from "../components/lab/interactive/EligibilityGap";
+import { RevenueEstimator } from "../components/lab/interactive/RevenueEstimator";
+import { ProgrammeChooser } from "../components/lab/interactive/ProgrammeChooser";
 
 /**
  * /remote-lab — a design sandbox for /remote-v2 sections.
@@ -460,6 +467,26 @@ export function RemoteLab() {
       </div>
 
       {/* Same section, same form. Only the left panel changes. */}
+      {/* ── Interactive blocks, newest first so they are the first thing seen ──
+          Ship order per the design review: Caseload is the reference and the
+          only one fully obeying the brief; Gap and Estimator need trimming;
+          the Chooser is a decision tree rather than a calculator and wants
+          re-framing. BillTogetherMatrix was built and cut: four of its six
+          pairs answered "unsettled", so the modal outcome taught the visitor
+          that the site does not know things. Its one real fact (CCM and APCM
+          cannot be billed in the same month) belongs in the Chooser footnote. */}
+      <LabBar>Interactive · 1 — caseload math. Minutes lead, caseload follows</LabBar>
+      <CaseloadSlider />
+
+      <LabBar>Interactive · 2 — the eligibility gap (third-party market figures)</LabBar>
+      <EligibilityGap />
+
+      <LabBar>Interactive · 3 — revenue estimator (BLOCKED: needs real CMS rates)</LabBar>
+      <RevenueEstimator />
+
+      <LabBar>Interactive · 4 — which program is this patient? (needs biller sign-off)</LabBar>
+      <ProgrammeChooser />
+
       <LabBar>§4 Live demo · 10a — same section, white ground, periwinkle waves</LabBar>
       <DemoSonicHeroForm />
 
