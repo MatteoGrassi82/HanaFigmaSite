@@ -1620,7 +1620,7 @@ export function RemoteV2({
         </motion.div>
       </section>
 
-      <PaletteSwitcher />
+      <PaletteSwitcher startOpen={false} />
       <Footer />
     </div>
   );

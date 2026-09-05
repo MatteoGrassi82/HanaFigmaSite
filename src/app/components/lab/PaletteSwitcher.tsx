@@ -71,9 +71,12 @@ function apply(sys: PaletteSystem | null) {
   document.head.appendChild(style);
 }
 
-export function PaletteSwitcher() {
+export function PaletteSwitcher({ startOpen = true }: { startOpen?: boolean } = {}) {
   const [activeId, setActiveId] = useState<string>("current");
-  const [open, setOpen] = useState(true);
+  // Closed by default on /remote-v2: that page is being judged as a page, and a
+  // bar across the bottom is the wrong thing to have in shot. Open on the lab,
+  // where comparing IS the job.
+  const [open, setOpen] = useState(startOpen);
 
   useEffect(() => {
     let id = "current";
