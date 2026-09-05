@@ -238,7 +238,7 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
             aria-hidden
             className="pointer-events-none absolute inset-0"
             style={{
-              backgroundImage: `radial-gradient(${light ? "#0A1633" : DOT_GRID} 0.6px, transparent 0.6px)`,
+              backgroundImage: `radial-gradient(${light ? "var(--color-navy)" : DOT_GRID} 0.6px, transparent 0.6px)`,
               backgroundSize: "22px 22px",
               opacity: light ? 0.06 : 0.05,
             }}
@@ -251,7 +251,7 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0 }}
               transition={{ duration: 0.4 }}
               className="text-xs font-semibold uppercase tracking-[0.2em]"
-              style={{ color: light ? "#2563EB" : SKY }}
+              style={{ color: light ? "var(--color-brand)" : SKY }}
             >
               {COPY.eyebrow}
             </motion.span>
@@ -259,7 +259,7 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
               initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0 }}
               transition={{ duration: 0.5, delay: 0.08 }}
-              className={`mt-4 font-serif text-3xl leading-tight md:text-[2.6rem] md:leading-[1.15] ${light ? "text-[#0A1633]" : "text-white"}`}
+              className={`mt-4 font-serif text-3xl leading-tight md:text-[2.6rem] md:leading-[1.15] ${light ? "text-navy" : "text-white"}`}
             >
               {COPY.heading}
             </motion.h2>
@@ -401,7 +401,7 @@ function LayerRow({
           className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border"
           style={{
             borderColor: light
-              ? active ? "#2563EB" : "rgba(10,22,51,0.16)"
+              ? active ? "var(--color-brand)" : "rgba(0,18,47,0.16)"
               : active ? PEACH : "rgba(255,255,255,0.18)",
             backgroundColor: light
               ? active ? "rgba(37,99,235,0.12)" : "#EFF3FF"
@@ -410,7 +410,7 @@ function LayerRow({
         >
           <Icon className="h-[18px] w-[18px]" strokeWidth={1.8} style={{ color: active ? PEACH : "#fff" }} />
         </span>
-        <h3 className={`text-base font-semibold tracking-tight ${light ? "text-[#0A1633]" : "text-white"}`}>{layer.name}</h3>
+        <h3 className={`text-base font-semibold tracking-tight ${light ? "text-navy" : "text-white"}`}>{layer.name}</h3>
       </div>
       <motion.p animate={{ opacity: active ? 1 : 0.7 }} className="mt-2 text-[12px] leading-relaxed" style={{ color: light ? "#475569" : INK_SOFT }}>
         {layer.line}
@@ -461,7 +461,7 @@ function MobileLayers({
                 className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border"
                 style={{
                   borderColor: light
-                    ? isActive ? "#2563EB" : "rgba(10,22,51,0.16)"
+                    ? isActive ? "var(--color-brand)" : "rgba(0,18,47,0.16)"
                     : isActive ? PEACH : "rgba(255,255,255,0.2)",
                   backgroundColor: light
                     ? isActive ? "rgba(37,99,235,0.12)" : "#EFF3FF"
@@ -470,7 +470,7 @@ function MobileLayers({
               >
                 <Icon className="h-5 w-5" strokeWidth={1.8} style={{ color: isActive ? PEACH : "#fff" }} />
               </span>
-              <span className={`text-base font-semibold tracking-tight ${light ? "text-[#0A1633]" : "text-white"}`}>{layer.name}</span>
+              <span className={`text-base font-semibold tracking-tight ${light ? "text-navy" : "text-white"}`}>{layer.name}</span>
             </div>
             <p className="mt-2 text-[13px] leading-relaxed" style={{ color: light ? "#475569" : INK_SOFT }}>
               {layer.line}

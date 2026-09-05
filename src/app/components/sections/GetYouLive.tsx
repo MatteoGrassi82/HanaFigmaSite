@@ -108,9 +108,9 @@ export function GetYouLive() {
     <section className="bg-white py-24 md:py-32 px-6 md:px-16">
       <div ref={ref} className="max-w-[1200px] mx-auto">
         <motion.div {...fadeUp} className="mb-12 md:mb-16">
-          <p className={`${eyebrow} text-[#2563EB] mt-0 mb-4`}>The partnership</p>
-          <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-[#0A1633] m-0 max-w-[20ch]">
-            You're not buying software. <em className="text-[#2563EB]">You're getting a team.</em>
+          <p className={`${eyebrow} text-brand mt-0 mb-4`}>The partnership</p>
+          <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-navy m-0 max-w-[20ch]">
+            You're not buying software. <em className="text-brand">You're getting a team.</em>
           </h2>
           <p className="text-[17px] leading-[1.7] text-slate-600 mt-6 mb-0 max-w-[54ch]">
             Most practices that quit these programs didn't lose to the billing rules. They lost to a
@@ -133,7 +133,7 @@ export function GetYouLive() {
                   >
                     <span
                       className={`text-[17px] md:text-[18px] font-semibold leading-snug transition-colors duration-300 ${
-                        on ? "text-[#2563EB]" : "text-[#0A1633] group-hover:text-[#2563EB]"
+                        on ? "text-brand" : "text-navy group-hover:text-brand"
                       }`}
                     >
                       {step.title}
@@ -159,7 +159,7 @@ export function GetYouLive() {
 
             <a
               href="/contact"
-              className="group inline-flex items-center gap-2 bg-[#0A1633] text-white text-[15px] font-semibold pl-6 pr-5 py-3.5 rounded-full no-underline hover:opacity-90 transition-opacity mt-9"
+              className="group inline-flex items-center gap-2 bg-navy text-white text-[15px] font-semibold pl-6 pr-5 py-3.5 rounded-full no-underline hover:opacity-90 transition-opacity mt-9"
             >
               Talk to us about onboarding
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" strokeWidth={2.4} />

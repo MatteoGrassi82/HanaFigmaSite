@@ -24,7 +24,7 @@ type Props = {
 };
 
 export default function ParticleSphereAnimation({
-  color = "#2563EB",
+  color = "#5B76D9",
   count = 700,
   period = 26,
 }: Props) {

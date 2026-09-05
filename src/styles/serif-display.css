@@ -1,0 +1,54 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+ * serif-display.css — Fraunces as the display serif, scoped to `.serif-display`.
+ *
+ * WAS cobalt-type.css, a type-AND-paper experiment lifted off usecobalt.com. The
+ * palette decision (2026-09-05) kept the serif and dropped the paper: the site is
+ * one design system, the legacy navy #00122F + periwinkle #5B76D9, on white. So
+ * everything that repainted grounds, rules and body ink is gone from this file,
+ * along with the IBM Plex body face. What survives is the display face and the
+ * variable-axis settings that make it work.
+ *
+ * Still scoped rather than global on purpose. Changing --font-serif in theme.css
+ * would reface every h1/h2/h3 in 58 files at once, at type sizes this treatment
+ * was never checked against, and Pricing.tsx would not even follow: it hardcodes
+ * font-['Instrument_Serif'] in ten places instead of using the token. Promoting
+ * Fraunces sitewide is a deliberate, screenshotted migration, not a side effect.
+ *
+ * To promote it later: move --font-serif into theme.css @theme, lift these rules
+ * to bare :is(h1,h2,h3,.font-serif) selectors, fix Pricing.tsx's ten hardcoded
+ * classes, and re-check the 19-27px serif sizes where weight 300 goes thin.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&display=swap");
+
+.serif-display {
+  /* Tailwind resolves --font-serif per element, so redefining it here refaces
+     every font-serif utility inside this subtree and nowhere else. */
+  --font-serif: "Fraunces", Georgia, serif;
+
+  letter-spacing: -0.003em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Fraunces at its default optical size reads as a chunky Cooper-ish serif.
+   "opsz" 144 is what produces the hairline contrast this design wants. */
+.serif-display :is(h1, h2, h3, .font-serif) {
+  font-variation-settings: "opsz" 144, "SOFT" 50;
+}
+
+/* Weight 300 only where the type is genuinely large (h1/h2 run 28-112px here,
+   and the serif stat numerals are divs/spans at 44-64px). The 19-27px serif —
+   h3, blockquote, the serif pull paragraphs — stays at 400 and stays readable. */
+.serif-display :is(h1, h2),
+.serif-display :is(div, span).font-serif {
+  font-weight: 300;
+}
+
+/* The accent italic: a softer axis on <em> inside a display heading. This is the
+   pattern Hero, FaqSection and CtaBand all expect when a caller passes an <em>. */
+.serif-display :is(h1, h2, .font-serif) :is(em, i) {
+  font-style: italic;
+  font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 100;
+}

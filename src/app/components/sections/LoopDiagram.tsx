@@ -383,7 +383,7 @@ export function LoopDiagram({
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0 }}
               transition={{ duration: 0.4 }}
               className="text-xs font-semibold uppercase tracking-[0.2em]"
-              style={{ color: light ? "#2563EB" : SKY }}
+              style={{ color: light ? "var(--color-brand)" : SKY }}
             >
               {c.eyebrow}
             </motion.span>
@@ -391,7 +391,7 @@ export function LoopDiagram({
               initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0 }}
               transition={{ duration: 0.5, delay: 0.08 }}
-              className={`mt-4 font-serif text-2xl leading-snug sm:text-3xl md:text-[2.6rem] md:leading-[1.15] ${light ? "text-[#0A1633]" : "text-white"}`}
+              className={`mt-4 font-serif text-2xl leading-snug sm:text-3xl md:text-[2.6rem] md:leading-[1.15] ${light ? "text-navy" : "text-white"}`}
             >
               {c.heading}
             </motion.h2>

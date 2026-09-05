@@ -69,7 +69,7 @@ const eyebrow = "text-[13px] font-bold tracking-[2.5px] uppercase";
 
 function LabBar({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-[#0A1633] px-6 md:px-16 py-3">
+    <div className="bg-navy px-6 md:px-16 py-3">
       <p className="max-w-[1200px] mx-auto text-[12px] font-bold uppercase tracking-[1.6px] text-[#8AB4FF] m-0">
         {children}
       </p>
@@ -117,7 +117,7 @@ const CLOCK = [
     when: "Day 0",
     title: "Setup",
     body: "Device delivered, patient trained, and the 90-day clock starts whether anyone is watching it or not.",
-    accent: "#2563EB",
+    accent: "#5B76D9",
   },
   {
     when: "Days 1 – 7",
@@ -129,7 +129,7 @@ const CLOCK = [
     when: "Any 30 consecutive days",
     title: "21 of 30 nights, 4 hours or more",
     body: "That is the window Medicare actually scores. HANA tracks the running count and calls when the week starts slipping, while there is still time to recover it.",
-    accent: "#2563EB",
+    accent: "#5B76D9",
   },
   {
     when: "Inside the same 90 days",
@@ -141,7 +141,7 @@ const CLOCK = [
     when: "Day 90",
     title: "The coverage decision",
     body: "Compliant, and the device is covered and resupply begins. Not compliant, and the machine can be recalled and the reimbursement is gone.",
-    accent: "#0A1633",
+    accent: "#00122F",
   },
 ];
 
@@ -150,12 +150,12 @@ function SleepNinetyDayClock() {
     <section className="bg-[#f6f7fb] py-24 md:py-32 px-6 md:px-16">
       <div className="max-w-[1200px] mx-auto">
         <motion.div {...fadeUp} className="text-center">
-          <span className="inline-flex items-center gap-2.5 rounded-full bg-[#0A1633] pl-3.5 pr-4 py-2">
-            <span className="w-2 h-2 rounded-full bg-[#2563EB]" />
+          <span className="inline-flex items-center gap-2.5 rounded-full bg-navy pl-3.5 pr-4 py-2">
+            <span className="w-2 h-2 rounded-full bg-brand" />
             <span className="text-[13px] font-medium text-white">HANA Sleep</span>
           </span>
-          <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-[#0A1633] mt-7 mb-0 mx-auto max-w-[24ch]">
-            Every new CPAP patient is on a <em className="text-[#2563EB]">ninety day clock.</em>
+          <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-navy mt-7 mb-0 mx-auto max-w-[24ch]">
+            Every new CPAP patient is on a <em className="text-brand">ninety day clock.</em>
           </h2>
           <p className="text-[16.5px] leading-[1.7] text-slate-600 mt-5 mb-0 mx-auto max-w-[62ch]">
             Medicare wants four hours a night on twenty-one of thirty consecutive nights, inside the
@@ -186,7 +186,7 @@ function SleepNinetyDayClock() {
                 >
                   {c.when}
                 </p>
-                <p className="font-serif text-[21px] leading-[1.22] text-[#0A1633] mt-2.5 mb-0">{c.title}</p>
+                <p className="font-serif text-[21px] leading-[1.22] text-navy mt-2.5 mb-0">{c.title}</p>
                 <p className="text-[14px] leading-[1.6] text-slate-600 mt-3 mb-0">{c.body}</p>
               </motion.div>
             ))}
@@ -196,7 +196,7 @@ function SleepNinetyDayClock() {
         <motion.div {...fadeUp} className="mt-14 flex flex-wrap items-center gap-4">
           <a
             href="/hana-sleep"
-            className="group inline-flex items-center gap-2 bg-[#0A1633] text-white text-[15px] font-semibold pl-6 pr-5 py-3.5 rounded-full no-underline hover:opacity-90 transition-opacity"
+            className="group inline-flex items-center gap-2 bg-navy text-white text-[15px] font-semibold pl-6 pr-5 py-3.5 rounded-full no-underline hover:opacity-90 transition-opacity"
           >
             See HANA Sleep
             <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" strokeWidth={2.4} />
@@ -252,9 +252,9 @@ function RemoteBothSides() {
     <section className="bg-white py-24 md:py-32 px-6 md:px-16">
       <div className="max-w-[1240px] mx-auto">
         <motion.div {...fadeUp} className="text-center">
-          <p className={`${eyebrow} text-[#2563EB] mt-0 mb-4`}>HANA Remote</p>
-          <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-[#0A1633] mx-auto max-w-[26ch] m-0">
-            One month. <em className="text-[#2563EB]">Both sides of it.</em>
+          <p className={`${eyebrow} text-brand mt-0 mb-4`}>HANA Remote</p>
+          <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-navy mx-auto max-w-[26ch] m-0">
+            One month. <em className="text-brand">Both sides of it.</em>
           </h2>
           <p className="text-[17px] leading-[1.7] text-slate-600 max-w-[56ch] mx-auto mt-5 mb-0">
             HANA makes the call. Your team reviews it in Compass, and the patient gets somebody who
@@ -266,7 +266,7 @@ function RemoteBothSides() {
         <motion.div
           {...fadeUp}
           transition={{ duration: 0.55, delay: 0.06 }}
-          className="relative mt-12 md:mt-14 rounded-[28px] overflow-hidden bg-[#0A1633]"
+          className="relative mt-12 md:mt-14 rounded-[28px] overflow-hidden bg-navy"
         >
           <div
             aria-hidden
@@ -455,12 +455,12 @@ export function RemoteLab() {
 
       <div className="bg-white px-6 md:px-16 pt-16 pb-10">
         <div className="max-w-[1200px] mx-auto">
-          <p className={`${eyebrow} text-[#2563EB] mt-0 mb-4`}>Design lab</p>
-          <h1 className="font-serif font-normal text-[34px] md:text-[44px] leading-[1.08] text-[#0A1633] m-0 max-w-[24ch]">
+          <p className={`${eyebrow} text-brand mt-0 mb-4`}>Design lab</p>
+          <h1 className="font-serif font-normal text-[34px] md:text-[44px] leading-[1.08] text-navy m-0 max-w-[24ch]">
             Section variants for HANA Remote.
           </h1>
           <p className="text-[16px] leading-[1.7] text-slate-600 mt-5 mb-0 max-w-[62ch]">
-            Unlinked and noindex. Open <span className="font-semibold text-[#0A1633]">/remote-v2</span>{" "}
+            Unlinked and noindex. Open <span className="font-semibold text-navy">/remote-v2</span>{" "}
             alongside this to compare against what is shipped. Nothing here is live.
           </p>
         </div>

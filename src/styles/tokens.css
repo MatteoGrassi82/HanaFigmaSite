@@ -7,15 +7,20 @@
  * Tailwind 4 turns every `--color-*` here into utilities (bg-navy, text-ink,
  * border-rule, …) that compile to `var(--color-…)`. Because the value is read
  * at the element, a scope that redefines the variable reskins every utility
- * inside it and nothing outside it. That is what `.cobalt` below does.
+ * inside it and nothing outside it.
  *
- * THE TWO PALETTES, AND WHY THIS FILE EXISTS
- * The site currently carries two design systems in hardcoded hex:
- *   legacy  #00122F navy + #5B76D9 periwinkle, DM Sans + Instrument Serif   (every page)
- *   cobalt  #0A1633 navy + #2563EB blue, IBM Plex Sans + Fraunces, warm paper (/remote-v2)
- * Expressed as tokens, the sitewide decision becomes a values change in :root,
- * not a rewrite of 50 files, and shared sections render correctly in both
- * scopes in the meantime instead of leaking cobalt hex onto legacy pages.
+ * THE PALETTE DECISION (2026-09-05)
+ * The site briefly carried two design systems in hardcoded hex: the legacy
+ * #00122F navy + #5B76D9 periwinkle on white that every page uses, and a warm
+ * paper variant with #0A1633 + #2563EB introduced on the /remote-v2 rebuild.
+ * Four SHARED sections (ProofBento, SafetyStack, LoopDiagram, RecipesMarquee)
+ * carried the second palette, but only inside their opt-in `soft` / `light` /
+ * `compact` branches, which only /remote-v2 passes. Home mounts all four bare,
+ * so nothing ever leaked: the opt-in props pattern held. It would have stopped
+ * holding the day /remote-v2 became the homepage.
+ * Resolved in favour of legacy. Those four variants are now on the tokens below,
+ * there is no second scope, and the one thing kept from the experiment is
+ * Fraunces as the display serif (src/styles/serif-display.css).
  *
  * MIGRATION RULE
  * New code uses tokens, never raw hex. Existing hex migrates section by
@@ -71,23 +76,3 @@
   --text-display--line-height: 1.02;
 }
 
-/* The cobalt experiment as an override of the same tokens. Fonts are already
-   overridden in cobalt-type.css; when sections have migrated to tokens the
-   selector-based utility overrides in that file can be deleted. */
-.cobalt {
-  --color-navy: #0a1633;
-  --color-navy-soft: #1a1715;
-  --color-brand: #2563eb;
-  --color-brand-soft: #93b4f5;
-  --color-brand-tint: #eaf0fd;
-
-  --color-paper: #f8f7f3;
-  --color-paper-2: #ecebe5;
-  --color-paper-bright: #fdfcf9;
-  --color-rule: #d4cdb8;
-  --color-rule-soft: #e5dfd0;
-
-  --color-ink: #1a1715;
-  --color-ink-soft: #3a332d;
-  --color-ink-mute: #6b6151;
-}

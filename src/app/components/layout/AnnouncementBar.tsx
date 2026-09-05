@@ -39,7 +39,7 @@ export function AnnouncementBar() {
   };
 
   return (
-    <div className="relative z-50 bg-[#0A1633] text-white">
+    <div className="relative z-50 bg-navy text-white">
       <div className="max-w-[1200px] mx-auto px-6 md:px-16 py-2.5 flex items-center justify-center gap-3 text-center">
         <span className="shrink-0 rounded-full bg-[#E8A06A] text-[#231206] text-[10.5px] font-bold uppercase tracking-[1.2px] px-2 py-[3px]">
           New

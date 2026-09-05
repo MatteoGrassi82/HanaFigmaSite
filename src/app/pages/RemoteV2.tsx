@@ -21,9 +21,10 @@ import { CompanionShowcaseComp, COMPANION_CHAPTER_LEN, COMPANION_DURATION } from
 import { ProofBento } from "../components/sections/ProofBento";
 import OrbitingCirclesGlobe from "../components/media/OrbitingCirclesGlobe";
 import { ShaderBackground } from "../components/media/ShaderBackground";
-// Type + paper experiment lifted off usecobalt.com. Scoped entirely to the
-// `cobalt` class on this page's root; delete both to revert.
-import "../../styles/cobalt-type.css";
+// Fraunces as the display serif, scoped to the `serif-display` class on this
+// page's root. The warm-paper half of the original experiment was dropped with
+// the palette decision; this page is the legacy navy and periwinkle on white.
+import "../../styles/serif-display.css";
 
 const DEMO_URL = "https://calendly.com/matteowastaken/discoverycall";
 
@@ -282,7 +283,7 @@ function HeroCareJourney() {
     // No negative top margin: with a white hero, pulling it under the light
     // navbar made the bar vanish into the page (Matteo: "the nav bar is hiding").
     // The hero now starts below the navbar, whose bottom hairline separates them.
-    <header ref={ref} className="bg-white text-[#0A1633] overflow-hidden border-b border-slate-200/80">
+    <header ref={ref} className="bg-white text-navy overflow-hidden border-b border-slate-200/80">
       {/* The claim gets the larger half: 58/42. It ran 43/57 before, which let the
           motion panel dominate a hero whose job is the headline. */}
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.16fr)_minmax(0,0.84fr)] lg:min-h-[calc(100vh-40px)]">
@@ -292,7 +293,7 @@ function HeroCareJourney() {
               reverted, not the words: the third line is the serif italic accent,
               the same treatment as every other accent line on the page.
               <HandwritingText> is still in components/ui if it finds a home. */}
-          <p className={`${eyebrow} text-[#2563EB] mt-0 mb-6`}>
+          <p className={`${eyebrow} text-brand mt-0 mb-6`}>
             AI care coordination that reaches every patient
           </p>
           <h1 className="font-serif font-normal text-[42px] sm:text-[54px] md:text-[64px] lg:text-[74px] leading-[1.02] tracking-[-0.018em] m-0">
@@ -300,7 +301,7 @@ function HeroCareJourney() {
             <br />
             Same team.
             <br />
-            <em className="text-[#2563EB]">Better outcomes.</em>
+            <em className="text-brand">Better outcomes.</em>
           </h1>
           <p className="text-[16px] md:text-[17.5px] leading-[1.65] text-slate-600 mt-7 mb-0 max-w-[48ch]">
             Every reimbursable care program, run in house from enrollment to billing. HANA's AI
@@ -310,7 +311,7 @@ function HeroCareJourney() {
             href={DEMO_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 self-start bg-[#0A1633] text-white text-[15px] font-semibold px-8 py-[15px] rounded-[10px] no-underline hover:opacity-90 transition-opacity mt-10"
+            className="inline-flex items-center gap-2.5 self-start bg-navy text-white text-[15px] font-semibold px-8 py-[15px] rounded-[10px] no-underline hover:opacity-90 transition-opacity mt-10"
           >
             Book a demo →
           </a>
@@ -421,9 +422,9 @@ function CompassShowcase() {
       {/* Heading on top, shared with the patient companion below so the two
           product sections read as a pair (Matteo 2026-08-25). */}
       <motion.div {...fadeUp} className="mb-12 md:mb-16">
-        <p className={`${eyebrow} text-[#2563EB] mt-0 mb-4`}>For your clinic</p>
-        <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-[#0A1633] m-0 max-w-[16ch]">
-          Your team sees four patients. <em className="text-[#2563EB]">HANA called two hundred.</em>
+        <p className={`${eyebrow} text-brand mt-0 mb-4`}>For your clinic</p>
+        <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-navy m-0 max-w-[16ch]">
+          Your team sees four patients. <em className="text-brand">HANA called two hundred.</em>
         </h2>
       </motion.div>
 
@@ -442,7 +443,7 @@ function CompassShowcase() {
                 >
                   <span
                     className={`text-[17px] md:text-[18px] font-semibold leading-snug transition-colors duration-300 ${
-                      open ? "text-[#2563EB]" : "text-[#0A1633] group-hover:text-[#2563EB]"
+                      open ? "text-brand" : "text-navy group-hover:text-brand"
                     }`}
                   >
                     {item.title}
@@ -590,9 +591,9 @@ function CompanionShowcase() {
   return (
     <div ref={ref}>
       <motion.div {...fadeUp} className="mb-12 md:mb-16">
-        <p className={`${eyebrow} text-[#2563EB] mt-0 mb-4`}>For your patients</p>
-        <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-[#0A1633] m-0 max-w-[16ch]">
-          The call your patient <em className="text-[#2563EB]">actually picks up.</em>
+        <p className={`${eyebrow} text-brand mt-0 mb-4`}>For your patients</p>
+        <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-navy m-0 max-w-[16ch]">
+          The call your patient <em className="text-brand">actually picks up.</em>
         </h2>
       </motion.div>
 
@@ -643,7 +644,7 @@ function CompanionShowcase() {
                 >
                   <span
                     className={`text-[17px] md:text-[18px] font-semibold leading-snug transition-colors duration-300 ${
-                      open ? "text-[#2563EB]" : "text-[#0A1633] group-hover:text-[#2563EB]"
+                      open ? "text-brand" : "text-navy group-hover:text-brand"
                     }`}
                   >
                     {item.title}
@@ -674,7 +675,7 @@ function CompanionShowcase() {
                               {l.name}
                             </span>
                           ))}
-                          <span className="inline-flex items-center rounded-full bg-[#EFF3FF] text-[#2563EB] px-2.5 py-1 text-[12.5px] font-semibold">
+                          <span className="inline-flex items-center rounded-full bg-[#EFF3FF] text-brand px-2.5 py-1 text-[12.5px] font-semibold">
                             +21 more
                           </span>
                         </div>
@@ -768,27 +769,27 @@ function TeamSection() {
           <div>
             <motion.span
               {...fadeUp}
-              className="inline-flex items-center gap-2.5 rounded-full bg-[#0A1633] pl-3.5 pr-4 py-2"
+              className="inline-flex items-center gap-2.5 rounded-full bg-navy pl-3.5 pr-4 py-2"
             >
-              <span className="w-2 h-2 rounded-full bg-[#2563EB]" />
+              <span className="w-2 h-2 rounded-full bg-brand" />
               <span className="text-[13px] font-medium text-white">Our team</span>
             </motion.span>
 
             <motion.h2
               {...fadeUp}
               transition={{ duration: 0.5, delay: 0.06 }}
-              className="font-serif font-normal text-[27px] sm:text-[32px] md:text-[36px] leading-[1.24] tracking-[-0.01em] text-[#0A1633] mt-7 mb-0"
+              className="font-serif font-normal text-[27px] sm:text-[32px] md:text-[36px] leading-[1.24] tracking-[-0.01em] text-navy mt-7 mb-0"
             >
               Our team of clinicians, AI researchers and care operators is united by one belief: the
               care that decides outcomes happens between visits, and it is lost for the most ordinary
-              reason. <em className="text-[#2563EB]">Nobody had the hours to call.</em>
+              reason. <em className="text-brand">Nobody had the hours to call.</em>
             </motion.h2>
 
             <motion.a
               {...fadeUp}
               transition={{ duration: 0.5, delay: 0.12 }}
               href="/about"
-              className="group inline-flex items-center gap-2 bg-[#2563EB] text-white text-[15px] font-semibold pl-6 pr-5 py-3.5 rounded-full no-underline hover:opacity-90 transition-opacity mt-9"
+              className="group inline-flex items-center gap-2 bg-brand text-white text-[15px] font-semibold pl-6 pr-5 py-3.5 rounded-full no-underline hover:opacity-90 transition-opacity mt-9"
             >
               About us
               <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" strokeWidth={2.4} />
@@ -813,7 +814,7 @@ function TeamSection() {
                   className="relative rounded-full overflow-hidden bg-[#EFF3FF] ring-[5px] ring-white"
                 >
                   <span
-                    className="absolute inset-0 grid place-items-center font-serif text-[#2563EB]"
+                    className="absolute inset-0 grid place-items-center font-serif text-brand"
                     style={{
                       fontSize: Math.round(m.w * 0.33),
                       background:
@@ -848,7 +849,7 @@ function TeamSection() {
               className="relative shrink-0"
               title="Plus the wider team"
             >
-              <div className="w-[78px] h-[112px] rounded-full ring-[5px] ring-white bg-[#0A1633] grid place-items-center">
+              <div className="w-[78px] h-[112px] rounded-full ring-[5px] ring-white bg-navy grid place-items-center">
                 <span className="font-serif text-[22px] text-white">+20</span>
               </div>
             </motion.div>
@@ -859,7 +860,7 @@ function TeamSection() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-6 mt-20 md:mt-24 max-w-[900px]">
           {TEAM_STATS.map((s, i) => (
             <motion.div key={s.l} {...fadeUp} transition={{ duration: 0.5, delay: 0.05 + i * 0.08 }}>
-              <p className="font-serif text-[54px] md:text-[66px] leading-[0.9] text-[#0A1633] m-0">{s.v}</p>
+              <p className="font-serif text-[54px] md:text-[66px] leading-[0.9] text-navy m-0">{s.v}</p>
               <span className="inline-block mt-5 rounded-full bg-[#F1F4FA] px-4 py-2 text-[13px] leading-snug text-slate-600">
                 {s.l}
               </span>
@@ -890,7 +891,7 @@ const LOOP_LEFT: LoopStep[] = [
     name: "Reach",
     role: (
       <>
-        Hana calls · <b className="text-[#0A1633]">you set the protocol</b>
+        Hana calls · <b className="text-navy">you set the protocol</b>
       </>
     ),
     body: "It calls from your number until someone picks up. Then medications, symptoms, and what changed.",
@@ -900,7 +901,7 @@ const LOOP_LEFT: LoopStep[] = [
     name: "Flag",
     role: (
       <>
-        Hana routes · <b className="text-[#0A1633]">your team decides</b>
+        Hana routes · <b className="text-navy">your team decides</b>
       </>
     ),
     body: "Anything clinical goes to your team, with the reason and the transcript attached.",
@@ -913,7 +914,7 @@ const LOOP_RIGHT: LoopStep[] = [
     name: "Document",
     role: (
       <>
-        <b className="text-[#0A1633]">Your clinician reviews</b> · Hana writes
+        <b className="text-navy">Your clinician reviews</b> · Hana writes
       </>
     ),
     body: "The note is in the chart before your team opens it. Under that patient, not in a spreadsheet.",
@@ -923,7 +924,7 @@ const LOOP_RIGHT: LoopStep[] = [
     name: "Bill",
     role: (
       <>
-        <b className="text-[#0A1633]">You submit</b> · Hana supplies the evidence
+        <b className="text-navy">You submit</b> · Hana supplies the evidence
       </>
     ),
     body: "Every minute attributed to the person who earned it, ready to attest on the first.",
@@ -1019,17 +1020,17 @@ function LoopStepBlock({ step, align }: { step: LoopStep; align: "l" | "r" }) {
       <div className={`flex items-baseline gap-2.5 ${right ? "justify-end" : ""}`}>
         {right ? (
           <>
-            <span className="text-[19px] font-bold tracking-[-0.01em] text-[#0A1633] order-1">{step.name}</span>
+            <span className="text-[19px] font-bold tracking-[-0.01em] text-navy order-1">{step.name}</span>
             <span className="font-serif text-[44px] leading-none text-[#C9D6F2] order-2">{step.n}</span>
           </>
         ) : (
           <>
             <span className="font-serif text-[44px] leading-none text-[#C9D6F2]">{step.n}</span>
-            <span className="text-[19px] font-bold tracking-[-0.01em] text-[#0A1633]">{step.name}</span>
+            <span className="text-[19px] font-bold tracking-[-0.01em] text-navy">{step.name}</span>
           </>
         )}
       </div>
-      <p className="mt-2.5 mb-0 text-[10px] font-bold uppercase tracking-[1px] text-[#2563EB]">{step.role}</p>
+      <p className="mt-2.5 mb-0 text-[10px] font-bold uppercase tracking-[1px] text-brand">{step.role}</p>
       <p className="mt-2.5 mb-0 text-[14.5px] leading-[1.58] text-slate-500">{step.body}</p>
     </motion.div>
   );
@@ -1041,11 +1042,11 @@ function HowItWorksLoop() {
     <section className="bg-white py-24 md:py-32 px-6 md:px-16">
       <div className="max-w-[1240px] mx-auto">
         <motion.div {...fadeUp} className="text-center">
-          <p className={`${eyebrow} text-[#2563EB] mt-0 mb-6`}>How it works</p>
-          <h2 className="font-serif font-normal text-[34px] sm:text-[44px] md:text-[52px] leading-[1.08] tracking-[-0.015em] text-[#0A1633] m-0">
+          <p className={`${eyebrow} text-brand mt-0 mb-6`}>How it works</p>
+          <h2 className="font-serif font-normal text-[34px] sm:text-[44px] md:text-[52px] leading-[1.08] tracking-[-0.015em] text-navy m-0">
             Forty-five minutes a patient.
             <br />
-            <em className="text-[#2563EB]">We take it under thirty.</em>
+            <em className="text-brand">We take it under thirty.</em>
           </h2>
           <p className="text-[17px] leading-[1.62] text-slate-600 max-w-[600px] mx-auto mt-6 mb-0">
             One coordinator. Same hours. Two hundred and fifty patients instead of a hundred and fifty.
@@ -1073,7 +1074,7 @@ function HowItWorksLoop() {
                 <path d={LOOP_PATH} fill="none" stroke="#8FB2F2" strokeWidth="4.2" opacity="0.5" />
                 {!reduce && (
                   <>
-                    <path d={LOOP_PATH} fill="none" stroke="#2563EB" strokeWidth="4.6" opacity="0.9" strokeDasharray="120 1500" strokeLinecap="round">
+                    <path d={LOOP_PATH} fill="none" stroke="var(--color-brand)" strokeWidth="4.6" opacity="0.9" strokeDasharray="120 1500" strokeLinecap="round">
                       <animate attributeName="stroke-dashoffset" from="1620" to="0" dur={LOOP_DUR} repeatCount="indefinite" />
                     </path>
                     <circle r="6.5" fill="#F59E42">
@@ -1096,19 +1097,19 @@ function HowItWorksLoop() {
                       {!reduce && (
                         <>
                           {/* halo */}
-                          <circle cx={node.cx} cy={node.cy} r="31" fill="none" stroke="#2563EB" strokeWidth="2" opacity="0">
+                          <circle cx={node.cx} cy={node.cy} r="31" fill="none" stroke="var(--color-brand)" strokeWidth="2" opacity="0">
                             <animate attributeName="r" dur={LOOP_DUR} repeatCount="indefinite" values={`31;31;40;46;46`} keyTimes={keyTimes} />
                             <animate attributeName="opacity" dur={LOOP_DUR} repeatCount="indefinite" values="0;0;0.55;0;0" keyTimes={keyTimes} />
                           </circle>
                           {/* accent fill */}
-                          <circle cx={node.cx} cy={node.cy} r="31" fill="#2563EB" opacity="0">
+                          <circle cx={node.cx} cy={node.cy} r="31" fill="var(--color-brand)" opacity="0">
                             <animate attributeName="opacity" dur={LOOP_DUR} repeatCount="indefinite" values="0;0;1;0;0" keyTimes={keyTimes} />
                           </circle>
                         </>
                       )}
                       <g
                         fill="none"
-                        stroke="#0A1633"
+                        stroke="var(--color-navy)"
                         strokeWidth="1.9"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -1119,7 +1120,7 @@ function HowItWorksLoop() {
                             attributeName="stroke"
                             dur={LOOP_DUR}
                             repeatCount="indefinite"
-                            values="#0A1633;#0A1633;#FFFFFF;#0A1633;#0A1633"
+                            values="#00122F;#00122F;#FFFFFF;#00122F;#00122F"
                             keyTimes={keyTimes}
                           />
                         )}
@@ -1155,11 +1156,11 @@ function HowItWorksLoop() {
         >
           {LOOP_MATH.map((m) => (
             <div key={m.label}>
-              <p className="font-serif font-normal text-[44px] md:text-[54px] leading-none text-[#0A1633] m-0">
+              <p className="font-serif font-normal text-[44px] md:text-[54px] leading-none text-navy m-0">
                 {m.v}
-                <span className="text-[#2563EB] text-[0.4em] align-super ml-1">{m.suf}</span>
+                <span className="text-brand text-[0.4em] align-super ml-1">{m.suf}</span>
               </p>
-              <p className="text-[15px] font-semibold text-[#0A1633] mt-4 mb-1.5">{m.label}</p>
+              <p className="text-[15px] font-semibold text-navy mt-4 mb-1.5">{m.label}</p>
               <p className="text-[14px] leading-[1.6] text-slate-600 m-0 max-w-[30ch] mx-auto">{m.body}</p>
             </div>
           ))}
@@ -1169,7 +1170,7 @@ function HowItWorksLoop() {
         <motion.p
           {...fadeUp}
           transition={{ duration: 0.5, delay: 0.16 }}
-          className="text-[17px] leading-[1.6] text-[#0A1633] mt-12 mb-0 max-w-[62ch] mx-auto text-center"
+          className="text-[17px] leading-[1.6] text-navy mt-12 mb-0 max-w-[62ch] mx-auto text-center"
         >
           Your team reviews it. Your provider signs it.{" "}
           <b className="font-semibold">Nothing is billed until a person on your team approves it.</b>
@@ -1442,7 +1443,7 @@ export function RemoteV2({
   handleEndWebCall,
 }: RemoteV2Props) {
   return (
-    <div className="cobalt bg-white text-[#00122F] font-sans overflow-x-hidden">
+    <div className="serif-display bg-white text-[#00122F] font-sans overflow-x-hidden">
       <SEO
         title="HANA · Draft"
         useExactTitle
@@ -1497,7 +1498,7 @@ export function RemoteV2({
       />
 
       {/* §6 COMPASS — the care team's side */}
-      <section className="bg-white text-[#0A1633] py-24 md:py-32 px-6 md:px-16">
+      <section className="bg-white text-navy py-24 md:py-32 px-6 md:px-16">
         <div className="max-w-[1200px] mx-auto">
           <CompassShowcase />
         </div>
@@ -1549,9 +1550,9 @@ export function RemoteV2({
       <section className="bg-white pt-24 md:pt-32 px-6 md:px-16 overflow-hidden">
         <div className="max-w-[1200px] mx-auto">
           <motion.div {...fadeUp} className="text-center">
-            <p className={`${eyebrow} text-[#2563EB] mt-0 mb-4`}>Integrations</p>
-            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-[#0A1633] mx-auto max-w-[24ch] m-0">
-              It lands in the chart <em className="text-[#2563EB]">you already use.</em>
+            <p className={`${eyebrow} text-brand mt-0 mb-4`}>Integrations</p>
+            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-navy mx-auto max-w-[24ch] m-0">
+              It lands in the chart <em className="text-brand">you already use.</em>
             </h2>
             <p className="text-[17px] leading-[1.7] text-slate-600 max-w-[54ch] mx-auto mt-5 mb-0">
               Your EHR. Your phone system. Nothing to rip out. The note is written the moment the
@@ -1635,11 +1636,11 @@ export function RemoteV2({
       <AskAiAboutUs className="py-12 md:py-16" />
 
       {/* §16c CTA */}
-      <section className="bg-white text-[#0A1633] py-28 md:py-32 px-6 md:px-16 text-center relative overflow-hidden">
-        <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-[#2563EB]/[0.12] w-[520px] h-[520px] -bottom-[180px] pointer-events-none" />
-        <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-[#2563EB]/[0.12] w-[340px] h-[340px] -bottom-[110px] pointer-events-none" />
+      <section className="bg-white text-navy py-28 md:py-32 px-6 md:px-16 text-center relative overflow-hidden">
+        <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-brand/[0.12] w-[520px] h-[520px] -bottom-[180px] pointer-events-none" />
+        <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-brand/[0.12] w-[340px] h-[340px] -bottom-[110px] pointer-events-none" />
         <motion.div {...fadeUp} className="relative">
-          <p className={`${eyebrow} text-[#2563EB] mt-0 mb-6`}>See it on your own patients.</p>
+          <p className={`${eyebrow} text-brand mt-0 mb-6`}>See it on your own patients.</p>
           <h2 className="font-serif font-normal text-[40px] sm:text-[52px] md:text-[60px] leading-[1.04] mx-auto mb-8 max-w-[16ch]">
             Book a demo.
           </h2>
@@ -1647,14 +1648,14 @@ export function RemoteV2({
             href={DEMO_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 bg-[#0A1633] text-white rounded-[10px] font-semibold text-[15px] px-8 py-[15px] no-underline hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2.5 bg-navy text-white rounded-[10px] font-semibold text-[15px] px-8 py-[15px] no-underline hover:opacity-90 transition-opacity"
           >
             Book a demo →
           </a>
           <div className="flex flex-wrap items-center justify-center gap-2.5 mt-8">
             {["No devices to ship", "No app to download", "Audit-ready from day one", "Runs in the EHR you already use"].map((t) => (
-              <span key={t} className="inline-flex items-center gap-1.5 text-[13px] font-medium text-[#0A1633] bg-white border border-slate-200 rounded-full px-3.5 py-1.5">
-                <Check className="w-3.5 h-3.5 text-[#2563EB]" strokeWidth={3} /> {t}
+              <span key={t} className="inline-flex items-center gap-1.5 text-[13px] font-medium text-navy bg-white border border-slate-200 rounded-full px-3.5 py-1.5">
+                <Check className="w-3.5 h-3.5 text-brand" strokeWidth={3} /> {t}
               </span>
             ))}
           </div>

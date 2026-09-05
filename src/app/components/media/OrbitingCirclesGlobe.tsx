@@ -61,8 +61,8 @@ const EHR_ORBITS: Orbit[] = [
     duration: 56,
     icons: [
       { src: "/logos/charm.png", alt: "CharmHealth", angle: -56 },
-      { node: <Plug className="h-5 w-5 md:h-6 md:w-6 text-[#2563EB]" strokeWidth={1.8} />, alt: "API", angle: 0 },
-      { node: <Webhook className="h-5 w-5 md:h-6 md:w-6 text-[#2563EB]" strokeWidth={1.8} />, alt: "Webhooks", angle: 56 },
+      { node: <Plug className="h-5 w-5 md:h-6 md:w-6 text-brand" strokeWidth={1.8} />, alt: "API", angle: 0 },
+      { node: <Webhook className="h-5 w-5 md:h-6 md:w-6 text-brand" strokeWidth={1.8} />, alt: "Webhooks", angle: 56 },
     ],
   },
 ];

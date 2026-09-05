@@ -84,7 +84,7 @@ export function SleepNoteBeforeTime() {
       {/* Full-bleed, not contained (Matteo 2026-08-25): the card ran to a
           1240px column and read as a banner. */}
       <div>
-        <motion.div {...fadeUp} className="relative overflow-hidden bg-[#0A1633]">
+        <motion.div {...fadeUp} className="relative overflow-hidden bg-navy">
           <img
             src="/products/remote-patient-call.webp"
             alt="A patient taking a call at home"
@@ -217,7 +217,7 @@ export function SleepNoteBeforeTime() {
                   initial={false}
                   animate={{ opacity: done ? 1 : 0.35 }}
                   transition={{ duration: 0.3 }}
-                  className="inline-flex items-center gap-2 bg-white text-[#0A1633] text-[14px] font-semibold px-5 py-2.5 rounded-full mt-5"
+                  className="inline-flex items-center gap-2 bg-white text-navy text-[14px] font-semibold px-5 py-2.5 rounded-full mt-5"
                 >
                   <Check className="w-3.5 h-3.5 text-[#2F8F6B]" strokeWidth={3.2} />
                   {done ? "Attested by the treating clinician" : "Attest and submit"}
