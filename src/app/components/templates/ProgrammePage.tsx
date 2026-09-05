@@ -4,13 +4,11 @@ import { EligibilityCheck } from "../sections/EligibilityCheck";
 import { CodeTable } from "../sections/CodeTable";
 import { WhoDoesWhat } from "../sections/WhoDoesWhat";
 import { HowItWorksLoop } from "../sections/HowItWorksLoop";
-import { RecipesMarquee } from "../sections/RecipesMarquee";
 import { RevenueEstimator } from "../sections/RevenueEstimator";
 import { FaqSection } from "../sections/FaqSection";
 import { CtaBand } from "../sections/CtaBand";
 import { Footer } from "../layout/Footer";
 import type { Programme } from "../../../content/programmes/index";
-import { PROGRAM_CARDS } from "../../../content/programmes";
 
 /**
  * ProgrammePage — the body of a /programs/* page.
@@ -40,6 +38,11 @@ import { PROGRAM_CARDS } from "../../../content/programmes";
  * programme genuinely needs a different order, that is a signal it is not a
  * programme page, not a signal to add an `order` prop.
  *
+ * NO WORKFLOW MARQUEE. It ran at 609 words against HowItWorksLoop's 231 and
+ * answered the same question, "how does the month run". Two sections answering
+ * one question is what makes a page feel long. The marquee stays on the homepage
+ * where breadth is the point; a programme page wants one answer, not two.
+ *
  * NO PROOF SECTION. ProofBento carries generic HANA proof and quotes that are not
  * about any particular programme, so on a programme page it reads as borrowed
  * credibility. It comes back per-programme when there is a case study for that
@@ -65,10 +68,6 @@ export interface ProgrammePageProps {
    *  also the moment the route can move out of NOINDEX_ROUTES. */
   openQuestions?: { q: string; needs: string }[];
 
-  /** Overrides for the workflow marquee. Defaults filter PROGRAM_CARDS on the
-   *  programme's own code. */
-  workflowsHeading?: string;
-  workflowsBody?: string;
 
   /** Defaults to `data.rule`, which is what both hand-built pages used. */
   heroBody?: string;
@@ -79,18 +78,14 @@ export function ProgrammePage({
   headline,
   faqs,
   openQuestions = [],
-  workflowsHeading,
-  workflowsBody,
   heroBody,
 }: ProgrammePageProps) {
-  const workflows = PROGRAM_CARDS.filter((c) => c.tag === data.code);
-
   return (
     <>
       <Hero
         eyebrow={`${data.code} · ${data.codes}`}
         headline={headline}
-        body={heroBody ?? data.rule}
+        body={heroBody ?? data.summary}
         primaryCta={{ label: "Talk to HANA", href: "/demo" }}
         secondaryCta={{ label: "See what it pays", href: "#codes" }}
         trustLine="Your team reviews. Your provider signs."
@@ -98,7 +93,18 @@ export function ProgrammePage({
 
       <EligibilityCheck data={data} id="eligibility" />
 
-      <CodeTable id="codes" tone="band" />
+      {/* ONE programme, not all four. The hub compares; a programme page does
+          not. This was 734 words showing three programmes the reader did not
+          ask about. `compact` also collapses the caveats behind a disclosure
+          rather than printing all five expanded. */}
+      <CodeTable
+        id="codes"
+        tone="band"
+        rows={[data]}
+        compact
+        heading={<>What <em>{data.code}</em> pays.</>}
+        body="One base code, one patient, one month, before adjustment. Not what you collect."
+      />
 
       {/* A programme that cannot run beside another gets its own moment here,
           not a footnote inside the table. A practice already billing something
@@ -122,18 +128,6 @@ export function ProgrammePage({
 
       <HowItWorksLoop id="how-it-works" />
 
-      {workflows.length > 0 && (
-        <RecipesMarquee
-          soft
-          tag={data.code}
-          items={workflows}
-          heading={workflowsHeading ?? `What a ${data.code} month actually looks like`}
-          body={
-            workflowsBody ??
-            `The workflows HANA runs inside ${data.name.toLowerCase()}. Each one ends in the record, not in a spreadsheet.`
-          }
-        />
-      )}
 
       <RevenueEstimator programme={data.id} id="what-it-is-worth" />
 
@@ -155,8 +149,7 @@ export function ProgrammePage({
                 : `${countWord(openQuestions.length)} things we will not guess at.`}
             </h2>
             <p className="text-[16.5px] leading-[1.7] text-ink-soft m-0 mb-8 max-w-[62ch]">
-              These are billing rules, and a plausible-sounding answer is worse than no answer. Each
-              one is confirmed before this page is published.
+Billing rules. We confirm each one before this page publishes.
             </p>
             <ul className="m-0 p-0 list-none grid gap-3">
               {openQuestions.map((o) => (

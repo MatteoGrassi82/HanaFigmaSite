@@ -93,8 +93,6 @@ export function BehavioralHealthIntegration() {
         headline={HERO_HEADLINE}
         faqs={BHI_FAQS}
         openQuestions={OPEN_QUESTIONS}
-        workflowsHeading="What a BHI month actually looks like"
-        workflowsBody="The workflows HANA runs inside behavioral health integration. Every one of them ends with a person on your team, and anything that sounds like risk reaches them live."
       />
     </div>
   );

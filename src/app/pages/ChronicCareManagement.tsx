@@ -68,7 +68,7 @@ const HERO_HEADLINE: ReactNode = (
 const CCM_FAQS = [
   {
     q: "Who counts as eligible?",
-    a: `${CCM.who} The programme runs against a care plan the patient has agreed to.`,
+    a: `${CCM.who} Against a care plan they have agreed to.`,
   },
   {
     q: "What does the month have to show?",
@@ -76,15 +76,15 @@ const CCM_FAQS = [
   },
   {
     q: "What does my team still do?",
-    a: `${CCM.team} HANA makes the calls and writes them up. Nothing bills until a person on your team approves it.`,
+    a: `${CCM.team} HANA makes the calls and writes them up.`,
   },
   {
     q: "What does it pay?",
-    a: `${CCM.payment.code} is ${CCM.payment.year} $${CCM.payment.rate.toFixed(2)} national non-facility, before geographic adjustment. That is one base code for one patient in one calendar month. It is not what the practice collects: sequestration and the standard Part B patient coinsurance both come off, and the amount varies by locality. The table above shows the basis.`,
+    a: `${CCM.payment.code} is $${CCM.payment.rate.toFixed(2)}, ${CCM.payment.year} national, before adjustment. Sequestration and the patient coinsurance both come off, so it is not what you collect.`,
   },
   {
     q: "Is this HANA billing on our behalf?",
-    a: "No. They are your patients and it is your claim. HANA supplies the reach and the documentation, your team supplies the clinical judgement and the attestation.",
+    a: "No. Your patients, your claim. HANA supplies the reach and the documentation. Your team supplies the judgement.",
   },
 ];
 
@@ -92,11 +92,11 @@ const CCM_FAQS = [
    page will ask every one of these, and an honest gap is worth more than a
    confident guess. Each is a fact somebody has to supply. */
 const OPEN_QUESTIONS: { q: string; needs: string }[] = [
-  { q: "How is patient consent obtained and recorded?", needs: "Confirm how consent is captured, by whom, and whether it is once or annual." },
-  { q: "Does a patient need an initiating visit first?", needs: "Confirm which patients require one, and who may perform it." },
-  { q: "Who in the practice may bill this?", needs: "Confirm practitioner types and the supervision level the clinical staff time sits under." },
-  { q: "Can it run alongside our other programmes?", needs: "Confirm the concurrency rules beyond the APCM exclusion, and how the same minutes are kept from being counted twice." },
-  { q: "What changes under the CY2027 proposed rule?", needs: "Wording for the proposed rule, from Matteo and counsel. Always described as proposed, never as settled." },
+  { q: "How is patient consent obtained and recorded?", needs: "How it is captured, by whom, once or annual." },
+  { q: "Does a patient need an initiating visit first?", needs: "Which patients need one, and who may perform it." },
+  { q: "Who in the practice may bill this?", needs: "Practitioner types, and the supervision level the staff time sits under." },
+  { q: "Can it run alongside our other programmes?", needs: "The rules beyond the APCM exclusion, and how minutes avoid double counting." },
+  { q: "What changes under the CY2027 proposed rule?", needs: "Wording from Matteo and counsel. Always described as proposed." },
 ];
 
 export function ChronicCareManagement() {
@@ -127,8 +127,6 @@ export function ChronicCareManagement() {
         headline={HERO_HEADLINE}
         faqs={CCM_FAQS}
         openQuestions={OPEN_QUESTIONS}
-        workflowsHeading="What a CCM month actually looks like"
-        workflowsBody="Four of the workflows HANA runs inside chronic care management. Each one ends in the record, not in a spreadsheet."
       />
     </div>
   );

@@ -259,11 +259,8 @@ export function RevenueEstimator({ programme, className, id }: RevenueEstimatorP
             The rate is set. <em className="text-ink">The enrollment is not.</em>
           </h2>
           <p className="text-[17px] leading-[1.7] text-ink-soft max-w-[60ch] mx-auto mt-5 mb-0">
-            A care management program pays per enrolled patient, per calendar month. Medicare sets
-            the rate. You set how much of your eligible panel is actually on the program, and that is
-            where the whole figure comes from. In {MARKET.dataYear}, about{" "}
-            {MARKET.receivingPctOfEligible} in 100 Medicare fee-for-service patients who qualified
-            for chronic care management were actually enrolled in it.
+            Medicare sets the rate. You set how much of your eligible panel is on the program, and
+            that is where the whole figure comes from.
           </p>
         </motion.div>
 
@@ -308,17 +305,15 @@ export function RevenueEstimator({ programme, className, id }: RevenueEstimatorP
           title="What a month of this program comes to"
           sub={
             locked
-              ? "Set the eligible panel and how much of it is enrolled. The figure moves as you do. The rate is the multiplier, and it sits still."
-              : "Pick a program, set the eligible panel, choose how much of it is enrolled. The figure moves as you do. The rate is the multiplier, and it sits still."
+              ? "Set the panel and the enrollment. The rate is the multiplier and it sits still."
+              : "Pick a program, set the panel and the enrollment. The rate sits still."
           }
           footnote={
             <>
-              This is an estimate, not a quote, and not billing advice. It models one base code per
-              enrolled patient per calendar month. It leaves out the additional-time codes, the
-              geographic adjustment, sequestration and the patient's share, and it assumes every
-              enrolled patient is billable every month, which no real month is. Check the rules
-              against your MAC before you rely on them. HANA makes the calls. Your team reviews and
-              attests, and nothing is billed until a person on your team approves it.
+              An estimate, not a quote and not billing advice. One base code per enrolled patient
+              per month, before add-on codes, geography, sequestration and the patient's share, and
+              it assumes every enrolled patient bills every month, which no real month does. Check
+              it against your MAC.
             </>
           }
         >
@@ -382,9 +377,7 @@ export function RevenueEstimator({ programme, className, id }: RevenueEstimatorP
               <div className="mt-5 md:min-h-[104px]">
                 <Note>
                   Eligibility is yours to count. {program.short} asks for this: {program.eligible}{" "}
-                  The marks on the dial are starting points, not claims about your panel, so drag it
-                  to your own count. How many enrolled patients one coordinator can carry is a
-                  separate question, and it is asked of the enrolled figure, not this one.
+                  The marks are starting points, not claims about your panel.
                 </Note>
               </div>
 
@@ -482,20 +475,16 @@ export function RevenueEstimator({ programme, className, id }: RevenueEstimatorP
                   </Note>
                 ) : (
                   <Note>
-                    Where the rate comes from. {program.code}, national non-facility payment amount,
-                    Medicare Physician Fee Schedule {program.year}. Source: {program.source}.
+                    {program.code}, national non-facility, Medicare PFS {program.year}.
                   </Note>
                 )}
               </div>
 
               <div className="mt-4">
                 <Note>
-                  Where the default enrollment comes from. In {MARKET.dataYear},{" "}
-                  {MARKET.eligiblePct}% of Medicare fee-for-service beneficiaries were potentially
-                  eligible for chronic care management, and {NATIONAL_ENROLLMENT_PCT}% of those
-                  eligible received any. That {NATIONAL_ENROLLMENT_PCT}% is where this page starts.
-                  It describes {MARKET.dataYear} and enrollment has grown since, so it is a floor to
-                  argue from, not a current rate. Source: {MARKET.citation}.
+                  The {NATIONAL_ENROLLMENT_PCT}% default: in {MARKET.dataYear}, that share of
+                  eligible Medicare fee-for-service patients was actually enrolled. Enrollment has
+                  grown since, so read it as a floor. Source: {MARKET.citation}.
                 </Note>
               </div>
             </div>

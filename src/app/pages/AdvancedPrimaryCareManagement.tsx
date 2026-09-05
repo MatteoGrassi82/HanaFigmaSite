@@ -114,8 +114,6 @@ export function AdvancedPrimaryCareManagement() {
         headline={HERO_HEADLINE}
         faqs={APCM_FAQS}
         openQuestions={OPEN_QUESTIONS}
-        workflowsHeading="What an APCM month actually looks like"
-        workflowsBody="The workflows HANA runs inside advanced primary care management. Each one ends in the record, which is what makes an element documented rather than asserted."
       />
     </div>
   );

@@ -93,8 +93,6 @@ export function RemoteTherapeuticMonitoring() {
         headline={HERO_HEADLINE}
         faqs={RTM_FAQS}
         openQuestions={OPEN_QUESTIONS}
-        workflowsHeading="What an RTM month actually looks like"
-        workflowsBody="The workflows HANA runs beside a device that is already recording. HANA summarises the conversation, never interprets the data, and never changes therapy."
       />
     </div>
   );
