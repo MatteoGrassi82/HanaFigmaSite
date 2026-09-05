@@ -185,7 +185,7 @@ export function EligibilityCheck({
             has already shipped once. Headers render static. */}
         <div className="max-w-[720px] mx-auto text-center">
           {eyebrow ? (
-            <p className="text-eyebrow font-bold uppercase text-brand mt-0 mb-4">
+            <p className="text-eyebrow font-bold uppercase text-ink-mute mt-0 mb-4">
               {eyebrow}
             </p>
           ) : null}
@@ -193,7 +193,7 @@ export function EligibilityCheck({
             id={headingId}
             className={cn(
               "font-serif font-normal m-0 text-[32px]/[1.1] sm:text-[40px]/[1.1] md:text-h2",
-              "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-brand",
+              "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-ink",
             )}
           >
             {heading ?? (
@@ -230,7 +230,7 @@ export function EligibilityCheck({
               <div className="flex items-center gap-3">
                 <span
                   aria-hidden="true"
-                  className="w-7 h-7 shrink-0 grid place-items-center rounded-pill bg-brand-tint text-brand text-[13px] font-semibold"
+                  className="w-7 h-7 shrink-0 grid place-items-center rounded-pill bg-paper-2 text-ink-soft text-[13px] font-semibold"
                 >
                   {step.n}
                 </span>

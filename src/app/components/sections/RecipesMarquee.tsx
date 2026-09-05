@@ -351,7 +351,7 @@ function RecipeCard({ recipe, onClick, soft = false }: { recipe: Recipe; onClick
         className="group flex-shrink-0 w-[290px] text-left bg-paper-bright rounded-[20px] p-5 cursor-pointer border border-rule hover:border-rule hover:-translate-y-[3px] hover:shadow-[0_18px_40px_-20px_rgba(10,22,51,0.28)] transition-all duration-300 flex flex-col justify-between min-h-[196px]"
       >
         <div>
-          <span className="inline-block text-[11px] font-bold uppercase tracking-[1.1px] text-brand bg-brand-tint rounded-full px-2.5 py-1">
+          <span className="inline-block text-[11px] font-bold uppercase tracking-[1.1px] text-ink-mute bg-paper-2 rounded-full px-2.5 py-1">
             {recipe.tag}
           </span>
           <div className="text-[19px] font-normal text-navy leading-snug tracking-[-0.2px] mt-3.5">
@@ -373,7 +373,7 @@ function RecipeCard({ recipe, onClick, soft = false }: { recipe: Recipe; onClick
             <span className="text-[12.5px] text-ink-mute">
               {recipe.steps.length} {it ? "passaggi" : "steps"}
             </span>
-            <span className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-brand">
+            <span className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-ink-soft underline underline-offset-4 decoration-rule">
               {it ? "Guarda" : "See them"}
               <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" className="transition-transform duration-300 group-hover:translate-x-0.5">
                 <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />

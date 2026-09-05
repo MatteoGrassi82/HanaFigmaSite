@@ -107,7 +107,7 @@ const DEFAULT_LEDE =
 const TONES = {
   light: {
     section: "bg-paper border-b border-rule",
-    eyebrow: "text-brand",
+    eyebrow: "text-ink-mute",
     heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-brand",
     body: "text-ink-soft",
     trust: "text-ink-soft",
@@ -120,7 +120,7 @@ const TONES = {
   },
   navy: {
     section: "bg-band border-y border-rule",
-    eyebrow: "text-brand",
+    eyebrow: "text-ink-mute",
     heading: "text-ink [&_em]:italic [&_em]:font-normal [&_em]:text-brand",
     body: "text-ink-soft",
     trust: "text-ink-mute",

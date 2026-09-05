@@ -110,7 +110,7 @@ export function GetYouLive() {
         <motion.div {...fadeUp} className="mb-12 md:mb-16">
           <p className={`${eyebrow} text-brand mt-0 mb-4`}>The partnership</p>
           <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-navy m-0 max-w-[20ch]">
-            You're not buying software. <em className="text-brand">You're getting a team.</em>
+            You're not buying software. <em className="text-ink">You're getting a team.</em>
           </h2>
           <p className="text-[17px] leading-[1.7] text-ink-soft mt-6 mb-0 max-w-[54ch]">
             Most practices that quit these programs didn't lose to the billing rules. They lost to a

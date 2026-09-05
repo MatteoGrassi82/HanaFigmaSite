@@ -82,14 +82,14 @@ const DEFAULT_FACES: BuiltByFace[] = [
 const TONE = {
   light: {
     section: "bg-paper",
-    eyebrow: "text-brand",
-    heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-brand",
+    eyebrow: "text-ink-mute",
+    heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-ink",
     body: "text-ink-soft",
   },
   band: {
     section: "bg-band border-y border-rule",
-    eyebrow: "text-brand",
-    heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-brand",
+    eyebrow: "text-ink-mute",
+    heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-ink",
     body: "text-ink-soft",
   },
 } as const;

@@ -122,14 +122,14 @@ const REQUIRED_CAVEAT_IDS: RateCaveat["id"][] = [
 const TONES = {
   light: {
     section: "bg-paper",
-    eyebrow: "text-brand",
-    heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-brand",
+    eyebrow: "text-ink-mute",
+    heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-ink",
     body: "text-ink-soft",
   },
   band: {
     section: "bg-band border-y border-rule",
-    eyebrow: "text-brand",
-    heading: "text-ink [&_em]:italic [&_em]:font-normal [&_em]:text-brand",
+    eyebrow: "text-ink-mute",
+    heading: "text-ink [&_em]:italic [&_em]:font-normal [&_em]:text-ink",
     body: "text-ink-soft",
   },
 } as const;

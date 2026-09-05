@@ -178,7 +178,7 @@ export function TeamSection({
 
             <h2
               id={headingId}
-              className="font-serif font-normal text-[27px] sm:text-[32px] md:text-[36px] leading-[1.24] tracking-[-0.01em] text-navy mt-7 mb-0 [&_em]:italic [&_em]:font-normal [&_em]:text-brand"
+              className="font-serif font-normal text-[27px] sm:text-[32px] md:text-[36px] leading-[1.24] tracking-[-0.01em] text-navy mt-7 mb-0 [&_em]:italic [&_em]:font-normal [&_em]:text-ink"
             >
               {heading}
             </h2>

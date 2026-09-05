@@ -248,15 +248,15 @@ const DEFAULT_GLYPHS: ReactNode[] = [
 const TONE = {
   light: {
     section: "bg-paper-bright",
-    eyebrow: "text-brand",
-    heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-brand",
+    eyebrow: "text-ink-mute",
+    heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-ink",
     body: "text-ink-soft",
     rule: "border-rule",
   },
   band: {
     section: "bg-band border-y border-rule",
-    eyebrow: "text-brand",
-    heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-brand",
+    eyebrow: "text-ink-mute",
+    heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-ink",
     body: "text-ink-soft",
     rule: "border-rule",
   },
@@ -285,7 +285,7 @@ function LoopStepBlock({ step, align }: { step: LoopStep; align: "l" | "r" }) {
           </>
         )}
       </div>
-      <p className="mt-2.5 mb-0 text-[10px] font-bold uppercase tracking-[1px] text-brand">
+      <p className="mt-2.5 mb-0 text-[10px] font-bold uppercase tracking-[1px] text-ink-mute">
         {step.role}
       </p>
       {/* Prose floor is text-ink-soft. The original ran this at text-ink-mute,
@@ -557,7 +557,7 @@ export function HowItWorksLoop({
                 <p className="font-serif font-normal text-[44px] md:text-[54px] leading-none text-navy m-0">
                   {m.v}
                   {m.suf ? (
-                    <span className="text-brand text-[0.4em] align-super ml-1">{m.suf}</span>
+                    <span className="text-ink-mute text-[0.4em] align-super ml-1">{m.suf}</span>
                   ) : null}
                 </p>
                 <p className="text-[15px] font-semibold text-navy mt-4 mb-1.5">{m.label}</p>

@@ -78,8 +78,8 @@ export interface WhoDoesWhatProps {
 const TONE = {
   light: {
     section: "bg-paper",
-    eyebrow: "text-brand",
-    heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-brand",
+    eyebrow: "text-ink-mute",
+    heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-ink",
     body: "text-ink-soft",
     hanaCard: "bg-paper-bright border-rule shadow-card",
     hanaBadge: "bg-paper border-rule text-ink-soft",
@@ -90,8 +90,8 @@ const TONE = {
   },
   band: {
     section: "bg-band border-y border-rule",
-    eyebrow: "text-brand",
-    heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-brand",
+    eyebrow: "text-ink-mute",
+    heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-ink",
     body: "text-ink-soft",
     hanaCard: "bg-paper-bright border-rule shadow-card",
     hanaBadge: "bg-paper-2 border-rule text-ink-soft",

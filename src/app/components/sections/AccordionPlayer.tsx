@@ -161,8 +161,8 @@ const TILE_WARM = {
 const TONE = {
   light: {
     section: "bg-paper",
-    eyebrow: "text-brand",
-    heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-brand",
+    eyebrow: "text-ink-mute",
+    heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-ink",
     body: "text-ink-soft",
     rule: "border-rule",
     title: "text-navy group-hover:text-brand",
@@ -174,8 +174,8 @@ const TONE = {
   },
   band: {
     section: "bg-band border-y border-rule",
-    eyebrow: "text-brand",
-    heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-brand",
+    eyebrow: "text-ink-mute",
+    heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-ink",
     body: "text-ink-soft",
     rule: "border-rule",
     title: "text-navy group-hover:text-brand",

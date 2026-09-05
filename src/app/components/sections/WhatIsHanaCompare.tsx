@@ -213,13 +213,13 @@ export function WhatIsHanaCompare({
         <div className="md:flex md:items-start md:justify-between md:gap-12 mb-10 md:mb-14">
           <div>
             {eyebrow ? (
-              <p className="text-eyebrow font-bold uppercase text-brand mt-0 mb-4">
+              <p className="text-eyebrow font-bold uppercase text-ink-mute mt-0 mb-4">
                 {eyebrow}
               </p>
             ) : null}
             <h2
               id={headingId}
-              className="font-serif font-normal text-[36px] sm:text-[44px] md:text-[52px] leading-[1.05] tracking-[-0.015em] text-navy m-0 [&_em]:italic [&_em]:font-normal [&_em]:text-brand"
+              className="font-serif font-normal text-[36px] sm:text-[44px] md:text-[52px] leading-[1.05] tracking-[-0.015em] text-navy m-0 [&_em]:italic [&_em]:font-normal [&_em]:text-ink"
             >
               {heading}
             </h2>

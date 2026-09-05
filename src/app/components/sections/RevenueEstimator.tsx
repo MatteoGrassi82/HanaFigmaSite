@@ -254,9 +254,9 @@ export function RevenueEstimator({ programme, className, id }: RevenueEstimatorP
           transition={{ duration: 0.5 }}
           className="text-center"
         >
-          <p className="text-eyebrow font-bold uppercase text-brand m-0">Program math</p>
+          <p className="text-eyebrow font-bold uppercase text-ink-mute m-0">Program math</p>
           <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-h2 leading-[1.08] text-navy max-w-[24ch] mx-auto mt-4 mb-0">
-            The rate is set. <em className="text-brand">The enrollment is not.</em>
+            The rate is set. <em className="text-ink">The enrollment is not.</em>
           </h2>
           <p className="text-[17px] leading-[1.7] text-ink-soft max-w-[60ch] mx-auto mt-5 mb-0">
             A care management program pays per enrolled patient, per calendar month. Medicare sets

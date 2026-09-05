@@ -183,7 +183,7 @@ export function ChronicCareManagement() {
       {/* 6. The gaps, stated. This section comes out before the page is indexed. */}
       <section id="open" className="scroll-mt-24 bg-band border-y border-rule py-16 md:py-20 px-6 md:px-16">
         <div className="max-w-[820px] mx-auto">
-          <p className="text-eyebrow font-bold uppercase text-brand m-0 mb-4">
+          <p className="text-eyebrow font-bold uppercase text-ink-mute m-0 mb-4">
             Not answered on this page yet
           </p>
           <h2 className="font-serif text-h2 text-ink m-0 mb-4">
