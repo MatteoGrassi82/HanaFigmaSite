@@ -25,36 +25,45 @@ import { getLocale } from "../../../lib/i18n";
 /*  "Context carried into next touch".                                 */
 /* ------------------------------------------------------------------ */
 
-/* ---- Brand tokens -------------------------------------------------- */
-const INK = "#0A0A0B";
-const INK_DEEP = "#030213";
-const SLATE = "#3F3F46";
-const SLATE_2 = "#52525B";
-const MUTED = "#71717A";
-const CANVAS = "#F7F7F8";
-const HAIRLINE = "rgba(0,0,0,0.06)";
-const HAIRLINE_2 = "rgba(0,0,0,0.08)";
-const BLUE = "#0A84FF";
-const BLUE_DEEP = "#0067D6";
-const SUCCESS = "#30D158";
-const DANGER = "#FF453A";
+/* ---- Brand tokens (Newsprint Ultramarine) --------------------------- */
+/*  Literal hex, not var(): this comp is rendered headlessly for video    */
+/*  export, where the page's CSS custom properties do not exist.          */
+const INK = "#16130F"; /* ink */
+const INK_DEEP = "#141210"; /* navy — the one genuinely dark ground */
+const NAVY_SOFT = "#353029"; /* navy-soft */
+const SLATE = "#4A4239"; /* ink-soft — secondary type on paper */
+const SLATE_2 = "#353029"; /* navy-soft — the big calendar numeral */
+const MUTED = "#6F6659"; /* ink-mute — captions, labels, meta */
+const CANVAS = "#FAF8F4"; /* paper — warm uncoated stock */
+const PAPER_2 = "#F0EDE6"; /* paper-2 */
+const PAPER_BRIGHT = "#FDFCFA"; /* paper-bright — cards and surfaces */
+const BAND = "#E0DBD0"; /* band — the tinted step below paper-2 */
+const HAIRLINE = "#D9D3C7"; /* rule-soft */
+const HAIRLINE_2 = "#CCC4B4"; /* rule */
+const BLUE = "#2536E6"; /* brand — ultramarine, the accent */
+const BLUE_SOFT = "#A9B4FF"; /* brand-soft — the accent on a dark ground */
+const SUCCESS = "#10B981"; /* signal green — done, adherent */
+const DANGER = "#FF453A"; /* signal red — a genuine alert state */
 
-/* Channel tints (semantic, on-brand) */
-const WA_GREEN = "#20BD5A";
-const SMS_AMBER = "#FF9F0A";
+/* Channel tints. These carry MEANING (which channel produced the fact),
+   so they stay three distinct hues: the accent plus the two signals. */
+const WA_GREEN = "#10B981"; /* signal green, normalised from #20BD5A */
+const SMS_AMBER = "#E8A06A"; /* signal amber, normalised from #FF9F0A */
 
 const SERIF = "'Fraunces', Georgia, serif";
 const SANS = "'IBM Plex Sans', system-ui, sans-serif";
 const MONO = "ui-monospace, 'SF Mono', 'JetBrains Mono', monospace";
 
 /* Layered, realistic shadows ---------------------------------------- */
+/*  Shadow alphas are warm ink (#16130F), not neutral black, so the lift
+    off warm paper stays in the same family as the ground. */
 const CARD_SHADOW =
-  "0 1px 2px rgba(0,0,0,0.04), 0 8px 24px -10px rgba(0,0,0,0.12), 0 24px 48px -28px rgba(0,0,0,0.12)";
+  "0 1px 2px rgba(22,19,15,0.06), 0 8px 24px -10px rgba(22,19,15,0.14), 0 24px 48px -28px rgba(22,19,15,0.14)";
 const CARD_SHADOW_SOFT =
-  "0 1px 2px rgba(0,0,0,0.03), 0 6px 18px -10px rgba(0,0,0,0.10), 0 18px 40px -28px rgba(0,0,0,0.10)";
+  "0 1px 2px rgba(22,19,15,0.05), 0 6px 18px -10px rgba(22,19,15,0.12), 0 18px 40px -28px rgba(22,19,15,0.12)";
 const PANEL_SHADOW =
-  "0 1px 2px rgba(0,0,0,0.06), 0 12px 34px -12px rgba(0,0,0,0.30), 0 30px 60px -30px rgba(0,0,0,0.35)";
-const TOP_INNER_HIGHLIGHT = "inset 0 1px 0 rgba(255,255,255,0.75)";
+  "0 1px 2px rgba(22,19,15,0.08), 0 12px 34px -12px rgba(22,19,15,0.30), 0 30px 60px -30px rgba(22,19,15,0.35)";
+const TOP_INNER_HIGHLIGHT = "inset 0 1px 0 rgba(253,252,250,0.80)"; /* paper-bright */
 
 /* ---- Motion helpers ------------------------------------------------ */
 /*  NOTE: these are PURE functions, not hooks. spring()/interpolate()  */
@@ -159,19 +168,19 @@ function DocIcon({ size = 12, color }: { size?: number; color: string }) {
   );
 }
 
-function WhatsAppGlyph({ size = 13 }: { size?: number }) {
+function WhatsAppGlyph({ size = 13, color = INK }: { size?: number; color?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
       <path
         d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"
-        stroke="#fff"
+        stroke={color}
         strokeWidth="1.7"
         strokeLinejoin="round"
         fill="none"
       />
       <path
         d="M9 8.6c-.3 0-.6.1-.8.4-.3.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.7 2.8 4.3 3.8 2.1.8 2.5.6 3 .6.5-.1 1.4-.6 1.6-1.2.2-.6.2-1 .1-1.1l-.6-.3-1.6-.8c-.2-.1-.4-.1-.6.1l-.6.8c-.1.2-.3.2-.5.1-.3-.1-1.1-.4-2-1.3-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5l.4-.5c.1-.2.1-.3.2-.5 0-.2 0-.3 0-.5l-.7-1.7c-.2-.5-.4-.5-.6-.5H9z"
-        fill="#fff"
+        fill={color}
       />
     </svg>
   );
@@ -238,6 +247,22 @@ function channelTint(channel: Channel): string {
   if (channel === "call") return BLUE;
   if (channel === "whatsapp") return WA_GREEN;
   return SMS_AMBER;
+}
+
+/*  Type that sits ON a filled channel tint. Ultramarine is dark enough to
+    carry paper-bright; the green and the amber are light, so they take ink.
+    Same rule the palette uses everywhere: light type on dark grounds only. */
+function channelFg(channel: Channel): string {
+  return channel === "call" ? PAPER_BRIGHT : INK;
+}
+
+/*  The same channel identity, restated for the DARK panel. Ultramarine is
+    a dark hue: on navy it composites to roughly 1.8:1 and the provenance
+    tag stops being readable, so on that ground the call channel takes
+    brand-soft. The green and the amber are already light and carry
+    themselves on navy unchanged. */
+function channelTintOnDark(channel: Channel): string {
+  return channel === "call" ? BLUE_SOFT : channelTint(channel);
 }
 
 function channelLabel(channel: Channel): string {
@@ -462,7 +487,8 @@ export function PatientContextComp() {
       <AbsoluteFill
         style={{
           backgroundImage:
-            "radial-gradient(rgba(10,10,11,0.035) 1px, transparent 1.2px)",
+            /* ink at low alpha, so the grain is warm like the stock */
+            "radial-gradient(rgba(22,19,15,0.045) 1px, transparent 1.2px)",
           backgroundSize: "22px 22px",
           backgroundPosition: "0 0",
           opacity: 0.6,
@@ -471,13 +497,15 @@ export function PatientContextComp() {
       <AbsoluteFill
         style={{
           background:
-            "radial-gradient(620px 360px at 22% 14%, rgba(10,132,255,0.07), transparent 70%), radial-gradient(560px 420px at 86% 88%, rgba(10,132,255,0.045), transparent 72%)",
+            /* was two blue glows; the depth is now two steps of the warm
+               ramp — paper-2 then band — so nothing here is a hue. */
+            "radial-gradient(620px 360px at 22% 14%, rgba(240,237,230,0.95), transparent 70%), radial-gradient(560px 420px at 86% 88%, rgba(224,219,208,0.55), transparent 72%)",
         }}
       />
       {/* subtle vignette so the canvas isn't dead-flat */}
       <AbsoluteFill
         style={{
-          boxShadow: "inset 0 0 140px rgba(0,0,0,0.05)",
+          boxShadow: "inset 0 0 140px rgba(22,19,15,0.06)" /* ink */,
           pointerEvents: "none",
         }}
       />
@@ -490,7 +518,7 @@ export function PatientContextComp() {
           left: 0,
           right: 0,
           height: 60,
-          background: "rgba(255,255,255,0.72)",
+          background: "rgba(253,252,250,0.82)" /* paper-bright, translucent */,
           backdropFilter: "blur(18px)",
           WebkitBackdropFilter: "blur(18px)",
           borderBottom: `1px solid ${HAIRLINE}`,
@@ -535,7 +563,9 @@ export function PatientContextComp() {
                 height: 14,
                 marginLeft: 3,
                 transform: "translateY(2px)",
-                background: BLUE,
+                /* a text caret is chrome, not a signal: ink keeps the
+                   accent budget for the live touchpoint below */
+                background: INK,
                 opacity: cursorOn,
               }}
             />
@@ -553,9 +583,10 @@ export function PatientContextComp() {
               width: 34,
               height: 34,
               borderRadius: "50%",
-              background: "linear-gradient(180deg, #FFFFFF 0%, #ECECEE 100%)",
+              /* paper-bright → paper-2 */
+              background: `linear-gradient(180deg, ${PAPER_BRIGHT} 0%, ${PAPER_2} 100%)`,
               border: `1px solid ${HAIRLINE_2}`,
-              boxShadow: "0 1px 2px rgba(0,0,0,0.06), " + TOP_INNER_HIGHLIGHT,
+              boxShadow: "0 1px 2px rgba(22,19,15,0.07), " + TOP_INNER_HIGHLIGHT,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -594,8 +625,8 @@ export function PatientContextComp() {
               height: 11,
               borderRadius: "50%",
               background: SUCCESS,
-              border: "2px solid #fff",
-              boxShadow: "0 0 0 0.5px rgba(0,0,0,0.04)",
+              border: `2px solid ${PAPER_BRIGHT}`,
+              boxShadow: "0 0 0 0.5px rgba(22,19,15,0.06)",
             }}
           />
         </div>
@@ -619,6 +650,8 @@ export function PatientContextComp() {
           const accent = live;
           const touched = completed;
           const tint = channelTint(card.channel);
+          // type colour once the header is filled with the channel tint
+          const litFg = channelFg(card.channel);
           // connector to the next card lights as the touchpoint hands off
           const next = CARDS[i + 1];
           const connectorLit = next ? ramp(frame, card.activeAt + 30, next.activeAt) : 0;
@@ -660,7 +693,7 @@ export function PatientContextComp() {
               <div
                 style={{
                   width: 150,
-                  background: "#FFFFFF",
+                  background: PAPER_BRIGHT,
                   borderRadius: 18,
                   boxShadow: accent > 0.5 ? CARD_SHADOW : CARD_SHADOW_SOFT,
                   border: `1px solid ${HAIRLINE}`,
@@ -673,10 +706,11 @@ export function PatientContextComp() {
                 <div
                   style={{
                     position: "relative",
-                    background: "linear-gradient(180deg, #F4F4F5 0%, #ECECEE 100%)",
+                    /* resting header: paper-2 → band, two steps of the ramp */
+                    background: `linear-gradient(180deg, ${PAPER_2} 0%, ${BAND} 100%)`,
                     padding: "13px 12px 11px",
                     textAlign: "center",
-                    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.6)",
+                    boxShadow: "inset 0 1px 0 rgba(253,252,250,0.7)",
                   }}
                 >
                   {/* lit gradient overlay (opacity follows LIVE state) */}
@@ -684,14 +718,11 @@ export function PatientContextComp() {
                     style={{
                       position: "absolute",
                       inset: 0,
-                      background:
-                        card.channel === "call"
-                          ? "linear-gradient(180deg, #2A93FF 0%, #0A84FF 100%)"
-                          : card.channel === "whatsapp"
-                          ? "linear-gradient(180deg, #2BD46A 0%, #20BD5A 100%)"
-                          : "linear-gradient(180deg, #FFB23E 0%, #FF9F0A 100%)",
+                      /* flat channel tint; the inset highlight below does
+                         the top-light the old two-stop gradient was faking */
+                      background: tint,
                       opacity: accent,
-                      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.30)",
+                      boxShadow: "inset 0 1px 0 rgba(253,252,250,0.30)",
                     }}
                   />
                   <p
@@ -701,7 +732,7 @@ export function PatientContextComp() {
                       fontSize: 10,
                       fontFamily: MONO,
                       fontWeight: 600,
-                      color: mixHex("#71717A", "#FFFFFF", accent),
+                      color: mixHex(MUTED, litFg, accent),
                       letterSpacing: 2,
                     }}
                   >
@@ -714,7 +745,7 @@ export function PatientContextComp() {
                       fontSize: 32,
                       fontFamily: SERIF,
                       fontWeight: 400,
-                      color: mixHex(SLATE_2, "#FFFFFF", accent),
+                      color: mixHex(SLATE_2, litFg, accent),
                       lineHeight: 1.05,
                       letterSpacing: -0.5,
                       fontFeatureSettings: "'tnum' 1",
@@ -739,9 +770,11 @@ export function PatientContextComp() {
                         position: "absolute",
                         inset: 0,
                         borderRadius: "50%",
-                        background: "#fff",
+                        background: litFg,
                         opacity: live * dotPulse,
-                        boxShadow: "0 0 8px rgba(255,255,255,0.8)",
+                        /* the glow follows the dot: paper-bright on the
+                           ultramarine header, ink on the light tints */
+                        boxShadow: `0 0 8px ${hexA(litFg, 0.8)}`,
                       }}
                     />
                     {/* completed check (fades in as live relaxes) */}
@@ -752,7 +785,7 @@ export function PatientContextComp() {
                         opacity: clamp01(touched - live) * 0.9,
                       }}
                     >
-                      <CheckBadge size={11} color={touched > 0 && accent < 0.3 ? tint : "#fff"} />
+                      <CheckBadge size={11} color={touched > 0 && accent < 0.3 ? tint : litFg} />
                     </div>
                   </div>
                 </div>
@@ -839,7 +872,7 @@ export function PatientContextComp() {
             opacity: chat.opacity,
             transform: `translateY(${chat.translateY}px)`,
             filter: chat.blur > 0.05 ? `blur(${chat.blur}px)` : "none",
-            background: "#FFFFFF",
+            background: PAPER_BRIGHT,
             borderRadius: 16,
             border: `1px solid ${HAIRLINE}`,
             boxShadow: CARD_SHADOW_SOFT + ", " + TOP_INNER_HIGHLIGHT,
@@ -853,15 +886,17 @@ export function PatientContextComp() {
                 width: 28,
                 height: 28,
                 borderRadius: 9,
-                background: "linear-gradient(180deg, #EAF4FF 0%, #DCEBFF 100%)",
-                border: "1px solid rgba(10,132,255,0.16)",
+                /* was a blue wash; this is a note avatar, not a state, so
+                   it takes the warm ramp and leaves the accent unspent */
+                background: `linear-gradient(180deg, ${PAPER_2} 0%, ${BAND} 100%)`,
+                border: `1px solid ${HAIRLINE_2}`,
                 flexShrink: 0,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
               }}
             >
-              <DocIcon size={13} color={BLUE} />
+              <DocIcon size={13} color={MUTED} />
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <p
@@ -899,12 +934,13 @@ export function PatientContextComp() {
             opacity: panelOpacity,
             transform: `translateY(${panelLift}px) scale(${panelScale})`,
             transformOrigin: "top right",
+            /* the one genuinely dark surface: navy-soft → navy */
             background:
-              "linear-gradient(180deg, #15151A 0%, " + INK_DEEP + " 100%)",
+              "linear-gradient(180deg, " + NAVY_SOFT + " 0%, " + INK_DEEP + " 100%)",
             borderRadius: 18,
             padding: "15px 18px 14px",
-            boxShadow: PANEL_SHADOW + ", inset 0 1px 0 rgba(255,255,255,0.08)",
-            border: "1px solid rgba(255,255,255,0.04)",
+            boxShadow: PANEL_SHADOW + ", inset 0 1px 0 rgba(253,252,250,0.10)",
+            border: "1px solid rgba(253,252,250,0.06)",
           }}
         >
           {/* header */}
@@ -916,13 +952,14 @@ export function PatientContextComp() {
               marginBottom: 12,
             }}
           >
-            <DocIcon size={13} color="#8E8E96" />
+            {/* on navy, every grey is a paper-bright alpha, never an ink */}
+            <DocIcon size={13} color="rgba(253,252,250,0.55)" />
             <span
               style={{
                 fontSize: 9.5,
                 fontFamily: MONO,
                 fontWeight: 600,
-                color: "#9A9AA2",
+                color: "rgba(253,252,250,0.62)",
                 letterSpacing: 1.1,
               }}
             >
@@ -940,8 +977,8 @@ export function PatientContextComp() {
                 marginLeft: "auto",
                 padding: "2px 7px",
                 borderRadius: 6,
-                background: "rgba(48,209,88,0.12)",
-                border: "1px solid rgba(48,209,88,0.22)",
+                background: "rgba(16,185,129,0.14)" /* signal green */,
+                border: "1px solid rgba(16,185,129,0.26)",
               }}
             >
               {loc === "it" ? "AGGIORNATO" : "UPDATED"}
@@ -952,7 +989,8 @@ export function PatientContextComp() {
               small source tag. The record visibly GROWS over time. */}
           {ROWS.map((row, i) => {
             const rr = rowReveals[i];
-            const tint = channelTint(row.source);
+            /* dark ground: the call channel reads as brand-soft here */
+            const tint = channelTintOnDark(row.source);
             // freshly-written rows flash their source tint briefly, then calm
             const freshFlash = interpolate(
               frame,
@@ -985,14 +1023,14 @@ export function PatientContextComp() {
                     />
                     <CheckBadge size={14} color={SUCCESS} />
                   </div>
-                  <span style={{ fontSize: 11.5, color: "#9A9AA2", letterSpacing: -0.1 }}>
+                  <span style={{ fontSize: 11.5, color: "rgba(253,252,250,0.62)", letterSpacing: -0.1 }}>
                     {row.label}
                   </span>
                   <span
                     style={{
                       fontSize: 11.5,
                       fontWeight: 500,
-                      color: "#F5F5F7",
+                      color: PAPER_BRIGHT,
                       marginLeft: "auto",
                       letterSpacing: -0.1,
                       fontFamily: row.mono ? MONO : SANS,
@@ -1013,7 +1051,10 @@ export function PatientContextComp() {
                       fontSize: 8,
                       fontFamily: MONO,
                       fontWeight: 600,
-                      color: mixHex("#6B6B73", tint, 0.5 + freshFlash * 0.5),
+                      /* mixHex needs literal hex on both ends, so the dim
+                         base here is ink-mute, the warm grey that sits
+                         between navy and paper on the ramp */
+                      color: mixHex(MUTED, tint, 0.5 + freshFlash * 0.5),
                       letterSpacing: 0.4,
                       padding: "1.5px 6px",
                       borderRadius: 5,
@@ -1022,7 +1063,7 @@ export function PatientContextComp() {
                       whiteSpace: "nowrap",
                     }}
                   >
-                    <ChannelGlyph channel={row.source} size={8} color={mixHex("#8E8E96", tint, 0.65)} />
+                    <ChannelGlyph channel={row.source} size={8} color={mixHex(MUTED, tint, 0.7)} />
                     {channelLabel(row.source)}
                   </span>
                 </div>
@@ -1033,7 +1074,7 @@ export function PatientContextComp() {
           {/* footer */}
           <div
             style={{
-              borderTop: "1px solid rgba(255,255,255,0.08)",
+              borderTop: "1px solid rgba(253,252,250,0.10)",
               marginTop: 3,
               paddingTop: 10,
               display: "flex",
@@ -1047,7 +1088,7 @@ export function PatientContextComp() {
               style={{
                 fontSize: 10,
                 fontFamily: MONO,
-                color: "#6B6B73",
+                color: "rgba(253,252,250,0.45)",
                 letterSpacing: 0.4,
               }}
             >
@@ -1059,7 +1100,7 @@ export function PatientContextComp() {
                   fontSize: 9.5,
                   fontFamily: MONO,
                   fontWeight: 600,
-                  color: "#8E8E96",
+                  color: "rgba(253,252,250,0.55)",
                   letterSpacing: 1,
                 }}
               >
@@ -1083,7 +1124,7 @@ export function PatientContextComp() {
                     borderRadius: "50%",
                     background: SUCCESS,
                     opacity: dotPulse,
-                    boxShadow: "0 0 6px rgba(48,209,88,0.7)",
+                    boxShadow: "0 0 6px rgba(16,185,129,0.7)" /* signal green */,
                   }}
                 />
               </div>
@@ -1093,7 +1134,7 @@ export function PatientContextComp() {
           {/* closing beat — context CARRIED FORWARD into the next touch */}
           <div
             style={{
-              borderTop: "1px solid rgba(255,255,255,0.08)",
+              borderTop: "1px solid rgba(253,252,250,0.10)",
               marginTop: 9,
               paddingTop: 9,
               display: "flex",
@@ -1110,8 +1151,10 @@ export function PatientContextComp() {
                 width: 18,
                 height: 18,
                 borderRadius: 6,
-                background: "rgba(10,132,255,0.14)",
-                border: "1px solid rgba(10,132,255,0.28)",
+                /* the accent on a dark ground: brand-soft, and this chip
+                   is the beat the whole frame is about */
+                background: "rgba(169,180,255,0.16)",
+                border: "1px solid rgba(169,180,255,0.30)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -1121,7 +1164,7 @@ export function PatientContextComp() {
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <path
                   d="M5 12h13M13 6l6 6-6 6"
-                  stroke="#5AB0FF"
+                  stroke={BLUE_SOFT}
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -1131,13 +1174,13 @@ export function PatientContextComp() {
             <span
               style={{
                 fontSize: 10.5,
-                color: "#9A9AA2",
+                color: "rgba(253,252,250,0.62)",
                 letterSpacing: -0.1,
                 lineHeight: 1.3,
               }}
             >
               {loc === "it" ? "Contesto portato nel" : "Context carried into"}
-              <span style={{ color: "#F5F5F7" }}>
+              <span style={{ color: PAPER_BRIGHT }}>
                 {loc === "it" ? " contatto dopo" : " next touch"}
               </span>
             </span>
@@ -1153,11 +1196,11 @@ export function PatientContextComp() {
           left: 0,
           right: 0,
           height: 52,
-          background: "rgba(255,255,255,0.72)",
+          background: "rgba(253,252,250,0.82)" /* paper-bright, translucent */,
           backdropFilter: "blur(18px)",
           WebkitBackdropFilter: "blur(18px)",
           borderTop: `1px solid ${HAIRLINE}`,
-          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.7)",
+          boxShadow: "inset 0 1px 0 rgba(253,252,250,0.7)",
           display: "flex",
           alignItems: "center",
           padding: "0 26px",
@@ -1215,7 +1258,8 @@ export function PatientContextComp() {
                     width: 2.5,
                     height: h,
                     borderRadius: 2,
-                    background: `rgba(63,63,70,${0.35 + 0.4 * clamp01(h / 16)})`,
+                    /* ink-soft, so the meter is warm grey not cool slate */
+                    background: `rgba(74,66,57,${0.35 + 0.4 * clamp01(h / 16)})`,
                   }}
                 />
               );
@@ -1233,16 +1277,16 @@ export function PatientContextComp() {
             borderRadius: 9,
             padding: "7px 15px",
             boxShadow:
-              "0 1px 2px rgba(0,0,0,0.12), 0 6px 14px -8px rgba(255,59,48,0.55), inset 0 1px 0 rgba(255,255,255,0.30)",
+              "0 1px 2px rgba(22,19,15,0.14), 0 6px 14px -8px rgba(255,59,48,0.55), inset 0 1px 0 rgba(253,252,250,0.30)",
           }}
         >
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
             <path
               d="M5 4.5c1 0 1.8.7 2 1.6l.5 2c.1.6-.1 1.2-.6 1.6l-1.2.9c.9 1.8 2.4 3.3 4.2 4.2l.9-1.2c.4-.5 1-.7 1.6-.6l2 .5c.9.2 1.6 1 1.6 2v1.7c0 1.1-.9 2-2 2C9.6 19.7 4.3 14.4 4.3 7.2c0-1.1.9-2 2-2z"
-              fill="#fff"
+              fill={PAPER_BRIGHT}
             />
           </svg>
-          <span style={{ fontSize: 12, fontWeight: 600, color: "#fff", letterSpacing: 0.2 }}>
+          <span style={{ fontSize: 12, fontWeight: 600, color: PAPER_BRIGHT, letterSpacing: 0.2 }}>
             {loc === "it" ? "Termina" : "End call"}
           </span>
         </div>
@@ -1260,16 +1304,15 @@ export function PatientContextComp() {
 function ChannelChip({ channel }: { channel: Channel }) {
   const isWA = channel === "whatsapp";
   const isCall = channel === "call";
-  const bg = isWA
-    ? "linear-gradient(180deg, #2BD46A 0%, #20BD5A 100%)"
-    : isCall
-    ? "linear-gradient(180deg, #2A93FF 0%, #0A84FF 100%)"
-    : "linear-gradient(180deg, #FFB23E 0%, #FF9F0A 100%)";
+  /* Flat channel tint. The old two-stop gradients were faking a top light
+     the inset highlight in `glow` already provides. */
+  const bg = channelTint(channel);
+  const fg = channelFg(channel);
   const glow = isWA
-    ? "0 1px 2px rgba(0,0,0,0.10), 0 6px 14px -8px rgba(32,189,90,0.55), inset 0 1px 0 rgba(255,255,255,0.35)"
+    ? "0 1px 2px rgba(22,19,15,0.12), 0 6px 14px -8px rgba(16,185,129,0.45), inset 0 1px 0 rgba(253,252,250,0.35)"
     : isCall
-    ? "0 1px 2px rgba(0,0,0,0.10), 0 6px 14px -8px rgba(10,132,255,0.55), inset 0 1px 0 rgba(255,255,255,0.35)"
-    : "0 1px 2px rgba(0,0,0,0.10), 0 6px 14px -8px rgba(255,159,10,0.55), inset 0 1px 0 rgba(255,255,255,0.35)";
+    ? "0 1px 2px rgba(22,19,15,0.12), 0 6px 14px -8px rgba(37,54,230,0.45), inset 0 1px 0 rgba(253,252,250,0.35)"
+    : "0 1px 2px rgba(22,19,15,0.12), 0 6px 14px -8px rgba(232,160,106,0.45), inset 0 1px 0 rgba(253,252,250,0.35)";
   const it = getLocale() === "it";
   const label = isWA
     ? "WhatsApp"
@@ -1293,11 +1336,11 @@ function ChannelChip({ channel }: { channel: Channel }) {
       }}
     >
       {isWA ? (
-        <WhatsAppGlyph size={14} />
+        <WhatsAppGlyph size={14} color={fg} />
       ) : (
-        <ChannelGlyph channel={channel} size={13} color="#fff" />
+        <ChannelGlyph channel={channel} size={13} color={fg} />
       )}
-      <span style={{ fontSize: 12, fontWeight: 600, color: "#fff", letterSpacing: 0.1 }}>
+      <span style={{ fontSize: 12, fontWeight: 600, color: fg, letterSpacing: 0.1 }}>
         {label}
       </span>
     </div>
@@ -1338,9 +1381,9 @@ function ContextCaption({
           gap: 7,
           padding: "5px 11px 5px 9px",
           borderRadius: 999,
-          background: "rgba(255,255,255,0.78)",
+          background: "rgba(253,252,250,0.85)" /* paper-bright */,
           border: `1px solid ${HAIRLINE_2}`,
-          boxShadow: "0 1px 2px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.7)",
+          boxShadow: "0 1px 2px rgba(22,19,15,0.06), inset 0 1px 0 rgba(253,252,250,0.7)",
           backdropFilter: "blur(6px)",
           WebkitBackdropFilter: "blur(6px)",
         }}
@@ -1350,7 +1393,9 @@ function ContextCaption({
             fontSize: 9.5,
             fontFamily: MONO,
             fontWeight: 600,
-            color: BLUE_DEEP,
+            /* was the old blue. The live card header is already carrying
+               the accent in this frame, so the counter takes ink. */
+            color: INK,
             letterSpacing: 0.5,
           }}
         >
@@ -1376,12 +1421,12 @@ function RecordCounter({ frame }: { frame: number }) {
         fontSize: 8.5,
         fontFamily: MONO,
         fontWeight: 600,
-        color: "#6B6B73",
+        color: "rgba(253,252,250,0.45)",
         letterSpacing: 0.5,
         padding: "1.5px 6px",
         borderRadius: 5,
-        background: "rgba(255,255,255,0.05)",
-        border: "1px solid rgba(255,255,255,0.07)",
+        background: "rgba(253,252,250,0.06)",
+        border: "1px solid rgba(253,252,250,0.09)",
       }}
     >
       {count} {getLocale() === "it" ? "campi" : "fields"}

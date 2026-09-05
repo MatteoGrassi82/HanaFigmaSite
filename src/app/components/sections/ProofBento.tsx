@@ -6,17 +6,25 @@ import { TimelineContent } from "../ui/timeline-animation";
 
 /* ── Proof bento — ported from the ShipTime "ClientFeedback" layout (two
    clusters, placements matched to the Federato reference) and re-skinned to
-   HANA: navy tiles, BLUE accents, soft-blue quote cards, blue duotone
-   portraits, blue/cream geometric decor. Content is illustrative; portraits and
-   "video" thumbnails use the local /avatars photos. ── */
+   HANA. Repainted 2026-09-05 into Newsprint Ultramarine: warm dark tiles,
+   band-tinted quote cards, near-neutral warm duotone portraits, cream geometric
+   decor. Ultramarine is spent three times in the view and nowhere else: the
+   headline, the gauge arc, the case-studies arrow. Content is illustrative;
+   portraits and "video" thumbnails use the local /avatars photos. ── */
 
-const ACCENT = "#6ea8fe";
-const CREAM = "#e8eefb";
-const FAINT = "rgba(255,255,255,0.45)";
-const WHITE_DIM = "rgba(255,255,255,0.72)";
-const INK = "#0f2748";
-const SUB = "#5a6b82";
-const DUOTONE = "#1c4e93";
+/* Newsprint Ultramarine, as literal hex with the token name beside it. This is
+   artwork, so the values have to hold up outside the page's CSS scope. */
+const DECOR = "#E0DBD0";                    /* band: the geometric shapes on navy */
+const DECOR_2 = "#FDFCFA";                  /* paper-bright: the shape overlapping it */
+const FAINT = "rgba(253,252,250,0.45)";     /* paper-bright: hairlines on navy */
+const WHITE_DIM = "rgba(253,252,250,0.72)"; /* paper-bright: secondary type on navy */
+const SUF_DARK = "rgba(253,252,250,0.55)";  /* paper-bright: the unit after a stat */
+const INK = "#16130F";                      /* ink */
+const SUB = "#4A4239";                      /* ink-soft */
+const MUTE = "#6F6659";                     /* ink-mute: labels only */
+const BRAND_SOFT = "#A9B4FF";               /* brand-soft: the accent on a dark ground */
+const DUOTONE_PLATE = "#353029";            /* navy-soft: the silhouette fallback */
+const DUOTONE_TINT = "#6F6659";             /* ink-mute: a near-neutral warm duotone */
 
 const AV = {
   jonathan: "/avatars/jonathan.jpg",
@@ -38,15 +46,17 @@ const revealVariants: Variants = {
   hidden: { filter: "blur(10px)", y: -18, opacity: 0 },
 };
 
-/* ── decorative geometric motifs (blue + cream, on navy) ── */
+/* ── decorative geometric motifs (two warm steps, on navy). These fill
+   rectangles, they do not signal anything, so they take the paper ramp and not
+   the accent. ── */
 function GeoDecor({ variant }: { variant: "bar" | "squares" | "circle" | "rects" }) {
   const dash = { stroke: FAINT, strokeWidth: 1.3, strokeDasharray: "2 6", fill: "none" as const };
   if (variant === "bar")
     return (
       <svg viewBox="0 0 200 88" className="h-full w-full" preserveAspectRatio="xMidYMid meet" aria-hidden>
-        <rect x="10" y="8" width="15" height="72" rx="4" fill={ACCENT} />
+        <rect x="10" y="8" width="15" height="72" rx="4" fill={DECOR} />
         <line x1="25" y1="40" x2="140" y2="40" {...dash} />
-        <circle cx="140" cy="40" r="4" fill={ACCENT} />
+        <circle cx="140" cy="40" r="4" fill={DECOR} />
         <rect x="120" y="6" width="44" height="70" rx="6" fill="none" stroke={FAINT} strokeWidth="1" />
       </svg>
     );
@@ -54,27 +64,27 @@ function GeoDecor({ variant }: { variant: "bar" | "squares" | "circle" | "rects"
     return (
       <svg viewBox="0 0 200 88" className="h-full w-full" preserveAspectRatio="xMidYMid meet" aria-hidden>
         <path d="M60 78 L150 10" {...dash} />
-        <rect x="104" y="8" width="52" height="52" rx="7" fill={ACCENT} />
-        <rect x="74" y="34" width="38" height="38" rx="6" fill={CREAM} />
-        <circle cx="150" cy="10" r="4" fill={ACCENT} />
+        <rect x="104" y="8" width="52" height="52" rx="7" fill={DECOR} />
+        <rect x="74" y="34" width="38" height="38" rx="6" fill={DECOR_2} />
+        <circle cx="150" cy="10" r="4" fill={DECOR} />
       </svg>
     );
   if (variant === "circle")
     return (
       <svg viewBox="0 0 200 88" className="h-full w-full" preserveAspectRatio="xMidYMid meet" aria-hidden>
-        <circle cx="52" cy="44" r="34" fill={ACCENT} />
-        <circle cx="66" cy="44" r="20" fill={CREAM} />
-        <circle cx="18" cy="70" r="3.5" fill={ACCENT} />
-        <circle cx="18" cy="18" r="3.5" fill={ACCENT} />
+        <circle cx="52" cy="44" r="34" fill={DECOR} />
+        <circle cx="66" cy="44" r="20" fill={DECOR_2} />
+        <circle cx="18" cy="70" r="3.5" fill={DECOR} />
+        <circle cx="18" cy="18" r="3.5" fill={DECOR} />
       </svg>
     );
   return (
     <svg viewBox="0 0 200 88" className="h-full w-full" preserveAspectRatio="xMidYMid meet" aria-hidden>
       <rect x="30" y="6" width="120" height="74" rx="6" fill="none" stroke={FAINT} strokeWidth="1" />
-      <rect x="108" y="12" width="30" height="62" rx="5" fill={ACCENT} />
-      <rect x="86" y="24" width="26" height="50" rx="4" fill={CREAM} />
+      <rect x="108" y="12" width="30" height="62" rx="5" fill={DECOR} />
+      <rect x="86" y="24" width="26" height="50" rx="4" fill={DECOR_2} />
       <line x1="40" y1="68" x2="150" y2="10" {...dash} />
-      <circle cx="150" cy="10" r="4" fill={ACCENT} />
+      <circle cx="150" cy="10" r="4" fill={DECOR} />
     </svg>
   );
 }
@@ -83,10 +93,11 @@ function Gauge() {
   return (
     <svg viewBox="0 0 120 120" width="84" height="84" aria-hidden>
       <circle cx="60" cy="60" r="46" fill="none" stroke={FAINT} strokeWidth="1.4" />
-      <path d="M60 14 A46 46 0 0 1 88 26" fill="none" stroke={ACCENT} strokeWidth="7" strokeLinecap="round" />
-      <circle cx="60" cy="14" r="3.5" fill={ACCENT} />
+      {/* the filled arc is a progress reading, so it is what gets the accent */}
+      <path d="M60 14 A46 46 0 0 1 88 26" fill="none" stroke={BRAND_SOFT} strokeWidth="7" strokeLinecap="round" />
+      <circle cx="60" cy="14" r="3.5" fill={BRAND_SOFT} />
       <circle cx="60" cy="60" r="34" fill="none" stroke={FAINT} strokeWidth="1.2" strokeDasharray="1.5 5" />
-      <circle cx="30" cy="72" r="3" fill={ACCENT} />
+      <circle cx="30" cy="72" r="3" fill={DECOR} />
     </svg>
   );
 }
@@ -95,10 +106,10 @@ function Stat({ v, suf, label, soft = false }: { v: string; suf: string; label: 
   return (
     <div>
       <div className="flex items-baseline gap-1.5">
-        <span className={`font-serif text-5xl leading-none md:text-6xl ${soft ? "text-navy" : "text-white"}`}>{v}</span>
-        <span className="font-serif text-3xl" style={{ color: soft ? "var(--color-brand)" : ACCENT }}>{suf}</span>
+        <span className={`font-serif text-5xl leading-none md:text-6xl ${soft ? "text-navy" : "text-[#FDFCFA]"}`}>{v}</span>
+        <span className="font-serif text-3xl" style={{ color: soft ? MUTE : SUF_DARK }}>{suf}</span>
       </div>
-      <p className="mt-2 text-sm leading-snug" style={{ color: soft ? "var(--color-ink-soft)" : WHITE_DIM }}>{label}</p>
+      <p className="mt-2 text-sm leading-snug" style={{ color: soft ? SUB : WHITE_DIM }}>{label}</p>
     </div>
   );
 }
@@ -108,21 +119,24 @@ function Stat({ v, suf, label, soft = false }: { v: string; suf: string; label: 
 function Duotone({ src }: { src: string | null }) {
   if (!src) return null;
   return (
-    <div className="relative h-[116px] w-[100px] shrink-0 overflow-hidden rounded-xl bg-[#0f2b56]">
+    <div className="relative h-[116px] w-[100px] shrink-0 overflow-hidden rounded-xl bg-[#141210]">
       {src ? (
         <>
           <img
             src={src}
             alt=""
             className="absolute inset-0 h-full w-full object-cover"
-            style={{ filter: "grayscale(0.55)" }}
+            style={{ filter: "grayscale(0.9)" }}
           />
-          <div className="absolute inset-0" style={{ background: "#6ea8fe", mixBlendMode: "color", opacity: 0.5 }} />
+          {/* A saturated warm tint turns skin sickly, so the photograph goes
+              nearly monochrome and takes a low-chroma warm cast on top of that:
+              newsprint halftone rather than sepia. */}
+          <div className="absolute inset-0" style={{ background: DUOTONE_TINT, mixBlendMode: "color", opacity: 0.35 }} />
         </>
       ) : (
         <svg viewBox="0 0 80 92" className="absolute inset-0 h-full w-full" aria-hidden>
-          <circle cx="40" cy="34" r="17" fill="#123a6e" />
-          <path d="M10 92 C10 66 24 55 40 55 C56 55 70 66 70 92 Z" fill="#123a6e" />
+          <circle cx="40" cy="34" r="17" fill={DUOTONE_PLATE} />
+          <path d="M10 92 C10 66 24 55 40 55 C56 55 70 66 70 92 Z" fill={DUOTONE_PLATE} />
         </svg>
       )}
     </div>
@@ -139,8 +153,8 @@ type Tile =
   | { k: "label"; span: string; text: string }
   | { k: "empty"; span: string };
 
-const NAVY = "bg-[#0f2b56]";
-const NAVY2 = "bg-[#0a2143]";
+const NAVY = "bg-[#141210]";   /* navy */
+const NAVY2 = "bg-[#353029]";  /* navy-soft: the second step of the checkerboard */
 
 const TILES: Tile[] = [
   // ── cluster 1 ──
@@ -172,10 +186,12 @@ const TILES: Tile[] = [
    swap the navy checkerboard for soft gradients and drop the geometric decor, so
    each tile carries one number and nothing else. Default stays the navy look, so
    the homepage is unaffected. */
+/* Three steps of the paper ramp instead of three hues, so the depth is stock and
+   not colour: paper-bright / paper / paper-2 / band / rule-soft. */
 const SOFT_TILES = [
-  "bg-gradient-to-br from-[#F7F9FF] via-[#EEF2FC] to-[#E1E9F7] border border-rule/70",
-  "bg-gradient-to-br from-[#FAFAFF] via-[#F1EFFB] to-[#E7E3F7] border border-rule/70",
-  "bg-gradient-to-br from-[#FFFDF9] via-[#FBF4EC] to-[#F7E9DA] border border-rule/70",
+  "bg-gradient-to-br from-[#FDFCFA] via-[#FAF8F4] to-[#F0EDE6] border border-rule/70",
+  "bg-gradient-to-br from-[#FAF8F4] via-[#F0EDE6] to-[#E0DBD0] border border-rule/70",
+  "bg-gradient-to-br from-[#FDFCFA] via-[#F0EDE6] to-[#D9D3C7] border border-rule/70",
 ];
 
 /* `compact` (used on /remote-v2): drops the final row of four tiles (2×, Katie's
@@ -249,13 +265,13 @@ function Cell({ t, i, timelineRef, soft = false }: { t: Tile; i: number; timelin
           className="absolute inset-0 h-full w-full object-cover"
           style={t.pos ? { objectPosition: t.pos } : undefined}
         />
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/55 to-transparent" />
-        <span className="absolute bottom-5 left-5 text-sm font-medium text-white">{t.caption}</span>
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#141210]/60 to-transparent" />
+        <span className="absolute bottom-5 left-5 text-sm font-medium text-[#FDFCFA]">{t.caption}</span>
       </TimelineContent>
     );
   if (t.k === "quote")
     return (
-      <TimelineContent {...tc(`${t.span} flex flex-col justify-between p-8 bg-[#eef4fc]`)}>
+      <TimelineContent {...tc(`${t.span} flex flex-col justify-between p-8 bg-[#E0DBD0]`)}>
         <div className="flex items-center gap-4">
           <Duotone src={t.img} />
           <div>
@@ -264,14 +280,14 @@ function Cell({ t, i, timelineRef, soft = false }: { t: Tile; i: number; timelin
           </div>
         </div>
         <p className="mt-6 flex-1 text-[19px] leading-relaxed md:text-xl" style={{ color: INK }}>&ldquo;{t.quote}&rdquo;</p>
-        <div className="mt-6 inline-flex w-fit items-center rounded-full bg-paper-bright px-3 py-1 text-[11px] font-semibold uppercase tracking-wide" style={{ color: SUB }}>
+        <div className="mt-6 inline-flex w-fit items-center rounded-full bg-paper-bright px-3 py-1 text-[11px] font-semibold uppercase tracking-wide" style={{ color: MUTE }}>
           {t.company}
         </div>
       </TimelineContent>
     );
   if (t.k === "quoteMini")
     return (
-      <TimelineContent {...tc(`${t.span} flex flex-col justify-center p-6 bg-[#eef4fc]`)}>
+      <TimelineContent {...tc(`${t.span} flex flex-col justify-center p-6 bg-[#E0DBD0]`)}>
         <p className="text-[15px] leading-relaxed" style={{ color: INK }}>&ldquo;{t.quote}&rdquo;</p>
       </TimelineContent>
     );
@@ -289,13 +305,14 @@ function Cell({ t, i, timelineRef, soft = false }: { t: Tile; i: number; timelin
         />
         <Link
           to={t.to}
-          className={`group absolute inline-flex items-center rounded-full bg-paper-bright font-medium shadow-md transition-colors hover:bg-blue-50 ${
+          className={`group absolute inline-flex items-center rounded-full bg-paper-bright font-medium shadow-md transition-colors hover:bg-[#ECEDFB] ${
             wide ? "bottom-7 left-7 gap-2.5 px-6 py-3.5 text-base" : "bottom-5 left-5 gap-2 px-4 py-2 text-sm"
           }`}
           style={{ color: INK }}
         >
           {t.text}
-          <ArrowRight className={`transition-transform group-hover:translate-x-0.5 ${wide ? "h-4 w-4" : "h-3.5 w-3.5"}`} />
+          {/* the third and last ultramarine in the view */}
+          <ArrowRight className={`text-[#2536E6] transition-transform group-hover:translate-x-0.5 ${wide ? "h-4 w-4" : "h-3.5 w-3.5"}`} />
         </Link>
       </TimelineContent>
     );
@@ -303,7 +320,7 @@ function Cell({ t, i, timelineRef, soft = false }: { t: Tile; i: number; timelin
   if (t.k === "label")
     return (
       <TimelineContent {...tc(`${t.span} ${tileBg(NAVY)} flex items-center p-6`)}>
-        <span className="font-sans text-5xl font-bold uppercase tracking-tight text-white md:text-6xl">{t.text}</span>
+        <span className={`font-sans text-5xl font-bold uppercase tracking-tight md:text-6xl ${soft ? "text-ink" : "text-[#FDFCFA]"}`}>{t.text}</span>
       </TimelineContent>
     );
   return <TimelineContent {...tc(`${t.span} ${tileBg(NAVY)}`)}><span /></TimelineContent>;
@@ -318,7 +335,7 @@ export function ProofBento({ soft = false, compact = false }: { soft?: boolean; 
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="mx-auto mb-12 max-w-2xl space-y-3 text-center">
           <TimelineContent {...tc(0, "font-serif text-4xl text-ink md:text-5xl", "h2")}>
-            Proven by the teams running care <span className="italic text-blue-600">at scale</span>
+            Proven by the teams running care <span className="italic text-[#2536E6]">at scale</span>
           </TimelineContent>
           <TimelineContent {...tc(1, "mx-auto text-lg leading-relaxed text-ink-soft", "p")}>
             Real outcomes, in the words of the operators and clinicians running HANA.

@@ -20,29 +20,45 @@ const t = (en: string, it: string) => (IT ? it : en);
 
 /* ── Hana "closes the loop" infinity diagram ───────────────────────────────
    A refined flat 2D figure-8 on a warm canvas. Two-rail track painted with a
-   navy→blue→sky GRADIENT that flows across the loop; nodes sit on the surface
+   warm ink-ramp GRADIENT that flows across the loop; nodes sit on the surface
    with a soft shadow. A pulse travels and STOPS at each station, which fills
    with accent and animates its icon, then hands off (Read → Reason → Engage →
    Write-Back → loop). No glow/neon — richness comes from a real surface,
    gradient color, elevation, texture, and type. motion.dev + SVG. No headline
    (placed by the page). Lives on /preview. */
 
-/* ── Palette — Hana brand, dark navy surface ────────────────────────────────
-   Deep brand navy card so the gradient rails + white nodes pop. FLAT, no glow:
-   drama from the dark field, polish from restraint. White/light text, white
-   elevated nodes, navy→blue→sky rails. */
-const NAVY = "var(--color-navy)"; // primary brand navy (the surface)
-const BLUE = "#3B82F6"; // Hana blue accent
-const SKY = "#7CC4F0"; // sky accent
-const PEACH = "#FFC091"; // warm brand accent — the one thing in motion (pulse)
-const CANVAS_TOP = "var(--color-navy)"; // matches the section field — no card seam
-const CANVAS_BOT = "var(--color-navy)"; // pure brand navy, same as Reasoning Engine
-const FIELD = "var(--color-navy)"; // section field — identical to Reasoning Engine bg
+/* ── Palette — Newsprint Ultramarine ────────────────────────────────────────
+   Two grounds: the default sits on navy, the `light` variant on the paper
+   band. Structure (rails, discs, numerals, chips) is carried by the warm
+   ink/rule ramp. Ultramarine is spent on the one live thing — the travelling
+   pulse and the station it is lighting — plus the eyebrow. Literal hex with
+   the token name beside it, because this artwork is also read outside the
+   page's CSS scope. */
+const NAVY = "#141210"; // navy — the true dark ground
+const NAVY_SOFT = "#353029"; // navy-soft — the resting rail on dark
+const INK = "#16130F"; // ink — primary type on light
+const INK_SOFT = "#4A4239"; // ink-soft — secondary type on light
+const INK_MUTE = "#6F6659"; // ink-mute — captions, labels, meta
+const PAPER = "#FAF8F4"; // paper — the page ground
+const PAPER_2 = "#F0EDE6"; // paper-2 — the alternating band
+const PAPER_BRIGHT = "#FDFCFA"; // paper-bright — node discs, cards, type on navy
+const RULE = "#CCC4B4"; // rule — borders on light
+const RULE_SOFT = "#D9D3C7"; // rule-soft — hairlines on light
+const RULE_STRONG = "#8F8672"; // rule-strong — the rail at its darkest on light
+const BRAND = "#2536E6"; // brand — ultramarine, the accent on light
+const BRAND_SOFT = "#A9B4FF"; // brand-soft — the accent on a dark ground
+const BRAND_TINT = "#ECEDFB"; // brand-tint — the accent as a wash
 
-const RAIL_REST = "#1C3A60"; // resting rail — muted navy-blue (visible on dark)
-const INK = "#FFFFFF"; // primary text — white
-const INK_SOFT = "#9DB2CE"; // muted text — cool light slate
-const DOT_GRID = "#7CC4F0"; // texture dots (very low opacity, cool)
+/* Ground-dependent roles. `light` picks the paper band, otherwise navy. */
+const accentOn = (light: boolean) => (light ? BRAND : BRAND_SOFT);
+const typeOn = (light: boolean) => (light ? INK : PAPER_BRIGHT);
+const softOn = (light: boolean) => (light ? INK_SOFT : "rgba(253,252,250,0.70)"); // paper-bright alpha
+const muteOn = (light: boolean) => (light ? INK_MUTE : "rgba(253,252,250,0.42)");
+/* The un-lit step numeral. Subordinate to the accent, but still a readable
+   figure: rule-strong on paper (rule itself sat at 1.5:1, invisible) and a
+   paper-bright alpha on navy rather than an ink value, which has no business
+   on the dark ground. */
+const restNumeral = (light: boolean) => (light ? RULE_STRONG : "rgba(253,252,250,0.42)");
 
 /* ── Geometry ──────────────────────────────────────────────────────────────*/
 const VIEW_W = 1000;
@@ -132,7 +148,7 @@ const STATIONS: Station[] = [
     label: t("Read", "Legge"),
     x: LEFT_X,
     y: UP_Y,
-    accent: BLUE,
+    accent: INK_SOFT, // ink-soft
     corner: "tl",
     num: 1,
     body: t(
@@ -146,7 +162,7 @@ const STATIONS: Station[] = [
     label: t("Reason", "Ragiona"),
     x: LEFT_X,
     y: DOWN_Y,
-    accent: BLUE,
+    accent: INK_SOFT, // ink-soft
     corner: "bl",
     num: 2,
     body: t(
@@ -160,7 +176,7 @@ const STATIONS: Station[] = [
     label: t("Engage", "Contatta"),
     x: RIGHT_X,
     y: UP_Y,
-    accent: SKY,
+    accent: INK_SOFT, // ink-soft
     corner: "tr",
     num: 3,
     body: t(
@@ -174,7 +190,7 @@ const STATIONS: Station[] = [
     label: t("Write-Back", "Scrive in cartella"),
     x: RIGHT_X,
     y: DOWN_Y,
-    accent: SKY,
+    accent: INK_SOFT, // ink-soft
     corner: "br",
     num: 4,
     body: t(
@@ -226,16 +242,16 @@ function CornerLabel({
         {/* big refined step number */}
         <motion.span
           className="font-serif text-5xl leading-none"
-          animate={{ color: active ? PEACH : light ? "#B7C3DA" : "#3E587C" }}
+          animate={{ color: active ? accentOn(light) : restNumeral(light) }}
           transition={{ duration: 0.3 }}
         >
           {station.num}
         </motion.span>
-        <span className="text-xl font-semibold tracking-tight" style={{ color: light ? NAVY : INK }}>
+        <span className="text-xl font-semibold tracking-tight" style={{ color: typeOn(light) }}>
           {station.label}
         </span>
       </div>
-      <p className="mt-2 text-sm leading-relaxed" style={{ color: light ? "var(--color-ink-mute)" : INK_SOFT }}>
+      <p className="mt-2 text-sm leading-relaxed" style={{ color: softOn(light) }}>
         {station.body}
       </p>
     </motion.div>
@@ -348,9 +364,9 @@ export function LoopDiagram({
   return (
     <section
       className={`relative w-full overflow-hidden ${bare ? "py-10 md:py-14" : "py-20 md:py-28"}`}
-      style={{ backgroundColor: light ? "var(--color-paper-2)" : FIELD }}
+      style={{ backgroundColor: light ? PAPER_2 : NAVY }}
     >
-      {/* blue radial glow at top — matches the Reasoning Engine section so the
+      {/* warm radial lift at top — matches the Reasoning Engine section so the
           two read as one continuous block (dark theme only) */}
       {!light && (
       <div
@@ -358,7 +374,8 @@ export function LoopDiagram({
         className="pointer-events-none absolute left-1/2 top-[-200px] z-0 h-[400px] w-[400px] -translate-x-1/2 md:h-[800px] md:w-[800px]"
         style={{
           background:
-            "radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%)",
+            // navy-soft, warmed off the navy field. Decoration, so no accent.
+            "radial-gradient(circle, rgba(53,48,41,0.55) 0%, transparent 70%)",
         }}
       />
       )}
@@ -369,7 +386,7 @@ export function LoopDiagram({
             aria-hidden
             className="pointer-events-none absolute inset-0"
             style={{
-              backgroundImage: `radial-gradient(${DOT_GRID} 0.6px, transparent 0.6px)`,
+              backgroundImage: `radial-gradient(${light ? INK_MUTE : PAPER_BRIGHT} 0.6px, transparent 0.6px)`,
               backgroundSize: "22px 22px",
               opacity: 0.05,
             }}
@@ -383,7 +400,7 @@ export function LoopDiagram({
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0 }}
               transition={{ duration: 0.4 }}
               className="text-xs font-semibold uppercase tracking-[0.2em]"
-              style={{ color: light ? "var(--color-brand)" : SKY }}
+              style={{ color: accentOn(light) }}
             >
               {c.eyebrow}
             </motion.span>
@@ -391,7 +408,8 @@ export function LoopDiagram({
               initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0 }}
               transition={{ duration: 0.5, delay: 0.08 }}
-              className={`mt-4 font-serif text-2xl leading-snug sm:text-3xl md:text-[2.6rem] md:leading-[1.15] ${light ? "text-navy" : "text-white"}`}
+              className="mt-4 font-serif text-2xl leading-snug sm:text-3xl md:text-[2.6rem] md:leading-[1.15]"
+              style={{ color: typeOn(light) }}
             >
               {c.heading}
             </motion.h2>
@@ -400,7 +418,7 @@ export function LoopDiagram({
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0 }}
               transition={{ duration: 0.5, delay: 0.16 }}
               className="mx-auto mt-5 max-w-xl text-base leading-relaxed"
-              style={{ color: light ? "var(--color-ink-soft)" : INK_SOFT }}
+              style={{ color: softOn(light) }}
             >
               {c.sub}
             </motion.p>
@@ -428,31 +446,32 @@ export function LoopDiagram({
                 )}
               >
                 <defs>
-                  {/* gradient that flows navy → blue → sky across the loop */}
+                  {/* the rail's flow, done with two steps of the warm ramp
+                      rather than two hues: rule → rule-strong → ink-mute on
+                      paper, and paper-bright at rising alpha on navy. Never
+                      the accent — the rail is structure, not the subject. */}
                   <linearGradient id="railFlow" x1="0" y1="0.5" x2="1" y2="0.5">
-                    {/* bright across the whole loop so the rail never sinks
-                        into the navy field at the ends */}
-                    <stop offset="0%" stopColor={BLUE} />
-                    <stop offset="25%" stopColor="#5AA0E0" />
-                    <stop offset="50%" stopColor={SKY} />
-                    <stop offset="75%" stopColor="#5AA0E0" />
-                    <stop offset="100%" stopColor={BLUE} />
+                    <stop offset="0%" stopColor={light ? RULE : PAPER_BRIGHT} stopOpacity={light ? 1 : 0.3} />
+                    <stop offset="25%" stopColor={light ? RULE_STRONG : PAPER_BRIGHT} stopOpacity={light ? 1 : 0.42} />
+                    <stop offset="50%" stopColor={light ? INK_MUTE : PAPER_BRIGHT} stopOpacity={light ? 1 : 0.56} />
+                    <stop offset="75%" stopColor={light ? RULE_STRONG : PAPER_BRIGHT} stopOpacity={light ? 1 : 0.42} />
+                    <stop offset="100%" stopColor={light ? RULE : PAPER_BRIGHT} stopOpacity={light ? 1 : 0.3} />
                   </linearGradient>
-                  {/* soft elevation shadow for nodes (dark, reads under white discs) */}
+                  {/* soft elevation shadow under the paper-bright discs */}
                   <filter id="nodeShadow" x="-60%" y="-60%" width="220%" height="220%">
                     <feDropShadow
                       dx="0"
                       dy="4"
                       stdDeviation="6"
-                      floodColor="#000000"
-                      floodOpacity="0.45"
+                      floodColor={light ? INK : NAVY}
+                      floodOpacity={light ? 0.16 : 0.5}
                     />
                   </filter>
                 </defs>
 
                 {/* resting rails */}
-                <path d={RAIL_OUTER} fill="none" stroke={RAIL_REST} strokeWidth={3} strokeLinecap="round" />
-                <path d={RAIL_INNER} fill="none" stroke={RAIL_REST} strokeWidth={3} strokeLinecap="round" />
+                <path d={RAIL_OUTER} fill="none" stroke={light ? RULE_SOFT : NAVY_SOFT} strokeWidth={3} strokeLinecap="round" />
+                <path d={RAIL_INNER} fill="none" stroke={light ? RULE_SOFT : NAVY_SOFT} strokeWidth={3} strokeLinecap="round" />
 
                 {/* gradient rails draw in on scroll */}
                 <motion.path
@@ -476,15 +495,18 @@ export function LoopDiagram({
                   transition={{ duration: 2, ease: "easeInOut", delay: 0.1 }}
                 />
 
-                {/* pulse(s) — the WARM element(s) orbiting the cool track in a
+                {/* pulse(s) — the ACCENT orbiting the neutral track in a
                     constant, unbroken loop. One pulse = a single call; several
-                    pulses = a monitoring program with patients mid-cycle. */}
+                    pulses = a monitoring program with patients mid-cycle. This
+                    is the one thing the frame is about, so it gets the
+                    ultramarine and the rails do not. The stroke is paper on
+                    light and navy on dark, so the dot cuts off the rail. */}
                 {pulseDistances.map((dist, k) => (
                   <motion.circle
                     key={k}
                     r={k === 0 ? 7 : 6}
-                    fill={PEACH}
-                    stroke="#FFFFFF"
+                    fill={accentOn(light)}
+                    stroke={light ? PAPER : NAVY}
                     strokeWidth={2}
                     style={{ offsetPath: `path("${CENTER_PATH}")`, offsetDistance: dist }}
                     initial={{ opacity: 0 }}
@@ -510,7 +532,7 @@ export function LoopDiagram({
                         fontSize="11.5"
                         fontWeight="700"
                         letterSpacing="1.5"
-                        style={{ fill: light ? "var(--color-ink-mute)" : "rgba(255,255,255,0.38)", textTransform: "uppercase" }}
+                        style={{ fill: muteOn(light), textTransform: "uppercase" }}
                         initial={{ opacity: 0 }}
                         animate={inView ? { opacity: 1 } : { opacity: 0 }}
                         transition={{ delay: 2, duration: 0.6 }}
@@ -540,7 +562,7 @@ export function LoopDiagram({
                         fill="none"
                         strokeWidth={1.8}
                         strokeDasharray="5 5"
-                        animate={{ stroke: activeRamp ? PEACH : light ? "rgba(91,118,217,0.55)" : "rgba(124,196,240,0.45)" }}
+                        animate={{ stroke: activeRamp ? accentOn(light) : light ? RULE : "rgba(253,252,250,0.28)" }}
                         transition={{ duration: 0.3 }}
                       />
                       <motion.rect
@@ -550,8 +572,8 @@ export function LoopDiagram({
                         height={30}
                         rx={15}
                         animate={{
-                          fill: light ? "#ffffff" : "rgba(255,255,255,0.06)",
-                          stroke: activeRamp ? PEACH : light ? "#e2e6f0" : "rgba(255,255,255,0.14)",
+                          fill: light ? PAPER_BRIGHT : "rgba(253,252,250,0.06)",
+                          stroke: activeRamp ? accentOn(light) : light ? RULE : "rgba(253,252,250,0.14)",
                           scale: activeRamp ? 1.04 : 1,
                         }}
                         transition={{ duration: 0.3 }}
@@ -565,7 +587,7 @@ export function LoopDiagram({
                         fontSize="13"
                         fontWeight="600"
                         style={{ fontFamily: "var(--font-sans)" }}
-                        animate={{ fill: light ? NAVY : "rgba(255,255,255,0.85)" }}
+                        animate={{ fill: light ? INK : "rgba(253,252,250,0.85)" }}
                       >
                         {copy.offRamp!.label}
                       </motion.text>
@@ -574,7 +596,7 @@ export function LoopDiagram({
                 })()}
 
                 {stations.map((s, i) => (
-                  <StationNode key={s.id} station={s} index={i} appear={inView} active={activeId === s.id} />
+                  <StationNode key={s.id} station={s} index={i} appear={inView} active={activeId === s.id} light={light} />
                 ))}
 
                 {/* center caption */}
@@ -583,12 +605,12 @@ export function LoopDiagram({
                   animate={inView ? { opacity: 1 } : { opacity: 0 }}
                   transition={{ delay: 1.8, duration: 0.6 }}
                 >
-                  <ellipse cx={CX} cy={CY} rx={172} ry={52} fill={light ? "var(--color-paper-2)" : CANVAS_BOT} />
+                  <ellipse cx={CX} cy={CY} rx={172} ry={52} fill={light ? PAPER_2 : NAVY} />
                   <text
                     x={CX}
                     y={CY - 4}
                     textAnchor="middle"
-                    style={{ fontFamily: "Georgia, 'Times New Roman', serif", fill: light ? NAVY : INK }}
+                    style={{ fontFamily: "Georgia, 'Times New Roman', serif", fill: typeOn(light) }}
                   >
                     <tspan x={CX} fontSize="22">{c.center[0]}</tspan>
                     <tspan x={CX} dy="28" fontSize="22">{c.center[1]}</tspan>
@@ -603,7 +625,7 @@ export function LoopDiagram({
                         textAnchor="middle"
                         fontSize="13"
                         fontWeight="600"
-                        style={{ fontFamily: "var(--font-sans)", fill: light ? "var(--color-brand)" : SKY }}
+                        style={{ fontFamily: "var(--font-sans)", fill: typeOn(light) }}
                         initial={{ opacity: 0, y: 4 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -4 }}
@@ -628,7 +650,7 @@ export function LoopDiagram({
             animate={inView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ delay: 0.6, duration: 0.6 }}
             className="relative z-10 mx-auto mt-12 max-w-2xl text-center text-sm leading-relaxed md:mt-16"
-            style={{ color: INK_SOFT }}
+            style={{ color: softOn(light) }}
           >
             {c.footnote}
           </motion.p>
@@ -642,7 +664,7 @@ export function LoopDiagram({
 /* ── Mobile vertical stepper ─────────────────────────────────────────────────
    A purpose-built mobile layout (NOT a squeezed figure-8). A rail runs down the
    left; each station is a row: a node disc ON the rail + a card (number, title,
-   body) beside it. A peach pulse travels down the rail and each step lights up
+   body) beside it. An ultramarine pulse travels down the rail and each step lights up
    in sequence (driven by the shared `progress` / `activeId`). Clean, tappable,
    zero collisions. Desktop keeps the figure-8. */
 const MS_ROW_H = 116; // px per step row
@@ -684,19 +706,22 @@ function MobileTimeline({
           left: MS_RAIL_X,
           top: railTop,
           height: railSpan,
-          background: `linear-gradient(${BLUE}, ${SKY}, ${BLUE})`,
+          background: light
+            ? `linear-gradient(${RULE}, ${INK_MUTE}, ${RULE})` // rule → ink-mute → rule
+            : "linear-gradient(rgba(253,252,250,0.30), rgba(253,252,250,0.56), rgba(253,252,250,0.30))", // paper-bright alphas
           opacity: 0.85,
         }}
       />
-      {/* Traveling peach pulse */}
+      {/* Traveling accent pulse */}
       <motion.div
-        className="absolute z-30 h-3.5 w-3.5 rounded-full border-2 border-white shadow"
+        className="absolute z-30 h-3.5 w-3.5 rounded-full border-2 shadow"
         style={{
           left: MS_RAIL_X,
           top: pulseTop,
           x: "-50%",
           y: "-50%",
-          backgroundColor: PEACH,
+          borderColor: light ? PAPER : NAVY, // paper / navy, cuts the dot off the rail
+          backgroundColor: accentOn(light),
           opacity: inView ? 1 : 0,
         }}
       />
@@ -721,14 +746,21 @@ function MobileTimeline({
               <motion.div
                 className="flex items-center justify-center rounded-full border shadow-md"
                 animate={{
-                  backgroundColor: active ? PEACH : "#FFFFFF",
-                  borderColor: active ? PEACH : "rgba(255,255,255,0.7)",
+                  backgroundColor: active ? accentOn(light) : PAPER_BRIGHT,
+                  borderColor: active ? accentOn(light) : light ? RULE : "rgba(253,252,250,0.7)",
                   scale: active ? 1.1 : 1,
                 }}
                 transition={{ duration: 0.3 }}
                 style={{ width: NODE, height: NODE }}
               >
-                <Icon active={active} color={NAVY} accent={active ? NAVY : s.accent} size={22} />
+                {/* on the filled disc the glyph reverses: paper-bright on the
+                    ultramarine fill, navy on the brand-soft one */}
+                <Icon
+                  active={active}
+                  color={active ? (light ? PAPER_BRIGHT : NAVY) : INK}
+                  accent={active ? (light ? PAPER_BRIGHT : NAVY) : s.accent}
+                  size={22}
+                />
               </motion.div>
             </div>
 
@@ -737,25 +769,25 @@ function MobileTimeline({
               className="ml-16 flex-1 rounded-2xl border p-3 sm:ml-[68px] sm:p-4"
               animate={{
                 backgroundColor: active
-                  ? light ? "rgba(255,192,145,0.16)" : "rgba(255,192,145,0.10)"
-                  : light ? "#ffffff" : "rgba(255,255,255,0.03)",
+                  ? light ? BRAND_TINT : "rgba(169,180,255,0.10)" // brand-tint / brand-soft wash
+                  : light ? PAPER_BRIGHT : "rgba(253,252,250,0.04)",
                 borderColor: active
-                  ? "rgba(255,192,145,0.45)"
-                  : light ? "#e2e6f0" : "rgba(255,255,255,0.08)",
+                  ? light ? "rgba(37,54,230,0.35)" : "rgba(169,180,255,0.35)"
+                  : light ? RULE : "rgba(253,252,250,0.10)",
               }}
               transition={{ duration: 0.3 }}
             >
               <div className="flex items-baseline gap-2">
                 <motion.span
                   className="font-serif text-2xl leading-none"
-                  animate={{ color: active ? PEACH : light ? "#B7C3DA" : "#3E587C" }}
+                  animate={{ color: active ? accentOn(light) : restNumeral(light) }}
                   transition={{ duration: 0.3 }}
                 >
                   {s.num}
                 </motion.span>
-                <span className="text-base font-semibold tracking-tight" style={{ color: light ? NAVY : "#FFFFFF" }}>{s.label}</span>
+                <span className="text-base font-semibold tracking-tight" style={{ color: typeOn(light) }}>{s.label}</span>
               </div>
-              <p className="mt-1.5 text-[13px] leading-relaxed" style={{ color: light ? "var(--color-ink-mute)" : INK_SOFT }}>
+              <p className="mt-1.5 text-[13px] leading-relaxed" style={{ color: softOn(light) }}>
                 {s.body}
               </p>
             </motion.div>
@@ -769,7 +801,7 @@ function MobileTimeline({
         animate={inView ? { opacity: 1 } : { opacity: 0 }}
         transition={{ delay: 0.9, duration: 0.6 }}
         className="mt-8 text-center font-serif text-lg leading-snug"
-        style={{ color: light ? NAVY : "#FFFFFF" }}
+        style={{ color: typeOn(light) }}
       >
         {center[0]}
         <br />
@@ -785,11 +817,13 @@ function StationNode({
   index,
   appear,
   active,
+  light = false,
 }: {
   station: Station;
   index: number;
   appear: boolean;
   active: boolean;
+  light?: boolean;
 }) {
   const Icon = LOOP_ICONS[station.icon ?? station.id];
   const R = 38; // node radius (bumped up for more presence)
@@ -806,42 +840,43 @@ function StationNode({
       }}
       style={{ transformOrigin: `${station.x}px ${station.y}px` }}
     >
-      {/* expanding activation ring — peach, matching the data-pulse */}
+      {/* expanding activation ring — the accent, matching the data-pulse */}
       <motion.circle
         cx={station.x}
         cy={station.y}
         r={R}
         fill="none"
-        stroke={PEACH}
+        stroke={accentOn(light)}
         strokeWidth={2}
         initial={{ scale: 1, opacity: 0 }}
         animate={active ? { scale: 1.5, opacity: [0, 0.6, 0] } : { scale: 1, opacity: 0 }}
         transition={{ duration: 0.9, ease: "easeOut" }}
         style={{ transformOrigin: `${station.x}px ${station.y}px` }}
       />
-      {/* elevated disc — white at rest so it pops on the dark field; turns
-          PEACH when the pulse stops here (active = the warm, live state) */}
+      {/* elevated disc — paper-bright at rest, so the product surface sits on
+          the same stock as the page; fills with ultramarine when the pulse
+          stops here (active = the live state) */}
       <motion.circle
         cx={station.x}
         cy={station.y}
         r={R}
         filter="url(#nodeShadow)"
         animate={{
-          fill: active ? PEACH : "#FFFFFF",
-          stroke: active ? PEACH : "rgba(255,255,255,0.7)",
+          fill: active ? accentOn(light) : PAPER_BRIGHT,
+          stroke: active ? accentOn(light) : light ? RULE : "rgba(253,252,250,0.7)",
         }}
         transition={{ duration: 0.3 }}
         strokeWidth={1.5}
       />
-      {/* icon — custom, performs its verb when active. On the peach active
-          disc the icon goes NAVY (dark reads on the warm fill); at rest it's
-          navy on white with the station accent as the verb-highlight color. */}
+      {/* icon — custom, performs its verb when active. On the filled disc the
+          glyph reverses: paper-bright on ultramarine, navy on brand-soft. At
+          rest it is ink on paper-bright, with ink-soft as the verb highlight. */}
       <foreignObject x={station.x - ICON_BOX / 2} y={station.y - ICON_BOX / 2} width={ICON_BOX} height={ICON_BOX}>
         <div className="flex items-center justify-center" style={{ width: ICON_BOX, height: ICON_BOX }}>
           <Icon
             active={active}
-            color={NAVY}
-            accent={active ? NAVY : station.accent}
+            color={active ? (light ? PAPER_BRIGHT : NAVY) : INK}
+            accent={active ? (light ? PAPER_BRIGHT : NAVY) : station.accent}
             size={ICON_SIZE}
           />
         </div>

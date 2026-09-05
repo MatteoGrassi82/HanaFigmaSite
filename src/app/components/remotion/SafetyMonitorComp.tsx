@@ -15,17 +15,17 @@ import { getLocale } from "../../../lib/i18n";
    A centered modal over softly blurred background cards. A live, two-way
    transcript streams in real time; the risk ESCALATES from Low through
    Elevated (L4) to Critical (L9) as a second, more severe danger phrase lands.
-   Hana mitigates inline (calm, blue), then three safety protocols EXECUTE live
+   Hana mitigates inline (calm, ultramarine), then three protocols EXECUTE live
    — each paired with a small console-style confirmation tag, like the Workflow
    Builder's "the system acts" energy. A closing line ties it off: care team
    notified, zero staff actions.
 
    Craft notes (raised to match the node-graph demo):
-   - One accent (Apple-system blue #0A84FF) carries the brand; semantic colors
-     (danger / warning / success / Hana-blue mitigation) appear ONLY where they
-     carry meaning. The escalating risk meter is the single focal moment.
+   - One accent (ultramarine #2536E6) carries the brand and is spent about
+     three times per frame; signal colors (danger / warning / success) appear
+     ONLY where they carry meaning. The escalating risk meter is the single focal moment.
    - Layered contact + ambient shadows; near-invisible hairlines; glassy inner
-     top-highlights on cards; small dark console tags in GitHub-dark syntax.
+     top-highlights on cards; small navy console confirmation tags.
    - Everything drifts in (translateY + opacity + blur->sharp) on spring/cubic
      easing, staggered. Continuous micro-life: breathing live dot with a radar
      ping halo, a smooth header waveform, a blinking type cursor — all tuned to
@@ -43,46 +43,47 @@ const FONT_MONO =
   "ui-monospace, 'SF Mono', 'JetBrains Mono', 'Menlo', monospace";
 
 const COLOR = {
-  canvas: "#F5F5F4",
-  ink: "#0A0A0B",
-  ink2: "#030213",
-  slate: "#3F3F46",
-  slate2: "#52525B",
-  muted: "#71717A",
-  faint: "#A1A1AA",
-  hairline: "rgba(0,0,0,0.06)",
-  hairlineStrong: "rgba(0,0,0,0.08)",
-  panel: "#FFFFFF",
-  accent: "#0A84FF",
-  accentDeep: "#0067D6",
-  danger: "#FF3B30",
-  dangerSoft: "#FF453A",
-  dangerDeep: "#C42B22",
-  warning: "#FF9F0A",
-  warningDeep: "#C77700",
-  success: "#30D158",
-  successDeep: "#1E9E45",
+  canvas: "#FAF8F4", // paper: the warm uncoated stock the page sits on
+  ink: "#16130F", // ink
+  ink2: "#16130F", // ink
+  slate: "#4A4239", // ink-soft: transcript prose
+  slate2: "#6F6659", // ink-mute: labels, speaker tags, meta
+  muted: "#6F6659", // ink-mute
+  faint: "#6F6659", // ink-mute: never lighter than this for readable type
+  hairline: "#D9D3C7", // rule-soft
+  hairlineStrong: "#CCC4B4", // rule
+  panel: "#FDFCFA", // paper-bright: product surfaces
+  accent: "#2536E6", // brand: ultramarine, spent only where it means Hana
+  accentDeep: "#1B27A6", // brand, one step darker for gradient depth only
+  danger: "#FF3B30", // signal red: protected, a genuine alert state
+  dangerSoft: "#FF453A", // signal red
+  dangerDeep: "#C42B22", // signal red, darkened for type
+  warning: "#E8A06A", // signal amber: protected, needs attention
+  warningDeep: "#A45A28", // signal amber, darkened for type legibility
+  success: "#10B981", // signal green: protected, done / dispatched
+  successDeep: "#0A7A5A", // signal green, darkened for type legibility
 };
 
-/* Console (GitHub-dark) syntax tints — matches the Workflow Builder. */
-const CONSOLE_BG = "#0E1116";
-const CONSOLE_BG2 = "#111317";
-const SYN_PATH = "#E6EDF3";
-const SYN_OK = "#3FB950";
-const SYN_COMMENT = "#8B949E";
+/* Console chip on the navy ground, matching the Workflow Builder. */
+const CONSOLE_BG = "#141210"; // navy
+const CONSOLE_BG2 = "#353029"; // navy-soft
+const SYN_PATH = "#FDFCFA"; // paper-bright, type on the dark chip
+const SYN_OK = "#10B981"; // signal green
+const SYN_COMMENT = "#6F6659"; // ink-mute: the "//" prefix sits on the LIGHT
+// footer tag, not on the dark chip, so it must be ink, never paper.
 
 /* Stacked, realistic elevation: tight contact shadow + soft ambient layers. */
 const SHADOW_MODAL =
-  "0 1px 2px rgba(0,0,0,0.05), 0 12px 32px -10px rgba(0,0,0,0.16), 0 36px 72px -28px rgba(0,0,0,0.18)";
+  "0 1px 2px rgba(22,19,15,0.06), 0 12px 32px -10px rgba(22,19,15,0.16), 0 36px 72px -28px rgba(22,19,15,0.18)";
 const SHADOW_CARD =
-  "0 1px 2px rgba(0,0,0,0.04), 0 8px 24px -12px rgba(0,0,0,0.10)";
+  "0 1px 2px rgba(22,19,15,0.05), 0 8px 24px -12px rgba(22,19,15,0.10)";
 const INNER_HIGHLIGHT = "inset 0 1px 0 rgba(255,255,255,0.75)";
 
 const TAU = Math.PI * 2;
 
 /* --------------------------------- Content ---------------------------------
    The transcript is a back-and-forth with speaker tags. Two danger phrases
-   escalate the risk; Hana mitigates inline (calm, blue). Each transcript turn
+   escalate the risk; Hana mitigates inline (calm, ultramarine). Each turn
    types out in sequence over its own char budget.                           */
 type Turn =
   | {
@@ -269,7 +270,7 @@ function CheckGlyph({ size = 11 }: { size?: number }) {
     <svg width={size} height={size} viewBox="0 0 12 12" fill="none">
       <polyline
         points="2.5,6.4 4.9,8.8 9.5,3.4"
-        stroke="#FFFFFF"
+        stroke="#FDFCFA"
         strokeWidth={1.8}
         fill="none"
         strokeLinecap="round"
@@ -285,7 +286,7 @@ function HanaGlyph({ size = 11 }: { size?: number }) {
     <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
       <path
         d="M8 2.2 L9.3 6.5 L13.6 8 L9.3 9.5 L8 13.8 L6.7 9.5 L2.4 8 L6.7 6.5 Z"
-        fill="#FFFFFF"
+        fill="#FDFCFA"
         opacity={0.96}
       />
     </svg>
@@ -443,11 +444,9 @@ export function SafetyMonitorComp() {
     : loc === "it"
     ? "Basso"
     : "Low";
-  const riskColor = isCritical
-    ? COLOR.danger
-    : isElevated
-    ? COLOR.warning
-    : COLOR.muted;
+  // Risk TYPE colour. The raw signal hues (danger #FF3B30 / warning #E8A06A)
+  // stay on the fills, pips and glyphs; small type takes the darker step of the
+  // same hue so it stays readable on warm paper.
   const riskColorDeep = isCritical
     ? COLOR.dangerDeep
     : isElevated
@@ -514,10 +513,10 @@ export function SafetyMonitorComp() {
     ? COLOR.warningDeep
     : COLOR.successDeep;
   const livePeakRGBA = isCritical
-    ? "255,59,48"
+    ? "255,59,48" // signal red
     : isElevated
-    ? "255,159,10"
-    : "48,209,88";
+    ? "232,160,106" // signal amber
+    : "16,185,129"; // signal green
   // Typing cursor blink. Period 26f -> 15 cycles over 390 -> clean at the seam.
   const cursorBlink = frame % 26 < 13 ? 1 : 0.18;
   // Header waveform.
@@ -541,8 +540,8 @@ export function SafetyMonitorComp() {
         WebkitFontSmoothing: "antialiased",
         // Subtle radial glow + faint dot grid so the canvas isn't dead-flat.
         backgroundImage: `
-          radial-gradient(130% 95% at 50% -12%, rgba(10,132,255,0.045), rgba(10,132,255,0) 56%),
-          radial-gradient(rgba(0,0,0,0.022) 1px, transparent 1px)
+          radial-gradient(130% 95% at 50% -12%, rgba(224,219,208,0.55), rgba(224,219,208,0) 56%),
+          radial-gradient(rgba(22,19,15,0.028) 1px, transparent 1px)
         `,
         backgroundSize: "auto, 24px 24px",
         backgroundPosition: "center, center",
@@ -600,7 +599,7 @@ export function SafetyMonitorComp() {
           inset: 0,
           pointerEvents: "none",
           background:
-            "radial-gradient(115% 85% at 50% 48%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.07) 100%)",
+            "radial-gradient(115% 85% at 50% 48%, rgba(22,19,15,0) 50%, rgba(22,19,15,0.07) 100%)",
           opacity: backdrop,
         }}
       />
@@ -618,7 +617,7 @@ export function SafetyMonitorComp() {
           transformOrigin: "center center",
           opacity: modalOpacity,
           filter: `blur(${modalBlur}px)`,
-          background: "linear-gradient(180deg, #FFFFFF 0%, #FBFBFC 100%)",
+          background: "linear-gradient(180deg, #FDFCFA 0%, #FAF8F4 100%)",
           borderRadius: 20,
           border: `1px solid ${COLOR.hairline}`,
           boxShadow: `${SHADOW_MODAL}, ${INNER_HIGHLIGHT}`,
@@ -631,7 +630,7 @@ export function SafetyMonitorComp() {
             padding: "12px 22px 10px",
             borderBottom: `1px solid ${COLOR.hairline}`,
             background:
-              "linear-gradient(180deg, rgba(10,132,255,0.04), rgba(10,132,255,0))",
+              "linear-gradient(180deg, rgba(224,219,208,0.45), rgba(224,219,208,0))",
           }}
         >
           <div
@@ -648,8 +647,8 @@ export function SafetyMonitorComp() {
                   height: 34,
                   borderRadius: 11,
                   background:
-                    "linear-gradient(180deg, rgba(10,132,255,0.16), rgba(10,132,255,0.06))",
-                  border: "1px solid rgba(10,132,255,0.18)",
+                    "linear-gradient(180deg, rgba(37,54,230,0.10), rgba(37,54,230,0.04))",
+                  border: "1px solid rgba(37,54,230,0.20)",
                   boxShadow: INNER_HIGHLIGHT,
                   display: "flex",
                   alignItems: "center",
@@ -711,7 +710,7 @@ export function SafetyMonitorComp() {
                           ? COLOR.danger
                           : isElevated
                           ? COLOR.warning
-                          : COLOR.accent,
+                          : COLOR.slate2,
                         opacity: 0.35 + 0.4 * (h / 12),
                       }}
                     />
@@ -794,13 +793,13 @@ export function SafetyMonitorComp() {
               risk={risk}
               label={riskLabel}
               level={riskLevelNum}
-              color={riskColor}
+              color={riskColorDeep}
               reveal={riskMeterReveal}
             />
           </div>
           <div
             style={{
-              background: "#FAFAF9",
+              background: "#FAF8F4", // paper, an inset step below the panel
               borderRadius: 14,
               border: `1px solid ${COLOR.hairline}`,
               boxShadow: INNER_HIGHLIGHT,
@@ -853,16 +852,16 @@ export function SafetyMonitorComp() {
                 ).toFixed(3)}), rgba(255,59,48,${(0.025 * dangerTint).toFixed(
                 3
               )})),
-                linear-gradient(180deg, rgba(255,159,10,${(
+                linear-gradient(180deg, rgba(232,160,106,${(
                   0.06 *
                   (1 - dangerTint)
-                ).toFixed(3)}), rgba(255,159,10,${(
+                ).toFixed(3)}), rgba(232,160,106,${(
                 0.02 *
                 (1 - dangerTint)
               ).toFixed(3)}))
               `,
               border: `1px solid rgba(${
-                isCritical ? "255,59,48" : "255,159,10"
+                isCritical ? "255,59,48" : "232,160,106"
               },0.22)`,
               borderRadius: 14,
               boxShadow: INNER_HIGHLIGHT,
@@ -876,10 +875,10 @@ export function SafetyMonitorComp() {
                   height: 34,
                   borderRadius: 10,
                   background: `rgba(${
-                    isCritical ? "255,59,48" : "255,159,10"
+                    isCritical ? "255,59,48" : "232,160,106"
                   },0.10)`,
                   border: `1px solid rgba(${
-                    isCritical ? "255,59,48" : "255,159,10"
+                    isCritical ? "255,59,48" : "232,160,106"
                   },0.22)`,
                   display: "flex",
                   alignItems: "center",
@@ -926,15 +925,15 @@ export function SafetyMonitorComp() {
                 transform: `scale(${badgeKick})`,
                 transformOrigin: "right center",
                 background: `linear-gradient(180deg, rgba(${
-                  isCritical ? "255,59,48" : "255,159,10"
+                  isCritical ? "255,59,48" : "232,160,106"
                 },0.12), rgba(${
-                  isCritical ? "255,59,48" : "255,159,10"
+                  isCritical ? "255,59,48" : "232,160,106"
                 },0.05))`,
                 border: `1px solid rgba(${
-                  isCritical ? "255,59,48" : "255,159,10"
+                  isCritical ? "255,59,48" : "232,160,106"
                 },0.28)`,
                 boxShadow: `0 2px 8px -4px rgba(${
-                  isCritical ? "255,59,48" : "255,159,10"
+                  isCritical ? "255,59,48" : "232,160,106"
                 },0.4)`,
                 borderRadius: 12,
                 padding: "5px 13px 7px",
@@ -1013,8 +1012,8 @@ export function SafetyMonitorComp() {
                     alignItems: "center",
                     gap: 12,
                     background:
-                      "linear-gradient(180deg, rgba(48,209,88,0.07), rgba(48,209,88,0.025))",
-                    border: "1px solid rgba(48,209,88,0.20)",
+                      "linear-gradient(180deg, rgba(16,185,129,0.07), rgba(16,185,129,0.025))",
+                    border: "1px solid rgba(16,185,129,0.20)",
                     borderRadius: 12,
                     boxShadow: INNER_HIGHLIGHT,
                     padding: "6px 12px 6px 14px",
@@ -1025,9 +1024,9 @@ export function SafetyMonitorComp() {
                       width: 22,
                       height: 22,
                       borderRadius: "50%",
-                      background: "linear-gradient(180deg, #34D862, #25A648)",
+                      background: "linear-gradient(180deg, #10B981, #0A7A5A)",
                       boxShadow:
-                        "0 1px 2px rgba(0,0,0,0.14), inset 0 1px 0 rgba(255,255,255,0.4)",
+                        "0 1px 2px rgba(22,19,15,0.16), inset 0 1px 0 rgba(255,255,255,0.4)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -1066,7 +1065,7 @@ export function SafetyMonitorComp() {
                       background: `linear-gradient(180deg, ${CONSOLE_BG2}, ${CONSOLE_BG})`,
                       border: "1px solid rgba(255,255,255,0.06)",
                       boxShadow:
-                        "0 1px 2px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05)",
+                        "0 1px 2px rgba(20,18,16,0.35), inset 0 1px 0 rgba(255,255,255,0.05)",
                       flexShrink: 0,
                     }}
                   >
@@ -1120,8 +1119,8 @@ export function SafetyMonitorComp() {
               alignItems: "center",
               gap: 10,
               background:
-                "linear-gradient(180deg, rgba(48,209,88,0.10), rgba(48,209,88,0.04))",
-              border: "1px solid rgba(48,209,88,0.24)",
+                "linear-gradient(180deg, rgba(16,185,129,0.10), rgba(16,185,129,0.04))",
+              border: "1px solid rgba(16,185,129,0.24)",
               borderRadius: 12,
               boxShadow: `${SHADOW_CARD}, ${INNER_HIGHLIGHT}`,
               padding: "8px 12px 8px 14px",
@@ -1132,9 +1131,9 @@ export function SafetyMonitorComp() {
                 width: 18,
                 height: 18,
                 borderRadius: "50%",
-                background: "linear-gradient(180deg, #34D862, #25A648)",
+                background: "linear-gradient(180deg, #10B981, #0A7A5A)",
                 boxShadow:
-                  "0 1px 2px rgba(0,0,0,0.14), inset 0 1px 0 rgba(255,255,255,0.4)",
+                  "0 1px 2px rgba(22,19,15,0.16), inset 0 1px 0 rgba(255,255,255,0.4)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -1184,8 +1183,8 @@ export function SafetyMonitorComp() {
                 fontSize: 9.5,
                 letterSpacing: 0.3,
                 color: COLOR.successDeep,
-                background: "rgba(48,209,88,0.10)",
-                border: "1px solid rgba(48,209,88,0.22)",
+                background: "rgba(16,185,129,0.10)",
+                border: "1px solid rgba(16,185,129,0.22)",
                 borderRadius: 7,
                 padding: "3px 8px",
                 flexShrink: 0,
@@ -1262,7 +1261,7 @@ function RiskMeter({
           // Top pips run hotter (warning -> red) to read as "climbing".
           const hot = i >= 5;
           const pipColor = !on
-            ? "rgba(0,0,0,0.08)"
+            ? "#D9D3C7" // rule-soft
             : hot
             ? COLOR.danger
             : COLOR.warning;
@@ -1288,7 +1287,7 @@ function RiskMeter({
 /* ============================================================================
    Transcript line — speaker-tagged turn with typewriter reveal. Patient turns
    can carry a [danger] phrase that sweeps amber/red as it lands; Hana's
-   mitigation turn renders calm/blue with a small spark avatar.
+   mitigation turn renders calm/ultramarine with a small spark avatar.
 ============================================================================ */
 function TranscriptLine({
   turn,
@@ -1307,9 +1306,9 @@ function TranscriptLine({
 }) {
   const isHana = turn.who === "hana";
   const tagColor = isHana ? COLOR.accent : COLOR.slate2;
-  const tagBg = isHana ? "rgba(10,132,255,0.10)" : "rgba(0,0,0,0.04)";
+  const tagBg = isHana ? "rgba(37,54,230,0.08)" : "rgba(22,19,15,0.05)";
   const tagBorder = isHana
-    ? "1px solid rgba(10,132,255,0.20)"
+    ? "1px solid rgba(37,54,230,0.20)"
     : `1px solid ${COLOR.hairlineStrong}`;
 
   const cursor = isTyping ? (
@@ -1321,7 +1320,7 @@ function TranscriptLine({
         marginLeft: 1.5,
         transform: "translateY(2px)",
         borderRadius: 1,
-        background: isHana ? COLOR.accent : COLOR.accentDeep,
+        background: isHana ? COLOR.accent : COLOR.ink,
         opacity: cursorOpacity,
       }}
     />
@@ -1375,7 +1374,7 @@ function TranscriptLine({
           fontSize: 13,
           lineHeight: 1.55,
           letterSpacing: -0.1,
-          color: isHana ? COLOR.accentDeep : COLOR.slate,
+          color: isHana ? COLOR.accent : COLOR.slate,
           fontWeight: isHana ? 500 : 400,
         }}
       >
@@ -1441,7 +1440,7 @@ function renderPatient(
   // Which danger sweep drives this phrase's highlight wipe.
   const isCriticalPhrase = turn.tone === "critical";
   const sweep = isCriticalPhrase ? danger2Progress : danger0Progress;
-  const tint = isCriticalPhrase ? "255,59,48" : "255,159,10";
+  const tint = isCriticalPhrase ? "255,59,48" : "232,160,106";
   const phraseColor = isCriticalPhrase ? COLOR.danger : COLOR.warningDeep;
 
   return (

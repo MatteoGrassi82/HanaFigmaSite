@@ -24,14 +24,18 @@ import {
 
 const SANS = "'IBM Plex Sans', system-ui, sans-serif";
 
-const BLUE = "#2563EB";
-const ORANGE = "#F59E42";
-const INK = "#0A1633";
-const SUB = "#6B7488";
-const BODY = "#454E63";
-const ROW_BG = "#F0F3FA";
-const HAIRLINE = "rgba(10,22,51,0.10)";
-const GREEN = "#22A15C";
+/* Newsprint Ultramarine. Literal hex, not var(): a Remotion comp renders
+   headless, where the page's custom properties do not exist. */
+const BLUE = "#2536E6"; // brand, ultramarine. Spent on the one live thing per frame
+const ORANGE = "#E8A06A"; // signal-amber (normalised from #F59E42)
+const INK = "#16130F"; // ink
+const SUB = "#6F6659"; // ink-mute: captions, labels, meta
+const BODY = "#4A4239"; // ink-soft: secondary prose
+const PAPER_BRIGHT = "#FDFCFA"; // paper-bright: the product surface
+const ROW_BG = "#F0EDE6"; // paper-2: the row ground
+const HAIRLINE = "#D9D3C7"; // rule-soft
+const RULE = "#CCC4B4"; // rule
+const GREEN = "#10B981"; // signal-green (normalised from #22A15C)
 
 export const ONBOARDING_CHAPTER_LEN = 170;
 export const ONBOARDING_DURATION = 510; // 3 chapters, 17s @30fps
@@ -72,9 +76,9 @@ function Window({ title, children }: { title: string; children: React.ReactNode 
         width: WIN.w,
         height: WIN.h,
         borderRadius: 20,
-        background: "#FFFFFF",
-        border: `1px solid ${HAIRLINE}`,
-        boxShadow: "0 30px 70px -28px rgba(10,22,51,0.30)",
+        background: PAPER_BRIGHT, // paper-bright
+        border: `1px solid ${RULE}`, // rule
+        boxShadow: "0 30px 70px -28px rgba(22,19,15,0.22)", // warm ink shadow
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
@@ -89,9 +93,10 @@ function Window({ title, children }: { title: string; children: React.ReactNode 
           borderBottom: `1px solid ${HAIRLINE}`,
         }}
       >
-        <span style={{ width: 9, height: 9, borderRadius: 99, background: "#E5544B" }} />
-        <span style={{ width: 9, height: 9, borderRadius: 99, background: "#F5B94A" }} />
-        <span style={{ width: 9, height: 9, borderRadius: 99, background: "#4CC38A" }} />
+        {/* window chrome: decoration, so it sits on the rule ramp, not in colour */}
+        <span style={{ width: 9, height: 9, borderRadius: 99, background: RULE }} />
+        <span style={{ width: 9, height: 9, borderRadius: 99, background: HAIRLINE }} />
+        <span style={{ width: 9, height: 9, borderRadius: 99, background: RULE }} />
         <span style={{ marginLeft: 12, fontFamily: SANS, fontSize: 12.5, fontWeight: 700, color: SUB }}>
           {title}
         </span>
@@ -137,7 +142,7 @@ function Owner({ frame, fps, t0 }: { frame: number; fps: number; t0: number }) {
             width: 62,
             height: 62,
             borderRadius: 99,
-            background: "#E8EDFB",
+            background: "#ECEDFB", // brand-tint
             display: "grid",
             placeItems: "center",
             fontFamily: SANS,
@@ -160,8 +165,8 @@ function Owner({ frame, fps, t0 }: { frame: number; fps: number; t0: number }) {
               fontWeight: 800,
               letterSpacing: 1,
               textTransform: "uppercase",
-              color: GREEN,
-              background: "rgba(34,161,92,0.12)",
+              color: INK, // label on ink: signal-green is 2.2:1 here, the wash carries the signal
+              background: "rgba(16,185,129,0.12)", // signal-green wash
               borderRadius: 99,
               padding: "6px 11px",
             }}
@@ -184,7 +189,7 @@ function Owner({ frame, fps, t0 }: { frame: number; fps: number; t0: number }) {
                     width: 24,
                     height: 24,
                     borderRadius: 99,
-                    background: done ? "rgba(34,161,92,0.14)" : "#FFFFFF",
+                    background: done ? "rgba(16,185,129,0.14)" : PAPER_BRIGHT,
                     border: done ? "none" : `1px solid ${HAIRLINE}`,
                     display: "grid",
                     placeItems: "center",
@@ -245,14 +250,14 @@ function Academy({ frame, fps, t0 }: { frame: number; fps: number; t0: number })
           const active = i === 0 && frame > playAt;
           return (
             <div key={c.t} style={riseStyle(frame, fps, at, 10)}>
-              <Row style={active ? { background: "#FFFFFF", borderColor: "rgba(37,99,235,0.35)" } : undefined}>
+              <Row style={active ? { background: PAPER_BRIGHT, borderColor: "rgba(37,54,230,0.35)" } : undefined}>
                 <span
                   style={{
                     width: 26,
                     height: 26,
                     borderRadius: 99,
-                    background: active ? BLUE : INK,
-                    color: "#fff",
+                    background: active ? BLUE : INK, // accent only while it plays
+                    color: PAPER_BRIGHT,
                     display: "grid",
                     placeItems: "center",
                     fontSize: 12,
@@ -279,7 +284,7 @@ function Academy({ frame, fps, t0 }: { frame: number; fps: number; t0: number })
         <div
           style={{
             fontFamily: SANS,
-            background: "#FFFFFF",
+            background: PAPER_BRIGHT, // paper-bright
             border: `1px solid ${HAIRLINE}`,
             borderRadius: 14,
             padding: "14px 16px",
@@ -293,12 +298,12 @@ function Academy({ frame, fps, t0 }: { frame: number; fps: number; t0: number })
                 width: 22,
                 height: 22,
                 borderRadius: 7,
-                background: `linear-gradient(150deg, ${BLUE} 0%, #7C3AED 100%)`,
+                background: "linear-gradient(150deg, #141210 0%, #353029 100%)", // navy → navy-soft
                 display: "grid",
                 placeItems: "center",
                 fontSize: 11,
                 fontWeight: 800,
-                color: "#fff",
+                color: PAPER_BRIGHT,
                 flexShrink: 0,
               }}
             >
@@ -337,7 +342,7 @@ function Cohort({ frame, fps, t0 }: { frame: number; fps: number; t0: number }) 
                 style={{
                   height: `${grown}%`,
                   borderRadius: "8px 8px 3px 3px",
-                  background: i < 2 ? "#D7E0F6" : BLUE,
+                  background: i < 2 ? "#E0DBD0" : BLUE, // band before, ultramarine once it holds
                 }}
               />
             </div>
@@ -349,9 +354,9 @@ function Cohort({ frame, fps, t0 }: { frame: number; fps: number; t0: number }) 
         <Row style={{ flex: 1 }}>
           <span style={{ fontSize: 13, color: SUB }}>One programme, one group</span>
         </Row>
-        <Row style={{ flex: 1, background: "#FFFFFF", borderColor: "rgba(34,161,92,0.35)" }}>
-          <span style={{ ...pop(frame, fps, t0 + 132), fontSize: 13, fontWeight: 700, color: GREEN }}>
-            ✓ Documentation inspected
+        <Row style={{ flex: 1, background: PAPER_BRIGHT, borderColor: "rgba(16,185,129,0.35)" }}>
+          <span style={{ ...pop(frame, fps, t0 + 132), fontSize: 13, fontWeight: 700, color: INK }}>
+            <span style={{ color: GREEN }}>✓</span> Documentation inspected
           </span>
         </Row>
       </div>

@@ -9,14 +9,14 @@ import {
 
 /* ------------------------------------------------------------------ */
 /*  Hana Remote — Care Journey motion graphic. Federato's STRUCTURE     */
-/*  (rail + swapping vignettes + traveling data), Retell's PALETTE:     */
-/*   - WHITE cards, lavender-gray rows, near-black navy ink            */
-/*   - docked chips = flat BLUE segments inside full-width gray bars   */
+/*  (rail + swapping vignettes + traveling data), NEWSPRINT ULTRAMARINE:*/
+/*   - paper-bright cards, band-tinted rows, warm near-black ink       */
+/*   - docked chips = flat segments inside full-width band bars        */
 /*   - XL rail badges; active node grows ~1.55x from the line          */
-/*   - dashed rail/coda lines = SVG with long thick light dashes       */
+/*   - dashed rail/coda lines = SVG with long thick rule-toned dashes  */
 /*   - chips fly in arcs w/ tilt + landing bounce (shadow only aloft)  */
-/*  Canvas 800x820 @ 30fps, 840-frame loop (28s), TRANSPARENT bg — the */
-/*  page provides the navy textured backdrop behind the <Player>.      */
+/*  Canvas 800x820 @ 30fps, 840-frame loop (28s), TRANSPARENT bg: the  */
+/*  page provides the textured backdrop behind the <Player>.           */
 /*  Portrait-ish so it fills the hero's right half; cards sit in the   */
 /*  lower two-thirds like the reference, rail just below the navbar.   */
 /*  Beats: Enroll · Check in · Flag · Escalate · Document · coda.      */
@@ -25,29 +25,33 @@ import {
 
 const SANS = "'IBM Plex Sans', system-ui, sans-serif";
 
-/* Retell-derived palette (Matteo 2026-08-12: "colour scheme like retell").
-   White cards on lavender-gray rows, near-black navy ink, ONE bright blue as
-   the accent for every highlight/status, warm peach + indigo only on the rail
-   badges. No yellow anywhere — Retell's system doesn't use it. */
-const NAVY = "#0A1633";
-const BLUE = "#2563EB";
-const ORANGE = "#F59E42"; // Retell's warm accent, second of the two
-const CARD_BG = "#FFFFFF";
-const ROW_BG = "#E7EBF5";
-const ROW_INNER = "#F7F8FC";
-const CHIP_BG = BLUE;
-const CHIP_INK = "#FFFFFF";
-const T_TITLE = "#0A1633";
-const T_SUB = "#6B7488";
-const T_BODY = "#454E63";
-const HAIRLINE = "rgba(10,22,51,0.10)";
-// Rail + coda dashes: back to white — the hero ground is the dark ocean photo.
-const CREAM_LINE = "rgba(255,255,255,0.8)";
+/* Newsprint Ultramarine palette (2026-09-05). Warm uncoated paper, warm
+   near-black ink, and ONE electric ultramarine spent about three times per
+   frame: the active rail step, the patient chip that travels, and the single
+   confirmation line. The greys carry the artwork. Amber is left alone, it is
+   the signal for a flag or an escalation, not decoration.
+   Literal hex rather than var(): this comp can be rendered headlessly for
+   video, where the page's CSS custom properties do not exist. */
+const NAVY = "#141210"; // navy, the true dark ground
+const BRAND = "#2536E6"; // brand, ultramarine, the accent
+const AMBER = "#E8A06A"; // signal-amber: a flag, an escalation
+const CARD_BG = "#FDFCFA"; // paper-bright
+const ROW_BG = "#E0DBD0"; // band, the placeholder bars inside a card
+const ROW_INNER = "#F0EDE6"; // paper-2, inset rows
+const CHIP_BG = BRAND;
+const CHIP_INK = "#FDFCFA"; // paper-bright
+const T_TITLE = "#16130F"; // ink
+const T_SUB = "#6F6659"; // ink-mute, labels and meta only
+const T_BODY = "#4A4239"; // ink-soft
+const HAIRLINE = "#D9D3C7"; // rule-soft
+const RULE = "#CCC4B4"; // rule
+// Rail + coda dashes: rule-toned, so they hold on the warm ground.
+const DASH_LINE = RULE;
 
 // Cards sit on a LIGHT canvas, so they need a hairline as well as a shadow.
-const CARD_BORDER = "1px solid rgba(10,22,51,0.07)";
+const CARD_BORDER = `1px solid ${HAIRLINE}`;
 const CARD_SHADOW =
-  "0 1px 3px rgba(10,22,51,0.06), 0 18px 44px -14px rgba(10,22,51,0.22)";
+  "0 1px 3px rgba(22,19,15,0.06), 0 18px 44px -14px rgba(22,19,15,0.16)";
 
 const EASE = Easing.bezier(0.22, 1, 0.36, 1);
 const EASE_IO = Easing.bezier(0.65, 0, 0.35, 1);
@@ -63,14 +67,15 @@ const T = SCENE + GAP; // 140
 const S0 = T; // first scene starts after the coda
 export const CARE_JOURNEY_DURATION = 840; // 6 * T = 28s @30fps
 
-/* Restrained Retell ramp: blue → indigo → peach → coral → navy (cool to warm to
-   resolved). White stars on every badge. */
+/* ENROLL, CHECK IN and DOCUMENT are STRUCTURE: ink-mute at rest, ultramarine
+   only while their scene is on screen, so exactly one accent badge is lit at a
+   time. FLAG and ESCALATE are SIGNALS and stay amber throughout. */
 const STAGES = [
-  { key: "ENROLL", color: BLUE },
-  { key: "CHECK IN", color: "#4F46E5" },
-  { key: "FLAG", color: ORANGE },
-  { key: "ESCALATE", color: "#E2703A" },
-  { key: "DOCUMENT", color: NAVY },
+  { key: "ENROLL", signal: false },
+  { key: "CHECK IN", signal: false },
+  { key: "FLAG", signal: true },
+  { key: "ESCALATE", signal: true },
+  { key: "DOCUMENT", signal: false },
 ];
 // Rail inset from the canvas edges (was 80..720, edge to edge): the reference
 // keeps clear margins either side of the rail so it reads as a contained
@@ -141,14 +146,14 @@ function Header({ d, title, sub }: { d: string; title: string; sub: string }) {
           width: 32,
           height: 32,
           borderRadius: 999,
-          background: "#EFF3FF",
+          background: ROW_INNER, // paper-2
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           flexShrink: 0,
         }}
       >
-        <Icon d={d} size={15} color={BLUE} />
+        <Icon d={d} size={15} color={T_BODY} />
       </div>
       <div style={{ fontFamily: SANS }}>
         <div style={{ fontSize: 15, fontWeight: 700, color: T_TITLE, lineHeight: 1.2 }}>{title}</div>
@@ -229,6 +234,9 @@ const CHIPS: { text: string; born: number; bg?: string; ink?: string; docks: Doc
   {
     text: "CPAP · 2 hrs last night",
     born: 305,
+    // the reading travels in ink, not in the accent: one ultramarine chip per frame
+    bg: NAVY,
+    ink: CHIP_INK, // paper-bright
     docks: [
       { f: 305, x: 182, y: 537 },
       { f: 401, x: 182, y: 537 },
@@ -243,9 +251,9 @@ const CHIPS: { text: string; born: number; bg?: string; ink?: string; docks: Doc
   {
     text: "Below 4-hr threshold",
     born: 445,
-    // the risk finding travels in the warm accent, so the two data types read apart
-    bg: ORANGE,
-    ink: "#3D2408",
+    // the risk finding travels in signal amber, so the two data types read apart
+    bg: AMBER,
+    ink: T_TITLE,
     docks: [
       { f: 445, x: 470, y: 712 },
       { f: 541, x: 470, y: 712 },
@@ -329,7 +337,8 @@ function Chip({ frame, fps, chip }: { frame: number; fps: number; chip: (typeof 
         padding: "0 12px",
         borderRadius: 6,
         /* flat when parked — depth only while airborne (reference look) */
-        boxShadow: lift > 0.02 ? `0 ${lift * 18}px ${6 + lift * 30}px rgba(0,0,0,${0.18 + lift * 0.3})` : "none",
+        boxShadow:
+          lift > 0.02 ? `0 ${lift * 18}px ${6 + lift * 30}px rgba(22,19,15,${0.14 + lift * 0.2})` : "none",
         whiteSpace: "nowrap",
         zIndex: 3,
       }}
@@ -353,7 +362,7 @@ function Bubble({ who, children, maxWidth }: { who: "hana" | "patient"; children
           borderRadius: 14,
           maxWidth: maxWidth ?? 360,
           ...(hana
-            ? { background: "#0A1633", color: "#fff", borderBottomLeftRadius: 4 }
+            ? { background: NAVY, color: CHIP_INK, borderBottomLeftRadius: 4 }
             : { background: ROW_INNER, color: T_TITLE, border: `1px solid ${HAIRLINE}`, borderBottomRightRadius: 4 }),
         }}
       >
@@ -410,7 +419,7 @@ function Card({
   );
 }
 
-/* Dashed line as SVG — long thick cream dashes like the reference.      */
+/* Dashed line as SVG: long thick rule-toned dashes like the reference.  */
 function DashedLine({ vertical, length }: { vertical?: boolean; length: number }) {
   return (
     <svg
@@ -424,7 +433,7 @@ function DashedLine({ vertical, length }: { vertical?: boolean; length: number }
         y1={vertical ? 0 : 2}
         x2={vertical ? 2 : length}
         y2={vertical ? length : 2}
-        stroke={CREAM_LINE}
+        stroke={DASH_LINE}
         strokeWidth={2.5}
         strokeDasharray="11 9"
       />
@@ -473,9 +482,9 @@ function Rail({ frame, fps }: { frame: number; fps: number }) {
             width: 10,
             height: 10,
             borderRadius: 999,
-            background: CHIP_BG,
+            background: BRAND,
             opacity: runner.o,
-            boxShadow: `0 0 14px 5px rgba(239,233,127,${0.55 * runner.o})`,
+            boxShadow: `0 0 14px 5px rgba(37,54,230,${0.4 * runner.o})`,
             zIndex: 2,
           }}
         />
@@ -483,6 +492,11 @@ function Rail({ frame, fps }: { frame: number; fps: number }) {
       {STAGES.map((s, i) => {
         const start = S0 + i * T;
         const end = start + SCENE;
+        // Same window as the scale below, so the colour lights with the growth.
+        const live = frame >= start - 6 && frame <= end + 16;
+        // amber = signal, ultramarine = the step you are on, ink-mute = at rest
+        const dot = s.signal ? AMBER : live ? BRAND : T_SUB;
+        const star = s.signal ? T_TITLE : CHIP_INK;
         const scale = interpolate(frame, [start - 6, start + 12, end + 2, end + 16], [1, 1.55, 1.55, 1], {
           easing: EASE,
           extrapolateLeft: "clamp",
@@ -518,7 +532,7 @@ function Rail({ frame, fps }: { frame: number; fps: number }) {
                 borderRadius: 12,
                 border: CARD_BORDER,
                 padding: "11px 15px 9px",
-                boxShadow: `0 ${5 + lift * 12}px ${16 + lift * 26}px rgba(0,0,0,${0.28 + lift * 0.2})`,
+                boxShadow: `0 ${5 + lift * 12}px ${16 + lift * 26}px rgba(22,19,15,${0.1 + lift * 0.1})`,
               }}
             >
               {ringT > 0 && ringT < 1 && (
@@ -530,7 +544,7 @@ function Rail({ frame, fps }: { frame: number; fps: number }) {
                     width: 30,
                     height: 30,
                     borderRadius: 999,
-                    border: `2px solid ${s.color}`,
+                    border: `2px solid ${dot}`,
                     transform: `translateX(-50%) scale(${1 + ringT * 1.4})`,
                     opacity: 1 - ringT,
                   }}
@@ -545,14 +559,14 @@ function Rail({ frame, fps }: { frame: number; fps: number }) {
                   width: 30,
                   height: 30,
                   borderRadius: 999,
-                  background: s.color,
+                  background: dot,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  boxShadow: "0 3px 8px rgba(0,0,0,0.3)",
+                  boxShadow: "0 3px 8px rgba(22,19,15,0.18)",
                 }}
               >
-                <Star size={15} color="#FFFFFF" />
+                <Star size={15} color={star} />
               </div>
               <div
                 style={{
@@ -594,7 +608,7 @@ function Coda({ frame, fps }: { frame: number; fps: number }) {
     color: CHIP_INK,
     padding: "11px 20px",
     borderRadius: 8,
-    boxShadow: "0 8px 22px rgba(0,0,0,0.35)",
+    boxShadow: "0 8px 22px rgba(22,19,15,0.18)",
   };
 
   return (
@@ -623,12 +637,12 @@ function Coda({ frame, fps }: { frame: number; fps: number }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          boxShadow: "0 18px 44px rgba(0,0,0,0.5)",
+          boxShadow: "0 18px 44px rgba(22,19,15,0.22)",
           opacity: at(26),
           transform: `scale(${0.7 + Math.min(at(26), 1) * 0.3})`,
         }}
       >
-        <Icon d={P_PHONE} size={32} color="#FFFFFF" />
+        <Icon d={P_PHONE} size={32} color={CHIP_INK} />
       </div>
       <div style={{ height: line2, overflow: "hidden", margin: "12px 0 2px" }}>
         <DashedLine vertical length={74} />
@@ -640,7 +654,7 @@ function Coda({ frame, fps }: { frame: number; fps: number }) {
           height: 0,
           borderLeft: "6px solid transparent",
           borderRight: "6px solid transparent",
-          borderTop: `8px solid ${CREAM_LINE}`,
+          borderTop: `8px solid ${DASH_LINE}`,
           marginBottom: 10,
           opacity: line2 > 70 ? 1 : 0,
         }}
@@ -693,7 +707,7 @@ export const CareJourneyComp = () => {
           </Rise>
           <Rise frame={frame} fps={fps} at={t0 + 44}>
             <div style={{ marginTop: 13 }}>
-              <CheckLine text="Consent captured on the call" color={BLUE} />
+              <CheckLine text="Consent captured on the call" color={BRAND} />
             </div>
           </Rise>
         </Card>
@@ -747,7 +761,7 @@ export const CareJourneyComp = () => {
                     fontSize: 11,
                     fontWeight: 800,
                     letterSpacing: 1,
-                    color: "#B45309",
+                    color: T_SUB, // ink-mute: a meta label, not a signal
                     textTransform: "uppercase",
                     ...riseStyle(frame, fps, t2 + 18, 6),
                   }}
@@ -798,16 +812,16 @@ export const CareJourneyComp = () => {
                   gap: 6,
                   fontSize: 12,
                   fontWeight: 700,
-                  color: "#B4530A",
-                  background: "rgba(245,158,66,0.14)",
-                  border: "1px solid rgba(226,112,58,0.32)",
+                  color: T_TITLE,
+                  background: "rgba(232,160,106,0.18)", // signal-amber wash
+                  border: "1px solid rgba(232,160,106,0.5)",
                   borderRadius: 999,
                   padding: "5px 11px",
                   whiteSpace: "nowrap",
                   ...riseStyle(frame, fps, t3 + 30, 8),
                 }}
               >
-                <span style={{ width: 6, height: 6, borderRadius: 999, background: "#E2703A" }} />
+                <span style={{ width: 6, height: 6, borderRadius: 999, background: AMBER }} />
                 Escalated → named owner
               </span>
             </div>
@@ -858,7 +872,7 @@ export const CareJourneyComp = () => {
           </div>
           <Rise frame={frame} fps={fps} at={t4 + 46}>
             <div style={{ marginTop: 14, paddingTop: 11, borderTop: `1px solid ${HAIRLINE}` }}>
-              <CheckLine text="Ready for your clinician to attest" color={BLUE} />
+              <CheckLine text="Ready for your clinician to attest" color={BRAND} />
             </div>
           </Rise>
         </Card>

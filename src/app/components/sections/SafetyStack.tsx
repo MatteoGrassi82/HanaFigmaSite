@@ -4,27 +4,40 @@ import { Lock, BookLock, UserCheck, Activity } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { getLocale } from "../../../lib/i18n";
 
-/* ── Safety layers — liquid-glass "defense in depth" ─────────────────────────
-   Four coplanar glass cards fanned on a single tilted plane (so each stays a
-   uniform square — no lopsided trapezoids), with a subtle liquid-glass sheen.
+/* ── Safety layers — layered "defense in depth" ──────────────────────────────
+   Four coplanar panes fanned on a single tilted plane (so each stays a uniform
+   square, no lopsided trapezoids), with a subtle sheen. Repainted to Newsprint
+   Ultramarine 2026-09-05: the depth that used to come from four saturated blues
+   now comes from four steps of the warm value ramp, and ultramarine is spent
+   only on the one layer the frame is about.
    Hovering a layer in the list (or a card) lifts its glass card off the plane
    and lights it; the whole stack has a gentle mouse parallax. Desktop = the
    glass stack + a flat interactive list; mobile = a clean flat card stack (no
    3D). Sits above ComplianceSection (which keeps the cert grid). */
 
-const NAVY = "var(--color-navy)";
-const SKY = "#7CC4F0";
-const PEACH = "#FFC091";
-const INK_SOFT = "#9DB2CE";
-const DOT_GRID = "#7CC4F0";
+/* Newsprint Ultramarine, as literal hex with the token name beside it. Written
+   literally rather than as var() because this scene is also captured headlessly
+   (canvas / video export), where the page's custom properties do not resolve. */
+const PAPER = "#FAF8F4";                     /* paper: the section ground, light */
+const NAVY = "#141210";                      /* navy: the section ground, dark */
+const INK = "#16130F";                       /* ink: type on light */
+const INK_SOFT = "#4A4239";                  /* ink-soft: secondary type on light */
+const PAPER_BRIGHT = "#FDFCFA";              /* paper-bright: type + marks on navy */
+const DARK_SOFT = "rgba(253,252,250,0.70)";  /* paper-bright 70%: secondary type on navy */
+const RULE = "#CCC4B4";                      /* rule: borders */
+const ACCENT = "#2536E6";                    /* brand: the accent on light */
+const ACCENT_DARK = "#A9B4FF";               /* brand-soft: the accent on a dark ground */
+const DOT_GRID = "#FDFCFA";                  /* paper-bright: the dot grid on navy */
 
 type Layer = {
   id: string;
   name: string;
   line: string;
   icon: LucideIcon;
-  /** glass gradient for the card (Hana palette, back → front) */
+  /** pane fill on the dark ground — warm ramp, back (deep) → front (light) */
   glass: string;
+  /** the same pane on the light ground — warm ramp, back (tinted) → front (bright) */
+  glassLight: string;
   /** fan offset on the tilted plane */
   tx: number;
   ty: number;
@@ -37,7 +50,10 @@ const LAYERS_EN: Layer[] = [
     name: "Observability",
     line: "Non-deterministic agents are continuously monitored: every decision logged, anomalies caught and circuit-broken.",
     icon: Activity,
-    glass: "linear-gradient(150deg, rgba(0,18,47,0.82), rgba(8,20,70,0.82))",
+    /* deepest pane: navy → navy-soft */
+    glass: "linear-gradient(150deg, rgba(20,18,16,0.88), rgba(53,48,41,0.86))",
+    /* on paper: rule-strong → ink-mute, the most veiled of the four */
+    glassLight: "linear-gradient(150deg, rgba(143,134,114,0.80), rgba(111,102,89,0.78))",
     tx: 150,
     ty: -108,
   },
@@ -46,7 +62,10 @@ const LAYERS_EN: Layer[] = [
     name: "Human in the loop",
     line: "Anything clinical or out-of-scope is handed to a human in real time, per the escalation rules you set.",
     icon: UserCheck,
-    glass: "linear-gradient(150deg, rgba(48,62,200,0.78), rgba(22,34,150,0.80))",
+    /* navy-soft → ink-soft */
+    glass: "linear-gradient(150deg, rgba(53,48,41,0.86), rgba(74,66,57,0.84))",
+    /* rule → rule-strong */
+    glassLight: "linear-gradient(150deg, rgba(204,196,180,0.80), rgba(143,134,114,0.78))",
     tx: 50,
     ty: -36,
   },
@@ -55,7 +74,10 @@ const LAYERS_EN: Layer[] = [
     name: "Protocols",
     line: "Hana acts only inside the clinical protocols and guardrails you define, never a model's own judgment.",
     icon: BookLock,
-    glass: "linear-gradient(150deg, rgba(59,130,246,0.80), rgba(12,58,158,0.80))",
+    /* ink-soft → ink-mute */
+    glass: "linear-gradient(150deg, rgba(74,66,57,0.84), rgba(111,102,89,0.82))",
+    /* rule-soft → rule */
+    glassLight: "linear-gradient(150deg, rgba(217,211,199,0.86), rgba(204,196,180,0.82))",
     tx: -50,
     ty: 36,
   },
@@ -64,7 +86,10 @@ const LAYERS_EN: Layer[] = [
     name: "Encryption",
     line: "Encrypted in transit (TLS 1.2/1.3) and at rest (AES-256); end-to-end where the channel supports it.",
     icon: Lock,
-    glass: "linear-gradient(150deg, rgba(124,196,240,0.82), rgba(40,120,180,0.80))",
+    /* frontmost pane: ink-mute → rule-strong, the lightest on navy */
+    glass: "linear-gradient(150deg, rgba(111,102,89,0.82), rgba(143,134,114,0.80))",
+    /* on paper: paper-bright → band, the pane nearest the reader */
+    glassLight: "linear-gradient(150deg, rgba(253,252,250,0.92), rgba(224,219,208,0.86))",
     tx: -150,
     ty: 108,
   },
@@ -77,7 +102,10 @@ const LAYERS_IT: Layer[] = [
     name: "Osservabilità",
     line: "Gli agenti non deterministici sono monitorati di continuo — ogni decisione registrata, le anomalie intercettate e interrotte automaticamente.",
     icon: Activity,
-    glass: "linear-gradient(150deg, rgba(0,18,47,0.82), rgba(8,20,70,0.82))",
+    /* deepest pane: navy → navy-soft */
+    glass: "linear-gradient(150deg, rgba(20,18,16,0.88), rgba(53,48,41,0.86))",
+    /* on paper: rule-strong → ink-mute, the most veiled of the four */
+    glassLight: "linear-gradient(150deg, rgba(143,134,114,0.80), rgba(111,102,89,0.78))",
     tx: 150,
     ty: -108,
   },
@@ -86,7 +114,10 @@ const LAYERS_IT: Layer[] = [
     name: "Supervisione umana",
     line: "Tutto ciò che è clinico o fuori ambito viene passato a una persona in tempo reale, secondo le regole di escalation che imposti tu.",
     icon: UserCheck,
-    glass: "linear-gradient(150deg, rgba(48,62,200,0.78), rgba(22,34,150,0.80))",
+    /* navy-soft → ink-soft */
+    glass: "linear-gradient(150deg, rgba(53,48,41,0.86), rgba(74,66,57,0.84))",
+    /* rule → rule-strong */
+    glassLight: "linear-gradient(150deg, rgba(204,196,180,0.80), rgba(143,134,114,0.78))",
     tx: 50,
     ty: -36,
   },
@@ -95,7 +126,10 @@ const LAYERS_IT: Layer[] = [
     name: "Protocolli",
     line: "Hana agisce solo all'interno dei protocolli clinici e dei guardrail che definisci tu — mai secondo il giudizio autonomo di un modello.",
     icon: BookLock,
-    glass: "linear-gradient(150deg, rgba(59,130,246,0.80), rgba(12,58,158,0.80))",
+    /* ink-soft → ink-mute */
+    glass: "linear-gradient(150deg, rgba(74,66,57,0.84), rgba(111,102,89,0.82))",
+    /* rule-soft → rule */
+    glassLight: "linear-gradient(150deg, rgba(217,211,199,0.86), rgba(204,196,180,0.82))",
     tx: -50,
     ty: 36,
   },
@@ -104,7 +138,10 @@ const LAYERS_IT: Layer[] = [
     name: "Crittografia",
     line: "Crittografata in transito (TLS 1.2/1.3) e a riposo (AES-256); end-to-end dove il canale lo consente.",
     icon: Lock,
-    glass: "linear-gradient(150deg, rgba(124,196,240,0.82), rgba(40,120,180,0.80))",
+    /* frontmost pane: ink-mute → rule-strong, the lightest on navy */
+    glass: "linear-gradient(150deg, rgba(111,102,89,0.82), rgba(143,134,114,0.80))",
+    /* on paper: paper-bright → band, the pane nearest the reader */
+    glassLight: "linear-gradient(150deg, rgba(253,252,250,0.92), rgba(224,219,208,0.86))",
     tx: -150,
     ty: 108,
   },
@@ -144,24 +181,24 @@ const CSS = `
   /* crisp edge lives HERE (no displacement filter) so it stays neat & straight;
      the liquid wobble is confined to the interior sheen only */
   overflow: hidden;
-  border: 1.5px solid rgba(255,255,255,.22);
-  box-shadow: 0 30px 64px rgba(0,0,0,.5);
+  border: 1.5px solid var(--ss-edge, rgba(253,252,250,.20));    /* paper-bright 20% */
+  box-shadow: var(--ss-shadow, 0 30px 64px rgba(20,18,16,.55)); /* navy 55% */
   transform: translate3d(var(--tx), var(--ty), var(--lift, 0px));
   transition: transform .38s cubic-bezier(.2,.7,.2,1), border-color .38s ease;
 }
-.ss-card.is-active { --lift: 64px; border-color: rgba(255,192,145,.6); }
+.ss-card.is-active { --lift: 64px; border-color: var(--ss-edge-active, #A9B4FF); } /* brand-soft */
 .ss-glass { position:absolute; inset:0; border-radius:inherit; transition:filter .38s ease; }
-.ss-card.is-active .ss-glass { filter: brightness(1.3) saturate(1.1); }
+.ss-card.is-active .ss-glass { filter: var(--ss-active-filter, brightness(1.3) saturate(1.06)); }
 .ss-sheen {
   position:absolute; inset:0; border-radius:inherit;
-  background: radial-gradient(120% 92% at 26% 16%, rgba(255,255,255,.40), rgba(255,255,255,.06) 42%, transparent 66%);
+  background: radial-gradient(120% 92% at 26% 16%, rgba(253,252,250,.40), rgba(253,252,250,.06) 42%, transparent 66%); /* paper-bright */
   filter: url(#ss-liquid);
-  mix-blend-mode: screen; opacity:.85;
+  mix-blend-mode: var(--ss-sheen-blend, screen); opacity: var(--ss-sheen-op, .85);
 }
 .ss-ico {
   position:absolute; top:20px; left:20px; width:46px; height:46px;
-  border-radius:13px; background:rgba(255,255,255,.16);
-  border:1px solid rgba(255,255,255,.28);
+  border-radius:13px; background: var(--ss-ico-bg, rgba(253,252,250,.14));    /* paper-bright 14% */
+  border:1px solid var(--ss-ico-edge, rgba(253,252,250,.26));                 /* paper-bright 26% */
   display:grid; place-items:center;
 }
 @media (prefers-reduced-motion: reduce) {
@@ -172,10 +209,10 @@ const CSS = `
 /* Order the auto-cycle steps through, back → front. */
 const CYCLE_IDS = ["observability", "human", "protocols", "encryption"];
 
-/** `light` renders the section on white for pages that are light end to end.
- *  The glass stack sat on a navy tile until 2026-08-25 (Matteo: remove the blue
- *  background); it now sits on the same soft pastel gradient tile as the Compass
- *  sections, so light pages have no dark panel here at all. */
+/** `light` renders the section on paper for pages that are light end to end.
+ *  The stack sat on a navy tile until 2026-08-25 (Matteo: remove the blue
+ *  background), then on a cool pastel tile; since the 2026-09-05 repaint it sits
+ *  on a warm paper-to-band value ramp, so light pages have no dark panel here. */
 export function SafetyStack({ light = false }: { light?: boolean } = {}) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.3 });
@@ -220,7 +257,7 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
   return (
     <section
       className="relative w-full overflow-hidden py-20 md:py-28"
-      style={{ backgroundColor: light ? "#ffffff" : NAVY }}
+      style={{ backgroundColor: light ? PAPER : NAVY }}
     >
       <style>{CSS}</style>
       <div
@@ -228,8 +265,8 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
         className="pointer-events-none absolute left-1/2 top-[-200px] z-0 h-[800px] w-[800px] -translate-x-1/2"
         style={{
           background: light
-            ? "radial-gradient(circle, rgba(37,99,235,0.07) 0%, transparent 70%)"
-            : "radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%)",
+            ? "radial-gradient(circle, rgba(224,219,208,0.55) 0%, transparent 70%)"  /* band */
+            : "radial-gradient(circle, rgba(53,48,41,0.55) 0%, transparent 70%)",    /* navy-soft */
         }}
       />
       <div className="relative z-10 mx-auto px-4 md:px-8">
@@ -238,7 +275,7 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
             aria-hidden
             className="pointer-events-none absolute inset-0"
             style={{
-              backgroundImage: `radial-gradient(${light ? "var(--color-navy)" : DOT_GRID} 0.6px, transparent 0.6px)`,
+              backgroundImage: `radial-gradient(${light ? INK : DOT_GRID} 0.6px, transparent 0.6px)`,
               backgroundSize: "22px 22px",
               opacity: light ? 0.06 : 0.05,
             }}
@@ -251,7 +288,7 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0 }}
               transition={{ duration: 0.4 }}
               className="text-xs font-semibold uppercase tracking-[0.2em]"
-              style={{ color: light ? "var(--color-brand)" : SKY }}
+              style={{ color: light ? ACCENT : ACCENT_DARK }}
             >
               {COPY.eyebrow}
             </motion.span>
@@ -259,7 +296,8 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
               initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0 }}
               transition={{ duration: 0.5, delay: 0.08 }}
-              className={`mt-4 font-serif text-3xl leading-tight md:text-[2.6rem] md:leading-[1.15] ${light ? "text-navy" : "text-white"}`}
+              className="mt-4 font-serif text-3xl leading-tight md:text-[2.6rem] md:leading-[1.15]"
+              style={{ color: light ? INK : PAPER_BRIGHT }}
             >
               {COPY.heading}
             </motion.h2>
@@ -268,7 +306,7 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0 }}
               transition={{ duration: 0.5, delay: 0.16 }}
               className="mx-auto mt-5 max-w-xl text-base leading-relaxed"
-              style={{ color: light ? "var(--color-ink-soft)" : INK_SOFT }}
+              style={{ color: light ? INK_SOFT : DARK_SOFT }}
             >
               {COPY.intro}
             </motion.p>
@@ -284,11 +322,13 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
               style={
                 light
                   ? {
+                      /* three warm washes over a two-step paper ramp; the depth
+                         that used to come from three hues now comes from value */
                       background: [
-                        "radial-gradient(60% 55% at 18% 12%, rgba(245,158,66,0.16) 0%, rgba(245,158,66,0) 60%)",
-                        "radial-gradient(65% 60% at 88% 22%, rgba(37,99,235,0.20) 0%, rgba(37,99,235,0) 62%)",
-                        "radial-gradient(70% 60% at 16% 92%, rgba(139,92,246,0.18) 0%, rgba(139,92,246,0) 62%)",
-                        "linear-gradient(150deg, #FAFBFF 0%, #F0F3FA 60%, #EDF0F8 100%)",
+                        "radial-gradient(60% 55% at 18% 12%, rgba(224,219,208,0.55) 0%, rgba(224,219,208,0) 60%)",  /* band */
+                        "radial-gradient(65% 60% at 88% 22%, rgba(204,196,180,0.50) 0%, rgba(204,196,180,0) 62%)",  /* rule */
+                        "radial-gradient(70% 60% at 16% 92%, rgba(217,211,199,0.60) 0%, rgba(217,211,199,0) 62%)",  /* rule-soft */
+                        "linear-gradient(150deg, #FDFCFA 0%, #F0EDE6 60%, #E0DBD0 100%)",  /* paper-bright → paper-2 → band */
                       ].join(", "),
                     }
                   : undefined
@@ -297,7 +337,32 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
               onMouseLeave={onLeave}
             >
               <div ref={sceneRef} style={{ perspective: "2400px", perspectiveOrigin: "50% 50%" }}>
-                <div className="ss-stack">
+                <div
+                  className="ss-stack"
+                  style={
+                    (light
+                      ? {
+                          "--ss-edge": "rgba(22,19,15,0.14)",              /* ink 14% */
+                          "--ss-edge-active": ACCENT,                      /* brand */
+                          "--ss-shadow": "0 24px 48px rgba(22,19,15,0.16)",
+                          "--ss-active-filter": "brightness(1.05) saturate(1.02)",
+                          "--ss-sheen-blend": "overlay",
+                          "--ss-sheen-op": ".40",
+                          "--ss-ico-bg": "rgba(253,252,250,0.62)",         /* paper-bright 62% */
+                          "--ss-ico-edge": "rgba(22,19,15,0.14)",
+                        }
+                      : {
+                          "--ss-edge": "rgba(253,252,250,0.20)",           /* paper-bright 20% */
+                          "--ss-edge-active": ACCENT_DARK,                 /* brand-soft */
+                          "--ss-shadow": "0 30px 64px rgba(20,18,16,0.55)",/* navy 55% */
+                          "--ss-active-filter": "brightness(1.3) saturate(1.06)",
+                          "--ss-sheen-blend": "screen",
+                          "--ss-sheen-op": ".85",
+                          "--ss-ico-bg": "rgba(253,252,250,0.14)",
+                          "--ss-ico-edge": "rgba(253,252,250,0.26)",
+                        }) as React.CSSProperties
+                  }
+                >
                   {LAYERS.map((layer) => {
                     const Icon = layer.icon;
                     // hover wins; otherwise the calm auto-cycle lights each in turn
@@ -310,10 +375,14 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
                         onMouseEnter={() => setHovered(layer.id)}
                         onMouseLeave={() => setHovered(null)}
                       >
-                        <div className="ss-glass" style={{ background: layer.glass }} />
+                        <div className="ss-glass" style={{ background: light ? layer.glassLight : layer.glass }} />
                         <div className="ss-sheen" />
                         <div className="ss-ico">
-                          <Icon className="h-[22px] w-[22px] text-white" strokeWidth={1.8} />
+                          <Icon
+                            className="h-[22px] w-[22px]"
+                            strokeWidth={1.8}
+                            style={{ color: light ? INK : PAPER_BRIGHT }}
+                          />
                         </div>
                       </div>
                     );
@@ -389,11 +458,11 @@ function LayerRow({
       className="cursor-pointer rounded-2xl border p-4 transition-colors"
       style={{
         backgroundColor: light
-          ? active ? "rgba(37,99,235,0.06)" : "var(--color-paper-2)"
-          : active ? "rgba(255,192,145,0.10)" : "rgba(255,255,255,0.03)",
+          ? active ? "rgba(37,54,230,0.06)" : "#F0EDE6"          /* brand 6% / paper-2 */
+          : active ? "rgba(169,180,255,0.10)" : "rgba(253,252,250,0.03)",  /* brand-soft 10% */
         borderColor: light
-          ? active ? "rgba(37,99,235,0.35)" : "rgba(10,22,51,0.10)"
-          : active ? "rgba(255,192,145,0.45)" : "rgba(255,255,255,0.08)",
+          ? active ? "rgba(37,54,230,0.35)" : RULE               /* brand 35% / rule */
+          : active ? "rgba(169,180,255,0.45)" : "rgba(253,252,250,0.10)",
       }}
     >
       <div className="flex items-center gap-3">
@@ -401,18 +470,24 @@ function LayerRow({
           className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border"
           style={{
             borderColor: light
-              ? active ? "var(--color-brand)" : "rgba(0,18,47,0.16)"
-              : active ? PEACH : "rgba(255,255,255,0.18)",
+              ? active ? ACCENT : RULE                            /* brand / rule */
+              : active ? ACCENT_DARK : "rgba(253,252,250,0.18)",
             backgroundColor: light
-              ? active ? "rgba(37,99,235,0.12)" : "#EFF3FF"
-              : active ? "rgba(255,192,145,0.18)" : "rgba(255,255,255,0.06)",
+              ? active ? "rgba(37,54,230,0.10)" : PAPER_BRIGHT     /* brand 10% / paper-bright */
+              : active ? "rgba(169,180,255,0.16)" : "rgba(253,252,250,0.06)",
           }}
         >
-          <Icon className="h-[18px] w-[18px]" strokeWidth={1.8} style={{ color: active ? PEACH : "#fff" }} />
+          <Icon
+            className="h-[18px] w-[18px]"
+            strokeWidth={1.8}
+            style={{ color: light ? (active ? ACCENT : INK_SOFT) : active ? ACCENT_DARK : PAPER_BRIGHT }}
+          />
         </span>
-        <h3 className={`text-base font-semibold tracking-tight ${light ? "text-navy" : "text-white"}`}>{layer.name}</h3>
+        <h3 className="text-base font-semibold tracking-tight" style={{ color: light ? INK : PAPER_BRIGHT }}>
+          {layer.name}
+        </h3>
       </div>
-      <motion.p animate={{ opacity: active ? 1 : 0.7 }} className="mt-2 text-[12px] leading-relaxed" style={{ color: light ? "var(--color-ink-soft)" : INK_SOFT }}>
+      <motion.p animate={{ opacity: active ? 1 : 0.7 }} className="mt-2 text-[12px] leading-relaxed" style={{ color: light ? INK_SOFT : DARK_SOFT }}>
         {layer.line}
       </motion.p>
     </motion.div>
@@ -449,11 +524,11 @@ function MobileLayers({
             className="rounded-2xl border p-4 text-left"
             style={{
               backgroundColor: light
-                ? isActive ? "rgba(37,99,235,0.06)" : "var(--color-paper-2)"
-                : isActive ? "rgba(255,192,145,0.10)" : "rgba(255,255,255,0.04)",
+                ? isActive ? "rgba(37,54,230,0.06)" : "#F0EDE6"        /* brand 6% / paper-2 */
+                : isActive ? "rgba(169,180,255,0.10)" : "rgba(253,252,250,0.04)",
               borderColor: light
-                ? isActive ? "rgba(37,99,235,0.35)" : "rgba(10,22,51,0.10)"
-                : isActive ? "rgba(255,192,145,0.45)" : "rgba(255,255,255,0.1)",
+                ? isActive ? "rgba(37,54,230,0.35)" : RULE             /* brand 35% / rule */
+                : isActive ? "rgba(169,180,255,0.45)" : "rgba(253,252,250,0.10)",
             }}
           >
             <div className="flex items-center gap-3">
@@ -461,18 +536,24 @@ function MobileLayers({
                 className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border"
                 style={{
                   borderColor: light
-                    ? isActive ? "var(--color-brand)" : "rgba(0,18,47,0.16)"
-                    : isActive ? PEACH : "rgba(255,255,255,0.2)",
+                    ? isActive ? ACCENT : RULE                          /* brand / rule */
+                    : isActive ? ACCENT_DARK : "rgba(253,252,250,0.20)",
                   backgroundColor: light
-                    ? isActive ? "rgba(37,99,235,0.12)" : "#EFF3FF"
-                    : isActive ? "rgba(255,192,145,0.18)" : "rgba(255,255,255,0.06)",
+                    ? isActive ? "rgba(37,54,230,0.10)" : PAPER_BRIGHT  /* brand 10% / paper-bright */
+                    : isActive ? "rgba(169,180,255,0.16)" : "rgba(253,252,250,0.06)",
                 }}
               >
-                <Icon className="h-5 w-5" strokeWidth={1.8} style={{ color: isActive ? PEACH : "#fff" }} />
+                <Icon
+                  className="h-5 w-5"
+                  strokeWidth={1.8}
+                  style={{ color: light ? (isActive ? ACCENT : INK_SOFT) : isActive ? ACCENT_DARK : PAPER_BRIGHT }}
+                />
               </span>
-              <span className={`text-base font-semibold tracking-tight ${light ? "text-navy" : "text-white"}`}>{layer.name}</span>
+              <span className="text-base font-semibold tracking-tight" style={{ color: light ? INK : PAPER_BRIGHT }}>
+                {layer.name}
+              </span>
             </div>
-            <p className="mt-2 text-[13px] leading-relaxed" style={{ color: light ? "var(--color-ink-soft)" : INK_SOFT }}>
+            <p className="mt-2 text-[13px] leading-relaxed" style={{ color: light ? INK_SOFT : DARK_SOFT }}>
               {layer.line}
             </p>
           </motion.button>

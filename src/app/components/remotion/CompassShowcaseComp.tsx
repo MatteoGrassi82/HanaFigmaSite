@@ -19,21 +19,30 @@ import {
 /*  (see CompassShowcase in RemoteV2.tsx).                             */
 /*                                                                     */
 /*  Canvas 760x620 @ 30fps, 510-frame loop (17s), TRANSPARENT bg —     */
-/*  the page provides the light gradient tile behind the <Player>.     */
-/*  Palette matches the hero comp: white UI, #2563EB blue accent,      */
-/*  #F59E42 warm accent, near-black navy ink.                          */
+/*  the page provides the light paper tile behind the <Player>.        */
+/*  Palette: Newsprint Ultramarine. Warm paper surfaces, warm ink,     */
+/*  ultramarine #2536E6 spent about three times a view. Amber and      */
+/*  green stay as signals: a flag, and something done.                 */
 /* ------------------------------------------------------------------ */
 
 const SANS = "'IBM Plex Sans', system-ui, sans-serif";
 
-const BLUE = "#2563EB";
-const ORANGE = "#F59E42";
-const INK = "#0A1633";
-const SUB = "#6B7488";
-const BODY = "#454E63";
-const ROW_BG = "#F0F3FA";
-const HAIRLINE = "rgba(10,22,51,0.10)";
-const GREEN = "#22A15C";
+/* Literal hex, not var(): this comp can be rendered headlessly, where
+   the page's CSS custom properties do not exist. Token name in comment. */
+const BRAND = "#2536E6";      /* brand — ultramarine, the accent */
+const BRAND_TINT = "#ECEDFB"; /* brand-tint — the accent as a wash */
+const AMBER = "#E8A06A";      /* signal-amber — a flag, needs attention */
+const AMBER_WASH = "rgba(232,160,106,0.22)"; /* signal-amber at 22% */
+const AMBER_EDGE = "rgba(232,160,106,0.75)"; /* signal-amber at 75% */
+const INK = "#16130F";        /* ink */
+const SUB = "#6F6659";        /* ink-mute — labels, meta */
+const BODY = "#4A4239";       /* ink-soft — secondary prose */
+const PAPER = "#FAF8F4";      /* paper — the window ground */
+const PAPER_2 = "#F0EDE6";    /* paper-2 — tracks, chips, sidebar */
+const PAPER_BRIGHT = "#FDFCFA"; /* paper-bright — cards that lift off it */
+const RULE = "#CCC4B4";       /* rule — borders */
+const RULE_SOFT = "#D9D3C7";  /* rule-soft — hairlines */
+const GREEN = "#10B981";      /* signal-green — done, attested */
 
 export const COMPASS_CHAPTER_LEN = 170;
 export const COMPASS_DURATION = 510; // 3 chapters, 17s @30fps
@@ -93,7 +102,7 @@ function Tag({ text, bg, ink }: { text: string; bg: string; ink: string }) {
 }
 
 function BarLine({ w }: { w: number }) {
-  return <span style={{ display: "inline-block", width: w, height: 12, borderRadius: 4, background: ROW_BG }} />;
+  return <span style={{ display: "inline-block", width: w, height: 12, borderRadius: 4, background: RULE_SOFT /* rule-soft */ }} />;
 }
 
 function CheckDot({ color = GREEN, size = 16 }: { color?: string; size?: number }) {
@@ -111,7 +120,8 @@ function CheckDot({ color = GREEN, size = 16 }: { color?: string; size?: number 
       }}
     >
       <svg viewBox="0 0 24 24" width={size * 0.6} height={size * 0.6}>
-        <path d="M5 13l4 4L19 7" stroke="#fff" strokeWidth={3.6} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        {/* the check reads paper-bright on the signal-green fill */}
+        <path d="M5 13l4 4L19 7" stroke="#FDFCFA" strokeWidth={3.6} fill="none" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </span>
   );
@@ -130,7 +140,7 @@ function Worklist({ frame, fps, t0 }: { frame: number; fps: number; t0: number }
       <div style={{ ...riseStyle(frame, fps, t0 + 6), display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
         <span style={{ fontFamily: SANS, fontSize: 16, fontWeight: 700, color: INK }}>Flagged worklist</span>
         <span style={{ ...pop(frame, fps, t0 + 64) }}>
-          <Tag text="1 needs review" bg="rgba(245,158,66,0.16)" ink="#B4530A" />
+          <Tag text="1 needs review" bg={AMBER_WASH} ink={INK} />
         </span>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -152,9 +162,9 @@ function Worklist({ frame, fps, t0 }: { frame: number; fps: number; t0: number }
                   gap: 10,
                   padding: "10px 12px",
                   borderRadius: 10,
-                  background: isFlag && flagOn ? "rgba(245,158,66,0.10)" : "#fff",
-                  border: `1px solid ${isFlag && flagOn ? "rgba(226,112,58,0.4)" : HAIRLINE}`,
-                  boxShadow: isFlag && flagOn ? "0 6px 18px -6px rgba(226,112,58,0.25)" : "none",
+                  background: isFlag && flagOn ? "rgba(232,160,106,0.14)" /* signal-amber wash */ : PAPER_BRIGHT,
+                  border: `1px solid ${isFlag && flagOn ? AMBER_EDGE : RULE}`,
+                  boxShadow: isFlag && flagOn ? "0 6px 18px -6px rgba(232,160,106,0.5)" : "none",
                   transition: "none",
                 }}
               >
@@ -163,14 +173,14 @@ function Worklist({ frame, fps, t0 }: { frame: number; fps: number; t0: number }
                     width: 26,
                     height: 26,
                     borderRadius: 999,
-                    background: isFlag ? "rgba(245,158,66,0.2)" : ROW_BG,
+                    background: isFlag ? AMBER_WASH : PAPER_2,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     fontFamily: SANS,
                     fontSize: 10,
                     fontWeight: 800,
-                    color: isFlag ? "#B4530A" : SUB,
+                    color: isFlag ? INK : SUB,
                     flexShrink: 0,
                   }}
                 >
@@ -181,7 +191,7 @@ function Worklist({ frame, fps, t0 }: { frame: number; fps: number; t0: number }
                 <span style={{ marginLeft: "auto" }}>
                   {isFlag ? (
                     <span style={pop(frame, fps, t0 + 58)}>
-                      <Tag text={r.status} bg="rgba(226,112,58,0.14)" ink="#B4530A" />
+                      <Tag text={r.status} bg={AMBER_WASH} ink={INK} />
                     </span>
                   ) : (
                     <span style={{ fontFamily: SANS, fontSize: 11, fontWeight: 600, color: frame >= at + 6 ? GREEN : SUB }}>{r.status}</span>
@@ -226,8 +236,8 @@ function Billing({ frame, fps, t0 }: { frame: number; fps: number; t0: number })
                 <span style={{ fontWeight: 700, color: INK }}>{p.key}</span>
                 <span style={{ color: SUB }}>{Math.round(p.notes * Math.min(1, fill / p.pct || 0))} notes ready</span>
               </div>
-              <div style={{ height: 10, borderRadius: 999, background: ROW_BG, overflow: "hidden" }}>
-                <div style={{ width: `${fill * 100}%`, height: "100%", borderRadius: 999, background: BLUE }} />
+              <div style={{ height: 10, borderRadius: 999, background: PAPER_2, overflow: "hidden" }}>
+                <div style={{ width: `${fill * 100}%`, height: "100%", borderRadius: 999, background: BRAND }} />
               </div>
             </div>
           );
@@ -239,8 +249,8 @@ function Billing({ frame, fps, t0 }: { frame: number; fps: number; t0: number })
           marginTop: 18,
           padding: "12px 14px",
           borderRadius: 12,
-          background: "#fff",
-          border: `1px solid ${HAIRLINE}`,
+          background: PAPER_BRIGHT,
+          border: `1px solid ${RULE}`,
           display: "flex",
           alignItems: "center",
           gap: 10,
@@ -260,9 +270,9 @@ function Billing({ frame, fps, t0 }: { frame: number; fps: number; t0: number })
 /* ---- Chapter 3: audit timeline ---------------------------------------- */
 function Timeline({ frame, fps, t0 }: { frame: number; fps: number; t0: number }) {
   const entries = [
-    { text: "Evening check-in completed", time: "6:42 PM", color: BLUE },
-    { text: "Flag raised · usage below threshold", time: "6:43 PM", color: ORANGE },
-    { text: "Reviewed by your clinician", time: "8:05 AM", color: BLUE },
+    { text: "Evening check-in completed", time: "6:42 PM", color: SUB },
+    { text: "Flag raised · usage below threshold", time: "6:43 PM", color: AMBER },
+    { text: "Reviewed by your clinician", time: "8:05 AM", color: SUB },
     { text: "Note attested", time: "8:07 AM", color: GREEN, check: true },
   ];
   const lineH = interpolate(frame, [t0 + 20, t0 + 96], [0, entries.length * 52 - 40], {
@@ -276,7 +286,7 @@ function Timeline({ frame, fps, t0 }: { frame: number; fps: number; t0: number }
         <span style={{ fontFamily: SANS, fontSize: 16, fontWeight: 700, color: INK }}>Maria R. · audit trail</span>
       </div>
       <div style={{ position: "relative", paddingLeft: 26 }}>
-        <div style={{ position: "absolute", left: 7, top: 8, width: 0, height: lineH, borderLeft: `2px dashed rgba(10,22,51,0.18)` }} />
+        <div style={{ position: "absolute", left: 7, top: 8, width: 0, height: lineH, borderLeft: `2px dashed ${RULE}` }} />
         <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
           {entries.map((e, i) => {
             const at = t0 + 18 + i * 20;
@@ -294,7 +304,7 @@ function Timeline({ frame, fps, t0 }: { frame: number; fps: number; t0: number }
                         width: 16,
                         height: 16,
                         borderRadius: 999,
-                        background: "#fff",
+                        background: PAPER_BRIGHT,
                         border: `4px solid ${e.color}`,
                       }}
                     />
@@ -344,9 +354,9 @@ export const CompassShowcaseComp = () => {
           width: WIN.w,
           height: WIN.h,
           borderRadius: 18,
-          background: "#fff",
-          border: `1px solid ${HAIRLINE}`,
-          boxShadow: "0 2px 8px rgba(10,22,51,0.08), 0 30px 70px -20px rgba(10,22,51,0.28)",
+          background: PAPER,
+          border: `1px solid ${RULE}`,
+          boxShadow: "0 2px 8px rgba(22,19,15,0.07), 0 30px 70px -20px rgba(22,19,15,0.22)",
           overflow: "hidden",
           opacity: Math.min(winIn, 1),
           transform: `translateY(${(1 - winIn) * 18}px)`,
@@ -355,16 +365,17 @@ export const CompassShowcaseComp = () => {
         }}
       >
         {/* window chrome */}
-        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "12px 16px", borderBottom: `1px solid ${HAIRLINE}` }}>
-          <span style={{ width: 10, height: 10, borderRadius: 999, background: "#F2605A" }} />
-          <span style={{ width: 10, height: 10, borderRadius: 999, background: "#F8BE4F" }} />
-          <span style={{ width: 10, height: 10, borderRadius: 999, background: "#5BC46A" }} />
+        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "12px 16px", borderBottom: `1px solid ${RULE_SOFT}` }}>
+          {/* window dots are chrome, not signal: they stay on the rule ramp */}
+          <span style={{ width: 10, height: 10, borderRadius: 999, background: RULE }} />
+          <span style={{ width: 10, height: 10, borderRadius: 999, background: RULE_SOFT }} />
+          <span style={{ width: 10, height: 10, borderRadius: 999, background: RULE }} />
           <span
             style={{
               margin: "0 auto",
               fontSize: 11,
               color: SUB,
-              background: ROW_BG,
+              background: PAPER_2,
               borderRadius: 6,
               padding: "3px 14px",
             }}
@@ -376,9 +387,9 @@ export const CompassShowcaseComp = () => {
 
         <div style={{ display: "flex", flex: 1, minHeight: 0 }}>
           {/* sidebar */}
-          <div style={{ width: SIDEBAR_W, borderRight: `1px solid ${HAIRLINE}`, background: "#FAFBFE", padding: "16px 12px" }}>
+          <div style={{ width: SIDEBAR_W, borderRight: `1px solid ${RULE_SOFT}`, background: PAPER_2, padding: "16px 12px" }}>
             <div style={{ fontSize: 12.5, fontWeight: 800, color: INK, padding: "0 8px", marginBottom: 14 }}>
-              HANA <span style={{ color: BLUE }}>Compass</span>
+              HANA <span style={{ color: INK }}>Compass</span>
             </div>
             <div style={{ position: "relative" }}>
               <div
@@ -389,7 +400,7 @@ export const CompassShowcaseComp = () => {
                   top: pillY,
                   height: 32,
                   borderRadius: 8,
-                  background: "rgba(37,99,235,0.10)",
+                  background: BRAND_TINT,
                 }}
               />
               {NAV.map((n, i) => (
@@ -404,7 +415,7 @@ export const CompassShowcaseComp = () => {
                     padding: "0 10px",
                     fontSize: 12,
                     fontWeight: chapter === i ? 800 : 600,
-                    color: chapter === i ? BLUE : SUB,
+                    color: chapter === i ? BRAND : SUB,
                   }}
                 >
                   {n}

@@ -26,11 +26,23 @@ import {
 
 const SANS = "'IBM Plex Sans', system-ui, sans-serif";
 
-const BLUE = "#2563EB";
-const INK = "#0A1633";
-const SUB = "#6B7488";
-const HAIRLINE = "rgba(10,22,51,0.09)";
-const GREEN = "#3FBB5A";
+/* Newsprint Ultramarine, as literal hex. These render headlessly for video
+   export, where the page's CSS custom properties do not exist, so no var(). */
+const BRAND = "#2536E6";        /* brand: ultramarine, the accent on light */
+const BRAND_SOFT = "#A9B4FF";   /* brand-soft: the accent on a dark ground */
+const BRAND_TINT = "#ECEDFB";   /* brand-tint: the accent as a wash */
+const INK = "#16130F";          /* ink: primary type on light */
+const INK_SOFT = "#4A4239";     /* ink-soft: secondary type */
+const SUB = "#6F6659";          /* ink-mute: captions, labels, meta */
+const PAPER_2 = "#F0EDE6";      /* paper-2: the alternating band */
+const PAPER_BRIGHT = "#FDFCFA"; /* paper-bright: cards and surfaces */
+const BAND = "#E0DBD0";         /* band: a tinted ground */
+const RULE = "#CCC4B4";         /* rule: borders */
+const HAIRLINE = "#D9D3C7";     /* rule-soft: hairlines */
+const NAVY = "#141210";         /* navy: the true dark ground */
+/* Signals, deliberately outside the palette. GREEN = answer the call,
+   RED = decline it. Both are states, not decoration. */
+const GREEN = "#10B981";
 const RED = "#E5544B";
 
 export const COMPANION_CHAPTER_LEN = 150;
@@ -95,7 +107,7 @@ function PhoneFrame({ width, children }: { width: number; children: React.ReactN
           height: `${SCREEN.height}%`,
           borderRadius: width * 0.115,
           overflow: "hidden",
-          background: "#EEF2FA",
+          background: PAPER_2, /* paper-2: the screen behind the home screen */
         }}
       >
         {children}
@@ -119,7 +131,7 @@ function PhoneFrame({ width, children }: { width: number; children: React.ReactN
    and keeps the asset ours. */
 type AppIcon = { label: string; bg: string; glyph: React.ReactNode };
 
-const g = (d: string, color = "#fff") => (
+const g = (d: string, color = "#FDFCFA") => (
   <svg viewBox="0 0 24 24" width="58%" height="58%">
     <path d={d} fill={color} />
   </svg>
@@ -128,26 +140,32 @@ const g = (d: string, color = "#fff") => (
 const APPS: AppIcon[] = [
   { label: "Phone", bg: "linear-gradient(160deg,#5CD672,#1FA94A)", glyph: g("M6.6 10.8c1.5 2.9 3.8 5.2 6.7 6.7l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.3c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.3 0 .7-.2 1l-2.1 2.3z") },
   { label: "Messages", bg: "linear-gradient(160deg,#6FE07C,#25B34C)", glyph: g("M12 3C6.9 3 3 6.4 3 10.6c0 2.4 1.3 4.5 3.4 5.9-.2 1.2-.8 2.4-1.7 3.4 1.7-.2 3.3-.9 4.6-1.9.8.2 1.7.3 2.7.3 5.1 0 9-3.4 9-7.7S17.1 3 12 3z") },
-  { label: "Calendar", bg: "#FFFFFF", glyph: (
+  { label: "Calendar", bg: "#FDFCFA" /* paper-bright, was pure #FFFFFF */, glyph: (
     <svg viewBox="0 0 24 24" width="72%" height="72%">
       <text x="12" y="9" textAnchor="middle" fontSize="6" fontWeight="700" fill="#E5544B" fontFamily="var(--font-sans)">MON</text>
-      <text x="12" y="20" textAnchor="middle" fontSize="11" fontWeight="500" fill="#1B2436" fontFamily="var(--font-sans)">6</text>
+      <text x="12" y="20" textAnchor="middle" fontSize="11" fontWeight="500" fill="#16130F" fontFamily="var(--font-sans)">6</text>
     </svg>
   ) },
-  { label: "Camera", bg: "linear-gradient(160deg,#7C8798,#4A5563)", glyph: g("M12 8.5A3.5 3.5 0 1 0 12 15.5 3.5 3.5 0 0 0 12 8.5zM20 6h-3l-1.2-1.6a1 1 0 0 0-.8-.4H9a1 1 0 0 0-.8.4L7 6H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1zm-8 11.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z") },
-  { label: "Mail", bg: "linear-gradient(160deg,#6FB6FF,#1E7FE0)", glyph: g("M3 6.5A1.5 1.5 0 0 1 4.5 5h15A1.5 1.5 0 0 1 21 6.5v11A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5v-11zm2 .8v.4l7 4.4 7-4.4v-.4l-7 4.3L5 7.3z") },
+  /* cool slate icon → the warm ink ramp: ink-mute into navy-soft */
+  { label: "Camera", bg: "linear-gradient(160deg,#6F6659,#353029)", glyph: g("M12 8.5A3.5 3.5 0 1 0 12 15.5 3.5 3.5 0 0 0 12 8.5zM20 6h-3l-1.2-1.6a1 1 0 0 0-.8-.4H9a1 1 0 0 0-.8.4L7 6H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1zm-8 11.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z") },
+  /* the one blue on the home screen is now our blue: brand-soft into brand */
+  { label: "Mail", bg: "linear-gradient(160deg,#A9B4FF,#2536E6)", glyph: g("M3 6.5A1.5 1.5 0 0 1 4.5 5h15A1.5 1.5 0 0 1 21 6.5v11A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5v-11zm2 .8v.4l7 4.4 7-4.4v-.4l-7 4.3L5 7.3z") },
   { label: "Notes", bg: "linear-gradient(160deg,#FFE79A,#F4C64A)", glyph: g("M5 4h14a1 1 0 0 1 1 1v10l-5 5H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm2 5h10v1.6H7V9zm0 4h7v1.6H7V13z", "#6B4E12") },
-  { label: "Health", bg: "#FFFFFF", glyph: g("M12 20s-7-4.4-7-9.2A4 4 0 0 1 12 8a4 4 0 0 1 7 2.8C19 15.6 12 20 12 20z", "#F0435F") },
-  { label: "Clock", bg: "#15181F", glyph: (
+  /* #F0435F stays: it is the alert red, not decoration */
+  { label: "Health", bg: "#FDFCFA" /* paper-bright, was pure #FFFFFF */, glyph: g("M12 20s-7-4.4-7-9.2A4 4 0 0 1 12 8a4 4 0 0 1 7 2.8C19 15.6 12 20 12 20z", "#F0435F") },
+  { label: "Clock", bg: "#141210" /* navy */, glyph: (
     <svg viewBox="0 0 24 24" width="72%" height="72%">
-      <circle cx="12" cy="12" r="9" fill="none" stroke="#fff" strokeWidth="1.4" />
-      <path d="M12 7v5.4l3.6 2.1" stroke="#fff" strokeWidth="1.6" fill="none" strokeLinecap="round" />
+      <circle cx="12" cy="12" r="9" fill="none" stroke="#FDFCFA" strokeWidth="1.4" />
+      <path d="M12 7v5.4l3.6 2.1" stroke="#FDFCFA" strokeWidth="1.6" fill="none" strokeLinecap="round" />
     </svg>
   ) },
-  { label: "Settings", bg: "linear-gradient(160deg,#B9C2CE,#7A8492)", glyph: g("M12 8.6A3.4 3.4 0 1 0 12 15.4 3.4 3.4 0 0 0 12 8.6zm9-1.1-1.5.6a7.6 7.6 0 0 0-.9-1.6l.9-1.3-1.7-1.7-1.3.9a7.6 7.6 0 0 0-1.6-.9L14.3 2h-2.4l-.6 1.5c-.6.2-1.1.5-1.6.9L8.4 3.5 6.7 5.2l.9 1.3c-.4.5-.7 1-.9 1.6L5 8.7v2.4l1.7.6c.2.6.5 1.1.9 1.6l-.9 1.3 1.7 1.7 1.3-.9c.5.4 1 .7 1.6.9l.6 1.7h2.4l.6-1.7c.6-.2 1.1-.5 1.6-.9l1.3.9 1.7-1.7-.9-1.3c.4-.5.7-1 .9-1.6L21 11V7.5z") },
-  { label: "Maps", bg: "linear-gradient(160deg,#8FD98F,#4EA9D8)", glyph: g("M12 3a6 6 0 0 0-6 6c0 4.4 6 12 6 12s6-7.6 6-12a6 6 0 0 0-6-6zm0 8.4A2.4 2.4 0 1 1 12 6.6a2.4 2.4 0 0 1 0 4.8z") },
+  /* cool slate icon → the warm ramp: rule into ink-mute */
+  { label: "Settings", bg: "linear-gradient(160deg,#CCC4B4,#6F6659)", glyph: g("M12 8.6A3.4 3.4 0 1 0 12 15.4 3.4 3.4 0 0 0 12 8.6zm9-1.1-1.5.6a7.6 7.6 0 0 0-.9-1.6l.9-1.3-1.7-1.7-1.3.9a7.6 7.6 0 0 0-1.6-.9L14.3 2h-2.4l-.6 1.5c-.6.2-1.1.5-1.6.9L8.4 3.5 6.7 5.2l.9 1.3c-.4.5-.7 1-.9 1.6L5 8.7v2.4l1.7.6c.2.6.5 1.1.9 1.6l-.9 1.3 1.7 1.7 1.3-.9c.5.4 1 .7 1.6.9l.6 1.7h2.4l.6-1.7c.6-.2 1.1-.5 1.6-.9l1.3.9 1.7-1.7-.9-1.3c.4-.5.7-1 .9-1.6L21 11V7.5z") },
+  /* the cool cyan stop was the largest remaining blue in the grid: green
+     land into rule #CCC4B4, which still reads as a map */
+  { label: "Maps", bg: "linear-gradient(160deg,#8FD98F,#CCC4B4)", glyph: g("M12 3a6 6 0 0 0-6 6c0 4.4 6 12 6 12s6-7.6 6-12a6 6 0 0 0-6-6zm0 8.4A2.4 2.4 0 1 1 12 6.6a2.4 2.4 0 0 1 0 4.8z") },
   { label: "Music", bg: "linear-gradient(160deg,#FF7A8A,#E8324F)", glyph: g("M9 18.2a2.6 2.6 0 1 1-1.7-2.45V7.4L18 5.2v8.9a2.6 2.6 0 1 1-1.7-2.45V8.1L9 9.6v8.6z") },
-  { label: "Photos", bg: "#FFFFFF", glyph: (
+  { label: "Photos", bg: "#FDFCFA" /* paper-bright, was pure #FFFFFF */, glyph: (
     <svg viewBox="0 0 24 24" width="70%" height="70%">
       {[
         ["#F0435F", 0], ["#F8A23C", 60], ["#F5D046", 120],
@@ -168,15 +186,16 @@ function HomeScreen({ frame, fps, t0 }: { frame: number; fps: number; t0: number
       style={{
         position: "absolute",
         inset: 0,
-        background:
-          "linear-gradient(160deg, #DCE6F7 0%, #E7DEF3 45%, #F6E4DE 100%)",
+        /* wallpaper is decoration: three steps of the warm ramp,
+           paper-2 → band → rule, in place of the old cool gradient */
+        background: `linear-gradient(160deg, ${PAPER_2} 0%, ${BAND} 52%, ${RULE} 100%)`,
       }}
     >
       {/* status bar */}
-      <div style={{ display: "flex", justifyContent: "space-between", padding: "12px 20px 0", fontFamily: SANS, fontSize: 11, fontWeight: 700, color: "#1B2436" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", padding: "12px 20px 0", fontFamily: SANS, fontSize: 11, fontWeight: 700, color: INK }}>
         <span>9:41</span>
         <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-          <span style={{ width: 14, height: 8, borderRadius: 2, border: "1px solid rgba(27,36,54,0.55)" }} />
+          <span style={{ width: 14, height: 8, borderRadius: 2, border: "1px solid rgba(22,19,15,0.55)" /* ink */ }} />
         </span>
       </div>
 
@@ -186,14 +205,14 @@ function HomeScreen({ frame, fps, t0 }: { frame: number; fps: number; t0: number
           style={{
             opacity: settled,
             transform: `translateY(${(1 - settled) * -26}px)`,
-            background: "rgba(22,26,34,0.92)",
+            background: "rgba(20,18,16,0.92)", /* navy */
             backdropFilter: "blur(8px)",
             borderRadius: 20,
             padding: "11px 12px",
             display: "flex",
             alignItems: "center",
             gap: 10,
-            boxShadow: "0 10px 24px -8px rgba(0,0,0,0.5)",
+            boxShadow: "0 10px 24px -8px rgba(22,19,15,0.5)",
           }}
         >
           <span
@@ -201,7 +220,10 @@ function HomeScreen({ frame, fps, t0 }: { frame: number; fps: number; t0: number
               width: 32,
               height: 32,
               borderRadius: 999,
-              background: BLUE,
+              /* the accent, spent on the one thing the frame is about: the
+                 call is from the practice. brand-soft, because the ground
+                 under it is navy. */
+              background: BRAND_SOFT,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -211,18 +233,19 @@ function HomeScreen({ frame, fps, t0 }: { frame: number; fps: number; t0: number
             <svg viewBox="0 0 24 24" width={14} height={14}>
               <path
                 d="M6.6 10.8c1.5 2.9 3.8 5.2 6.7 6.7l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.3c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.3 0 .7-.2 1l-2.1 2.3z"
-                fill="#fff"
+                fill={NAVY}
               />
             </svg>
           </span>
           <div style={{ flex: 1, minWidth: 0, textAlign: "left", fontFamily: SANS }}>
-            <div style={{ fontSize: 9, color: "#98A1B2", letterSpacing: 0.3 }}>Incoming call</div>
-            <div style={{ fontSize: 12, color: "#fff", fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+            {/* on a navy ground, type is paper-bright and white alphas */}
+            <div style={{ fontSize: 9, color: "rgba(253,252,250,0.62)", letterSpacing: 0.3 }}>Incoming call</div>
+            <div style={{ fontSize: 12, color: PAPER_BRIGHT, fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
               Your Practice
             </div>
           </div>
           <div style={{ display: "flex", gap: 6 }}>
-            <span style={{ width: 24, height: 24, borderRadius: 999, background: RED, display: "grid", placeItems: "center", color: "#fff", fontSize: 10 }}>✕</span>
+            <span style={{ width: 24, height: 24, borderRadius: 999, background: RED, display: "grid", placeItems: "center", color: PAPER_BRIGHT, fontSize: 10 }}>✕</span>
             <span
               style={{
                 width: 24,
@@ -231,7 +254,7 @@ function HomeScreen({ frame, fps, t0 }: { frame: number; fps: number; t0: number
                 background: GREEN,
                 display: "grid",
                 placeItems: "center",
-                color: "#fff",
+                color: PAPER_BRIGHT,
                 fontSize: 10,
                 transform: `scale(${ringPulse})`,
               }}
@@ -252,7 +275,7 @@ function HomeScreen({ frame, fps, t0 }: { frame: number; fps: number; t0: number
                 aspectRatio: "1",
                 borderRadius: 13,
                 background: app.bg,
-                boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+                boxShadow: "0 1px 3px rgba(22,19,15,0.2)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -265,7 +288,7 @@ function HomeScreen({ frame, fps, t0 }: { frame: number; fps: number; t0: number
                 fontFamily: SANS,
                 fontSize: 6.5,
                 fontWeight: 500,
-                color: "rgba(27,36,54,0.72)",
+                color: "rgba(22,19,15,0.72)", /* ink */
                 letterSpacing: 0.1,
                 whiteSpace: "nowrap",
               }}
@@ -290,16 +313,17 @@ function CallerId({ frame, fps, t0 }: { frame: number; fps: number; t0: number }
             display: "inline-flex",
             alignItems: "center",
             gap: 7,
-            background: "rgba(255,255,255,0.92)",
-            border: `1px solid ${HAIRLINE}`,
+            background: PAPER_BRIGHT,
+            border: `1px solid ${RULE}`,
             borderRadius: 999,
             padding: "8px 16px",
             fontFamily: SANS,
             fontSize: 12.5,
-            color: SUB,
-            boxShadow: "0 8px 22px -12px rgba(16,27,51,0.35)",
+            color: INK_SOFT,
+            boxShadow: "0 8px 22px -12px rgba(22,19,15,0.35)",
           }}
         >
+          {/* #B03A2E stays: it marks the bad state, it is not decoration */}
           not <s style={{ color: "#B03A2E" }}>Spam likely</s> · your practice's name
         </div>
       </div>
@@ -312,7 +336,7 @@ function CallerId({ frame, fps, t0 }: { frame: number; fps: number; t0: number }
           top: 132,
           left: "50%",
           marginLeft: -186,
-          filter: "drop-shadow(0 30px 50px rgba(16,27,51,0.34))",
+          filter: "drop-shadow(0 30px 50px rgba(22,19,15,0.30))",
         }}
       >
         <PhoneFrame width={372}>
@@ -337,11 +361,11 @@ function Attempts({ frame, fps, t0 }: { frame: number; fps: number; t0: number }
       style={{
         ...riseStyle(frame, fps, t0 + 8, 16),
         width: 340,
-        background: "rgba(255,255,255,0.95)",
-        border: `1px solid ${HAIRLINE}`,
+        background: PAPER_BRIGHT,
+        border: `1px solid ${RULE}`,
         borderRadius: 20,
         padding: 22,
-        boxShadow: "0 24px 50px -22px rgba(16,27,51,0.3)",
+        boxShadow: "0 24px 50px -22px rgba(22,19,15,0.3)",
         fontFamily: SANS,
       }}
     >
@@ -361,7 +385,9 @@ function Attempts({ frame, fps, t0 }: { frame: number; fps: number; t0: number }
               gap: 12,
               padding: "9px 6px",
               borderBottom: i < slots.length - 1 ? `1px solid ${HAIRLINE}` : "none",
-              background: isHit ? "rgba(37,99,235,0.06)" : "transparent",
+              /* the accent marks the one attempt that connected. Everything
+                 else in the list is carried by the ink and rule ramp. */
+              background: isHit ? BRAND_TINT : "transparent",
               borderRadius: isHit ? 8 : 0,
             }}
           >
@@ -370,13 +396,13 @@ function Attempts({ frame, fps, t0 }: { frame: number; fps: number; t0: number }
                 width: 9,
                 height: 9,
                 borderRadius: 999,
-                background: isHit ? BLUE : "#D6DCE9",
-                boxShadow: isHit ? "0 0 0 4px rgba(37,99,235,0.16)" : "none",
+                background: isHit ? BRAND : RULE,
+                boxShadow: isHit ? "0 0 0 4px rgba(37,54,230,0.16)" : "none",
                 flexShrink: 0,
               }}
             />
             <span style={{ fontSize: 13, width: 88, color: INK, fontWeight: 600 }}>{s.t}</span>
-            <span style={{ flex: 1, fontSize: 12, color: isHit ? BLUE : SUB, fontWeight: isHit ? 700 : 400 }}>{s.d}</span>
+            <span style={{ flex: 1, fontSize: 12, color: isHit ? BRAND : INK_SOFT, fontWeight: isHit ? 700 : 400 }}>{s.d}</span>
           </div>
         );
       })}
@@ -411,8 +437,8 @@ function Conversation({ frame, fps, t0 }: { frame: number; fps: number; t0: numb
                 fontSize: 12.5,
                 lineHeight: 1.45,
                 ...(hana
-                  ? { background: INK, color: "#EDF0F8", borderBottomLeftRadius: 5 }
-                  : { background: "rgba(255,255,255,0.96)", color: INK, border: `1px solid ${HAIRLINE}`, borderBottomRightRadius: 5 }),
+                  ? { background: NAVY, color: PAPER_BRIGHT, borderBottomLeftRadius: 5 }
+                  : { background: PAPER_BRIGHT, color: INK, border: `1px solid ${RULE}`, borderBottomRightRadius: 5 }),
               }}
             >
               {turn.text}
@@ -429,8 +455,9 @@ function Conversation({ frame, fps, t0 }: { frame: number; fps: number; t0: numb
           marginTop: 8,
           fontSize: 11.5,
           fontWeight: 700,
-          color: BLUE,
-          background: "rgba(37,99,235,0.10)",
+          /* the one accent in this frame: the protocol finished */
+          color: BRAND,
+          background: BRAND_TINT,
           borderRadius: 999,
           padding: "6px 12px",
         }}
@@ -480,13 +507,14 @@ function Languages({ frame, fps, t0 }: { frame: number; fps: number; t0: number 
           alignItems: "center",
           justifyContent: "center",
           gap: 10,
-          background: "rgba(255,255,255,0.96)",
-          border: `1px solid ${HAIRLINE}`,
+          background: PAPER_BRIGHT,
+          border: `1px solid ${RULE}`,
           borderRadius: 18,
           padding: "18px 20px",
         }}
       >
-        <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1.2, textTransform: "uppercase", color: BLUE }}>
+        {/* the accent lands on the thing that changes: the language */}
+        <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1.2, textTransform: "uppercase", color: BRAND }}>
           {cur.lang}
         </span>
         <span style={{ fontSize: 15, lineHeight: 1.45, color: INK, direction: rtl ? "rtl" : "ltr" }}>
@@ -502,7 +530,7 @@ function Languages({ frame, fps, t0 }: { frame: number; fps: number; t0: number 
               width: i === active ? 18 : 6,
               height: 6,
               borderRadius: 999,
-              background: i === active ? BLUE : "rgba(10,22,51,0.16)",
+              background: i === active ? BRAND : RULE,
               transition: "none",
             }}
           />
@@ -518,8 +546,10 @@ function Languages({ frame, fps, t0 }: { frame: number; fps: number; t0: number 
           marginTop: 16,
           fontSize: 11.5,
           fontWeight: 700,
-          color: BLUE,
-          background: "rgba(37,99,235,0.10)",
+          /* the label and the active dot already spend the accent in this
+             frame, so the payoff chip sits on the wash and keeps ink type */
+          color: INK,
+          background: BRAND_TINT,
           borderRadius: 999,
           padding: "6px 12px",
         }}
@@ -536,11 +566,11 @@ function Memory({ frame, fps, t0 }: { frame: number; fps: number; t0: number }) 
     extrapolateRight: "clamp",
   });
   const card: React.CSSProperties = {
-    background: "rgba(255,255,255,0.96)",
-    border: `1px solid ${HAIRLINE}`,
+    background: PAPER_BRIGHT,
+    border: `1px solid ${RULE}`,
     borderRadius: 17,
     padding: "16px 18px",
-    boxShadow: "0 18px 40px -20px rgba(16,27,51,0.28)",
+    boxShadow: "0 18px 40px -20px rgba(22,19,15,0.28)",
     fontFamily: SANS,
     textAlign: "left",
   };
@@ -556,13 +586,15 @@ function Memory({ frame, fps, t0 }: { frame: number; fps: number; t0: number }) 
         <div style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase", color: SUB, marginBottom: 8 }}>April 9</div>
         <div
           style={{
-            borderLeft: `2px solid ${BLUE}`,
+            /* the accent, spent once: the line she said last month, quoted
+               back to her. The glow is the same ultramarine as a wash. */
+            borderLeft: `2px solid ${BRAND}`,
             paddingLeft: 10,
             marginBottom: 9,
             fontSize: 11.5,
-            color: SUB,
+            color: INK_SOFT,
             fontStyle: "italic",
-            background: `rgba(37,99,235,${0.09 * quoteGlow})`,
+            background: `rgba(37,54,230,${0.09 * quoteGlow})`,
             borderRadius: 4,
             padding: "4px 8px 4px 10px",
           }}
