@@ -47,6 +47,9 @@ const RemoteLab = lazy(() => import("./pages/RemoteLab").then((m) => ({ default:
 const ChronicCareManagement = lazy(() =>
   import("./pages/ChronicCareManagement").then((m) => ({ default: m.ChronicCareManagement }))
 );
+const AdvancedPrimaryCareManagement = lazy(() =>
+  import("./pages/AdvancedPrimaryCareManagement").then((m) => ({ default: m.AdvancedPrimaryCareManagement }))
+);
 
 // Configuration
 const VAPI_PUBLIC_KEY = "5dfc26c6-90a6-4efe-907b-7bd0d690dc6e";
@@ -289,6 +292,7 @@ function AppContent() {
               <Route path="/proof" element={<ProofShowcase />} />
               <Route path="/remote-lab" element={<RemoteLab />} />
               <Route path="/programs/chronic-care-management" element={<ChronicCareManagement />} />
+              <Route path="/programs/advanced-primary-care-management" element={<AdvancedPrimaryCareManagement />} />
               <Route path="/remote-v2" element={
                 <RemoteV2
                   activeAgentId={activeAgentId}

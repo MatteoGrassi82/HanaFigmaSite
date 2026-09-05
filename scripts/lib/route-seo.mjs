@@ -96,6 +96,7 @@ export const NOINDEX_ROUTES = [
   // not indexed: it renders five open billing questions on the page, and those
   // are answered before it moves to STATIC_ROUTES. Moving it is the publish step.
   '/programs/chronic-care-management',
+  '/programs/advanced-primary-care-management',
 ];
 
 /**
