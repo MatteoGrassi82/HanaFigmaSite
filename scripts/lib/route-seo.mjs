@@ -90,7 +90,13 @@ export const EN_ONLY_ROUTES = ['/access', '/case-studies', '/state-of-ai', '/use
  */
 // /remote-v2 is the in-progress rebuild of /hana-remote (src/app/pages/RemoteV2.tsx)
 // — remove it from here and from App.tsx when it replaces the live page.
-export const NOINDEX_ROUTES = ['/demo', '/preview', '/bento', '/proof', '/remote-v2', '/remote-lab'];
+export const NOINDEX_ROUTES = [
+  '/demo', '/preview', '/bento', '/proof', '/remote-v2', '/remote-lab',
+  // The reference programme page. Live at its real URL for review, deliberately
+  // not indexed: it renders five open billing questions on the page, and those
+  // are answered before it moves to STATIC_ROUTES. Moving it is the publish step.
+  '/programs/chronic-care-management',
+];
 
 /**
  * Paths handled by a real server-side 301 in vercel.json.
