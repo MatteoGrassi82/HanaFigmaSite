@@ -282,9 +282,9 @@ void main() {
 /**
  * Recipe, retuned for the HANA hero. Changes from the builder's output:
  *
- *  - colors: the original dark-purple → dusty-rose → cream ramp is replaced by
+ *  - colors: the original dark-purple to dusty-rose to cream ramp, then a cool blue ramp, is now
  *    a navy → steel-blue → pale-blue ramp authored in the site palette. The mid
- *    tones are deliberately MUTED rather than brand blue (#2563EB): the hero's
+ *    warm ramp of Newsprint Ultramarine: navy-soft, rule-strong, band, paper-2. The hero's
  *    data chips are that exact blue, and they vanished against a matching field.
  *  - hue: 2.2689 → 0. The rotation existed to turn the purple recipe blue; with
  *    the colours authored blue it would push them off-brand.
@@ -294,7 +294,7 @@ void main() {
  *    the white cards and rail badges keep their edges against it.
  */
 const UNIFORMS = {
-  colors: [[0.055,0.118,0.235],[0.165,0.290,0.525],[0.498,0.627,0.831],[0.776,0.831,0.925],[0.776,0.831,0.925],[0.776,0.831,0.925],[0.776,0.831,0.925],[0.776,0.831,0.925]] as [number, number, number][],
+  colors: [[0.208,0.188,0.161],[0.561,0.525,0.447],[0.878,0.859,0.816],[0.941,0.929,0.902],[0.941,0.929,0.902],[0.941,0.929,0.902],[0.941,0.929,0.902],[0.941,0.929,0.902]] as [number, number, number][],
   colorCount: 4,
   scale: 1.320,
   intensity: 0.490,
