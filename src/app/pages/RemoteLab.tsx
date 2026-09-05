@@ -26,6 +26,8 @@ import { SleepTwoProducts } from "../components/lab/SleepTwoProducts";
 // input, one number, the arithmetic visible, and a default state that is true
 // before anyone touches it — because the prerender snapshot is what gets read.
 import { PalettePreview } from "../components/lab/PalettePreview";
+import { Hero } from "../components/sections/Hero";
+import { CtaBand } from "../components/sections/CtaBand";
 import { CaseloadSlider } from "../components/lab/interactive/CaseloadSlider";
 import { EligibilityGap } from "../components/lab/interactive/EligibilityGap";
 import { RevenueEstimator } from "../components/lab/interactive/RevenueEstimator";
@@ -476,6 +478,49 @@ export function RemoteLab() {
           pairs answered "unsettled", so the modal outcome taught the visitor
           that the site does not know things. Its one real fact (CCM and APCM
           cannot be billed in the same month) belongs in the Chooser footnote. */}
+      {/* ── The spine. Every new page is built from these three. ──────────── */}
+      <LabBar>Spine · Hero — single column, the shape 12 of the 15 new pages use</LabBar>
+      <Hero
+        eyebrow="Chronic care management"
+        headline={<>Bill the month of work that <em>happens between visits.</em></>}
+        body="Twenty minutes of clinical staff time a month, against a care plan the patient has agreed to. HANA makes the calls. Your team reviews and attests."
+        primaryCta={{ label: "Talk to HANA", href: "/demo" }}
+        secondaryCta={{ label: "See the codes", href: "#codes" }}
+        trustLine="CPT 99490 · 99439"
+      />
+
+      <LabBar>Spine · Hero — two column, with a visual slot on the right</LabBar>
+      <Hero
+        eyebrow="AI care coordination that reaches every patient"
+        headline={<>More patients. Same team. <em>Better outcomes.</em></>}
+        body="Every reimbursable care program, run in house from enrollment to billing."
+        primaryCta={{ label: "Book a demo", href: "/demo" }}
+        visual={
+          <div className="rounded-card border border-rule bg-paper-2 aspect-[4/3] grid place-items-center">
+            <span className="text-eyebrow font-bold uppercase text-ink-mute">visual slot</span>
+          </div>
+        }
+      />
+
+      <LabBar>Spine · CtaBand — navy, the closing section on every page</LabBar>
+      <CtaBand
+        heading={<>Hear it make a call. <em>Then decide.</em></>}
+        body="Drop your number and HANA calls you. The agent works out the right demo as you talk."
+        buttons={[
+          { label: "Talk to HANA", href: "/demo" },
+          { label: "Book a demo", href: "/contact", variant: "ghost" },
+        ]}
+        reassurances={["Your team reviews", "Your provider signs", "Nothing bills until a person approves"]}
+      />
+
+      <LabBar>Spine · CtaBand — light variant</LabBar>
+      <CtaBand
+        tone="light"
+        heading={<>Run every program you are <em>eligible to bill.</em></>}
+        body="With the team you already have."
+        buttons={[{ label: "Talk to HANA", href: "/demo" }]}
+      />
+
       <LabBar>Palette · pick the accent where it actually has to work</LabBar>
       <PalettePreview />
 
