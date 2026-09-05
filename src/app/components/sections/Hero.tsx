@@ -96,8 +96,14 @@ const DEFAULT_HEADING = (
 const DEFAULT_LEDE =
   "Care programs run in house, from enrollment to billing. HANA does the calls and the documentation. Your team reviews, your provider signs.";
 
-/* Tone is two palettes over one layout. Both are token-only, so the .cobalt
-   scope and any future palette change carry through untouched. */
+/* Tone is two palettes over one layout, both token-only.
+
+   THE "BAND" TONE REPLACED A DARK ONE. Newsprint Ultramarine separates a section
+   with a tinted stock and a hairline rule, the way a printed page does, instead
+   of reversing out a dark block. --color-band sits 1.30:1 off paper: enough to
+   read as a distinct section, nowhere near a hole in the page. --color-navy is
+   still genuinely dark and still used, but for the footer, the announcement bar
+   and filled buttons, not for a mid-page band. */
 const TONES = {
   light: {
     section: "bg-paper border-b border-rule",
@@ -113,17 +119,17 @@ const TONES = {
     glow: "bg-brand/10",
   },
   navy: {
-    section: "bg-navy",
-    eyebrow: "text-brand-soft",
-    heading: "text-white [&_em]:italic [&_em]:font-normal [&_em]:text-brand-soft",
-    body: "text-white/75",
-    trust: "text-white/70",
-    rule: "border-white/15",
-    primary: "bg-white text-navy hover:bg-white/90 shadow-float",
-    ghost: "text-white border border-white/25 hover:bg-white/10 hover:border-white/45",
-    focus: "focus-visible:ring-brand-soft focus-visible:ring-offset-navy",
-    panel: "bg-white/[0.04]",
-    glow: "bg-brand/25",
+    section: "bg-band border-y border-rule",
+    eyebrow: "text-brand",
+    heading: "text-ink [&_em]:italic [&_em]:font-normal [&_em]:text-brand",
+    body: "text-ink-soft",
+    trust: "text-ink-mute",
+    rule: "border-rule",
+    primary: "bg-brand text-paper-bright hover:bg-navy shadow-card",
+    ghost: "text-ink border border-rule hover:bg-paper hover:border-rule-strong",
+    focus: "focus-visible:ring-brand focus-visible:ring-offset-band",
+    panel: "bg-paper",
+    glow: "bg-brand/10",
   },
 } as const;
 

@@ -83,7 +83,10 @@ export function PaletteSwitcher() {
       /* private mode */
     }
     setActiveId(id);
-    apply(SYSTEMS.find((s) => s.id === id) ?? null);
+    // "current" means NO override: let the real tokens.css values show through,
+    // otherwise the switcher would pin the page to whatever this file thinks the
+    // live palette is, which goes stale the moment tokens.css changes.
+    apply(id === "current" ? null : SYSTEMS.find((s) => s.id === id) ?? null);
   }, []);
 
   const pick = (s: PaletteSystem) => {
