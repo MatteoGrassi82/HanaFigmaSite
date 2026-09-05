@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { PaletteSwitcher } from "../components/lab/PaletteSwitcher";
-import { motion, AnimatePresence, useReducedMotion, useInView, useScroll, useTransform } from "motion/react";
-import { Check, ChevronRight, Minus, Plus } from "lucide-react";
+import { motion, useReducedMotion, useInView } from "motion/react";
+import { Check } from "lucide-react";
 import { SEO } from "../components/SEO";
 import { Footer } from "../components/layout/Footer";
 import { RecipesMarquee } from "../components/sections/RecipesMarquee";
@@ -16,9 +16,13 @@ import { ComplianceSection } from "../components/sections/ComplianceSection";
 import { LatestPosts } from "../components/sections/LatestPosts";
 import { AskAiAboutUs } from "../components/sections/AskAiAboutUs";
 import { FaqSection } from "../components/sections/FaqSection";
+import { HowItWorksLoop } from "../components/sections/HowItWorksLoop";
+import { WhatIsHanaCompare } from "../components/sections/WhatIsHanaCompare";
+import { BuiltByClinicians } from "../components/sections/BuiltByClinicians";
+import { TeamSection } from "../components/sections/TeamSection";
+import { AccordionPlayer, type AccordionPlayerItem } from "../components/sections/AccordionPlayer";
 import { Player, type PlayerRef } from "@remotion/player";
 import { CareJourneyComp, CARE_JOURNEY_DURATION } from "../components/remotion/CareJourneyComp";
-import { CompassShowcaseComp, COMPASS_CHAPTER_LEN, COMPASS_DURATION } from "../components/remotion/CompassShowcaseComp";
 import { CompanionShowcaseComp, COMPANION_CHAPTER_LEN, COMPANION_DURATION } from "../components/remotion/CompanionShowcaseComp";
 import { ProofBento } from "../components/sections/ProofBento";
 import OrbitingCirclesGlobe from "../components/media/OrbitingCirclesGlobe";
@@ -354,159 +358,7 @@ function HeroCareJourney() {
 
 
 
-// ── §8 Compass showcase (Retell accordion pattern + Remotion) ────────────────
-// Retell's "Consistently High Quality" section shape: heading + accordion on
-// the left, product visual in a soft gradient tile on the right. Upgrade over
-// their static screenshots: the right panel is a Remotion motion graphic with
-// three chapters (worklist → billing readiness → audit trail), and the
-// accordion is synced BOTH ways — clicking an item seeks the video to that
-// chapter; playback moves the open item as chapters change.
-const COMPASS_ITEMS = [
-  {
-    title: "One flagged worklist, not a phone queue",
-    body: "Every call is scored against your protocol. Only the flags surface, each with the call behind it and a named owner.",
-  },
-  {
-    title: "Billing documentation, ready to attest",
-    body: "The note is written the moment the call ends, and the minutes are attributed to whoever earned them. You see what is ready to sign, across every program you run.",
-  },
-  {
-    title: "An audit trail that assembles itself",
-    body: "Who was flagged, who got it, what they did, when they signed. Any month, any patient, one export.",
-  },
-];
 
-function CompassShowcase() {
-  const reduce = useReducedMotion();
-  const playerRef = useRef<PlayerRef>(null);
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: false, margin: "-120px" });
-  const [chapter, setChapter] = useState(0);
-
-  // Follow playback: derive the open accordion item from the current frame.
-  useEffect(() => {
-    const p = playerRef.current;
-    if (!p) return;
-    if (reduce) {
-      p.pause();
-      p.seekTo(70); // hold the worklist beat as a still
-      return;
-    }
-    if (!inView) {
-      p.pause();
-      return;
-    }
-    p.play();
-    const retry = setTimeout(() => playerRef.current?.play(), 350);
-    const id = setInterval(() => {
-      const f = playerRef.current?.getCurrentFrame() ?? 0;
-      setChapter(Math.min(2, Math.floor(f / COMPASS_CHAPTER_LEN)));
-    }, 250);
-    return () => {
-      clearTimeout(retry);
-      clearInterval(id);
-    };
-  }, [inView, reduce]);
-
-  // Drive playback: clicking an item seeks its chapter.
-  const select = (i: number) => {
-    setChapter(i);
-    const p = playerRef.current;
-    if (!p) return;
-    p.seekTo(i * COMPASS_CHAPTER_LEN + 2);
-    if (!reduce) p.play();
-  };
-
-  return (
-    <div ref={ref}>
-      {/* Heading on top, shared with the patient companion below so the two
-          product sections read as a pair (Matteo 2026-08-25). */}
-      <motion.div {...fadeUp} className="mb-12 md:mb-16">
-        <p className={`${eyebrow} text-brand mt-0 mb-4`}>For your clinic</p>
-        <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-navy m-0 max-w-[16ch]">
-          Your team sees four patients. <em className="text-brand">HANA called two hundred.</em>
-        </h2>
-      </motion.div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,42%)_minmax(0,1fr)] gap-12 lg:gap-16 items-center">
-      {/* LEFT — synced accordion */}
-      <div>
-        <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.08 }} className="border-t border-rule">
-          {COMPASS_ITEMS.map((item, i) => {
-            const open = chapter === i;
-            return (
-              <div key={item.title} className="border-b border-rule">
-                <button
-                  onClick={() => select(i)}
-                  aria-expanded={open}
-                  className="w-full flex items-start justify-between gap-4 py-5 text-left group"
-                >
-                  <span
-                    className={`text-[17px] md:text-[18px] font-semibold leading-snug transition-colors duration-300 ${
-                      open ? "text-brand" : "text-navy group-hover:text-brand"
-                    }`}
-                  >
-                    {item.title}
-                  </span>
-                  <span className="shrink-0 mt-0.5 text-slate-400">
-                    {open ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-                  </span>
-                </button>
-                <AnimatePresence initial={false}>
-                  {open && (
-                    <motion.div
-                      key="body"
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="overflow-hidden"
-                    >
-                      <p className="text-[15px] leading-[1.7] text-ink-soft pb-5 pr-8 m-0">{item.body}</p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            );
-          })}
-        </motion.div>
-      </div>
-
-      {/* RIGHT — motion graphic in a soft gradient tile (Retell treatment) */}
-      <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.12 }}>
-        <div
-          className="rounded-[28px] p-4 sm:p-8 md:p-10"
-          style={{
-            background: [
-              "radial-gradient(60% 55% at 18% 12%, rgba(245,158,66,0.18) 0%, rgba(245,158,66,0) 60%)",
-              "radial-gradient(65% 60% at 88% 22%, rgba(37,99,235,0.22) 0%, rgba(37,99,235,0) 62%)",
-              "radial-gradient(70% 60% at 16% 92%, rgba(139,92,246,0.20) 0%, rgba(139,92,246,0) 62%)",
-              "linear-gradient(150deg, #FAFBFF 0%, #F0F3FA 60%, #EDF0F8 100%)",
-            ].join(", "),
-          }}
-        >
-          <Player
-            ref={playerRef}
-            component={CompassShowcaseComp}
-            durationInFrames={COMPASS_DURATION}
-            compositionWidth={760}
-            compositionHeight={620}
-            fps={30}
-            loop
-            autoPlay
-            initiallyMuted
-            controls={false}
-            clickToPlay={false}
-            doubleClickToFullscreen={false}
-            spaceKeyToPlayOrPause={false}
-            style={{ width: "100%" }}
-          />
-        </div>
-      </motion.div>
-      </div>
-    </div>
-  );
-}
 
 // ── §9 Companion showcase (the patient's side; twin of CompassShowcase) ──────
 // From Matteo's HTML mock: stage LEFT (warm pastel tile + Remotion comp with
@@ -533,7 +385,13 @@ const LANGS_IN_PRODUCTION = [
   { flag: "🇵🇭", name: "Tagalog" },
   { flag: "🇮🇳", name: "Hindi" },
 ];
-const COMPANION_ITEMS = [
+
+/* The three patient-side rows, for the AccordionPlayer. Copy unchanged from the
+   page-local COMPANION_ITEMS this replaces. The old `flags: true` flag is now a
+   rendered `extra` node on the row it belongs to, which is the language row and
+   not the caller-ID one: the two accordions share markup and it has landed in
+   the wrong one before. */
+const COMPANION_ITEMS: AccordionPlayerItem[] = [
   {
     title: "Your patients see your practice, not an unknown number",
     body: "Your name on the caller ID, not a number she has been told to ignore. And it works the other way: she rings that number back and HANA answers, any hour, and writes that conversation up too.",
@@ -545,640 +403,53 @@ const COMPANION_ITEMS = [
   {
     title: "It works in the language they actually speak",
     body: "30+ languages, switched per patient, same number and same protocol. Nothing to configure, no second line, no interpreter to book. The patients who get a worse call everywhere else get the same call here.",
-    flags: true,
-  },
-];
-
-function CompanionShowcase() {
-  const reduce = useReducedMotion();
-  const playerRef = useRef<PlayerRef>(null);
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: false, margin: "-120px" });
-  const [chapter, setChapter] = useState(0);
-
-  useEffect(() => {
-    const p = playerRef.current;
-    if (!p) return;
-    if (reduce) {
-      p.pause();
-      p.seekTo(70); // hold the caller-ID beat as a still
-      return;
-    }
-    if (!inView) {
-      p.pause();
-      return;
-    }
-    p.play();
-    const retry = setTimeout(() => playerRef.current?.play(), 350);
-    const id = setInterval(() => {
-      const f = playerRef.current?.getCurrentFrame() ?? 0;
-      setChapter(Math.min(2, Math.floor(f / COMPANION_CHAPTER_LEN)));
-    }, 250);
-    return () => {
-      clearTimeout(retry);
-      clearInterval(id);
-    };
-  }, [inView, reduce]);
-
-  const select = (i: number) => {
-    setChapter(i);
-    const p = playerRef.current;
-    if (!p) return;
-    p.seekTo(i * COMPANION_CHAPTER_LEN + 2);
-    if (!reduce) p.play();
-  };
-
-  return (
-    <div ref={ref}>
-      <motion.div {...fadeUp} className="mb-12 md:mb-16">
-        <p className={`${eyebrow} text-brand mt-0 mb-4`}>For your patients</p>
-        <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-navy m-0 max-w-[16ch]">
-          The call your patient <em className="text-brand">actually picks up.</em>
-        </h2>
-      </motion.div>
-
-      {/* Same arrangement as Compass above: accordion left, motion graphic right */}
-      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,42%)_minmax(0,1fr)] gap-12 lg:gap-16 items-center">
-        {/* RIGHT in source order, second column on screen — the motion graphic */}
-        <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.08 }} className="order-2">
-          <div
-            className="rounded-[28px] overflow-hidden"
-            style={{
-              background: [
-                "radial-gradient(120% 90% at 12% 88%, #F2DCEF 0%, rgba(242,220,239,0) 55%)",
-                "radial-gradient(110% 80% at 88% 14%, #B9CDF5 0%, rgba(185,205,245,0) 58%)",
-                "radial-gradient(90% 70% at 42% 34%, #F6E3CE 0%, rgba(246,227,206,0) 60%)",
-                "#EDEFF6",
-              ].join(", "),
-            }}
+    extra: (
+      <div className="mt-4 flex flex-wrap gap-1.5">
+        {LANGS_IN_PRODUCTION.map((l) => (
+          <span
+            key={l.name}
+            className="inline-flex items-center gap-1.5 rounded-pill border border-rule bg-paper px-2.5 py-1 text-[12.5px] text-ink-soft"
           >
-            <Player
-              ref={playerRef}
-              component={CompanionShowcaseComp}
-              durationInFrames={COMPANION_DURATION}
-              compositionWidth={660}
-              compositionHeight={660}
-              fps={30}
-              loop
-              autoPlay
-              initiallyMuted
-              controls={false}
-              clickToPlay={false}
-              doubleClickToFullscreen={false}
-              spaceKeyToPlayOrPause={false}
-              style={{ width: "100%" }}
-            />
-          </div>
-        </motion.div>
-
-        {/* RIGHT — synced accordion */}
-        <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.12 }} className="order-1 border-t border-rule self-start">
-          {COMPANION_ITEMS.map((item, i) => {
-            const open = chapter === i;
-            return (
-              <div key={item.title} className="border-b border-rule">
-                <button
-                  onClick={() => select(i)}
-                  aria-expanded={open}
-                  className="w-full flex items-start justify-between gap-4 py-5 text-left group"
-                >
-                  <span
-                    className={`text-[17px] md:text-[18px] font-semibold leading-snug transition-colors duration-300 ${
-                      open ? "text-brand" : "text-navy group-hover:text-brand"
-                    }`}
-                  >
-                    {item.title}
-                  </span>
-                  <span className="shrink-0 mt-0.5 text-slate-400">
-                    {open ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-                  </span>
-                </button>
-                <AnimatePresence initial={false}>
-                  {open && (
-                    <motion.div
-                      key="body"
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="overflow-hidden"
-                    >
-                      <p className="text-[15px] leading-[1.7] text-ink-soft pb-5 pr-8 m-0">{item.body}</p>
-                      {"flags" in item && item.flags && (
-                        <div className="flex flex-wrap gap-2 pb-6 pr-6">
-                          {LANGS_IN_PRODUCTION.map((l) => (
-                            <span
-                              key={l.name}
-                              className="inline-flex items-center gap-1.5 rounded-full border border-rule bg-paper-bright px-2.5 py-1 text-[12.5px] text-ink-soft"
-                            >
-                              <span aria-hidden>{l.flag}</span>
-                              {l.name}
-                            </span>
-                          ))}
-                          <span className="inline-flex items-center rounded-full bg-[#EFF3FF] text-brand px-2.5 py-1 text-[12.5px] font-semibold">
-                            +21 more
-                          </span>
-                        </div>
-                      )}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            );
-          })}
-        </motion.div>
+            <span aria-hidden>{l.flag}</span>
+            {l.name}
+          </span>
+        ))}
+        <span className="inline-flex items-center rounded-pill border border-rule bg-paper px-2.5 py-1 text-[12.5px] text-ink-mute">
+          +21 more
+        </span>
       </div>
-    </div>
-  );
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ── §6b Our team ─────────────────────────────────────────────────────────────
-// Pill badge, mission statement, CTA, overlapping oval portraits, three stats
-// with pill captions.
-//
-// PROVENANCE: the mission statement, the roster and all three figures below came
-// from Matteo directly (2026-08-16). "75 years combined" and "100+ peer reviewed
-// publications" are HIS assertions about his own team, not derived from anything
-// in this repo; "45+ care protocols" matches what the rest of the site claims.
-// The "+20" chip is a headcount claim and should be checked before this ships.
-//
-// Roster is HANA's own people only. Oprandi, Katie Murphy and Lorri Hanes appear
-// elsewhere on the site as CUSTOMERS and must never be listed here.
-//
-// PHOTOS: only Dr. Mohamed has one in /public/avatars. The rest render as
-// monograms, which is a deliberate fallback. Archie's old portrait was hotlinked
-// from ResearchGate and now 403s, so it isn't used.
-type TeamMember = {
-  name: string;
-  role: string;
-  photo?: string;
-  w: number;
-  h: number;
-  offset: number;
-  z: number;
-};
-
-// Roster set 2026-08-25 (Matteo): Grassi, Archie, Sthita and Massimo, with real
-// photographs to come — drop each into /public/avatars and fill `photo`. Until
-// then the initials tiles render. Fakhrudin and Priyanka came off with this cut;
-// one line each to restore. Massimiliano's surname and exact title need
-// confirming with him before launch (brand doc: agree titles before a team page).
-const TEAM: TeamMember[] = [
-  { name: "Sthita Pujari", role: "Engineering & applied AI", photo: "/avatars/sthita.jpg", w: 98, h: 142, offset: 48, z: 1 },
-  { name: "Archie Defillo, MD", role: "Neuroscience, sleep & behavioral health", photo: "/avatars/archie.jpg", w: 112, h: 164, offset: 18, z: 2 },
-  { name: "Matteo Grassi", role: "Founder · behavioral psychologist", photo: "/avatars/matteo.jpg", w: 138, h: 202, offset: 0, z: 4 },
-  { name: "Massimiliano", role: "Clinical psychologist · sleep", photo: "/avatars/massimo.jpg", w: 108, h: 156, offset: 26, z: 3 },
-];
-
-const TEAM_STATS = [
-  { v: "75", l: "years of combined experience in medicine and clinical AI" },
-  { v: "100+", l: "peer reviewed publications" },
-  { v: "45+", l: "care protocols deployed" },
-];
-
-function initials(name: string) {
-  return name
-    .replace(/,.*$/, "")
-    .split(" ")
-    .filter((w) => !/^(MD|Dr\.?)$/i.test(w))
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join("");
-}
-
-function TeamSection() {
-  return (
-    <section className="bg-paper-bright py-24 md:py-32 px-6 md:px-16">
-      <div className="max-w-[1200px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,50%)_minmax(0,1fr)] gap-14 lg:gap-8 items-center">
-          {/* left: badge, mission, CTA */}
-          <div>
-            <motion.span
-              {...fadeUp}
-              className="inline-flex items-center gap-2.5 rounded-full bg-navy pl-3.5 pr-4 py-2"
-            >
-              <span className="w-2 h-2 rounded-full bg-brand" />
-              <span className="text-[13px] font-medium text-white">Our team</span>
-            </motion.span>
-
-            <motion.h2
-              {...fadeUp}
-              transition={{ duration: 0.5, delay: 0.06 }}
-              className="font-serif font-normal text-[27px] sm:text-[32px] md:text-[36px] leading-[1.24] tracking-[-0.01em] text-navy mt-7 mb-0"
-            >
-              Our team of clinicians, AI researchers and care operators is united by one belief: the
-              care that decides outcomes happens between visits, and it is lost for the most ordinary
-              reason. <em className="text-brand">Nobody had the hours to call.</em>
-            </motion.h2>
-
-            <motion.a
-              {...fadeUp}
-              transition={{ duration: 0.5, delay: 0.12 }}
-              href="/about"
-              className="group inline-flex items-center gap-2 bg-brand text-white text-[15px] font-semibold pl-6 pr-5 py-3.5 rounded-full no-underline hover:opacity-90 transition-opacity mt-9"
-            >
-              About us
-              <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" strokeWidth={2.4} />
-            </motion.a>
-          </div>
-
-          {/* right: overlapping oval portraits */}
-          <div className="flex items-start justify-start lg:justify-end overflow-x-auto lg:overflow-visible pb-2 pt-2">
-            {TEAM.map((m, i) => (
-              <motion.div
-                key={m.name}
-                initial={{ opacity: 0, y: 18, scale: 0.94 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.55, delay: 0.05 + i * 0.07, ease: [0.16, 1, 0.3, 1] }}
-                style={{ marginTop: m.offset, marginLeft: i === 0 ? 0 : -20, zIndex: m.z }}
-                className="relative shrink-0"
-                title={`${m.name} · ${m.role}`}
-              >
-                <div
-                  style={{ width: m.w, height: m.h }}
-                  className="relative rounded-full overflow-hidden bg-[#EFF3FF] ring-[5px] ring-white"
-                >
-                  <span
-                    className="absolute inset-0 grid place-items-center font-serif text-brand"
-                    style={{
-                      fontSize: Math.round(m.w * 0.33),
-                      background:
-                        "radial-gradient(120% 90% at 30% 15%, rgba(37,99,235,0.16) 0%, rgba(37,99,235,0) 62%), linear-gradient(160deg, #F4F7FF 0%, #E7EDFA 100%)",
-                    }}
-                  >
-                    {initials(m.name)}
-                  </span>
-                  {m.photo && (
-                    <img
-                      src={m.photo}
-                      alt={m.name}
-                      loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover"
-                      /* the roster lists photos that are not in the repo yet;
-                         until each lands, the initials tile shows instead of a
-                         broken image */
-                      onError={(e) => { e.currentTarget.style.display = "none"; }}
-                    />
-                  )}
-                </div>
-              </motion.div>
-            ))}
-
-            {/* the wider team */}
-            <motion.div
-              initial={{ opacity: 0, y: 18, scale: 0.94 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.55, delay: 0.42, ease: [0.16, 1, 0.3, 1] }}
-              style={{ marginTop: 70, marginLeft: -20, zIndex: 0 }}
-              className="relative shrink-0"
-              title="Plus the wider team"
-            >
-              <div className="w-[78px] h-[112px] rounded-full ring-[5px] ring-white bg-navy grid place-items-center">
-                <span className="font-serif text-[22px] text-white">+20</span>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-6 mt-20 md:mt-24 max-w-[900px]">
-          {TEAM_STATS.map((s, i) => (
-            <motion.div key={s.l} {...fadeUp} transition={{ duration: 0.5, delay: 0.05 + i * 0.08 }}>
-              <p className="font-serif text-[54px] md:text-[66px] leading-[0.9] text-navy m-0">{s.v}</p>
-              <span className="inline-block mt-5 rounded-full bg-[#F1F4FA] px-4 py-2 text-[13px] leading-snug text-ink-soft">
-                {s.l}
-              </span>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-
-
-// ── §3 How it works: the care coordination loop ──────────────────────────────
-// From Matteo's HTML mock (2026-08-13), replacing the imported LoopDiagram. The
-// point of this version is the WHO on every step: each beat says what HANA does
-// and what the practice does, which is the post-CY2027 argument in miniature.
-//
-// COPY GUARDRAIL: the mock's step 4 read "Twenty documented minutes per patient,
-// ready to attest", which asserts HANA's call time IS the billable time. That's
-// the one claim this page must never make (see the header note). Rewritten as
-// documentation prepared + minutes attributed to the clinician who supplied them.
-type LoopStep = { n: string; name: string; role: React.ReactNode; body: string };
-
-const LOOP_LEFT: LoopStep[] = [
-  {
-    n: "1",
-    name: "Reach",
-    role: (
-      <>
-        Hana calls · <b className="text-navy">you set the protocol</b>
-      </>
-    ),
-    body: "It calls from your number until someone picks up. Then medications, symptoms, and what changed.",
-  },
-  {
-    n: "2",
-    name: "Flag",
-    role: (
-      <>
-        Hana routes · <b className="text-navy">your team decides</b>
-      </>
-    ),
-    body: "Anything clinical goes to your team, with the reason and the transcript attached.",
-  },
-];
-
-const LOOP_RIGHT: LoopStep[] = [
-  {
-    n: "3",
-    name: "Document",
-    role: (
-      <>
-        <b className="text-navy">Your clinician reviews</b> · Hana writes
-      </>
-    ),
-    body: "The note is in the chart before your team opens it. Under that patient, not in a spreadsheet.",
-  },
-  {
-    n: "4",
-    name: "Bill",
-    role: (
-      <>
-        <b className="text-navy">You submit</b> · Hana supplies the evidence
-      </>
-    ),
-    body: "Every minute attributed to the person who earned it, ready to attest on the first.",
-  },
-];
-
-const LOOP_PATH =
-  "M 400 200 C 300 80, 120 90, 120 200 C 120 310, 300 320, 400 200 C 500 80, 680 90, 680 200 C 680 310, 500 320, 400 200 Z";
-const LOOP_PATH_BACK =
-  "M 400 200 C 300 74, 112 84, 112 200 C 112 316, 300 326, 400 200 C 500 74, 688 84, 688 200 C 688 316, 500 326, 400 200 Z";
-const LOOP_DUR = "10s";
-
-/* Node positions plus the slice of the 10s cycle when the travelling dot is on
-   them, as keyTimes [riseStart, peak, fadeEnd]. The path runs centre → left-top
-   → left-bottom → centre → right-top → right-bottom → centre, so the four nodes
-   sit at roughly 12%, 37%, 62% and 87% of the loop. */
-// The arithmetic under the loop. Published range for coordinator time per
-// patient per month, the caseload it caps at, and where HANA is built to take it.
-// Order matters: minutes, then caseload.
-const LOOP_MATH = [
-  {
-    v: "45-60",
-    suf: "min",
-    label: "per patient, per month, today",
-    body: "What a coordinator spends on one enrolled patient when the calling, the chasing and the note are all done by hand.",
-  },
-  {
-    v: "120-160",
-    suf: "",
-    label: "the caseload that caps at",
-    body: "Which is why most programs stall well short of what the panel could support.",
-  },
-  {
-    v: "29",
-    suf: "min",
-    label: "what HANA is built for",
-    body: "Same coordinator, same hours, toward 250 patients. HANA makes the calls; your team reviews and attests.",
-  },
-];
-
-const LOOP_NODES = [
-  {
-    name: "reach",
-    cx: 222,
-    cy: 114,
-    window: [0.075, 0.125, 0.2, 1] as const,
-    glyph: <path d="M-9 -5 V5 M-4.5 -9 V9 M0 -6 V6 M4.5 -9 V9 M9 -4 V4" />,
-  },
-  {
-    name: "flag",
-    cx: 222,
-    cy: 286,
-    window: [0.325, 0.375, 0.45, 1] as const,
-    glyph: (
-      <>
-        <path d="M0 -9 L9.5 8 H-9.5 Z" />
-        <path d="M0 -3 V2" />
-        <path d="M0 4.6 V4.7" />
-      </>
-    ),
-  },
-  {
-    name: "document",
-    cx: 578,
-    cy: 114,
-    window: [0.575, 0.625, 0.7, 1] as const,
-    glyph: (
-      <>
-        <path d="M-7.5 -10 H5 L8 -7 V10 H-7.5 Z" />
-        <path d="M-4 -4 H4 M-4 0.5 H4 M-4 5 H1" />
-      </>
-    ),
-  },
-  {
-    name: "bill",
-    cx: 578,
-    cy: 286,
-    window: [0.825, 0.875, 0.95, 1] as const,
-    glyph: (
-      <>
-        <path d="M-8 -10 H8 V10 L4 7 L0 10 L-4 7 L-8 10 Z" />
-        <path d="M-4 -4.5 L-1.5 -2 L4 -7" />
-        <path d="M-4.5 2.5 H4.5" />
-      </>
     ),
   },
 ];
 
-function LoopStepBlock({ step, align }: { step: LoopStep; align: "l" | "r" }) {
-  const right = align === "r";
-  return (
-    <motion.div {...fadeUp} className={`max-w-[300px] ${right ? "ml-auto text-right" : ""}`}>
-      <div className={`flex items-baseline gap-2.5 ${right ? "justify-end" : ""}`}>
-        {right ? (
-          <>
-            <span className="text-[19px] font-bold tracking-[-0.01em] text-navy order-1">{step.name}</span>
-            <span className="font-serif text-[44px] leading-none text-[#C9D6F2] order-2">{step.n}</span>
-          </>
-        ) : (
-          <>
-            <span className="font-serif text-[44px] leading-none text-[#C9D6F2]">{step.n}</span>
-            <span className="text-[19px] font-bold tracking-[-0.01em] text-navy">{step.name}</span>
-          </>
-        )}
-      </div>
-      <p className="mt-2.5 mb-0 text-[10px] font-bold uppercase tracking-[1px] text-brand">{step.role}</p>
-      <p className="mt-2.5 mb-0 text-[14.5px] leading-[1.58] text-ink-mute">{step.body}</p>
-    </motion.div>
-  );
-}
 
-function HowItWorksLoop() {
-  const reduce = useReducedMotion();
-  return (
-    <section className="bg-paper-bright py-24 md:py-32 px-6 md:px-16">
-      <div className="max-w-[1240px] mx-auto">
-        <motion.div {...fadeUp} className="text-center">
-          <p className={`${eyebrow} text-brand mt-0 mb-6`}>How it works</p>
-          <h2 className="font-serif font-normal text-[34px] sm:text-[44px] md:text-[52px] leading-[1.08] tracking-[-0.015em] text-navy m-0">
-            Forty-five minutes a patient.
-            <br />
-            <em className="text-brand">We take it under thirty.</em>
-          </h2>
-          <p className="text-[17px] leading-[1.62] text-ink-soft max-w-[600px] mx-auto mt-6 mb-0">
-            One coordinator. Same hours. Two hundred and fifty patients instead of a hundred and fifty.
-          </p>
 
-        </motion.div>
 
-        {/* the loop */}
-        <div className="relative mt-3.5">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(520px,760px)_1fr] items-center gap-9 lg:gap-0">
-            <div className="lg:px-2 space-y-8 lg:space-y-[150px]">
-              {LOOP_LEFT.map((s) => (
-                <LoopStepBlock key={s.n} step={s} align="l" />
-              ))}
-            </div>
 
-            <div className="order-first lg:order-none">
-              <svg viewBox="60 40 680 320" className="w-full h-auto overflow-visible" role="img" aria-label="The care coordination loop: reach, flag, document, bill">
-                <defs>
-                  <filter id="hanaLoopShadow" x="-40%" y="-40%" width="180%" height="180%">
-                    <feDropShadow dx="0" dy="6" stdDeviation="7" floodColor="#0F1B33" floodOpacity="0.13" />
-                  </filter>
-                </defs>
-                <path d={LOOP_PATH_BACK} fill="none" stroke="#8FB2F2" strokeWidth="3.6" opacity="0.26" />
-                <path d={LOOP_PATH} fill="none" stroke="#8FB2F2" strokeWidth="4.2" opacity="0.5" />
-                {!reduce && (
-                  <>
-                    <path d={LOOP_PATH} fill="none" stroke="var(--color-brand)" strokeWidth="4.6" opacity="0.9" strokeDasharray="120 1500" strokeLinecap="round">
-                      <animate attributeName="stroke-dashoffset" from="1620" to="0" dur={LOOP_DUR} repeatCount="indefinite" />
-                    </path>
-                    <circle r="6.5" fill="#F59E42">
-                      <animateMotion dur={LOOP_DUR} repeatCount="indefinite" path={LOOP_PATH} />
-                    </circle>
-                  </>
-                )}
 
-                {/* Nodes. Each lights up as the travelling dot reaches it: the
-                    windows below are that node's position along the loop, so the
-                    pulse and the dot stay in sync on one 10s cycle. */}
-                {LOOP_NODES.map((node) => {
-                  const [a, b, c, d] = node.window;
-                  const keyTimes = `0;${a};${b};${c};1`;
-                  return (
-                    <g key={node.name}>
-                      <g filter="url(#hanaLoopShadow)">
-                        <circle cx={node.cx} cy={node.cy} r="31" fill="#fff" />
-                      </g>
-                      {!reduce && (
-                        <>
-                          {/* halo */}
-                          <circle cx={node.cx} cy={node.cy} r="31" fill="none" stroke="var(--color-brand)" strokeWidth="2" opacity="0">
-                            <animate attributeName="r" dur={LOOP_DUR} repeatCount="indefinite" values={`31;31;40;46;46`} keyTimes={keyTimes} />
-                            <animate attributeName="opacity" dur={LOOP_DUR} repeatCount="indefinite" values="0;0;0.55;0;0" keyTimes={keyTimes} />
-                          </circle>
-                          {/* accent fill */}
-                          <circle cx={node.cx} cy={node.cy} r="31" fill="var(--color-brand)" opacity="0">
-                            <animate attributeName="opacity" dur={LOOP_DUR} repeatCount="indefinite" values="0;0;1;0;0" keyTimes={keyTimes} />
-                          </circle>
-                        </>
-                      )}
-                      <g
-                        fill="none"
-                        stroke="var(--color-navy)"
-                        strokeWidth="1.9"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        transform={`translate(${node.cx},${node.cy})`}
-                      >
-                        {!reduce && (
-                          <animate
-                            attributeName="stroke"
-                            dur={LOOP_DUR}
-                            repeatCount="indefinite"
-                            values="#00122F;#00122F;#FFFFFF;#00122F;#00122F"
-                            keyTimes={keyTimes}
-                          />
-                        )}
-                        {node.glyph}
-                      </g>
-                    </g>
-                  );
-                })}
-              </svg>
 
-            </div>
 
-            <div className="lg:px-2 space-y-8 lg:space-y-[150px]">
-              {LOOP_RIGHT.map((s) => (
-                <LoopStepBlock key={s.n} step={s} align="r" />
-              ))}
-            </div>
-          </div>
-        </div>
 
-        <motion.p {...fadeUp} className="max-w-[820px] mx-auto mt-16 mb-0 text-center text-[14.5px] leading-[1.6] text-ink-mute">
-          <b className="font-medium text-ink-soft">You set the escalation rules.</b> A person on
-          every clinical flag, an audit trail on every call, minutes totalled per patient.
-        </motion.p>
 
-        {/* The arithmetic, folded in here rather than given its own section
-            (Matteo 2026-08-25). Minutes first and caseload second, never caseload
-            alone, because a competitor already claims 250. */}
-        <motion.div
-          {...fadeUp}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="mt-14 md:mt-16 pt-12 border-t border-rule grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 text-center"
-        >
-          {LOOP_MATH.map((m) => (
-            <div key={m.label}>
-              <p className="font-serif font-normal text-[44px] md:text-[54px] leading-none text-navy m-0">
-                {m.v}
-                <span className="text-brand text-[0.4em] align-super ml-1">{m.suf}</span>
-              </p>
-              <p className="text-[15px] font-semibold text-navy mt-4 mb-1.5">{m.label}</p>
-              <p className="text-[14px] leading-[1.6] text-ink-soft m-0 max-w-[30ch] mx-auto">{m.body}</p>
-            </div>
-          ))}
-        </motion.div>
 
-        {/* The human step. The brief says this one never gets cut for length. */}
-        <motion.p
-          {...fadeUp}
-          transition={{ duration: 0.5, delay: 0.16 }}
-          className="text-[17px] leading-[1.6] text-navy mt-12 mb-0 max-w-[62ch] mx-auto text-center"
-        >
-          Your team reviews it. Your provider signs it.{" "}
-          <b className="font-semibold">Nothing is billed until a person on your team approves it.</b>
-        </motion.p>
-      </div>
-    </section>
-  );
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ── §2 "What is Hana?" three-way comparison ──────────────────────────────────
 // Ported from Matteo's HTML mock (Retell-style "what is X" comparison): two
@@ -1192,194 +463,10 @@ function HowItWorksLoop() {
 //     Brief is explicit that the behaviour goes on the site and the label does
 //     not). Matteo 2026-08-25: the AI has to stay visible, only the buzzword goes.
 
-const CMP_OUTSOURCED_POINTS = [
-  "They do the calling. You pay for their hours.",
-  "Capacity capped by whoever they can hire",
-  "Notes handed back to you, not written in your chart",
-  "From January, Medicare may not pay you back for them",
-];
 
-const CMP_HANA_POINTS = [
-  "It dials, it listens, it writes the note",
-  "Every patient, every month, in 30+ languages",
-  "The note lands in your chart, ready to sign",
-  "Not clinical staff, so the proposed CY2027 rule leaves it standing",
-];
 
-function WhatIsHanaCompare() {
-  return (
-    <section className="bg-paper-bright py-28 md:py-36 px-6 md:px-16">
-      <div className="max-w-[1200px] mx-auto">
-        {/* Retell-style header: heading left, one-liner right */}
-        <motion.div {...fadeUp} className="md:flex md:items-start md:justify-between md:gap-12 mb-10 md:mb-14">
-          <h2 className="font-serif font-normal text-[36px] sm:text-[44px] md:text-[52px] leading-[1.05] tracking-[-0.015em] text-navy m-0">
-            Three ways to run care management.
-            <br />
-            <em className="text-brand">One of them makes the calls.</em>
-          </h2>
-          {/* The "only one of them actually picks up the phone" one-liner came out
-              here (Matteo 2026-08-25): the HANA card's first bullet already says
-              it, so the header was making the point twice. */}
-        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {/* Card 1 — sparse (reference: IVR card): name mid-card, one line at bottom */}
-          <motion.div
-            {...fadeUp}
-            transition={{ duration: 0.5, delay: 0.05 }}
-            className="rounded-xl bg-paper-2 p-8 md:p-9 flex flex-col md:min-h-[620px]"
-          >
-            <p className="text-[13px] font-semibold text-navy m-0">One way</p>
-            <div className="h-10 md:h-[220px]" aria-hidden />
-            <h3 className="font-serif font-normal text-[26px] md:text-[28px] leading-[1.2] text-navy m-0">
-              Care management software
-            </h3>
-            <p className="text-[15px] leading-[1.6] text-ink-soft mt-10 md:mt-auto md:pt-10 mb-0">
-              Mainly used to track time, build the care plan, and assemble the claim. Nothing
-              happens until someone on your team dials.
-            </p>
-          </motion.div>
 
-          {/* Card 2 — outsourced care management, ✕ list */}
-          <motion.div
-            {...fadeUp}
-            transition={{ duration: 0.5, delay: 0.13 }}
-            className="rounded-xl bg-paper-2 p-8 md:p-9 flex flex-col md:min-h-[620px]"
-          >
-            <p className="text-[13px] font-semibold text-navy m-0">Another way</p>
-            <div className="h-10 md:h-[220px]" aria-hidden />
-            <h3 className="font-serif font-normal text-[26px] md:text-[28px] leading-[1.2] text-navy m-0">
-              Outsourced care management
-            </h3>
-            <p className="text-[16px] leading-[1.5] text-navy mt-6 mb-0">
-              Based on contracted staff and staffing agencies
-            </p>
-            <ul className="list-none p-0 mt-5 mb-0 space-y-4">
-              {CMP_OUTSOURCED_POINTS.map((p) => (
-                <li key={p} className="flex items-start gap-3 text-[15px] leading-[1.5] text-ink-soft">
-                  <span className="shrink-0 w-5 h-5 rounded-full bg-navy text-white grid place-items-center text-[9px] font-bold mt-0.5">✕</span>
-                  {p}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-
-          {/* Card 3 — HANA, dark, ✓ list */}
-          <motion.div
-            {...fadeUp}
-            transition={{ duration: 0.5, delay: 0.21 }}
-            className="rounded-xl bg-navy p-8 md:p-9 flex flex-col md:min-h-[620px] shadow-[0_28px_70px_-26px_rgba(0,18,47,0.55)]"
-          >
-            <p className="text-[13px] font-semibold text-white m-0">Our way</p>
-            <div className="h-10 md:h-[220px]" aria-hidden />
-            <h3 className="font-serif font-normal text-[26px] md:text-[28px] leading-[1.2] text-white m-0">
-              AI care coordination
-            </h3>
-            <p className="text-[16px] leading-[1.5] text-white/90 mt-6 mb-0">
-              Based on clinician-built protocols
-            </p>
-            <ul className="list-none p-0 mt-5 mb-0 space-y-4">
-              {CMP_HANA_POINTS.map((p) => (
-                <li key={p} className="flex items-start gap-3 text-[15px] leading-[1.5] text-white/90">
-                  <span className="shrink-0 w-5 h-5 rounded-full border border-white/40 text-white grid place-items-center text-[10px] mt-0.5">✓</span>
-                  {p}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        </div>
-
-        {/* The "only one that does the calling" line came out 2026-09-02: the
-            headline says it now, and the cards prove it. This is the keeper. */}
-        <motion.p {...fadeUp} className="text-[15px] leading-[1.6] text-ink-soft text-center mt-10 mb-0 max-w-[62ch] mx-auto">
-          Your team keeps the relationship, the judgment and the signature. HANA does the dialing.
-        </motion.p>
-      </div>
-    </section>
-  );
-}
-
-// ── §5b "Built by clinicians" statement ──────────────────────────────────────
-// Giant serif statement with an image chip inline in the headline (pattern from
-// the reference screenshot). Scroll-linked: "Built" and "by" start pushed to
-// the outside and converge to center as the section scrolls into view;
-// "clinicians" rises from below. Chip = the Remote product photo blurred hard
-// with a blue/violet cast and a warm glow, approximating the reference's
-// blurred-silhouette look. No subline (removed per Matteo 2026-08-12); the hero
-// keeps "Built by clinicians. Supervised by yours." alongside this section.
-// The three clinicians in the headline. Order is left to right; `pos` is the
-// crop focus once the real photo lands.
-const BUILT_BY_FACES = [
-  { src: "/avatars/archie.jpg", pos: "50% 25%" },
-  { src: "/avatars/fakhrudin.png", pos: "50% 20%" },
-  { src: "/avatars/matteo.jpg", pos: "50% 25%" },
-];
-
-function BuiltByClinicians() {
-  const reduce = useReducedMotion();
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "center 0.45"] });
-  const still = [0, 0] as [number, number];
-  const xLeft = useTransform(scrollYProgress, [0, 1], reduce ? still : [-170, 0]);
-  const xRight = useTransform(scrollYProgress, [0, 1], reduce ? still : [170, 0]);
-  const yLine2 = useTransform(scrollYProgress, [0, 1], reduce ? still : [70, 0]);
-  const chipScale = useTransform(scrollYProgress, [0, 1], reduce ? [1, 1] : [0.75, 1]);
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 1], reduce ? [1, 1, 1] : [0, 0.55, 1]);
-
-  return (
-    <section ref={ref} className="bg-paper-bright py-24 md:py-36 px-6 overflow-hidden">
-      <div className="max-w-[1200px] mx-auto">
-        <h2 className="font-serif font-normal text-navy leading-[1.04] tracking-[-0.02em] m-0 text-[48px] sm:text-[80px] md:text-[112px]">
-          <span className="flex items-center justify-center gap-[0.35em] whitespace-nowrap">
-            <motion.span style={{ x: xLeft, opacity }} className="inline-block">Built</motion.span>
-            {/* Three overlapping faces (Matteo 2026-08-25, mock A "recommended"):
-                the claim and its proof in the same line. Round crops, tight
-                overlap, sized to the cap height so the line still reads as type.
-                Each circle carries a drawn silhouette and, layered over it, a
-                photo that appears when its file lands in /public/avatars —
-                fakhrudin.png exists today, archie.jpg and matteo.jpg are pending
-                (same lazy-photo pattern as the team section). */}
-            <motion.span
-              aria-hidden
-              style={{ scale: chipScale, opacity }}
-              className="relative inline-flex items-center shrink-0 h-[1.06em]"
-            >
-              {BUILT_BY_FACES.map((f, i) => (
-                <span
-                  key={f.src}
-                  className="relative inline-block w-[1.06em] h-[1.06em] rounded-full overflow-hidden ring-[0.045em] ring-white shadow-[0_10px_30px_rgba(0,18,47,0.20)]"
-                  style={{ marginLeft: i === 0 ? 0 : "-0.38em", zIndex: 3 - i, background: "#DFE8F8" }}
-                >
-                  {/* the silhouette, always there */}
-                  <svg viewBox="0 0 40 40" className="absolute inset-0 w-full h-full">
-                    <circle cx="20" cy="15" r="7" fill="#8FA8D8" />
-                    <path d="M6 38c1.8-8.3 7.4-12.5 14-12.5S32.2 29.7 34 38Z" fill="#8FA8D8" />
-                  </svg>
-                  {/* the photo, when its file exists */}
-                  <img
-                    src={f.src}
-                    alt=""
-                    loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover"
-                    style={{ objectPosition: f.pos }}
-                    onError={(e) => { e.currentTarget.style.display = "none"; }}
-                  />
-                </span>
-              ))}
-            </motion.span>
-            <motion.span style={{ x: xRight, opacity }} className="inline-block">by</motion.span>
-          </span>
-          <motion.span
-            style={{ y: yLine2, opacity }}
-            className="block text-center md:-translate-x-[0.3em] mt-[0.02em]"
-          >
-            clinicians
-          </motion.span>
-        </h2>
-      </div>
-    </section>
-  );
-}
 
 // ── §9 The patient agent (unchanged from live page) ──────────────────────────
 
@@ -1471,7 +558,7 @@ export function RemoteV2({
       {/* §6 COMPASS — the care team's side */}
       <section className="bg-paper-bright text-navy py-24 md:py-32 px-6 md:px-16">
         <div className="max-w-[1200px] mx-auto">
-          <CompassShowcase />
+          <AccordionPlayer />
         </div>
       </section>
 
@@ -1485,7 +572,15 @@ export function RemoteV2({
           kept below for revert) */}
       <section className="bg-paper-bright py-24 md:py-32 px-6 md:px-16">
         <div className="max-w-[1200px] mx-auto">
-          <CompanionShowcase />
+          <AccordionPlayer
+            eyebrow="For your patients"
+            heading={<>The call your patient actually <em>picks up.</em></>}
+            items={COMPANION_ITEMS}
+            comp={CompanionShowcaseComp}
+            chapterLen={COMPANION_CHAPTER_LEN}
+            duration={COMPANION_DURATION}
+            side="left"
+          />
         </div>
       </section>
 
