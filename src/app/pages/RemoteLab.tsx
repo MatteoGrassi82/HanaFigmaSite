@@ -35,7 +35,7 @@ import { PROGRAMMES } from "../../content/programmes/index";
 import { CtaBand } from "../components/sections/CtaBand";
 import { CaseloadSlider } from "../components/lab/interactive/CaseloadSlider";
 import { EligibilityGap } from "../components/lab/interactive/EligibilityGap";
-import { RevenueEstimator } from "../components/lab/interactive/RevenueEstimator";
+import { RevenueEstimator } from "../components/sections/RevenueEstimator";
 import { ProgrammeChooser } from "../components/lab/interactive/ProgrammeChooser";
 
 /**

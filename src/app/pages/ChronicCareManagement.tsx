@@ -7,7 +7,7 @@ import { CodeTable } from "../components/sections/CodeTable";
 import { WhoDoesWhat } from "../components/sections/WhoDoesWhat";
 import { HowItWorksLoop } from "../components/sections/HowItWorksLoop";
 import { RecipesMarquee } from "../components/sections/RecipesMarquee";
-import { ProofBento } from "../components/sections/ProofBento";
+import { RevenueEstimator } from "../components/sections/RevenueEstimator";
 import { FaqSection } from "../components/sections/FaqSection";
 import { CtaBand } from "../components/sections/CtaBand";
 import { programmeById } from "../../content/programmes/index";
@@ -166,9 +166,13 @@ export function ChronicCareManagement() {
         body="Four of the workflows HANA runs inside chronic care management. Each one ends in the record, not in a spreadsheet."
       />
 
-      {/* 5. Proof. No case study or testimonial yet: the module is built to take
-             one and ships empty rather than with a placeholder. */}
-      <ProofBento soft compact />
+      {/* 5. What is it worth on my panel. Locked to CCM: the four-programme
+             selector belongs on the hub, not on a page about one programme.
+             NO PROOF SECTION HERE. ProofBento carries generic HANA proof and
+             quotes that are not about chronic care management, so on this page it
+             would be borrowed credibility. It goes back when there is a CCM
+             case study to put in it. */}
+      <RevenueEstimator programme="ccm" id="what-it-is-worth" />
 
       <FaqSection
         items={CCM_FAQS}

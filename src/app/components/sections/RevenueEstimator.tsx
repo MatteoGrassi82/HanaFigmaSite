@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import { AlertTriangle } from "lucide-react";
-import { Arithmetic, BigStat, Dial, Note, Panel, clamp, formatInt, useUrlState } from "./kit";
-import { cn } from "../../../../lib/utils";
+import { Arithmetic, BigStat, Dial, Note, Panel, clamp, formatInt, useUrlState } from "../lab/interactive/kit";
+import { cn } from "../../../lib/utils";
 import {
   MARKET,
   NATIONAL_ENROLLMENT_PCT,
@@ -10,7 +10,7 @@ import {
   type ProgrammeRate,
   isProgrammeId,
   rateFor,
-} from "./rates";
+} from "../lab/interactive/rates";
 
 /* ─────────────────────────────────────────────────────────────────────────────
  * RevenueEstimator — what a month of one program comes to.
@@ -193,7 +193,15 @@ function TapRow<T extends string | number>({
 
 /* ── The section ───────────────────────────────────────────────────────────── */
 
-export function RevenueEstimator() {
+export interface RevenueEstimatorProps {
+  /** Lock to one programme and drop the selector. A programme page has one
+   *  programme; offering the other three there is a question nobody asked. */
+  programme?: ProgrammeRate["id"];
+  className?: string;
+  id?: string;
+}
+
+export function RevenueEstimator({ programme, className, id }: RevenueEstimatorProps = {}) {
   const reduce = useReducedMotion();
 
   // Linkable, but the default is what renders first and what gets indexed. Each
@@ -224,10 +232,12 @@ export function RevenueEstimator() {
     }
   );
 
-  const program = rateFor(programId);
+  // A locked programme wins over the URL: the page decided, not the visitor.
+  const program = rateFor(programme ?? programId);
   const enrolled = Math.round(panel * (enrollPct / 100));
   const monthly = Math.round(enrolled * program.rate);
 
+  const locked = programme !== undefined;
   const programOptions: TapOption<ProgrammeRate["id"]>[] = PROGRAMME_RATES.map((r) => ({
     value: r.id,
     label: r.short,
@@ -235,7 +245,7 @@ export function RevenueEstimator() {
   }));
 
   return (
-    <section className="bg-paper py-20 md:py-28 px-6 md:px-16">
+    <section id={id} className={cn("scroll-mt-24 bg-paper py-20 md:py-28 px-6 md:px-16", className)}>
       <div className="max-w-[1120px] mx-auto">
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 24 }}
@@ -296,7 +306,11 @@ export function RevenueEstimator() {
           className="mt-8 md:mt-10"
           eyebrow="One program, one month"
           title="What a month of this program comes to"
-          sub="Pick a program, set the eligible panel, choose how much of it is enrolled. The figure moves as you do. The rate is the multiplier, and it sits still."
+          sub={
+            locked
+              ? "Set the eligible panel and how much of it is enrolled. The figure moves as you do. The rate is the multiplier, and it sits still."
+              : "Pick a program, set the eligible panel, choose how much of it is enrolled. The figure moves as you do. The rate is the multiplier, and it sits still."
+          }
           footnote={
             <>
               This is an estimate, not a quote, and not billing advice. It models one base code per
@@ -311,13 +325,15 @@ export function RevenueEstimator() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-start">
             {/* ── The inputs, and the number they set ── */}
             <div>
-              <TapRow<ProgrammeRate["id"]>
-                legend="Program"
-                options={programOptions}
-                value={programId}
-                onChange={setProgramId}
-                cols={4}
-              />
+              {!locked && (
+                <TapRow<ProgrammeRate["id"]>
+                  legend="Program"
+                  options={programOptions}
+                  value={programId}
+                  onChange={setProgramId}
+                  cols={4}
+                />
+              )}
 
               <div
                 className={cn(
@@ -395,7 +411,7 @@ export function RevenueEstimator() {
                 <span className="tabular-nums font-semibold">{formatInt(enrolled)}</span> enrolled
                 patients on {program.short} {program.code}, at {formatRate(program.rate)} each, comes
                 to{" "}
-                <span className="font-serif text-[30px] leading-none text-brand tabular-nums align-baseline inline-block min-w-[8ch]">
+                <span className="font-semibold text-ink tabular-nums">
                   {formatUSD(monthly)}
                 </span>{" "}
                 a month.
