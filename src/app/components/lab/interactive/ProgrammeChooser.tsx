@@ -2,6 +2,7 @@ import React, { useCallback, useId, useRef } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { Arithmetic, BigStat, Note, Panel, useUrlState } from "./kit";
 import type { ArithmeticPart } from "./kit";
+import { MARKET } from "./rates";
 import { PROGRAMS, PROGRAM_FOOTNOTE } from "../ProgramsStack";
 import type { Program } from "../ProgramsStack";
 import { cn } from "../../../../lib/utils";
@@ -54,10 +55,9 @@ import { cn } from "../../../../lib/utils";
  * eligible and enrolled is the whole problem.
  */
 const REACH = {
-  eligible: "75%",
-  receiving: "4%",
-  source:
-    "Those are third-party market figures describing the Medicare population. They are not HANA's data, and they are not a measurement of your practice.",
+  eligible: `${MARKET.eligiblePct}%`,
+  receiving: `${MARKET.receivingPctOfEligible}%`,
+  source: `Medicare fee-for-service, ${MARKET.dataYear}. Third-party figures describing the Medicare population, not HANA's data and not a measurement of your practice. Source: ${MARKET.citation}`,
 };
 
 const BY_CODE = Object.fromEntries(PROGRAMS.map((p) => [p.code, p])) as Record<

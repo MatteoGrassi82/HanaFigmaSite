@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import { Arithmetic, BigStat, Dial, Note, Panel, clamp, formatInt, useUrlState } from "./kit";
 import { ILLUSTRATIVE_PANEL, ILLUSTRATIVE_SHARE } from "./eligibility-todo-figures";
-import { MARKET } from "./rates.todo";
+import { MARKET } from "./rates";
 
 /* ─────────────────────────────────────────────────────────────────────────────
  * EligibilityGap — the subtraction that is the whole argument.
@@ -49,7 +49,7 @@ import { MARKET } from "./rates.todo";
  * Not HANA data. Attributed on screen wherever they are used.
  *
  * ONE SOURCE OF TRUTH, NOT A SECOND COPY.
- * These two percentages already live in MARKET, in rates.todo.ts, which is what
+ * These two percentages already live in MARKET, in rates.ts, which is what
  * RevenueEstimator reads and what the publish checklist in that file says to
  * fill the citation on. Re-typing 75 and 4 here would let this component drift
  * away from its siblings the day either figure is revised, so it reads them.
@@ -57,11 +57,10 @@ import { MARKET } from "./rates.todo";
  */
 /** Share of Medicare fee-for-service beneficiaries eligible for CCM. */
 const RATE_ELIGIBLE = MARKET.eligiblePct / 100;
-/** Share of them receiving it. */
-const RATE_RECEIVING = MARKET.receivingPct / 100;
-/** The spread between the two rates, in percentage points. */
-const GAP_POINTS = MARKET.eligiblePct - MARKET.receivingPct;
-/** The citation both rates come from. Pending until rates.todo.ts carries it. */
+/** Share OF THE ELIGIBLE who receive it. Note the denominator: the source
+ *  states 4.0% of *potentially eligible* beneficiaries, not 4.0% of all FFS. */
+const RATE_RECEIVING = MARKET.receivingPctOfEligible / 100;
+/** The citation both rates come from. Pending until rates.ts carries it. */
 const RATE_SOURCE = MARKET.citation || "citation pending";
 
 /** The element both dials describe, so a screen reader hears the consequence. */
@@ -82,7 +81,9 @@ interface GapMath {
 function gapMath(panel: number, sharePct: number): GapMath {
   const medicare = Math.round((panel * sharePct) / 100);
   const eligible = Math.round(medicare * RATE_ELIGIBLE);
-  const receiving = Math.round(medicare * RATE_RECEIVING);
+  // Applied to the ELIGIBLE subset, not the whole Medicare panel: the published
+  // 4.0% is a share of those eligible. Multiplying the panel by it double-counts.
+  const receiving = Math.round(eligible * RATE_RECEIVING);
   return { medicare, eligible, receiving, gap: eligible - receiving };
 }
 
@@ -310,8 +311,8 @@ export function EligibilityGap() {
                 />
                 <Arithmetic
                   parts={[
-                    { value: formatInt(medicare), label: "Medicare patients" },
-                    { value: `${MARKET.receivingPct}%`, label: "receiving it" },
+                    { value: formatInt(eligible), label: "eligible" },
+                    { value: `${MARKET.receivingPctOfEligible}%`, label: "of them enrolled" },
                   ]}
                   result={{ value: formatInt(receiving), label: "getting it" }}
                 />
@@ -331,16 +332,18 @@ export function EligibilityGap() {
                 Where the two rates come from
               </p>
               <Note>
-                About {MARKET.eligiblePct}% of Medicare fee-for-service beneficiaries are eligible
-                for chronic care management, and about {MARKET.receivingPct}% receive it. Those are
-                third-party market figures describing the Medicare fee-for-service population. They
-                are not HANA's data, and they are not a measurement of your practice. Source:{" "}
-                {RATE_SOURCE}.
+                In {MARKET.dataYear}, {MARKET.eligiblePct}% of Medicare fee-for-service
+                beneficiaries were potentially eligible for chronic care management, and{" "}
+                {MARKET.receivingPctOfEligible}% of those eligible received any. Those are
+                third-party figures describing the Medicare fee-for-service population in{" "}
+                {MARKET.dataYear}. They are not HANA's data, and they are not a measurement of your
+                practice. Source: {RATE_SOURCE}.
               </Note>
               <Note className="mt-3">
-                Both rates count the same people, so the two lines in the sum are slices of one
-                population and the difference between them is a real {GAP_POINTS} points, not two
-                unrelated percentages put next to each other.
+                The two rates nest rather than sit side by side: the second is a share of the
+                first, so the subtraction is one population minus a slice of itself. Both describe{" "}
+                {MARKET.dataYear} and enrollment has grown since, so read this as the shape of the
+                gap, not today's count.
               </Note>
             </div>
           </div>

@@ -10,7 +10,7 @@ import {
   type ProgrammeRate,
   isProgrammeId,
   rateFor,
-} from "./rates.todo";
+} from "./rates";
 
 /* ─────────────────────────────────────────────────────────────────────────────
  * RevenueEstimator — what a month of one program comes to.
@@ -23,10 +23,10 @@ import {
  *
  * THIS COMPONENT IS BLOCKED ON FACTS, AND IT SAYS SO ON THE PAGE.
  * The confirmed CMS payment amounts are not in this repo and are not invented
- * here. Every dollar figure comes from ./rates.todo.ts, every entry there is
+ * here. Every dollar figure comes from ./rates.ts, every entry there is
  * flagged `placeholder: true`, and while any flag is true this renders a large
  * amber notice at the top of the section and a marker on the rate itself.
- * Filling in rates.todo.ts is the only edit needed to publish this. No JSX
+ * Filling in rates.ts is the only place a rate changes. No JSX
  * changes, no copy changes: the notice is driven by the data.
  *
  * WHERE THE NUMBERS COME FROM
@@ -38,7 +38,7 @@ import {
  *                       axes and must not share a dial. See CaseloadSlider for
  *                       the caseload question, which is a separate component.
  *   Program facts ..... the verified set in ProgramsStack.tsx and
- *                       src/content/programmes.ts, carried into rates.todo.ts.
+ *                       src/content/programmes.ts, carried into rates.ts.
  *   Default enrollment  4 in 100 Medicare fee-for-service beneficiaries receive
  *                       chronic care management, against about 75 in 100 who
  *                       qualify. Roughly 5 enrolled for every 100 eligible.
@@ -105,7 +105,7 @@ function formatRate(value: number): string {
 /* ── PlaceholderPill ───────────────────────────────────────────────────────
  * The marker that rides beside any figure that is not confirmed yet. Amber is
  * a signal token, and a rate nobody has checked is exactly what a signal is
- * for. It disappears on its own when rates.todo.ts is filled in.
+ * for. It disappears on its own when rates.ts is filled in.
  */
 function PlaceholderPill({ className }: { className?: string }) {
   return (
@@ -251,9 +251,9 @@ export function RevenueEstimator() {
           <p className="text-[17px] leading-[1.7] text-ink-soft max-w-[60ch] mx-auto mt-5 mb-0">
             A care management program pays per enrolled patient, per calendar month. Medicare sets
             the rate. You set how much of your eligible panel is actually on the program, and that is
-            where the whole figure comes from. Nationally, about {MARKET.receivingPct} in 100
-            Medicare fee-for-service beneficiaries receive chronic care management, against about{" "}
-            {MARKET.eligiblePct} in 100 who qualify.
+            where the whole figure comes from. In {MARKET.dataYear}, about{" "}
+            {MARKET.receivingPctOfEligible} in 100 Medicare fee-for-service patients who qualified
+            for chronic care management were actually enrolled in it.
           </p>
         </motion.div>
 
@@ -462,7 +462,7 @@ export function RevenueEstimator() {
                   <Note>
                     Where the rate does not come from. Nobody has checked {program.code} against a
                     fee schedule yet, so {formatRate(program.rate)} is a round stand-in and nothing
-                    more. Replace it in rates.todo.ts and this figure becomes real.
+                    more. Replace it in rates.ts and this figure becomes real.
                   </Note>
                 ) : (
                   <Note>
@@ -474,12 +474,12 @@ export function RevenueEstimator() {
 
               <div className="mt-4">
                 <Note>
-                  Where the default enrollment comes from. About {MARKET.receivingPct} in 100
-                  Medicare fee-for-service beneficiaries receive chronic care management, against
-                  about {MARKET.eligiblePct} in 100 who qualify. That is {MARKET.receivingPct}{" "}
-                  divided by {MARKET.eligiblePct}, roughly {NATIONAL_ENROLLMENT_PCT} enrolled for
-                  every 100 eligible, which is where this page starts. Source:{" "}
-                  {MARKET.citation || "citation pending"}.
+                  Where the default enrollment comes from. In {MARKET.dataYear},{" "}
+                  {MARKET.eligiblePct}% of Medicare fee-for-service beneficiaries were potentially
+                  eligible for chronic care management, and {NATIONAL_ENROLLMENT_PCT}% of those
+                  eligible received any. That {NATIONAL_ENROLLMENT_PCT}% is where this page starts.
+                  It describes {MARKET.dataYear} and enrollment has grown since, so it is a floor to
+                  argue from, not a current rate. Source: {MARKET.citation}.
                 </Note>
               </div>
             </div>
