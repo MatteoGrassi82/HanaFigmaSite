@@ -28,6 +28,10 @@ import { SleepTwoProducts } from "../components/lab/SleepTwoProducts";
 // before anyone touches it — because the prerender snapshot is what gets read.
 import { PalettePreview } from "../components/lab/PalettePreview";
 import { Hero } from "../components/sections/Hero";
+import { WhoDoesWhat } from "../components/sections/WhoDoesWhat";
+import { CodeTable } from "../components/sections/CodeTable";
+import { EligibilityCheck } from "../components/sections/EligibilityCheck";
+import { PROGRAMMES } from "../../content/programmes/index";
 import { CtaBand } from "../components/sections/CtaBand";
 import { CaseloadSlider } from "../components/lab/interactive/CaseloadSlider";
 import { EligibilityGap } from "../components/lab/interactive/EligibilityGap";
@@ -521,6 +525,17 @@ export function RemoteLab() {
         body="With the team you already have."
         buttons={[{ label: "Talk to HANA", href: "/demo" }]}
       />
+
+      {/* ── The programme kit. These three plus Hero, CodeTable's siblings and
+             CtaBand are the whole of a programme page. CCM shown. ────────── */}
+      <LabBar>Programme · WhoDoesWhat — the positioning, as two columns</LabBar>
+      <WhoDoesWhat data={PROGRAMMES[0]} />
+
+      <LabBar>Programme · CodeTable — what it pays, with the basis attached</LabBar>
+      <CodeTable />
+
+      <LabBar>Programme · EligibilityCheck — who qualifies</LabBar>
+      <EligibilityCheck data={PROGRAMMES[0]} />
 
       <LabBar>Palette · pick the accent where it actually has to work</LabBar>
       <PalettePreview />

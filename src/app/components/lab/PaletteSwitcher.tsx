@@ -163,9 +163,9 @@ export function PaletteSwitcher({ startOpen = true }: { startOpen?: boolean } = 
             <span className="text-slate-400"> · </span>
             {active.note}
             <div className="mt-1 text-ink-mute">
-              The artwork does not follow: ~560 hardcoded colours in the Remotion panels, the
-              SafetyStack glass cards and the loop diagram stay blue whatever you pick. Repainting
-              those is the real cost of moving off blue.
+              The artwork now follows the tokens: the Remotion panels, the SafetyStack layers and
+              the loop diagram were all repainted, so a candidate here reskins the whole page. The
+              one thing still fixed is HanaBloomOrb, which sits next to the logo.
             </div>
           </div>
         )}
