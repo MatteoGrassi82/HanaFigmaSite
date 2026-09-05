@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Plus, Minus, ArrowLeft, ArrowRight, Check, ChevronDown } from "lucide-react";
-import { Footer } from "../components/Footer";
+import { Footer } from "../components/layout/Footer";
 import { SEO, faqSchema } from "../components/SEO";
 import { cn } from "../../lib/utils";
 import { useTranslations } from "../../lib/i18n";

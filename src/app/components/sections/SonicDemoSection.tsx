@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { motion } from "motion/react";
-import { LiveDemoSection } from "../LiveDemoSection";
+import { LiveDemoSection } from "./LiveDemoSection";
 
 /**
  * The live-demo section, rebuilt on the sonic-waveform canvas.

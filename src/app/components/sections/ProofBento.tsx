@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { type Variants } from "motion/react";
 import { Link } from "react-router";
 import { ArrowRight } from "lucide-react";
-import { TimelineContent } from "./timeline-animation";
+import { TimelineContent } from "../ui/timeline-animation";
 
 /* ── Proof bento — ported from the ShipTime "ClientFeedback" layout (two
    clusters, placements matched to the Federato reference) and re-skinned to

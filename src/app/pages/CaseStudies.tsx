@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { ArrowLeft, ArrowRight, Phone, Mic, MicOff } from "lucide-react";
 import { SEO, breadcrumbSchema, faqSchema } from "../components/SEO";
-import { Footer } from "../components/Footer";
+import { Footer } from "../components/layout/Footer";
 
 /* Case-studies FAQ — answer-first, citation-friendly for AI answer engines. */
 const CASE_STUDIES_FAQ = faqSchema([

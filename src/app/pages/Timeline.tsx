@@ -1,7 +1,7 @@
 "use client";
 
 import { BrainCircuit, Database, BookOpen, HeartHandshake, ShieldCheck } from "lucide-react";
-import RadialOrbitalTimeline from "../components/ui/radial-orbital-timeline";
+import RadialOrbitalTimeline from "../components/lab/RadialOrbitalTimeline";
 import { SEO } from "../components/SEO";
 import { breadcrumbSchema } from "../components/SEO";
 import { getLocale } from "../../lib/i18n";

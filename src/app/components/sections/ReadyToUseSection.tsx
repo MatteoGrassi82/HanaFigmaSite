@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
-import { useTranslations } from "../../lib/i18n";
+import { useTranslations } from "../../../lib/i18n";
 
 export function ReadyToUseSection() {
   const t = useTranslations();

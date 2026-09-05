@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "motion/react";
 import { Check, ChevronRight } from "lucide-react";
 import { SEO } from "../components/SEO";
-import { Footer } from "../components/Footer";
+import { Footer } from "../components/layout/Footer";
 // Both of these graduated out of this file and onto /remote-v2 on 2026-08-19.
 // They stay mounted here so a variant can still be compared against them.
-import { PROGRAMS, PROGRAM_FOOTNOTE, ProgramsStack } from "../components/remote/ProgramsStack";
-import { SleepBand } from "../components/remote/SleepBand";
+import { PROGRAMS, PROGRAM_FOOTNOTE, ProgramsStack } from "../components/lab/ProgramsStack";
+import { SleepBand } from "../components/lab/SleepBand";
 import {
   DemoSonicHeroForm,
   DemoSonicHeroFormInk,
@@ -20,8 +20,8 @@ import {
   DemoWithPhone,
   DemoWithPulse,
   DemoWithCaptions,
-} from "../components/remote/demo-variants";
-import { SleepTwoProducts } from "../components/remote/SleepTwoProducts";
+} from "../components/lab/demo-variants";
+import { SleepTwoProducts } from "../components/lab/SleepTwoProducts";
 
 /**
  * /remote-lab — a design sandbox for /remote-v2 sections.

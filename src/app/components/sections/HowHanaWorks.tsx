@@ -4,12 +4,12 @@ import React, { useState, useEffect, useRef, memo } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { cn } from "../../lib/utils";
+import { cn } from "../../../lib/utils";
 import { CheckCircle2, Play, Activity, ChevronLeft, ChevronRight } from "lucide-react";
-import { useTranslations, getLocale } from "../../lib/i18n";
+import { useTranslations, getLocale } from "../../../lib/i18n";
 import { Player, type PlayerRef } from "@remotion/player";
-import { WorkflowBuilderComp } from "./remotion/WorkflowBuilderComp";
-import { SafetyMonitorComp } from "./remotion/SafetyMonitorComp";
+import { WorkflowBuilderComp } from "../remotion/WorkflowBuilderComp";
+import { SafetyMonitorComp } from "../remotion/SafetyMonitorComp";
 
 // Add TypeScript declaration for custom element
 declare global {

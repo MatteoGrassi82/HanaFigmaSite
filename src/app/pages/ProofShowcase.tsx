@@ -1,5 +1,5 @@
-import { ProofBento } from "../components/ui/proof-bento";
-import { Footer } from "../components/Footer";
+import { ProofBento } from "../components/sections/ProofBento";
+import { Footer } from "../components/layout/Footer";
 import { SEO } from "../components/SEO";
 
 /**

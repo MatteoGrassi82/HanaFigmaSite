@@ -2,9 +2,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion, useInView } from "motion/react";
 import { Check, X, ChevronDown } from "lucide-react";
 import { SEO, breadcrumbSchema } from "../components/SEO";
-import { Footer } from "../components/Footer";
-import { RecipesMarquee } from "../components/RecipesMarquee";
-import { ContactFlow } from "../components/contact/ContactFlow";
+import { Footer } from "../components/layout/Footer";
+import { RecipesMarquee } from "../components/sections/RecipesMarquee";
+import { ContactFlow } from "../components/sections/ContactFlow";
 
 const DEMO_URL = "https://calendly.com/matteowastaken/discoverycall";
 

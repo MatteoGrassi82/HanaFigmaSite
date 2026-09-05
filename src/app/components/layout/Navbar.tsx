@@ -3,10 +3,10 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Menu, X, Sparkle } from "lucide-react";
-import { cn } from "../../lib/utils";
+import { cn } from "../../../lib/utils";
 import { Link, useLocation } from "react-router";
 import logoImage from 'figma:asset/55130a9cc9a8f890dc08e580a5cf6dd0df0df413.png';
-import { useTranslations, getLocale } from "../../lib/i18n";
+import { useTranslations, getLocale } from "../../../lib/i18n";
 
 // --- Types ---
 type ImageProps = {

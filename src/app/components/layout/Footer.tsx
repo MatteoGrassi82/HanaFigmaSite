@@ -1,7 +1,7 @@
 import { Github, Twitter, Linkedin } from "lucide-react";
 import { Link } from "react-router";
 import logoImage from 'figma:asset/55130a9cc9a8f890dc08e580a5cf6dd0df0df413.png';
-import { useTranslations, getLocale } from "../../lib/i18n";
+import { useTranslations, getLocale } from "../../../lib/i18n";
 
 export function Footer() {
   const t = useTranslations();

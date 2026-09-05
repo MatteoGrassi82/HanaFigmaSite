@@ -1,8 +1,8 @@
 import React from 'react';
 import { ArrowRight, Code2 } from 'lucide-react';
 import { Link } from 'react-router';
-import { useTranslations } from '../../lib/i18n';
-import { TRUST_LOGOS, LogoMarquee } from './ui/brand-logos';
+import { useTranslations } from '../../../lib/i18n';
+import { TRUST_LOGOS, LogoMarquee } from '../media/BrandLogos';
 
 export function IntegrationsSection() {
   const t = useTranslations();

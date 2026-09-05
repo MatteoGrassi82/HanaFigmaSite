@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { getPosts, type Post } from "../../lib/sanity";
-import { PostCover } from "../components/PostCover";
-import { Footer } from "../components/Footer";
+import { PostCover } from "../components/media/PostCover";
+import { Footer } from "../components/layout/Footer";
 import { SEO } from "../components/SEO";
 import { useTranslations, getLocale } from "../../lib/i18n";
 

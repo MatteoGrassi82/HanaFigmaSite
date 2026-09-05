@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { type Variants } from "motion/react";
-import { TimelineContent } from "./timeline-animation";
+import { TimelineContent } from "../ui/timeline-animation";
 import { getLocale } from "../../../lib/i18n";
 
 /* ── Mosaic tiles ─────────────────────────────────────────────────────────

@@ -1,7 +1,7 @@
 import { SEO } from "../components/SEO";
-import { Footer } from "../components/Footer";
-import { LoopDiagram } from "../components/ui/loop-diagram";
-import { ClientFeedback } from "../components/ui/testimonial";
+import { Footer } from "../components/layout/Footer";
+import { LoopDiagram } from "../components/sections/LoopDiagram";
+import { ClientFeedback } from "../components/lab/Testimonial";
 
 /**
  * Scratch preview page for sections in progress.

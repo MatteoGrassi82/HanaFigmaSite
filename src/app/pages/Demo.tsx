@@ -3,7 +3,7 @@ import { Player } from "@remotion/player";
 import { WorkflowBuilderComp } from "../components/remotion/WorkflowBuilderComp";
 import { SafetyMonitorComp } from "../components/remotion/SafetyMonitorComp";
 import { PatientContextComp } from "../components/remotion/PatientContextComp";
-import { Footer } from "../components/Footer";
+import { Footer } from "../components/layout/Footer";
 import { SEO } from "../components/SEO";
 import { getLocale } from "../../lib/i18n";
 

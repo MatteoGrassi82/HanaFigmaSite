@@ -1,4 +1,4 @@
-import type { Recipe } from "../RecipesMarquee";
+import type { Recipe } from "../app/components/sections/RecipesMarquee";
 
 /* ── The program card set for Remote's workflow marquee ────────────────────
  * Matteo, 2026-08-19: keep the home-page marquee exactly as it is (cards drift,

@@ -6,7 +6,7 @@ import {
   Shield,
   Stethoscope
 } from "lucide-react";
-import { useTranslations } from "../../lib/i18n";
+import { useTranslations } from "../../../lib/i18n";
 
 /**
  * The credentials view: certifications plus the deployment note.

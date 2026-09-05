@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowRight, BookOpen, FileText, FlaskConical, ExternalLink } from "lucide-react";
-import { Footer } from "../components/Footer";
+import { Footer } from "../components/layout/Footer";
 import { SEO } from "../components/SEO";
 import { getPosts, type Post } from "../../lib/sanity";
 

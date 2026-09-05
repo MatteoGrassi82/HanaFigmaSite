@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from "motion/react";
 import { Check } from "lucide-react";
-import { HanaBloomOrb } from "../ui/hana-bloom-orb";
+import { HanaBloomOrb } from "../media/HanaBloomOrb";
 
 // ── "How it works" flow diagram ──────────────────────────────────────────────
 // A cinematic, calm-and-premium reveal told in three acts, played once on scroll:

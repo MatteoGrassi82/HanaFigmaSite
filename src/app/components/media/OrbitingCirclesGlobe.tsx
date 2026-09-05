@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Plug, Webhook } from "lucide-react";
-import ParticleSphereAnimation from "./orbiting-circles-02-utils/particalsphear";
+import ParticleSphereAnimation from "./ParticleSphere";
 
 /**
  * OrbitingCirclesGlobe — integration logos orbiting a glowing core.

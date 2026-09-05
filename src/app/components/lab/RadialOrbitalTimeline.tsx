@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "./card";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { cn } from "../../../lib/utils";
 import centerOrbImage from "../../../assets/hana-orb.webp";
 

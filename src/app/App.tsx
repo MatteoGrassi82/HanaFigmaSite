@@ -8,7 +8,7 @@ function ScrollToTop() {
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   return null;
 }
-import { Navbar } from "./components/Navbar";
+import { Navbar } from "./components/layout/Navbar";
 import { getLocale } from "../lib/i18n";
 import { Home } from "./pages/Home";
 
@@ -24,7 +24,7 @@ const HanaRemote = lazy(() => import("./pages/HanaRemote").then((m) => ({ defaul
 const HanaSleep = lazy(() => import("./pages/HanaSleep").then((m) => ({ default: m.HanaSleep })));
 const HanaSleepAnalysis = lazy(() => import("./pages/HanaSleepAnalysis").then((m) => ({ default: m.HanaSleepAnalysis })));
 const HanaSleepCPAP = lazy(() => import("./pages/HanaSleepCPAP").then((m) => ({ default: m.HanaSleepCPAP })));
-const TestWebhook = lazy(() => import("./components/TestWebhook").then((m) => ({ default: m.TestWebhook })));
+const TestWebhook = lazy(() => import("./components/dev/TestWebhook").then((m) => ({ default: m.TestWebhook })));
 const Terms = lazy(() => import("./pages/Terms").then((m) => ({ default: m.Terms })));
 const AUP = lazy(() => import("./pages/AUP").then((m) => ({ default: m.AUP })));
 const Privacy = lazy(() => import("./pages/Privacy").then((m) => ({ default: m.Privacy })));

@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { motion } from "motion/react";
 import { ArrowRight, FileText } from "lucide-react";
-import { Footer } from "../components/Footer";
+import { Footer } from "../components/layout/Footer";
 import { SEO } from "../components/SEO";
 import { getLocale } from "../../lib/i18n";
 

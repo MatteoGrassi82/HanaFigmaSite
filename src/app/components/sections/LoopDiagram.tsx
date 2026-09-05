@@ -9,7 +9,7 @@ import {
   useTransform,
   type Variants,
 } from "motion/react";
-import { LOOP_ICONS } from "./loop-icons";
+import { LOOP_ICONS } from "../media/LoopIcons";
 import { getLocale } from "../../../lib/i18n";
 
 /* ── Locale ─────────────────────────────────────────────────────────────────

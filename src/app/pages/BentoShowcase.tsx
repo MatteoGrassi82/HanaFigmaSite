@@ -1,6 +1,6 @@
-import { FeatureBento } from "../components/ui/feature-bento";
-import { PatientEngagement } from "../components/PatientEngagement";
-import { Footer } from "../components/Footer";
+import { FeatureBento } from "../components/lab/FeatureBento";
+import { PatientEngagement } from "../components/sections/PatientEngagement";
+import { Footer } from "../components/layout/Footer";
 import { SEO } from "../components/SEO";
 
 /**

@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { toast } from "sonner";
-import { getLocale } from "../../lib/i18n";
+import { getLocale } from "../../../lib/i18n";
 
 // Pre-written prompt the visitor will take to their chosen AI platform.
 const HANA_PROMPT_EN =

@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion, useInView } from "motion/react";
 import { Check, ChevronDown } from "lucide-react";
 import { SEO, breadcrumbSchema, faqSchema } from "../components/SEO";
-import { Footer } from "../components/Footer";
-import { HanaBloomOrb } from "../components/ui/hana-bloom-orb";
-import { InlineImageHeader } from "../components/InlineImageHeader";
-import { LoopDiagram } from "../components/ui/loop-diagram";
-import { SafetyStack } from "../components/ui/safety-stack";
-import { NightSky } from "../components/ui/night-sky";
-import { Glyph, RI } from "../components/remote/CompassDashboard";
+import { Footer } from "../components/layout/Footer";
+import { HanaBloomOrb } from "../components/media/HanaBloomOrb";
+import { InlineImageHeader } from "../components/sections/InlineImageHeader";
+import { LoopDiagram } from "../components/sections/LoopDiagram";
+import { SafetyStack } from "../components/sections/SafetyStack";
+import { NightSky } from "../components/media/NightSky";
+import { Glyph, RI } from "../components/media/CompassDashboard";
 
 const DEMO_URL = "https://calendly.com/matteowastaken/discoverycall";
 

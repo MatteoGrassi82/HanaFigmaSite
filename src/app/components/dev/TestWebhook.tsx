@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { projectId, publicAnonKey } from "../../../utils/supabase/info";
+import { projectId, publicAnonKey } from "../../../../utils/supabase/info";
 
 export function TestWebhook() {
   const [leadResult, setLeadResult] = useState<any>(null);

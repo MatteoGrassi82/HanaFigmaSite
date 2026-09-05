@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { ArrowRight } from "lucide-react";
-import { getPosts, type Post } from "../../lib/sanity";
-import { PostCover } from "./PostCover";
-import { getLocale } from "../../lib/i18n";
+import { getPosts, type Post } from "../../../lib/sanity";
+import { PostCover } from "../media/PostCover";
+import { getLocale } from "../../../lib/i18n";
 
 /* ── Latest from the blog ───────────────────────────────────────────────────
    Pulls the 3 most recent posts from Sanity (getPosts already returns them

@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Footer } from "../components/Footer";
+import { Footer } from "../components/layout/Footer";
 import { SEO } from "../components/SEO";
 import { ArrowRight, ChevronDown, ChevronUp, CheckCircle2, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router";
-import { WhitepaperFlows } from "../components/WhitepaperFlows";
+import { WhitepaperFlows } from "../components/sections/WhitepaperFlows";
 import { getLocale } from "../../lib/i18n";
 
 const IT = getLocale() === "it";

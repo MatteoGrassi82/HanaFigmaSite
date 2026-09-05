@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from "react";
-import { Footer } from "../components/Footer";
+import { Footer } from "../components/layout/Footer";
 import { SEO } from "../components/SEO";
 import { ExternalLink, Search, X, Layers, Phone, Heart, Calendar, MessageSquare, DollarSign, Globe, Brain, AudioLines, Mic, Radio, FlaskConical, GitFork, Download } from "lucide-react";
 

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { getLocale } from "../../lib/i18n";
+import { getLocale } from "../../../lib/i18n";
 
 const IT = getLocale() === "it";
 

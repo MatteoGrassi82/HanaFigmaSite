@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Footer } from "../components/Footer";
+import { Footer } from "../components/layout/Footer";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { SEO } from "../components/SEO";
 import { breadcrumbSchema } from "../components/SEO";

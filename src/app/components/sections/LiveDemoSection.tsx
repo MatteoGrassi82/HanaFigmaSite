@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Loader2, Globe, PhoneOff, CheckCircle2 } from "lucide-react";
-import { cn } from "../../lib/utils";
-import { projectId, publicAnonKey } from "../../../utils/supabase/info";
-import { HanaBloomOrb } from "./ui/hana-bloom-orb";
-import { useTranslations, getLocale } from "../../lib/i18n";
+import { cn } from "../../../lib/utils";
+import { projectId, publicAnonKey } from "../../../../utils/supabase/info";
+import { HanaBloomOrb } from "../media/HanaBloomOrb";
+import { useTranslations, getLocale } from "../../../lib/i18n";
 
 const FN_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-77ada9a1`;
 

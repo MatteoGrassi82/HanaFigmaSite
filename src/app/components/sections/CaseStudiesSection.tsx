@@ -3,7 +3,7 @@ import image_79f9f204476e9693a3b2efedb57797a6f4a0fa38 from 'figma:asset/79f9f204
 import image_15b8b08ff934107140826361e6e3912f69618bae from 'figma:asset/15b8b08ff934107140826361e6e3912f69618bae.png';
 import { ArrowRight, Play, Quote } from "lucide-react";
 import { Link } from "react-router";
-import { useTranslations } from "../../lib/i18n";
+import { useTranslations } from "../../../lib/i18n";
 
 interface CaseStudy {
   id: string;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
-import { useTranslations } from "../../lib/i18n";
+import { useTranslations } from "../../../lib/i18n";
 
 function WorkflowAnimation() {
   return (

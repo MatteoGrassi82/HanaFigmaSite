@@ -2,7 +2,7 @@
 
 import React, { useState, useCallback } from "react";
 import { X, ArrowRight } from "lucide-react";
-import { useTranslations, getLocale } from "../../lib/i18n";
+import { useTranslations, getLocale } from "../../../lib/i18n";
 
 const CHANNELS = {
   ehr:   { label: "EHR",           dot: "#4A7BA7" },

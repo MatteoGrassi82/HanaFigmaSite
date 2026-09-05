@@ -1,4 +1,4 @@
-import { urlFor, type Post } from "../../lib/sanity";
+import { urlFor, type Post } from "../../../lib/sanity";
 
 /**
  * PostCover

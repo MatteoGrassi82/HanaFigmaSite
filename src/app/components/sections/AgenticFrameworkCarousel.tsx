@@ -2,12 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import { ChevronLeft, ChevronRight, X, Maximize2 } from 'lucide-react';
-import { cn } from '../../lib/utils';
+import { cn } from '../../../lib/utils';
 import { Player, type PlayerRef } from '@remotion/player';
-import { WorkflowBuilderComp } from './remotion/WorkflowBuilderComp';
-import { SafetyMonitorComp } from './remotion/SafetyMonitorComp';
-import { PatientContextComp } from './remotion/PatientContextComp';
-import { getLocale } from '../../lib/i18n';
+import { WorkflowBuilderComp } from '../remotion/WorkflowBuilderComp';
+import { SafetyMonitorComp } from '../remotion/SafetyMonitorComp';
+import { PatientContextComp } from '../remotion/PatientContextComp';
+import { getLocale } from '../../../lib/i18n';
 
 /* Shared <Player> render for a homepage demo slide. The compositions are
    900x506 (≈16:9), so they fill the carousel's aspect-video frame cleanly.

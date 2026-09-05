@@ -1,7 +1,7 @@
 import image_77a7976bf5ac7a4d6dd84ca175d8ece4a749f268 from 'figma:asset/77a7976bf5ac7a4d6dd84ca175d8ece4a749f268.png';
 import image_dd3b64b03ed0e3ccd7fa880ddc0aaa53dd304353 from 'figma:asset/dd3b64b03ed0e3ccd7fa880ddc0aaa53dd304353.png';
 import { useState, useEffect, useRef } from "react";
-import { Footer } from "../components/Footer";
+import { Footer } from "../components/layout/Footer";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { SEO } from "../components/SEO";
 import { breadcrumbSchema } from "../components/SEO";
