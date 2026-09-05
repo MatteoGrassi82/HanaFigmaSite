@@ -32,7 +32,7 @@ const IT = LOC === "it";
 ---------------------------------------------------------------------------- */
 
 /* ---- Brand tokens ---------------------------------------------------------- */
-const SANS = "'DM Sans', system-ui, sans-serif";
+const SANS = "'IBM Plex Sans', system-ui, sans-serif";
 const MONO = "ui-monospace, 'SF Mono', 'JetBrains Mono', monospace";
 
 const INK = "#0A0A0B";

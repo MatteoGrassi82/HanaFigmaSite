@@ -37,8 +37,8 @@ import { getLocale } from "../../../lib/i18n";
    ========================================================================== */
 
 /* ----------------------------- Type scale & color -------------------------- */
-const FONT_DISPLAY = "'Instrument Serif', Georgia, 'Times New Roman', serif";
-const FONT_UI = "'DM Sans', system-ui, -apple-system, sans-serif";
+const FONT_DISPLAY = "'Fraunces', Georgia, 'Times New Roman', serif";
+const FONT_UI = "'IBM Plex Sans', system-ui, -apple-system, sans-serif";
 const FONT_MONO =
   "ui-monospace, 'SF Mono', 'JetBrains Mono', 'Menlo', monospace";
 

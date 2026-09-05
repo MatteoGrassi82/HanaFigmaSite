@@ -24,7 +24,7 @@ import {
 /*  HANA never logs "billable minutes" — notes are attested by staff.  */
 /* ------------------------------------------------------------------ */
 
-const SANS = "'DM Sans', system-ui, sans-serif";
+const SANS = "'IBM Plex Sans', system-ui, sans-serif";
 
 const BLUE = "#2563EB";
 const INK = "#0A1633";
@@ -130,8 +130,8 @@ const APPS: AppIcon[] = [
   { label: "Messages", bg: "linear-gradient(160deg,#6FE07C,#25B34C)", glyph: g("M12 3C6.9 3 3 6.4 3 10.6c0 2.4 1.3 4.5 3.4 5.9-.2 1.2-.8 2.4-1.7 3.4 1.7-.2 3.3-.9 4.6-1.9.8.2 1.7.3 2.7.3 5.1 0 9-3.4 9-7.7S17.1 3 12 3z") },
   { label: "Calendar", bg: "#FFFFFF", glyph: (
     <svg viewBox="0 0 24 24" width="72%" height="72%">
-      <text x="12" y="9" textAnchor="middle" fontSize="6" fontWeight="700" fill="#E5544B" fontFamily="'DM Sans', sans-serif">MON</text>
-      <text x="12" y="20" textAnchor="middle" fontSize="11" fontWeight="500" fill="#1B2436" fontFamily="'DM Sans', sans-serif">6</text>
+      <text x="12" y="9" textAnchor="middle" fontSize="6" fontWeight="700" fill="#E5544B" fontFamily="var(--font-sans)">MON</text>
+      <text x="12" y="20" textAnchor="middle" fontSize="11" fontWeight="500" fill="#1B2436" fontFamily="var(--font-sans)">6</text>
     </svg>
   ) },
   { label: "Camera", bg: "linear-gradient(160deg,#7C8798,#4A5563)", glyph: g("M12 8.5A3.5 3.5 0 1 0 12 15.5 3.5 3.5 0 0 0 12 8.5zM20 6h-3l-1.2-1.6a1 1 0 0 0-.8-.4H9a1 1 0 0 0-.8.4L7 6H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1zm-8 11.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z") },

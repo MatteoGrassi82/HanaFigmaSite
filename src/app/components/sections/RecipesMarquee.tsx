@@ -579,7 +579,7 @@ export function RecipesMarquee({
   };
 
   return (
-    <section className="py-24 bg-white overflow-hidden" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+    <section className="py-24 bg-white overflow-hidden" style={{ fontFamily: "var(--font-sans)" }}>
       <style>{`
         @keyframes marqueeLeft {
           from { transform: translateX(0); }

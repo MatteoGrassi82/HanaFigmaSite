@@ -1,54 +1,52 @@
 /* ─────────────────────────────────────────────────────────────────────────────
- * serif-display.css — Fraunces as the display serif, scoped to `.serif-display`.
+ * serif-display.css — how Fraunces is driven, site-wide.
  *
- * WAS cobalt-type.css, a type-AND-paper experiment lifted off usecobalt.com. The
- * palette decision (2026-09-05) kept the serif and dropped the paper: the site is
- * one design system, the legacy navy #00122F + periwinkle #5B76D9, on white. So
- * everything that repainted grounds, rules and body ink is gone from this file,
- * along with the IBM Plex body face. What survives is the display face and the
- * variable-axis settings that make it work.
+ * The type system is Fraunces (display) + IBM Plex Sans (body). It was built on
+ * the /remote-v2 rebuild and scoped to that page while it proved itself; on
+ * 2026-09-05 it became the site's type system, so the faces now live in
+ * theme.css @theme (--font-serif / --font-sans) and these rules apply globally
+ * rather than under a `.cobalt` / `.serif-display` class.
  *
- * Still scoped rather than global on purpose. Changing --font-serif in theme.css
- * would reface every h1/h2/h3 in 58 files at once, at type sizes this treatment
- * was never checked against, and Pricing.tsx would not even follow: it hardcodes
- * font-['Instrument_Serif'] in ten places instead of using the token. Promoting
- * Fraunces sitewide is a deliberate, screenshotted migration, not a side effect.
+ * The faces load from index.html <head>, not by @import here, so the browser
+ * discovers them in the initial HTML instead of after this stylesheet parses.
  *
- * To promote it later: move --font-serif into theme.css @theme, lift these rules
- * to bare :is(h1,h2,h3,.font-serif) selectors, fix Pricing.tsx's ten hardcoded
- * classes, and re-check the 19-27px serif sizes where weight 300 goes thin.
+ * Fraunces is variable on four axes. Left at its defaults it reads as a chunky
+ * Cooper-ish serif; `opsz` 144 is what produces the hairline contrast the design
+ * depends on, and SOFT rounds the terminals slightly.
+ *
+ * WEIGHT: 300 only where type is genuinely large. Display headings run 28-112px
+ * and the serif stat numerals 44-64px, which carry a 300 comfortably. The 19-27px
+ * serif — h3, blockquote, the serif pull paragraphs — stays at 400, because a 300
+ * at that size goes thin and fails on a laptop screen in daylight.
  * ─────────────────────────────────────────────────────────────────────────── */
 
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&display=swap");
-
-.serif-display {
-  /* Tailwind resolves --font-serif per element, so redefining it here refaces
-     every font-serif utility inside this subtree and nowhere else. */
-  --font-serif: "Fraunces", Georgia, serif;
-
-  letter-spacing: -0.003em;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Fraunces at its default optical size reads as a chunky Cooper-ish serif.
-   "opsz" 144 is what produces the hairline contrast this design wants. */
-.serif-display :is(h1, h2, h3, .font-serif) {
+:is(h1, h2, h3, .font-serif) {
   font-variation-settings: "opsz" 144, "SOFT" 50;
 }
 
-/* Weight 300 only where the type is genuinely large (h1/h2 run 28-112px here,
-   and the serif stat numerals are divs/spans at 44-64px). The 19-27px serif —
-   h3, blockquote, the serif pull paragraphs — stays at 400 and stays readable. */
-.serif-display :is(h1, h2),
-.serif-display :is(div, span).font-serif {
+:is(h1, h2),
+:is(div, span).font-serif {
   font-weight: 300;
 }
 
-/* The accent italic: a softer axis on <em> inside a display heading. This is the
-   pattern Hero, FaqSection and CtaBand all expect when a caller passes an <em>. */
-.serif-display :is(h1, h2, .font-serif) :is(em, i) {
+/* h3 and the small serif sizes stay at 400. Stated explicitly so a future
+   `font-weight` shorthand on a parent cannot drag them down to 300. */
+h3 {
+  font-weight: 400;
+}
+
+/* The accent italic: a softer axis on <em> inside a display heading. Hero,
+   FaqSection and CtaBand all pass an <em> for the second clause and expect
+   this treatment. */
+:is(h1, h2, .font-serif) :is(em, i) {
   font-style: italic;
   font-weight: 400;
   font-variation-settings: "opsz" 144, "SOFT" 100;
+}
+
+/* Body copy sits slightly tighter in Plex than it did in DM Sans. */
+body {
+  letter-spacing: -0.003em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

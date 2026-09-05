@@ -22,7 +22,7 @@ import {
 /*  Canvas 760x620 @ 30fps, 510-frame loop (17s), TRANSPARENT bg.      */
 /* ------------------------------------------------------------------ */
 
-const SANS = "'DM Sans', system-ui, sans-serif";
+const SANS = "'IBM Plex Sans', system-ui, sans-serif";
 
 const BLUE = "#2563EB";
 const ORANGE = "#F59E42";

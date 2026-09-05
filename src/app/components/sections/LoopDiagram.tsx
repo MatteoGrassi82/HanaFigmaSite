@@ -564,7 +564,7 @@ export function LoopDiagram({
                         textAnchor="middle"
                         fontSize="13"
                         fontWeight="600"
-                        style={{ fontFamily: "'DM Sans', sans-serif" }}
+                        style={{ fontFamily: "var(--font-sans)" }}
                         animate={{ fill: light ? NAVY : "rgba(255,255,255,0.85)" }}
                       >
                         {copy.offRamp!.label}
@@ -603,7 +603,7 @@ export function LoopDiagram({
                         textAnchor="middle"
                         fontSize="13"
                         fontWeight="600"
-                        style={{ fontFamily: "'DM Sans', sans-serif", fill: light ? "#5b76d9" : SKY }}
+                        style={{ fontFamily: "var(--font-sans)", fill: light ? "#5b76d9" : SKY }}
                         initial={{ opacity: 0, y: 4 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -4 }}

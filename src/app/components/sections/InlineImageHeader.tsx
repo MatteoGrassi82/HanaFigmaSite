@@ -96,7 +96,7 @@ export function InlineImageHeader({ light = false }: { light?: boolean } = {}) {
   const t = useTranslations();
   const gs = t.getStarted;
   return (
-    <section className={`py-16 md:py-[100px] px-6 md:px-10 font-["DM_Sans"] `}>
+    <section className={`py-16 md:py-[100px] px-6 md:px-10 font-sans `}>
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}

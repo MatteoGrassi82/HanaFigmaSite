@@ -88,7 +88,7 @@ export function SleepTwoProducts() {
                   {HYPNO_LEVELS.map(([label, y]) => (
                     <g key={label}>
                       <line x1="46" y1={y} x2="332" y2={y} stroke="rgba(255,255,255,0.09)" strokeWidth="1" />
-                      <text x="6" y={y + 3.5} fill="rgba(255,255,255,0.5)" fontSize="9" fontFamily="'DM Sans', sans-serif">
+                      <text x="6" y={y + 3.5} fill="rgba(255,255,255,0.5)" fontSize="9" fontFamily="var(--font-sans)">
                         {label}
                       </text>
                     </g>

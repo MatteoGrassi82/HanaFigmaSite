@@ -43,8 +43,8 @@ const DANGER = "#FF453A";
 const WA_GREEN = "#20BD5A";
 const SMS_AMBER = "#FF9F0A";
 
-const SERIF = "'Instrument Serif', Georgia, serif";
-const SANS = "'DM Sans', system-ui, sans-serif";
+const SERIF = "'Fraunces', Georgia, serif";
+const SANS = "'IBM Plex Sans', system-ui, sans-serif";
 const MONO = "ui-monospace, 'SF Mono', 'JetBrains Mono', monospace";
 
 /* Layered, realistic shadows ---------------------------------------- */

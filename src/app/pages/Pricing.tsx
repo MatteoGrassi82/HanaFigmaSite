@@ -171,7 +171,7 @@ function SlideTypeSelect({ value, onChange, onNext, nextLabel }: {
   return (
     <div className="w-full max-w-[600px]">
       <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3 text-center">1 of 5</div>
-      <h2 className="font-['Instrument_Serif'] text-3xl md:text-4xl text-slate-900 mb-2 text-center">What kind of practice are you?</h2>
+      <h2 className="font-serif text-3xl md:text-4xl text-slate-900 mb-2 text-center">What kind of practice are you?</h2>
       <p className="text-sm text-slate-600 font-light mb-8 leading-relaxed text-center">This pre-selects the most relevant workflows for your setting.</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-8">
         {PRACTICE_TYPES.map(pt => (
@@ -200,13 +200,13 @@ function SlideProviders({ value, onChange, onNext, onBack, nextLabel, backLabel 
   return (
     <div className="w-full max-w-[560px]">
       <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3 text-center">2 of 5</div>
-      <h2 className="font-['Instrument_Serif'] text-3xl md:text-4xl text-slate-900 mb-2 text-center">How many providers do you have?</h2>
+      <h2 className="font-serif text-3xl md:text-4xl text-slate-900 mb-2 text-center">How many providers do you have?</h2>
       <p className="text-sm text-slate-600 font-light mb-10 leading-relaxed text-center">Count all clinicians who see patients — doctors, nurses, therapists, PAs.</p>
       <div className="flex items-center justify-center gap-8 mb-3">
         <button onClick={() => onChange(Math.max(1, value - 1))} className="w-11 h-11 rounded-full border border-slate-200 bg-white flex items-center justify-center hover:border-blue-500 hover:text-blue-500 transition-colors">
           <Minus className="w-4 h-4" />
         </button>
-        <span className="font-['Instrument_Serif'] text-5xl sm:text-6xl font-medium text-slate-900 min-w-[80px] text-center">{value}</span>
+        <span className="font-serif text-5xl sm:text-6xl font-medium text-slate-900 min-w-[80px] text-center">{value}</span>
         <button onClick={() => onChange(Math.min(50, value + 1))} className="w-11 h-11 rounded-full border border-slate-200 bg-white flex items-center justify-center hover:border-blue-500 hover:text-blue-500 transition-colors">
           <Plus className="w-4 h-4" />
         </button>
@@ -237,7 +237,7 @@ function SlideMods({ mods, wfs, onChange, onNext, onBack, nextLabel, backLabel }
   return (
     <div className="w-full max-w-[560px]">
       <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3 text-center">3 of 5</div>
-      <h2 className="font-['Instrument_Serif'] text-3xl md:text-4xl text-slate-900 mb-2 text-center">Which modules do you want?</h2>
+      <h2 className="font-serif text-3xl md:text-4xl text-slate-900 mb-2 text-center">Which modules do you want?</h2>
       <p className="text-sm text-slate-600 font-light mb-8 leading-relaxed text-center">Select the categories relevant to your practice.</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-8">
         {MODULES.map(m => {
@@ -300,7 +300,7 @@ function SlideWorkflows({ mods, wfs, onChange, onNext, onBack, nextLabel, backLa
   return (
     <div className="w-full max-w-[600px]">
       <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3 text-center">4 of 5</div>
-      <h2 className="font-['Instrument_Serif'] text-3xl md:text-4xl text-slate-900 mb-2 text-center">Select your workflows</h2>
+      <h2 className="font-serif text-3xl md:text-4xl text-slate-900 mb-2 text-center">Select your workflows</h2>
       <p className="text-sm text-slate-600 font-light mb-8 leading-relaxed text-center">Select the workflows you want to automate. Toggle any on or off.</p>
 
       <div className="mb-8 space-y-2">
@@ -372,7 +372,7 @@ function SlideVolumes({ mods, wfs, vols, onChange, onNext, onBack, nextLabel, ba
   return (
     <div className="w-full max-w-[560px]">
       <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3 text-center">5 of 5</div>
-      <h2 className="font-['Instrument_Serif'] text-3xl md:text-4xl text-slate-900 mb-2 text-center">Roughly how many per month?</h2>
+      <h2 className="font-serif text-3xl md:text-4xl text-slate-900 mb-2 text-center">Roughly how many per month?</h2>
       <p className="text-sm text-slate-600 font-light mb-8 leading-relaxed text-center">Estimates are fine. We confirm exact numbers on the discovery call.</p>
 
       <div className="mb-8">
@@ -406,7 +406,7 @@ function SlideVolumes({ mods, wfs, vols, onChange, onNext, onBack, nextLabel, ba
                           const n = parseInt(e.target.value, 10);
                           if (!isNaN(n) && n >= (w.min ?? 0)) onChange(id, n);
                         }}
-                        className="font-['Instrument_Serif'] text-xl font-medium text-slate-900 w-16 text-center border border-slate-200 rounded-lg py-1 focus:outline-none focus:border-blue-400 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                        className="font-serif text-xl font-medium text-slate-900 w-16 text-center border border-slate-200 rounded-lg py-1 focus:outline-none focus:border-blue-400 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       />
                       <button onClick={() => onChange(id, val + (w.step ?? 1))}
                         className="w-9 h-9 sm:w-8 sm:h-8 rounded-full border border-slate-200 bg-slate-50 flex items-center justify-center hover:border-blue-400 hover:text-blue-500 transition-colors">
@@ -451,14 +451,14 @@ function SlideResult({ providers, mods, wfs, vols, onBack, bookCallLabel, backTo
     <div className="w-full max-w-[640px]">
       <div className="text-center mb-6 pb-6 border-b border-slate-200">
         <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-1">Your estimated monthly saving</div>
-        <div className="font-['Instrument_Serif'] text-5xl sm:text-6xl font-medium text-blue-500">{fmt(saving)}</div>
+        <div className="font-serif text-5xl sm:text-6xl font-medium text-blue-500">{fmt(saving)}</div>
         <div className="text-sm text-slate-400 mt-1 font-light">{pct}% less than your current practice cost for the same tasks</div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
         {[{ val: fmt(hana), label: "HANA / month" }, { val: fmt(human), label: "Current practice cost" }, { val: fmt(annual), label: "Annual saving" }].map(m => (
           <div key={m.label} className="bg-white border border-slate-200 rounded-lg p-4 text-center">
-            <div className="font-['Instrument_Serif'] text-xl font-medium text-slate-900">{m.val}</div>
+            <div className="font-serif text-xl font-medium text-slate-900">{m.val}</div>
             <div className="text-xs text-slate-400 mt-1 font-light">{m.label}</div>
           </div>
         ))}
@@ -624,7 +624,7 @@ export function Pricing() {
       {/* FAQ */}
       <section className="max-w-xl mx-auto px-4 pb-20">
         <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium text-center mb-2">{t.pricing.commonQuestions}</div>
-        <h2 className="font-['Instrument_Serif'] text-2xl md:text-3xl text-slate-900 text-center mb-8">How does this work?</h2>
+        <h2 className="font-serif text-2xl md:text-3xl text-slate-900 text-center mb-8">How does this work?</h2>
         {FAQS.map(f => <FaqItem key={f.q} q={f.q} a={f.a} />)}
       </section>
 

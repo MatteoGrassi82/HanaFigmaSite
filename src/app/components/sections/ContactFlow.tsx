@@ -97,7 +97,7 @@ function NodeCard({ x, y, label, icon }: { x: number; y: number; label: string; 
       <rect x={x} y={y} width="220" height="48" rx="12" fill="#fff" stroke="#e2e6f0" strokeWidth="1" />
       <circle cx={x + 26} cy={y + 24} r="14" fill="#eef1fb" />
       <NodeGlyph cx={x + 26} cy={y + 24} icon={icon} />
-      <text x={x + 52} y={y + 29} fontFamily="DM Sans, sans-serif" fontSize="13" fill="#00122F" fontWeight="500">{label}</text>
+      <text x={x + 52} y={y + 29} fontFamily="var(--font-sans)" fontSize="13" fill="#00122F" fontWeight="500">{label}</text>
     </g>
   );
 }
@@ -265,7 +265,7 @@ function FrontDeskDiagram() {
             {/* Icon well + icon (shared look with inputs) */}
             <circle cx="746" cy={n.y + 24} r="14" fill="#eef1fb" />
             <NodeGlyph cx={746} cy={n.y + 24} icon={n.icon} />
-            <text x="772" y={n.y + 29} fontFamily="DM Sans, sans-serif" fontSize="13" fill="#00122F" fontWeight="500">{n.label}</text>
+            <text x="772" y={n.y + 29} fontFamily="var(--font-sans)" fontSize="13" fill="#00122F" fontWeight="500">{n.label}</text>
             {/* Confirmation check — pops in at the right edge as the action completes */}
             <motion.g
               initial={{ opacity: reduce ? 1 : 0, scale: reduce ? 1 : 0 }}

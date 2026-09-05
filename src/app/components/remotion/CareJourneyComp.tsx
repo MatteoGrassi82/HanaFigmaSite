@@ -23,7 +23,7 @@ import {
 /*  Scene windows = 120f, travel gaps = 20f.                           */
 /* ------------------------------------------------------------------ */
 
-const SANS = "'DM Sans', system-ui, sans-serif";
+const SANS = "'IBM Plex Sans', system-ui, sans-serif";
 
 /* Retell-derived palette (Matteo 2026-08-12: "colour scheme like retell").
    White cards on lavender-gray rows, near-black navy ink, ONE bright blue as

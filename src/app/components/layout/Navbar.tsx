@@ -215,7 +215,7 @@ export const Navbar = (props: NavbarProps) => {
               <SmartLink
                 key={index}
                 href={navLink.url}
-                className="text-[15px] font-medium text-[#1e2a3a] hover:text-[#2d3f54] transition-colors font-['DM_Sans']"
+                className="text-[15px] font-medium text-[#1e2a3a] hover:text-[#2d3f54] transition-colors font-sans"
               >
                 {navLink.title}
               </SmartLink>
@@ -260,7 +260,7 @@ export const Navbar = (props: NavbarProps) => {
                   <SmartLink
                     key={index}
                     href={navLink.url}
-                    className="text-lg font-medium text-[#1e2a3a] py-3 font-['DM_Sans']"
+                    className="text-lg font-medium text-[#1e2a3a] py-3 font-sans"
                   >
                     {navLink.title}
                   </SmartLink>
@@ -285,7 +285,7 @@ const SubMenu = ({ navLink, isMobile }: { navLink: NavLink; isMobile: boolean })
     return (
       <div className="flex flex-col">
         <button
-          className="flex w-full items-center justify-between text-lg font-medium text-[#1e2a3a] py-3 font-['DM_Sans']"
+          className="flex w-full items-center justify-between text-lg font-medium text-[#1e2a3a] py-3 font-sans"
           onClick={() => setIsDropdownOpen((prev) => !prev)}
         >
           <span>{navLink.title}</span>
@@ -303,7 +303,7 @@ const SubMenu = ({ navLink, isMobile }: { navLink: NavLink; isMobile: boolean })
                 <SmartLink
                   key={index}
                   href={subMenuLink.url}
-                  className="flex items-center min-h-[44px] py-3 text-[#718096] hover:text-[#1e2a3a] font-['DM_Sans']"
+                  className="flex items-center min-h-[44px] py-3 text-[#718096] hover:text-[#1e2a3a] font-sans"
                 >
                   {subMenuLink.title}
                 </SmartLink>
@@ -322,7 +322,7 @@ const SubMenu = ({ navLink, isMobile }: { navLink: NavLink; isMobile: boolean })
       onMouseLeave={() => setIsDropdownOpen(false)}
     >
       <button
-        className="flex items-center gap-1 text-[15px] font-medium text-[#1e2a3a] hover:text-[#2d3f54] transition-colors font-['DM_Sans']"
+        className="flex items-center gap-1 text-[15px] font-medium text-[#1e2a3a] hover:text-[#2d3f54] transition-colors font-sans"
       >
         <span>{navLink.title}</span>
         <ChevronDown className={cn("h-4 w-4 transition-transform duration-200", isDropdownOpen && "rotate-180")} />
@@ -341,7 +341,7 @@ const SubMenu = ({ navLink, isMobile }: { navLink: NavLink; isMobile: boolean })
                 <SmartLink
                   key={index}
                   href={subMenuLink.url}
-                  className="block px-4 py-2 text-sm text-[#718096] hover:bg-[#f5f6f8] hover:text-[#1e2a3a] rounded-lg transition-colors font-['DM_Sans']"
+                  className="block px-4 py-2 text-sm text-[#718096] hover:bg-[#f5f6f8] hover:text-[#1e2a3a] rounded-lg transition-colors font-sans"
                 >
                   {subMenuLink.title}
                 </SmartLink>

@@ -21,10 +21,6 @@ import { CompanionShowcaseComp, COMPANION_CHAPTER_LEN, COMPANION_DURATION } from
 import { ProofBento } from "../components/sections/ProofBento";
 import OrbitingCirclesGlobe from "../components/media/OrbitingCirclesGlobe";
 import { ShaderBackground } from "../components/media/ShaderBackground";
-// Fraunces as the display serif, scoped to the `serif-display` class on this
-// page's root. The warm-paper half of the original experiment was dropped with
-// the palette decision; this page is the legacy navy and periwinkle on white.
-import "../../styles/serif-display.css";
 
 const DEMO_URL = "https://calendly.com/matteowastaken/discoverycall";
 
@@ -104,11 +100,11 @@ const eyebrow = "text-[13px] font-bold tracking-[2.5px] uppercase";
 // (readability pass: body copy uses slate-600+, never the lighter grays)
 
 // Scoped title normalization for the sections imported from Home. Their h2s run
-// Instrument Serif at font-weight 500 — the family only ships 400, so the
-// browser fakes a bold that reads as a different font — plus larger sizes
-// (56-60px) and tighter tracking. These wrappers restyle the imported headings
-// to this page's title style (serif 400 · 32/40/46px · normal tracking) without
-// touching the Home originals.
+// larger (56-60px) with tighter tracking than this page's title style. These
+// wrappers restyle the imported headings to serif 32/40/46px at normal tracking
+// without touching the Home originals. (The original reason for this also
+// included Instrument Serif faking a bold at weight 500, since that family only
+// ships 400. Fraunces is variable across 100-900, so that half is now moot.)
 const homeTitleFix =
   "[&_h2]:font-normal [&_h2]:tracking-normal [&_h2]:leading-[1.1] [&_h2]:text-[32px] sm:[&_h2]:text-[40px] md:[&_h2]:text-[46px]";
 const homeTitleFixLight = `${homeTitleFix} [&_h2]:text-[#00122F]`;
@@ -1443,7 +1439,7 @@ export function RemoteV2({
   handleEndWebCall,
 }: RemoteV2Props) {
   return (
-    <div className="serif-display bg-white text-[#00122F] font-sans overflow-x-hidden">
+    <div className="bg-white text-[#00122F] font-sans overflow-x-hidden">
       <SEO
         title="HANA · Draft"
         useExactTitle

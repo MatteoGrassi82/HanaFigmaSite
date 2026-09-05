@@ -24,7 +24,7 @@ import {
 /*  #F59E42 warm accent, near-black navy ink.                          */
 /* ------------------------------------------------------------------ */
 
-const SANS = "'DM Sans', system-ui, sans-serif";
+const SANS = "'IBM Plex Sans', system-ui, sans-serif";
 
 const BLUE = "#2563EB";
 const ORANGE = "#F59E42";
