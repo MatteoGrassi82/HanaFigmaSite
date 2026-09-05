@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { Plus, Minus, ArrowLeft, ArrowRight, Check, ChevronDown } from "lucide-react";
 import { Footer } from "../components/layout/Footer";
 import { SEO, faqSchema } from "../components/SEO";
+import { FaqSection } from "../components/sections/FaqSection";
 import { cn } from "../../lib/utils";
 import { useTranslations } from "../../lib/i18n";
 
@@ -138,27 +139,6 @@ const FAQS = [
   { q: "Do you work with our EHR?", a: "We integrate with 150+ EHR systems including Epic, Cerner, athenahealth, eClinicalWorks, and most systems used in Ireland, the UK, and Europe. Bi-directional read and write-back included on all plans." },
   { q: "What does the 90-day pilot include?", a: "Full EHR integration, workflows built to your specs, clinical safety layer configured, and all flows running. You get a complete outcomes report at day 90 showing exactly what HANA delivered before we discuss any ongoing contract." },
 ];
-
-function FaqItem({ q, a }: { q: string; a: string }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <div className="border-b border-slate-200 py-4">
-      <button onClick={() => setOpen(!open)} className="w-full flex justify-between items-center gap-4 text-left">
-        <span className="text-sm font-medium text-slate-800">{q}</span>
-        <span className={cn("flex-shrink-0 transition-transform duration-200", open && "rotate-45")}>
-          <Plus className="w-4 h-4 text-slate-400" />
-        </span>
-      </button>
-      <AnimatePresence>
-        {open && (
-          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }} className="overflow-hidden">
-            <p className="pt-3 text-sm text-slate-500 leading-relaxed font-light">{a}</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
 
 // ─── Slide 1: Practice type ────────────────────────────────────────────────────
 
@@ -621,12 +601,17 @@ export function Pricing() {
         </AnimatePresence>
       </div>
 
-      {/* FAQ */}
-      <section className="max-w-xl mx-auto px-4 pb-20">
-        <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium text-center mb-2">{t.pricing.commonQuestions}</div>
-        <h2 className="font-serif text-2xl md:text-3xl text-slate-900 text-center mb-8">How does this work?</h2>
-        {FAQS.map(f => <FaqItem key={f.q} q={f.q} a={f.a} />)}
-      </section>
+      {/* FAQ. The shared accordion. The page keeps its own questions, its own
+          eyebrow from the dictionary, its narrow column and the page ground;
+          only the row rendering is shared now. The PRICING_FAQ JSON-LD above
+          stays where it is, in the <SEO> block the prerender scrapes. */}
+      <FaqSection
+        items={FAQS}
+        eyebrow={t.pricing.commonQuestions}
+        heading="How does this work?"
+        compact
+        className="max-w-xl mx-auto bg-transparent px-4 md:px-4 pt-0 md:pt-0 pb-20 md:pb-20"
+      />
 
       <Footer />
     </>

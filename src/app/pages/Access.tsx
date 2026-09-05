@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { ArrowRight, ChevronDown, ChevronUp } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { Footer } from "../components/layout/Footer";
 import { SEO } from "../components/SEO";
+import { FaqSection } from "../components/sections/FaqSection";
 
 
 const TRACKS = [
@@ -102,7 +103,6 @@ interface AccessProps {
 
 export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handleEndWebCall }: AccessProps) {
   const [activeTrack, setActiveTrack] = useState("CKM");
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
@@ -881,35 +881,16 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
         </section>
 
         {/* ── FAQ ───────────────────────────────────────────────────────────── */}
-        <section className="px-4 py-20 bg-white border-t border-slate-100">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-12">
-              <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-600 mb-4">FAQ</p>
-              <h2 className="font-serif text-3xl md:text-4xl text-slate-900 leading-tight">
-                Questions we get on every call
-              </h2>
-            </div>
-            <div className="divide-y divide-slate-100">
-              {FAQS.map((faq, i) => (
-                <div key={i}>
-                  <button
-                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                    className="w-full flex items-center justify-between gap-4 py-5 text-left"
-                  >
-                    <span className="text-[15px] font-semibold text-slate-900">{faq.q}</span>
-                    {openFaq === i
-                      ? <ChevronUp className="w-4 h-4 text-slate-400 shrink-0" />
-                      : <ChevronDown className="w-4 h-4 text-slate-400 shrink-0" />
-                    }
-                  </button>
-                  {openFaq === i && (
-                    <p className="pb-5 text-[14px] text-slate-500 leading-relaxed">{faq.a}</p>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* One shared accordion now. The page keeps its own FAQS array, eyebrow
+            and heading; className restores this page's px-4 band, py-20 rhythm
+            and the hairline above it. */}
+        <FaqSection
+          items={FAQS}
+          eyebrow="FAQ"
+          heading="Questions we get on every call"
+          exclusive
+          className="px-4 md:px-4 py-20 md:py-20 border-t border-slate-100"
+        />
 
         {/* ── Bottom CTA ────────────────────────────────────────────────────── */}
         <section className="bg-[#00122F] px-4 py-24">

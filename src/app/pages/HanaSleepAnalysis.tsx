@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import { Check, ChevronDown } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
+import { Check } from "lucide-react";
 import { SEO, breadcrumbSchema, faqSchema } from "../components/SEO";
 import { Footer } from "../components/layout/Footer";
 import { InlineImageHeader } from "../components/sections/InlineImageHeader";
+import { FaqSection } from "../components/sections/FaqSection";
 import { SafetyStack } from "../components/sections/SafetyStack";
 import { NightSky } from "../components/media/NightSky";
 import { Glyph, RI } from "../components/media/CompassDashboard";
@@ -127,36 +127,6 @@ function Hypnogram() {
         transition={{ duration: 1.4, ease: "easeInOut" }}
       />
     </svg>
-  );
-}
-
-function AFaqRow({ q, a, index }: { q: string; a: string; index: number }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <div>
-      <button
-        onClick={() => setOpen((o) => !o)}
-        aria-expanded={open}
-        className="group w-full flex items-center justify-between gap-4 py-5 text-left"
-      >
-        <span className="text-[17px] font-medium text-white transition-colors duration-200 group-hover:text-[#A7BCF5]">{q}</span>
-        <ChevronDown className={`w-5 h-5 text-[#A7BCF5] shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
-      </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            key={`afaq-${index}`}
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="overflow-hidden"
-          >
-            <p className="text-[15px] leading-[1.7] text-white/65 pb-5 pr-8 m-0">{a}</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
   );
 }
 
@@ -333,22 +303,16 @@ export function HanaSleepAnalysis() {
       {/* HOW WE START — three-step go-live section, same as the homepage */}
       <InlineImageHeader />
 
-      {/* FAQ */}
-      <section className="py-20 md:py-24 px-6 md:px-16 bg-[#00122F]">
-        <div className="max-w-[820px] mx-auto">
-          <motion.div {...fadeUp} className="text-center mb-10 md:mb-12">
-            <p className={`${eyebrow} text-[#A7BCF5] mt-0 mb-4`}>Questions? Answers.</p>
-            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-white">
-              The things everyone asks.
-            </h2>
-          </motion.div>
-          <div className="divide-y divide-white/10 border-t border-b border-white/10">
-            {A_FAQS.map((f, i) => (
-              <AFaqRow key={f.q} q={f.q} a={f.a} index={i} />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* FAQ — the shared section. This page carried its own copy of the same
+          expanding row; FaqSection is the one implementation now. className
+          restores this page's own vertical rhythm over the component default. */}
+      <FaqSection
+        items={A_FAQS}
+        tone="navy"
+        eyebrow="Questions? Answers."
+        heading="The things everyone asks."
+        className="py-20 md:py-24"
+      />
 
       {/* CTA */}
       <section className="bg-[#00122F] text-white py-24 px-6 md:px-16 text-center relative overflow-hidden">

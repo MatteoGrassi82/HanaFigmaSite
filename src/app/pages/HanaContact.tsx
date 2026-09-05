@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion, useInView } from "motion/react";
-import { Check, X, ChevronDown } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { SEO, breadcrumbSchema } from "../components/SEO";
 import { Footer } from "../components/layout/Footer";
 import { RecipesMarquee } from "../components/sections/RecipesMarquee";
 import { ContactFlow } from "../components/sections/ContactFlow";
+import { FaqSection } from "../components/sections/FaqSection";
 
 const DEMO_URL = "https://calendly.com/matteowastaken/discoverycall";
 
@@ -420,22 +421,17 @@ export function HanaContact() {
           clinical-program recipes). IT tags included for locale safety. */}
       <RecipesMarquee tags={["Intake", "Refills", "Reactivation", "Accoglienza", "Ricette", "Recupero"]} />
 
-      {/* FAQ */}
-      <section className="py-20 md:py-24 px-6 md:px-16 bg-[#f6f7fb]">
-        <div className="max-w-[820px] mx-auto">
-          <motion.div {...fadeUp} className="text-center mb-10 md:mb-12">
-            <p className={`${eyebrow} text-[#5b76d9] mt-0 mb-4`}>Questions? Answers.</p>
-            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-[#00122F]">
-              The things everyone asks.
-            </h2>
-          </motion.div>
-          <div className="divide-y divide-slate-200 border-t border-b border-slate-200">
-            {FAQS.map((f, i) => (
-              <FaqRow key={f.q} q={f.q} a={f.a} index={i} />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* FAQ: the shared accordion. The local row this file used to carry
+          rendered its answer as {open && …}, so the prerendered HTML shipped
+          questions with no answers in it. FaqSection always mounts the answer
+          and collapses it with a 0fr grid row. className restores this page's
+          band ground and its shorter padding. */}
+      <FaqSection
+        items={FAQS}
+        eyebrow="Questions? Answers."
+        heading="The things everyone asks."
+        className="bg-paper-2 py-20 md:py-24"
+      />
 
       {/* CTA */}
       <section className="bg-[#00122F] text-white py-24 px-6 md:px-16 text-center relative overflow-hidden">
@@ -907,37 +903,6 @@ function ContactIntegrations() {
         </div>
       </div>
     </section>
-  );
-}
-
-// ── FAQ accordion row ────────────────────────────────────────────────────────
-function FaqRow({ q, a, index }: { q: string; a: string; index: number }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <div>
-      <button
-        onClick={() => setOpen((o) => !o)}
-        aria-expanded={open}
-        className="group w-full flex items-center justify-between gap-4 py-5 text-left"
-      >
-        <span className="text-[17px] font-medium text-[#00122F] transition-colors duration-200 group-hover:text-[#5b76d9]">{q}</span>
-        <ChevronDown className={`w-5 h-5 text-[#5b76d9] shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
-      </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            key={`faq-${index}`}
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="overflow-hidden"
-          >
-            <p className="text-[15px] leading-[1.7] text-slate-500 pb-5 pr-8 m-0">{a}</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
   );
 }
 
