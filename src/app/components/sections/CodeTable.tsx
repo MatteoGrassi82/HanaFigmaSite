@@ -349,6 +349,39 @@ export function CodeTable({
                     </tr>
                   );
                 })}
+
+                {/* Other codes in the same family. A row per code rather than a
+                    paragraph, because a practice manager is scanning for their
+                    own situation and 99491 is a different situation from 99490.
+                    Only rendered when a single programme is shown; across four
+                    it would be twenty rows of noise. */}
+                {rows.length === 1 &&
+                  rows[0].alsoBillable?.map((rc) => (
+                    <tr key={rc.code} className="align-top border-t border-rule-soft">
+                      <td className={TD}>
+                        <span className="block text-[13px] font-semibold uppercase tracking-[1px] text-ink-mute">
+                          Also billable
+                        </span>
+                      </td>
+                      <td className={TD} />
+                      <td className={TD}>
+                        <span className="font-mono text-[15px] font-semibold text-ink tabular-nums">
+                          {rc.code}
+                        </span>
+                      </td>
+                      <td className={TD}>
+                        <span className="block text-[14.5px] leading-[1.55] text-ink-soft">{rc.what}</span>
+                        {rc.caveat && (
+                          <span className="mt-1.5 block text-[13px] leading-[1.5] text-ink-mute">{rc.caveat}</span>
+                        )}
+                      </td>
+                      <td className={TD}>
+                        <span className="block font-serif text-[20px] leading-none text-ink tabular-nums">
+                          {formatUsd(rc.rate)}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>

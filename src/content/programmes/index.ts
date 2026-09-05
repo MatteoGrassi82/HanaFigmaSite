@@ -47,6 +47,16 @@ export type { ProgrammeRate };
 /** Stable programme key. Matches `ProgrammeRate["id"]`, which is the join. */
 export type ProgrammeId = ProgrammeRate["id"];
 
+export interface RelatedCode {
+  code: string;
+  /** What the code is for, in one line. Present tense, plain words. */
+  what: string;
+  /** CY2026 national non-facility amount. Same basis as `payment`. */
+  rate: number;
+  /** Anything that would make the figure misleading on its own. */
+  caveat?: string;
+}
+
 export interface Programme {
   /** Stable key, and the join onto rates.ts. Also goes in URLs. Do not rename. */
   id: ProgrammeId;
@@ -76,6 +86,14 @@ export interface Programme {
   note?: string;
   /** The CY2026 amount and its sourcing, joined from rates.ts. Never re-typed. */
   payment: ProgrammeRate;
+
+  /** Other codes in the same family a practice may bill, with their own CY2026
+   *  amounts. Separate from `payment` because `payment` is the ONE code the
+   *  estimator multiplies; these are context, not the model. Sourced 2026-09-05
+   *  and each cross-checked: every amount divides cleanly by the same CY2026
+   *  non-qualifying-APM conversion factor ($33.4009) that reproduces 99490 and
+   *  99439 exactly, so they come from the same Addendum B. */
+  alsoBillable?: RelatedCode[];
 }
 
 /* Programme pages sit under one prefix so the hub, the seven pages and the
@@ -93,7 +111,7 @@ export const PROGRAMMES: Programme[] = [
     slug: "chronic-care-management",
     path: path("chronic-care-management"),
     code: "CCM",
-    codes: "99490 · 99439",
+    codes: "99490 · 99439 · 99487 · 99489 · 99491 · 99437",
     name: "Chronic Care Management",
     summary:
       "Twenty minutes of care management a month, for patients with two or more chronic conditions.",
@@ -108,6 +126,31 @@ export const PROGRAMMES: Programme[] = [
     team: "Reviews the summary, adds their own work, attests. The minutes on the claim are your team's minutes.",
     lands: ["Structured call summary", "Care-plan touch", "Flag queue"],
     payment: rateFor("ccm"),
+    alsoBillable: [
+      {
+        code: "99487",
+        what: "Complex CCM. Sixty minutes of clinical staff time, for a patient whose care plan needs moderate or high-complexity medical decision making.",
+        rate: 144.29,
+      },
+      {
+        code: "99489",
+        what: "Each further thirty minutes of complex CCM.",
+        rate: 78.16,
+        caveat: "An add-on to 99487, never billed alone.",
+      },
+      {
+        code: "99491",
+        what: "Thirty minutes of the physician's or QHP's OWN time, not clinical staff time.",
+        rate: 89.18,
+        caveat: "Personal time only. Staff time does not count toward it, and it is not billed in the same month as 99490 for the same patient.",
+      },
+      {
+        code: "99437",
+        what: "Each further thirty minutes of physician or QHP time.",
+        rate: 63.13,
+        caveat: "An add-on to 99491, and personal time only.",
+      },
+    ],
   },
   {
     id: "apcm",

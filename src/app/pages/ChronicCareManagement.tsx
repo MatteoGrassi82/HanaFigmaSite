@@ -97,6 +97,7 @@ const OPEN_QUESTIONS: { q: string; needs: string }[] = [
   { q: "Who in the practice may bill this?", needs: "Practitioner types, and the supervision level the staff time sits under." },
   { q: "Can it run alongside our other programmes?", needs: "The rules beyond the APCM exclusion, and how minutes avoid double counting." },
   { q: "What changes under the CY2027 proposed rule?", needs: "Wording from Matteo and counsel. Always described as proposed." },
+  { q: "Are we speaking to RHCs and FQHCs?", needs: "G0511 stopped being payable on 1 October 2025, so they now bill these individual codes or APCM. Decide whether the page addresses them." },
 ];
 
 export function ChronicCareManagement() {
