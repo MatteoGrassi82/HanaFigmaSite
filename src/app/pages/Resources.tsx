@@ -50,7 +50,7 @@ function WhitepaperCard({ wp, index }: { wp: typeof WHITEPAPERS[0]; index: numbe
     >
       <Link
         to={wp.href}
-        className="group flex flex-col h-full rounded-2xl border border-slate-200 bg-white hover:border-blue-200 hover:shadow-lg transition-all duration-200 overflow-hidden"
+        className="group flex flex-col h-full rounded-2xl border border-rule bg-paper-bright hover:border-blue-200 hover:shadow-lg transition-all duration-200 overflow-hidden"
       >
         {/* Dark header strip */}
         <div className="bg-navy px-6 py-5 relative overflow-hidden">
@@ -66,9 +66,9 @@ function WhitepaperCard({ wp, index }: { wp: typeof WHITEPAPERS[0]; index: numbe
             {wp.tags.map(t => (
               <span key={t} className="text-[10px] font-semibold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">{t}</span>
             ))}
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">{wp.year}</span>
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 bg-paper-2 px-2 py-0.5 rounded-full">{wp.year}</span>
           </div>
-          <p className="text-sm text-slate-600 leading-relaxed flex-1">{wp.description}</p>
+          <p className="text-sm text-ink-soft leading-relaxed flex-1">{wp.description}</p>
           <div className="mt-5 flex items-center gap-1.5 text-blue-600 text-sm font-semibold group-hover:gap-2.5 transition-all">
             Read whitepaper <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
           </div>
@@ -88,7 +88,7 @@ function BlogCard({ post, index }: { post: Post; index: number }) {
     >
       <Link
         to={`/blog/${post.slug.current}`}
-        className="group flex flex-col h-full rounded-2xl border border-slate-200 bg-white hover:border-slate-300 hover:shadow-lg transition-all duration-200 p-5"
+        className="group flex flex-col h-full rounded-2xl border border-rule bg-paper-bright hover:border-rule hover:shadow-lg transition-all duration-200 p-5"
       >
         <div className="flex items-center gap-2 mb-3 flex-wrap">
           {post.categories?.map(c => (
@@ -98,11 +98,11 @@ function BlogCard({ post, index }: { post: Post; index: number }) {
             <span className="text-[11px] text-slate-400">{formatDate(post.publishedAt)}</span>
           )}
         </div>
-        <h2 className="font-serif text-lg text-slate-900 leading-snug group-hover:text-blue-700 transition-colors flex-1">
+        <h2 className="font-serif text-lg text-ink leading-snug group-hover:text-blue-700 transition-colors flex-1">
           {post.title}
         </h2>
         {post.excerpt && (
-          <p className="text-sm text-slate-500 mt-2 leading-relaxed line-clamp-2">{post.excerpt}</p>
+          <p className="text-sm text-ink-mute mt-2 leading-relaxed line-clamp-2">{post.excerpt}</p>
         )}
         <div className="mt-4 flex items-center gap-1 text-blue-600 text-sm font-semibold group-hover:gap-2 transition-all">
           Read post <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
@@ -122,13 +122,13 @@ function ResearchCard({ item, index }: { item: typeof RESEARCH_ITEMS[0]; index: 
     >
       <Link
         to={item.href}
-        className="group flex flex-col h-full rounded-2xl border border-slate-200 bg-white hover:border-slate-300 hover:shadow-lg transition-all duration-200 p-6"
+        className="group flex flex-col h-full rounded-2xl border border-rule bg-paper-bright hover:border-rule hover:shadow-lg transition-all duration-200 p-6"
       >
         <div className="flex items-start justify-between gap-3 mb-3">
-          <h2 className="text-lg font-bold text-slate-900 group-hover:text-blue-700 transition-colors">{item.title}</h2>
+          <h2 className="text-lg font-bold text-ink group-hover:text-blue-700 transition-colors">{item.title}</h2>
           {!item.internal && <ExternalLink size={15} className="text-slate-400 shrink-0 mt-0.5" />}
         </div>
-        <p className="text-sm text-slate-600 leading-relaxed flex-1">{item.desc}</p>
+        <p className="text-sm text-ink-soft leading-relaxed flex-1">{item.desc}</p>
         <div className="mt-5 flex items-center gap-1.5 text-blue-600 text-sm font-semibold group-hover:gap-2.5 transition-all">
           Explore <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
         </div>
@@ -173,11 +173,11 @@ export function Resources() {
       </div>
 
       {/* Body */}
-      <div className="bg-slate-50 min-h-screen">
+      <div className="bg-paper-2 min-h-screen">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
 
           {/* Category tabs */}
-          <div className="flex gap-2 mb-10 border-b border-slate-200 pb-0 overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+          <div className="flex gap-2 mb-10 border-b border-rule pb-0 overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
             {TABS.map(tab => {
               const Icon = tab.icon;
               const active = activeTab === tab.id;
@@ -188,7 +188,7 @@ export function Resources() {
                   className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-3.5 sm:py-3 min-h-[44px] shrink-0 whitespace-nowrap text-sm font-semibold border-b-2 -mb-px transition-all ${
                     active
                       ? "border-blue-600 text-blue-600"
-                      : "border-transparent text-slate-500 hover:text-slate-800 hover:border-slate-300"
+                      : "border-transparent text-ink-mute hover:text-ink hover:border-rule"
                   }`}
                 >
                   <Icon size={15} />
@@ -215,7 +215,7 @@ export function Resources() {
                   <motion.div
                     initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: 0.15 }}
-                    className="rounded-2xl border-2 border-dashed border-slate-200 bg-white/50 flex flex-col items-center justify-center p-8 text-center min-h-[220px]"
+                    className="rounded-2xl border-2 border-dashed border-rule bg-paper-bright/50 flex flex-col items-center justify-center p-8 text-center min-h-[220px]"
                   >
                     <FileText size={28} className="text-slate-300 mb-3" />
                     <p className="text-sm font-semibold text-slate-400">More whitepapers coming</p>
@@ -232,7 +232,7 @@ export function Resources() {
                 {loadingPosts ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {[1, 2, 3].map(i => (
-                      <div key={i} className="animate-pulse rounded-2xl border border-slate-200 bg-white p-5 h-48" />
+                      <div key={i} className="animate-pulse rounded-2xl border border-rule bg-paper-bright p-5 h-48" />
                     ))}
                   </div>
                 ) : posts.length === 0 ? (

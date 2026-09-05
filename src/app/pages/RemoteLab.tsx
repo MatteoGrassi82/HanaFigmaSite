@@ -161,7 +161,7 @@ function SleepNinetyDayClock() {
           <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-navy mt-7 mb-0 mx-auto max-w-[24ch]">
             Every new CPAP patient is on a <em className="text-brand">ninety day clock.</em>
           </h2>
-          <p className="text-[16.5px] leading-[1.7] text-slate-600 mt-5 mb-0 mx-auto max-w-[62ch]">
+          <p className="text-[16.5px] leading-[1.7] text-ink-soft mt-5 mb-0 mx-auto max-w-[62ch]">
             Medicare wants four hours a night on twenty-one of thirty consecutive nights, inside the
             first ninety days, plus a follow-up visit in the same window. Miss either and coverage
             can end.
@@ -170,7 +170,7 @@ function SleepNinetyDayClock() {
 
         <div className="relative mt-14 md:mt-16">
           {/* the rail */}
-          <span aria-hidden className="hidden lg:block absolute left-0 right-0 top-[13px] border-t-2 border-dashed border-slate-300" />
+          <span aria-hidden className="hidden lg:block absolute left-0 right-0 top-[13px] border-t-2 border-dashed border-rule" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-5">
             {CLOCK.map((c, i) => (
               <motion.div
@@ -181,7 +181,7 @@ function SleepNinetyDayClock() {
               >
                 <span
                   aria-hidden
-                  className="hidden lg:block w-[26px] h-[26px] rounded-full border-[5px] bg-white relative z-10"
+                  className="hidden lg:block w-[26px] h-[26px] rounded-full border-[5px] bg-paper-bright relative z-10"
                   style={{ borderColor: c.accent }}
                 />
                 <p
@@ -191,7 +191,7 @@ function SleepNinetyDayClock() {
                   {c.when}
                 </p>
                 <p className="font-serif text-[21px] leading-[1.22] text-navy mt-2.5 mb-0">{c.title}</p>
-                <p className="text-[14px] leading-[1.6] text-slate-600 mt-3 mb-0">{c.body}</p>
+                <p className="text-[14px] leading-[1.6] text-ink-soft mt-3 mb-0">{c.body}</p>
               </motion.div>
             ))}
           </div>
@@ -205,7 +205,7 @@ function SleepNinetyDayClock() {
             See HANA Sleep
             <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" strokeWidth={2.4} />
           </a>
-          <p className="text-[13px] text-slate-500 m-0 max-w-[52ch]">
+          <p className="text-[13px] text-ink-mute m-0 max-w-[52ch]">
             Non-adherence runs at about 22% on programme. Between 46 and 83 percent of new patients
             miss the threshold without one.
           </p>
@@ -253,14 +253,14 @@ const WORKLIST = [
  */
 function RemoteBothSides() {
   return (
-    <section className="bg-white py-24 md:py-32 px-6 md:px-16">
+    <section className="bg-paper-bright py-24 md:py-32 px-6 md:px-16">
       <div className="max-w-[1240px] mx-auto">
         <motion.div {...fadeUp} className="text-center">
           <p className={`${eyebrow} text-brand mt-0 mb-4`}>HANA Remote</p>
           <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-navy mx-auto max-w-[26ch] m-0">
             One month. <em className="text-brand">Both sides of it.</em>
           </h2>
-          <p className="text-[17px] leading-[1.7] text-slate-600 max-w-[56ch] mx-auto mt-5 mb-0">
+          <p className="text-[17px] leading-[1.7] text-ink-soft max-w-[56ch] mx-auto mt-5 mb-0">
             HANA makes the call. Your team reviews it in Compass, and the patient gets somebody who
             remembers. Same month, same call, seen from each end.
           </p>
@@ -310,10 +310,10 @@ function RemoteBothSides() {
                       className={`flex items-center gap-3 rounded-[12px] px-3.5 py-3 border ${
                         r.state === "flag"
                           ? "bg-[#E8A06A]/[0.18] border-[#E8A06A]/45"
-                          : "bg-white/[0.06] border-white/10"
+                          : "bg-paper-bright/[0.06] border-white/10"
                       }`}
                     >
-                      <span className="w-7 h-7 shrink-0 rounded-full bg-white/15 border border-white/15 grid place-items-center text-[10.5px] font-bold text-white/85">
+                      <span className="w-7 h-7 shrink-0 rounded-full bg-paper-bright/15 border border-white/15 grid place-items-center text-[10.5px] font-bold text-white/85">
                         {r.who.split(" ").map((w) => w[0]).join("")}
                       </span>
                       <span className="text-[13px] font-semibold text-white flex-1 min-w-0 truncate">{r.who}</span>
@@ -347,7 +347,7 @@ function RemoteBothSides() {
                 {["Worklist", "Billing review", "Audit trail"].map((c) => (
                   <span
                     key={c}
-                    className="rounded-full bg-white/[0.10] border border-white/15 text-white/80 text-[11.5px] font-semibold px-2.5 py-1"
+                    className="rounded-full bg-paper-bright/[0.10] border border-white/15 text-white/80 text-[11.5px] font-semibold px-2.5 py-1"
                   >
                     {c}
                   </span>
@@ -370,7 +370,7 @@ function RemoteBothSides() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.45, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                  className="rounded-[16px] bg-white/[0.07] border border-white/12 p-5"
+                  className="rounded-[16px] bg-paper-bright/[0.07] border border-white/12 p-5"
                 >
                   <p className="text-[10.5px] font-bold uppercase tracking-[1.3px] text-white/50 m-0">March 12</p>
                   <p className="text-[13.5px] leading-[1.6] text-white/85 mt-2.5 mb-0">
@@ -384,7 +384,7 @@ function RemoteBothSides() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.45, delay: 0.42, ease: [0.16, 1, 0.3, 1] }}
-                  className="rounded-[16px] bg-white/[0.12] backdrop-blur-xl border border-white/20 p-5"
+                  className="rounded-[16px] bg-paper-bright/[0.12] backdrop-blur-xl border border-white/20 p-5"
                 >
                   <p className="text-[10.5px] font-bold uppercase tracking-[1.3px] text-white/55 m-0">April 9</p>
                   <p className="text-[12.5px] italic leading-[1.55] text-[#9EC1FF] mt-2.5 mb-0 pl-3 border-l-2 border-[#5B93FF]/60">
@@ -410,7 +410,7 @@ function RemoteBothSides() {
                 {["Your caller ID", "Evenings and Saturdays", "30+ languages"].map((c) => (
                   <span
                     key={c}
-                    className="rounded-full bg-white/[0.10] border border-white/15 text-white/80 text-[11.5px] font-semibold px-2.5 py-1"
+                    className="rounded-full bg-paper-bright/[0.10] border border-white/15 text-white/80 text-[11.5px] font-semibold px-2.5 py-1"
                   >
                     {c}
                   </span>
@@ -420,7 +420,7 @@ function RemoteBothSides() {
           </div>
         </motion.div>
 
-        <motion.p {...fadeUp} className="text-[13px] leading-[1.7] text-slate-600 mt-6 mb-0 max-w-[86ch]">
+        <motion.p {...fadeUp} className="text-[13px] leading-[1.7] text-ink-soft mt-6 mb-0 max-w-[86ch]">
           HANA scores against a threshold your clinician set and routes what crosses it. The decision
           and the attestation are always a person's, and HANA's call time is never billed as clinical
           time.
@@ -457,13 +457,13 @@ export function RemoteLab() {
     <>
       <SEO title="Remote lab" useExactTitle path="/remote-lab" robots="noindex, nofollow" />
 
-      <div className="bg-white px-6 md:px-16 pt-16 pb-10">
+      <div className="bg-paper-bright px-6 md:px-16 pt-16 pb-10">
         <div className="max-w-[1200px] mx-auto">
           <p className={`${eyebrow} text-brand mt-0 mb-4`}>Design lab</p>
           <h1 className="font-serif font-normal text-[34px] md:text-[44px] leading-[1.08] text-navy m-0 max-w-[24ch]">
             Section variants for HANA Remote.
           </h1>
-          <p className="text-[16px] leading-[1.7] text-slate-600 mt-5 mb-0 max-w-[62ch]">
+          <p className="text-[16px] leading-[1.7] text-ink-soft mt-5 mb-0 max-w-[62ch]">
             Unlinked and noindex. Open <span className="font-semibold text-navy">/remote-v2</span>{" "}
             alongside this to compare against what is shipped. Nothing here is live.
           </p>

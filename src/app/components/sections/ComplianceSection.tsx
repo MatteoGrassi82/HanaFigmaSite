@@ -29,7 +29,7 @@ export function ComplianceSection({ white = false }: { white?: boolean } = {}) {
   return (
     <section
       className={`py-16 sm:py-20 lg:py-24 ${
-        white ? "bg-white dark:bg-slate-950" : "bg-[#F5F5F5] dark:bg-slate-950"
+        white ? "bg-paper-bright dark:bg-navy" : "bg-[#F5F5F5] dark:bg-navy"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8">
@@ -37,20 +37,20 @@ export function ComplianceSection({ white = false }: { white?: boolean } = {}) {
 
           {/* Left Content */}
           <div className="flex-1 lg:max-w-sm space-y-8 lg:sticky lg:top-24 self-start">
-            <div className="inline-flex items-center rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-300 shadow-sm">
+            <div className="inline-flex items-center rounded-full border border-rule dark:border-navy-soft bg-paper-bright dark:bg-navy px-4 py-1.5 text-sm font-medium text-ink-soft dark:text-slate-300 shadow-sm">
               {t.compliance.tag}
             </div>
 
-            <h2 className="text-4xl md:text-5xl font-serif font-medium text-slate-900 dark:text-white leading-[1.1]">
+            <h2 className="text-4xl md:text-5xl font-serif font-medium text-ink dark:text-white leading-[1.1]">
               {t.compliance.heading}
             </h2>
 
             {/* Deployment flexibility note */}
             <div className="pt-2">
-              <h3 className="text-base font-semibold text-slate-900 dark:text-white">
+              <h3 className="text-base font-semibold text-ink dark:text-white">
                 {t.compliance.environmentsTitle}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              <p className="mt-2 text-sm leading-relaxed text-ink-soft dark:text-slate-400">
                 {t.compliance.environments}
               </p>
             </div>
@@ -58,7 +58,7 @@ export function ComplianceSection({ white = false }: { white?: boolean } = {}) {
 
           {/* Right Grid */}
           <div className="flex-1">
-            <div className="grid grid-cols-1 md:grid-cols-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-sm">
+            <div className="grid grid-cols-1 md:grid-cols-2 border border-rule dark:border-navy-soft bg-paper-bright dark:bg-navy rounded-2xl overflow-hidden shadow-sm">
               {certifications.map((cert, index) => {
                 const isRightCol = index % 2 !== 0;
                 const isLastRow = index >= certifications.length - 2;
@@ -68,17 +68,17 @@ export function ComplianceSection({ white = false }: { white?: boolean } = {}) {
                     key={index}
                     className={`
                       p-6 sm:p-8 md:p-10 flex flex-col gap-4
-                      ${!isLastRow ? 'border-b border-slate-200 dark:border-slate-800' : ''}
-                      ${isRightCol ? '' : 'md:border-r border-slate-200 dark:border-slate-800'}
+                      ${!isLastRow ? 'border-b border-rule dark:border-navy-soft' : ''}
+                      ${isRightCol ? '' : 'md:border-r border-rule dark:border-navy-soft'}
                     `}
                   >
                     <div className="h-10 w-10 text-navy dark:text-white mb-2">
                       <cert.icon strokeWidth={1.5} className="w-full h-full" />
                     </div>
-                    <h3 className="text-xl font-medium text-slate-900 dark:text-white">
+                    <h3 className="text-xl font-medium text-ink dark:text-white">
                       {cert.title}
                     </h3>
-                    <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
+                    <p className="text-ink-soft dark:text-slate-400 leading-relaxed text-sm">
                       {cert.description}
                     </p>
                   </div>

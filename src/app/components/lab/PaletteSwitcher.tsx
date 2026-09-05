@@ -58,15 +58,15 @@ function apply(sys: PaletteSystem | null) {
   style.id = "hana-palette-map";
   style.textContent = `
     body { background-color: ${t.paper}; }
-    .text-slate-900, .text-slate-800 { color: ${t.ink} !important; }
-    .text-slate-700, .text-slate-600 { color: ${t.inkSoft} !important; }
-    .text-slate-500, .text-slate-400, .text-slate-300 { color: ${t.inkMute} !important; }
-    .bg-slate-50, .bg-slate-100 { background-color: ${t.paper2} !important; }
-    .bg-slate-200 { background-color: ${t.rule} !important; }
-    .bg-slate-800, .bg-slate-900, .bg-slate-950 { background-color: ${t.navy} !important; }
-    .border-slate-100, .border-slate-200 { border-color: ${t.ruleSoft} !important; }
-    .border-slate-300 { border-color: ${t.rule} !important; }
-    section.bg-white, header.bg-white, div.bg-white { background-color: ${t.paper} !important; }
+    .text-ink, .text-ink { color: ${t.ink} !important; }
+    .text-ink-soft, .text-ink-soft { color: ${t.inkSoft} !important; }
+    .text-ink-mute, .text-slate-400, .text-slate-300 { color: ${t.inkMute} !important; }
+    .bg-paper-2, .bg-paper-2 { background-color: ${t.paper2} !important; }
+    .bg-rule-soft { background-color: ${t.rule} !important; }
+    .bg-navy, .bg-navy, .bg-navy { background-color: ${t.navy} !important; }
+    .border-rule-soft, .border-rule { border-color: ${t.ruleSoft} !important; }
+    .border-rule { border-color: ${t.rule} !important; }
+    section.bg-paper-bright, header.bg-paper-bright, div.bg-paper-bright { background-color: ${t.paper} !important; }
   `;
   document.head.appendChild(style);
 }
@@ -103,9 +103,9 @@ export function PaletteSwitcher() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-[9999] pointer-events-none">
-      <div className="pointer-events-auto mx-auto max-w-[1400px] m-3 rounded-[14px] border border-black/10 bg-white/95 backdrop-blur shadow-[0_10px_40px_rgba(0,0,0,0.18)]">
+      <div className="pointer-events-auto mx-auto max-w-[1400px] m-3 rounded-[14px] border border-black/10 bg-paper-bright/95 backdrop-blur shadow-[0_10px_40px_rgba(0,0,0,0.18)]">
         <div className="flex items-center gap-2 px-3 py-2.5">
-          <span className="text-[11px] font-bold uppercase tracking-[1.4px] text-slate-500 shrink-0">
+          <span className="text-[11px] font-bold uppercase tracking-[1.4px] text-ink-mute shrink-0">
             Palette
           </span>
 
@@ -120,7 +120,7 @@ export function PaletteSwitcher() {
                     aria-pressed={on}
                     title={s.note}
                     className={`flex items-center gap-1.5 rounded-[9px] border px-2 py-1.5 cursor-pointer transition-colors ${
-                      on ? "border-slate-900 bg-slate-50" : "border-slate-200 hover:bg-slate-50"
+                      on ? "border-navy bg-paper-2" : "border-rule hover:bg-paper-2"
                     }`}
                   >
                     <span
@@ -133,7 +133,7 @@ export function PaletteSwitcher() {
                       style={{ backgroundColor: s.t.paper }}
                       aria-hidden
                     />
-                    <span className={`text-[12.5px] ${on ? "font-semibold text-slate-900" : "text-slate-600"}`}>
+                    <span className={`text-[12.5px] ${on ? "font-semibold text-ink" : "text-ink-soft"}`}>
                       {s.name}
                     </span>
                   </button>
@@ -144,22 +144,22 @@ export function PaletteSwitcher() {
 
           <button
             onClick={() => setOpen((v) => !v)}
-            className="ml-auto shrink-0 rounded-[9px] border border-slate-200 px-2.5 py-1.5 text-[12px] text-slate-600 hover:bg-slate-50 cursor-pointer"
+            className="ml-auto shrink-0 rounded-[9px] border border-rule px-2.5 py-1.5 text-[12px] text-ink-soft hover:bg-paper-2 cursor-pointer"
           >
             {open ? "Hide" : "Show palettes"}
           </button>
         </div>
 
         {open && (
-          <div className="border-t border-slate-100 px-3 py-2 text-[12px] leading-[1.55] text-slate-600">
-            <span className="font-semibold text-slate-900">{active.name}</span>
+          <div className="border-t border-rule-soft px-3 py-2 text-[12px] leading-[1.55] text-ink-soft">
+            <span className="font-semibold text-ink">{active.name}</span>
             <span className="text-slate-400"> · {active.temp} · </span>
             <span className="tabular-nums">
               accent {active.t.brand} at {active.contrast.brand}:1
             </span>
             <span className="text-slate-400"> · </span>
             {active.note}
-            <div className="mt-1 text-slate-500">
+            <div className="mt-1 text-ink-mute">
               The artwork does not follow: ~560 hardcoded colours in the Remotion panels, the
               SafetyStack glass cards and the loop diagram stay blue whatever you pick. Repainting
               those is the real cost of moving off blue.

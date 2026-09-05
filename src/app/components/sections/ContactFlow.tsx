@@ -349,7 +349,7 @@ function FrontDeskDiagramMobile() {
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.45, delay: reduce ? 0 : i * 0.08 }}
       className={`flex items-center gap-2.5 rounded-xl border px-3 py-3 ${
-        done ? "bg-brand/10 border-[#dfe3ee]" : "bg-white border-[#e2e6f0]"
+        done ? "bg-brand/10 border-[#dfe3ee]" : "bg-paper-bright border-[#e2e6f0]"
       }`}
     >
       <span className="flex items-center justify-center w-8 h-8 rounded-full bg-brand-tint shrink-0">

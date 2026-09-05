@@ -106,7 +106,7 @@ export default function OrbitingCirclesGlobe({ orbits = EHR_ORBITS }: { orbits?:
         return (
           <div
             key={index}
-            className={`absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 rounded-full border border-slate-200 ${orbit.size}`}
+            className={`absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 rounded-full border border-rule ${orbit.size}`}
           >
             {orbit.icons.map((iconData) => (
               <div
@@ -121,7 +121,7 @@ export default function OrbitingCirclesGlobe({ orbits = EHR_ORBITS }: { orbits?:
               >
                 {/* counter-rotates so the logo never appears upside down */}
                 <div
-                  className="hana-orbit-chip relative z-10 -mt-8 rounded-full border border-slate-200 bg-white p-3 shadow-[0_6px_18px_-8px_rgba(10,22,51,0.25)] sm:p-4"
+                  className="hana-orbit-chip relative z-10 -mt-8 rounded-full border border-rule bg-paper-bright p-3 shadow-[0_6px_18px_-8px_rgba(10,22,51,0.25)] sm:p-4"
                   style={
                     {
                       "--counter-offset": `${-iconData.angle}deg`,

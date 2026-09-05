@@ -21,7 +21,7 @@ export function Cookies() {
         path="/cookies"
       />
 
-      <div className="bg-white min-h-screen">
+      <div className="bg-paper-bright min-h-screen">
         {/* Hero */}
         <section className="bg-navy text-white py-20 px-4">
           <div className="max-w-3xl mx-auto text-center">
@@ -88,13 +88,13 @@ export function Cookies() {
           {/* 3 */}
           <Section number="3" title={it ? "Cookie e tracker su questo Sito" : "Cookies and trackers on this Site"}>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
+              <table className="w-full text-sm border border-rule rounded-lg overflow-hidden">
                 <thead>
-                  <tr className="bg-slate-50">
-                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Nome / fornitore" : "Name / provider"}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Finalità" : "Purpose"}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Durata" : "Duration"}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Categoria" : "Category"}</th>
+                  <tr className="bg-paper-2">
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-rule">{it ? "Nome / fornitore" : "Name / provider"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-rule">{it ? "Finalità" : "Purpose"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-rule">{it ? "Durata" : "Duration"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-rule">{it ? "Categoria" : "Category"}</th>
                   </tr>
                 </thead>
                 <tbody className="text-[#718096]">
@@ -162,7 +162,7 @@ export function Cookies() {
                 ? "Potremmo aggiornare la presente Cookie Policy per riflettere modifiche alle tecnologie che utilizziamo o alla normativa applicabile. Pubblicheremo qui la versione aggiornata con una nuova data di “Ultimo Aggiornamento”."
                 : "We may update this Cookie Policy to reflect changes to the technologies we use or to applicable law. We will post the updated version here with a new &ldquo;Last Updated&rdquo; date."}
             </p>
-            <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 text-[15px]">
+            <div className="p-5 bg-paper-2 rounded-xl border border-rule text-[15px]">
               <p className="font-semibold text-navy-soft mb-1">HANA Health, Inc.</p>
               <p>{it ? "Privacy: " : "Privacy: "}<a href="mailto:privacy@hana.health" className="text-blue-600 hover:underline">privacy@hana.health</a></p>
               <p>{it ? "Correlato: " : "Related: "}<a href="/privacy" className="text-blue-600 hover:underline">{it ? "Informativa sulla Privacy" : "Privacy Policy"}</a></p>
@@ -190,7 +190,7 @@ function Section({ number, title, children }: { number: string; title: string; c
 
 function Row({ a, b, c, d }: { a: string; b: string; c: string; d: string }) {
   return (
-    <tr className="border-b border-slate-100 last:border-0">
+    <tr className="border-b border-rule-soft last:border-0">
       <td className="px-4 py-3 font-medium text-navy-soft align-top">{a}</td>
       <td className="px-4 py-3 align-top">{b}</td>
       <td className="px-4 py-3 align-top whitespace-nowrap">{c}</td>

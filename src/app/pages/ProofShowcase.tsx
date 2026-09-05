@@ -16,8 +16,8 @@ export function ProofShowcase() {
         path="/proof"
         robots="noindex, nofollow"
       />
-      <div className="pt-10 text-center bg-white">
-        <span className="inline-block rounded-full bg-slate-50 text-slate-500 border border-slate-200 text-xs font-medium px-3 py-1">
+      <div className="pt-10 text-center bg-paper-bright">
+        <span className="inline-block rounded-full bg-paper-2 text-ink-mute border border-rule text-xs font-medium px-3 py-1">
           Preview · /proof
         </span>
       </div>

@@ -107,7 +107,7 @@ function TaskQueuePane({ compact = false }: { compact?: boolean }) {
   const rows = compact ? TASK_ROWS.slice(0, 4) : TASK_ROWS;
   return (
     <div>
-      <div className="flex items-center justify-between px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[1px] text-slate-500 border-b border-slate-100 bg-[#fbfcfe]">
+      <div className="flex items-center justify-between px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[1px] text-ink-mute border-b border-rule-soft bg-[#fbfcfe]">
         <span>Priority queue · 38 of 412 need action</span>
         {!compact && <span className="hidden sm:block">Ranked by risk + billing</span>}
       </div>
@@ -118,7 +118,7 @@ function TaskQueuePane({ compact = false }: { compact?: boolean }) {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.35, delay: reduce ? 0 : 0.15 + i * 0.08 }}
-          className="flex items-center gap-3 px-4 py-3 border-b border-slate-100 hover:bg-[#fafbfe] transition-colors"
+          className="flex items-center gap-3 px-4 py-3 border-b border-rule-soft hover:bg-[#fafbfe] transition-colors"
         >
           <span className="text-[11px] font-semibold text-slate-300 w-4 shrink-0 tabular-nums">{i + 1}</span>
           <span className="flex items-center justify-center w-8 h-8 rounded-full bg-brand-tint text-brand text-[11px] font-bold shrink-0">
@@ -127,10 +127,10 @@ function TaskQueuePane({ compact = false }: { compact?: boolean }) {
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
               <LevelDot level={r.level} />
-              <span className="text-[13px] font-semibold text-slate-900 truncate">{r.name}</span>
-              <span className="text-[11px] text-slate-500 truncate hidden md:block">{r.program}</span>
+              <span className="text-[13px] font-semibold text-ink truncate">{r.name}</span>
+              <span className="text-[11px] text-ink-mute truncate hidden md:block">{r.program}</span>
             </div>
-            <p className="text-[12px] text-slate-600 m-0 mt-0.5 truncate">{r.reason}</p>
+            <p className="text-[12px] text-ink-soft m-0 mt-0.5 truncate">{r.reason}</p>
           </div>
           <span className={`inline-flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-lg shrink-0 ${actClasses(r.level, true)}`}>
             {r.act === "Call now" && <Glyph d={RI.phone} className="w-3 h-3" />}
@@ -149,7 +149,7 @@ function Meter({ value, max, tone }: { value: number; max: number; tone: string 
   const color = tone === "billable" ? "#10b981" : tone === "atrisk" ? "#f59e0b" : "var(--color-brand)";
   return (
     <div className="flex items-center gap-2">
-      <div className="h-1.5 flex-1 rounded-full bg-slate-100 overflow-hidden min-w-[52px]">
+      <div className="h-1.5 flex-1 rounded-full bg-paper-2 overflow-hidden min-w-[52px]">
         <motion.div
           className="h-full rounded-full"
           style={{ backgroundColor: color }}
@@ -159,7 +159,7 @@ function Meter({ value, max, tone }: { value: number; max: number; tone: string 
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
         />
       </div>
-      <span className="text-[11px] font-semibold text-slate-600 tabular-nums w-11 text-right shrink-0">{value}/{max}</span>
+      <span className="text-[11px] font-semibold text-ink-soft tabular-nums w-11 text-right shrink-0">{value}/{max}</span>
     </div>
   );
 }
@@ -191,20 +191,20 @@ function BillingPane() {
   return (
     <div className="flex flex-col h-full">
       {/* month-readiness summary strip */}
-      <div className="grid grid-cols-3 border-b border-slate-100 bg-[#fbfcfe]">
+      <div className="grid grid-cols-3 border-b border-rule-soft bg-[#fbfcfe]">
         {[
           { v: "218", l: "Requirements met", c: "text-emerald-600" },
           { v: "34", l: "Short of threshold", c: "text-amber-600" },
           { v: "$142K", l: "Across RPM · RTM · CCM · APCM", c: "text-navy" },
         ].map((s, i) => (
-          <div key={s.l} className={`px-4 py-3.5 ${i > 0 ? "border-l border-slate-100" : ""}`}>
+          <div key={s.l} className={`px-4 py-3.5 ${i > 0 ? "border-l border-rule-soft" : ""}`}>
             <div className={`font-serif text-[24px] leading-none ${s.c}`}>{s.v}</div>
-            <div className="text-[11px] text-slate-500 mt-1">{s.l}</div>
+            <div className="text-[11px] text-ink-mute mt-1">{s.l}</div>
           </div>
         ))}
       </div>
       {/* column header */}
-      <div className="hidden md:grid grid-cols-[1.5fr_1.1fr_1.4fr_0.9fr] gap-3 px-4 py-2 text-[10px] font-bold uppercase tracking-[1px] text-slate-300 border-b border-slate-100">
+      <div className="hidden md:grid grid-cols-[1.5fr_1.1fr_1.4fr_0.9fr] gap-3 px-4 py-2 text-[10px] font-bold uppercase tracking-[1px] text-slate-300 border-b border-rule-soft">
         <span>Patient</span>
         <span>Program · codes</span>
         <span>Requirement met</span>
@@ -215,24 +215,24 @@ function BillingPane() {
           const st = BILL_STATUS[b.status as keyof typeof BILL_STATUS];
           const tone = b.status === "billable" ? "#10b981" : b.status === "needtime" ? "var(--color-brand)" : "#f59e0b";
           return (
-            <div key={b.name} className="grid grid-cols-[1fr_auto] md:grid-cols-[1.5fr_1.1fr_1.4fr_0.9fr] gap-3 items-center px-4 py-3 border-b border-slate-100 hover:bg-[#fafbfe] transition-colors">
+            <div key={b.name} className="grid grid-cols-[1fr_auto] md:grid-cols-[1.5fr_1.1fr_1.4fr_0.9fr] gap-3 items-center px-4 py-3 border-b border-rule-soft hover:bg-[#fafbfe] transition-colors">
               <div className="flex items-center gap-2.5 min-w-0">
                 <span className="flex items-center justify-center w-7 h-7 rounded-full bg-brand-tint text-brand text-[10px] font-bold shrink-0">{b.initials}</span>
                 <div className="min-w-0">
-                  <div className="text-[13px] font-semibold text-slate-900 truncate">{b.name}</div>
-                  <div className="text-[11px] text-slate-500 md:hidden">{b.program} · {b.codes}</div>
+                  <div className="text-[13px] font-semibold text-ink truncate">{b.name}</div>
+                  <div className="text-[11px] text-ink-mute md:hidden">{b.program} · {b.codes}</div>
                 </div>
               </div>
               <div className="hidden md:flex flex-col gap-1">
                 <span className={`inline-flex w-fit items-center text-[11px] font-bold px-2 py-0.5 rounded-md ${PROGRAM_CHIP[b.program]}`}>{b.program}</span>
-                <span className="text-[11px] text-slate-500 tabular-nums">{b.codes}</span>
+                <span className="text-[11px] text-ink-mute tabular-nums">{b.codes}</span>
               </div>
               <div className="hidden md:block">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-[11px] text-slate-600">{b.req}</span>
-                  <span className="text-[11px] font-semibold text-slate-600 tabular-nums">{b.met}</span>
+                  <span className="text-[11px] text-ink-soft">{b.req}</span>
+                  <span className="text-[11px] font-semibold text-ink-soft tabular-nums">{b.met}</span>
                 </div>
-                <div className="h-1.5 rounded-full bg-slate-100 overflow-hidden">
+                <div className="h-1.5 rounded-full bg-paper-2 overflow-hidden">
                   <motion.div
                     className="h-full rounded-full"
                     style={{ backgroundColor: tone }}
@@ -253,8 +253,8 @@ function BillingPane() {
           );
         })}
       </div>
-      <div className="flex items-center justify-between px-4 py-3 mt-auto border-t border-slate-100 bg-[#fbfcfe]">
-        <span className="text-[12px] text-slate-600">One click exports the month's documentation packet — attributed time, escalations &amp; consent, for your biller to work.</span>
+      <div className="flex items-center justify-between px-4 py-3 mt-auto border-t border-rule-soft bg-[#fbfcfe]">
+        <span className="text-[12px] text-ink-soft">One click exports the month's documentation packet — attributed time, escalations &amp; consent, for your biller to work.</span>
         <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-white bg-navy-soft rounded-lg px-3 py-1.5 shrink-0">Export documentation</span>
       </div>
     </div>
@@ -276,23 +276,23 @@ function AnalyticsPane() {
       {/* KPI tiles */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4 shrink-0">
         {ANALYTICS_KPIS.map((k) => (
-          <div key={k.label} className="rounded-xl border border-slate-100 bg-white p-3.5">
-            <div className="text-[10.5px] font-semibold uppercase tracking-[0.5px] text-slate-500">{k.label}</div>
+          <div key={k.label} className="rounded-xl border border-rule-soft bg-paper-bright p-3.5">
+            <div className="text-[10.5px] font-semibold uppercase tracking-[0.5px] text-ink-mute">{k.label}</div>
             <div className="flex items-baseline gap-1.5 mt-1">
               <span className="font-serif text-[28px] leading-none text-navy">{k.value}</span>
               {k.trend === "up" && <span className="text-[11px] font-semibold text-emerald-500">▲</span>}
               {k.trend === "down" && <span className="text-[11px] font-semibold text-emerald-500">▼</span>}
             </div>
-            <div className="text-[11px] text-slate-500 mt-1 leading-snug">{k.sub}</div>
+            <div className="text-[11px] text-ink-mute mt-1 leading-snug">{k.sub}</div>
           </div>
         ))}
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-4 flex-1 min-h-0">
         {/* Adherence trend */}
-        <div className="rounded-xl border border-slate-100 bg-white p-4 flex flex-col">
+        <div className="rounded-xl border border-rule-soft bg-paper-bright p-4 flex flex-col">
           <div className="flex items-center justify-between mb-3 shrink-0">
-            <span className="text-[12px] font-semibold text-slate-700">Adherence trend</span>
-            <span className="text-[11px] text-slate-500">12 months</span>
+            <span className="text-[12px] font-semibold text-ink-soft">Adherence trend</span>
+            <span className="text-[11px] text-ink-mute">12 months</span>
           </div>
           <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="w-full flex-1 min-h-0" aria-label="Adherence climbing to 85% over 12 months">
             <defs>
@@ -323,16 +323,16 @@ function AnalyticsPane() {
               transition={{ duration: reduce ? 0 : 0.6, ease: "easeOut", delay: 0.2 }}
             />
           </svg>
-          <div className="flex justify-between text-[10px] text-slate-500 mt-1 shrink-0"><span>38%</span><span className="text-brand font-semibold">85% now</span></div>
+          <div className="flex justify-between text-[10px] text-ink-mute mt-1 shrink-0"><span>38%</span><span className="text-brand font-semibold">85% now</span></div>
         </div>
         {/* Program mix */}
-        <div className="rounded-xl border border-slate-100 bg-white p-4 flex flex-col">
-          <span className="text-[12px] font-semibold text-slate-700 shrink-0">Program mix</span>
+        <div className="rounded-xl border border-rule-soft bg-paper-bright p-4 flex flex-col">
+          <span className="text-[12px] font-semibold text-ink-soft shrink-0">Program mix</span>
           <div className="mt-3.5 flex-1 flex flex-col justify-between gap-2.5">
             {ANALYTICS_MIX.map((m) => (
               <div key={m.label} className="flex items-center gap-2.5">
-                <span className="text-[11px] font-medium text-slate-600 w-12 shrink-0">{m.label}</span>
-                <div className="h-2 flex-1 rounded-full bg-slate-100 overflow-hidden">
+                <span className="text-[11px] font-medium text-ink-soft w-12 shrink-0">{m.label}</span>
+                <div className="h-2 flex-1 rounded-full bg-paper-2 overflow-hidden">
                   <motion.div
                     className="h-full rounded-full"
                     style={{ backgroundColor: m.color }}
@@ -342,7 +342,7 @@ function AnalyticsPane() {
                     transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
                   />
                 </div>
-                <span className="text-[11px] font-semibold text-slate-600 w-8 text-right tabular-nums shrink-0">{m.pct}%</span>
+                <span className="text-[11px] font-semibold text-ink-soft w-8 text-right tabular-nums shrink-0">{m.pct}%</span>
               </div>
             ))}
           </div>
@@ -373,14 +373,14 @@ const DASH_KPIS = [
 // like a real dashboard rather than a small card.
 function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: number) => void; children: ReactNode }) {
   return (
-    <div className="rounded-xl bg-white border border-slate-200 shadow-[0_50px_110px_rgba(0,18,47,0.22)] overflow-hidden text-left">
+    <div className="rounded-xl bg-paper-bright border border-rule shadow-[0_50px_110px_rgba(0,18,47,0.22)] overflow-hidden text-left">
       {/* Browser bar */}
-      <div className="flex items-center gap-2 px-4 py-2.5 bg-[#eef0f4] border-b border-slate-200">
+      <div className="flex items-center gap-2 px-4 py-2.5 bg-[#eef0f4] border-b border-rule">
         <span className="w-3 h-3 rounded-full bg-[#ff5f57]" aria-hidden="true" />
         <span className="w-3 h-3 rounded-full bg-[#febc2e]" aria-hidden="true" />
         <span className="w-3 h-3 rounded-full bg-[#28c840]" aria-hidden="true" />
         <div className="flex-1 flex justify-center min-w-0 px-2">
-          <span className="inline-flex items-center gap-1.5 bg-white border border-slate-200 rounded-md px-3 py-1 text-[11px] text-slate-500 font-medium max-w-full truncate">
+          <span className="inline-flex items-center gap-1.5 bg-paper-bright border border-rule rounded-md px-3 py-1 text-[11px] text-ink-mute font-medium max-w-full truncate">
             <svg viewBox="0 0 24 24" className="w-3 h-3 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
             </svg>
@@ -394,8 +394,8 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
           reads as a full desktop screen without cramping on phones. */}
       <div className="flex items-stretch h-[440px] sm:h-auto sm:aspect-[16/10] sm:max-h-[640px]">
         {/* Left rail */}
-        <div className="hidden sm:flex flex-col w-52 lg:w-56 shrink-0 bg-[#fbfcfe] border-r border-slate-100">
-          <div className="flex items-center gap-2.5 px-4 h-14 border-b border-slate-100">
+        <div className="hidden sm:flex flex-col w-52 lg:w-56 shrink-0 bg-[#fbfcfe] border-r border-rule-soft">
+          <div className="flex items-center gap-2.5 px-4 h-14 border-b border-rule-soft">
             {/* Compass app mark — three ascending bars in a periwinkle tile */}
             <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-brand to-[#3f57c0] shadow-sm">
               <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true">
@@ -403,8 +403,8 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
               </svg>
             </span>
             <div className="leading-tight">
-              <div className="text-[13px] font-semibold text-slate-800">Compass</div>
-              <div className="text-[10px] text-slate-500">by HANA Remote</div>
+              <div className="text-[13px] font-semibold text-ink">Compass</div>
+              <div className="text-[10px] text-ink-mute">by HANA Remote</div>
             </div>
           </div>
           <div className="px-3 py-4 flex flex-col flex-1">
@@ -416,7 +416,7 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
                 disabled={!onNav}
                 aria-pressed={i === active}
                 className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] font-medium transition-colors text-left mb-0.5 ${
-                  i === active ? "bg-brand-tint text-brand" : `text-slate-600 ${onNav ? "hover:bg-slate-100 cursor-pointer" : "cursor-default"}`
+                  i === active ? "bg-brand-tint text-brand" : `text-ink-soft ${onNav ? "hover:bg-paper-2 cursor-pointer" : "cursor-default"}`
                 }`}
               >
                 <Glyph d={n.icon} className="w-[18px] h-[18px]" />
@@ -427,8 +427,8 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
             {/* KPI mini-cards */}
             <div className="mt-6 space-y-2.5">
               {DASH_KPIS.map((k) => (
-                <div key={k.label} className="rounded-lg border border-slate-100 bg-white px-3 py-2.5">
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.5px] text-slate-500">{k.label}</div>
+                <div key={k.label} className="rounded-lg border border-rule-soft bg-paper-bright px-3 py-2.5">
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.5px] text-ink-mute">{k.label}</div>
                   <div className="flex items-baseline gap-1.5 mt-0.5">
                     <span className="text-[18px] font-semibold text-navy leading-none">{k.value}</span>
                     {k.trend === "up" && <span className="text-[11px] font-semibold text-emerald-500">▲</span>}
@@ -436,25 +436,25 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
                 </div>
               ))}
             </div>
-            <div className="mt-auto flex items-center gap-2 pt-4 border-t border-slate-100">
+            <div className="mt-auto flex items-center gap-2 pt-4 border-t border-rule-soft">
               <span className="flex items-center justify-center w-7 h-7 rounded-full bg-brand-tint text-brand text-[10px] font-bold">DR</span>
               <div className="min-w-0">
-                <div className="text-[12px] font-medium text-slate-700 truncate">Dr. Reyes</div>
-                <div className="text-[10.5px] text-slate-500">412 monitored</div>
+                <div className="text-[12px] font-medium text-ink-soft truncate">Dr. Reyes</div>
+                <div className="text-[10.5px] text-ink-mute">412 monitored</div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Main column: app top bar + scrolling view */}
-        <div className="flex-1 min-w-0 flex flex-col bg-white">
-          <div className="flex items-center gap-3 px-5 h-14 border-b border-slate-100 shrink-0">
+        <div className="flex-1 min-w-0 flex flex-col bg-paper-bright">
+          <div className="flex items-center gap-3 px-5 h-14 border-b border-rule-soft shrink-0">
             <span className="text-[15px] font-semibold text-navy">{DASH_NAV[active].label}</span>
-            <div className="ml-auto hidden md:flex items-center gap-2 bg-[#f6f7fb] border border-slate-200 rounded-lg px-3 py-1.5 text-[12px] text-slate-500 w-56">
+            <div className="ml-auto hidden md:flex items-center gap-2 bg-[#f6f7fb] border border-rule rounded-lg px-3 py-1.5 text-[12px] text-ink-mute w-56">
               <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
               Search patients…
             </div>
-            <span className="relative flex items-center justify-center w-8 h-8 rounded-lg hover:bg-slate-50 text-slate-500" aria-hidden="true">
+            <span className="relative flex items-center justify-center w-8 h-8 rounded-lg hover:bg-paper-2 text-ink-mute" aria-hidden="true">
               <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" /><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" /></svg>
               <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-brand" />
             </span>
@@ -487,14 +487,14 @@ function DashboardTour() {
             three panels (pauses on hover); each pill carries a fill bar that
             drains over the dwell so the "pa pa pa" advance reads on screen. */}
         <div className="flex justify-center mb-5">
-          <div className="inline-flex gap-1.5 p-1.5 rounded-full bg-white/[0.06] border border-white/10">
+          <div className="inline-flex gap-1.5 p-1.5 rounded-full bg-paper-bright/[0.06] border border-white/10">
             {DASH_TABS.map((t, i) => (
               <button
                 key={t}
                 onClick={() => setTab(i)}
                 aria-pressed={tab === i}
                 className={`relative overflow-hidden px-4 sm:px-5 py-2 rounded-full text-[12.5px] sm:text-[13px] font-semibold transition-colors ${
-                  tab === i ? "bg-white text-navy" : "text-white/80 hover:text-white/90"
+                  tab === i ? "bg-paper-bright text-navy" : "text-white/80 hover:text-white/90"
                 }`}
               >
                 {tab === i && !reduce && !paused && (

@@ -181,7 +181,7 @@ export function HanaSleepAnalysis() {
             href={DEMO_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 bg-white text-navy text-[15px] font-semibold px-8 py-[15px] rounded-[10px] no-underline hover:opacity-90 transition-opacity mt-9 md:mt-10"
+            className="inline-flex items-center gap-2.5 bg-paper-bright text-navy text-[15px] font-semibold px-8 py-[15px] rounded-[10px] no-underline hover:opacity-90 transition-opacity mt-9 md:mt-10"
           >
             Book a demo →
           </motion.a>
@@ -220,9 +220,9 @@ export function HanaSleepAnalysis() {
                 key={c.title}
                 {...fadeUp}
                 transition={{ duration: 0.5, delay: 0.05 + i * 0.08 }}
-                className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 md:p-7"
+                className="rounded-2xl bg-paper-bright/[0.04] border border-white/10 p-6 md:p-7"
               >
-                <span className="flex items-center justify-center w-12 h-12 rounded-[12px] bg-white/[0.06] border border-white/10 text-brand-soft mb-5">
+                <span className="flex items-center justify-center w-12 h-12 rounded-[12px] bg-paper-bright/[0.06] border border-white/10 text-brand-soft mb-5">
                   <Glyph d={c.icon} className="w-6 h-6" />
                 </span>
                 <h3 className="font-serif font-normal text-[22px] md:text-[24px] leading-[1.2] mt-0 mb-3 text-white">{c.title}</h3>
@@ -248,7 +248,7 @@ export function HanaSleepAnalysis() {
               or run the study; we make sense of what it already captured.
             </p>
           </motion.div>
-          <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.08 }} className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 md:p-7">
+          <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.08 }} className="rounded-2xl bg-paper-bright/[0.04] border border-white/10 p-6 md:p-7">
             <div className="flex items-center justify-between mb-4">
               <span className="text-[12px] font-semibold tracking-[1.5px] uppercase text-brand-soft">A single night, read</span>
               <span className="inline-flex items-center gap-1.5 text-[11px] text-white/45">
@@ -258,7 +258,7 @@ export function HanaSleepAnalysis() {
             <Hypnogram />
             <div className="mt-5 flex flex-wrap gap-2">
               {["Apple Watch", "Oura", "Fitbit", "Garmin", "Type III / IV"].map((d) => (
-                <span key={d} className="inline-flex items-center gap-1.5 text-[12px] text-white/80 bg-white/[0.05] border border-white/10 rounded-full px-3 py-1">
+                <span key={d} className="inline-flex items-center gap-1.5 text-[12px] text-white/80 bg-paper-bright/[0.05] border border-white/10 rounded-full px-3 py-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-brand-soft" aria-hidden="true" />
                   {d}
                 </span>
@@ -287,7 +287,7 @@ export function HanaSleepAnalysis() {
                 key={f.k}
                 {...fadeUp}
                 transition={{ duration: 0.5, delay: 0.05 + i * 0.08 }}
-                className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 md:p-7"
+                className="rounded-2xl bg-paper-bright/[0.04] border border-white/10 p-6 md:p-7"
               >
                 <h3 className="font-serif font-normal text-[20px] md:text-[22px] leading-[1.25] mt-0 mb-3 text-white">{f.k}</h3>
                 <p className="text-[14.5px] leading-[1.65] text-white/65 m-0">{f.body}</p>
@@ -327,13 +327,13 @@ export function HanaSleepAnalysis() {
             href={DEMO_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 bg-white text-navy rounded-[10px] font-semibold text-[15px] px-8 py-[15px] no-underline hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2.5 bg-paper-bright text-navy rounded-[10px] font-semibold text-[15px] px-8 py-[15px] no-underline hover:opacity-90 transition-opacity"
           >
             Book a demo →
           </a>
           <div className="flex flex-wrap items-center justify-center gap-2.5 mt-8">
             {["Wearable-agnostic", "Reads Type III / IV", "Complements HST & PSG", "Clinical decision support"].map((t) => (
-              <span key={t} className="inline-flex items-center gap-1.5 text-[13px] font-medium text-white/90 bg-white/[0.06] border border-white/10 rounded-full px-3.5 py-1.5">
+              <span key={t} className="inline-flex items-center gap-1.5 text-[13px] font-medium text-white/90 bg-paper-bright/[0.06] border border-white/10 rounded-full px-3.5 py-1.5">
                 <Check className="w-3.5 h-3.5 text-brand-soft" strokeWidth={3} /> {t}
               </span>
             ))}

@@ -80,7 +80,7 @@ export function SleepNoteBeforeTime() {
   }, [inView]);
 
   return (
-    <section className="bg-white py-0">
+    <section className="bg-paper-bright py-0">
       {/* Full-bleed, not contained (Matteo 2026-08-25): the card ran to a
           1240px column and read as a banner. */}
       <div>
@@ -109,7 +109,7 @@ export function SleepNoteBeforeTime() {
                 <span className="rounded-full bg-[#E8A06A] text-[#231206] text-[11px] font-bold uppercase tracking-[1.2px] px-2.5 py-1">
                   New program
                 </span>
-                <span className="inline-flex items-center gap-2.5 rounded-full bg-white/[0.14] backdrop-blur-md border border-white/15 pl-3.5 pr-4 py-2">
+                <span className="inline-flex items-center gap-2.5 rounded-full bg-paper-bright/[0.14] backdrop-blur-md border border-white/15 pl-3.5 pr-4 py-2">
                   <span className="w-2 h-2 rounded-full bg-[#5B93FF]" />
                   <span className="text-[13px] font-medium text-white">HANA Sleep</span>
                 </span>
@@ -156,13 +156,13 @@ export function SleepNoteBeforeTime() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.12 }}
-              className="w-full lg:justify-self-end lg:max-w-[470px] rounded-[22px] bg-white/[0.13] backdrop-blur-xl border border-white/20 p-6 md:p-7 shadow-[0_30px_70px_-24px_rgba(0,0,0,0.55)]"
+              className="w-full lg:justify-self-end lg:max-w-[470px] rounded-[22px] bg-paper-bright/[0.13] backdrop-blur-xl border border-white/20 p-6 md:p-7 shadow-[0_30px_70px_-24px_rgba(0,0,0,0.55)]"
             >
               <div className="flex items-center justify-between gap-4">
                 <p className="text-[11.5px] font-bold uppercase tracking-[1.3px] text-white/60 m-0">
                   Time log · an example month
                 </p>
-                <span className="rounded-full bg-white/15 border border-white/15 text-[11px] font-semibold text-white/85 px-2.5 py-1">
+                <span className="rounded-full bg-paper-bright/15 border border-white/15 text-[11px] font-semibold text-white/85 px-2.5 py-1">
                   RTM 98980
                 </span>
               </div>
@@ -175,7 +175,7 @@ export function SleepNoteBeforeTime() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.45, delay: 0.2 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                    className="rounded-[14px] bg-white/[0.07] border border-white/10 px-4 py-3.5"
+                    className="rounded-[14px] bg-paper-bright/[0.07] border border-white/10 px-4 py-3.5"
                   >
                     <div className="flex items-baseline justify-between gap-3">
                       <span className="text-[13px] font-semibold text-white">{e.title}</span>
@@ -206,7 +206,7 @@ export function SleepNoteBeforeTime() {
                   </p>
                 </div>
 
-                <div className="relative mt-4 h-1.5 rounded-full bg-white/15 overflow-hidden">
+                <div className="relative mt-4 h-1.5 rounded-full bg-paper-bright/15 overflow-hidden">
                   <div
                     className="h-full rounded-full bg-[#4ECB8B] transition-[width] duration-100 ease-linear"
                     style={{ width: `${(secs / 252) * 100}%` }}
@@ -217,7 +217,7 @@ export function SleepNoteBeforeTime() {
                   initial={false}
                   animate={{ opacity: done ? 1 : 0.35 }}
                   transition={{ duration: 0.3 }}
-                  className="inline-flex items-center gap-2 bg-white text-navy text-[14px] font-semibold px-5 py-2.5 rounded-full mt-5"
+                  className="inline-flex items-center gap-2 bg-paper-bright text-navy text-[14px] font-semibold px-5 py-2.5 rounded-full mt-5"
                 >
                   <Check className="w-3.5 h-3.5 text-[#2F8F6B]" strokeWidth={3.2} />
                   {done ? "Attested by the treating clinician" : "Attest and submit"}

@@ -57,7 +57,7 @@ export function AnnouncementBar() {
         <button
           onClick={dismiss}
           aria-label="Dismiss announcement"
-          className="absolute right-4 md:right-8 w-7 h-7 grid place-items-center rounded-full bg-transparent border-0 cursor-pointer text-white/60 hover:text-white hover:bg-white/10 transition-colors"
+          className="absolute right-4 md:right-8 w-7 h-7 grid place-items-center rounded-full bg-transparent border-0 cursor-pointer text-white/60 hover:text-white hover:bg-paper-bright/10 transition-colors"
         >
           <X className="w-4 h-4" strokeWidth={2.2} />
         </button>

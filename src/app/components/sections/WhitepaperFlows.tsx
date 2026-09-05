@@ -412,11 +412,11 @@ export function WhitepaperFlows() {
   return (
     <div ref={containerRef}>
       {/* Tab switcher */}
-      <div className="flex gap-2 p-1 bg-white border border-slate-200 rounded-xl w-fit mb-5 shadow-sm">
+      <div className="flex gap-2 p-1 bg-paper-bright border border-rule rounded-xl w-fit mb-5 shadow-sm">
         {(["journey", "modules"] as const).map(t => (
           <button key={t} onClick={() => setTab(t)}
             className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${
-              tab === t ? "bg-blue-600 text-white shadow" : "text-slate-500 hover:text-slate-800"
+              tab === t ? "bg-blue-600 text-white shadow" : "text-ink-mute hover:text-ink"
             }`}>
             {t === "journey"
               ? (IT ? "Percorso del Paziente" : "Patient Journey")
@@ -429,7 +429,7 @@ export function WhitepaperFlows() {
         <motion.div key={tab}
           initial={{ opacity:0, y:8 }} animate={{ opacity:1, y:0 }}
           exit={{ opacity:0, y:-8 }} transition={{ duration:0.2 }}>
-          <div className="rounded-2xl border border-slate-200 bg-slate-900 overflow-hidden shadow-lg">
+          <div className="rounded-2xl border border-rule bg-navy overflow-hidden shadow-lg">
             {tab === "journey" ? (
               <svg viewBox={`0 0 ${J_W} ${J_H}`} className="w-full" xmlns="http://www.w3.org/2000/svg">
                 <Defs />

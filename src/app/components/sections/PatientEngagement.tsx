@@ -11,7 +11,7 @@ import { Check } from "lucide-react";
  */
 export function PatientEngagement({ white = false }: { white?: boolean } = {}) {
   return (
-    <section className={`py-20 sm:py-24 lg:py-[100px] px-5 sm:px-6 lg:px-8 font-sans ${white ? "bg-white" : "bg-[#f6f7fb]"}`}>
+    <section className={`py-20 sm:py-24 lg:py-[100px] px-5 sm:px-6 lg:px-8 font-sans ${white ? "bg-paper-bright" : "bg-[#f6f7fb]"}`}>
       <div className="max-w-7xl mx-auto">
 
         {/* ── Header ── */}
@@ -113,7 +113,7 @@ export function PatientEngagement({ white = false }: { white?: boolean } = {}) {
           {/* 4 · Dashboard */}
           <Card>
             <Illustration>
-              <span className="w-[232px] border-[1.5px] border-navy rounded-xl overflow-hidden bg-white block">
+              <span className="w-[232px] border-[1.5px] border-navy rounded-xl overflow-hidden bg-paper-bright block">
                 <span className="flex items-center gap-1.5 px-3 py-[9px] border-b-[1.5px] border-[#e8ebf2]">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#c3cbdb]" />
                   <span className="w-1.5 h-1.5 rounded-full bg-[#c3cbdb]" />
@@ -144,7 +144,7 @@ export function PatientEngagement({ white = false }: { white?: boolean } = {}) {
         </div>
 
         {/* ── Partnership · long bento ── */}
-        <div className={`${cardHover} mt-6 bg-white border border-[#e8ebf2] rounded-[18px] overflow-hidden grid grid-cols-1 md:grid-cols-[0.72fr_1.28fr] items-center`}>
+        <div className={`${cardHover} mt-6 bg-paper-bright border border-[#e8ebf2] rounded-[18px] overflow-hidden grid grid-cols-1 md:grid-cols-[0.72fr_1.28fr] items-center`}>
           {/* founders */}
           <div className="flex flex-col items-center justify-center gap-4 px-8 md:pl-12 md:pr-8 pt-10 md:py-12">
             <img
@@ -194,7 +194,7 @@ export function PatientEngagement({ white = false }: { white?: boolean } = {}) {
 
 function Card({ children }: { children: React.ReactNode }) {
   return (
-    <div className={`${cardHover} bg-white border border-[#e8ebf2] rounded-[18px] px-8 pt-9 pb-8 flex flex-col items-center`}>
+    <div className={`${cardHover} bg-paper-bright border border-[#e8ebf2] rounded-[18px] px-8 pt-9 pb-8 flex flex-col items-center`}>
       {children}
     </div>
   );

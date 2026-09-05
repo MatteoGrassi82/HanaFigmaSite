@@ -66,7 +66,7 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
           <div className="flex flex-col items-center text-center z-20 pointer-events-auto max-w-5xl mx-auto">
 
             {/* Peel badge */}
-            <div className="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-6">
+            <div className="inline-flex items-center gap-1.5 bg-paper-bright/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-[#7CC4F0] shrink-0" />
               <span className="text-sm font-medium text-white/70 tracking-wide">{t.hero.builtByClinicians}</span>
             </div>
@@ -86,7 +86,7 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
               <button
                 onClick={handleDemoClick}
                 disabled={isConnecting || disabled}
-                className="group relative flex items-center justify-center gap-3 bg-white/10 hover:bg-white/15 border border-white/20 rounded-full p-2 pr-6 transition-all duration-300 w-auto shadow-md hover:shadow-lg transform hover:-translate-y-0.5 backdrop-blur-sm"
+                className="group relative flex items-center justify-center gap-3 bg-paper-bright/10 hover:bg-paper-bright/15 border border-white/20 rounded-full p-2 pr-6 transition-all duration-300 w-auto shadow-md hover:shadow-lg transform hover:-translate-y-0.5 backdrop-blur-sm"
               >
                 <div className="relative w-12 h-12 rounded-full overflow-hidden ring-1 ring-white/10 shrink-0">
                   <img src={VoiceWave} alt="Voice Wave" className="absolute inset-0 w-full h-full object-cover opacity-90" />
@@ -107,7 +107,7 @@ export function CTASection({ onStartCall, isConnecting = false, isActive = false
                 href="https://calendly.com/matteowastaken/discoverycall"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block px-6 sm:px-8 py-4 bg-white text-slate-900 rounded-full font-medium text-base sm:text-lg hover:bg-blue-50 transition-all duration-300 w-full sm:w-auto shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-center whitespace-nowrap"
+                className="inline-block px-6 sm:px-8 py-4 bg-paper-bright text-ink rounded-full font-medium text-base sm:text-lg hover:bg-blue-50 transition-all duration-300 w-full sm:w-auto shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-center whitespace-nowrap"
               >
                 {t.hero.bookDemo}
               </a>

@@ -17,7 +17,7 @@ export function Terms() {
         }
         path="/terms"
       />
-      <div className="bg-white min-h-screen">
+      <div className="bg-paper-bright min-h-screen">
         {/* Hero */}
         <section className="bg-navy text-white py-20 px-4">
           <div className="max-w-3xl mx-auto text-center">
@@ -39,18 +39,18 @@ export function Terms() {
           </p>
 
           {/* PART A */}
-          <div className="border-b border-slate-200 pb-4 mb-10">
+          <div className="border-b border-rule pb-4 mb-10">
             <h2 className="text-2xl font-semibold text-navy-soft tracking-tight">{it ? "PARTE A — TERMINI DI SERVIZIO" : "PART A — TERMS OF SERVICE"}</h2>
           </div>
 
           {/* 1. Definitions */}
           <Section number="1" title={it ? "Definizioni" : "Definitions"}>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
+              <table className="w-full text-sm border border-rule rounded-lg overflow-hidden">
                 <thead>
-                  <tr className="bg-slate-50">
-                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200 w-1/3">{it ? "Termine" : "Term"}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Significato" : "Meaning"}</th>
+                  <tr className="bg-paper-2">
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-rule w-1/3">{it ? "Termine" : "Term"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-rule">{it ? "Significato" : "Meaning"}</th>
                   </tr>
                 </thead>
                 <tbody className="text-[#718096]">
@@ -150,11 +150,11 @@ export function Terms() {
           {/* 7. Service Levels */}
           <Section number="7" title={it ? "Livelli di Servizio, Disponibilità e Supporto" : "Service Levels, Availability, and Support"}>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
+              <table className="w-full text-sm border border-rule rounded-lg overflow-hidden">
                 <thead>
-                  <tr className="bg-slate-50">
-                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200 w-2/5">{it ? "Metrica" : "Metric"}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Impegno" : "Commitment"}</th>
+                  <tr className="bg-paper-2">
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-rule w-2/5">{it ? "Metrica" : "Metric"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-rule">{it ? "Impegno" : "Commitment"}</th>
                   </tr>
                 </thead>
                 <tbody className="text-[#718096]">
@@ -331,7 +331,7 @@ export function Terms() {
           </Section>
 
           {/* PART B */}
-          <div className="border-b border-slate-200 pb-4 mb-10 mt-16">
+          <div className="border-b border-rule pb-4 mb-10 mt-16">
             <h2 className="text-2xl font-semibold text-navy-soft tracking-tight">{it ? "PARTE B — POLITICA DI SICUREZZA" : "PART B — SECURITY POLICY"}</h2>
           </div>
 
@@ -345,12 +345,12 @@ export function Terms() {
 
             <h4 className="font-semibold text-navy-soft mb-3">{it ? "Sintesi del Quadro di Conformità" : "Compliance Framework Summary"}</h4>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
+              <table className="w-full text-sm border border-rule rounded-lg overflow-hidden">
                 <thead>
-                  <tr className="bg-slate-50">
-                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Quadro Normativo" : "Framework"}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Stato" : "Status"}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Ambito" : "Scope"}</th>
+                  <tr className="bg-paper-2">
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-rule">{it ? "Quadro Normativo" : "Framework"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-rule">{it ? "Stato" : "Status"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-rule">{it ? "Ambito" : "Scope"}</th>
                   </tr>
                 </thead>
                 <tbody className="text-[#718096]">
@@ -363,7 +363,7 @@ export function Terms() {
                     ["DTAC", "Compliant", it ? "Digital Technology Assessment Criteria (NHS England)" : "Digital Technology Assessment Criteria (NHS England)"],
                     ["ISO 27001", "Aligned", it ? "ISMS implementato; roadmap di certificazione formale in corso" : "ISMS implemented; formal certification roadmap in progress"],
                   ].map(([fw, status, scope]) => (
-                    <tr key={fw} className="border-b border-slate-100 last:border-0">
+                    <tr key={fw} className="border-b border-rule-soft last:border-0">
                       <td className="px-4 py-3 font-medium text-navy-soft">{fw}</td>
                       <td className="px-4 py-3">
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
@@ -391,11 +391,11 @@ export function Terms() {
           {/* 12. Data Encryption */}
           <Section number="16" title={it ? "Crittografia dei Dati" : "Data Encryption"}>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
+              <table className="w-full text-sm border border-rule rounded-lg overflow-hidden">
                 <thead>
-                  <tr className="bg-slate-50">
-                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200 w-2/5">{it ? "Contesto" : "Context"}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Standard" : "Standard"}</th>
+                  <tr className="bg-paper-2">
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-rule w-2/5">{it ? "Contesto" : "Context"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-rule">{it ? "Standard" : "Standard"}</th>
                   </tr>
                 </thead>
                 <tbody className="text-[#718096]">
@@ -435,11 +435,11 @@ export function Terms() {
           {/* 15. Incident Response */}
           <Section number="19" title={it ? "Risposta agli Incidenti" : "Incident Response"}>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
+              <table className="w-full text-sm border border-rule rounded-lg overflow-hidden">
                 <thead>
-                  <tr className="bg-slate-50">
-                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200 w-2/5">{it ? "Fase" : "Phase"}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Impegno di HANA" : "HANA Commitment"}</th>
+                  <tr className="bg-paper-2">
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-rule w-2/5">{it ? "Fase" : "Phase"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-rule">{it ? "Impegno di HANA" : "HANA Commitment"}</th>
                   </tr>
                 </thead>
                 <tbody className="text-[#718096]">
@@ -512,11 +512,11 @@ export function Terms() {
           {/* 20. Security Contact */}
           <Section number="24" title={it ? "Contatto per la Sicurezza" : "Security Contact"}>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
+              <table className="w-full text-sm border border-rule rounded-lg overflow-hidden">
                 <thead>
-                  <tr className="bg-slate-50">
-                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200 w-2/5">{it ? "Tipo di Contatto" : "Contact Type"}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{it ? "Dettagli" : "Details"}</th>
+                  <tr className="bg-paper-2">
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-rule w-2/5">{it ? "Tipo di Contatto" : "Contact Type"}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-rule">{it ? "Dettagli" : "Details"}</th>
                   </tr>
                 </thead>
                 <tbody className="text-[#718096]">
@@ -530,7 +530,7 @@ export function Terms() {
           </Section>
 
           {/* Footer note */}
-          <div className="mt-16 pt-8 border-t border-slate-200 text-center">
+          <div className="mt-16 pt-8 border-t border-rule text-center">
             <p className="text-sm text-[#718096]">
               HANA Health, Inc. &nbsp;|&nbsp; <a href="mailto:privacy@hana.health" className="text-blue-600 hover:text-blue-800 transition-colors">privacy@hana.health</a>
             </p>
@@ -559,7 +559,7 @@ function Section({ number, title, children }: { number: string; title: string; c
 /* Reusable table row */
 function DefRow({ term, meaning }: { term: string; meaning: string }) {
   return (
-    <tr className="border-b border-slate-100 last:border-0">
+    <tr className="border-b border-rule-soft last:border-0">
       <td className="px-4 py-3 font-medium text-navy-soft">{term}</td>
       <td className="px-4 py-3">{meaning}</td>
     </tr>

@@ -57,11 +57,11 @@ const Stats = () => {
       <style>{css}</style>
       <div className="max-w-7xl mx-auto">
         <div className="mx-auto max-w-2xl text-center mb-10 md:mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-normal text-slate-900 dark:text-white mb-6 font-serif">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-normal text-ink dark:text-white mb-6 font-serif">
             {t.headingLine1} <br className="hidden md:inline" />
             <span className="italic">{t.headingLine2}</span>
           </h2>
-          <p className="text-lg text-slate-500 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
+          <p className="text-lg text-ink-mute dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
             {t.subheading}
           </p>
         </div>
@@ -95,7 +95,7 @@ const Stats = () => {
           ))}
         </div>
         <div className="mt-12 text-center">
-             <p className="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">{t.caption}</p>
+             <p className="text-sm font-medium text-ink-mute dark:text-slate-400 uppercase tracking-wider">{t.caption}</p>
         </div>
       </div>
     </section>
@@ -119,17 +119,17 @@ const BarChart = ({
 }) => {
   return (
     <div className="group relative h-full w-full flex flex-col justify-end">
-      <div className="candy-bg relative h-full w-full overflow-hidden rounded-[24px] md:rounded-[40px] bg-slate-100 dark:bg-slate-800/50">
+      <div className="candy-bg relative h-full w-full overflow-hidden rounded-[24px] md:rounded-[40px] bg-paper-2 dark:bg-navy/50">
         <motion.div
           initial={{ opacity: 0, y: 100, height: 0 }}
           animate={{ opacity: 1, y: 0, height: `${value}%` }}
           transition={{ duration: 0.5, type: "spring", damping: 20, delay }}
           className={cn(
-            "absolute bottom-0 mt-auto w-full rounded-[24px] md:rounded-[40px] bg-zinc-800 dark:bg-zinc-700 p-2 md:p-3 text-white",
+            "absolute bottom-0 mt-auto w-full rounded-[24px] md:rounded-[40px] bg-navy dark:bg-navy-soft p-2 md:p-3 text-white",
             className,
           )}
         >
-          <div className="relative flex h-10 md:h-14 w-full items-center justify-center gap-2 rounded-full bg-white/20 tracking-tighter">
+          <div className="relative flex h-10 md:h-14 w-full items-center justify-center gap-2 rounded-full bg-paper-bright/20 tracking-tighter">
             <NumberFlow value={value} suffix="%" className="text-lg md:text-3xl font-bold" />
           </div>
         </motion.div>
@@ -146,14 +146,14 @@ const BarChart = ({
           animate={{ opacity: showToolTip ? 1 : 0, y: showToolTip ? 0 : 100 }}
           transition={{ duration: 0.5, type: "spring", damping: 15, delay }}
           className={cn(
-            "absolute -top-14 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-[90vw] rounded-xl bg-zinc-800 px-3 py-2 text-white font-bold text-sm shadow-xl z-50 md:px-6 md:py-3 md:text-lg md:whitespace-nowrap",
-            className.includes("bg-brand-soft") ? "bg-brand-soft" : "bg-zinc-800",
+            "absolute -top-14 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-[90vw] rounded-xl bg-navy px-3 py-2 text-white font-bold text-sm shadow-xl z-50 md:px-6 md:py-3 md:text-lg md:whitespace-nowrap",
+            className.includes("bg-brand-soft") ? "bg-brand-soft" : "bg-navy",
           )}
         >
           <div
             className={cn(
               "absolute -bottom-9 left-1/2 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-inherit transition-all duration-300 ease-in-out",
-              className.includes("bg-brand-soft") ? "bg-brand-soft" : "bg-zinc-800",
+              className.includes("bg-brand-soft") ? "bg-brand-soft" : "bg-navy",
             )}
           />
           <svg
@@ -161,7 +161,7 @@ const BarChart = ({
               "absolute -bottom-2 left-1/2 -translate-x-1/2",
               className.includes("bg-brand-soft")
                 ? "text-brand-soft"
-                : "text-zinc-800",
+                : "text-ink",
             )}
             width="10"
             height="10"
@@ -177,7 +177,7 @@ const BarChart = ({
           {t.tooltip}
         </motion.div>
       </motion.div>
-      <p className="mx-auto mt-3 md:mt-4 w-fit tracking-tight text-xs md:text-base text-slate-500 dark:text-slate-400 font-medium">
+      <p className="mx-auto mt-3 md:mt-4 w-fit tracking-tight text-xs md:text-base text-ink-mute dark:text-slate-400 font-medium">
         {label}
       </p>
     </div>

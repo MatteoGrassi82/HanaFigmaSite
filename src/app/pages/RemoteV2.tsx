@@ -281,7 +281,7 @@ function HeroCareJourney() {
     // No negative top margin: with a white hero, pulling it under the light
     // navbar made the bar vanish into the page (Matteo: "the nav bar is hiding").
     // The hero now starts below the navbar, whose bottom hairline separates them.
-    <header ref={ref} className="bg-white text-navy overflow-hidden border-b border-slate-200/80">
+    <header ref={ref} className="bg-paper-bright text-navy overflow-hidden border-b border-rule/80">
       {/* The claim gets the larger half: 58/42. It ran 43/57 before, which let the
           motion panel dominate a hero whose job is the headline. */}
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.16fr)_minmax(0,0.84fr)] lg:min-h-[calc(100vh-40px)]">
@@ -301,7 +301,7 @@ function HeroCareJourney() {
             <br />
             <em className="text-brand">Better outcomes.</em>
           </h1>
-          <p className="text-[16px] md:text-[17.5px] leading-[1.65] text-slate-600 mt-7 mb-0 max-w-[48ch]">
+          <p className="text-[16px] md:text-[17.5px] leading-[1.65] text-ink-soft mt-7 mb-0 max-w-[48ch]">
             Every reimbursable care program, run in house from enrollment to billing. HANA's AI
             does the calls and the documentation. Your clinicians review and sign.
           </p>
@@ -429,11 +429,11 @@ function CompassShowcase() {
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,42%)_minmax(0,1fr)] gap-12 lg:gap-16 items-center">
       {/* LEFT — synced accordion */}
       <div>
-        <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.08 }} className="border-t border-slate-200">
+        <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.08 }} className="border-t border-rule">
           {COMPASS_ITEMS.map((item, i) => {
             const open = chapter === i;
             return (
-              <div key={item.title} className="border-b border-slate-200">
+              <div key={item.title} className="border-b border-rule">
                 <button
                   onClick={() => select(i)}
                   aria-expanded={open}
@@ -460,7 +460,7 @@ function CompassShowcase() {
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                       className="overflow-hidden"
                     >
-                      <p className="text-[15px] leading-[1.7] text-slate-600 pb-5 pr-8 m-0">{item.body}</p>
+                      <p className="text-[15px] leading-[1.7] text-ink-soft pb-5 pr-8 m-0">{item.body}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -630,11 +630,11 @@ function CompanionShowcase() {
         </motion.div>
 
         {/* RIGHT — synced accordion */}
-        <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.12 }} className="order-1 border-t border-slate-200 self-start">
+        <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.12 }} className="order-1 border-t border-rule self-start">
           {COMPANION_ITEMS.map((item, i) => {
             const open = chapter === i;
             return (
-              <div key={item.title} className="border-b border-slate-200">
+              <div key={item.title} className="border-b border-rule">
                 <button
                   onClick={() => select(i)}
                   aria-expanded={open}
@@ -661,13 +661,13 @@ function CompanionShowcase() {
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                       className="overflow-hidden"
                     >
-                      <p className="text-[15px] leading-[1.7] text-slate-600 pb-5 pr-8 m-0">{item.body}</p>
+                      <p className="text-[15px] leading-[1.7] text-ink-soft pb-5 pr-8 m-0">{item.body}</p>
                       {"flags" in item && item.flags && (
                         <div className="flex flex-wrap gap-2 pb-6 pr-6">
                           {LANGS_IN_PRODUCTION.map((l) => (
                             <span
                               key={l.name}
-                              className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[12.5px] text-slate-700"
+                              className="inline-flex items-center gap-1.5 rounded-full border border-rule bg-paper-bright px-2.5 py-1 text-[12.5px] text-ink-soft"
                             >
                               <span aria-hidden>{l.flag}</span>
                               {l.name}
@@ -760,7 +760,7 @@ function initials(name: string) {
 
 function TeamSection() {
   return (
-    <section className="bg-white py-24 md:py-32 px-6 md:px-16">
+    <section className="bg-paper-bright py-24 md:py-32 px-6 md:px-16">
       <div className="max-w-[1200px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,50%)_minmax(0,1fr)] gap-14 lg:gap-8 items-center">
           {/* left: badge, mission, CTA */}
@@ -859,7 +859,7 @@ function TeamSection() {
           {TEAM_STATS.map((s, i) => (
             <motion.div key={s.l} {...fadeUp} transition={{ duration: 0.5, delay: 0.05 + i * 0.08 }}>
               <p className="font-serif text-[54px] md:text-[66px] leading-[0.9] text-navy m-0">{s.v}</p>
-              <span className="inline-block mt-5 rounded-full bg-[#F1F4FA] px-4 py-2 text-[13px] leading-snug text-slate-600">
+              <span className="inline-block mt-5 rounded-full bg-[#F1F4FA] px-4 py-2 text-[13px] leading-snug text-ink-soft">
                 {s.l}
               </span>
             </motion.div>
@@ -1029,7 +1029,7 @@ function LoopStepBlock({ step, align }: { step: LoopStep; align: "l" | "r" }) {
         )}
       </div>
       <p className="mt-2.5 mb-0 text-[10px] font-bold uppercase tracking-[1px] text-brand">{step.role}</p>
-      <p className="mt-2.5 mb-0 text-[14.5px] leading-[1.58] text-slate-500">{step.body}</p>
+      <p className="mt-2.5 mb-0 text-[14.5px] leading-[1.58] text-ink-mute">{step.body}</p>
     </motion.div>
   );
 }
@@ -1037,7 +1037,7 @@ function LoopStepBlock({ step, align }: { step: LoopStep; align: "l" | "r" }) {
 function HowItWorksLoop() {
   const reduce = useReducedMotion();
   return (
-    <section className="bg-white py-24 md:py-32 px-6 md:px-16">
+    <section className="bg-paper-bright py-24 md:py-32 px-6 md:px-16">
       <div className="max-w-[1240px] mx-auto">
         <motion.div {...fadeUp} className="text-center">
           <p className={`${eyebrow} text-brand mt-0 mb-6`}>How it works</p>
@@ -1046,7 +1046,7 @@ function HowItWorksLoop() {
             <br />
             <em className="text-brand">We take it under thirty.</em>
           </h2>
-          <p className="text-[17px] leading-[1.62] text-slate-600 max-w-[600px] mx-auto mt-6 mb-0">
+          <p className="text-[17px] leading-[1.62] text-ink-soft max-w-[600px] mx-auto mt-6 mb-0">
             One coordinator. Same hours. Two hundred and fifty patients instead of a hundred and fifty.
           </p>
 
@@ -1139,8 +1139,8 @@ function HowItWorksLoop() {
           </div>
         </div>
 
-        <motion.p {...fadeUp} className="max-w-[820px] mx-auto mt-16 mb-0 text-center text-[14.5px] leading-[1.6] text-slate-500">
-          <b className="font-medium text-slate-600">You set the escalation rules.</b> A person on
+        <motion.p {...fadeUp} className="max-w-[820px] mx-auto mt-16 mb-0 text-center text-[14.5px] leading-[1.6] text-ink-mute">
+          <b className="font-medium text-ink-soft">You set the escalation rules.</b> A person on
           every clinical flag, an audit trail on every call, minutes totalled per patient.
         </motion.p>
 
@@ -1150,7 +1150,7 @@ function HowItWorksLoop() {
         <motion.div
           {...fadeUp}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="mt-14 md:mt-16 pt-12 border-t border-slate-200 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 text-center"
+          className="mt-14 md:mt-16 pt-12 border-t border-rule grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 text-center"
         >
           {LOOP_MATH.map((m) => (
             <div key={m.label}>
@@ -1159,7 +1159,7 @@ function HowItWorksLoop() {
                 <span className="text-brand text-[0.4em] align-super ml-1">{m.suf}</span>
               </p>
               <p className="text-[15px] font-semibold text-navy mt-4 mb-1.5">{m.label}</p>
-              <p className="text-[14px] leading-[1.6] text-slate-600 m-0 max-w-[30ch] mx-auto">{m.body}</p>
+              <p className="text-[14px] leading-[1.6] text-ink-soft m-0 max-w-[30ch] mx-auto">{m.body}</p>
             </div>
           ))}
         </motion.div>
@@ -1206,7 +1206,7 @@ const CMP_HANA_POINTS = [
 
 function WhatIsHanaCompare() {
   return (
-    <section className="bg-white py-28 md:py-36 px-6 md:px-16">
+    <section className="bg-paper-bright py-28 md:py-36 px-6 md:px-16">
       <div className="max-w-[1200px] mx-auto">
         {/* Retell-style header: heading left, one-liner right */}
         <motion.div {...fadeUp} className="md:flex md:items-start md:justify-between md:gap-12 mb-10 md:mb-14">
@@ -1232,7 +1232,7 @@ function WhatIsHanaCompare() {
             <h3 className="font-serif font-normal text-[26px] md:text-[28px] leading-[1.2] text-navy m-0">
               Care management software
             </h3>
-            <p className="text-[15px] leading-[1.6] text-slate-600 mt-10 md:mt-auto md:pt-10 mb-0">
+            <p className="text-[15px] leading-[1.6] text-ink-soft mt-10 md:mt-auto md:pt-10 mb-0">
               Mainly used to track time, build the care plan, and assemble the claim. Nothing
               happens until someone on your team dials.
             </p>
@@ -1254,7 +1254,7 @@ function WhatIsHanaCompare() {
             </p>
             <ul className="list-none p-0 mt-5 mb-0 space-y-4">
               {CMP_OUTSOURCED_POINTS.map((p) => (
-                <li key={p} className="flex items-start gap-3 text-[15px] leading-[1.5] text-slate-700">
+                <li key={p} className="flex items-start gap-3 text-[15px] leading-[1.5] text-ink-soft">
                   <span className="shrink-0 w-5 h-5 rounded-full bg-navy text-white grid place-items-center text-[9px] font-bold mt-0.5">✕</span>
                   {p}
                 </li>
@@ -1289,7 +1289,7 @@ function WhatIsHanaCompare() {
 
         {/* The "only one that does the calling" line came out 2026-09-02: the
             headline says it now, and the cards prove it. This is the keeper. */}
-        <motion.p {...fadeUp} className="text-[15px] leading-[1.6] text-slate-600 text-center mt-10 mb-0 max-w-[62ch] mx-auto">
+        <motion.p {...fadeUp} className="text-[15px] leading-[1.6] text-ink-soft text-center mt-10 mb-0 max-w-[62ch] mx-auto">
           Your team keeps the relationship, the judgment and the signature. HANA does the dialing.
         </motion.p>
       </div>
@@ -1325,7 +1325,7 @@ function BuiltByClinicians() {
   const opacity = useTransform(scrollYProgress, [0, 0.3, 1], reduce ? [1, 1, 1] : [0, 0.55, 1]);
 
   return (
-    <section ref={ref} className="bg-white py-24 md:py-36 px-6 overflow-hidden">
+    <section ref={ref} className="bg-paper-bright py-24 md:py-36 px-6 overflow-hidden">
       <div className="max-w-[1200px] mx-auto">
         <h2 className="font-serif font-normal text-navy leading-[1.04] tracking-[-0.02em] m-0 text-[48px] sm:text-[80px] md:text-[112px]">
           <span className="flex items-center justify-center gap-[0.35em] whitespace-nowrap">
@@ -1412,7 +1412,7 @@ export function RemoteV2({
   handleEndWebCall,
 }: RemoteV2Props) {
   return (
-    <div className="bg-white text-navy font-sans overflow-x-hidden">
+    <div className="bg-paper-bright text-navy font-sans overflow-x-hidden">
       <SEO
         title="HANA · Draft"
         useExactTitle
@@ -1467,7 +1467,7 @@ export function RemoteV2({
       />
 
       {/* §6 COMPASS — the care team's side */}
-      <section className="bg-white text-navy py-24 md:py-32 px-6 md:px-16">
+      <section className="bg-paper-bright text-navy py-24 md:py-32 px-6 md:px-16">
         <div className="max-w-[1200px] mx-auto">
           <CompassShowcase />
         </div>
@@ -1481,7 +1481,7 @@ export function RemoteV2({
       {/* §8 THE PATIENT COMPANION — the patient's side (Retell accordion pattern
           + Remotion, twin of §8 Compass; replaced PatientAgentSection, which is
           kept below for revert) */}
-      <section className="bg-white py-24 md:py-32 px-6 md:px-16">
+      <section className="bg-paper-bright py-24 md:py-32 px-6 md:px-16">
         <div className="max-w-[1200px] mx-auto">
           <CompanionShowcase />
         </div>
@@ -1516,14 +1516,14 @@ export function RemoteV2({
       {/* §10b INTEGRATIONS — EHR logos orbiting the HANA core. Replaced the phone
           carousel version ("The phone they have. The chart you use."), which is
           kept in the file as IntegrationsSection for easy re-add. */}
-      <section className="bg-white pt-24 md:pt-32 px-6 md:px-16 overflow-hidden">
+      <section className="bg-paper-bright pt-24 md:pt-32 px-6 md:px-16 overflow-hidden">
         <div className="max-w-[1200px] mx-auto">
           <motion.div {...fadeUp} className="text-center">
             <p className={`${eyebrow} text-brand mt-0 mb-4`}>Integrations</p>
             <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-navy mx-auto max-w-[24ch] m-0">
               It lands in the chart <em className="text-brand">you already use.</em>
             </h2>
-            <p className="text-[17px] leading-[1.7] text-slate-600 max-w-[54ch] mx-auto mt-5 mb-0">
+            <p className="text-[17px] leading-[1.7] text-ink-soft max-w-[54ch] mx-auto mt-5 mb-0">
               Your EHR. Your phone system. Nothing to rip out. The note is written the moment the
               call ends, attributed to whoever owns the patient.
             </p>
@@ -1592,7 +1592,7 @@ export function RemoteV2({
       <AskAiAboutUs className="py-12 md:py-16" />
 
       {/* §16c CTA */}
-      <section className="bg-white text-navy py-28 md:py-32 px-6 md:px-16 text-center relative overflow-hidden">
+      <section className="bg-paper-bright text-navy py-28 md:py-32 px-6 md:px-16 text-center relative overflow-hidden">
         <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-brand/[0.12] w-[520px] h-[520px] -bottom-[180px] pointer-events-none" />
         <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-brand/[0.12] w-[340px] h-[340px] -bottom-[110px] pointer-events-none" />
         <motion.div {...fadeUp} className="relative">
@@ -1610,7 +1610,7 @@ export function RemoteV2({
           </a>
           <div className="flex flex-wrap items-center justify-center gap-2.5 mt-8">
             {["No devices to ship", "No app to download", "Audit-ready from day one", "Runs in the EHR you already use"].map((t) => (
-              <span key={t} className="inline-flex items-center gap-1.5 text-[13px] font-medium text-navy bg-white border border-slate-200 rounded-full px-3.5 py-1.5">
+              <span key={t} className="inline-flex items-center gap-1.5 text-[13px] font-medium text-navy bg-paper-bright border border-rule rounded-full px-3.5 py-1.5">
                 <Check className="w-3.5 h-3.5 text-brand" strokeWidth={3} /> {t}
               </span>
             ))}

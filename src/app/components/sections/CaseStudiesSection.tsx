@@ -34,7 +34,7 @@ const caseStudies: CaseStudy[] = [
         role: "Shoorah",
         avatarUrl: "https://images.unsplash.com/photo-1758518727592-706e80ebc354?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBidXNpbmVzc3dvbWFuJTIwZXhlY3V0aXZlJTIwbW9kZXJuJTIwcG9ydHJhaXR8ZW58MXx8fHwxNzcwNDEyOTY4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
         logoUrl: "SHOORAH",
-        logoBg: "bg-white",
+        logoBg: "bg-paper-bright",
         isDarkLogo: true
     }
   },
@@ -66,7 +66,7 @@ const caseStudies: CaseStudy[] = [
         role: "Founder of NTX",
         avatarUrl: "https://images.unsplash.com/photo-1696992443065-64eadfc2ded1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBtYW4lMjBzdWl0JTIwY29ycG9yYXRlJTIwbGVhZGVyJTIwc21pbGluZyUyMHBvcnRyYWl0fGVufDF8fHx8MTc3MDQxMjk2N3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
         logoUrl: "NTX",
-        logoBg: "bg-white",
+        logoBg: "bg-paper-bright",
         isDarkLogo: true
     }
   }
@@ -76,16 +76,16 @@ export function CaseStudiesSection() {
   const t = useTranslations();
   const cs = t.caseStudiesTeaser;
   return (
-    <section className="py-12 md:py-24 bg-[#F5F5F5] dark:bg-slate-950" id="case-studies">
+    <section className="py-12 md:py-24 bg-[#F5F5F5] dark:bg-navy" id="case-studies">
       {/* Section Header */}
       <div className="max-w-7xl mx-auto px-4 md:px-8 text-center mb-12 md:mb-16">
         <p className="text-[11px] font-semibold uppercase tracking-[2.5px] text-slate-400 mb-4">
           {cs.tag}
         </p>
-        <h2 className="font-serif text-4xl md:text-5xl text-slate-900 dark:text-white leading-tight max-w-3xl mx-auto">
+        <h2 className="font-serif text-4xl md:text-5xl text-ink dark:text-white leading-tight max-w-3xl mx-auto">
           {cs.heading}
         </h2>
-        <p className="text-lg text-slate-500 dark:text-slate-400 max-w-xl mx-auto mt-4 leading-relaxed">
+        <p className="text-lg text-ink-mute dark:text-slate-400 max-w-xl mx-auto mt-4 leading-relaxed">
           {cs.body}
         </p>
       </div>
@@ -100,7 +100,7 @@ export function CaseStudiesSection() {
               min-h-[450px] 
               flex flex-col lg:flex-row gap-8 items-stretch shadow-xl
               ${study.theme === 'dark' ? 'bg-navy text-white' : ''}
-              ${study.theme === 'peach' ? 'bg-[#FFC091] text-slate-900' : ''}
+              ${study.theme === 'peach' ? 'bg-[#FFC091] text-ink' : ''}
               ${study.theme === 'blue' ? 'bg-[#3B82F6] text-white' : ''}
             `}
             style={{ 
@@ -111,7 +111,7 @@ export function CaseStudiesSection() {
             {/* Left Content */}
             <div className="flex-1 flex flex-col justify-between z-10 w-full relative">
               <div className="space-y-6">
-                <Quote className={`w-6 h-6 ${study.theme === 'peach' ? 'text-slate-900' : 'text-white/80'}`} />
+                <Quote className={`w-6 h-6 ${study.theme === 'peach' ? 'text-ink' : 'text-white/80'}`} />
                 
                 <h3 className="text-xl md:text-2xl lg:text-3xl font-serif leading-tight tracking-tight max-w-3xl">
                   {study.quote}
@@ -123,8 +123,8 @@ export function CaseStudiesSection() {
                  {/* Author */}
                  {study.author && (
                   <div className="flex flex-col gap-1">
-                    <span className={`font-bold text-lg ${study.theme === 'peach' ? 'text-slate-900' : 'text-white'}`}>{study.author.name}</span>
-                    <span className={`text-sm font-medium uppercase tracking-wide opacity-80 ${study.theme === 'peach' ? 'text-slate-800' : 'text-slate-300'}`}>{study.author.role}</span>
+                    <span className={`font-bold text-lg ${study.theme === 'peach' ? 'text-ink' : 'text-white'}`}>{study.author.name}</span>
+                    <span className={`text-sm font-medium uppercase tracking-wide opacity-80 ${study.theme === 'peach' ? 'text-ink' : 'text-slate-300'}`}>{study.author.role}</span>
                   </div>
                 )}
 
@@ -133,8 +133,8 @@ export function CaseStudiesSection() {
                   <button className={`
                     px-5 py-2 rounded-full text-xs font-semibold transition-transform hover:scale-105 active:scale-95 whitespace-nowrap self-start md:self-auto
                     ${study.theme === 'peach' 
-                      ? 'bg-white text-slate-900 shadow-sm' 
-                      : 'bg-white text-slate-900 hover:bg-slate-100 shadow-sm'}
+                      ? 'bg-paper-bright text-ink shadow-sm' 
+                      : 'bg-paper-bright text-ink hover:bg-paper-2 shadow-sm'}
                   `}>
                     {study.cta}
                   </button>
@@ -164,7 +164,7 @@ export function CaseStudiesSection() {
           {cs.readMore}
           <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-[3px]" />
         </Link>
-        <p className="text-[13px] text-slate-500 dark:text-slate-400 mt-[14px]">
+        <p className="text-[13px] text-ink-mute dark:text-slate-400 mt-[14px]">
           {cs.readMoreSub}
         </p>
       </div>

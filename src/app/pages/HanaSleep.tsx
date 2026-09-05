@@ -186,13 +186,13 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
               href={DEMO_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 bg-white text-navy text-[15px] font-semibold px-8 py-[15px] rounded-[10px] no-underline hover:opacity-90 transition-opacity"
+              className="inline-flex items-center gap-2.5 bg-paper-bright text-navy text-[15px] font-semibold px-8 py-[15px] rounded-[10px] no-underline hover:opacity-90 transition-opacity"
             >
               Book a demo →
             </a>
             <a
               href="#solutions"
-              className="inline-flex items-center gap-2.5 border border-white/25 text-white text-[15px] font-semibold px-8 py-[15px] rounded-[10px] no-underline hover:bg-white/10 transition-colors"
+              className="inline-flex items-center gap-2.5 border border-white/25 text-white text-[15px] font-semibold px-8 py-[15px] rounded-[10px] no-underline hover:bg-paper-bright/10 transition-colors"
             >
               Explore the suite
             </a>
@@ -223,12 +223,12 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
                   transition={{ duration: 0.5, delay: 0.05 + i * 0.08 }}
                   className={`group relative flex flex-col h-full rounded-2xl border p-6 md:p-7 transition-all duration-300 ${
                     s.soon
-                      ? "bg-white/[0.02] border-white/[0.08]"
-                      : "bg-white/[0.04] border-white/10 hover:bg-white/[0.07] hover:border-white/20"
+                      ? "bg-paper-bright/[0.02] border-white/[0.08]"
+                      : "bg-paper-bright/[0.04] border-white/10 hover:bg-paper-bright/[0.07] hover:border-white/20"
                   }`}
                 >
                   <div className="flex items-center justify-between mb-5">
-                    <span className={`flex items-center justify-center w-12 h-12 rounded-[12px] bg-white/[0.06] border border-white/10 ${s.soon ? "text-white/40" : "text-brand-soft"}`}>
+                    <span className={`flex items-center justify-center w-12 h-12 rounded-[12px] bg-paper-bright/[0.06] border border-white/10 ${s.soon ? "text-white/40" : "text-brand-soft"}`}>
                       <Glyph d={s.icon} className="w-6 h-6" />
                     </span>
                     <span className={`text-[11px] font-bold tracking-[2px] uppercase ${s.soon ? "text-white/35" : "text-brand-soft"}`}>{s.eyebrow}</span>
@@ -238,7 +238,7 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
                   <ul className="list-none p-0 mt-5 mb-6 space-y-2">
                     {s.points.map((p) => (
                       <li key={p} className="flex items-start gap-2.5 text-[13.5px] text-white/75">
-                        <span className={`mt-[7px] w-1.5 h-1.5 rounded-full shrink-0 ${s.soon ? "bg-white/30" : "bg-brand-soft"}`} aria-hidden="true" />
+                        <span className={`mt-[7px] w-1.5 h-1.5 rounded-full shrink-0 ${s.soon ? "bg-paper-bright/30" : "bg-brand-soft"}`} aria-hidden="true" />
                         {p}
                       </li>
                     ))}
@@ -300,7 +300,7 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
                 key={s.v}
                 {...fadeUp}
                 transition={{ duration: 0.5, delay: 0.04 + i * 0.07 }}
-                className="flex items-center gap-5 rounded-2xl bg-white/[0.04] border border-white/10 p-5 md:p-6"
+                className="flex items-center gap-5 rounded-2xl bg-paper-bright/[0.04] border border-white/10 p-5 md:p-6"
               >
                 <div className="font-serif text-[34px] md:text-[44px] leading-[0.95] text-white shrink-0 w-[104px] md:w-[124px]">{s.v}</div>
                 <div className="text-[14px] leading-[1.55] text-white/65">{s.l}</div>
@@ -347,7 +347,7 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: 0.04 + i * 0.08 }}
-                className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 md:p-7"
+                className="rounded-2xl bg-paper-bright/[0.04] border border-white/10 p-6 md:p-7"
               >
                 <div className="font-serif text-[38px] md:text-[46px] leading-[0.95] text-white">{s.v}</div>
                 <div className="text-[13.5px] leading-[1.55] text-white/65 mt-3">{s.l}</div>
@@ -386,7 +386,7 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
             href={DEMO_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 bg-white text-navy rounded-[10px] font-semibold text-[15px] px-8 py-[15px] no-underline hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2.5 bg-paper-bright text-navy rounded-[10px] font-semibold text-[15px] px-8 py-[15px] no-underline hover:opacity-90 transition-opacity"
           >
             Book a demo →
           </a>

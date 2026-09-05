@@ -105,14 +105,14 @@ export function GetYouLive() {
     if (!reduce) p.play();
   };
   return (
-    <section className="bg-white py-24 md:py-32 px-6 md:px-16">
+    <section className="bg-paper-bright py-24 md:py-32 px-6 md:px-16">
       <div ref={ref} className="max-w-[1200px] mx-auto">
         <motion.div {...fadeUp} className="mb-12 md:mb-16">
           <p className={`${eyebrow} text-brand mt-0 mb-4`}>The partnership</p>
           <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-navy m-0 max-w-[20ch]">
             You're not buying software. <em className="text-brand">You're getting a team.</em>
           </h2>
-          <p className="text-[17px] leading-[1.7] text-slate-600 mt-6 mb-0 max-w-[54ch]">
+          <p className="text-[17px] leading-[1.7] text-ink-soft mt-6 mb-0 max-w-[54ch]">
             Most practices that quit these programs didn't lose to the billing rules. They lost to a
             hundred clicks and a manual nobody had time to read. So we do the clicking, we teach your
             team, and we stay on it after you're live.
@@ -121,11 +121,11 @@ export function GetYouLive() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,42%)_minmax(0,1fr)] gap-12 lg:gap-16 items-center">
           {/* LEFT — the accordion */}
-          <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.08 }} className="border-t border-slate-200 self-start">
+          <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.08 }} className="border-t border-rule self-start">
             {STEPS.map((step, i) => {
               const on = open === i;
               return (
-                <div key={step.title} className="border-b border-slate-200">
+                <div key={step.title} className="border-b border-rule">
                   <button
                     onClick={() => select(i)}
                     aria-expanded={on}
@@ -147,8 +147,8 @@ export function GetYouLive() {
                     style={{ gridTemplateRows: on ? "1fr" : "0fr" }}
                   >
                     <div className="overflow-hidden">
-                      <p className="text-[15px] leading-[1.7] text-slate-600 pb-6 pr-6 m-0">{step.body}</p>
-                      <p className="text-[12.5px] font-semibold uppercase tracking-[1.2px] text-slate-500 pb-6 m-0">
+                      <p className="text-[15px] leading-[1.7] text-ink-soft pb-6 pr-6 m-0">{step.body}</p>
+                      <p className="text-[12.5px] font-semibold uppercase tracking-[1.2px] text-ink-mute pb-6 m-0">
                         {step.meta}
                       </p>
                     </div>
@@ -199,7 +199,7 @@ export function GetYouLive() {
           </motion.div>
         </div>
 
-        <motion.p {...fadeUp} className="text-[14px] leading-[1.6] text-slate-600 mt-10 mb-0 max-w-[64ch]">
+        <motion.p {...fadeUp} className="text-[14px] leading-[1.6] text-ink-soft mt-10 mb-0 max-w-[64ch]">
           The staffing model answers this by doing it all for you. If the proposed CY2027 rule is
           finalized, Medicare stops paying for that. This is how your own team covers it instead.
         </motion.p>

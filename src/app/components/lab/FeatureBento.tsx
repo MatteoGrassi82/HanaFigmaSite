@@ -24,7 +24,7 @@ import {
  */
 export function FeatureBento() {
   return (
-    <section className="relative py-16 sm:py-20 lg:py-24 px-5 sm:px-6 lg:px-8 overflow-hidden bg-white text-slate-900">
+    <section className="relative py-16 sm:py-20 lg:py-24 px-5 sm:px-6 lg:px-8 overflow-hidden bg-paper-bright text-ink">
       {/* faint top glow */}
       <div className="absolute top-[-160px] left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.06)_0%,transparent_70%)] pointer-events-none" />
 
@@ -36,7 +36,7 @@ export function FeatureBento() {
             Built for healthcare
             <span className="w-5 h-px bg-blue-700/40" />
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-[44px] font-normal leading-[1.1] text-slate-900">
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-[44px] font-normal leading-[1.1] text-ink">
             Everything your front desk can&rsquo;t get to
           </h2>
         </div>
@@ -67,7 +67,7 @@ function Card({
   return (
     <div
       className={
-        "relative rounded-[26px] border border-slate-200/70 bg-gradient-to-b from-white to-slate-50/40 " +
+        "relative rounded-[26px] border border-rule/70 bg-gradient-to-b from-white to-paper-2/40 " +
         "shadow-[0_2px_14px_-6px_rgba(15,23,42,0.10)] overflow-hidden " +
         className
       }
@@ -85,7 +85,7 @@ function PoweredPill({
   icon?: React.ReactNode;
 }) {
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1 text-[12px] font-medium text-slate-500">
+    <span className="inline-flex items-center gap-1.5 rounded-full border border-rule bg-paper-bright px-3 py-1 text-[12px] font-medium text-ink-mute">
       {icon}
       {children}
     </span>
@@ -94,7 +94,7 @@ function PoweredPill({
 
 function Tag({ children }: { children: React.ReactNode }) {
   return (
-    <span className="rounded-md bg-slate-100 text-slate-500 text-[11px] font-medium tracking-wide uppercase px-2 py-0.5">
+    <span className="rounded-md bg-paper-2 text-ink-mute text-[11px] font-medium tracking-wide uppercase px-2 py-0.5">
       {children}
     </span>
   );
@@ -102,7 +102,7 @@ function Tag({ children }: { children: React.ReactNode }) {
 
 function FeatureTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="text-[19px] sm:text-[21px] font-semibold text-slate-900 leading-snug">
+    <h3 className="text-[19px] sm:text-[21px] font-semibold text-ink leading-snug">
       {children}
     </h3>
   );
@@ -135,7 +135,7 @@ const LANG_ROW_2: Lang[] = [
 
 function FlagChip({ flag, name }: Lang) {
   return (
-    <span className="inline-flex items-center gap-2 rounded-full bg-white border border-slate-200 shadow-[0_1px_4px_-1px_rgba(15,23,42,0.10)] px-3 py-1.5 text-[13px] font-medium text-slate-700 shrink-0 whitespace-nowrap">
+    <span className="inline-flex items-center gap-2 rounded-full bg-paper-bright border border-rule shadow-[0_1px_4px_-1px_rgba(15,23,42,0.10)] px-3 py-1.5 text-[13px] font-medium text-ink-soft shrink-0 whitespace-nowrap">
       <span className="text-[15px] leading-none" aria-hidden="true">
         {flag}
       </span>
@@ -186,11 +186,11 @@ function LanguageCard() {
       `}</style>
 
       {/* live translation demo */}
-      <div className="relative rounded-2xl border border-slate-100 bg-gradient-to-b from-white to-slate-50/60 p-4 sm:p-5 overflow-hidden">
+      <div className="relative rounded-2xl border border-rule-soft bg-gradient-to-b from-white to-paper-2/60 p-4 sm:p-5 overflow-hidden">
         <div className="absolute inset-x-6 top-0 h-24 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.10),transparent_70%)] pointer-events-none" />
 
         <div className="relative flex items-center justify-between mb-4">
-          <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-slate-500">
+          <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-ink-mute">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             Live call · auto-detected
           </span>
@@ -206,7 +206,7 @@ function LanguageCard() {
             </div>
           </div>
           <div className="flex justify-start">
-            <div className="max-w-[88%] rounded-2xl rounded-tl-md bg-white border border-slate-200 text-slate-800 text-[13px] leading-snug px-3.5 py-2 shadow-sm">
+            <div className="max-w-[88%] rounded-2xl rounded-tl-md bg-paper-bright border border-rule text-ink text-[13px] leading-snug px-3.5 py-2 shadow-sm">
               Claro, Sofía. Tengo el martes a las 9:40 o el jueves a las 15:00 — ¿cuál le viene mejor?
             </div>
           </div>
@@ -227,13 +227,13 @@ function LanguageCard() {
       {/* copy */}
       <div className="mt-6 lg:mt-auto lg:pt-6">
         <div className="flex items-baseline gap-2">
-          <span className="font-serif text-4xl text-slate-900 leading-none">30+</span>
+          <span className="font-serif text-4xl text-ink leading-none">30+</span>
           <span className="text-[15px] font-medium text-slate-400">languages</span>
         </div>
-        <h3 className="mt-3 text-[19px] sm:text-[21px] font-semibold text-slate-900 leading-snug">
+        <h3 className="mt-3 text-[19px] sm:text-[21px] font-semibold text-ink leading-snug">
           Speaks 30+ languages
         </h3>
-        <p className="mt-2 text-[14.5px] leading-[1.6] text-slate-500">
+        <p className="mt-2 text-[14.5px] leading-[1.6] text-ink-mute">
           Detects the caller&rsquo;s language automatically and replies in it — switching mid-conversation, no interpreter line, no wait.
         </p>
         <div className="mt-4 flex flex-wrap items-center gap-2">
@@ -263,7 +263,7 @@ function InfraCard() {
     <Card className="p-7 sm:p-8 flex flex-col">
       <div className="text-center mb-1">
         <FeatureTitle>Clinical AI we run ourselves</FeatureTitle>
-        <p className="mt-2 text-[14.5px] leading-[1.6] text-slate-500 max-w-[340px] mx-auto">
+        <p className="mt-2 text-[14.5px] leading-[1.6] text-ink-mute max-w-[340px] mx-auto">
           Not a thin wrapper over a general-purpose API — our own healthcare stack, watched on every call.
         </p>
       </div>
@@ -274,10 +274,10 @@ function InfraCard() {
           return (
             <React.Fragment key={s.label}>
               <div className="flex flex-col items-center gap-1.5">
-                <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center text-blue-700">
+                <div className="w-10 h-10 rounded-xl bg-paper-bright border border-rule shadow-sm flex items-center justify-center text-blue-700">
                   <Icon className="w-4 h-4" />
                 </div>
-                <span className="text-[10px] font-medium text-slate-500 whitespace-nowrap">
+                <span className="text-[10px] font-medium text-ink-mute whitespace-nowrap">
                   {s.label}
                 </span>
               </div>
@@ -316,30 +316,30 @@ function ObservabilityCard() {
       <div className="flex items-start justify-between gap-3 mb-4">
         <div>
           <FeatureTitle>Call intelligence on every conversation</FeatureTitle>
-          <p className="mt-2 text-[14.5px] leading-[1.6] text-slate-500">
+          <p className="mt-2 text-[14.5px] leading-[1.6] text-ink-mute">
             Every call transcribed, scored, and ranked by risk — a live queue of who needs a human next.
           </p>
         </div>
         <Tag>Illustrative</Tag>
       </div>
 
-      <div className="rounded-2xl border border-slate-100 overflow-hidden bg-white">
+      <div className="rounded-2xl border border-rule-soft overflow-hidden bg-paper-bright">
         {/* stat strip */}
-        <div className="grid grid-cols-3 border-b border-slate-100 bg-[#fbfcfe]">
+        <div className="grid grid-cols-3 border-b border-rule-soft bg-[#fbfcfe]">
           {[
             { v: "412", l: "calls today" },
             { v: "38", l: "need action" },
             { v: "96", l: "avg QA" },
           ].map((s, i) => (
-            <div key={s.l} className={"px-3 py-2.5 " + (i > 0 ? "border-l border-slate-100" : "")}>
-              <div className="font-serif text-[20px] leading-none text-slate-900">{s.v}</div>
-              <div className="text-[10px] text-slate-500 mt-0.5">{s.l}</div>
+            <div key={s.l} className={"px-3 py-2.5 " + (i > 0 ? "border-l border-rule-soft" : "")}>
+              <div className="font-serif text-[20px] leading-none text-ink">{s.v}</div>
+              <div className="text-[10px] text-ink-mute mt-0.5">{s.l}</div>
             </div>
           ))}
         </div>
 
         {/* queue header */}
-        <div className="px-3.5 py-2 text-[10px] font-semibold uppercase tracking-[1px] text-slate-500 border-b border-slate-100 bg-[#fbfcfe]">
+        <div className="px-3.5 py-2 text-[10px] font-semibold uppercase tracking-[1px] text-ink-mute border-b border-rule-soft bg-[#fbfcfe]">
           Priority queue · ranked by risk
         </div>
 
@@ -347,7 +347,7 @@ function ObservabilityCard() {
         {CALL_ROWS.map((r, i) => (
           <div
             key={r.name}
-            className="flex items-center gap-2.5 px-3.5 py-2.5 border-b border-slate-100 last:border-b-0"
+            className="flex items-center gap-2.5 px-3.5 py-2.5 border-b border-rule-soft last:border-b-0"
           >
             <span className="text-[10px] font-semibold text-slate-300 w-3 shrink-0 tabular-nums">{i + 1}</span>
             <span className="flex items-center justify-center w-7 h-7 rounded-full bg-brand-tint text-brand text-[10px] font-bold shrink-0">
@@ -356,15 +356,15 @@ function ObservabilityCard() {
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: LEVEL_COLOR[r.level] }} />
-                <span className="text-[12px] font-semibold text-slate-900 truncate">{r.name}</span>
+                <span className="text-[12px] font-semibold text-ink truncate">{r.name}</span>
               </div>
-              <p className="text-[11px] text-slate-500 truncate mt-0.5">{r.reason}</p>
+              <p className="text-[11px] text-ink-mute truncate mt-0.5">{r.reason}</p>
             </div>
             <div className="w-14 shrink-0">
-              <div className="h-1 rounded-full bg-slate-100 overflow-hidden">
+              <div className="h-1 rounded-full bg-paper-2 overflow-hidden">
                 <div className="h-full rounded-full bg-blue-500" style={{ width: `${r.score}%` }} />
               </div>
-              <div className="text-[10px] font-semibold text-slate-500 tabular-nums text-right mt-1">QA {r.score}</div>
+              <div className="text-[10px] font-semibold text-ink-mute tabular-nums text-right mt-1">QA {r.score}</div>
             </div>
           </div>
         ))}
@@ -385,22 +385,22 @@ const DASH_CALLS: { initials: string; name: string; dur: string; status: string;
 function DashboardCard() {
   return (
     <Card className="p-7 sm:p-8 flex flex-col">
-      <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden mb-5">
-        <div className="flex items-center gap-1.5 px-3 py-2 border-b border-slate-100 bg-slate-50/60">
-          <span className="w-2 h-2 rounded-full bg-slate-200" />
-          <span className="w-2 h-2 rounded-full bg-slate-200" />
-          <span className="w-2 h-2 rounded-full bg-slate-200" />
+      <div className="rounded-xl border border-rule bg-paper-bright shadow-sm overflow-hidden mb-5">
+        <div className="flex items-center gap-1.5 px-3 py-2 border-b border-rule-soft bg-paper-2/60">
+          <span className="w-2 h-2 rounded-full bg-rule-soft" />
+          <span className="w-2 h-2 rounded-full bg-rule-soft" />
+          <span className="w-2 h-2 rounded-full bg-rule-soft" />
           <span className="ml-2 text-[10px] text-slate-400">yourclinic.hana.health</span>
         </div>
         <div className="p-3.5">
           <div className="grid grid-cols-3 gap-2 mb-3">
-            <div className="rounded-lg bg-[#fbfcfe] border border-slate-100 px-2.5 py-2">
+            <div className="rounded-lg bg-[#fbfcfe] border border-rule-soft px-2.5 py-2">
               <p className="text-[9.5px] text-slate-400 leading-tight">Calls today</p>
-              <p className="font-serif text-[19px] leading-none text-slate-900 tabular-nums mt-0.5">142</p>
+              <p className="font-serif text-[19px] leading-none text-ink tabular-nums mt-0.5">142</p>
             </div>
-            <div className="rounded-lg bg-[#fbfcfe] border border-slate-100 px-2.5 py-2">
+            <div className="rounded-lg bg-[#fbfcfe] border border-rule-soft px-2.5 py-2">
               <p className="text-[9.5px] text-slate-400 leading-tight">Avg QA</p>
-              <p className="font-serif text-[19px] leading-none text-slate-900 tabular-nums mt-0.5">96</p>
+              <p className="font-serif text-[19px] leading-none text-ink tabular-nums mt-0.5">96</p>
             </div>
             <div className="rounded-lg bg-brand-tint border border-blue-100 px-2.5 py-2">
               <p className="text-[9.5px] text-brand leading-tight">Recovered</p>
@@ -418,12 +418,12 @@ function DashboardCard() {
             {DASH_CALLS.map((c) => (
               <div
                 key={c.name}
-                className="flex items-center gap-2 rounded-lg border border-slate-100 bg-white px-2 py-1.5"
+                className="flex items-center gap-2 rounded-lg border border-rule-soft bg-paper-bright px-2 py-1.5"
               >
                 <span className="flex items-center justify-center w-6 h-6 rounded-full bg-brand-tint text-brand text-[9px] font-bold shrink-0">
                   {c.initials}
                 </span>
-                <span className="flex-1 truncate text-[11.5px] font-medium text-slate-700">
+                <span className="flex-1 truncate text-[11.5px] font-medium text-ink-soft">
                   {c.name}
                 </span>
                 <span className="text-[10.5px] text-slate-400 tabular-nums">{c.dur}</span>
@@ -446,7 +446,7 @@ function DashboardCard() {
       </div>
 
       <FeatureTitle>Your own custom dashboard</FeatureTitle>
-      <p className="mt-2 text-[14.5px] leading-[1.6] text-slate-500">
+      <p className="mt-2 text-[14.5px] leading-[1.6] text-ink-mute">
         A cockpit branded to your practice — review any call, track outcomes, and spot trends, live.
       </p>
 
@@ -468,11 +468,11 @@ function WhiteGloveCard() {
   return (
     <Card className="p-7 sm:p-8 flex flex-col">
       <FeatureTitle>A partnership, not a purchase</FeatureTitle>
-      <p className="mt-2 text-[14.5px] leading-[1.6] text-slate-500">
+      <p className="mt-2 text-[14.5px] leading-[1.6] text-ink-mute">
         A dedicated success lead maps HANA to your protocols, gets you live in days, and keeps tuning it as you grow.
       </p>
 
-      <div className="mt-5 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+      <div className="mt-5 rounded-2xl border border-rule-soft bg-paper-bright p-5 shadow-sm">
         <div className="flex items-center gap-3">
           <img
             src="https://assets.headway.co/provider_photos/129044/66574eca-82d2-11f0-bc93-0a58a9feac02-129044-1756250061589.jpeg"
@@ -481,14 +481,14 @@ function WhiteGloveCard() {
             className="w-12 h-12 rounded-full object-cover shrink-0 ring-2 ring-white shadow-[0_2px_8px_-2px_rgba(15,23,42,0.25)]"
           />
           <div>
-            <p className="text-[14px] font-semibold text-slate-900">Katie R. · Success lead</p>
+            <p className="text-[14px] font-semibold text-ink">Katie R. · Success lead</p>
             <p className="text-[12.5px] text-slate-400">Named contact, not a ticket queue</p>
           </div>
         </div>
         <div className="mt-4 space-y-2">
           {["White-glove onboarding, live in days", "Protocol tuning + weekly reviews early on", "Direct line, always"].map(
             (line) => (
-              <div key={line} className="flex items-center gap-2 text-[13px] text-slate-600">
+              <div key={line} className="flex items-center gap-2 text-[13px] text-ink-soft">
                 <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
                 {line}
               </div>

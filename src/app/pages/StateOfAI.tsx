@@ -98,7 +98,7 @@ function CompanyPill({ company, isHighlighted, layer, onClick }: { company: Comp
       className={`inline-flex items-center px-3 py-2 sm:py-1.5 m-1 sm:m-0.5 min-h-[40px] sm:min-h-0 border rounded-full cursor-pointer text-xs font-medium transition-all duration-200 ${
         isHighlighted
           ? `${layer.pill} ${layer.color} border-current`
-          : `border-slate-200 bg-white text-slate-700 ${layer.pillHover}`
+          : `border-rule bg-paper-bright text-ink-soft ${layer.pillHover}`
       }`}
     >
       {company.n}
@@ -120,19 +120,19 @@ function CompanyDetail({ company, onClose }: { company: Company; onClose: () => 
 
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={onClose}>
-      <div className="w-[90%] max-w-md bg-white rounded-2xl shadow-2xl p-6 sm:p-8 relative" onClick={(e) => e.stopPropagation()}>
-        <button onClick={onClose} className="absolute top-4 right-4 p-2.5 rounded-full hover:bg-slate-100 transition-colors text-slate-400 hover:text-slate-600">
+      <div className="w-[90%] max-w-md bg-paper-bright rounded-2xl shadow-2xl p-6 sm:p-8 relative" onClick={(e) => e.stopPropagation()}>
+        <button onClick={onClose} className="absolute top-4 right-4 p-2.5 rounded-full hover:bg-paper-2 transition-colors text-slate-400 hover:text-ink-soft">
           <X className="w-5 h-5" />
         </button>
-        <h3 className="font-serif text-2xl text-slate-900 mb-1 pr-8">{company.n}</h3>
+        <h3 className="font-serif text-2xl text-ink mb-1 pr-8">{company.n}</h3>
         <a href={company.u} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-700 mb-4 transition-colors">
           {domain} <ExternalLink className="w-3.5 h-3.5" />
         </a>
-        {desc && <p className="text-sm text-slate-600 leading-relaxed mb-4">{desc}</p>}
+        {desc && <p className="text-sm text-ink-soft leading-relaxed mb-4">{desc}</p>}
         {tags.length > 0 && (
           <div className="flex flex-wrap gap-1.5">
             {tags.map((tag, i) => (
-              <span key={i} className="text-xs font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full">{tag}</span>
+              <span key={i} className="text-xs font-medium text-ink-mute bg-paper-2 px-2.5 py-1 rounded-full">{tag}</span>
             ))}
           </div>
         )}
@@ -173,10 +173,10 @@ function LayerSection({ layer, searchTerm, onCompanyClick }: { layer: typeof LAY
       <div className={`mb-8 ${layer.bg} rounded-2xl p-4 sm:p-6 md:p-8 border ${layer.border}`}>
         <div className="mb-6">
           <div className="flex items-baseline gap-3 mb-2">
-            <h2 className="font-serif text-2xl md:text-3xl text-slate-900">{layer.label}</h2>
+            <h2 className="font-serif text-2xl md:text-3xl text-ink">{layer.label}</h2>
             <span className={`font-serif text-xl ${layer.color}`}>{layerTotal}</span>
           </div>
-          <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">{layer.tagline}</p>
+          <p className="text-sm text-ink-mute leading-relaxed max-w-2xl">{layer.tagline}</p>
           <div className="h-px w-full bg-black/5 mt-5" />
         </div>
         {visibleBuckets.map((bucketName) => (
@@ -199,7 +199,7 @@ export function StateOfAI() {
   }, [activeFilter]);
 
   return (
-    <div className="bg-slate-50 min-h-screen">
+    <div className="bg-paper-2 min-h-screen">
       <SEO
         title="The State of Voice AI in Healthcare"
         description="247 companies mapped across three layers of voice AI infrastructure. The first comprehensive mapping of the healthcare voice AI ecosystem."
@@ -208,24 +208,24 @@ export function StateOfAI() {
       />
 
       {/* Hero Section */}
-      <section className="pt-20 pb-16 md:pt-32 md:pb-20 px-6 relative bg-slate-50 overflow-hidden">
+      <section className="pt-20 pb-16 md:pt-32 md:pb-20 px-6 relative bg-paper-2 overflow-hidden">
         <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[120%] h-[80%] rounded-[100%] bg-blue-100/30 blur-[120px] pointer-events-none" />
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <FadeIn>
             {/* removed "Published by" line */}
           </FadeIn>
           <FadeIn delay={0.05}>
-            <h1 className="font-serif text-3xl sm:text-5xl md:text-7xl tracking-normal text-slate-900 mb-8 leading-[1.1]">
+            <h1 className="font-serif text-3xl sm:text-5xl md:text-7xl tracking-normal text-ink mb-8 leading-[1.1]">
               The State of Voice AI <br className="hidden sm:block" /> in Healthcare
             </h1>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <p className="text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto mb-4">
+            <p className="text-xl text-ink-soft leading-relaxed max-w-2xl mx-auto mb-4">
               247 companies. Three layers of infrastructure. One map to make sense of it all.
             </p>
           </FadeIn>
           <FadeIn delay={0.15}>
-            <p className="text-base text-slate-500 leading-relaxed max-w-xl mx-auto">
+            <p className="text-base text-ink-mute leading-relaxed max-w-xl mx-auto">
               The first comprehensive mapping of the entire voice AI ecosystem in healthcare, from foundational models to patient-facing applications. Your reference for evaluating vendors, mapping the space, or choosing your stack.
             </p>
           </FadeIn>
@@ -234,7 +234,7 @@ export function StateOfAI() {
               href="https://dissgvupfcazdnhspdzv.supabase.co/storage/v1/object/public/materials/The%20State%20Of%20AI.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 mt-8 px-7 py-3.5 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold rounded-full transition-colors shadow-lg shadow-slate-900/20"
+              className="inline-flex items-center gap-2.5 mt-8 px-7 py-3.5 bg-navy hover:bg-navy text-white text-sm font-semibold rounded-full transition-colors shadow-lg shadow-slate-900/20"
             >
               <Download className="w-4 h-4" />
               Download the Full Report
@@ -246,7 +246,7 @@ export function StateOfAI() {
       {/* Stats Bar */}
       <section className="px-6 pb-16">
         <FadeIn>
-          <div className="max-w-4xl mx-auto bg-slate-900 rounded-2xl py-8 px-6 grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="max-w-4xl mx-auto bg-navy rounded-2xl py-8 px-6 grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
               { number: "247", label: "Companies Mapped", sub: "" },
               { number: "75", label: "Infrastructure", sub: "Core voice tech" },
@@ -270,8 +270,8 @@ export function StateOfAI() {
             {LAYERS.map((layer, idx) => (
               <div key={layer.key} className={`${layer.bg} rounded-2xl p-6 border ${layer.border}`}>
                 <div className={`text-sm font-semibold ${layer.color} mb-1`}>Layer {idx + 1}</div>
-                <div className="font-serif text-lg text-slate-900 mb-2">{layer.label}</div>
-                <div className="text-sm text-slate-500 leading-relaxed">{layer.tagline}</div>
+                <div className="font-serif text-lg text-ink mb-2">{layer.label}</div>
+                <div className="text-sm text-ink-mute leading-relaxed">{layer.tagline}</div>
               </div>
             ))}
           </div>
@@ -284,17 +284,17 @@ export function StateOfAI() {
           {/* Search + Filters */}
           <FadeIn>
             <div className="flex gap-4 items-center flex-wrap mb-8">
-              <div className="flex items-center gap-2 border border-slate-200 bg-white rounded-full px-4 py-2.5 flex-[1_1_280px] max-w-sm shadow-sm">
+              <div className="flex items-center gap-2 border border-rule bg-paper-bright rounded-full px-4 py-2.5 flex-[1_1_280px] max-w-sm shadow-sm">
                 <Search className="w-4 h-4 text-slate-400" />
                 <input
                   type="text"
                   placeholder="Search companies..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="border-none outline-none bg-transparent w-full text-sm text-slate-900 placeholder:text-slate-400"
+                  className="border-none outline-none bg-transparent w-full text-sm text-ink placeholder:text-slate-400"
                 />
                 {searchTerm && (
-                  <button onClick={() => setSearchTerm("")} className="p-0.5 hover:bg-slate-100 rounded-full transition-colors">
+                  <button onClick={() => setSearchTerm("")} className="p-0.5 hover:bg-paper-2 rounded-full transition-colors">
                     <X className="w-4 h-4 text-slate-400" />
                   </button>
                 )}
@@ -311,8 +311,8 @@ export function StateOfAI() {
                     onClick={() => setActiveFilter(key)}
                     className={`px-4 py-2.5 min-h-[40px] rounded-full text-[13px] font-semibold uppercase tracking-wider transition-all duration-200 border ${
                       activeFilter === key
-                        ? "bg-slate-900 text-white border-slate-900"
-                        : "bg-white text-slate-500 border-slate-200 hover:border-slate-300 hover:text-slate-700"
+                        ? "bg-navy text-white border-navy"
+                        : "bg-paper-bright text-ink-mute border-rule hover:border-rule hover:text-ink-soft"
                     }`}
                   >
                     {label}
@@ -337,10 +337,10 @@ export function StateOfAI() {
       {/* Key Observations */}
       <section className="px-6 pb-20">
         <FadeIn>
-          <div className="max-w-5xl mx-auto bg-slate-900 rounded-2xl p-6 sm:p-8 md:p-12">
+          <div className="max-w-5xl mx-auto bg-navy rounded-2xl p-6 sm:p-8 md:p-12">
             <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">Key Observations</p>
             <h2 className="font-serif text-3xl md:text-4xl text-white mb-6">What the map reveals</h2>
-            <div className="h-px w-full bg-white/10 mb-8" />
+            <div className="h-px w-full bg-paper-bright/10 mb-8" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-x-12">
               {[
                 { title: "The engagement layer is crowded and undifferentiated", body: "107 companies in healthcare engagement and patient access alone. Most are thin application wrappers around the same infrastructure. The question for clinics isn't 'which one?' but 'which architecture?'" },

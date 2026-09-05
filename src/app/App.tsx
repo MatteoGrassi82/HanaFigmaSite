@@ -242,7 +242,7 @@ function AppContent() {
   return (
     <BrowserRouter>
         <ScrollToTop />
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 pb-12 relative">
+        <div className="min-h-screen bg-paper-2 dark:bg-navy font-sans text-ink dark:text-slate-100 pb-12 relative">
           <Toaster position="top-center" />
 
           <Navbar />

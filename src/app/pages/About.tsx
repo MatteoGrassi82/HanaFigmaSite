@@ -62,7 +62,7 @@ export function About() {
   const timeline = ab.tItems;
 
   return (
-    <div className="bg-slate-50 min-h-screen">
+    <div className="bg-paper-2 min-h-screen">
       <SEO
         title={ab.seoTitle}
         useExactTitle={true}
@@ -80,12 +80,12 @@ export function About() {
         <div className="max-w-4xl mx-auto text-center">
           <FadeIn>
             <span className="text-blue-600 font-semibold tracking-wider uppercase text-sm mb-4 block">{ab.h1}</span>
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-slate-900 mb-8 md:leading-tight">
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-ink mb-8 md:leading-tight">
               {ab.tagline}
             </h1>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <p className="text-xl md:text-2xl text-slate-600 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-ink-soft leading-relaxed max-w-3xl mx-auto">
               {ab.story}
             </p>
           </FadeIn>
@@ -93,21 +93,21 @@ export function About() {
       </section>
 
       {/* Founders Story */}
-      <section className="py-20 px-6 bg-white border-y border-slate-200/60">
+      <section className="py-20 px-6 bg-paper-bright border-y border-rule/60">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           <FadeIn className="order-2 lg:order-1">
-            <h2 className="font-serif text-3xl sm:text-4xl text-slate-900 mb-8">{ab.foundersTitle}</h2>
-            <div className="space-y-6 text-lg text-slate-600 leading-relaxed">
+            <h2 className="font-serif text-3xl sm:text-4xl text-ink mb-8">{ab.foundersTitle}</h2>
+            <div className="space-y-6 text-lg text-ink-soft leading-relaxed">
               <p>
-                <strong className="text-slate-900">Matteo Grassi</strong>, 3× founder and clinical psychologist. Built an app to monitor patients with bipolar disorder. The tech worked. Engagement didn't. So he threw out the app and called patients directly with AI. Engagement went from 15% to 85%. The problem was never the protocol, it was the delivery.
+                <strong className="text-ink">Matteo Grassi</strong>, 3× founder and clinical psychologist. Built an app to monitor patients with bipolar disorder. The tech worked. Engagement didn't. So he threw out the app and called patients directly with AI. Engagement went from 15% to 85%. The problem was never the protocol, it was the delivery.
               </p>
               <p>
-                <strong className="text-slate-900">Sthita Pragyan Pujari</strong> was building AI voice agents before voice AI was a category. Ex-Honeywell, scaled Speech AI at Thumb Technologies. Architected HANA's dual-model system, a reasoning engine that thinks before every call, a voice model that speaks, then led the full migration to open-source, self-hosted infrastructure. No OpenAI. No vendor lock-in.
+                <strong className="text-ink">Sthita Pragyan Pujari</strong> was building AI voice agents before voice AI was a category. Ex-Honeywell, scaled Speech AI at Thumb Technologies. Architected HANA's dual-model system, a reasoning engine that thinks before every call, a voice model that speaks, then led the full migration to open-source, self-hosted infrastructure. No OpenAI. No vendor lock-in.
               </p>
               <p>
                 Together, they stopped building another healthcare app and started building the infrastructure that powers all of them.
               </p>
-              <blockquote className="border-l-4 border-blue-600 pl-6 italic text-slate-800 text-xl my-8">
+              <blockquote className="border-l-4 border-blue-600 pl-6 italic text-ink text-xl my-8">
                 "While everyone was building cars, we wanted to build roads."
               </blockquote>
             </div>
@@ -121,7 +121,7 @@ export function About() {
       </section>
 
       {/* Stats */}
-      <section className="py-16 px-6 bg-slate-900 text-white">
+      <section className="py-16 px-6 bg-navy text-white">
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           {stats.map((stat, i) => (
             <FadeIn key={i} delay={i * 0.1}>
@@ -137,14 +137,14 @@ export function About() {
       {/* Values */}
       <section className="py-16 sm:py-20 lg:py-24 px-6 max-w-7xl mx-auto">
         <FadeIn>
-          <h2 className="font-serif text-3xl sm:text-4xl text-slate-900 mb-16 text-center">{ab.valuesTitle}</h2>
+          <h2 className="font-serif text-3xl sm:text-4xl text-ink mb-16 text-center">{ab.valuesTitle}</h2>
         </FadeIn>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 sm:gap-x-12 sm:gap-y-16">
           {values.map((val, i) => (
             <FadeIn key={i} delay={i * 0.05}>
               <div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-4">{val.title}</h3>
-                <p className="text-slate-600 leading-relaxed">{val.desc}</p>
+                <h3 className="text-xl font-semibold text-ink mb-4">{val.title}</h3>
+                <p className="text-ink-soft leading-relaxed">{val.desc}</p>
               </div>
             </FadeIn>
           ))}
@@ -152,10 +152,10 @@ export function About() {
       </section>
 
       {/* Timeline - How We Got Here */}
-      <section className="py-16 sm:py-20 lg:py-24 px-6 bg-slate-50 overflow-hidden">
+      <section className="py-16 sm:py-20 lg:py-24 px-6 bg-paper-2 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <FadeIn>
-            <h2 className="font-serif text-3xl sm:text-4xl text-slate-900 mb-12 sm:mb-20 text-center">{ab.timelineTitle}</h2>
+            <h2 className="font-serif text-3xl sm:text-4xl text-ink mb-12 sm:mb-20 text-center">{ab.timelineTitle}</h2>
           </FadeIn>
           
           <div className="relative w-full">
@@ -173,15 +173,15 @@ export function About() {
                       )}
 
                       {/* Content Card */}
-                      <div className="relative z-10 bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 w-full group h-full flex flex-col">
+                      <div className="relative z-10 bg-paper-bright p-6 rounded-2xl border border-rule-soft shadow-sm hover:shadow-md transition-all duration-300 w-full group h-full flex flex-col">
                         {/* Number/Icon Bubble */}
-                        <div className="absolute -top-5 left-1/2 -translate-x-1/2 flex items-center justify-center w-10 h-10 rounded-full border-4 border-slate-50 bg-blue-600 shadow-sm transition-transform group-hover:scale-110">
-                           <div className="w-2.5 h-2.5 bg-white rounded-full" />
+                        <div className="absolute -top-5 left-1/2 -translate-x-1/2 flex items-center justify-center w-10 h-10 rounded-full border-4 border-rule-soft bg-blue-600 shadow-sm transition-transform group-hover:scale-110">
+                           <div className="w-2.5 h-2.5 bg-paper-bright rounded-full" />
                         </div>
                         
                         <div className="pt-4 flex-1 flex flex-col justify-center">
-                          <h3 className="font-semibold text-slate-900 mb-3 text-lg leading-tight">{item.title}</h3>
-                          <p className="text-slate-600 text-sm leading-relaxed">{item.desc}</p>
+                          <h3 className="font-semibold text-ink mb-3 text-lg leading-tight">{item.title}</h3>
+                          <p className="text-ink-soft text-sm leading-relaxed">{item.desc}</p>
                         </div>
                       </div>
                    </FadeIn>
@@ -197,14 +197,14 @@ export function About() {
                  <FadeIn key={i} delay={i * 0.1}>
                     <div className="relative">
                        {/* Dot */}
-                       <div className="absolute top-6 -left-6 w-8 h-8 rounded-full border-4 border-slate-50 bg-blue-600 shadow-sm z-10 flex items-center justify-center">
-                          <div className="w-1.5 h-1.5 bg-white rounded-full" />
+                       <div className="absolute top-6 -left-6 w-8 h-8 rounded-full border-4 border-rule-soft bg-blue-600 shadow-sm z-10 flex items-center justify-center">
+                          <div className="w-1.5 h-1.5 bg-paper-bright rounded-full" />
                        </div>
                        
                        {/* Card */}
-                       <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-                          <h3 className="font-semibold text-slate-900 mb-2">{item.title}</h3>
-                          <p className="text-slate-600 text-sm leading-relaxed">{item.desc}</p>
+                       <div className="bg-paper-bright p-6 rounded-2xl border border-rule-soft shadow-sm">
+                          <h3 className="font-semibold text-ink mb-2">{item.title}</h3>
+                          <p className="text-ink-soft text-sm leading-relaxed">{item.desc}</p>
                        </div>
                     </div>
                  </FadeIn>
@@ -215,7 +215,7 @@ export function About() {
       </section>
 
       {/* Where We're Going */}
-      <section className="py-16 sm:py-20 lg:py-24 px-6 bg-slate-900 text-white overflow-hidden relative">
+      <section className="py-16 sm:py-20 lg:py-24 px-6 bg-navy text-white overflow-hidden relative">
         <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_#3b82f6_0%,_transparent_50%)]"></div>
         </div>
@@ -235,25 +235,25 @@ export function About() {
             
             <div className="grid md:grid-cols-2 gap-8 mt-12">
                <FadeIn delay={0.2}>
-                  <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
+                  <div className="bg-paper-bright/5 p-6 rounded-2xl border border-white/10">
                      <h3 className="text-white font-semibold text-lg mb-3">Open-Source Models</h3>
                      <p className="text-sm">We run Llama 3.1 and other OSS models on our own infrastructure. Our reasoning engine doesn't depend on any single foundation model provider.</p>
                   </div>
                </FadeIn>
                <FadeIn delay={0.3}>
-                  <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
+                  <div className="bg-paper-bright/5 p-6 rounded-2xl border border-white/10">
                      <h3 className="text-white font-semibold text-lg mb-3">Data Sovereignty</h3>
                      <p className="text-sm">Patient data stays where it belongs. Our European servers handle GDPR. Our architecture supports region-locked cloud infrastructure.</p>
                   </div>
                </FadeIn>
                <FadeIn delay={0.4}>
-                  <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
+                  <div className="bg-paper-bright/5 p-6 rounded-2xl border border-white/10">
                      <h3 className="text-white font-semibold text-lg mb-3">On-Premise Installation</h3>
                      <p className="text-sm">For hospitals running mainframes and sovereign clouds, we're testing on-premise deployments. Your infrastructure, our intelligence.</p>
                   </div>
                </FadeIn>
                <FadeIn delay={0.5}>
-                  <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
+                  <div className="bg-paper-bright/5 p-6 rounded-2xl border border-white/10">
                      <h3 className="text-white font-semibold text-lg mb-3">The Data Flywheel</h3>
                      <p className="text-sm">Every interaction makes the model smarter. Over one million patient conversations have trained our reasoning engine on clinical nuance.</p>
                   </div>
@@ -270,16 +270,16 @@ export function About() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 sm:py-20 lg:py-24 px-6 bg-white border-t border-slate-200">
+      <section className="py-16 sm:py-20 lg:py-24 px-6 bg-paper-bright border-t border-rule">
          <div className="max-w-4xl mx-auto text-center">
             <FadeIn>
-               <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-6">{ab.closingHeading}</h2>
-               <p className="text-xl text-slate-600 mb-10">{ab.closingBody}</p>
+               <h2 className="font-serif text-4xl md:text-5xl text-ink mb-6">{ab.closingHeading}</h2>
+               <p className="text-xl text-ink-soft mb-10">{ab.closingBody}</p>
                <a
                  href="https://calendly.com/matteowastaken/discoverycall"
                  target="_blank"
                  rel="noopener noreferrer"
-                 className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white rounded-full font-medium text-lg hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-blue-600/20 transform hover:-translate-y-0.5"
+                 className="inline-flex items-center gap-2 px-8 py-4 bg-navy text-white rounded-full font-medium text-lg hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-blue-600/20 transform hover:-translate-y-0.5"
                >
                  {ab.bookConversation} <ArrowRight className="w-4 h-4" />
                </a>

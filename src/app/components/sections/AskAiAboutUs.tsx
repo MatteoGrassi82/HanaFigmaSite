@@ -116,10 +116,10 @@ export function AskAiAboutUs({ className }: { className?: string } = {}) {
       transition={{ duration: 0.5, delay: 0.2 }}
       className={`flex flex-col items-center text-center ${className ?? "mt-14"}`}
     >
-      <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">
+      <h2 className="text-2xl md:text-3xl font-bold text-ink mb-2">
         {it ? "Chiedi all'AI di HANA" : "Ask AI about HANA"}
       </h2>
-      <p className="text-base text-slate-500 mb-6">
+      <p className="text-base text-ink-mute mb-6">
         {it
           ? "Ottieni una panoramica imparziale dal tuo assistente AI preferito"
           : "Get an unbiased overview from your favorite AI assistant"}
@@ -133,7 +133,7 @@ export function AskAiAboutUs({ className }: { className?: string } = {}) {
             whileHover={{ scale: 1.15, y: -2 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 15 }}
-            className="flex items-center justify-center w-11 h-11 rounded-full bg-white shadow-md border border-slate-100 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            className="flex items-center justify-center w-11 h-11 rounded-full bg-paper-bright shadow-md border border-rule-soft cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
             style={{ color: platform.color }}
             title={
               it

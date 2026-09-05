@@ -88,7 +88,7 @@ export function Portrait({ src, name, size = 64 }: { src?: string; name?: string
 /* ── Proof variant A — three voices, nothing else ─────────────────────────── */
 export function ProofVoices() {
   return (
-    <section className="bg-white py-24 md:py-32 px-6 md:px-16">
+    <section className="bg-paper-bright py-24 md:py-32 px-6 md:px-16">
       <div className="max-w-[1000px] mx-auto">
         <motion.div {...fadeUp} className="text-center">
           <p className={`${eyebrow} text-[#2563EB] mt-0 mb-4`}>Proof</p>
@@ -97,13 +97,13 @@ export function ProofVoices() {
           </h2>
         </motion.div>
 
-        <div className="mt-12 md:mt-14 border-t border-slate-200">
+        <div className="mt-12 md:mt-14 border-t border-rule">
           {VOICES.map((v, i) => (
             <motion.figure
               key={i}
               {...fadeUp}
               transition={{ duration: 0.5, delay: 0.05 + i * 0.08 }}
-              className="m-0 border-b border-slate-200 py-9 grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_220px] gap-6 md:gap-12 items-start"
+              className="m-0 border-b border-rule py-9 grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_220px] gap-6 md:gap-12 items-start"
             >
               <blockquote className="m-0">
                 <p className="font-serif text-[21px] md:text-[24px] leading-[1.45] text-[#0A1633] m-0">
@@ -116,11 +116,11 @@ export function ProofVoices() {
                     <Portrait src={v.img} name={v.name} size={56} />
                     <span className="min-w-0">
                       <span className="block text-[14.5px] font-semibold text-[#0A1633]">{v.name}</span>
-                      <span className="block text-[13px] leading-[1.5] text-slate-600 mt-0.5">{v.role}</span>
+                      <span className="block text-[13px] leading-[1.5] text-ink-soft mt-0.5">{v.role}</span>
                     </span>
                   </>
                 ) : (
-                  <span className="text-[13px] font-semibold uppercase tracking-[1.1px] text-slate-500">
+                  <span className="text-[13px] font-semibold uppercase tracking-[1.1px] text-ink-mute">
                     {v.tag}
                   </span>
                 )}
@@ -152,7 +152,7 @@ export const PROOF_NUMBERS = [
 export function ProofOneQuote() {
   const hero = VOICES[0];
   return (
-    <section className="bg-white py-24 md:py-32 px-6 md:px-16">
+    <section className="bg-paper-bright py-24 md:py-32 px-6 md:px-16">
       <div className="max-w-[1000px] mx-auto text-center">
         <motion.div {...fadeUp}>
           <p className={`${eyebrow} text-[#2563EB] mt-0 mb-8`}>Proof</p>
@@ -167,13 +167,13 @@ export function ProofOneQuote() {
             </p>
           </blockquote>
           <p className="text-[14.5px] font-semibold text-[#0A1633] mt-7 mb-0">{hero.name}</p>
-          <p className="text-[13.5px] text-slate-600 mt-1 mb-0">{hero.role}</p>
+          <p className="text-[13.5px] text-ink-soft mt-1 mb-0">{hero.role}</p>
         </motion.div>
 
         <motion.div
           {...fadeUp}
           transition={{ duration: 0.5, delay: 0.12 }}
-          className="mt-14 pt-10 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-3 gap-10"
+          className="mt-14 pt-10 border-t border-rule grid grid-cols-1 sm:grid-cols-3 gap-10"
         >
           {PROOF_NUMBERS.map((n) => (
             <div key={n.label}>
@@ -181,7 +181,7 @@ export function ProofOneQuote() {
                 {n.v}
                 <span className="text-[#2563EB] text-[0.5em] align-super ml-0.5">{n.suf}</span>
               </p>
-              <p className="text-[14px] leading-[1.55] text-slate-600 mt-3 mb-0 max-w-[18ch] mx-auto">{n.label}</p>
+              <p className="text-[14px] leading-[1.55] text-ink-soft mt-3 mb-0 max-w-[18ch] mx-auto">{n.label}</p>
             </div>
           ))}
         </motion.div>
@@ -195,7 +195,7 @@ export function ProofOneQuote() {
           <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" strokeWidth={2.4} />
         </motion.a>
 
-        <motion.p {...fadeUp} className="text-[12.5px] leading-[1.6] text-slate-600 mt-8 mb-0 max-w-[70ch] mx-auto">
+        <motion.p {...fadeUp} className="text-[12.5px] leading-[1.6] text-ink-soft mt-8 mb-0 max-w-[70ch] mx-auto">
           Note: these three numbers are front-desk outcomes and are among the figures the brand
           architecture note asks us to reconcile before publishing. Variant A avoids them.
         </motion.p>
@@ -217,24 +217,24 @@ export function ProofOneQuote() {
  * same family.
  */
 export const SOFT_BLUE =
-  "bg-gradient-to-br from-[#F7F9FF] via-[#EEF2FC] to-[#E1E9F7] border border-slate-200/70";
+  "bg-gradient-to-br from-[#F7F9FF] via-[#EEF2FC] to-[#E1E9F7] border border-rule/70";
 export const SOFT_LAV =
-  "bg-gradient-to-br from-[#FAFAFF] via-[#F1EFFB] to-[#E7E3F7] border border-slate-200/70";
+  "bg-gradient-to-br from-[#FAFAFF] via-[#F1EFFB] to-[#E7E3F7] border border-rule/70";
 export const SOFT_WARM =
-  "bg-gradient-to-br from-[#FFFDF9] via-[#FBF4EC] to-[#F7E9DA] border border-slate-200/70";
+  "bg-gradient-to-br from-[#FFFDF9] via-[#FBF4EC] to-[#F7E9DA] border border-rule/70";
 
 export function ProofCalmBento() {
   const hero = VOICES[0];
   const second = VOICES[2];
   return (
-    <section className="bg-white py-24 md:py-32 px-6 md:px-16">
+    <section className="bg-paper-bright py-24 md:py-32 px-6 md:px-16">
       <div className="max-w-[1200px] mx-auto">
         <motion.div {...fadeUp} className="text-center">
           <p className={`${eyebrow} text-[#2563EB] mt-0 mb-4`}>Proof</p>
           <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-[#0A1633] mx-auto max-w-[26ch] m-0">
             Proven by the teams running care <em className="text-[#2563EB]">at scale.</em>
           </h2>
-          <p className="text-[17px] leading-[1.7] text-slate-600 max-w-[52ch] mx-auto mt-5 mb-0">
+          <p className="text-[17px] leading-[1.7] text-ink-soft max-w-[52ch] mx-auto mt-5 mb-0">
             In the words of the clinicians running it.
           </p>
         </motion.div>
@@ -246,7 +246,7 @@ export function ProofCalmBento() {
             transition={{ duration: 0.5, delay: 0.04 }}
             className={`m-0 md:col-span-2 md:row-span-2 rounded-3xl p-8 md:p-10 flex flex-col ${SOFT_BLUE}`}
           >
-            <span className="self-start rounded-full bg-white/80 border border-slate-200 text-[11px] font-bold uppercase tracking-[1.1px] text-slate-600 px-3 py-1">
+            <span className="self-start rounded-full bg-paper-bright/80 border border-rule text-[11px] font-bold uppercase tracking-[1.1px] text-ink-soft px-3 py-1">
               {hero.tag}
             </span>
             <blockquote className="m-0 mt-auto pt-10">
@@ -258,7 +258,7 @@ export function ProofCalmBento() {
               <Portrait src={hero.img} name={hero.name} size={52} />
               <span>
                 <span className="block text-[14.5px] font-semibold text-[#0A1633]">{hero.name}</span>
-                <span className="block text-[13px] text-slate-600 mt-0.5">{hero.role}</span>
+                <span className="block text-[13px] text-ink-soft mt-0.5">{hero.role}</span>
               </span>
             </figcaption>
           </motion.figure>
@@ -290,7 +290,7 @@ export function ProofCalmBento() {
             <p className="font-serif font-normal text-[52px] leading-none text-[#0A1633] m-0">
               90<span className="text-[#2563EB] text-[0.42em] align-super ml-0.5">%</span>
             </p>
-            <p className="text-[14px] leading-[1.5] text-slate-600 mt-3 mb-0">
+            <p className="text-[14px] leading-[1.5] text-ink-soft mt-3 mb-0">
               fewer missed patient calls
             </p>
           </motion.div>
@@ -304,7 +304,7 @@ export function ProofCalmBento() {
             <p className="text-[15.5px] leading-[1.6] text-[#0A1633] m-0">
               &ldquo;{second.quote}&rdquo;
             </p>
-            <span className="text-[11px] font-bold uppercase tracking-[1.1px] text-slate-600 mt-6">
+            <span className="text-[11px] font-bold uppercase tracking-[1.1px] text-ink-soft mt-6">
               {second.tag}
             </span>
           </motion.figure>
@@ -324,7 +324,7 @@ export function ProofCalmBento() {
             />
             <div aria-hidden className="absolute inset-0 bg-[#050C1A]/45" />
             <span className="absolute inset-0 grid place-items-center">
-              <span className="inline-flex items-center gap-2 bg-white text-[#0A1633] text-[14px] font-semibold px-5 py-2.5 rounded-full">
+              <span className="inline-flex items-center gap-2 bg-paper-bright text-[#0A1633] text-[14px] font-semibold px-5 py-2.5 rounded-full">
                 See all case studies
                 <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" strokeWidth={2.4} />
               </span>
@@ -345,7 +345,7 @@ export function ProofCalmBento() {
 export function ProofOnePanel() {
   const hero = VOICES[0];
   return (
-    <section className="bg-white py-24 md:py-32 px-6 md:px-16">
+    <section className="bg-paper-bright py-24 md:py-32 px-6 md:px-16">
       <div className="max-w-[1100px] mx-auto">
         <motion.div {...fadeUp} className={`rounded-[32px] p-10 md:p-16 text-center ${SOFT_BLUE}`}>
           <p className={`${eyebrow} text-[#2563EB] mt-0 mb-8`}>Proof</p>
@@ -358,16 +358,16 @@ export function ProofOnePanel() {
             </p>
           </blockquote>
           <p className="text-[14.5px] font-semibold text-[#0A1633] mt-7 mb-0">{hero.name}</p>
-          <p className="text-[13.5px] text-slate-600 mt-1 mb-0">{hero.role}</p>
+          <p className="text-[13.5px] text-ink-soft mt-1 mb-0">{hero.role}</p>
 
-          <div className="mt-12 pt-8 border-t border-slate-300/60 grid grid-cols-1 sm:grid-cols-3 gap-8">
+          <div className="mt-12 pt-8 border-t border-rule/60 grid grid-cols-1 sm:grid-cols-3 gap-8">
             {PROOF_NUMBERS.map((n) => (
               <div key={n.label}>
                 <p className="font-serif font-normal text-[34px] leading-none text-[#0A1633] m-0">
                   {n.v}
                   <span className="text-[#2563EB] text-[0.5em] align-super ml-0.5">{n.suf}</span>
                 </p>
-                <p className="text-[13px] leading-[1.5] text-slate-600 mt-2 mb-0">{n.label}</p>
+                <p className="text-[13px] leading-[1.5] text-ink-soft mt-2 mb-0">{n.label}</p>
               </div>
             ))}
           </div>
@@ -385,7 +385,7 @@ export function ProofOnePanel() {
  */
 export function ProofThreeCards() {
   return (
-    <section className="bg-white py-24 md:py-32 px-6 md:px-16">
+    <section className="bg-paper-bright py-24 md:py-32 px-6 md:px-16">
       <div className="max-w-[1200px] mx-auto">
         <motion.div {...fadeUp} className="text-center">
           <p className={`${eyebrow} text-[#2563EB] mt-0 mb-4`}>Proof</p>
@@ -410,11 +410,11 @@ export function ProofThreeCards() {
                     <Portrait src={v.img} name={v.name} size={44} />
                     <span className="min-w-0">
                       <span className="block text-[13.5px] font-semibold text-[#0A1633] truncate">{v.name}</span>
-                      <span className="block text-[12px] leading-[1.4] text-slate-600 mt-0.5">{v.role}</span>
+                      <span className="block text-[12px] leading-[1.4] text-ink-soft mt-0.5">{v.role}</span>
                     </span>
                   </>
                 ) : (
-                  <span className="rounded-full bg-white/80 border border-slate-200 text-[11px] font-bold uppercase tracking-[1.1px] text-slate-600 px-3 py-1">
+                  <span className="rounded-full bg-paper-bright/80 border border-rule text-[11px] font-bold uppercase tracking-[1.1px] text-ink-soft px-3 py-1">
                     {v.tag}
                   </span>
                 )}
@@ -447,7 +447,7 @@ export function ProofThreeCards() {
 export function ProofSplit() {
   const hero = VOICES[0];
   return (
-    <section className="bg-white py-24 md:py-32 px-6 md:px-16">
+    <section className="bg-paper-bright py-24 md:py-32 px-6 md:px-16">
       <div className="max-w-[1200px] mx-auto">
         <motion.div {...fadeUp} className="text-center">
           <p className={`${eyebrow} text-[#2563EB] mt-0 mb-4`}>Proof</p>
@@ -488,7 +488,7 @@ export function ProofSplit() {
               <Portrait src={hero.img} name={hero.name} size={48} />
               <span>
                 <span className="block text-[14px] font-semibold text-[#0A1633]">{hero.name}</span>
-                <span className="block text-[12.5px] text-slate-600 mt-0.5">{hero.role}</span>
+                <span className="block text-[12.5px] text-ink-soft mt-0.5">{hero.role}</span>
               </span>
             </figcaption>
           </motion.figure>
@@ -497,7 +497,7 @@ export function ProofSplit() {
         <motion.div
           {...fadeUp}
           transition={{ duration: 0.5, delay: 0.18 }}
-          className="mt-10 pt-8 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-3 gap-8"
+          className="mt-10 pt-8 border-t border-rule grid grid-cols-1 sm:grid-cols-3 gap-8"
         >
           {PROOF_NUMBERS.map((n) => (
             <div key={n.label} className="flex items-baseline gap-3">
@@ -505,7 +505,7 @@ export function ProofSplit() {
                 {n.v}
                 <span className="text-[#2563EB] text-[0.5em] align-super ml-0.5">{n.suf}</span>
               </p>
-              <p className="text-[13.5px] leading-[1.45] text-slate-600 m-0">{n.label}</p>
+              <p className="text-[13.5px] leading-[1.45] text-ink-soft m-0">{n.label}</p>
             </div>
           ))}
         </motion.div>

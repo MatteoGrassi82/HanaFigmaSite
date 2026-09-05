@@ -40,7 +40,7 @@ export function IntegrationsSection() {
           {/* Grid — 2x2 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
              {/* Pillar 1: EHR Integrations */}
-             <div className="relative bg-white border border-slate-200 rounded-[20px] p-6 sm:p-8 md:p-10 pb-6 sm:pb-7 md:pb-9 overflow-hidden transition-all duration-300 hover:border-slate-300 hover:shadow-lg group">
+             <div className="relative bg-paper-bright border border-rule rounded-[20px] p-6 sm:p-8 md:p-10 pb-6 sm:pb-7 md:pb-9 overflow-hidden transition-all duration-300 hover:border-rule hover:shadow-lg group">
                 
                 <div className="w-[52px] h-[52px] rounded-[14px] flex items-center justify-center mb-7 bg-blue-50 border border-blue-200 text-blue-600">
                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -56,7 +56,7 @@ export function IntegrationsSection() {
                 
                 <div className="flex flex-wrap gap-[10px]">
                    {["Athena Health", "Epic", "eClinicalWorks", "Redox", "95+ EHRs"].map(item => (
-                     <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-slate-50 border border-slate-200 text-[13px] font-medium text-navy-soft transition-colors hover:bg-slate-100 hover:border-slate-300 tracking-[0.01em]">
+                     <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-paper-2 border border-rule text-[13px] font-medium text-navy-soft transition-colors hover:bg-paper-2 hover:border-rule tracking-[0.01em]">
                        <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-blue-500"></span>
                        {item}
                      </span>
@@ -65,7 +65,7 @@ export function IntegrationsSection() {
              </div>
 
              {/* Pillar 2: Patient Channels */}
-             <div className="relative bg-white border border-slate-200 rounded-[20px] p-6 sm:p-8 md:p-10 pb-6 sm:pb-7 md:pb-9 overflow-hidden transition-all duration-300 hover:border-slate-300 hover:shadow-lg group">
+             <div className="relative bg-paper-bright border border-rule rounded-[20px] p-6 sm:p-8 md:p-10 pb-6 sm:pb-7 md:pb-9 overflow-hidden transition-all duration-300 hover:border-rule hover:shadow-lg group">
                 
                 <div className="w-[52px] h-[52px] rounded-[14px] flex items-center justify-center mb-7 bg-blue-50 border border-blue-200 text-blue-600">
                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -81,7 +81,7 @@ export function IntegrationsSection() {
                 
                 <div className="flex flex-wrap gap-[10px]">
                    {["Voice calls", "SMS", "WhatsApp", "iMessage", "30+ languages"].map(item => (
-                     <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-slate-50 border border-slate-200 text-[13px] font-medium text-navy-soft transition-colors hover:bg-slate-100 hover:border-slate-300 tracking-[0.01em]">
+                     <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-paper-2 border border-rule text-[13px] font-medium text-navy-soft transition-colors hover:bg-paper-2 hover:border-rule tracking-[0.01em]">
                        <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-blue-500"></span>
                        {item}
                      </span>
@@ -90,7 +90,7 @@ export function IntegrationsSection() {
              </div>
 
              {/* Pillar 3: No EHR? No problem. */}
-             <div className="relative bg-white border border-slate-200 rounded-[20px] p-6 sm:p-8 md:p-10 pb-6 sm:pb-7 md:pb-9 overflow-hidden transition-all duration-300 hover:border-slate-300 hover:shadow-lg group">
+             <div className="relative bg-paper-bright border border-rule rounded-[20px] p-6 sm:p-8 md:p-10 pb-6 sm:pb-7 md:pb-9 overflow-hidden transition-all duration-300 hover:border-rule hover:shadow-lg group">
                 
                 <div className="w-[52px] h-[52px] rounded-[14px] flex items-center justify-center mb-7 bg-blue-50 border border-blue-200 text-blue-600">
                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -106,7 +106,7 @@ export function IntegrationsSection() {
                 
                 <div className="flex flex-wrap gap-[10px]">
                    {["Custom dashboards", "Agent control panel", "Works alongside your tools", "No tech requirements"].map(item => (
-                     <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-slate-50 border border-slate-200 text-[13px] font-medium text-navy-soft transition-colors hover:bg-slate-100 hover:border-slate-300 tracking-[0.01em]">
+                     <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-paper-2 border border-rule text-[13px] font-medium text-navy-soft transition-colors hover:bg-paper-2 hover:border-rule tracking-[0.01em]">
                        <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-blue-500"></span>
                        {item}
                      </span>
@@ -115,7 +115,7 @@ export function IntegrationsSection() {
              </div>
 
              {/* Pillar 4: SDK & White-Label — UPGRADED to full card */}
-             <div className="relative bg-white border border-slate-200 rounded-[20px] p-6 sm:p-8 md:p-10 pb-6 sm:pb-7 md:pb-9 overflow-hidden transition-all duration-300 hover:border-slate-300 hover:shadow-lg group">
+             <div className="relative bg-paper-bright border border-rule rounded-[20px] p-6 sm:p-8 md:p-10 pb-6 sm:pb-7 md:pb-9 overflow-hidden transition-all duration-300 hover:border-rule hover:shadow-lg group">
                 
                 <div className="w-[52px] h-[52px] rounded-[14px] flex items-center justify-center mb-7 bg-blue-50 border border-blue-200 text-blue-600">
                    <Code2 className="w-6 h-6" />
@@ -129,7 +129,7 @@ export function IntegrationsSection() {
                 
                 <div className="flex flex-wrap gap-[10px] mb-8">
                    {["Full API", "White-label", "Custom dashboards", "Your branding", "SDK"].map(item => (
-                     <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-slate-50 border border-slate-200 text-[13px] font-medium text-navy-soft transition-colors hover:bg-slate-100 hover:border-slate-300 tracking-[0.01em]">
+                     <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-paper-2 border border-rule text-[13px] font-medium text-navy-soft transition-colors hover:bg-paper-2 hover:border-rule tracking-[0.01em]">
                        <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-blue-500"></span>
                        {item}
                      </span>
@@ -146,7 +146,7 @@ export function IntegrationsSection() {
              </div>
 
              {/* Pillar 5: Wearables & devices — full-width row (spans both columns) */}
-             <div className="md:col-span-2 relative bg-white border border-slate-200 rounded-[20px] p-6 sm:p-8 md:p-10 overflow-hidden transition-all duration-300 hover:border-slate-300 hover:shadow-lg flex flex-col md:flex-row md:items-center gap-7 md:gap-10">
+             <div className="md:col-span-2 relative bg-paper-bright border border-rule rounded-[20px] p-6 sm:p-8 md:p-10 overflow-hidden transition-all duration-300 hover:border-rule hover:shadow-lg flex flex-col md:flex-row md:items-center gap-7 md:gap-10">
                 <div className="md:flex-1">
                    <div className="w-[52px] h-[52px] rounded-[14px] flex items-center justify-center mb-6 bg-blue-50 border border-blue-200 text-blue-600">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -159,7 +159,7 @@ export function IntegrationsSection() {
                 </div>
                 <div className="flex flex-wrap gap-[10px] md:max-w-[300px] md:justify-end">
                    {["Apple Watch", "Oura", "Fitbit", "Garmin"].map(item => (
-                     <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-slate-50 border border-slate-200 text-[13px] font-medium text-navy-soft transition-colors hover:bg-slate-100 hover:border-slate-300 tracking-[0.01em]">
+                     <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-paper-2 border border-rule text-[13px] font-medium text-navy-soft transition-colors hover:bg-paper-2 hover:border-rule tracking-[0.01em]">
                        <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-blue-500"></span>
                        {item}
                      </span>

@@ -37,14 +37,14 @@ const HYPNO_POINTS =
 export function SleepTwoProducts() {
   const reduce = useReducedMotion();
   return (
-    <section className="bg-white py-24 md:py-32 px-6 md:px-16">
+    <section className="bg-paper-bright py-24 md:py-32 px-6 md:px-16">
       <div className="max-w-[1240px] mx-auto">
         <motion.div {...fadeUp} className="text-center">
           <p className={`${eyebrow} text-[#2563EB] mt-0 mb-4`}>HANA Sleep</p>
           <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-[#0A1633] mx-auto max-w-[26ch] m-0">
             Reading the night is one job. <em className="text-[#2563EB]">Keeping the therapy is another.</em>
           </h2>
-          <p className="text-[17px] leading-[1.7] text-slate-600 max-w-[58ch] mx-auto mt-5 mb-0">
+          <p className="text-[17px] leading-[1.7] text-ink-soft max-w-[58ch] mx-auto mt-5 mb-0">
             HANA Sleep is two things, and a Remote patient can have both. One reads the night the
             patient is already recording. The other calls them until the therapy sticks.
           </p>
@@ -66,13 +66,13 @@ export function SleepTwoProducts() {
               }}
             />
             <div className="relative z-10 flex flex-col h-full">
-              <span className="inline-flex self-start items-center gap-2.5 rounded-full bg-white/[0.12] backdrop-blur-md border border-white/15 pl-3.5 pr-4 py-2">
+              <span className="inline-flex self-start items-center gap-2.5 rounded-full bg-paper-bright/[0.12] backdrop-blur-md border border-white/15 pl-3.5 pr-4 py-2">
                 <span className="w-2 h-2 rounded-full bg-[#5B93FF]" />
                 <span className="text-[13px] font-medium text-white">HANA Sleep Analysis</span>
               </span>
 
               {/* the artefact: a hypnogram, drawing itself in */}
-              <div className="mt-8 rounded-[18px] bg-white/[0.06] border border-white/10 p-5">
+              <div className="mt-8 rounded-[18px] bg-paper-bright/[0.06] border border-white/10 p-5">
                 <div className="flex items-baseline justify-between gap-4">
                   <p className="text-[11px] font-bold uppercase tracking-[1.2px] text-white/60 m-0">
                     One night, as the wearable recorded it
@@ -110,7 +110,7 @@ export function SleepTwoProducts() {
                   {["Apple Watch", "Oura", "Fitbit", "Garmin", "Type III & IV home tests"].map((d) => (
                     <span
                       key={d}
-                      className="rounded-full bg-white/[0.08] border border-white/10 text-white/75 text-[11.5px] font-medium px-2.5 py-1"
+                      className="rounded-full bg-paper-bright/[0.08] border border-white/10 text-white/75 text-[11.5px] font-medium px-2.5 py-1"
                     >
                       {d}
                     </span>
@@ -166,13 +166,13 @@ export function SleepTwoProducts() {
               }}
             />
             <div className="relative z-10 flex flex-col h-full">
-              <span className="inline-flex self-start items-center gap-2.5 rounded-full bg-white/[0.14] backdrop-blur-md border border-white/15 pl-3.5 pr-4 py-2">
+              <span className="inline-flex self-start items-center gap-2.5 rounded-full bg-paper-bright/[0.14] backdrop-blur-md border border-white/15 pl-3.5 pr-4 py-2">
                 <span className="w-2 h-2 rounded-full bg-[#E8A06A]" />
                 <span className="text-[13px] font-medium text-white">CPAP Adherence Program</span>
               </span>
 
               {/* the artefact: the first week, and the call that saved it */}
-              <div className="mt-8 rounded-[18px] bg-white/[0.10] backdrop-blur-xl border border-white/15 p-5">
+              <div className="mt-8 rounded-[18px] bg-paper-bright/[0.10] backdrop-blur-xl border border-white/15 p-5">
                 <div className="flex items-baseline justify-between gap-4">
                   <p className="text-[11px] font-bold uppercase tracking-[1.2px] text-white/65 m-0">
                     An example first week
@@ -191,8 +191,8 @@ export function SleepTwoProducts() {
                           {x.hrs}
                         </span>
                       </div>
-                      <div className="relative mt-1.5 h-2 rounded-full bg-white/15 overflow-hidden">
-                        <span aria-hidden className="absolute inset-y-0 left-[48%] w-[2px] bg-white/45 z-10" />
+                      <div className="relative mt-1.5 h-2 rounded-full bg-paper-bright/15 overflow-hidden">
+                        <span aria-hidden className="absolute inset-y-0 left-[48%] w-[2px] bg-paper-bright/45 z-10" />
                         <motion.div
                           className="h-full rounded-full"
                           style={{ background: x.pct >= 48 ? "#4ECB8B" : "#E8A06A" }}

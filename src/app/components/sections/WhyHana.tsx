@@ -63,7 +63,7 @@ export function WhyHana({
   }, [reduce]);
 
   return (
-    <section ref={ref} className="bg-white py-20 md:py-[120px] px-6 md:px-8">
+    <section ref={ref} className="bg-paper-bright py-20 md:py-[120px] px-6 md:px-8">
       {/* Header */}
       <div className="max-w-[640px] mx-auto text-center">
         <div className="text-[12px] font-bold uppercase tracking-[2.5px] text-brand mb-5">

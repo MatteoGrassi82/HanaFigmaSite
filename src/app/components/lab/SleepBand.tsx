@@ -46,7 +46,7 @@ const eyebrow = "text-[13px] font-bold tracking-[2.5px] uppercase";
 
 export function SleepBand() {
   return (
-    <section className="bg-white py-24 md:py-32 px-6 md:px-16">
+    <section className="bg-paper-bright py-24 md:py-32 px-6 md:px-16">
       <div className="max-w-[1240px] mx-auto">
         <motion.div {...fadeUp} className="relative rounded-[26px] overflow-hidden bg-[#0A1633]">
           <img
@@ -100,7 +100,7 @@ export function SleepBand() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.45, delay: 0.12 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                  className="group flex items-center gap-5 rounded-[16px] bg-white/[0.10] backdrop-blur-xl border border-white/15 px-5 py-4 no-underline hover:bg-white/[0.16] hover:border-white/30 transition-colors"
+                  className="group flex items-center gap-5 rounded-[16px] bg-paper-bright/[0.10] backdrop-blur-xl border border-white/15 px-5 py-4 no-underline hover:bg-paper-bright/[0.16] hover:border-white/30 transition-colors"
                 >
                   <span className="flex-1 min-w-0">
                     <span className="block text-[15px] font-semibold text-white">{s.name}</span>

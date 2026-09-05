@@ -81,7 +81,7 @@ const FAQS = [
 
 export function HanaContact() {
   return (
-    <div className="bg-white text-navy font-sans overflow-x-hidden">
+    <div className="bg-paper-bright text-navy font-sans overflow-x-hidden">
       <SEO
         title="HANA Contact — AI Front Desk for Clinics"
         useExactTitle
@@ -147,16 +147,16 @@ export function HanaContact() {
             </p>
           </motion.div>
           <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.1 }} className="md:pt-2 space-y-5">
-            <p className="text-base leading-[1.75] text-slate-700 m-0">
+            <p className="text-base leading-[1.75] text-ink-soft m-0">
               Your front desk is the first thing patients experience. It's also the most
               overloaded part of your clinic.
             </p>
-            <p className="text-base leading-[1.75] text-slate-700 m-0">
+            <p className="text-base leading-[1.75] text-ink-soft m-0">
               Missed calls become missed appointments. Missed appointments become lost revenue.
               Your staff spends hours chasing patients, confirming appointments, collecting
               information, and leaving voicemails that nobody returns.
             </p>
-            <p className="text-base leading-[1.75] text-slate-700 m-0">
+            <p className="text-base leading-[1.75] text-ink-soft m-0">
               The average clinic misses 30% of calls after hours. Each missed call is a missed patient.
             </p>
           </motion.div>
@@ -164,7 +164,7 @@ export function HanaContact() {
       </section>
 
       {/* COMPARISON — bar chart */}
-      <section className="py-20 md:py-24 px-6 md:px-16 bg-white text-center">
+      <section className="py-20 md:py-24 px-6 md:px-16 bg-paper-bright text-center">
         <motion.h2
           {...fadeUp}
           className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.06] mt-0 mb-[18px]"
@@ -176,7 +176,7 @@ export function HanaContact() {
         <motion.p
           {...fadeUp}
           transition={{ duration: 0.5, delay: 0.05 }}
-          className="text-[17px] leading-[1.7] text-slate-500 max-w-[60ch] mx-auto"
+          className="text-[17px] leading-[1.7] text-ink-mute max-w-[60ch] mx-auto"
         >
           Phone trees, hold music, and callback voicemails leave most calls unresolved. HANA Contact
           answers, understands, and finishes the call — no human required.
@@ -244,7 +244,7 @@ export function HanaContact() {
             <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch] text-navy">
               How many calls slip through <em className="text-brand">every month?</em>
             </h2>
-            <p className="text-[17px] leading-[1.7] text-slate-500 max-w-[52ch] mx-auto mt-4">
+            <p className="text-[17px] leading-[1.7] text-ink-mute max-w-[52ch] mx-auto mt-4">
               Every missed call is a patient who doesn't book. Here's what that leak looks like for you.
             </p>
           </motion.div>
@@ -293,7 +293,7 @@ export function HanaContact() {
       </section>
 
       {/* A TALE OF TWO FRONT DESKS — with / without comparison */}
-      <section className="py-20 md:py-24 px-6 md:px-16 bg-white">
+      <section className="py-20 md:py-24 px-6 md:px-16 bg-paper-bright">
         <div className="max-w-[1000px] mx-auto">
           <motion.div {...fadeUp} className="text-center mb-12 md:mb-14">
             <p className={`${eyebrow} text-brand mt-0 mb-4`}>A tale of two front desks</p>
@@ -301,7 +301,7 @@ export function HanaContact() {
               HANA Contact vs. the status quo.
             </h2>
           </motion.div>
-          <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.1 }} className="grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden border border-slate-200">
+          <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.1 }} className="grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden border border-rule">
             {/* With */}
             <div className="bg-[#f6f7fb] p-7 md:p-9">
               <p className={`${eyebrow} text-brand mt-0 mb-6`}>With HANA Contact</p>
@@ -315,11 +315,11 @@ export function HanaContact() {
               </ul>
             </div>
             {/* Without */}
-            <div className="bg-white p-7 md:p-9 border-t md:border-t-0 md:border-l border-slate-200">
+            <div className="bg-paper-bright p-7 md:p-9 border-t md:border-t-0 md:border-l border-rule">
               <p className={`${eyebrow} text-slate-400 mt-0 mb-6`}>Without</p>
               <ul className="space-y-4 m-0 p-0 list-none">
                 {WITHOUT_HANA.map((t) => (
-                  <li key={t} className="flex items-start gap-3 text-[15px] text-slate-500">
+                  <li key={t} className="flex items-start gap-3 text-[15px] text-ink-mute">
                     <X className="w-5 h-5 text-slate-300 shrink-0 mt-0.5" />
                     {t}
                   </li>
@@ -331,11 +331,11 @@ export function HanaContact() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="py-16 md:py-[72px] px-6 md:px-16 bg-white">
+      <section className="py-16 md:py-[72px] px-6 md:px-16 bg-paper-bright">
         <div className="max-w-[1200px] mx-auto">
           <motion.div {...fadeUp} className="text-center mb-10 md:mb-[52px]">
             <h2 className="font-serif font-normal text-[32px] md:text-[44px] mt-0 mb-3.5">What clinics say.</h2>
-            <p className="text-[17px] leading-[1.7] text-slate-500 m-0">In their words.</p>
+            <p className="text-[17px] leading-[1.7] text-ink-mute m-0">In their words.</p>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-[22px]">
             <motion.div
@@ -386,7 +386,7 @@ export function HanaContact() {
       </section>
 
       {/* HOW WE START — three steps */}
-      <section className="py-20 md:py-24 px-6 md:px-16 bg-white">
+      <section className="py-20 md:py-24 px-6 md:px-16 bg-paper-bright">
         <div className="max-w-[1200px] mx-auto">
           <motion.div {...fadeUp} className="text-center mb-12 md:mb-16">
             <p className={`${eyebrow} text-brand mt-0 mb-4`}>How we start</p>
@@ -400,13 +400,13 @@ export function HanaContact() {
                 key={s.title}
                 {...fadeUp}
                 transition={{ duration: 0.5, delay: 0.05 + i * 0.1 }}
-                className="rounded-2xl bg-[#f6f7fb] border border-slate-200 p-7 md:p-8"
+                className="rounded-2xl bg-[#f6f7fb] border border-rule p-7 md:p-8"
               >
                 <div className="flex items-center justify-center w-11 h-11 rounded-full bg-navy-soft text-white font-serif text-[20px]">
                   {i + 1}
                 </div>
                 <h3 className="font-serif font-normal text-[24px] leading-[1.2] mt-5 mb-3 text-navy">{s.title}</h3>
-                <p className="text-[15px] leading-[1.7] text-slate-500 m-0">{s.desc}</p>
+                <p className="text-[15px] leading-[1.7] text-ink-mute m-0">{s.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -446,7 +446,7 @@ export function HanaContact() {
             href={DEMO_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 bg-white text-navy rounded-[10px] font-semibold text-[15px] px-8 py-[15px] no-underline hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2.5 bg-paper-bright text-navy rounded-[10px] font-semibold text-[15px] px-8 py-[15px] no-underline hover:opacity-90 transition-opacity"
           >
             Book a demo →
           </a>
@@ -624,7 +624,7 @@ function FrontDeskPipeline() {
                 className={`group relative flex-1 min-w-[150px] lg:min-w-0 snap-start text-left rounded-2xl p-5 transition-all duration-500 ${
                   isActive
                     ? "bg-[#2347e6] shadow-[0_18px_50px_rgba(35,71,230,0.45)]"
-                    : "bg-white/[0.04] hover:bg-white/[0.07]"
+                    : "bg-paper-bright/[0.04] hover:bg-paper-bright/[0.07]"
                 }`}
                 style={{ flexGrow: isActive ? 1.5 : 1 }}
               >
@@ -660,7 +660,7 @@ function FrontDeskPipeline() {
       </div>
 
       {/* Detail panel — cross-fades on stage change */}
-      <div className="mt-8 rounded-2xl bg-white/[0.03] border border-white/[0.06] p-7 md:p-9 grid grid-cols-1 md:grid-cols-[1fr_220px] gap-8 items-center min-h-[200px]">
+      <div className="mt-8 rounded-2xl bg-paper-bright/[0.03] border border-white/[0.06] p-7 md:p-9 grid grid-cols-1 md:grid-cols-[1fr_220px] gap-8 items-center min-h-[200px]">
         <AnimatePresence mode="wait">
           <motion.div
             key={cur.key}
@@ -697,7 +697,7 @@ function FrontDeskPipeline() {
             key={st.key}
             onClick={() => setActive(i)}
             aria-label={`Show ${st.key}`}
-            className={`h-2 rounded-full transition-all duration-500 ${i === active ? "w-8 bg-brand-soft" : "w-2 bg-white/25 hover:bg-white/40"}`}
+            className={`h-2 rounded-full transition-all duration-500 ${i === active ? "w-8 bg-brand-soft" : "w-2 bg-paper-bright/25 hover:bg-paper-bright/40"}`}
           />
         ))}
       </div>
@@ -756,8 +756,8 @@ function RoiCalculator() {
   ) => (
     <div>
       <div className="flex items-center justify-between gap-3">
-        <span className="text-[13px] text-slate-500">{label}</span>
-        <div className="flex items-center rounded-lg border border-slate-300 bg-white px-2.5 py-1 focus-within:border-brand focus-within:ring-2 focus-within:ring-brand/20 transition shrink-0">
+        <span className="text-[13px] text-ink-mute">{label}</span>
+        <div className="flex items-center rounded-lg border border-rule bg-paper-bright px-2.5 py-1 focus-within:border-brand focus-within:ring-2 focus-within:ring-brand/20 transition shrink-0">
           {opts.prefix && <span className="text-slate-400 text-[13px] mr-0.5">{opts.prefix}</span>}
           <input
             type="number"
@@ -787,10 +787,10 @@ function RoiCalculator() {
     <motion.div
       {...fadeUp}
       transition={{ duration: 0.5, delay: 0.1 }}
-      className="grid grid-cols-1 lg:grid-cols-2 rounded-2xl overflow-hidden border border-slate-200 shadow-[0_20px_60px_rgba(0,18,47,0.08)]"
+      className="grid grid-cols-1 lg:grid-cols-2 rounded-2xl overflow-hidden border border-rule shadow-[0_20px_60px_rgba(0,18,47,0.08)]"
     >
       {/* Inputs */}
-      <div className="bg-white p-7 md:p-9">
+      <div className="bg-paper-bright p-7 md:p-9">
         <p className={`${eyebrow} text-brand mt-0 mb-5`}>Your practice</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5">
           {field("Number of locations", locations, setLocations, { min: 1, max: 50 })}
@@ -819,7 +819,7 @@ function RoiCalculator() {
             <span className="font-semibold text-brand-soft">{money(recovered)}/year</span> your front desk can't get to today.
           </p>
           {/* Recovered vs. lost — visual share of the leak HANA plugs back */}
-          <div className="mt-5 h-2 rounded-full bg-white/10 overflow-hidden">
+          <div className="mt-5 h-2 rounded-full bg-paper-bright/10 overflow-hidden">
             <motion.div
               className="h-full rounded-full bg-brand-soft"
               initial={{ width: 0 }}
@@ -862,7 +862,7 @@ const INTEGRATION_PILLARS = [
 
 function ContactIntegrations() {
   return (
-    <section className="py-20 md:py-24 px-6 md:px-16 bg-white">
+    <section className="py-20 md:py-24 px-6 md:px-16 bg-paper-bright">
       <div className="max-w-[1200px] mx-auto">
         <motion.div {...fadeUp} className="text-center mb-12 md:mb-16">
           <p className={`${eyebrow} text-brand mt-0 mb-4`}>Plugs into what you run</p>
@@ -876,7 +876,7 @@ function ContactIntegrations() {
               key={p.title}
               {...fadeUp}
               transition={{ duration: 0.5, delay: 0.05 + i * 0.1 }}
-              className="group rounded-2xl bg-[#f6f7fb] border border-slate-200 p-7 md:p-9 transition-all duration-300 hover:border-[#c2cef6] hover:shadow-[0_16px_44px_rgba(0,18,47,0.10)]"
+              className="group rounded-2xl bg-[#f6f7fb] border border-rule p-7 md:p-9 transition-all duration-300 hover:border-[#c2cef6] hover:shadow-[0_16px_44px_rgba(0,18,47,0.10)]"
             >
               <span className="flex items-center justify-center w-12 h-12 rounded-[14px] bg-brand-tint mb-6 transition-colors group-hover:bg-[#e2e8fb]">
                 <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="var(--color-brand)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -885,19 +885,19 @@ function ContactIntegrations() {
               </span>
               <h3 className="font-serif font-normal text-[24px] md:text-[26px] leading-[1.15] mt-0 mb-1.5 text-navy">{p.title}</h3>
               <p className="text-[14px] font-medium text-brand mt-0 mb-4">{p.tagline}</p>
-              <p className="text-[15px] leading-[1.7] text-slate-500 mt-0 mb-7">{p.body}</p>
+              <p className="text-[15px] leading-[1.7] text-ink-mute mt-0 mb-7">{p.body}</p>
               <div className="flex flex-wrap gap-2.5">
                 {p.chips.map((c) => (
                   <span
                     key={c}
-                    className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200 text-[13px] font-medium text-navy transition-colors hover:border-brand-soft hover:bg-brand-tint"
+                    className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-paper-bright border border-rule text-[13px] font-medium text-navy transition-colors hover:border-brand-soft hover:bg-brand-tint"
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-brand" aria-hidden="true" />
                     {c}
                   </span>
                 ))}
               </div>
-              <p className="text-[13px] font-semibold text-slate-400 mt-7 mb-0 pt-5 border-t border-slate-200">{p.foot}</p>
+              <p className="text-[13px] font-semibold text-slate-400 mt-7 mb-0 pt-5 border-t border-rule">{p.foot}</p>
             </motion.div>
           ))}
         </div>
@@ -925,7 +925,7 @@ function StatCell({
         {value}
         {suffix && <span className="text-[28px] md:text-[40px] text-brand">{suffix}</span>}
       </div>
-      <div className="text-[15px] text-slate-500 leading-[1.5]">{children}</div>
+      <div className="text-[15px] text-ink-mute leading-[1.5]">{children}</div>
     </div>
   );
 }

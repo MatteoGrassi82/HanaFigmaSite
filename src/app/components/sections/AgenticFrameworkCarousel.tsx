@@ -200,15 +200,15 @@ export function AgenticFrameworkCarousel() {
   const expandedSlideData = expandedSlide !== null ? slides.find(s => s.id === expandedSlide) : null;
 
   return (
-    <section className="py-16 md:py-24 bg-[#F5F5F5] dark:bg-slate-950 overflow-hidden">
+    <section className="py-16 md:py-24 bg-[#F5F5F5] dark:bg-navy overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 mb-10 md:mb-16">
-          <h2 className="text-3xl md:text-5xl font-serif font-normal tracking-normal text-slate-900 dark:text-white max-w-2xl leading-[1.1]">
+          <h2 className="text-3xl md:text-5xl font-serif font-normal tracking-normal text-ink dark:text-white max-w-2xl leading-[1.1]">
             {it ? "Costruito su come lavora la tua clinica." : "Built around how your clinic works."}
           </h2>
-          <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-3xl leading-relaxed md:mt-4 font-sans">
+          <p className="text-xl md:text-2xl text-ink-soft dark:text-slate-400 max-w-3xl leading-relaxed md:mt-4 font-sans">
             {it ? "Dai flussi semplici ai percorsi di cura complessi. Attivo in 3 settimane." : "Simple workflows to complex care pathways. Live in 3 weeks."}
           </p>
         </div>
@@ -221,7 +221,7 @@ export function AgenticFrameworkCarousel() {
                 <div className="group h-full flex flex-col">
                     {/* Image Container with Light Gray Border/Background */}
                     <div 
-                      className="relative aspect-video w-full overflow-hidden rounded-xl bg-slate-200 dark:bg-slate-800 p-1 shadow-lg cursor-pointer md:cursor-grab md:active:cursor-grabbing"
+                      className="relative aspect-video w-full overflow-hidden rounded-xl bg-rule-soft dark:bg-navy p-1 shadow-lg cursor-pointer md:cursor-grab md:active:cursor-grabbing"
                       onClick={() => handleSlideClick(slide.id)}
                     >
                         {/* Mobile tap hint */}
@@ -229,7 +229,7 @@ export function AgenticFrameworkCarousel() {
                           <Maximize2 className="w-3.5 h-3.5" />
                         </div>
                         {/* Inner live Remotion demo */}
-                        <div className="w-full h-full rounded-lg overflow-hidden bg-white dark:bg-slate-900 relative pointer-events-none">
+                        <div className="w-full h-full rounded-lg overflow-hidden bg-paper-bright dark:bg-navy relative pointer-events-none">
                             <DemoPlayer
                                 component={slide.component}
                                 durationInFrames={slide.durationInFrames}
@@ -239,10 +239,10 @@ export function AgenticFrameworkCarousel() {
 
                     {/* Content */}
                     <div className="mt-8">
-                        <h3 className="text-2xl font-medium text-slate-900 dark:text-white mb-3">
+                        <h3 className="text-2xl font-medium text-ink dark:text-white mb-3">
                             {slide.title}
                         </h3>
-                        <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-base max-w-xl">
+                        <p className="text-ink-soft dark:text-slate-400 leading-relaxed text-base max-w-xl">
                             {slide.description}
                         </p>
                     </div>
@@ -258,7 +258,7 @@ export function AgenticFrameworkCarousel() {
                 <button 
                     onClick={previous}
                     disabled={currentSlide === 0}
-                    className="w-11 h-11 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                    className="w-11 h-11 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-paper-2 dark:bg-navy text-ink-soft dark:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-rule-soft dark:hover:bg-navy-soft transition-colors"
                     aria-label={it ? "Slide precedente" : "Previous slide"}
                 >
                     <ChevronLeft className="w-5 h-5" />
@@ -266,7 +266,7 @@ export function AgenticFrameworkCarousel() {
                 <button 
                     onClick={next}
                     disabled={currentSlide === slides.length - 1}
-                    className="w-11 h-11 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors"
+                    className="w-11 h-11 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-navy dark:bg-paper-bright text-white dark:text-ink disabled:opacity-30 disabled:cursor-not-allowed hover:bg-navy dark:hover:bg-rule-soft transition-colors"
                     aria-label={it ? "Slide successiva" : "Next slide"}
                 >
                     <ChevronRight className="w-5 h-5" />
@@ -282,8 +282,8 @@ export function AgenticFrameworkCarousel() {
                         className={cn(
                             "transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center",
                             currentSlide === index
-                                ? "text-slate-900 dark:text-white"
-                                : "text-slate-400 dark:text-slate-600 hover:text-slate-600 dark:hover:text-slate-400"
+                                ? "text-ink dark:text-white"
+                                : "text-slate-400 dark:text-ink-soft hover:text-ink-soft dark:hover:text-slate-400"
                         )}
                     >
                         {index + 1}
@@ -292,7 +292,7 @@ export function AgenticFrameworkCarousel() {
             </div>
 
              {/* Horizontal Line */}
-             <div className="h-px bg-slate-200 dark:bg-slate-800 flex-1 ml-2 md:ml-4" />
+             <div className="h-px bg-rule-soft dark:bg-navy flex-1 ml-2 md:ml-4" />
         </div>
 
       </div>
@@ -310,7 +310,7 @@ export function AgenticFrameworkCarousel() {
             </span>
             <button 
               onClick={() => setExpandedSlide(null)}
-              className="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 text-white"
+              className="w-9 h-9 flex items-center justify-center rounded-full bg-paper-bright/10 text-white"
             >
               <X className="w-5 h-5" />
             </button>
@@ -318,7 +318,7 @@ export function AgenticFrameworkCarousel() {
           
           {/* Full-width live demo */}
           <div className="flex-1 flex items-center px-2" onClick={(e) => e.stopPropagation()}>
-            <div className="w-full aspect-video rounded-xl overflow-hidden bg-slate-900">
+            <div className="w-full aspect-video rounded-xl overflow-hidden bg-navy">
               <DemoPlayer
                 component={expandedSlideData.component}
                 durationInFrames={expandedSlideData.durationInFrames}
@@ -342,8 +342,8 @@ export function AgenticFrameworkCarousel() {
                 className={cn(
                   "w-2 h-2 rounded-full transition-all",
                   expandedSlide === s.id 
-                    ? "bg-white w-6" 
-                    : "bg-white/30"
+                    ? "bg-paper-bright w-6" 
+                    : "bg-paper-bright/30"
                 )}
               />
             ))}

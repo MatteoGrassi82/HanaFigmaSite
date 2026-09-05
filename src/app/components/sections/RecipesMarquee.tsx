@@ -348,7 +348,7 @@ function RecipeCard({ recipe, onClick, soft = false }: { recipe: Recipe; onClick
     return (
       <button
         onClick={onClick}
-        className="group flex-shrink-0 w-[290px] text-left bg-white rounded-[20px] p-5 cursor-pointer border border-slate-200 hover:border-slate-300 hover:-translate-y-[3px] hover:shadow-[0_18px_40px_-20px_rgba(10,22,51,0.28)] transition-all duration-300 flex flex-col justify-between min-h-[196px]"
+        className="group flex-shrink-0 w-[290px] text-left bg-paper-bright rounded-[20px] p-5 cursor-pointer border border-rule hover:border-rule hover:-translate-y-[3px] hover:shadow-[0_18px_40px_-20px_rgba(10,22,51,0.28)] transition-all duration-300 flex flex-col justify-between min-h-[196px]"
       >
         <div>
           <span className="inline-block text-[11px] font-bold uppercase tracking-[1.1px] text-brand bg-brand-tint rounded-full px-2.5 py-1">
@@ -366,11 +366,11 @@ function RecipeCard({ recipe, onClick, soft = false }: { recipe: Recipe; onClick
               </span>
             ))}
             {recipe.flow.length > 4 && (
-              <span className="text-[12px] text-slate-500 font-medium">+{recipe.flow.length - 4}</span>
+              <span className="text-[12px] text-ink-mute font-medium">+{recipe.flow.length - 4}</span>
             )}
           </div>
-          <div className="flex items-center justify-between mt-4 pt-3.5 border-t border-slate-100">
-            <span className="text-[12.5px] text-slate-500">
+          <div className="flex items-center justify-between mt-4 pt-3.5 border-t border-rule-soft">
+            <span className="text-[12.5px] text-ink-mute">
               {recipe.steps.length} {it ? "passaggi" : "steps"}
             </span>
             <span className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-brand">
@@ -391,7 +391,7 @@ function RecipeCard({ recipe, onClick, soft = false }: { recipe: Recipe; onClick
     >
       <div>
         <div className="text-[13px] font-medium text-blue-600 mb-2">{recipe.tag}</div>
-        <div className="text-[20px] font-normal text-slate-900 leading-snug tracking-[-0.2px]">{recipe.title}</div>
+        <div className="text-[20px] font-normal text-ink leading-snug tracking-[-0.2px]">{recipe.title}</div>
       </div>
       <div className="flex items-center gap-2 mt-4">
         {recipe.flow.slice(0, 4).map((ch, i) => (
@@ -400,7 +400,7 @@ function RecipeCard({ recipe, onClick, soft = false }: { recipe: Recipe; onClick
           </span>
         ))}
         {recipe.flow.length > 4 && (
-          <span className="text-[12px] text-slate-500 font-medium">+{recipe.flow.length - 4}</span>
+          <span className="text-[12px] text-ink-mute font-medium">+{recipe.flow.length - 4}</span>
         )}
       </div>
     </button>
@@ -417,22 +417,22 @@ function Modal({ recipe, onClose }: { recipe: Recipe; onClose: () => void }) {
   };
   return (
     <div
-      className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 sm:p-6"
+      className="fixed inset-0 bg-navy/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 sm:p-6"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <div className="bg-[#F5F3F0] rounded-2xl w-full max-w-[640px] md:max-w-[900px] lg:max-w-[1000px] max-h-[90vh] overflow-y-auto p-5 sm:p-8 md:p-10 relative">
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-900/10 hover:bg-slate-900/20 flex items-center justify-center text-slate-500 transition-colors z-10"
+          className="absolute top-5 right-5 w-8 h-8 rounded-full bg-navy/10 hover:bg-navy/20 flex items-center justify-center text-ink-mute transition-colors z-10"
         >
           <X size={16} />
         </button>
 
         {/* Header — spans full width */}
         <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-blue-600 mb-3 pr-10">{recipe.tag}</div>
-        <h3 className="font-serif text-[22px] sm:text-[28px] md:text-[32px] leading-tight text-slate-900 mb-6 pr-10">{recipe.title}</h3>
+        <h3 className="font-serif text-[22px] sm:text-[28px] md:text-[32px] leading-tight text-ink mb-6 pr-10">{recipe.title}</h3>
 
-        <div className="flex items-center gap-2 sm:gap-3 flex-wrap bg-white/60 rounded-xl p-4 mb-8">
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap bg-paper-bright/60 rounded-xl p-4 mb-8">
           {recipe.flow.map((ch, i) => (
             <React.Fragment key={i}>
               {React.createElement(ICONS[ch], { size: 36 })}
@@ -451,26 +451,26 @@ function Modal({ recipe, onClose }: { recipe: Recipe; onClose: () => void }) {
           <div className="flex flex-col gap-6">
             <div>
               <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-slate-400 mb-2">{L.whatItDoes}</div>
-              <p className="text-[15px] leading-relaxed text-slate-600">{recipe.desc}</p>
+              <p className="text-[15px] leading-relaxed text-ink-soft">{recipe.desc}</p>
             </div>
 
-            <div className="border-t border-slate-900/10 pt-5">
+            <div className="border-t border-navy/10 pt-5">
               <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-slate-400 mb-3">{L.connectsTo}</div>
               <div className="flex flex-wrap gap-2">
                 {recipe.systems.map((sys) => (
-                  <span key={sys} className="text-[12px] text-slate-600 bg-white/70 border border-slate-900/10 px-3 py-1.5 rounded-full">{sys}</span>
+                  <span key={sys} className="text-[12px] text-ink-soft bg-paper-bright/70 border border-navy/10 px-3 py-1.5 rounded-full">{sys}</span>
                 ))}
               </div>
             </div>
           </div>
 
           {/* Right column: how it works */}
-          <div className="border-t border-slate-900/10 pt-5 mt-6 md:mt-0 md:border-t-0 md:pt-0">
+          <div className="border-t border-navy/10 pt-5 mt-6 md:mt-0 md:border-t-0 md:pt-0">
             <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-slate-400 mb-3">{L.howItWorks}</div>
             <ol className="space-y-0">
               {recipe.steps.map((step, i) => (
-                <li key={i} className="flex gap-3 py-3 border-b border-slate-900/8 last:border-0 text-[14px] text-slate-600 leading-snug">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-slate-900 text-white flex items-center justify-center text-[11px] font-semibold mt-0.5">{i + 1}</span>
+                <li key={i} className="flex gap-3 py-3 border-b border-navy/8 last:border-0 text-[14px] text-ink-soft leading-snug">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-navy text-white flex items-center justify-center text-[11px] font-semibold mt-0.5">{i + 1}</span>
                   {step}
                 </li>
               ))}
@@ -482,7 +482,7 @@ function Modal({ recipe, onClose }: { recipe: Recipe; onClose: () => void }) {
           href="https://calendly.com/matteowastaken/discoverycall"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-lg text-[14px] font-medium hover:bg-blue-600 transition-colors mt-8"
+          className="inline-flex items-center gap-2 bg-navy text-white px-6 py-3 rounded-lg text-[14px] font-medium hover:bg-blue-600 transition-colors mt-8"
         >
           {L.cta} <ArrowRight size={14} />
         </a>
@@ -579,7 +579,7 @@ export function RecipesMarquee({
   };
 
   return (
-    <section className="py-24 bg-white overflow-hidden" style={{ fontFamily: "var(--font-sans)" }}>
+    <section className="py-24 bg-paper-bright overflow-hidden" style={{ fontFamily: "var(--font-sans)" }}>
       <style>{`
         @keyframes marqueeLeft {
           from { transform: translateX(0); }
@@ -595,17 +595,17 @@ export function RecipesMarquee({
         <p className="text-[11px] font-semibold uppercase tracking-[2.5px] text-slate-400 mb-4">
           {rm.tag}
         </p>
-        <h2 className="font-serif text-4xl md:text-5xl text-slate-900 leading-tight mb-4">
+        <h2 className="font-serif text-4xl md:text-5xl text-ink leading-tight mb-4">
           {rm.heading}
         </h2>
-        <p className="text-base md:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-base md:text-lg text-ink-mute max-w-2xl mx-auto leading-relaxed">
           {rm.body}
         </p>
         <div className="flex flex-wrap justify-center gap-4 mt-6">
           {(Object.keys(CHANNELS) as Channel[])
             .filter((key) => RECIPES.some((r) => r.flow.includes(key)))
             .map((key) => (
-            <div key={key} className="flex items-center gap-2 text-[12px] text-slate-500">
+            <div key={key} className="flex items-center gap-2 text-[12px] text-ink-mute">
               <span className="flex-shrink-0">{React.createElement(ICONS[key], { size: 20 })}</span>
               {channelLabel(key)}
             </div>

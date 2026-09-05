@@ -336,7 +336,7 @@ const SubMenu = ({ navLink, isMobile }: { navLink: NavLink; isMobile: boolean })
             transition={{ duration: 0.2 }}
             className="absolute left-1/2 -translate-x-1/2 top-full pt-4 z-50"
           >
-            <div className="w-48 rounded-xl bg-white border border-[#e2e8f0] shadow-lg p-2 overflow-hidden">
+            <div className="w-48 rounded-xl bg-paper-bright border border-[#e2e8f0] shadow-lg p-2 overflow-hidden">
               {navLink.subMenuLinks?.map((subMenuLink, index) => (
                 <SmartLink
                   key={index}
@@ -360,7 +360,7 @@ const Button = ({ className, title, variant = "primary", href, ...props }: Butto
     const baseStyles = "inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-[15px] font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 min-h-[44px] group";
     const variants = {
         primary: "bg-navy-soft text-white hover:bg-[#2d3f54] hover:-translate-y-[2px] shadow-sm hover:shadow-[0_8px_24px_rgba(30,42,58,0.2)]",
-        white: "bg-white text-navy-soft border border-[#e2e8f0] hover:bg-[#f5f6f8] hover:-translate-y-[2px] shadow-sm hover:shadow-[0_8px_24px_rgba(30,42,58,0.08)]",
+        white: "bg-paper-bright text-navy-soft border border-[#e2e8f0] hover:bg-[#f5f6f8] hover:-translate-y-[2px] shadow-sm hover:shadow-[0_8px_24px_rgba(30,42,58,0.08)]",
         secondary: "bg-[#f5f6f8] text-navy-soft hover:bg-[#e2e8f0]",
         link: "text-navy-soft underline-offset-4 hover:underline",
     };

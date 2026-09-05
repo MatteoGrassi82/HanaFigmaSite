@@ -28,7 +28,7 @@ export function Blog() {
         description={t.blog.seoDescription}
         path="/blog"
       />
-      <div className="bg-white min-h-screen">
+      <div className="bg-paper-bright min-h-screen">
         {/* Hero */}
         <section className="bg-navy text-white py-20 px-4">
           <div className="max-w-3xl mx-auto text-center">
@@ -47,10 +47,10 @@ export function Blog() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="animate-pulse">
-                  <div className="bg-slate-100 rounded-2xl h-48 mb-4" />
-                  <div className="h-4 bg-slate-100 rounded w-1/3 mb-3" />
-                  <div className="h-6 bg-slate-100 rounded w-3/4 mb-2" />
-                  <div className="h-4 bg-slate-100 rounded w-full" />
+                  <div className="bg-paper-2 rounded-2xl h-48 mb-4" />
+                  <div className="h-4 bg-paper-2 rounded w-1/3 mb-3" />
+                  <div className="h-6 bg-paper-2 rounded w-3/4 mb-2" />
+                  <div className="h-4 bg-paper-2 rounded w-full" />
                 </div>
               ))}
             </div>
@@ -64,7 +64,7 @@ export function Blog() {
                 <Link
                   key={post._id}
                   to={`/blog/${post.slug.current}`}
-                  className="group flex flex-col rounded-2xl overflow-hidden border border-slate-100 hover:border-slate-200 hover:shadow-lg transition-all duration-200"
+                  className="group flex flex-col rounded-2xl overflow-hidden border border-rule-soft hover:border-rule hover:shadow-lg transition-all duration-200"
                 >
                   <PostCover post={post} size="card" className="aspect-[16/9] w-full" />
                   <div className="flex flex-col flex-1 p-5">
@@ -80,19 +80,19 @@ export function Blog() {
                       )}
                     </div>
 
-                    <h2 className="font-serif text-xl text-slate-900 mb-2 leading-snug group-hover:text-blue-700 transition-colors">
+                    <h2 className="font-serif text-xl text-ink mb-2 leading-snug group-hover:text-blue-700 transition-colors">
                       {post.title}
                     </h2>
 
                     {post.excerpt && (
-                      <p className="text-sm text-slate-500 leading-relaxed line-clamp-3 flex-1">
+                      <p className="text-sm text-ink-mute leading-relaxed line-clamp-3 flex-1">
                         {post.excerpt}
                       </p>
                     )}
 
                     {post.author?.name && (
                       <div className="mt-4">
-                        <span className="text-xs text-slate-500">{post.author.name}</span>
+                        <span className="text-xs text-ink-mute">{post.author.name}</span>
                       </div>
                     )}
                   </div>

@@ -33,16 +33,16 @@ const portableTextComponents = {
     },
   },
   block: {
-    h1: ({ children }: any) => <h1 className="font-serif text-3xl sm:text-4xl text-slate-900 mt-10 mb-4 leading-tight">{children}</h1>,
-    h2: ({ children }: any) => <h2 className="font-serif text-2xl sm:text-3xl text-slate-900 mt-10 mb-4 leading-tight">{children}</h2>,
-    h3: ({ children }: any) => <h3 className="font-serif text-2xl text-slate-900 mt-8 mb-3 leading-tight">{children}</h3>,
-    normal: ({ children }: any) => <p className="text-[17px] leading-[1.8] text-slate-600 mb-5">{children}</p>,
+    h1: ({ children }: any) => <h1 className="font-serif text-3xl sm:text-4xl text-ink mt-10 mb-4 leading-tight">{children}</h1>,
+    h2: ({ children }: any) => <h2 className="font-serif text-2xl sm:text-3xl text-ink mt-10 mb-4 leading-tight">{children}</h2>,
+    h3: ({ children }: any) => <h3 className="font-serif text-2xl text-ink mt-8 mb-3 leading-tight">{children}</h3>,
+    normal: ({ children }: any) => <p className="text-[17px] leading-[1.8] text-ink-soft mb-5">{children}</p>,
     blockquote: ({ children }: any) => (
-      <blockquote className="border-l-4 border-blue-500 pl-4 sm:pl-6 my-6 italic text-slate-500 text-lg">{children}</blockquote>
+      <blockquote className="border-l-4 border-blue-500 pl-4 sm:pl-6 my-6 italic text-ink-mute text-lg">{children}</blockquote>
     ),
   },
   marks: {
-    strong: ({ children }: any) => <strong className="font-semibold text-slate-900">{children}</strong>,
+    strong: ({ children }: any) => <strong className="font-semibold text-ink">{children}</strong>,
     em: ({ children }: any) => <em>{children}</em>,
     link: ({ value, children }: any) => (
       <a href={value.href} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
@@ -51,8 +51,8 @@ const portableTextComponents = {
     ),
   },
   list: {
-    bullet: ({ children }: any) => <ul className="list-disc pl-5 sm:pl-6 space-y-2 mb-5 text-[17px] text-slate-600">{children}</ul>,
-    number: ({ children }: any) => <ol className="list-decimal pl-5 sm:pl-6 space-y-2 mb-5 text-[17px] text-slate-600">{children}</ol>,
+    bullet: ({ children }: any) => <ul className="list-disc pl-5 sm:pl-6 space-y-2 mb-5 text-[17px] text-ink-soft">{children}</ul>,
+    number: ({ children }: any) => <ol className="list-decimal pl-5 sm:pl-6 space-y-2 mb-5 text-[17px] text-ink-soft">{children}</ol>,
   },
 };
 
@@ -74,7 +74,7 @@ export function BlogPost() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-paper-bright flex items-center justify-center">
         <div className="animate-pulse text-slate-400">{it ? "Caricamento..." : "Loading..."}</div>
       </div>
     );
@@ -82,8 +82,8 @@ export function BlogPost() {
 
   if (notFound || !post) {
     return (
-      <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-4">
-        <p className="text-slate-500 text-lg">{it ? "Articolo non trovato." : "Post not found."}</p>
+      <div className="min-h-screen bg-paper-bright flex flex-col items-center justify-center gap-4">
+        <p className="text-ink-mute text-lg">{it ? "Articolo non trovato." : "Post not found."}</p>
         <Link to="/blog" className="text-blue-600 hover:underline flex items-center gap-1">
           <ArrowLeft className="w-4 h-4" /> {it ? "Torna al blog" : "Back to Blog"}
         </Link>
@@ -128,10 +128,10 @@ export function BlogPost() {
         {...(seoImage ? { image: seoImage } : {})}
         {...(seoRobots ? { robots: seoRobots } : {})}
       />
-      <div className="bg-white min-h-screen">
+      <div className="bg-paper-bright min-h-screen">
         {/* Cover */}
         <div className="max-w-2xl mx-auto px-4 py-12">
-          <Link to="/blog" className="inline-flex items-center gap-1 text-sm text-slate-400 hover:text-slate-700 mb-8 transition-colors">
+          <Link to="/blog" className="inline-flex items-center gap-1 text-sm text-slate-400 hover:text-ink-soft mb-8 transition-colors">
             <ArrowLeft className="w-4 h-4" /> {it ? "Tutti gli articoli" : "All posts"}
           </Link>
 
@@ -150,13 +150,13 @@ export function BlogPost() {
             )}
           </div>
 
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-slate-900 leading-tight mb-6">
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-ink leading-tight mb-6">
             {post.title}
           </h1>
 
           {post.author && (
-            <div className="mb-10 pb-8 border-b border-slate-100">
-              <span className="text-sm text-slate-600 font-medium">{post.author.name}</span>
+            <div className="mb-10 pb-8 border-b border-rule-soft">
+              <span className="text-sm text-ink-soft font-medium">{post.author.name}</span>
             </div>
           )}
 

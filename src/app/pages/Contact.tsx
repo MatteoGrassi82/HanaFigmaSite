@@ -70,10 +70,10 @@ export function Contact() {
           transition={{ duration: 0.5 }}
           className="text-center mb-10 md:mb-16"
         >
-          <h1 className="text-4xl md:text-5xl font-serif font-medium text-slate-900 dark:text-white mb-6">
+          <h1 className="text-4xl md:text-5xl font-serif font-medium text-ink dark:text-white mb-6">
             {t.contact.h1}
           </h1>
-          <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+          <p className="text-lg sm:text-xl text-ink-soft dark:text-slate-400 max-w-2xl mx-auto">
             {t.contact.subheading}
           </p>
         </motion.div>
@@ -87,7 +87,7 @@ export function Contact() {
             className="space-y-8 md:space-y-12"
           >
             <div>
-              <h3 className="text-2xl font-medium text-slate-900 dark:text-white mb-6">
+              <h3 className="text-2xl font-medium text-ink dark:text-white mb-6">
                 {t.contact.infoTitle}
               </h3>
               <div className="space-y-6">
@@ -96,9 +96,9 @@ export function Contact() {
                     <Mail className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="font-medium text-slate-900 dark:text-white mb-1">{t.contact.emailLabel}</h4>
-                    <p className="text-slate-600 dark:text-slate-400">hello@hana.health</p>
-                    <p className="text-slate-600 dark:text-slate-400">support@hana.health</p>
+                    <h4 className="font-medium text-ink dark:text-white mb-1">{t.contact.emailLabel}</h4>
+                    <p className="text-ink-soft dark:text-slate-400">hello@hana.health</p>
+                    <p className="text-ink-soft dark:text-slate-400">support@hana.health</p>
                   </div>
                 </div>
 
@@ -107,8 +107,8 @@ export function Contact() {
                     <MapPin className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="font-medium text-slate-900 dark:text-white mb-1">{t.contact.officeLabel}</h4>
-                    <p className="text-slate-600 dark:text-slate-400">
+                    <h4 className="font-medium text-ink dark:text-white mb-1">{t.contact.officeLabel}</h4>
+                    <p className="text-ink-soft dark:text-slate-400">
                       {t.contact.officeCompany}<br />
                       {t.contact.officeAddress}<br />
                       {t.contact.officeNote}
@@ -119,14 +119,14 @@ export function Contact() {
               </div>
             </div>
 
-            <div className="p-6 md:p-8 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
-              <h3 className="text-lg font-medium text-slate-900 dark:text-white mb-2">
+            <div className="p-6 md:p-8 rounded-2xl bg-paper-2 dark:bg-navy/50 border border-rule dark:border-navy-soft">
+              <h3 className="text-lg font-medium text-ink dark:text-white mb-2">
                 {t.contact.getStartedTitle}
               </h3>
-              <p className="text-slate-600 dark:text-slate-400 mb-6">
+              <p className="text-ink-soft dark:text-slate-400 mb-6">
                 {t.contact.getStartedBody}
               </p>
-              <a href="https://calendly.com/matteowastaken/discoverycall" target="_blank" rel="noopener noreferrer" className="w-full py-3 px-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-lg font-medium hover:opacity-90 transition-opacity block text-center">
+              <a href="https://calendly.com/matteowastaken/discoverycall" target="_blank" rel="noopener noreferrer" className="w-full py-3 px-4 bg-navy dark:bg-paper-bright text-white dark:text-ink rounded-lg font-medium hover:opacity-90 transition-opacity block text-center">
                 {t.contact.bookDemo}
               </a>
             </div>
@@ -138,8 +138,8 @@ export function Contact() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <form onSubmit={handleSubmit} className="p-6 md:p-8 rounded-2xl bg-white dark:bg-slate-900 shadow-sm border border-slate-200 dark:border-slate-800">
-              <h3 className="text-2xl font-medium text-slate-900 dark:text-white mb-6">
+            <form onSubmit={handleSubmit} className="p-6 md:p-8 rounded-2xl bg-paper-bright dark:bg-navy shadow-sm border border-rule dark:border-navy-soft">
+              <h3 className="text-2xl font-medium text-ink dark:text-white mb-6">
                 {t.contact.formTitle}
               </h3>
               
@@ -149,7 +149,7 @@ export function Contact() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label htmlFor="firstName" className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                    <label htmlFor="firstName" className="text-sm font-medium text-ink-soft dark:text-slate-300">
                       {t.contact.firstNameLabel}
                     </label>
                     <input
@@ -157,12 +157,12 @@ export function Contact() {
                       id="firstName"
                       name="First Name"
                       required
-                      className="w-full px-4 py-3 text-base rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                      className="w-full px-4 py-3 text-base rounded-lg border border-rule dark:border-navy-soft bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                       placeholder={t.contact.firstNamePlaceholder}
                     />
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="lastName" className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                    <label htmlFor="lastName" className="text-sm font-medium text-ink-soft dark:text-slate-300">
                       {t.contact.lastNameLabel}
                     </label>
                     <input
@@ -170,14 +170,14 @@ export function Contact() {
                       id="lastName"
                       name="Last Name"
                       required
-                      className="w-full px-4 py-3 text-base rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                      className="w-full px-4 py-3 text-base rounded-lg border border-rule dark:border-navy-soft bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                       placeholder={t.contact.lastNamePlaceholder}
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                  <label htmlFor="email" className="text-sm font-medium text-ink-soft dark:text-slate-300">
                     {t.contact.emailAddress}
                   </label>
                   <input
@@ -185,19 +185,19 @@ export function Contact() {
                     id="email"
                     name="email"
                     required
-                    className="w-full px-4 py-3 text-base rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                    className="w-full px-4 py-3 text-base rounded-lg border border-rule dark:border-navy-soft bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                     placeholder={t.contact.emailPlaceholder}
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="subject" className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                  <label htmlFor="subject" className="text-sm font-medium text-ink-soft dark:text-slate-300">
                     {t.contact.subjectLabel}
                   </label>
                   <select
                     id="subject"
                     name="Subject"
-                    className="w-full px-4 py-3 text-base rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                    className="w-full px-4 py-3 text-base rounded-lg border border-rule dark:border-navy-soft bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                   >
                     <option>{t.contact.subjectSales}</option>
                     <option>{t.contact.subjectSupport}</option>
@@ -207,7 +207,7 @@ export function Contact() {
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="message" className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                  <label htmlFor="message" className="text-sm font-medium text-ink-soft dark:text-slate-300">
                     {t.contact.messageLabel}
                   </label>
                   <textarea
@@ -215,7 +215,7 @@ export function Contact() {
                     name="Message"
                     required
                     rows={4}
-                    className="w-full px-4 py-3 text-base rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
+                    className="w-full px-4 py-3 text-base rounded-lg border border-rule dark:border-navy-soft bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
                     placeholder={t.contact.messagePlaceholder}
                   />
                 </div>
@@ -235,7 +235,7 @@ export function Contact() {
                   )}
                 </button>
 
-                <p className="text-xs text-slate-500 dark:text-slate-500 mt-4 text-center">
+                <p className="text-xs text-ink-mute dark:text-ink-mute mt-4 text-center">
                   {t.contact.privacyNote.split(/Privacy Policy|Informativa Privacy/)[0]}
                   <Link to="/privacy" className="text-blue-600 hover:underline">
                     {t.contact.subjectOther === "Altro" ? "Informativa Privacy" : "Privacy Policy"}

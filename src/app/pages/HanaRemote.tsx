@@ -240,7 +240,7 @@ function HowItWorksFlow() {
                 onClick={() => setActive(i)}
                 aria-pressed={is}
                 className={`group relative flex-1 min-w-[150px] lg:min-w-0 snap-start text-left rounded-2xl p-5 transition-all duration-500 ${
-                  is ? "bg-[#2347e6] shadow-[0_18px_50px_rgba(35,71,230,0.45)]" : "bg-white/[0.04] hover:bg-white/[0.07]"
+                  is ? "bg-[#2347e6] shadow-[0_18px_50px_rgba(35,71,230,0.45)]" : "bg-paper-bright/[0.04] hover:bg-paper-bright/[0.07]"
                 }`}
                 style={{ flexGrow: is ? 1.5 : 1 }}
               >
@@ -271,7 +271,7 @@ function HowItWorksFlow() {
       </div>
 
       {/* Detail panel — cross-fades on stage change */}
-      <div className="mt-8 rounded-2xl bg-white/[0.03] border border-white/[0.06] p-7 md:p-9 grid grid-cols-1 md:grid-cols-[1fr_220px] gap-8 items-center min-h-[200px]">
+      <div className="mt-8 rounded-2xl bg-paper-bright/[0.03] border border-white/[0.06] p-7 md:p-9 grid grid-cols-1 md:grid-cols-[1fr_220px] gap-8 items-center min-h-[200px]">
         <AnimatePresence mode="wait">
           <motion.div
             key={cur.key}
@@ -308,7 +308,7 @@ function HowItWorksFlow() {
             key={b.key}
             onClick={() => setActive(i)}
             aria-label={`Show ${b.title}`}
-            className={`h-2 rounded-full transition-all duration-500 ${i === active ? "w-8 bg-brand-soft" : "w-2 bg-white/25 hover:bg-white/40"}`}
+            className={`h-2 rounded-full transition-all duration-500 ${i === active ? "w-8 bg-brand-soft" : "w-2 bg-paper-bright/25 hover:bg-paper-bright/40"}`}
           />
         ))}
       </div>
@@ -344,9 +344,9 @@ function SleepCalculator() {
   ) => (
     <div>
       <div className="flex items-center justify-between gap-3">
-        <span className="text-[13px] text-slate-600">{label}</span>
-        <div className="flex items-center rounded-lg border border-slate-300 bg-white px-2.5 py-1 focus-within:border-brand focus-within:ring-2 focus-within:ring-brand/20 transition shrink-0">
-          {opts.prefix && <span className="text-slate-500 text-[13px] mr-0.5">{opts.prefix}</span>}
+        <span className="text-[13px] text-ink-soft">{label}</span>
+        <div className="flex items-center rounded-lg border border-rule bg-paper-bright px-2.5 py-1 focus-within:border-brand focus-within:ring-2 focus-within:ring-brand/20 transition shrink-0">
+          {opts.prefix && <span className="text-ink-mute text-[13px] mr-0.5">{opts.prefix}</span>}
           <input
             type="number"
             value={value}
@@ -355,7 +355,7 @@ function SleepCalculator() {
             onChange={(e) => set(Math.max(0, Number(e.target.value) || 0))}
             className="w-[64px] bg-transparent outline-none text-[15px] font-semibold text-navy text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           />
-          {opts.suffix && <span className="text-slate-500 text-[13px] ml-0.5">{opts.suffix}</span>}
+          {opts.suffix && <span className="text-ink-mute text-[13px] ml-0.5">{opts.suffix}</span>}
         </div>
       </div>
       <input
@@ -375,16 +375,16 @@ function SleepCalculator() {
     <motion.div
       {...fadeUp}
       transition={{ duration: 0.5, delay: 0.1 }}
-      className="grid grid-cols-1 lg:grid-cols-2 rounded-2xl overflow-hidden border border-slate-200 shadow-[0_20px_60px_rgba(0,18,47,0.08)]"
+      className="grid grid-cols-1 lg:grid-cols-2 rounded-2xl overflow-hidden border border-rule shadow-[0_20px_60px_rgba(0,18,47,0.08)]"
     >
-      <div className="bg-white p-7 md:p-9">
+      <div className="bg-paper-bright p-7 md:p-9">
         <p className={`${eyebrow} text-brand mt-0 mb-5`}>Your sleep / DME program</p>
         <div className="grid grid-cols-1 gap-5">
           {field("New CPAP setups / month", setups, setSetups, { min: 25, max: 1000, step: 25 })}
           {field("Current 90-day non-adherence", nonAdherence, setNonAdherence, { min: 25, max: 83, suffix: "%" })}
           {field("Reimbursement per adherent patient", perPatient, setPerPatient, { min: 500, max: 3000, step: 100, prefix: "$" })}
         </div>
-        <p className="text-[12px] text-slate-500 mt-5 leading-[1.6]">
+        <p className="text-[12px] text-ink-mute mt-5 leading-[1.6]">
           Estimates only, for illustration. Assumes HANA Remote brings non-adherence to ~22%, its
           production figure. 46–83% of new CPAP patients fail Medicare's 90-day threshold today.{" "}
           <a href={DEMO_URL} target="_blank" rel="noopener noreferrer" className="text-brand underline">Get a tailored assessment →</a>
@@ -404,7 +404,7 @@ function SleepCalculator() {
             Recovered with a phone call that actually works — non-adherence drops from{" "}
             <span className="font-semibold text-brand-soft">{nonAdherence}% to ~22%</span> in production.
           </p>
-          <div className="mt-5 h-2 rounded-full bg-white/10 overflow-hidden">
+          <div className="mt-5 h-2 rounded-full bg-paper-bright/10 overflow-hidden">
             <motion.div
               className="h-full rounded-full bg-brand-soft"
               initial={{ width: "0%" }}
@@ -469,7 +469,7 @@ function PatientAgentSection() {
           <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch] text-navy">
             Not just a monitor. <em className="text-brand">The reason they stick with it.</em>
           </h2>
-          <p className="text-[17px] leading-[1.7] text-slate-600 max-w-[58ch] mx-auto mt-4">
+          <p className="text-[17px] leading-[1.7] text-ink-soft max-w-[58ch] mx-auto mt-4">
             Data alone doesn't change behavior. A patient who feels seen does. HANA is the voice on
             the other end of the line — an accountability partner running a real clinical protocol.
           </p>
@@ -484,15 +484,15 @@ function PatientAgentSection() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="relative mx-auto w-full max-w-[440px]"
           >
-            <div className="rounded-[24px] bg-white/80 backdrop-blur-sm border border-white shadow-[0_30px_80px_rgba(0,18,47,0.14)] p-5 md:p-6">
-              <div className="flex items-center gap-2.5 pb-4 mb-2 border-b border-slate-100">
+            <div className="rounded-[24px] bg-paper-bright/80 backdrop-blur-sm border border-white shadow-[0_30px_80px_rgba(0,18,47,0.14)] p-5 md:p-6">
+              <div className="flex items-center gap-2.5 pb-4 mb-2 border-b border-rule-soft">
                 <span className="relative flex items-center justify-center w-9 h-9 rounded-full bg-brand-tint text-brand">
                   <Glyph d={RI.phone} className="w-4 h-4" />
                   <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-white" />
                 </span>
                 <div>
                   <div className="text-[13px] font-semibold text-navy">HANA · evening check-in</div>
-                  <div className="text-[11px] text-slate-500">CPAP adherence · HANA Sleep protocol</div>
+                  <div className="text-[11px] text-ink-mute">CPAP adherence · HANA Sleep protocol</div>
                 </div>
               </div>
               <div className="space-y-2.5">
@@ -509,7 +509,7 @@ function PatientAgentSection() {
                       className={`max-w-[82%] rounded-2xl px-3.5 py-2.5 text-[13.5px] leading-[1.55] ${
                         turn.who === "hana"
                           ? "bg-navy-soft text-white rounded-bl-md"
-                          : "bg-white text-navy border border-slate-200 rounded-br-md"
+                          : "bg-paper-bright text-navy border border-rule rounded-br-md"
                       }`}
                     >
                       {turn.text}
@@ -521,7 +521,7 @@ function PatientAgentSection() {
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: reduce ? 0 : 0.3 + AGENT_TURNS.length * 0.5 }}
-                  className="flex items-center gap-2 pt-1 text-[11px] text-slate-500"
+                  className="flex items-center gap-2 pt-1 text-[11px] text-ink-mute"
                 >
                   <Check className="w-3.5 h-3.5 text-emerald-500" strokeWidth={3} />
                   Logged to chart · follow-up scheduled for tomorrow
@@ -539,12 +539,12 @@ function PatientAgentSection() {
                 transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
                 className="flex items-start gap-4"
               >
-                <span className="flex items-center justify-center w-11 h-11 rounded-[12px] bg-white border border-slate-200 text-brand shrink-0 shadow-sm">
+                <span className="flex items-center justify-center w-11 h-11 rounded-[12px] bg-paper-bright border border-rule text-brand shrink-0 shadow-sm">
                   <Glyph d={p.icon} className="w-5 h-5" />
                 </span>
                 <div>
                   <h3 className="font-serif font-normal text-[22px] md:text-[24px] leading-[1.2] mt-0 mb-2 text-navy">{p.title}</h3>
-                  <p className="text-[15px] leading-[1.7] text-slate-600 m-0">{p.body}</p>
+                  <p className="text-[15px] leading-[1.7] text-ink-soft m-0">{p.body}</p>
                 </div>
               </motion.div>
             ))}
@@ -613,7 +613,7 @@ function AuditSection() {
               key={p.title}
               {...fadeUp}
               transition={{ duration: 0.5, delay: 0.05 + i * 0.07 }}
-              className="rounded-2xl bg-white/[0.04] border border-white/[0.07] p-6 md:p-7 flex items-start gap-4"
+              className="rounded-2xl bg-paper-bright/[0.04] border border-white/[0.07] p-6 md:p-7 flex items-start gap-4"
             >
               <span className="flex items-center justify-center w-11 h-11 rounded-[12px] bg-[#2347e6]/20 text-brand-soft shrink-0">
                 <Glyph d={p.icon} className="w-5 h-5" />
@@ -643,28 +643,28 @@ type DeltaRow = { k: string; pct: number; v: string; hi?: boolean };
 function RDeltaStat({ big, suffix, label, rows }: { big: string; suffix?: string; label: string; rows: DeltaRow[] }) {
   const reduce = useReducedMotion();
   return (
-    <div className="rounded-2xl bg-white border border-slate-200 p-6 md:p-7 flex flex-col sm:flex-row sm:items-center gap-5 md:gap-7">
+    <div className="rounded-2xl bg-paper-bright border border-rule p-6 md:p-7 flex flex-col sm:flex-row sm:items-center gap-5 md:gap-7">
       <div className="sm:w-[150px] shrink-0">
         <div className="font-serif text-[52px] md:text-[64px] leading-[0.9] text-navy">
           {big}
           {suffix && <span className="text-[28px] md:text-[34px] text-brand">{suffix}</span>}
         </div>
-        <div className="text-[14px] text-slate-600 leading-[1.5] mt-2">{label}</div>
+        <div className="text-[14px] text-ink-soft leading-[1.5] mt-2">{label}</div>
       </div>
       <div className="flex-1 min-w-0 space-y-2.5">
         {rows.map((r) => (
           <div key={r.k} className="flex items-center gap-3">
-            <span className={`w-[76px] shrink-0 text-[12px] ${r.hi ? "font-semibold text-brand" : "text-slate-600"}`}>{r.k}</span>
-            <div className="flex-1 h-2.5 rounded-full bg-slate-100 overflow-hidden">
+            <span className={`w-[76px] shrink-0 text-[12px] ${r.hi ? "font-semibold text-brand" : "text-ink-soft"}`}>{r.k}</span>
+            <div className="flex-1 h-2.5 rounded-full bg-paper-2 overflow-hidden">
               <motion.div
-                className={`h-full rounded-full ${r.hi ? "bg-brand" : "bg-slate-300"}`}
+                className={`h-full rounded-full ${r.hi ? "bg-brand" : "bg-rule"}`}
                 initial={{ width: reduce ? `${r.pct}%` : 0 }}
                 whileInView={{ width: `${r.pct}%` }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               />
             </div>
-            <span className={`w-11 text-right text-[12px] tabular-nums ${r.hi ? "font-semibold text-navy" : "text-slate-600"}`}>{r.v}</span>
+            <span className={`w-11 text-right text-[12px] tabular-nums ${r.hi ? "font-semibold text-navy" : "text-ink-soft"}`}>{r.v}</span>
           </div>
         ))}
       </div>
@@ -676,10 +676,10 @@ function RDeltaStat({ big, suffix, label, rows }: { big: string; suffix?: string
 // live-UI snippet (children) that animates in on scroll.
 function QBlock({ q, a, children }: { q: string; a: string; children: React.ReactNode }) {
   return (
-    <motion.div {...fadeUp} className="rounded-2xl bg-white border border-slate-200 p-6 md:p-7 flex flex-col">
+    <motion.div {...fadeUp} className="rounded-2xl bg-paper-bright border border-rule p-6 md:p-7 flex flex-col">
       <h3 className="text-[18px] md:text-[19px] font-semibold text-navy mt-0 mb-2 leading-snug">{q}</h3>
-      <p className="text-[14.5px] leading-[1.65] text-slate-700 m-0">{a}</p>
-      <div className="mt-5 pt-5 border-t border-slate-100">{children}</div>
+      <p className="text-[14.5px] leading-[1.65] text-ink-soft m-0">{a}</p>
+      <div className="mt-5 pt-5 border-t border-rule-soft">{children}</div>
     </motion.div>
   );
 }
@@ -689,17 +689,17 @@ function QBar({ k, pct, v, hi }: { k: string; pct: number; v: string; hi?: boole
   const reduce = useReducedMotion();
   return (
     <div className="flex items-center gap-3 mb-2 last:mb-0">
-      <span className={`w-12 shrink-0 text-[12px] ${hi ? "font-semibold text-brand" : "text-slate-500"}`}>{k}</span>
-      <div className="flex-1 h-2.5 rounded-full bg-slate-100 overflow-hidden">
+      <span className={`w-12 shrink-0 text-[12px] ${hi ? "font-semibold text-brand" : "text-ink-mute"}`}>{k}</span>
+      <div className="flex-1 h-2.5 rounded-full bg-paper-2 overflow-hidden">
         <motion.div
-          className={`h-full rounded-full ${hi ? "bg-brand" : "bg-slate-300"}`}
+          className={`h-full rounded-full ${hi ? "bg-brand" : "bg-rule"}`}
           initial={{ width: reduce ? `${pct}%` : 0 }}
           whileInView={{ width: `${pct}%` }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         />
       </div>
-      <span className={`w-10 text-right text-[12px] tabular-nums ${hi ? "font-semibold text-navy" : "text-slate-500"}`}>{v}</span>
+      <span className={`w-10 text-right text-[12px] tabular-nums ${hi ? "font-semibold text-navy" : "text-ink-mute"}`}>{v}</span>
     </div>
   );
 }
@@ -708,7 +708,7 @@ function QBar({ k, pct, v, hi }: { k: string; pct: number; v: string; hi?: boole
 
 export function HanaRemote() {
   return (
-    <div className="bg-white text-navy font-sans overflow-x-hidden">
+    <div className="bg-paper-bright text-navy font-sans overflow-x-hidden">
       <SEO
         title="HANA Remote — The Engagement Layer for Remote Care"
         useExactTitle
@@ -746,7 +746,7 @@ export function HanaRemote() {
           <motion.p
             {...fadeUp}
             transition={{ duration: 0.5, delay: 0.12 }}
-            className="text-[17px] md:text-[19px] leading-[1.6] text-slate-700 mt-7 mb-0 mx-auto max-w-[54ch]"
+            className="text-[17px] md:text-[19px] leading-[1.6] text-ink-soft mt-7 mb-0 mx-auto max-w-[54ch]"
           >
             HANA keeps patients engaged across CCM, APCM, BHI &amp; RTM — and keeps the
             devices in your existing RPM program transmitting.
@@ -780,20 +780,20 @@ export function HanaRemote() {
       </section>
 
       {/* THE PROBLEM — cost-of-inaction band (Tile-style hard stats) */}
-      <section className="py-20 md:py-24 px-6 md:px-16 bg-white">
+      <section className="py-20 md:py-24 px-6 md:px-16 bg-paper-bright">
         <div className="max-w-[1200px] mx-auto">
           <motion.div {...fadeUp} className="mb-10 md:mb-14 max-w-[46ch]">
             <p className={`${eyebrow} text-brand mt-0 mb-4`}>The cost of doing nothing</p>
             <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-navy mt-0 mb-4">
               The program dies before it pays for itself.
             </h2>
-            <p className="text-[16px] leading-[1.7] text-slate-700 m-0">
+            <p className="text-[16px] leading-[1.7] text-ink-soft m-0">
               Remote care is reimbursable — CCM, APCM, BHI, RTM, RPM. The codes exist and the
               money is there. Programs still fail for one reason: patients don't answer, don't use the
               devices you ship, and don't open the apps you send. No engagement, no data, nothing to bill.
             </p>
           </motion.div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10 border-t border-slate-200 pt-10">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10 border-t border-rule pt-10">
             {[
               { v: "46–83%", l: "of new CPAP patients fail Medicare's adherence threshold in the first 90 days" },
               { v: "$1,400", l: "lost per patient who walks out the door" },
@@ -802,7 +802,7 @@ export function HanaRemote() {
             ].map((s, i) => (
               <motion.div key={s.v} {...fadeUp} transition={{ duration: 0.5, delay: 0.04 + i * 0.07 }}>
                 <div className="font-serif text-[40px] md:text-[56px] leading-[0.95] text-navy mb-3">{s.v}</div>
-                <div className="text-[14px] leading-[1.55] text-slate-700">{s.l}</div>
+                <div className="text-[14px] leading-[1.55] text-ink-soft">{s.l}</div>
               </motion.div>
             ))}
           </div>
@@ -838,7 +838,7 @@ export function HanaRemote() {
               a="A tripped threshold routes to your worklist in real time — a qualified human on every flag, not a log nobody reads."
             >
               <div className="flex items-center gap-2 text-[13px]">
-                <span className="font-mono text-slate-700 bg-white border border-slate-200 rounded-md px-2.5 py-1">&ldquo;My BP cuff read 158/94&rdquo;</span>
+                <span className="font-mono text-ink-soft bg-paper-bright border border-rule rounded-md px-2.5 py-1">&ldquo;My BP cuff read 158/94&rdquo;</span>
                 <span className="text-slate-400">→</span>
                 <motion.span
                   initial={{ opacity: 0.4 }}
@@ -857,7 +857,7 @@ export function HanaRemote() {
               a="HANA doesn't bill and doesn't generate clinical minutes. It writes the structured note the moment the call ends, so your clinician reviews and attests — CCM, APCM, BHI, RTM."
             >
               <div className="flex flex-wrap items-center gap-2 text-[12.5px]">
-                <span className="text-slate-500">Call ends</span>
+                <span className="text-ink-mute">Call ends</span>
                 <span className="text-slate-400">→</span>
                 <span className="inline-flex items-center gap-1.5 font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-2.5 py-1">
                   <Check className="w-3 h-3" strokeWidth={3} /> Structured note in the chart
@@ -872,7 +872,7 @@ export function HanaRemote() {
             >
               <div className="flex flex-wrap gap-2 text-[13px] font-semibold text-navy">
                 {["No device", "No app", "No behavior change"].map((t) => (
-                  <span key={t} className="inline-flex items-center gap-1.5 bg-white border border-slate-200 rounded-full px-3 py-1">
+                  <span key={t} className="inline-flex items-center gap-1.5 bg-paper-bright border border-rule rounded-full px-3 py-1">
                     <Check className="w-3.5 h-3.5 text-brand" strokeWidth={3} /> {t}
                   </span>
                 ))}
@@ -943,7 +943,7 @@ export function HanaRemote() {
                 key={t.name}
                 {...fadeUp}
                 transition={{ duration: 0.5, delay: 0.05 + i * 0.08 }}
-                className="rounded-[24px] bg-white border border-white shadow-[0_28px_64px_rgba(0,18,47,0.10)] p-8 md:p-10 flex flex-col justify-between m-0"
+                className="rounded-[24px] bg-paper-bright border border-white shadow-[0_28px_64px_rgba(0,18,47,0.10)] p-8 md:p-10 flex flex-col justify-between m-0"
               >
                 <blockquote className="font-serif text-[21px] md:text-[24px] leading-[1.5] text-navy m-0">
                   &ldquo;{t.quote}&rdquo;
@@ -952,7 +952,7 @@ export function HanaRemote() {
                   <img src={t.avatar} alt={t.name} width={56} height={56} loading="lazy" className="w-14 h-14 rounded-full object-cover shrink-0" />
                   <div>
                     <div className="text-[15px] font-semibold text-navy leading-tight">{t.name}</div>
-                    <div className="text-[14px] text-slate-600 mt-0.5">{t.role}</div>
+                    <div className="text-[14px] text-ink-soft mt-0.5">{t.role}</div>
                   </div>
                 </figcaption>
               </motion.figure>
@@ -962,14 +962,14 @@ export function HanaRemote() {
       </section>
 
       {/* CALCULATOR — sleep/CPAP recovery */}
-      <section className="py-20 md:py-24 px-6 md:px-16 bg-white">
+      <section className="py-20 md:py-24 px-6 md:px-16 bg-paper-bright">
         <div className="max-w-[1200px] mx-auto">
           <motion.div {...fadeUp} className="text-center mb-12 md:mb-16">
             <p className={`${eyebrow} text-brand mt-0 mb-4`}>The adherence math</p>
             <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch] text-navy">
               What does non-adherence <em className="text-brand">cost your program?</em>
             </h2>
-            <p className="text-[17px] leading-[1.7] text-slate-600 max-w-[52ch] mx-auto mt-4">
+            <p className="text-[17px] leading-[1.7] text-ink-soft max-w-[52ch] mx-auto mt-4">
               Run the numbers for a sleep / DME program — the sharpest case for the device-less model.
             </p>
           </motion.div>
@@ -1002,7 +1002,7 @@ export function HanaRemote() {
           </div>
           <motion.div {...fadeUp} className="flex flex-wrap gap-2.5 mt-10">
             {["$1.4K recovered per patient", "150+ EHR integrations", "45+ clinical protocols", "4M+ patient interactions"].map((c) => (
-              <span key={c} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200 text-[13px] font-medium text-navy">
+              <span key={c} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-paper-bright border border-rule text-[13px] font-medium text-navy">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand" aria-hidden="true" />
                 {c}
               </span>
@@ -1042,14 +1042,14 @@ export function HanaRemote() {
             href={DEMO_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 bg-white text-navy rounded-[10px] font-semibold text-[15px] px-8 py-[15px] no-underline hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2.5 bg-paper-bright text-navy rounded-[10px] font-semibold text-[15px] px-8 py-[15px] no-underline hover:opacity-90 transition-opacity"
           >
             Book a demo →
           </a>
           {/* Transparent terms — true claims only; add real pricing terms when confirmed */}
           <div className="flex flex-wrap items-center justify-center gap-2.5 mt-8">
             {["No devices to ship", "No app to download", "Audit-ready from day one", "Live in your EHR in days"].map((t) => (
-              <span key={t} className="inline-flex items-center gap-1.5 text-[13px] font-medium text-white/90 bg-white/[0.06] border border-white/10 rounded-full px-3.5 py-1.5">
+              <span key={t} className="inline-flex items-center gap-1.5 text-[13px] font-medium text-white/90 bg-paper-bright/[0.06] border border-white/10 rounded-full px-3.5 py-1.5">
                 <Check className="w-3.5 h-3.5 text-brand-soft" strokeWidth={3} /> {t}
               </span>
             ))}

@@ -22,7 +22,7 @@ export function BentoShowcase() {
         robots="noindex, nofollow"
       />
       <div className="pt-10 text-center">
-        <span className="inline-block rounded-full bg-slate-100 text-slate-500 text-xs font-medium px-3 py-1">
+        <span className="inline-block rounded-full bg-paper-2 text-ink-mute text-xs font-medium px-3 py-1">
           Preview · /bento
         </span>
       </div>

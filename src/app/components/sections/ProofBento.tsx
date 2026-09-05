@@ -173,9 +173,9 @@ const TILES: Tile[] = [
    each tile carries one number and nothing else. Default stays the navy look, so
    the homepage is unaffected. */
 const SOFT_TILES = [
-  "bg-gradient-to-br from-[#F7F9FF] via-[#EEF2FC] to-[#E1E9F7] border border-slate-200/70",
-  "bg-gradient-to-br from-[#FAFAFF] via-[#F1EFFB] to-[#E7E3F7] border border-slate-200/70",
-  "bg-gradient-to-br from-[#FFFDF9] via-[#FBF4EC] to-[#F7E9DA] border border-slate-200/70",
+  "bg-gradient-to-br from-[#F7F9FF] via-[#EEF2FC] to-[#E1E9F7] border border-rule/70",
+  "bg-gradient-to-br from-[#FAFAFF] via-[#F1EFFB] to-[#E7E3F7] border border-rule/70",
+  "bg-gradient-to-br from-[#FFFDF9] via-[#FBF4EC] to-[#F7E9DA] border border-rule/70",
 ];
 
 /* `compact` (used on /remote-v2): drops the final row of four tiles (2×, Katie's
@@ -264,7 +264,7 @@ function Cell({ t, i, timelineRef, soft = false }: { t: Tile; i: number; timelin
           </div>
         </div>
         <p className="mt-6 flex-1 text-[19px] leading-relaxed md:text-xl" style={{ color: INK }}>&ldquo;{t.quote}&rdquo;</p>
-        <div className="mt-6 inline-flex w-fit items-center rounded-full bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-wide" style={{ color: SUB }}>
+        <div className="mt-6 inline-flex w-fit items-center rounded-full bg-paper-bright px-3 py-1 text-[11px] font-semibold uppercase tracking-wide" style={{ color: SUB }}>
           {t.company}
         </div>
       </TimelineContent>
@@ -289,7 +289,7 @@ function Cell({ t, i, timelineRef, soft = false }: { t: Tile; i: number; timelin
         />
         <Link
           to={t.to}
-          className={`group absolute inline-flex items-center rounded-full bg-white font-medium shadow-md transition-colors hover:bg-blue-50 ${
+          className={`group absolute inline-flex items-center rounded-full bg-paper-bright font-medium shadow-md transition-colors hover:bg-blue-50 ${
             wide ? "bottom-7 left-7 gap-2.5 px-6 py-3.5 text-base" : "bottom-5 left-5 gap-2 px-4 py-2 text-sm"
           }`}
           style={{ color: INK }}
@@ -314,13 +314,13 @@ export function ProofBento({ soft = false, compact = false }: { soft?: boolean; 
   const timelineRef = useRef<HTMLDivElement>(null);
   const tc = (n: number, cls: string, as: "h2" | "p") => ({ animationNum: n, customVariants: revealVariants, timelineRef, className: cls, as });
   return (
-    <section ref={timelineRef} className="w-full bg-white py-20 md:py-32">
+    <section ref={timelineRef} className="w-full bg-paper-bright py-20 md:py-32">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="mx-auto mb-12 max-w-2xl space-y-3 text-center">
-          <TimelineContent {...tc(0, "font-serif text-4xl text-slate-900 md:text-5xl", "h2")}>
+          <TimelineContent {...tc(0, "font-serif text-4xl text-ink md:text-5xl", "h2")}>
             Proven by the teams running care <span className="italic text-blue-600">at scale</span>
           </TimelineContent>
-          <TimelineContent {...tc(1, "mx-auto text-lg leading-relaxed text-slate-600", "p")}>
+          <TimelineContent {...tc(1, "mx-auto text-lg leading-relaxed text-ink-soft", "p")}>
             Real outcomes, in the words of the operators and clinicians running HANA.
           </TimelineContent>
         </div>

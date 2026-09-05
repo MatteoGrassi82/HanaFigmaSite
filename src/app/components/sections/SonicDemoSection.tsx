@@ -125,7 +125,7 @@ function WaveCanvas({ active }: { active: boolean }) {
   }, []);
 
   return (
-    <div ref={wrap} aria-hidden className="absolute inset-0 overflow-hidden bg-white">
+    <div ref={wrap} aria-hidden className="absolute inset-0 overflow-hidden bg-paper-bright">
       <canvas ref={canvas} className="absolute inset-0" />
     </div>
   );
@@ -139,7 +139,7 @@ export function SonicDemoSection({
 }: Props) {
   const live = webCallStatus !== "idle";
   return (
-    <section className="relative overflow-hidden bg-white">
+    <section className="relative overflow-hidden bg-paper-bright">
       <WaveCanvas active={live} />
 
       {/* white, bottom-up, so the card sits on clean ground and the waves fade */}
@@ -160,12 +160,12 @@ export function SonicDemoSection({
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="text-center"
         >
-          <span className="inline-flex items-center gap-2.5 rounded-full bg-white/70 border border-[#e2e6f4] backdrop-blur-sm px-4 py-1.5">
+          <span className="inline-flex items-center gap-2.5 rounded-full bg-paper-bright/70 border border-[#e2e6f4] backdrop-blur-sm px-4 py-1.5">
             <span
               className="w-2 h-2 rounded-full bg-brand"
               style={{ animation: "hana-glow 2.4s ease-in-out infinite" }}
             />
-            <span className="text-[13px] font-medium text-slate-600">
+            <span className="text-[13px] font-medium text-ink-soft">
               {webCallStatus === "active"
                 ? "Hana is listening"
                 : webCallStatus === "connecting"
@@ -174,10 +174,10 @@ export function SonicDemoSection({
             </span>
           </span>
 
-          <h2 className="font-serif text-4xl md:text-6xl text-slate-900 leading-[1.05] tracking-tight mt-7 mb-4">
+          <h2 className="font-serif text-4xl md:text-6xl text-ink leading-[1.05] tracking-tight mt-7 mb-4">
             Have a chat with HANA.
           </h2>
-          <p className="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed mb-10">
+          <p className="text-lg text-ink-mute max-w-2xl mx-auto leading-relaxed mb-10">
             Give us your number. It calls in about ten seconds. Talk to it like a patient would, then
             let your team try it.
           </p>
@@ -189,7 +189,7 @@ export function SonicDemoSection({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full max-w-[560px] rounded-[24px] bg-white/85 backdrop-blur-xl border border-[#e8ebf2] p-7 sm:p-9 shadow-[0_30px_70px_-24px_rgba(0,18,47,0.22)]"
+          className="w-full max-w-[560px] rounded-[24px] bg-paper-bright/85 backdrop-blur-xl border border-[#e8ebf2] p-7 sm:p-9 shadow-[0_30px_70px_-24px_rgba(0,18,47,0.22)]"
         >
           <LiveDemoSection
             bare

@@ -32,9 +32,9 @@ type Tint = "blue" | "peach" | "mint" | "sky";
 /* Solid, saturated Hana-leaning colors. */
 const TINT: Record<Tint, string> = {
   blue: "bg-[#3B82F6] text-white",
-  peach: "bg-[#FFC091] text-slate-900",
+  peach: "bg-[#FFC091] text-ink",
   mint: "bg-navy text-white",
-  sky: "bg-[#7CC4F0] text-slate-900",
+  sky: "bg-[#7CC4F0] text-ink",
 };
 
 const STAT_ACCENT: Record<Tint, string> = {
@@ -52,10 +52,10 @@ const IS_DARK: Record<Tint, boolean> = {
   sky: false,
 };
 
-const quoteText = (t: Tint) => (IS_DARK[t] ? "text-white/90" : "text-slate-700");
-const nameText = (t: Tint) => (IS_DARK[t] ? "text-white" : "text-slate-900");
-const roleText = (t: Tint) => (IS_DARK[t] ? "text-white/70" : "text-slate-500");
-const statLabel = (t: Tint) => (IS_DARK[t] ? "text-white/80" : "text-slate-600");
+const quoteText = (t: Tint) => (IS_DARK[t] ? "text-white/90" : "text-ink-soft");
+const nameText = (t: Tint) => (IS_DARK[t] ? "text-white" : "text-ink");
+const roleText = (t: Tint) => (IS_DARK[t] ? "text-white/70" : "text-ink-mute");
+const statLabel = (t: Tint) => (IS_DARK[t] ? "text-white/80" : "text-ink-soft");
 
 const TILES_EN: Tile[] = [
   {
@@ -259,7 +259,7 @@ export function ClientFeedback() {
     : "Real outcomes, in the words of the clinics and partners using Hana.";
 
   return (
-    <section ref={timelineRef} className="w-full bg-white py-20 md:py-24">
+    <section ref={timelineRef} className="w-full bg-paper-bright py-20 md:py-24">
       <div className="container mx-auto px-4 md:px-8">
         <div className="mx-auto max-w-2xl space-y-3 text-center">
           <TimelineContent
@@ -267,7 +267,7 @@ export function ClientFeedback() {
             animationNum={0}
             customVariants={revealVariants}
             timelineRef={timelineRef}
-            className="font-serif text-3xl text-slate-900 md:text-4xl"
+            className="font-serif text-3xl text-ink md:text-4xl"
           >
             {heading}
           </TimelineContent>
@@ -276,7 +276,7 @@ export function ClientFeedback() {
             animationNum={1}
             customVariants={revealVariants}
             timelineRef={timelineRef}
-            className="mx-auto text-slate-500"
+            className="mx-auto text-ink-mute"
           >
             {subheading}
           </TimelineContent>

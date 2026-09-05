@@ -8,7 +8,7 @@ function WorkflowAnimation() {
       {[0, 1, 2, 3].map((i) => (
         <div
           key={i}
-          className="rounded-[3px] bg-white"
+          className="rounded-[3px] bg-paper-bright"
           style={{
             animation: `tileFlash 2s ease-in-out infinite`,
             animationDelay: `${i * 0.25}s`,
@@ -30,15 +30,15 @@ function SyncAnimation() {
     <div className="relative w-9 h-7 flex items-center justify-between">
       {/* Left node */}
       <div
-        className="w-3 h-3 rounded-full bg-white flex-shrink-0"
+        className="w-3 h-3 rounded-full bg-paper-bright flex-shrink-0"
         style={{ animation: 'nodePulse 1.8s ease-in-out infinite' }}
       />
 
       {/* Travelling dot on line */}
       <div className="absolute inset-0 flex items-center">
-        <div className="relative w-full h-px bg-white/20">
+        <div className="relative w-full h-px bg-paper-bright/20">
           <div
-            className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-white"
+            className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-paper-bright"
             style={{ animation: 'travel 1.8s ease-in-out infinite' }}
           />
         </div>
@@ -46,7 +46,7 @@ function SyncAnimation() {
 
       {/* Right node */}
       <div
-        className="w-3 h-3 rounded-full bg-white/40 flex-shrink-0"
+        className="w-3 h-3 rounded-full bg-paper-bright/40 flex-shrink-0"
         style={{ animation: 'nodePulse 1.8s ease-in-out infinite', animationDelay: '0.9s' }}
       />
 
@@ -115,7 +115,7 @@ export function InlineImageHeader({ light = false }: { light?: boolean } = {}) {
           {/* Step 1 */}
           <div className="flex flex-col items-center text-center relative z-10 px-4 md:px-7 group">
             <p className="text-[11px] font-bold uppercase tracking-[2px]  mb-[18px]">{gs.step1Number}</p>
-            <div className="w-[104px] h-[104px] rounded-full flex items-center justify-center mb-7 transition-transform duration-300 group-hover:scale-105 bg-white/5 border-2 border-white/10 shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
+            <div className="w-[104px] h-[104px] rounded-full flex items-center justify-center mb-7 transition-transform duration-300 group-hover:scale-105 bg-paper-bright/5 border-2 border-white/10 shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
               <WorkflowAnimation />
             </div>
             <h3 className={`font-serif text-[22px] md:text-[26px] mb-3 tracking-normal `}>{gs.step1Title}</h3>
@@ -151,7 +151,7 @@ export function InlineImageHeader({ light = false }: { light?: boolean } = {}) {
 
         {/* Bottom CTA */}
         <div className="mt-12 md:mt-[72px] text-center">
-          <a href="https://calendly.com/matteowastaken/discoverycall" target="_blank" rel="noopener noreferrer" className={`inline-flex items-center gap-2 px-8 py-[14px] rounded-lg  text-[15px] font-semibold hover:bg-slate-100 hover:-translate-y-[2px] hover:shadow-[0_8px_24px_rgba(0,0,0,0.3)] transition-all duration-200 group`}>
+          <a href="https://calendly.com/matteowastaken/discoverycall" target="_blank" rel="noopener noreferrer" className={`inline-flex items-center gap-2 px-8 py-[14px] rounded-lg  text-[15px] font-semibold hover:bg-paper-2 hover:-translate-y-[2px] hover:shadow-[0_8px_24px_rgba(0,0,0,0.3)] transition-all duration-200 group`}>
             {gs.cta}
             <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-[3px]" />
           </a>

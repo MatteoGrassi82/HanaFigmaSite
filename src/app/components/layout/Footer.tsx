@@ -20,7 +20,7 @@ export function Footer() {
               height="32"
             />
           </Link>
-          <p className="text-sm text-slate-500 mb-4">
+          <p className="text-sm text-ink-mute mb-4">
             {t.footer.tagline}
           </p>
           <div className="flex gap-4">
@@ -83,7 +83,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+      <div className="max-w-7xl mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-ink-mute">
         <p>&copy; {new Date().getFullYear()} {t.footer.allRightsReserved}</p>
         <div className="flex gap-6">
           <Link to="/privacy" className="py-2 hover:text-slate-400 transition-colors">{t.footer.privacy}</Link>

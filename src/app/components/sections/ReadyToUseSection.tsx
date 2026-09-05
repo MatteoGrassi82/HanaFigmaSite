@@ -28,14 +28,14 @@ export function ReadyToUseSection() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a href="https://calendly.com/matteowastaken/discoverycall" target="_blank" rel="noopener noreferrer" className="bg-white text-slate-900 px-8 py-4 rounded-full text-lg font-medium hover:bg-slate-100 transition-colors flex items-center gap-2 group shadow-lg shadow-blue-900/20">
+            <a href="https://calendly.com/matteowastaken/discoverycall" target="_blank" rel="noopener noreferrer" className="bg-paper-bright text-ink px-8 py-4 rounded-full text-lg font-medium hover:bg-paper-2 transition-colors flex items-center gap-2 group shadow-lg shadow-blue-900/20">
               {t.cta.bookDemo}
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
-            <Link to="/pricing" className="px-8 py-4 rounded-full text-lg font-medium text-white border border-white/20 hover:bg-white/10 transition-colors flex items-center gap-2">
+            <Link to="/pricing" className="px-8 py-4 rounded-full text-lg font-medium text-white border border-white/20 hover:bg-paper-bright/10 transition-colors flex items-center gap-2">
               {t.cta.savings}
             </Link>
-            <a href="https://docs.hana.health/" target="_blank" rel="noopener noreferrer" className="px-8 py-4 rounded-full text-lg font-medium text-white border border-white/20 hover:bg-white/10 transition-colors flex items-center gap-2">
+            <a href="https://docs.hana.health/" target="_blank" rel="noopener noreferrer" className="px-8 py-4 rounded-full text-lg font-medium text-white border border-white/20 hover:bg-paper-bright/10 transition-colors flex items-center gap-2">
               {t.cta.readDocs}
             </a>
           </div>

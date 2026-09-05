@@ -44,8 +44,8 @@ export function TestWebhook() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-8">
-      <div className="bg-slate-900 border border-slate-700 rounded-2xl p-8 max-w-2xl w-full space-y-8">
+    <div className="min-h-screen bg-navy flex items-center justify-center p-8">
+      <div className="bg-navy border border-navy-soft rounded-2xl p-8 max-w-2xl w-full space-y-8">
         <h1 className="text-2xl font-light text-white">Zapier Webhook Tester</h1>
         <p className="text-slate-400 text-sm">
           Make sure your Zapier zap is turned ON and the "Catch Hook" trigger is listening before clicking.
@@ -58,7 +58,7 @@ export function TestWebhook() {
         )}
 
         {/* Test Lead */}
-        <div className="border border-slate-700 rounded-xl p-6 space-y-4">
+        <div className="border border-navy-soft rounded-xl p-6 space-y-4">
           <h2 className="text-lg text-white font-medium">1. Test Lead Webhook</h2>
           <button
             onClick={fireTestLead}
@@ -68,14 +68,14 @@ export function TestWebhook() {
             {loading === "lead" ? "Firing..." : "Fire Test Lead"}
           </button>
           {leadResult && (
-            <pre className="bg-slate-800 rounded-lg p-4 text-xs text-green-400 font-mono overflow-auto max-h-60">
+            <pre className="bg-navy rounded-lg p-4 text-xs text-green-400 font-mono overflow-auto max-h-60">
               {JSON.stringify(leadResult, null, 2)}
             </pre>
           )}
         </div>
 
         {/* Test Guide Download */}
-        <div className="border border-slate-700 rounded-xl p-6 space-y-4">
+        <div className="border border-navy-soft rounded-xl p-6 space-y-4">
           <h2 className="text-lg text-white font-medium">2. Test Guide Download Webhook</h2>
           <button
             onClick={fireTestGuide}
@@ -85,7 +85,7 @@ export function TestWebhook() {
             {loading === "guide" ? "Firing..." : "Fire Test Guide Download"}
           </button>
           {guideResult && (
-            <pre className="bg-slate-800 rounded-lg p-4 text-xs text-green-400 font-mono overflow-auto max-h-60">
+            <pre className="bg-navy rounded-lg p-4 text-xs text-green-400 font-mono overflow-auto max-h-60">
               {JSON.stringify(guideResult, null, 2)}
             </pre>
           )}

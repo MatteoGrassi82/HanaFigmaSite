@@ -151,21 +151,21 @@ function SlideTypeSelect({ value, onChange, onNext, nextLabel }: {
   return (
     <div className="w-full max-w-[600px]">
       <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3 text-center">1 of 5</div>
-      <h2 className="font-serif text-3xl md:text-4xl text-slate-900 mb-2 text-center">What kind of practice are you?</h2>
-      <p className="text-sm text-slate-600 font-light mb-8 leading-relaxed text-center">This pre-selects the most relevant workflows for your setting.</p>
+      <h2 className="font-serif text-3xl md:text-4xl text-ink mb-2 text-center">What kind of practice are you?</h2>
+      <p className="text-sm text-ink-soft font-light mb-8 leading-relaxed text-center">This pre-selects the most relevant workflows for your setting.</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-8">
         {PRACTICE_TYPES.map(pt => (
           <button key={pt.id} onClick={() => onChange(pt.id)}
             className={cn("text-left p-4 rounded-xl border transition-all duration-150",
-              value === pt.id ? "border-2 border-blue-500 bg-blue-50" : "border border-slate-200 bg-white hover:border-blue-400 hover:bg-blue-50 hover:-translate-y-0.5"
+              value === pt.id ? "border-2 border-blue-500 bg-blue-50" : "border border-rule bg-paper-bright hover:border-blue-400 hover:bg-blue-50 hover:-translate-y-0.5"
             )}>
-            <div className="text-sm font-medium text-slate-800 mb-1">{pt.name}</div>
+            <div className="text-sm font-medium text-ink mb-1">{pt.name}</div>
             <div className="text-xs text-slate-400 font-light leading-snug">{pt.sub}</div>
           </button>
         ))}
       </div>
       <button onClick={onNext} disabled={!value}
-        className="w-full bg-navy text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors disabled:opacity-30 disabled:cursor-default">
+        className="w-full bg-navy text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-navy transition-colors disabled:opacity-30 disabled:cursor-default">
         {nextLabel} <ArrowRight className="w-4 h-4" />
       </button>
     </div>
@@ -180,21 +180,21 @@ function SlideProviders({ value, onChange, onNext, onBack, nextLabel, backLabel 
   return (
     <div className="w-full max-w-[560px]">
       <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3 text-center">2 of 5</div>
-      <h2 className="font-serif text-3xl md:text-4xl text-slate-900 mb-2 text-center">How many providers do you have?</h2>
-      <p className="text-sm text-slate-600 font-light mb-10 leading-relaxed text-center">Count all clinicians who see patients — doctors, nurses, therapists, PAs.</p>
+      <h2 className="font-serif text-3xl md:text-4xl text-ink mb-2 text-center">How many providers do you have?</h2>
+      <p className="text-sm text-ink-soft font-light mb-10 leading-relaxed text-center">Count all clinicians who see patients — doctors, nurses, therapists, PAs.</p>
       <div className="flex items-center justify-center gap-8 mb-3">
-        <button onClick={() => onChange(Math.max(1, value - 1))} className="w-11 h-11 rounded-full border border-slate-200 bg-white flex items-center justify-center hover:border-blue-500 hover:text-blue-500 transition-colors">
+        <button onClick={() => onChange(Math.max(1, value - 1))} className="w-11 h-11 rounded-full border border-rule bg-paper-bright flex items-center justify-center hover:border-blue-500 hover:text-blue-500 transition-colors">
           <Minus className="w-4 h-4" />
         </button>
-        <span className="font-serif text-5xl sm:text-6xl font-medium text-slate-900 min-w-[80px] text-center">{value}</span>
-        <button onClick={() => onChange(Math.min(50, value + 1))} className="w-11 h-11 rounded-full border border-slate-200 bg-white flex items-center justify-center hover:border-blue-500 hover:text-blue-500 transition-colors">
+        <span className="font-serif text-5xl sm:text-6xl font-medium text-ink min-w-[80px] text-center">{value}</span>
+        <button onClick={() => onChange(Math.min(50, value + 1))} className="w-11 h-11 rounded-full border border-rule bg-paper-bright flex items-center justify-center hover:border-blue-500 hover:text-blue-500 transition-colors">
           <Plus className="w-4 h-4" />
         </button>
       </div>
       <p className="text-center text-sm text-slate-400 font-light mb-10">provider{value > 1 ? "s" : ""}</p>
       <div className="flex gap-3">
-        <button onClick={onBack} className="border border-slate-200 rounded-lg px-5 py-3 text-sm text-slate-500 hover:border-slate-400 hover:text-slate-700 transition-colors">{backLabel}</button>
-        <button onClick={onNext} className="flex-1 bg-navy text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors">
+        <button onClick={onBack} className="border border-rule rounded-lg px-5 py-3 text-sm text-ink-mute hover:border-rule-strong hover:text-ink-soft transition-colors">{backLabel}</button>
+        <button onClick={onNext} className="flex-1 bg-navy text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-navy transition-colors">
           {nextLabel} <ArrowRight className="w-4 h-4" />
         </button>
       </div>
@@ -217,8 +217,8 @@ function SlideMods({ mods, wfs, onChange, onNext, onBack, nextLabel, backLabel }
   return (
     <div className="w-full max-w-[560px]">
       <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3 text-center">3 of 5</div>
-      <h2 className="font-serif text-3xl md:text-4xl text-slate-900 mb-2 text-center">Which modules do you want?</h2>
-      <p className="text-sm text-slate-600 font-light mb-8 leading-relaxed text-center">Select the categories relevant to your practice.</p>
+      <h2 className="font-serif text-3xl md:text-4xl text-ink mb-2 text-center">Which modules do you want?</h2>
+      <p className="text-sm text-ink-soft font-light mb-8 leading-relaxed text-center">Select the categories relevant to your practice.</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-8">
         {MODULES.map(m => {
           const sel = !!mods[m.id];
@@ -226,14 +226,14 @@ function SlideMods({ mods, wfs, onChange, onNext, onBack, nextLabel, backLabel }
           return (
             <button key={m.id} onClick={() => onChange(m.id, !sel)}
               className={cn("text-left p-4 rounded-xl border transition-all duration-150",
-                sel ? "border-2 border-blue-500 bg-blue-50" : "border border-slate-200 bg-white hover:border-blue-400 hover:bg-blue-50"
+                sel ? "border-2 border-blue-500 bg-blue-50" : "border border-rule bg-paper-bright hover:border-blue-400 hover:bg-blue-50"
               )}>
               <div className="flex items-center gap-2 mb-1">
                 <div className={cn("w-4 h-4 rounded-sm border flex-shrink-0 flex items-center justify-center transition-all",
-                  sel ? "bg-blue-500 border-blue-500" : "border-slate-300")}>
+                  sel ? "bg-blue-500 border-blue-500" : "border-rule")}>
                   {sel && <Check className="w-3 h-3 text-white" strokeWidth={3} />}
                 </div>
-                <span className="text-sm font-medium text-slate-800">{m.name}</span>
+                <span className="text-sm font-medium text-ink">{m.name}</span>
               </div>
               <div className="text-xs text-slate-400 font-light leading-snug mb-2">{m.sub}</div>
               {sel && cnt > 0 && (
@@ -246,9 +246,9 @@ function SlideMods({ mods, wfs, onChange, onNext, onBack, nextLabel, backLabel }
         })}
       </div>
       <div className="flex gap-3">
-        <button onClick={onBack} className="border border-slate-200 rounded-lg px-5 py-3 text-sm text-slate-500 hover:border-slate-400 hover:text-slate-700 transition-colors">{backLabel}</button>
+        <button onClick={onBack} className="border border-rule rounded-lg px-5 py-3 text-sm text-ink-mute hover:border-rule-strong hover:text-ink-soft transition-colors">{backLabel}</button>
         <button onClick={onNext} disabled={!anyMod}
-          className="flex-1 bg-navy text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors disabled:opacity-30 disabled:cursor-default">
+          className="flex-1 bg-navy text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-navy transition-colors disabled:opacity-30 disabled:cursor-default">
           {nextLabel} <ArrowRight className="w-4 h-4" />
         </button>
       </div>
@@ -280,8 +280,8 @@ function SlideWorkflows({ mods, wfs, onChange, onNext, onBack, nextLabel, backLa
   return (
     <div className="w-full max-w-[600px]">
       <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3 text-center">4 of 5</div>
-      <h2 className="font-serif text-3xl md:text-4xl text-slate-900 mb-2 text-center">Select your workflows</h2>
-      <p className="text-sm text-slate-600 font-light mb-8 leading-relaxed text-center">Select the workflows you want to automate. Toggle any on or off.</p>
+      <h2 className="font-serif text-3xl md:text-4xl text-ink mb-2 text-center">Select your workflows</h2>
+      <p className="text-sm text-ink-soft font-light mb-8 leading-relaxed text-center">Select the workflows you want to automate. Toggle any on or off.</p>
 
       <div className="mb-8 space-y-2">
         {activeMods.map(m => {
@@ -289,30 +289,30 @@ function SlideWorkflows({ mods, wfs, onChange, onNext, onBack, nextLabel, backLa
           const selCount = wfsInMod.filter(id => wfs[id]).length;
           const isOpen = openMods[m.id];
           return (
-            <div key={m.id} className="border border-slate-200 rounded-xl overflow-hidden bg-white">
+            <div key={m.id} className="border border-rule rounded-xl overflow-hidden bg-paper-bright">
               <button onClick={() => toggleMod(m.id)}
-                className="w-full flex items-center justify-between px-4 py-3.5 hover:bg-slate-50 transition-colors">
-                <span className="text-sm font-medium text-slate-800">{m.name}</span>
+                className="w-full flex items-center justify-between px-4 py-3.5 hover:bg-paper-2 transition-colors">
+                <span className="text-sm font-medium text-ink">{m.name}</span>
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] bg-blue-100 text-blue-600 rounded-full px-2.5 py-0.5 font-medium">{selCount} selected</span>
                   <ChevronDown className={cn("w-4 h-4 text-slate-400 transition-transform duration-200", isOpen && "rotate-180")} />
                 </div>
               </button>
               {isOpen && (
-                <div className="border-t border-slate-100">
+                <div className="border-t border-rule-soft">
                   {wfsInMod.map(id => {
                     const w = WORKFLOWS[id];
                     const sel = !!wfs[id];
                     return (
                       <button key={id} onClick={() => onChange(id, !sel)}
-                        className={cn("w-full flex items-start gap-3 px-4 py-3 text-left border-b border-slate-100 last:border-0 transition-colors",
-                          sel ? "bg-blue-50" : "hover:bg-slate-50")}>
+                        className={cn("w-full flex items-start gap-3 px-4 py-3 text-left border-b border-rule-soft last:border-0 transition-colors",
+                          sel ? "bg-blue-50" : "hover:bg-paper-2")}>
                         <div className={cn("w-4 h-4 rounded-sm border flex-shrink-0 mt-0.5 flex items-center justify-center transition-all",
-                          sel ? "bg-blue-500 border-blue-500" : "border-slate-300")}>
+                          sel ? "bg-blue-500 border-blue-500" : "border-rule")}>
                           {sel && <Check className="w-2.5 h-2.5 text-white" strokeWidth={3} />}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="text-xs font-medium text-slate-800">{w.name}</div>
+                          <div className="text-xs font-medium text-ink">{w.name}</div>
                           <div className="text-xs text-slate-400 font-light leading-snug mt-0.5">{w.sub}</div>
                         </div>
                       </button>
@@ -326,9 +326,9 @@ function SlideWorkflows({ mods, wfs, onChange, onNext, onBack, nextLabel, backLa
       </div>
 
       <div className="flex gap-3">
-        <button onClick={onBack} className="border border-slate-200 rounded-lg px-5 py-3 text-sm text-slate-500 hover:border-slate-400 hover:text-slate-700 transition-colors">{backLabel}</button>
+        <button onClick={onBack} className="border border-rule rounded-lg px-5 py-3 text-sm text-ink-mute hover:border-rule-strong hover:text-ink-soft transition-colors">{backLabel}</button>
         <button onClick={onNext} disabled={!anyWF}
-          className="flex-1 bg-navy text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors disabled:opacity-30 disabled:cursor-default">
+          className="flex-1 bg-navy text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-navy transition-colors disabled:opacity-30 disabled:cursor-default">
           {nextLabel} <ArrowRight className="w-4 h-4" />
         </button>
       </div>
@@ -352,8 +352,8 @@ function SlideVolumes({ mods, wfs, vols, onChange, onNext, onBack, nextLabel, ba
   return (
     <div className="w-full max-w-[560px]">
       <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-3 text-center">5 of 5</div>
-      <h2 className="font-serif text-3xl md:text-4xl text-slate-900 mb-2 text-center">Roughly how many per month?</h2>
-      <p className="text-sm text-slate-600 font-light mb-8 leading-relaxed text-center">Estimates are fine. We confirm exact numbers on the discovery call.</p>
+      <h2 className="font-serif text-3xl md:text-4xl text-ink mb-2 text-center">Roughly how many per month?</h2>
+      <p className="text-sm text-ink-soft font-light mb-8 leading-relaxed text-center">Estimates are fine. We confirm exact numbers on the discovery call.</p>
 
       <div className="mb-8">
         {MODULES.map(m => {
@@ -363,19 +363,19 @@ function SlideVolumes({ mods, wfs, vols, onChange, onNext, onBack, nextLabel, ba
           hasAny = true;
           return (
             <div key={m.id} className="mb-5">
-              <div className="text-[10px] tracking-[1.5px] uppercase text-slate-400 font-medium mb-2 pb-1.5 border-b border-slate-100">{m.name}</div>
+              <div className="text-[10px] tracking-[1.5px] uppercase text-slate-400 font-medium mb-2 pb-1.5 border-b border-rule-soft">{m.name}</div>
               {wfsWithVol.map(id => {
                 const w = WORKFLOWS[id];
                 const val = vols[id] ?? w.def ?? 0;
                 return (
-                  <div key={id} className="flex items-center justify-between py-3.5 border-b border-slate-100 last:border-0">
+                  <div key={id} className="flex items-center justify-between py-3.5 border-b border-rule-soft last:border-0">
                     <div className="flex-1">
-                      <div className="text-sm text-slate-700">{w.name}</div>
+                      <div className="text-sm text-ink-soft">{w.name}</div>
                       <div className="text-xs text-slate-400 font-light">{w.unit}</div>
                     </div>
                     <div className="flex items-center gap-2.5">
                       <button onClick={() => onChange(id, Math.max(w.min ?? 0, val - (w.step ?? 1)))}
-                        className="w-9 h-9 sm:w-8 sm:h-8 rounded-full border border-slate-200 bg-slate-50 flex items-center justify-center hover:border-blue-400 hover:text-blue-500 transition-colors">
+                        className="w-9 h-9 sm:w-8 sm:h-8 rounded-full border border-rule bg-paper-2 flex items-center justify-center hover:border-blue-400 hover:text-blue-500 transition-colors">
                         <Minus className="w-3 h-3" />
                       </button>
                       <input
@@ -386,10 +386,10 @@ function SlideVolumes({ mods, wfs, vols, onChange, onNext, onBack, nextLabel, ba
                           const n = parseInt(e.target.value, 10);
                           if (!isNaN(n) && n >= (w.min ?? 0)) onChange(id, n);
                         }}
-                        className="font-serif text-xl font-medium text-slate-900 w-16 text-center border border-slate-200 rounded-lg py-1 focus:outline-none focus:border-blue-400 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                        className="font-serif text-xl font-medium text-ink w-16 text-center border border-rule rounded-lg py-1 focus:outline-none focus:border-blue-400 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       />
                       <button onClick={() => onChange(id, val + (w.step ?? 1))}
-                        className="w-9 h-9 sm:w-8 sm:h-8 rounded-full border border-slate-200 bg-slate-50 flex items-center justify-center hover:border-blue-400 hover:text-blue-500 transition-colors">
+                        className="w-9 h-9 sm:w-8 sm:h-8 rounded-full border border-rule bg-paper-2 flex items-center justify-center hover:border-blue-400 hover:text-blue-500 transition-colors">
                         <Plus className="w-3 h-3" />
                       </button>
                     </div>
@@ -405,9 +405,9 @@ function SlideVolumes({ mods, wfs, vols, onChange, onNext, onBack, nextLabel, ba
       </div>
 
       <div className="flex gap-3">
-        <button onClick={onBack} className="border border-slate-200 rounded-lg px-5 py-3 text-sm text-slate-500 hover:border-slate-400 hover:text-slate-700 transition-colors">{backLabel}</button>
+        <button onClick={onBack} className="border border-rule rounded-lg px-5 py-3 text-sm text-ink-mute hover:border-rule-strong hover:text-ink-soft transition-colors">{backLabel}</button>
         <button onClick={onNext}
-          className="flex-1 bg-navy text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors">
+          className="flex-1 bg-navy text-white px-8 py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-navy transition-colors">
           {nextLabel} <ArrowRight className="w-4 h-4" />
         </button>
       </div>
@@ -429,7 +429,7 @@ function SlideResult({ providers, mods, wfs, vols, onBack, bookCallLabel, backTo
   const { hana, human, saving, pct, annual, rows } = calcResults(providers, mods, wfs, vols);
   return (
     <div className="w-full max-w-[640px]">
-      <div className="text-center mb-6 pb-6 border-b border-slate-200">
+      <div className="text-center mb-6 pb-6 border-b border-rule">
         <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-1">Your estimated monthly saving</div>
         <div className="font-serif text-5xl sm:text-6xl font-medium text-blue-500">{fmt(saving)}</div>
         <div className="text-sm text-slate-400 mt-1 font-light">{pct}% less than your current practice cost for the same tasks</div>
@@ -437,14 +437,14 @@ function SlideResult({ providers, mods, wfs, vols, onBack, bookCallLabel, backTo
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
         {[{ val: fmt(hana), label: "HANA / month" }, { val: fmt(human), label: "Current practice cost" }, { val: fmt(annual), label: "Annual saving" }].map(m => (
-          <div key={m.label} className="bg-white border border-slate-200 rounded-lg p-4 text-center">
-            <div className="font-serif text-xl font-medium text-slate-900">{m.val}</div>
+          <div key={m.label} className="bg-paper-bright border border-rule rounded-lg p-4 text-center">
+            <div className="font-serif text-xl font-medium text-ink">{m.val}</div>
             <div className="text-xs text-slate-400 mt-1 font-light">{m.label}</div>
           </div>
         ))}
       </div>
 
-      <div className="rounded-xl overflow-hidden border border-slate-200 mb-5">
+      <div className="rounded-xl overflow-hidden border border-rule mb-5">
         <table className="w-full text-xs sm:text-sm">
           <thead>
             <tr className="bg-navy text-slate-300">
@@ -453,18 +453,18 @@ function SlideResult({ providers, mods, wfs, vols, onBack, bookCallLabel, backTo
               <th className="text-right px-2.5 sm:px-4 py-3 text-[10px] tracking-[1.5px] uppercase font-normal">Current cost</th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-slate-100">
+          <tbody className="bg-paper-bright divide-y divide-rule-soft">
             {rows.map((r, i) => (
               <tr key={i}>
-                <td className="px-2.5 sm:px-4 py-3 text-slate-600 font-light">{r.label}</td>
+                <td className="px-2.5 sm:px-4 py-3 text-ink-soft font-light">{r.label}</td>
                 <td className="px-2.5 sm:px-4 py-3 text-right text-blue-600 font-medium">{fmt(r.hana)}</td>
                 <td className="px-2.5 sm:px-4 py-3 text-right text-slate-400 line-through">{fmt(r.curr)}</td>
               </tr>
             ))}
-            <tr className="border-t-2 border-slate-200">
-              <td className="px-2.5 sm:px-4 py-3 font-medium text-slate-900">Monthly total</td>
+            <tr className="border-t-2 border-rule">
+              <td className="px-2.5 sm:px-4 py-3 font-medium text-ink">Monthly total</td>
               <td className="px-2.5 sm:px-4 py-3 text-right font-medium text-blue-600">{fmt(hana)}</td>
-              <td className="px-2.5 sm:px-4 py-3 text-right font-medium text-slate-900">{fmt(human)}</td>
+              <td className="px-2.5 sm:px-4 py-3 text-right font-medium text-ink">{fmt(human)}</td>
             </tr>
             <tr>
               <td className="px-2.5 sm:px-4 py-3 font-medium text-emerald-700">You save</td>
@@ -486,7 +486,7 @@ function SlideResult({ providers, mods, wfs, vols, onBack, bookCallLabel, backTo
       </div>
 
       <div className="text-center mt-4">
-        <button onClick={onBack} className="text-sm text-slate-400 hover:text-slate-700 transition-colors flex items-center gap-1 mx-auto">
+        <button onClick={onBack} className="text-sm text-slate-400 hover:text-ink-soft transition-colors flex items-center gap-1 mx-auto">
           <ArrowLeft className="w-3 h-3" /> {backToVolumesLabel}
         </button>
       </div>
@@ -566,10 +566,10 @@ export function Pricing() {
       {/* Hero */}
       <section className="pt-36 pb-10 px-4 text-center max-w-2xl mx-auto">
         <div className="text-xs tracking-[2.5px] uppercase text-blue-500 font-medium mb-4">{t.pricing.heading}</div>
-        <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-normal text-slate-900 leading-[1.1] mb-4">
+        <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-normal text-ink leading-[1.1] mb-4">
           {t.pricing.subheading}
         </h1>
-        <p className="text-base text-slate-600 leading-relaxed font-light max-w-md mx-auto">
+        <p className="text-base text-ink-soft leading-relaxed font-light max-w-md mx-auto">
           Answer a few questions about your practice. We'll show you exactly what HANA costs — and what you save across every workflow you automate.
         </p>
       </section>
@@ -578,7 +578,7 @@ export function Pricing() {
       <div className="pb-4 flex justify-center gap-1.5">
         {Array.from({ length: TOTAL_SLIDES }).map((_, i) => (
           <div key={i} className={cn("h-0.5 w-8 rounded-full transition-all duration-300",
-            i < slide ? "bg-blue-500" : i === slide ? "bg-blue-400/50" : "bg-slate-200"
+            i < slide ? "bg-blue-500" : i === slide ? "bg-blue-400/50" : "bg-rule-soft"
           )} />
         ))}
       </div>

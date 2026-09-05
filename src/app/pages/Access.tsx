@@ -138,13 +138,13 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
         path="/access"
       />
 
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-paper-bright">
 
         {/* ── Hero ──────────────────────────────────────────────────────────── */}
         <section className="bg-navy text-white pt-32 pb-24 px-4">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 mb-8">
-              <span className="w-2 h-2 rounded-full bg-slate-400 animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-rule animate-pulse" />
               <span className="text-slate-400 text-xs font-semibold tracking-[3px] uppercase">CMS ACCESS Model · July 5 Launch</span>
             </div>
             <h1 className="font-serif text-4xl sm:text-5xl md:text-[3.5rem] leading-[1.05] mb-6 mx-auto max-w-3xl">
@@ -159,7 +159,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                 href="https://calendly.com/matteowastaken/discoverycall"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-slate-100 text-navy rounded-full font-semibold text-[15px] transition-all hover:-translate-y-0.5 group"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-paper-bright hover:bg-paper-2 text-navy rounded-full font-semibold text-[15px] transition-all hover:-translate-y-0.5 group"
               >
                 Book a 20-min call
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -175,24 +175,24 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
         </section>
 
         {/* ── What is ACCESS ───────────────────────────────────────────────── */}
-        <section className="bg-white border-t border-slate-100 px-4 py-12">
+        <section className="bg-paper-bright border-t border-rule-soft px-4 py-12">
           <div className="max-w-4xl mx-auto">
             <p className="text-[10px] font-bold tracking-[3px] uppercase text-slate-400 mb-8 text-center">What is ACCESS?</p>
-            <p className="text-slate-600 text-[16px] leading-relaxed text-center max-w-2xl mx-auto mb-10">
+            <p className="text-ink-soft text-[16px] leading-relaxed text-center max-w-2xl mx-auto mb-10">
               ACCESS is a new CMS program that starts July 5. You get paid every month for each patient you enroll. But CMS keeps half of it for up to a year. You earn that half back only if enough of your patients complete their check-ins.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-slate-100 rounded-2xl overflow-hidden">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-paper-2 rounded-2xl overflow-hidden">
               {[
                 { term: "OAP", full: "Outcome-Aligned Payment", def: "What CMS pays you per patient each month. Half now, half held back." },
                 { term: "OAT", full: "Outcome Attainment Threshold", def: "The 50% completion rate you have to hit to earn the held-back half." },
                 { term: "OAR", full: "Outcome Attainment Rate", def: "Your real completion rate when CMS settles up. This is the number Hana moves." },
               ].map(({ term, full, def }) => (
-                <div key={term} className="bg-white p-6 flex flex-col gap-2">
+                <div key={term} className="bg-paper-bright p-6 flex flex-col gap-2">
                   <div className="flex items-baseline gap-2 mb-1">
-                    <span className="font-serif text-[24px] text-slate-900 leading-none">{term}</span>
+                    <span className="font-serif text-[24px] text-ink leading-none">{term}</span>
                     <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">{full}</span>
                   </div>
-                  <p className="text-[13px] text-slate-500 leading-relaxed">{def}</p>
+                  <p className="text-[13px] text-ink-mute leading-relaxed">{def}</p>
                 </div>
               ))}
             </div>
@@ -200,41 +200,41 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
         </section>
 
         {/* ── The revenue cliff ─────────────────────────────────────────────── */}
-        <section className="bg-slate-50 border-t border-slate-100 px-4 py-20">
+        <section className="bg-paper-2 border-t border-rule-soft px-4 py-20">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-14">
               <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-600 mb-4">The revenue cliff</p>
-              <h2 className="font-serif text-3xl md:text-4xl text-slate-900 leading-tight mb-4">
+              <h2 className="font-serif text-3xl md:text-4xl text-ink leading-tight mb-4">
                 You go from <span className="text-blue-600">~$216</span> a month to <span className="text-blue-600">~$35</span>. And half of that is held back.
               </h2>
-              <p className="text-slate-600 text-[16px] max-w-2xl mx-auto leading-relaxed">
+              <p className="text-ink-soft text-[16px] max-w-2xl mx-auto leading-relaxed">
                 Today, a chronic-care patient on remote monitoring brings in about $216 a month. Under ACCESS, your best-paying track pays about $35. Then CMS holds back half of that for up to a year, and only pays it out once your patients respond.
               </p>
             </div>
 
             {/* Two stat callouts: the cliff + the withhold */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-slate-100 rounded-2xl overflow-hidden mb-12">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-paper-2 rounded-2xl overflow-hidden mb-12">
               {/* before */}
-              <div className="bg-white p-8 flex flex-col gap-2">
-                <div className="font-serif text-4xl text-slate-900 leading-none">~$216</div>
+              <div className="bg-paper-bright p-8 flex flex-col gap-2">
+                <div className="font-serif text-4xl text-ink leading-none">~$216</div>
                 <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Remote monitoring / patient / month</div>
-                <p className="text-[13px] text-slate-500 leading-relaxed">
+                <p className="text-[13px] text-ink-mute leading-relaxed">
                   What a chronic-care patient brings in today.
                 </p>
               </div>
               {/* after */}
-              <div className="bg-white p-8 flex flex-col gap-2">
+              <div className="bg-paper-bright p-8 flex flex-col gap-2">
                 <div className="font-serif text-4xl text-blue-600 leading-none">~$35</div>
                 <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">ACCESS CKM / patient / month</div>
-                <p className="text-[13px] text-slate-500 leading-relaxed">
+                <p className="text-[13px] text-ink-mute leading-relaxed">
                   The top ACCESS rate. Most tracks pay $15 to $30 a month.
                 </p>
               </div>
               {/* withheld */}
-              <div className="bg-white p-8 flex flex-col gap-2">
-                <div className="font-serif text-4xl text-slate-900 leading-none">50%</div>
+              <div className="bg-paper-bright p-8 flex flex-col gap-2">
+                <div className="font-serif text-4xl text-ink leading-none">50%</div>
                 <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Held back up to 12 months</div>
-                <p className="text-[13px] text-slate-500 leading-relaxed">
+                <p className="text-[13px] text-ink-mute leading-relaxed">
                   You only earn it back once your patients complete their check-ins.
                 </p>
               </div>
@@ -257,68 +257,68 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
             {/* How the penalty actually works — at reconciliation */}
             <div id="how-it-works" className="text-center mt-20 mb-14 scroll-mt-24">
               <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-600 mb-4">When CMS settles up</p>
-              <h3 className="font-serif text-2xl md:text-3xl text-slate-900 leading-tight mb-4">
+              <h3 className="font-serif text-2xl md:text-3xl text-ink leading-tight mb-4">
                 One number decides how much you get back
               </h3>
-              <p className="text-slate-500 text-[16px] max-w-2xl mx-auto leading-relaxed">
+              <p className="text-ink-mute text-[16px] max-w-2xl mx-auto leading-relaxed">
                 It's the share of your patients who finished their check-ins. The higher it is, the more of the held-back money you keep.
               </p>
             </div>
 
             {/* Three-column OAT diagram */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-100 rounded-2xl overflow-hidden mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-paper-2 rounded-2xl overflow-hidden mb-12">
               {/* ≥50% — full release */}
-              <div className="bg-white p-8 flex flex-col gap-4">
+              <div className="bg-paper-bright p-8 flex flex-col gap-4">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-emerald-500" />
                   <span className="text-[10px] font-bold tracking-[2px] uppercase text-emerald-600">OAR ≥ 50%</span>
                 </div>
-                <div className="font-serif text-4xl text-slate-900 leading-none">100%</div>
+                <div className="font-serif text-4xl text-ink leading-none">100%</div>
                 <div className="text-[11px] text-emerald-600 font-semibold uppercase tracking-wider">You get it all back</div>
-                <p className="text-[13px] text-slate-500 leading-relaxed">
+                <p className="text-[13px] text-ink-mute leading-relaxed">
                   Half or more of your patients finished their check-ins. CMS pays back the whole held-back amount.
                 </p>
-                <div className="mt-auto pt-4 border-t border-slate-100">
+                <div className="mt-auto pt-4 border-t border-rule-soft">
                   <span className="text-[11px] text-slate-400">1,000 CKM patients → $210K released</span>
                 </div>
               </div>
 
               {/* 40% — proportional cut */}
-              <div className="bg-white p-8 flex flex-col gap-4">
+              <div className="bg-paper-bright p-8 flex flex-col gap-4">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-amber-500" />
                   <span className="text-[10px] font-bold tracking-[2px] uppercase text-amber-600">OAR = 40%</span>
                 </div>
-                <div className="font-serif text-4xl text-slate-900 leading-none">80%</div>
+                <div className="font-serif text-4xl text-ink leading-none">80%</div>
                 <div className="text-[11px] text-amber-600 font-semibold uppercase tracking-wider">You lose a slice</div>
-                <p className="text-[13px] text-slate-500 leading-relaxed">
+                <p className="text-[13px] text-ink-mute leading-relaxed">
                   Fall short of 50% and your payout drops to match. At 40%, you get 80% of the held-back money back.
                 </p>
-                <div className="mt-auto pt-4 border-t border-slate-100">
+                <div className="mt-auto pt-4 border-t border-rule-soft">
                   <span className="text-[11px] text-slate-400">1,000 CKM patients → $168K released</span>
                 </div>
               </div>
 
               {/* 20% — floor cap */}
-              <div className="bg-white p-8 flex flex-col gap-4">
+              <div className="bg-paper-bright p-8 flex flex-col gap-4">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-red-500" />
                   <span className="text-[10px] font-bold tracking-[2px] uppercase text-red-600">OAR = 20%</span>
                 </div>
-                <div className="font-serif text-4xl text-slate-900 leading-none">50%</div>
+                <div className="font-serif text-4xl text-ink leading-none">50%</div>
                 <div className="text-[11px] text-red-600 font-semibold uppercase tracking-wider">As low as it goes</div>
-                <p className="text-[13px] text-slate-500 leading-relaxed">
+                <p className="text-[13px] text-ink-mute leading-relaxed">
                   Even in a bad year, you keep at least half of the held-back money. That's the floor.
                 </p>
-                <div className="mt-auto pt-4 border-t border-slate-100">
+                <div className="mt-auto pt-4 border-t border-rule-soft">
                   <span className="text-[11px] text-slate-400">1,000 CKM patients → $105K released</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white border border-slate-200 rounded-2xl px-8 py-6 text-center">
-              <p className="text-[15px] text-slate-600 leading-relaxed max-w-2xl mx-auto">
-                <span className="text-slate-900 font-semibold">Getting past 50% is the difference between all your money and a cut of it.</span>{" "}
+            <div className="bg-paper-bright border border-rule rounded-2xl px-8 py-6 text-center">
+              <p className="text-[15px] text-ink-soft leading-relaxed max-w-2xl mx-auto">
+                <span className="text-ink font-semibold">Getting past 50% is the difference between all your money and a cut of it.</span>{" "}
                 Every patient who doesn't finish their check-ins counts against you.
               </p>
             </div>
@@ -326,55 +326,55 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
         </section>
 
         {/* ── Equity / Portal-Failure Evidence ──────────────────────────────── */}
-        <section className="px-4 py-20 bg-slate-50 border-t border-slate-100">
+        <section className="px-4 py-20 bg-paper-2 border-t border-rule-soft">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-14">
               <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-600 mb-4">Why voice-first</p>
-              <h2 className="font-serif text-3xl md:text-4xl text-slate-900 leading-tight mb-4">
+              <h2 className="font-serif text-3xl md:text-4xl text-ink leading-tight mb-4">
                 Most Medicare patients won't use the portal
               </h2>
-              <p className="text-slate-500 text-[16px] max-w-2xl mx-auto leading-relaxed">
+              <p className="text-ink-mute text-[16px] max-w-2xl mx-auto leading-relaxed">
                 And if they don't check in, it counts as a miss. So the way you reach them sets a ceiling on your score before you even start. The research is clear on this, and it points to one answer: pick up the phone.
               </p>
             </div>
 
             {/* The channel evidence — the load-bearing argument */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-100 rounded-2xl overflow-hidden mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-paper-2 rounded-2xl overflow-hidden mb-12">
               {/* Passive portal alone — below OAT */}
-              <div className="bg-white p-8 flex flex-col gap-4">
+              <div className="bg-paper-bright p-8 flex flex-col gap-4">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-red-500" />
                   <span className="text-[10px] font-bold tracking-[2px] uppercase text-red-600">Portal reminders only</span>
                 </div>
-                <div className="font-serif text-4xl text-slate-900 leading-none">45–52%</div>
+                <div className="font-serif text-4xl text-ink leading-none">45–52%</div>
                 <div className="text-[11px] text-red-600 font-semibold uppercase tracking-wider">Below the 50% line</div>
-                <p className="text-[13px] text-slate-500 leading-relaxed">
+                <p className="text-[13px] text-ink-mute leading-relaxed">
                   In a Medicare study, sending portal reminders and waiting got just 45 to 52% of patients to respond. That's not enough to clear the threshold.
                 </p>
               </div>
 
               {/* + Active phone follow-up — clears the gate */}
-              <div className="bg-white p-8 flex flex-col gap-4">
+              <div className="bg-paper-bright p-8 flex flex-col gap-4">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-emerald-500" />
                   <span className="text-[10px] font-bold tracking-[2px] uppercase text-emerald-600">Add phone calls</span>
                 </div>
-                <div className="font-serif text-4xl text-slate-900 leading-none">75–85%</div>
+                <div className="font-serif text-4xl text-ink leading-none">75–85%</div>
                 <div className="text-[11px] text-emerald-600 font-semibold uppercase tracking-wider">Clears the line</div>
-                <p className="text-[13px] text-slate-500 leading-relaxed">
+                <p className="text-[13px] text-ink-mute leading-relaxed">
                   Add a phone call on top and response jumps to 75 to 85%. Same patients, same portal. The only thing that changed was someone calling them.
                 </p>
               </div>
 
               {/* The population reality — NPHA */}
-              <div className="bg-white p-8 flex flex-col gap-4">
+              <div className="bg-paper-bright p-8 flex flex-col gap-4">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-amber-500" />
                   <span className="text-[10px] font-bold tracking-[2px] uppercase text-amber-600">Older adults with a portal</span>
                 </div>
-                <div className="font-serif text-4xl text-slate-900 leading-none">~55%</div>
+                <div className="font-serif text-4xl text-ink leading-none">~55%</div>
                 <div className="text-[11px] text-amber-600 font-semibold uppercase tracking-wider">Opened it last month</div>
-                <p className="text-[13px] text-slate-500 leading-relaxed">
+                <p className="text-[13px] text-ink-mute leading-relaxed">
                   Even among older adults who have a portal, only about half had logged in that month. Many would rather just talk to someone on the phone.
                 </p>
               </div>
@@ -383,22 +383,22 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
             {/* Honesty note — kept short */}
             <p className="text-[13px] text-slate-400 leading-relaxed text-center max-w-2xl mx-auto">
               Those numbers come from studies where people made the calls. Our own 85% is a{" "}
-              <span className="text-slate-500 font-medium">goal we're working toward</span>, not a promise. We'd rather show you why phone outreach works than throw a number at you.
+              <span className="text-ink-mute font-medium">goal we're working toward</span>, not a promise. We'd rather show you why phone outreach works than throw a number at you.
             </p>
           </div>
         </section>
 
         {/* ── What Hana Does ────────────────────────────────────────────────── */}
-        <section className="px-4 py-20 bg-white">
+        <section className="px-4 py-20 bg-paper-bright">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-14">
               <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-600 mb-4">What Hana does</p>
-              <h2 className="font-serif text-3xl md:text-4xl text-slate-900 leading-tight">
+              <h2 className="font-serif text-3xl md:text-4xl text-ink leading-tight">
                 Built specifically for the ACCESS operational problem
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-slate-100 border border-slate-100 rounded-2xl overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-paper-2 border border-rule-soft rounded-2xl overflow-hidden">
               {[
                 {
                   title: "Calls and texts your patients",
@@ -425,9 +425,9 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                   body: "Connects to Athena, Charm, and most major systems. Hana reads the chart before every call so nothing is asked twice.",
                 },
               ].map(({ title, body }) => (
-                <div key={title} className="bg-white p-8">
-                  <h3 className="font-semibold text-slate-900 text-[15px] mb-2">{title}</h3>
-                  <p className="text-[14px] text-slate-500 leading-relaxed">{body}</p>
+                <div key={title} className="bg-paper-bright p-8">
+                  <h3 className="font-semibold text-ink text-[15px] mb-2">{title}</h3>
+                  <p className="text-[14px] text-ink-mute leading-relaxed">{body}</p>
                 </div>
               ))}
             </div>
@@ -435,38 +435,38 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
         </section>
 
         {/* ── Follow-On Re-Consent ──────────────────────────────────────────── */}
-        <section className="px-4 py-20 bg-slate-50 border-t border-slate-100">
+        <section className="px-4 py-20 bg-paper-2 border-t border-rule-soft">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-14">
               <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-600 mb-4">The easy one to hand off</p>
-              <h2 className="font-serif text-3xl md:text-4xl text-slate-900 leading-tight mb-4">
+              <h2 className="font-serif text-3xl md:text-4xl text-ink leading-tight mb-4">
                 Every year, you have to get consent again
               </h2>
-              <p className="text-slate-500 text-[16px] max-w-2xl mx-auto leading-relaxed">
+              <p className="text-ink-mute text-[16px] max-w-2xl mx-auto leading-relaxed">
                 For each patient you keep, you have to ask them to re-up every twelve months. Miss the window and you can't bill that patient. It happens again next year, and the year after, for ten years.
               </p>
             </div>
 
             {/* The recurring obligation */}
-            <div className="bg-white border border-slate-200 rounded-2xl px-8 py-7 mb-12">
-              <p className="text-[15px] text-slate-600 leading-relaxed">
-                You have a <span className="text-slate-900 font-semibold">60-day window</span> to get the patient's consent again, confirm they still need the care, and take a fresh reading if the old one's gone stale.{" "}
-                <span className="text-slate-900 font-semibold">Miss it and you can't bill that patient that year.</span>{" "}
+            <div className="bg-paper-bright border border-rule rounded-2xl px-8 py-7 mb-12">
+              <p className="text-[15px] text-ink-soft leading-relaxed">
+                You have a <span className="text-ink font-semibold">60-day window</span> to get the patient's consent again, confirm they still need the care, and take a fresh reading if the old one's gone stale.{" "}
+                <span className="text-ink font-semibold">Miss it and you can't bill that patient that year.</span>{" "}
                 It's easy to forget, and the cost of forgetting is a whole year of payments.
               </p>
             </div>
 
             {/* Why this is the strongest automation fit — 4 traits */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-px bg-slate-100 rounded-2xl overflow-hidden mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-px bg-paper-2 rounded-2xl overflow-hidden mb-12">
               {[
                 { label: "Every year", body: "It comes back every twelve months for every patient you keep. Not a one-off." },
                 { label: "Hard deadline", body: "You have 60 days. Inside it you can bill. Outside it you can't." },
                 { label: "Real money", body: "Miss it and you lose a full year of payments for that patient." },
                 { label: "Nothing clinical", body: "It's consent, contact info, and a quick reading. No doctor needed." },
               ].map(({ label, body }) => (
-                <div key={label} className="bg-white p-8 flex flex-col gap-3">
+                <div key={label} className="bg-paper-bright p-8 flex flex-col gap-3">
                   <span className="text-[10px] font-bold tracking-[2px] uppercase text-blue-600">{label}</span>
-                  <p className="text-[13px] text-slate-500 leading-relaxed">{body}</p>
+                  <p className="text-[13px] text-ink-mute leading-relaxed">{body}</p>
                 </div>
               ))}
             </div>
@@ -485,39 +485,39 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
         </section>
 
         {/* ── How the timing works ─────────────────────────────────────────── */}
-        <section className="px-4 py-20 bg-white border-t border-slate-100">
+        <section className="px-4 py-20 bg-paper-bright border-t border-rule-soft">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-14">
               <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-600 mb-4">Timing matters</p>
-              <h2 className="font-serif text-3xl md:text-4xl text-slate-900 leading-tight mb-4">
+              <h2 className="font-serif text-3xl md:text-4xl text-ink leading-tight mb-4">
                 A reading on the wrong day doesn't count
               </h2>
-              <p className="text-slate-600 text-[16px] max-w-2xl mx-auto leading-relaxed">
+              <p className="text-ink-soft text-[16px] max-w-2xl mx-auto leading-relaxed">
                 CMS only accepts data inside specific windows. A regular reminder app doesn't know that. Hana does, so every call lands when the reading actually counts toward your score.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-100 border border-slate-100 rounded-2xl overflow-hidden">
-              <div className="bg-white p-8">
-                <div className="font-serif text-5xl text-slate-900 leading-none mb-3">15</div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-paper-2 border border-rule-soft rounded-2xl overflow-hidden">
+              <div className="bg-paper-bright p-8">
+                <div className="font-serif text-5xl text-ink leading-none mb-3">15</div>
                 <p className="text-[10px] font-bold tracking-[2px] uppercase text-blue-600 mb-3">Days to submit a reading</p>
-                <p className="text-[14px] text-slate-500 leading-relaxed">
+                <p className="text-[14px] text-ink-mute leading-relaxed">
                   Blood pressure, weight, and check-ins only count if sent within 15 days. Hana calls so the reading is fresh when it goes in.
                 </p>
               </div>
 
-              <div className="bg-white p-8">
-                <div className="font-serif text-5xl text-slate-900 leading-none mb-3">60</div>
+              <div className="bg-paper-bright p-8">
+                <div className="font-serif text-5xl text-ink leading-none mb-3">60</div>
                 <p className="text-[10px] font-bold tracking-[2px] uppercase text-blue-600 mb-3">Days to get the first reading</p>
-                <p className="text-[14px] text-slate-500 leading-relaxed">
+                <p className="text-[14px] text-ink-mute leading-relaxed">
                   You have 60 days to get a patient's first reading, or they drop out of the program. Hana makes sure it happens in time.
                 </p>
               </div>
 
-              <div className="bg-white p-8">
-                <div className="font-serif text-5xl text-slate-900 leading-none mb-3">1–2</div>
+              <div className="bg-paper-bright p-8">
+                <div className="font-serif text-5xl text-ink leading-none mb-3">1–2</div>
                 <p className="text-[10px] font-bold tracking-[2px] uppercase text-blue-600 mb-3">Years a lab result lasts</p>
-                <p className="text-[14px] text-slate-500 leading-relaxed">
+                <p className="text-[14px] text-ink-mute leading-relaxed">
                   Lab results count for one to two years, so they're on a different clock. Hana tracks each one separately instead of nagging everyone at once.
                 </p>
               </div>
@@ -527,27 +527,27 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
         </section>
 
         {/* ── Pricing ───────────────────────────────────────────────────────── */}
-        <section className="px-4 py-20 bg-slate-50 border-t border-slate-100">
+        <section className="px-4 py-20 bg-paper-2 border-t border-rule-soft">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-14">
               <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-600 mb-4">Pricing</p>
-              <h2 className="font-serif text-3xl md:text-4xl text-slate-900 leading-tight mb-4">
+              <h2 className="font-serif text-3xl md:text-4xl text-ink leading-tight mb-4">
                 We win when you win.
               </h2>
-              <p className="text-slate-500 text-[16px] max-w-xl mx-auto leading-relaxed">
+              <p className="text-ink-mute text-[16px] max-w-xl mx-auto leading-relaxed">
                 You only pay the success fee when CMS pays you back the money they held for a year. It's the easiest check you'll write.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
               {/* Base fee */}
-              <div className="bg-white border border-slate-200 rounded-2xl p-8">
+              <div className="bg-paper-bright border border-rule rounded-2xl p-8">
                 <p className="text-[10px] font-bold tracking-[2px] uppercase text-slate-400 mb-4">Base fee</p>
-                <div className="font-serif text-5xl text-slate-900 mb-2">$5</div>
-                <div className="text-slate-500 text-sm mb-6">per patient / per month</div>
+                <div className="font-serif text-5xl text-ink mb-2">$5</div>
+                <div className="text-ink-mute text-sm mb-6">per patient / per month</div>
                 <ul className="space-y-2">
                   {["All the calls and texts", "Every check-in, all tracks", "Timed to count with CMS", "Data sent to CMS for you", "Alerts when something's off"].map(item => (
-                    <li key={item} className="flex items-center gap-2 text-[13px] text-slate-600">
+                    <li key={item} className="flex items-center gap-2 text-[13px] text-ink-soft">
                       <div className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
                       {item}
                     </li>
@@ -570,7 +570,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
             </div>
 
             {/* ROI calc */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-8 md:p-10">
+            <div className="bg-paper-bright border border-rule rounded-2xl p-8 md:p-10">
               <p className="text-[10px] font-bold tracking-[2px] uppercase text-blue-600 mb-6">The math · CKM track, 1,000 patients</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-3">
@@ -584,19 +584,19 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                     ["Total Hana cost", "$81,000"],
                   ].map(([label, value]) => (
                     <div key={label} className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4 text-[14px]">
-                      <span className="text-slate-500">{label}</span>
-                      <span className="text-slate-900 font-medium tabular-nums sm:text-right">{value}</span>
+                      <span className="text-ink-mute">{label}</span>
+                      <span className="text-ink font-medium tabular-nums sm:text-right">{value}</span>
                     </div>
                   ))}
-                  <div className="border-t border-slate-100 pt-3 flex items-baseline justify-between gap-4">
-                    <span className="text-slate-900 font-semibold text-[14px]">Revenue protected</span>
-                    <span className="text-slate-900 font-semibold text-[14px]">$210,000</span>
+                  <div className="border-t border-rule-soft pt-3 flex items-baseline justify-between gap-4">
+                    <span className="text-ink font-semibold text-[14px]">Revenue protected</span>
+                    <span className="text-ink font-semibold text-[14px]">$210,000</span>
                   </div>
                 </div>
                 <div className="flex flex-col items-center justify-center bg-blue-50 rounded-xl p-8 text-center">
                   <div className="font-serif text-5xl sm:text-6xl md:text-[72px] text-blue-600 leading-none mb-2">2.6×</div>
                   <div className="text-[11px] font-bold tracking-[2px] uppercase text-blue-600 mb-3">Return</div>
-                  <p className="text-[13px] text-slate-500 leading-relaxed">
+                  <p className="text-[13px] text-ink-mute leading-relaxed">
                     Hana brings back $210K for $81K. And if you fall short of the line, say 40%, you'd get just $168K instead, leaving $42K on the table.
                   </p>
                 </div>
@@ -621,7 +621,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
               {/* Inputs */}
-              <div className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-8 flex flex-col gap-8">
+              <div className="bg-paper-bright/[0.04] border border-white/[0.08] rounded-2xl p-8 flex flex-col gap-8">
 
                 {/* Patient count */}
                 <div>
@@ -727,7 +727,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                 </div>
 
                 {/* Key numbers */}
-                <div className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-6 flex flex-col gap-4 flex-1">
+                <div className="bg-paper-bright/[0.04] border border-white/[0.08] rounded-2xl p-6 flex flex-col gap-4 flex-1">
                   {[
                     ["Paid over the year", `$${annualOAP.toLocaleString()}`],
                     ["Held back by CMS (50%)", `$${withheld.toLocaleString()}`],
@@ -763,17 +763,17 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
         </section>
 
         {/* ── Track Tabs ────────────────────────────────────────────────────── */}
-        <section className="px-4 py-20 bg-white border-t border-slate-100">
+        <section className="px-4 py-20 bg-paper-bright border-t border-rule-soft">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-600 mb-4">By track</p>
-              <h2 className="font-serif text-3xl md:text-4xl text-slate-900 leading-tight">
+              <h2 className="font-serif text-3xl md:text-4xl text-ink leading-tight">
                 What Hana handles per track
               </h2>
             </div>
 
             {/* Tab switcher */}
-            <div className="flex gap-1 p-1 bg-slate-100 rounded-xl mb-10 w-fit mx-auto">
+            <div className="flex gap-1 p-1 bg-paper-2 rounded-xl mb-10 w-fit mx-auto">
               {TRACKS.map(t => (
                 <button
                   key={t.key}
@@ -793,7 +793,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
                 <div className="flex items-center gap-2 mb-1">
-                  <h3 className="font-serif text-2xl text-slate-900">{track.label}</h3>
+                  <h3 className="font-serif text-2xl text-ink">{track.label}</h3>
                 </div>
                 <p className="text-slate-400 text-sm mb-6">{track.subtitle} · OAP {track.oap}</p>
                 <p className="text-[10px] font-bold tracking-[2px] uppercase mb-4" style={{ color: track.color }}>Required measures</p>
@@ -802,23 +802,23 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                     <div key={m.name} className="flex items-start gap-3">
                       <div className="w-1.5 h-1.5 rounded-full mt-2 shrink-0" style={{ backgroundColor: track.color }} />
                       <div>
-                        <span className="text-[14px] font-semibold text-slate-900">{m.name}</span>
+                        <span className="text-[14px] font-semibold text-ink">{m.name}</span>
                         <span className="text-[13px] text-slate-400 ml-2">{m.note}</span>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-              <div className="bg-slate-50 border border-slate-100 rounded-2xl p-7">
+              <div className="bg-paper-2 border border-rule-soft rounded-2xl p-7">
                 <p className="text-[10px] font-bold tracking-[2px] uppercase mb-4" style={{ color: track.color }}>How Hana handles it</p>
-                <p className="text-[15px] text-slate-600 leading-relaxed">{track.hana}</p>
+                <p className="text-[15px] text-ink-soft leading-relaxed">{track.hana}</p>
                 {track.whodas && (
-                  <div className="mt-6 pt-6 border-t border-slate-200">
+                  <div className="mt-6 pt-6 border-t border-rule">
                     <div className="flex items-center gap-2 mb-3">
                       <div className="w-2 h-2 rounded-full bg-emerald-500" />
                       <span className="text-[11px] font-bold tracking-[2px] uppercase text-emerald-600">WHODAS 2.0 · optional</span>
                     </div>
-                    <p className="text-[13px] text-slate-500 leading-relaxed">
+                    <p className="text-[13px] text-ink-mute leading-relaxed">
                       A short check-in on daily function. It's optional for now, but CMS has hinted something like it is coming, so it's worth getting ahead of. Most older patients won't fill it out online. Hana just asks them over the phone, in plain language, and sends the results in for you.
                     </p>
                   </div>
@@ -829,19 +829,19 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
         </section>
 
         {/* ── Roadmap ───────────────────────────────────────────────────────── */}
-        <section className="px-4 py-20 bg-slate-50 border-t border-slate-100">
+        <section className="px-4 py-20 bg-paper-2 border-t border-rule-soft">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-14">
               <p className="text-[10px] font-bold tracking-[3px] uppercase text-blue-600 mb-4">On the roadmap</p>
-              <h2 className="font-serif text-3xl md:text-4xl text-slate-900 leading-tight mb-4">
+              <h2 className="font-serif text-3xl md:text-4xl text-ink leading-tight mb-4">
                 What we're building next
               </h2>
-              <p className="text-slate-500 text-[16px] max-w-xl mx-auto leading-relaxed">
+              <p className="text-ink-mute text-[16px] max-w-xl mx-auto leading-relaxed">
                 These aren't live yet, and we won't pretend they are. Here's what's coming, and we're upfront about where it stops.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-100 rounded-2xl overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-paper-2 rounded-2xl overflow-hidden">
               {[
                 {
                   title: "Care update drafts",
@@ -859,16 +859,16 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                   not: "It's a heads-up, not a fix. Patients are always free to go elsewhere.",
                 },
               ].map(({ title, what, not }) => (
-                <div key={title} className="bg-white p-8">
+                <div key={title} className="bg-paper-bright p-8">
                   <div className="inline-flex items-center gap-2 mb-5">
                     <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
                     <span className="text-[10px] font-bold tracking-[2px] uppercase text-amber-600">Coming soon</span>
                   </div>
-                  <h3 className="font-semibold text-slate-900 text-[15px] mb-3">{title}</h3>
-                  <p className="text-[14px] text-slate-600 leading-relaxed mb-5">{what}</p>
-                  <div className="pt-4 border-t border-slate-100">
+                  <h3 className="font-semibold text-ink text-[15px] mb-3">{title}</h3>
+                  <p className="text-[14px] text-ink-soft leading-relaxed mb-5">{what}</p>
+                  <div className="pt-4 border-t border-rule-soft">
                     <p className="text-[10px] font-bold tracking-[2px] uppercase text-slate-400 mb-2">Where it stops</p>
-                    <p className="text-[13px] text-slate-500 leading-relaxed">{not}</p>
+                    <p className="text-[13px] text-ink-mute leading-relaxed">{not}</p>
                   </div>
                 </div>
               ))}
@@ -889,7 +889,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
           eyebrow="FAQ"
           heading="Questions we get on every call"
           exclusive
-          className="px-4 md:px-4 py-20 md:py-20 border-t border-slate-100"
+          className="px-4 md:px-4 py-20 md:py-20 border-t border-rule-soft"
         />
 
         {/* ── Bottom CTA ────────────────────────────────────────────────────── */}
@@ -916,9 +916,9 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
 
             {/* PDF lead capture */}
             <div className="border-t border-white/[0.07] pt-12 max-w-xl mx-auto text-center">
-              <p className="text-[10px] font-bold tracking-[3px] uppercase text-slate-500 mb-3">Free one-pager</p>
+              <p className="text-[10px] font-bold tracking-[3px] uppercase text-ink-mute mb-3">Free one-pager</p>
               <p className="text-white font-semibold text-[15px] mb-2">ACCESS Pricing & ROI Calculator</p>
-              <p className="text-slate-500 text-[13px] mb-6">The numbers for each track, with your patient count filled in.</p>
+              <p className="text-ink-mute text-[13px] mb-6">The numbers for each track, with your patient count filled in.</p>
               {submitted ? (
                 <div className="flex items-center justify-center gap-2 text-emerald-400 text-[14px] font-semibold py-3">
                   <div className="w-2 h-2 rounded-full bg-emerald-400" />
@@ -935,11 +935,11 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     placeholder="you@company.com"
-                    className="flex-1 px-4 py-3 rounded-xl bg-white/[0.06] border border-white/[0.1] text-white placeholder-slate-500 text-[14px] focus:outline-none focus:border-blue-500/60"
+                    className="flex-1 px-4 py-3 rounded-xl bg-paper-bright/[0.06] border border-white/[0.1] text-white placeholder-ink-mute text-[14px] focus:outline-none focus:border-blue-500/60"
                   />
                   <button
                     type="submit"
-                    className="w-full sm:w-auto px-6 py-3 bg-white text-navy rounded-xl font-semibold text-[14px] hover:bg-slate-100 transition-colors shrink-0"
+                    className="w-full sm:w-auto px-6 py-3 bg-paper-bright text-navy rounded-xl font-semibold text-[14px] hover:bg-paper-2 transition-colors shrink-0"
                   >
                     Send it
                   </button>

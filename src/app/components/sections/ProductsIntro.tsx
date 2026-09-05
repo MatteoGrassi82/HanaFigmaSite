@@ -114,7 +114,7 @@ export function ProductsIntro() {
           {PRODUCTS.map((p) => (
             <div
               key={p.href}
-              className={`${cardHover} bg-white border border-[#e8ebf2] rounded-[18px] overflow-hidden flex flex-col`}
+              className={`${cardHover} bg-paper-bright border border-[#e8ebf2] rounded-[18px] overflow-hidden flex flex-col`}
             >
               {/* photo header — real people, the human side of each product */}
               <div className="relative">
@@ -132,7 +132,7 @@ export function ProductsIntro() {
               </div>
 
               {/* activity feed — floats up over the photo's bottom edge */}
-              <div className="relative z-10 mx-6 sm:mx-8 -mt-14 bg-white rounded-[12px] border border-[#e8ebf2] shadow-[0_12px_30px_rgba(0,18,47,0.14)] px-5 py-1.5">
+              <div className="relative z-10 mx-6 sm:mx-8 -mt-14 bg-paper-bright rounded-[12px] border border-[#e8ebf2] shadow-[0_12px_30px_rgba(0,18,47,0.14)] px-5 py-1.5">
                 {p.rows.map((row, i) => (
                   <div
                     key={row.label}

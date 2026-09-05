@@ -311,19 +311,19 @@ function ModuleCard({ mod, index }: { mod: typeof MODULES[0]; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm"
+      className="rounded-2xl border border-rule bg-paper-bright overflow-hidden shadow-sm"
     >
       <button
         onClick={() => setOpen(v => !v)}
-        className="w-full flex items-center gap-5 p-6 text-left hover:bg-slate-50 transition-colors"
+        className="w-full flex items-center gap-5 p-6 text-left hover:bg-paper-2 transition-colors"
       >
         <span className="shrink-0 w-10 h-10 rounded-xl bg-blue-50 border border-blue-200 text-blue-600 text-xs font-bold flex items-center justify-center">
           {mod.num}
         </span>
         <div className="flex-1 min-w-0">
           <p className="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-0.5">{IT ? "Modulo" : "Module"} {mod.num}</p>
-          <p className="text-base font-semibold text-slate-900">{mod.title}</p>
-          <p className="text-sm text-slate-500 mt-1 leading-relaxed">{mod.description}</p>
+          <p className="text-base font-semibold text-ink">{mod.title}</p>
+          <p className="text-sm text-ink-mute mt-1 leading-relaxed">{mod.description}</p>
         </div>
         <span className="shrink-0 text-slate-400">{open ? <ChevronUp size={18} /> : <ChevronDown size={18} />}</span>
       </button>
@@ -337,7 +337,7 @@ function ModuleCard({ mod, index }: { mod: typeof MODULES[0]; index: number }) {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div className="border-t border-slate-200 p-6 bg-slate-50">
+            <div className="border-t border-rule p-6 bg-paper-2">
               {mod.callout && (
                 <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-5 text-sm text-blue-700 leading-relaxed">
                   {mod.callout}
@@ -346,7 +346,7 @@ function ModuleCard({ mod, index }: { mod: typeof MODULES[0]; index: number }) {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="bg-slate-800 text-white">
+                    <tr className="bg-navy text-white">
                       <th className="text-left px-4 py-2.5 font-semibold rounded-tl-lg w-16">ID</th>
                       <th className="text-left px-4 py-2.5 font-semibold w-48">{IT ? "Argomento" : "Topic"}</th>
                       <th className="text-left px-4 py-2.5 font-semibold rounded-tr-lg">{IT ? "Finalità Clinica" : "Clinical Purpose"}</th>
@@ -354,10 +354,10 @@ function ModuleCard({ mod, index }: { mod: typeof MODULES[0]; index: number }) {
                   </thead>
                   <tbody>
                     {mod.items.map((item, i) => (
-                      <tr key={item.id} className={i % 2 === 0 ? "bg-white" : "bg-slate-50"}>
+                      <tr key={item.id} className={i % 2 === 0 ? "bg-paper-bright" : "bg-paper-2"}>
                         <td className="px-4 py-3 font-bold text-blue-600">{item.id}</td>
-                        <td className="px-4 py-3 font-semibold text-slate-800">{item.topic}</td>
-                        <td className="px-4 py-3 text-slate-500 leading-relaxed">{item.purpose}</td>
+                        <td className="px-4 py-3 font-semibold text-ink">{item.topic}</td>
+                        <td className="px-4 py-3 text-ink-mute leading-relaxed">{item.purpose}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -366,7 +366,7 @@ function ModuleCard({ mod, index }: { mod: typeof MODULES[0]; index: number }) {
               {mod.sample && (
                 <div className="mt-5 border-l-4 border-blue-500 pl-4">
                   <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">{IT ? "Esempio di apertura" : "Opening sample"}</p>
-                  <p className="text-sm text-slate-500 italic leading-relaxed">{mod.sample}</p>
+                  <p className="text-sm text-ink-mute italic leading-relaxed">{mod.sample}</p>
                 </div>
               )}
             </div>
@@ -389,18 +389,18 @@ function EHRStep({ step, index }: { step: typeof EHR_STEPS[0]; index: number }) 
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay: index * 0.08 }}
-      className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm"
+      className="rounded-2xl border border-rule bg-paper-bright overflow-hidden shadow-sm"
     >
       <button
         onClick={() => setOpen(v => !v)}
-        className="w-full flex items-center gap-4 p-5 text-left hover:bg-slate-50 transition-colors"
+        className="w-full flex items-center gap-4 p-5 text-left hover:bg-paper-2 transition-colors"
       >
         <span className="shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white text-sm font-bold flex items-center justify-center">
           {step.n}
         </span>
         <div className="flex-1 min-w-0">
-          <p className="font-semibold text-slate-900 text-sm">{step.title}</p>
-          {step.desc && <p className="text-xs text-slate-500 mt-0.5">{step.desc}</p>}
+          <p className="font-semibold text-ink text-sm">{step.title}</p>
+          {step.desc && <p className="text-xs text-ink-mute mt-0.5">{step.desc}</p>}
         </div>
         <div className="flex items-center gap-3 shrink-0">
           <span className="text-xs text-slate-400">{done}/{step.steps.length}</span>
@@ -418,7 +418,7 @@ function EHRStep({ step, index }: { step: typeof EHR_STEPS[0]; index: number }) 
             transition={{ duration: 0.25 }}
             className="overflow-hidden"
           >
-            <div className="border-t border-slate-200 p-5 bg-slate-50 space-y-2.5">
+            <div className="border-t border-rule p-5 bg-paper-2 space-y-2.5">
               {step.steps.map((s, i) => (
                 <button
                   key={i}
@@ -428,11 +428,11 @@ function EHRStep({ step, index }: { step: typeof EHR_STEPS[0]; index: number }) 
                   <span className={`shrink-0 mt-0.5 w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${
                     checked[i]
                       ? "bg-blue-600 border-blue-600"
-                      : "border-slate-300 group-hover:border-blue-400"
+                      : "border-rule group-hover:border-blue-400"
                   }`}>
                     {checked[i] && <CheckCircle2 size={12} className="text-white" />}
                   </span>
-                  <span className={`text-sm leading-relaxed transition-colors ${checked[i] ? "text-slate-400 line-through" : "text-slate-600"}`}>
+                  <span className={`text-sm leading-relaxed transition-colors ${checked[i] ? "text-slate-400 line-through" : "text-ink-soft"}`}>
                     {s}
                   </span>
                 </button>
@@ -469,8 +469,8 @@ function JourneyGrid({ steps }: { steps: typeof PEDIATRIC_STEPS }) {
             active === i
               ? "bg-blue-600 border-blue-500 text-white"
               : i < 4
-              ? "bg-white border-slate-200 text-slate-900 hover:bg-slate-50 hover:border-slate-300"
-              : "bg-blue-50 border-blue-200 text-slate-900 hover:bg-blue-100"
+              ? "bg-paper-bright border-rule text-ink hover:bg-paper-2 hover:border-rule"
+              : "bg-blue-50 border-blue-200 text-ink hover:bg-blue-100"
           }`}
         >
           <div className="flex items-center justify-between mb-1">
@@ -501,7 +501,7 @@ function JourneyGrid({ steps }: { steps: typeof PEDIATRIC_STEPS }) {
 function SectionHeader({ label }: { label: string }) {
   return (
     <div className="mb-8">
-      <h2 className="text-2xl font-bold text-slate-900">{label}</h2>
+      <h2 className="text-2xl font-bold text-ink">{label}</h2>
       <div className="mt-2.5 h-0.5 bg-blue-500 w-12" />
     </div>
   );
@@ -557,7 +557,7 @@ export function WhitepaperADHD() {
             <h2 className="text-3xl md:text-4xl font-black text-blue-400 mb-8 leading-tight">{IT ? "WORKFLOW DI ACCOGLIENZA ADHD" : "ADHD INTAKE WORKFLOW"}</h2>
             <div className="w-16 h-0.5 bg-blue-500 mb-8" />
             <p className="text-lg text-slate-300 mb-3 font-light">{IT ? "Una Guida Completa per Cliniche Partner Potenziali" : "A Complete Walkthrough for Prospective Clinic Partners"}</p>
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-ink-mute">
               {IT
                 ? <>Contenuti: architettura dell'intervista a 3 moduli &nbsp;·&nbsp; flussi di accoglienza pediatrici &amp; adulti &nbsp;·&nbsp; integrazione Practice Q</>
                 : <>Covering: 3-module interview architecture &nbsp;·&nbsp; pediatric &amp; adult intake flows &nbsp;·&nbsp; Practice Q integration</>}
@@ -587,7 +587,7 @@ export function WhitepaperADHD() {
                 <p className="text-3xl font-black text-white mb-1">
                   <Counter target={s.val} suffix={s.suffix} />
                 </p>
-                <p className="text-xs text-slate-500 leading-snug">{s.label}</p>
+                <p className="text-xs text-ink-mute leading-snug">{s.label}</p>
               </div>
             ))}
           </motion.div>
@@ -595,7 +595,7 @@ export function WhitepaperADHD() {
       </div>
 
       {/* Body */}
-      <div className="bg-slate-50 min-h-screen">
+      <div className="bg-paper-2 min-h-screen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
           <div className="flex gap-12">
 
@@ -611,7 +611,7 @@ export function WhitepaperADHD() {
                       className={`w-full text-left text-sm px-3 py-2 rounded-lg transition-all ${
                         activeSection === s.id
                           ? "bg-blue-50 text-blue-600 font-semibold border border-blue-200"
-                          : "text-slate-500 hover:text-slate-800 hover:bg-white"
+                          : "text-ink-mute hover:text-ink hover:bg-paper-bright"
                       }`}
                     >
                       {s.label}
@@ -627,18 +627,18 @@ export function WhitepaperADHD() {
               {/* Executive Summary */}
               <section ref={setRef("executive-summary")} id="executive-summary">
                 <SectionHeader label={IT ? "Sintesi Esecutiva" : "Executive Summary"} />
-                <div className="space-y-4 text-slate-600 leading-relaxed">
+                <div className="space-y-4 text-ink-soft leading-relaxed">
                   {IT ? (
                     <>
                       <p>HANA è una piattaforma di voice AI che trasforma il modo in cui gli studi di salute mentale e neurosviluppo conducono l'accoglienza dei pazienti. Questo documento offre una guida completa, passo dopo passo, al workflow di accoglienza ADHD di HANA — dal momento in cui un paziente contatta il tuo studio fino a quando il clinico riceve un referto strutturato e pronto per l'analisi.</p>
-                      <p>L'accoglienza ADHD di HANA si basa su una <span className="text-slate-900 font-semibold">intervista strutturata a tre moduli</span>, progettata in collaborazione con specialisti certificati nella diagnosi dell'ADHD. HANA conduce l'intervista tramite voce, raccoglie i punti dati definiti dal clinico e organizza i risultati nel tuo gestionale — riducendo il carico amministrativo, migliorando la coerenza dei dati e liberando i clinici per concentrarsi sulla cura.</p>
-                      <p>Questa guida copre due casi d'uso principali: <span className="text-slate-900 font-semibold">accoglienza ADHD pediatrica (flusso su segnalazione del genitore)</span> e <span className="text-slate-900 font-semibold">accoglienza ADHD per adulti (flusso di autovalutazione)</span>. Entrambi utilizzano la stessa architettura di intervista a tre moduli, adattata al tipo di rispondente.</p>
+                      <p>L'accoglienza ADHD di HANA si basa su una <span className="text-ink font-semibold">intervista strutturata a tre moduli</span>, progettata in collaborazione con specialisti certificati nella diagnosi dell'ADHD. HANA conduce l'intervista tramite voce, raccoglie i punti dati definiti dal clinico e organizza i risultati nel tuo gestionale — riducendo il carico amministrativo, migliorando la coerenza dei dati e liberando i clinici per concentrarsi sulla cura.</p>
+                      <p>Questa guida copre due casi d'uso principali: <span className="text-ink font-semibold">accoglienza ADHD pediatrica (flusso su segnalazione del genitore)</span> e <span className="text-ink font-semibold">accoglienza ADHD per adulti (flusso di autovalutazione)</span>. Entrambi utilizzano la stessa architettura di intervista a tre moduli, adattata al tipo di rispondente.</p>
                     </>
                   ) : (
                     <>
                       <p>HANA is a voice AI platform that transforms how mental health and neurodevelopmental practices conduct patient intake. This document provides a complete, step-by-step walkthrough of the HANA ADHD intake workflow — from the moment a patient contacts your practice to the moment your clinician receives a structured, analysis-ready report.</p>
-                      <p>The HANA ADHD intake is built around a structured <span className="text-slate-900 font-semibold">three-module interview</span>, designed in collaboration with board-certified ADHD diagnosticians. HANA conducts the interview by voice, collects clinician-defined data points, and organizes findings into your practice management system — reducing administrative burden, improving data consistency, and freeing clinicians to focus on care.</p>
-                      <p>This walkthrough covers two core use cases: <span className="text-slate-900 font-semibold">pediatric ADHD intake (parent-report flow)</span> and <span className="text-slate-900 font-semibold">adult ADHD intake (self-report flow)</span>. Both leverage the same three-module interview architecture, adapted for the respondent type.</p>
+                      <p>The HANA ADHD intake is built around a structured <span className="text-ink font-semibold">three-module interview</span>, designed in collaboration with board-certified ADHD diagnosticians. HANA conducts the interview by voice, collects clinician-defined data points, and organizes findings into your practice management system — reducing administrative burden, improving data consistency, and freeing clinicians to focus on care.</p>
+                      <p>This walkthrough covers two core use cases: <span className="text-ink font-semibold">pediatric ADHD intake (parent-report flow)</span> and <span className="text-ink font-semibold">adult ADHD intake (self-report flow)</span>. Both leverage the same three-module interview architecture, adapted for the respondent type.</p>
                     </>
                   )}
                 </div>
@@ -647,14 +647,14 @@ export function WhitepaperADHD() {
               {/* Workflow Overview */}
               <section ref={setRef("workflow-overview")} id="workflow-overview">
                 <SectionHeader label={IT ? "Panoramica del Workflow" : "Workflow Overview"} />
-                <p className="text-slate-600 leading-relaxed mb-6">{IT ? "Diagrammi interattivi dell'intero percorso del paziente e dell'architettura dell'intervista a tre moduli. Trascina per spostarti, scorri per zoomare." : "Interactive diagrams of the full patient journey and the three-module interview architecture. Drag to pan, scroll to zoom."}</p>
+                <p className="text-ink-soft leading-relaxed mb-6">{IT ? "Diagrammi interattivi dell'intero percorso del paziente e dell'architettura dell'intervista a tre moduli. Trascina per spostarti, scorri per zoomare." : "Interactive diagrams of the full patient journey and the three-module interview architecture. Drag to pan, scroll to zoom."}</p>
                 <WhitepaperFlows />
               </section>
 
               {/* The Challenge */}
               <section ref={setRef("the-challenge")} id="the-challenge">
                 <SectionHeader label={IT ? "La Sfida: Perché l'Accoglienza ADHD va Ripensata" : "The Challenge: Why ADHD Intake Needs a Rethink"} />
-                <p className="text-slate-600 leading-relaxed mb-8">{IT ? "La valutazione dell'ADHD è uno dei processi più intensivi in termini di dati nella salute mentale clinica. Un'accoglienza accurata richiede la raccolta di informazioni strutturate da più informatori, in più contesti, su decine di dimensioni comportamentali. La sfida si manifesta in tre modi:" : "ADHD assessment is one of the most data-intensive processes in clinical mental health. A thorough intake requires gathering structured information from multiple informants, across multiple settings, on dozens of behavioral dimensions. The challenge shows up in three ways:"}</p>
+                <p className="text-ink-soft leading-relaxed mb-8">{IT ? "La valutazione dell'ADHD è uno dei processi più intensivi in termini di dati nella salute mentale clinica. Un'accoglienza accurata richiede la raccolta di informazioni strutturate da più informatori, in più contesti, su decine di dimensioni comportamentali. La sfida si manifesta in tre modi:" : "ADHD assessment is one of the most data-intensive processes in clinical mental health. A thorough intake requires gathering structured information from multiple informants, across multiple settings, on dozens of behavioral dimensions. The challenge shows up in three ways:"}</p>
                 <div className="grid gap-4 sm:grid-cols-3">
                   {(IT
                     ? [
@@ -676,12 +676,12 @@ export function WhitepaperADHD() {
                       transition={{ duration: 0.4, delay: i * 0.1 }}
                       className="bg-red-50 border border-red-100 rounded-2xl p-5"
                     >
-                      <p className="font-bold text-slate-900 mb-2">{c.title}</p>
-                      <p className="text-sm text-slate-600 leading-relaxed">{c.text}</p>
+                      <p className="font-bold text-ink mb-2">{c.title}</p>
+                      <p className="text-sm text-ink-soft leading-relaxed">{c.text}</p>
                     </motion.div>
                   ))}
                 </div>
-                <p className="text-slate-700 leading-relaxed mt-6 font-medium">
+                <p className="text-ink-soft leading-relaxed mt-6 font-medium">
                   {IT ? "Il risultato: tempi di attesa più lunghi per le famiglie, costi operativi più alti per le cliniche e burnout dei clinici — senza migliorare l'accuratezza diagnostica." : "The result: longer wait times for families, higher operational costs for clinics, and clinician burnout — without improving diagnostic accuracy."}
                 </p>
               </section>
@@ -689,12 +689,12 @@ export function WhitepaperADHD() {
               {/* Solution */}
               <section ref={setRef("the-solution")} id="the-solution">
                 <SectionHeader label={IT ? "La Soluzione HANA" : "The HANA Solution"} />
-                <p className="text-slate-600 leading-relaxed mb-8">{IT ? "HANA sostituisce le chiamate di accoglienza non strutturate con un'intervista voice AI strutturata. Un genitore o un paziente chiama una linea HANA dedicata (o riceve una chiamata in uscita) e HANA conduce un'intervista progettata dal clinico — raccogliendo esattamente i punti dati di cui i tuoi clinici hanno bisogno, in un formato coerente ed empatico, ogni volta." : "HANA replaces unstructured intake calls with a structured voice AI interview. A parent or patient calls a dedicated HANA line (or receives an outbound call), and HANA conducts a clinician-designed interview — capturing the exact data points your clinicians need, in a consistent and empathetic format, every time."}</p>
-                <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm">
+                <p className="text-ink-soft leading-relaxed mb-8">{IT ? "HANA sostituisce le chiamate di accoglienza non strutturate con un'intervista voice AI strutturata. Un genitore o un paziente chiama una linea HANA dedicata (o riceve una chiamata in uscita) e HANA conduce un'intervista progettata dal clinico — raccogliendo esattamente i punti dati di cui i tuoi clinici hanno bisogno, in un formato coerente ed empatico, ogni volta." : "HANA replaces unstructured intake calls with a structured voice AI interview. A parent or patient calls a dedicated HANA line (or receives an outbound call), and HANA conducts a clinician-designed interview — capturing the exact data points your clinicians need, in a consistent and empathetic format, every time."}</p>
+                <div className="overflow-x-auto rounded-2xl border border-rule shadow-sm">
                   <table className="w-full text-sm">
                     <thead>
                       <tr>
-                        <th className="bg-slate-800 text-white text-left px-5 py-3.5 font-semibold rounded-tl-2xl">{IT ? "Accoglienza Tradizionale" : "Traditional Intake"}</th>
+                        <th className="bg-navy text-white text-left px-5 py-3.5 font-semibold rounded-tl-2xl">{IT ? "Accoglienza Tradizionale" : "Traditional Intake"}</th>
                         <th className="bg-blue-600 text-white text-left px-5 py-3.5 font-semibold rounded-tr-2xl">{IT ? "Accoglienza HANA" : "HANA Intake"}</th>
                       </tr>
                     </thead>
@@ -715,8 +715,8 @@ export function WhitepaperADHD() {
                             ["Clinician burnout on data-gathering", "Clinicians engage only at interpretation and planning stage"],
                           ]
                       ).map(([bad, good], i) => (
-                        <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-slate-50"}>
-                          <td className="px-5 py-3.5 text-slate-500">{bad}</td>
+                        <tr key={i} className={i % 2 === 0 ? "bg-paper-bright" : "bg-paper-2"}>
+                          <td className="px-5 py-3.5 text-ink-mute">{bad}</td>
                           <td className="px-5 py-3.5 text-blue-600 font-medium">{good}</td>
                         </tr>
                       ))}
@@ -728,7 +728,7 @@ export function WhitepaperADHD() {
               {/* Interview Architecture */}
               <section ref={setRef("interview-architecture")} id="interview-architecture">
                 <SectionHeader label={IT ? "L'Architettura dell'Intervista: Tre Moduli" : "The Interview Architecture: Three Modules"} />
-                <p className="text-slate-600 leading-relaxed mb-8">{IT ? "L'intervista ADHD di HANA è organizzata in tre moduli sequenziali. Ogni modulo ha una finalità clinica definita e insieme producono un quadro completo della presentazione del paziente, della compromissione funzionale, dell'anamnesi evolutiva e del contesto di trattamento." : "The HANA ADHD interview is organized into three sequential modules. Each module has a defined clinical purpose and together they produce a complete picture of the patient's presentation, functional impairment, developmental history, and treatment context."}</p>
+                <p className="text-ink-soft leading-relaxed mb-8">{IT ? "L'intervista ADHD di HANA è organizzata in tre moduli sequenziali. Ogni modulo ha una finalità clinica definita e insieme producono un quadro completo della presentazione del paziente, della compromissione funzionale, dell'anamnesi evolutiva e del contesto di trattamento." : "The HANA ADHD interview is organized into three sequential modules. Each module has a defined clinical purpose and together they produce a complete picture of the patient's presentation, functional impairment, developmental history, and treatment context."}</p>
                 <p className="text-xs text-slate-400 mb-4 uppercase tracking-wider font-semibold">{IT ? "Clicca un modulo per espanderlo" : "Click a module to expand"}</p>
                 <div className="space-y-3">
                   {MODULES.map((mod, i) => <ModuleCard key={mod.key} mod={mod} index={i} />)}
@@ -738,10 +738,10 @@ export function WhitepaperADHD() {
               {/* Patient Journey */}
               <section ref={setRef("patient-journey")} id="patient-journey">
                 <SectionHeader label={IT ? "Il Percorso del Paziente" : "The Patient Journey"} />
-                <p className="text-slate-600 leading-relaxed mb-8">{IT ? "HANA supporta due flussi principali di accoglienza ADHD. Entrambi seguono la stessa struttura di intervista a tre moduli, adattata al rispondente." : "HANA supports two primary ADHD intake flows. Both follow the same three-module interview structure, adapted for the respondent."}</p>
+                <p className="text-ink-soft leading-relaxed mb-8">{IT ? "HANA supporta due flussi principali di accoglienza ADHD. Entrambi seguono la stessa struttura di intervista a tre moduli, adattata al rispondente." : "HANA supports two primary ADHD intake flows. Both follow the same three-module interview structure, adapted for the respondent."}</p>
 
                 {/* Tab toggle */}
-                <div className="flex gap-2 p-1 bg-white border border-slate-200 rounded-xl w-full sm:w-fit mb-8 shadow-sm">
+                <div className="flex gap-2 p-1 bg-paper-bright border border-rule rounded-xl w-full sm:w-fit mb-8 shadow-sm">
                   {(["pediatric", "adult"] as const).map(tab => (
                     <button
                       key={tab}
@@ -749,7 +749,7 @@ export function WhitepaperADHD() {
                       className={`flex-1 sm:flex-none px-3 sm:px-5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
                         journeyTab === tab
                           ? "bg-blue-600 text-white shadow"
-                          : "text-slate-500 hover:text-slate-800"
+                          : "text-ink-mute hover:text-ink"
                       }`}
                     >
                       {tab === "pediatric"
@@ -767,7 +767,7 @@ export function WhitepaperADHD() {
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.25 }}
                   >
-                    <p className="text-sm text-slate-500 mb-5">
+                    <p className="text-sm text-ink-mute mb-5">
                       {journeyTab === "pediatric"
                         ? (IT
                             ? "Un genitore o tutore completa l'intervista HANA per conto del proprio figlio. È il percorso di valutazione ADHD più comune in psichiatria infantile e neuropsicologia."
@@ -780,9 +780,9 @@ export function WhitepaperADHD() {
                     <JourneyGrid steps={journeyTab === "pediatric" ? PEDIATRIC_STEPS : ADULT_STEPS} />
 
                     {journeyTab === "pediatric" && (
-                      <div className="mt-5 bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                      <div className="mt-5 bg-paper-bright border border-rule rounded-xl p-4 shadow-sm">
                         <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">{IT ? "Strumenti di valutazione inviati" : "Assessment instruments dispatched"}</p>
-                        <ul className="text-sm text-slate-600 space-y-1">
+                        <ul className="text-sm text-ink-soft space-y-1">
                           {(IT
                             ? ["NICHQ Vanderbilt Assessment Scales (moduli Genitore e Insegnante)", "BASC-3: Behavior Assessment System for Children, 3ª edizione", "Conners 3rd Edition (C3) — moduli Genitore, Insegnante e Autovalutazione", "BRIEF-2: Behavior Rating Inventory of Executive Function, 2ª edizione"]
                             : ["NICHQ Vanderbilt Assessment Scales (Parent & Teacher forms)", "BASC-3: Behavior Assessment System for Children, 3rd Edition", "Conners 3rd Edition (C3) — Parent, Teacher, and Self-Report forms", "BRIEF-2: Behavior Rating Inventory of Executive Function, 2nd Edition"]
@@ -799,7 +799,7 @@ export function WhitepaperADHD() {
               {/* EHR Integration */}
               <section ref={setRef("ehr-integration")} id="ehr-integration">
                 <SectionHeader label={IT ? "Integrazione nello Studio: Configurazione nell'EHR" : "Practice Integration: Setup in EHR"} />
-                <p className="text-slate-600 leading-relaxed mb-8">{IT ? "HANA si integra direttamente con il tuo EHR per automatizzare la pianificazione, l'invio delle valutazioni e la consegna dei referti. Segui ogni passo qui sotto per configurare il tuo studio." : "HANA integrates directly with your EHR to automate scheduling, assessment dispatch, and report delivery. Work through each step below to configure your practice."}</p>
+                <p className="text-ink-soft leading-relaxed mb-8">{IT ? "HANA si integra direttamente con il tuo EHR per automatizzare la pianificazione, l'invio delle valutazioni e la consegna dei referti. Segui ogni passo qui sotto per configurare il tuo studio." : "HANA integrates directly with your EHR to automate scheduling, assessment dispatch, and report delivery. Work through each step below to configure your practice."}</p>
                 <div className="space-y-3">
                   {EHR_STEPS.map((step, i) => <EHRStep key={step.n} step={step} index={i} />)}
                 </div>
@@ -808,18 +808,18 @@ export function WhitepaperADHD() {
               {/* Outcomes */}
               <section ref={setRef("outcomes")} id="outcomes">
                 <SectionHeader label={IT ? "Risultati Attesi per le Cliniche Partner" : "Expected Outcomes for Clinic Partners"} />
-                <p className="text-slate-600 leading-relaxed mb-8">{IT ? "Gli studi che adottano il workflow di accoglienza ADHD di HANA registrano miglioramenti misurabili su tre dimensioni:" : "Practices that implement the HANA ADHD intake workflow see measurable improvements across three dimensions:"}</p>
+                <p className="text-ink-soft leading-relaxed mb-8">{IT ? "Gli studi che adottano il workflow di accoglienza ADHD di HANA registrano miglioramenti misurabili su tre dimensioni:" : "Practices that implement the HANA ADHD intake workflow see measurable improvements across three dimensions:"}</p>
                 <div className="grid gap-4 sm:grid-cols-3">
                   {(IT
                     ? [
-                        { title: "Efficienza Operativa", accent: "border-blue-500", bg: "bg-white", text: "Elimina 40–90 minuti di tempo del coordinatore per ogni accoglienza. Scala il volume delle valutazioni ADHD senza aumentare il personale né creare colli di bottiglia nella pianificazione." },
-                        { title: "Qualità Clinica", accent: "border-indigo-500", bg: "bg-white", text: "100% di aderenza al protocollo. Ogni paziente riceve la stessa accoglienza basata sulle evidenze — nessuna domanda saltata, nessun informatore tralasciato, nessuna variazione da coordinatore a coordinatore." },
-                        { title: "Esperienza del Paziente", accent: "border-violet-500", bg: "bg-white", text: "Le famiglie completano l'accoglienza con i propri tempi, da casa, senza un appuntamento telefonico. Riduce le mancate presentazioni e migliora i tassi di completamento dell'accoglienza." },
+                        { title: "Efficienza Operativa", accent: "border-blue-500", bg: "bg-paper-bright", text: "Elimina 40–90 minuti di tempo del coordinatore per ogni accoglienza. Scala il volume delle valutazioni ADHD senza aumentare il personale né creare colli di bottiglia nella pianificazione." },
+                        { title: "Qualità Clinica", accent: "border-indigo-500", bg: "bg-paper-bright", text: "100% di aderenza al protocollo. Ogni paziente riceve la stessa accoglienza basata sulle evidenze — nessuna domanda saltata, nessun informatore tralasciato, nessuna variazione da coordinatore a coordinatore." },
+                        { title: "Esperienza del Paziente", accent: "border-violet-500", bg: "bg-paper-bright", text: "Le famiglie completano l'accoglienza con i propri tempi, da casa, senza un appuntamento telefonico. Riduce le mancate presentazioni e migliora i tassi di completamento dell'accoglienza." },
                       ]
                     : [
-                        { title: "Operational Efficiency", accent: "border-blue-500", bg: "bg-white", text: "Eliminate 40–90 minutes of coordinator time per intake. Scale ADHD assessment volume without adding headcount or creating scheduling bottlenecks." },
-                        { title: "Clinical Quality", accent: "border-indigo-500", bg: "bg-white", text: "100% protocol adherence. Every patient receives the same evidence-based intake — no questions skipped, no informants missed, no variation by coordinator." },
-                        { title: "Patient Experience", accent: "border-violet-500", bg: "bg-white", text: "Families complete intake on their own schedule, at home, without a phone appointment. Reduces no-shows and improves intake completion rates." },
+                        { title: "Operational Efficiency", accent: "border-blue-500", bg: "bg-paper-bright", text: "Eliminate 40–90 minutes of coordinator time per intake. Scale ADHD assessment volume without adding headcount or creating scheduling bottlenecks." },
+                        { title: "Clinical Quality", accent: "border-indigo-500", bg: "bg-paper-bright", text: "100% protocol adherence. Every patient receives the same evidence-based intake — no questions skipped, no informants missed, no variation by coordinator." },
+                        { title: "Patient Experience", accent: "border-violet-500", bg: "bg-paper-bright", text: "Families complete intake on their own schedule, at home, without a phone appointment. Reduces no-shows and improves intake completion rates." },
                       ]
                   ).map((o, i) => (
                     <motion.div
@@ -828,10 +828,10 @@ export function WhitepaperADHD() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.4, delay: i * 0.1 }}
-                      className={`border-t-4 ${o.accent} ${o.bg} border border-slate-200 rounded-2xl p-5 shadow-sm`}
+                      className={`border-t-4 ${o.accent} ${o.bg} border border-rule rounded-2xl p-5 shadow-sm`}
                     >
-                      <p className="font-bold text-slate-900 mb-3">{o.title}</p>
-                      <p className="text-sm text-slate-600 leading-relaxed">{o.text}</p>
+                      <p className="font-bold text-ink mb-3">{o.title}</p>
+                      <p className="text-sm text-ink-soft leading-relaxed">{o.text}</p>
                     </motion.div>
                   ))}
                 </div>
@@ -840,7 +840,7 @@ export function WhitepaperADHD() {
               {/* Onboarding */}
               <section ref={setRef("onboarding")} id="onboarding">
                 <SectionHeader label={IT ? "Tempistiche di Onboarding" : "Onboarding Timeline"} />
-                <p className="text-slate-600 leading-relaxed mb-8">{IT ? "HANA è disponibile per deployment pilota con un numero selezionato di cliniche partner. Le tempistiche di onboarding tipiche sono 2–4 settimane, comprese la configurazione dei template, la formazione del personale e una revisione supervisionata della prima accoglienza." : "HANA is available for pilot deployment with select clinic partners. The typical onboarding timeline is 2–4 weeks, including template configuration, staff training, and a supervised first-intake review."}</p>
+                <p className="text-ink-soft leading-relaxed mb-8">{IT ? "HANA è disponibile per deployment pilota con un numero selezionato di cliniche partner. Le tempistiche di onboarding tipiche sono 2–4 settimane, comprese la configurazione dei template, la formazione del personale e una revisione supervisionata della prima accoglienza." : "HANA is available for pilot deployment with select clinic partners. The typical onboarding timeline is 2–4 weeks, including template configuration, staff training, and a supervised first-intake review."}</p>
                 <div className="space-y-3 mb-14">
                   {(IT
                     ? [
@@ -862,10 +862,10 @@ export function WhitepaperADHD() {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.35, delay: i * 0.08 }}
-                      className="flex gap-4 items-start p-4 rounded-xl border border-slate-200 bg-white shadow-sm"
+                      className="flex gap-4 items-start p-4 rounded-xl border border-rule bg-paper-bright shadow-sm"
                     >
-                      <span className={`shrink-0 text-xs font-bold px-3 py-1.5 rounded-lg text-white ${i < 3 ? "bg-slate-700" : "bg-blue-600"}`}>{row.week}</span>
-                      <p className="text-sm text-slate-600 leading-relaxed pt-1">{row.text}</p>
+                      <span className={`shrink-0 text-xs font-bold px-3 py-1.5 rounded-lg text-white ${i < 3 ? "bg-navy-soft" : "bg-blue-600"}`}>{row.week}</span>
+                      <p className="text-sm text-ink-soft leading-relaxed pt-1">{row.text}</p>
                     </motion.div>
                   ))}
                 </div>
@@ -882,7 +882,7 @@ export function WhitepaperADHD() {
                         href="https://calendly.com/matteowastaken/discoverycall"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 bg-white text-slate-900 px-6 py-3 rounded-full font-semibold text-sm hover:bg-slate-100 transition-colors group"
+                        className="inline-flex items-center gap-2 bg-paper-bright text-ink px-6 py-3 rounded-full font-semibold text-sm hover:bg-paper-2 transition-colors group"
                       >
                         {IT ? "Chiedici una Demo" : "Book a Demo"} <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
                       </a>
@@ -893,7 +893,7 @@ export function WhitepaperADHD() {
                         matteo@usehana.com <ArrowUpRight size={14} />
                       </a>
                     </div>
-                    <p className="text-xs text-slate-600 mt-6">{IT ? "Riservato — preparato esclusivamente per le potenziali cliniche partner di HANA" : "Confidential — prepared exclusively for prospective HANA clinic partners"}</p>
+                    <p className="text-xs text-ink-soft mt-6">{IT ? "Riservato — preparato esclusivamente per le potenziali cliniche partner di HANA" : "Confidential — prepared exclusively for prospective HANA clinic partners"}</p>
                   </div>
                 </div>
               </section>

@@ -190,7 +190,7 @@ export function CaseStudies({ activeAgentId, webCallStatus, handleStartWebCall, 
           CASE_STUDIES_FAQ,
         ]}
       />
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-paper-bright">
         {selected ? (
           <DetailView
             c={selected}
@@ -232,12 +232,12 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
 
       {/* Cards grid */}
       <section className="max-w-6xl mx-auto px-4 md:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-slate-200">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-rule-soft">
           {CASES.map((c, i) => (
             <button
               key={c.id}
               onClick={() => onOpen(i)}
-              className="group bg-white text-left p-8 hover:bg-slate-50 transition-colors flex flex-col gap-6"
+              className="group bg-paper-bright text-left p-8 hover:bg-paper-2 transition-colors flex flex-col gap-6"
             >
 
               {/* Tag */}
@@ -248,20 +248,20 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
                 >
                   {c.tag}
                 </span>
-                <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-slate-900 group-hover:translate-x-1 transition-all" />
+                <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-ink group-hover:translate-x-1 transition-all" />
               </div>
 
               {/* Title */}
               <div>
-                <h2 className="font-serif text-3xl text-slate-900 leading-tight mb-2">{c.title}</h2>
-                <p className="text-sm text-slate-500">{c.sub}</p>
+                <h2 className="font-serif text-3xl text-ink leading-tight mb-2">{c.title}</h2>
+                <p className="text-sm text-ink-mute">{c.sub}</p>
               </div>
 
               {/* Stats */}
-              <div className="grid grid-cols-3 gap-3 pt-4 border-t border-slate-100">
+              <div className="grid grid-cols-3 gap-3 pt-4 border-t border-rule-soft">
                 {c.stats.map(([n, l]) => (
                   <div key={l}>
-                    <div className="text-xl font-semibold text-slate-900 leading-none mb-1">{n}</div>
+                    <div className="text-xl font-semibold text-ink leading-none mb-1">{n}</div>
                     <div className="text-[10px] text-slate-400 leading-tight uppercase tracking-wide">{l}</div>
                   </div>
                 ))}
@@ -300,7 +300,7 @@ function IndexView({ onOpen }: { onOpen: (idx: number) => void }) {
             href="https://calendly.com/matteowastaken/discoverycall"
             target="_blank"
             rel="noopener noreferrer"
-            className="shrink-0 bg-white text-navy font-semibold px-8 py-4 rounded-full text-sm hover:bg-slate-100 transition-colors"
+            className="shrink-0 bg-paper-bright text-navy font-semibold px-8 py-4 rounded-full text-sm hover:bg-paper-2 transition-colors"
           >
             Book a demo →
           </a>
@@ -328,14 +328,14 @@ function DetailView({
         <div className="max-w-4xl mx-auto">
           <button
             onClick={onBack}
-            className="inline-flex items-center gap-2 text-slate-500 hover:text-white text-sm mb-12 transition-colors"
+            className="inline-flex items-center gap-2 text-ink-mute hover:text-white text-sm mb-12 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> All case studies
           </button>
 
           <div className="flex items-center gap-3 mb-5">
             <span className="text-[11px] font-bold tracking-[2.5px] uppercase" style={{ color: c.color }}>{c.tag}</span>
-            <span className="text-slate-700 text-xs">{idx + 1} / {total}</span>
+            <span className="text-ink-soft text-xs">{idx + 1} / {total}</span>
           </div>
 
           <h1 className="font-serif text-4xl sm:text-5xl md:text-[3.5rem] leading-[1.05] mb-5 max-w-3xl">{c.title}</h1>
@@ -357,9 +357,9 @@ function DetailView({
           {/* Stats bar */}
           <div className="grid grid-cols-3 divide-x divide-white/[0.07] border border-white/[0.07] rounded-2xl overflow-hidden">
             {c.stats.map(([n, l]) => (
-              <div key={l} className="px-6 py-6 bg-white/[0.03]">
+              <div key={l} className="px-6 py-6 bg-paper-bright/[0.03]">
                 <div className="text-[2rem] font-semibold text-white mb-1.5 leading-none">{n}</div>
-                <div className="text-[10px] text-slate-500 uppercase tracking-widest">{l}</div>
+                <div className="text-[10px] text-ink-mute uppercase tracking-widest">{l}</div>
               </div>
             ))}
           </div>
@@ -367,7 +367,7 @@ function DetailView({
       </div>
 
       {/* Body */}
-      <div className="bg-white">
+      <div className="bg-paper-bright">
 
         {/* Situation */}
         <div className="max-w-4xl mx-auto px-6 md:px-12 pt-16 pb-16">
@@ -375,14 +375,14 @@ function DetailView({
             <div className="w-8 h-px" style={{ backgroundColor: c.color }} />
             <span className="text-[10px] font-bold tracking-[3px] uppercase" style={{ color: c.color }}>The situation</span>
           </div>
-          <p className="text-[17px] md:text-[18px] leading-[1.9] text-slate-600">{c.situation}</p>
+          <p className="text-[17px] md:text-[18px] leading-[1.9] text-ink-soft">{c.situation}</p>
         </div>
 
         {/* Pull quote */}
-        <div className="border-y border-slate-100 py-16 px-6 md:px-12" style={{ backgroundColor: `${c.color}07` }}>
+        <div className="border-y border-rule-soft py-16 px-6 md:px-12" style={{ backgroundColor: `${c.color}07` }}>
           <div className="max-w-3xl mx-auto text-center">
             <div className="w-8 h-[3px] rounded-full mx-auto mb-8" style={{ backgroundColor: c.color }} />
-            <p className="font-serif text-2xl md:text-[2.25rem] text-slate-900 leading-[1.4] italic">
+            <p className="font-serif text-2xl md:text-[2.25rem] text-ink leading-[1.4] italic">
               "{c.sub}"
             </p>
           </div>
@@ -395,7 +395,7 @@ function DetailView({
             <span className="text-[10px] font-bold tracking-[3px] uppercase" style={{ color: c.color }}>What Hana did</span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-[1fr_180px] gap-12 items-start">
-            <p className="text-[17px] md:text-[18px] leading-[1.9] text-slate-600">{c.what}</p>
+            <p className="text-[17px] md:text-[18px] leading-[1.9] text-ink-soft">{c.what}</p>
             <div className="flex flex-row md:flex-col gap-4 sm:gap-8 border-t md:border-t-0 md:border-l pt-6 md:pt-0 md:pl-8" style={{ borderColor: `${c.color}25` }}>
               {c.stats.map(([n, l]) => (
                 <div key={l}>
@@ -408,25 +408,25 @@ function DetailView({
         </div>
 
         {/* The result */}
-        <div className="border-t border-slate-100 py-16 px-6 md:px-12" style={{ backgroundColor: `${c.color}05` }}>
+        <div className="border-t border-rule-soft py-16 px-6 md:px-12" style={{ backgroundColor: `${c.color}05` }}>
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center gap-3 mb-8">
               <div className="w-8 h-px" style={{ backgroundColor: c.color }} />
               <span className="text-[10px] font-bold tracking-[3px] uppercase" style={{ color: c.color }}>The result</span>
             </div>
-            <p className="text-[17px] md:text-[18px] leading-[1.9] text-slate-600">{c.result}</p>
+            <p className="text-[17px] md:text-[18px] leading-[1.9] text-ink-soft">{c.result}</p>
           </div>
         </div>
 
         {/* In numbers — dark, centered */}
         <div className="bg-navy px-6 md:px-12 py-16 md:py-24 text-center">
           <div className="max-w-3xl mx-auto">
-            <p className="text-[10px] font-bold tracking-[3px] uppercase text-slate-500 mb-10">In numbers</p>
+            <p className="text-[10px] font-bold tracking-[3px] uppercase text-ink-mute mb-10">In numbers</p>
             <div className="font-serif text-6xl sm:text-7xl md:text-[120px] leading-none tracking-tight mb-4" style={{ color: c.color }}>
               {c.stats[0][0]}
             </div>
-            <div className="text-[10px] text-slate-500 uppercase tracking-[3px] mb-12">{c.stats[0][1]}</div>
-            <div className="w-12 h-px bg-white/10 mx-auto mb-12" />
+            <div className="text-[10px] text-ink-mute uppercase tracking-[3px] mb-12">{c.stats[0][1]}</div>
+            <div className="w-12 h-px bg-paper-bright/10 mx-auto mb-12" />
             <p className="text-[16px] md:text-[17px] leading-[1.9] text-slate-400 max-w-2xl mx-auto">{c.inNumbers}</p>
           </div>
         </div>
@@ -439,7 +439,7 @@ function DetailView({
               <h2 className="font-serif text-3xl md:text-4xl text-white leading-tight mb-3">
                 These are the actual agents from this deployment.
               </h2>
-              <p className="text-slate-500 text-sm">No app. No login. Just click to call.</p>
+              <p className="text-ink-mute text-sm">No app. No login. Just click to call.</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {c.agents.map((a) => {
@@ -463,13 +463,13 @@ function DetailView({
         </div>
 
         {/* Nav */}
-        <div className="bg-white border-t border-slate-100">
+        <div className="bg-paper-bright border-t border-rule-soft">
           <div className="max-w-4xl mx-auto px-6 md:px-12 py-10 flex items-center justify-between">
-            <button onClick={onPrev} className="flex items-center gap-2 py-2 -my-2 text-[13px] text-slate-400 hover:text-slate-900 transition-colors">
+            <button onClick={onPrev} className="flex items-center gap-2 py-2 -my-2 text-[13px] text-slate-400 hover:text-ink transition-colors">
               <ArrowLeft className="w-3.5 h-3.5" /> Previous
             </button>
-            <button onClick={onBack} className="py-2 -my-2 text-[13px] text-slate-400 hover:text-slate-900 transition-colors">All case studies</button>
-            <button onClick={onNext} className="flex items-center gap-2 py-2 -my-2 text-[13px] text-slate-400 hover:text-slate-900 transition-colors">
+            <button onClick={onBack} className="py-2 -my-2 text-[13px] text-slate-400 hover:text-ink transition-colors">All case studies</button>
+            <button onClick={onNext} className="flex items-center gap-2 py-2 -my-2 text-[13px] text-slate-400 hover:text-ink transition-colors">
               Next <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -489,7 +489,7 @@ function AgentCard({ a, color, status, isOtherActive, onStart, onEnd }: {
   const isConnecting = status === "connecting";
 
   return (
-    <div className="rounded-2xl p-6 flex flex-col gap-5 transition-all border border-white/[0.07] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/[0.12]">
+    <div className="rounded-2xl p-6 flex flex-col gap-5 transition-all border border-white/[0.07] bg-paper-bright/[0.04] hover:bg-paper-bright/[0.08] hover:border-white/[0.12]">
       <div className="flex items-start justify-between gap-3">
         <div
           className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"

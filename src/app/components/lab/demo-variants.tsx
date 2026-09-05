@@ -110,7 +110,7 @@ function PlayButton({ playing, onClick, dark = true }: { playing: boolean; onCli
       onClick={onClick}
       aria-label={playing ? "Pause" : "Play the call"}
       className={`shrink-0 w-14 h-14 rounded-full grid place-items-center cursor-pointer border-0 hover:scale-[1.04] transition-transform ${
-        dark ? "bg-navy" : "bg-white shadow-md"
+        dark ? "bg-navy" : "bg-paper-bright shadow-md"
       }`}
     >
       {playing ? (
@@ -129,18 +129,18 @@ function DemoShell({ left, caption }: { left: React.ReactNode; caption: string }
   const labelClass = "block text-[12px] font-bold uppercase tracking-[2.2px] text-brand mb-3";
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20 px-4 md:px-8 bg-white">
+    <section className="py-12 sm:py-16 lg:py-20 px-4 md:px-8 bg-paper-bright">
       <div className="max-w-7xl mx-auto">
-        <h2 className="font-serif text-4xl md:text-6xl text-slate-900 leading-[1.05] text-center mb-4 tracking-tight">
+        <h2 className="font-serif text-4xl md:text-6xl text-ink leading-[1.05] text-center mb-4 tracking-tight">
           Don't take our word for it. Take the call.
         </h2>
-        <p className="text-lg text-slate-500 text-center max-w-2xl mx-auto mb-8 sm:mb-12 lg:mb-14 leading-relaxed">
+        <p className="text-lg text-ink-mute text-center max-w-2xl mx-auto mb-8 sm:mb-12 lg:mb-14 leading-relaxed">
           Drop your number and Hana calls you right now. The agent works out the right demo as you talk.
         </p>
 
         <div className="flex flex-col lg:flex-row gap-0 border border-[#e8ebf2] rounded-[20px] overflow-hidden shadow-[0_24px_64px_rgba(0,18,47,0.10)]">
           {/* Left — the panel under discussion */}
-          <div className="relative lg:w-1/2 bg-white overflow-hidden flex flex-col items-center justify-center min-h-[320px] lg:min-h-[520px] px-10 sm:px-12 py-16">
+          <div className="relative lg:w-1/2 bg-paper-bright overflow-hidden flex flex-col items-center justify-center min-h-[320px] lg:min-h-[520px] px-10 sm:px-12 py-16">
             {left}
             <div className="absolute bottom-8 left-0 right-0 flex items-center justify-center gap-2">
               <span
@@ -153,10 +153,10 @@ function DemoShell({ left, caption }: { left: React.ReactNode; caption: string }
 
           {/* Right — the form, unchanged */}
           <div className="lg:w-1/2 bg-[#f6f7fb] border-t lg:border-t-0 lg:border-l border-[#e8ebf2] p-7 sm:p-10 lg:p-14 flex flex-col justify-center">
-            <h3 className="font-serif text-[26px] md:text-[30px] leading-tight text-slate-900 m-0">
+            <h3 className="font-serif text-[26px] md:text-[30px] leading-tight text-ink m-0">
               Hear Hana handle a real patient conversation.
             </h3>
-            <p className="text-[15px] leading-relaxed text-slate-500 mt-3 mb-8">
+            <p className="text-[15px] leading-relaxed text-ink-mute mt-3 mb-8">
               Enter your details and Hana texts you first to confirm, then calls within seconds, so
               you can experience the AI live.
             </p>
@@ -173,10 +173,10 @@ function DemoShell({ left, caption }: { left: React.ReactNode; caption: string }
               <div>
                 <span className={labelClass}>Phone</span>
                 <div className="mb-4 inline-flex items-center gap-1 rounded-[10px] p-1 bg-[#eef0f5] border border-[#e2e6f4]">
-                  <span className="rounded-[7px] bg-white px-3 py-1.5 text-[13px] font-semibold text-navy shadow-sm">
+                  <span className="rounded-[7px] bg-paper-bright px-3 py-1.5 text-[13px] font-semibold text-navy shadow-sm">
                     🇺🇸 US / Canada
                   </span>
-                  <span className="px-3 py-1.5 text-[13px] font-medium text-slate-500">🇪🇺 Europe</span>
+                  <span className="px-3 py-1.5 text-[13px] font-medium text-ink-mute">🇪🇺 Europe</span>
                 </div>
                 <input className={inputClass} placeholder="+1 555 123 4567" />
               </div>
@@ -193,7 +193,7 @@ function DemoShell({ left, caption }: { left: React.ReactNode; caption: string }
               <span className="flex-1 h-px bg-[#e2e6f4]" />
             </div>
 
-            <button className="w-full rounded-xl bg-white border border-[#e2e6f4] text-[15px] font-semibold text-navy py-4 cursor-pointer inline-flex items-center justify-center gap-2">
+            <button className="w-full rounded-xl bg-paper-bright border border-[#e2e6f4] text-[15px] font-semibold text-navy py-4 cursor-pointer inline-flex items-center justify-center gap-2">
               Prefer to talk now? Start a web call
               <ArrowRight className="w-4 h-4" strokeWidth={2.2} />
             </button>
@@ -227,23 +227,23 @@ export function DemoWithWaveform() {
           </div>
           <div className="flex items-center gap-4 mt-8">
             <PlayButton playing={c.playing} onClick={c.toggle} />
-            <span className="text-[14px] tabular-nums text-slate-500">
+            <span className="text-[14px] tabular-nums text-ink-mute">
               {mmss(c.time)} / {mmss(DURATION)}
             </span>
-            <span className="ml-auto text-[12px] text-slate-500">
+            <span className="ml-auto text-[12px] text-ink-mute">
               {c.hasFile ? "Monthly check-in" : "simulated · recording pending"}
             </span>
           </div>
           <div className="mt-7 min-h-[86px]">
             {c.current ? (
               <>
-                <p className={`text-[10.5px] font-bold uppercase tracking-[1.6px] m-0 ${c.current.who === "hana" ? "text-brand" : "text-slate-500"}`}>
+                <p className={`text-[10.5px] font-bold uppercase tracking-[1.6px] m-0 ${c.current.who === "hana" ? "text-brand" : "text-ink-mute"}`}>
                   {c.current.who === "hana" ? "Hana" : "Patient"}
                 </p>
-                <p className="text-[15px] leading-[1.6] text-slate-700 mt-2 mb-0">{c.current.text}</p>
+                <p className="text-[15px] leading-[1.6] text-ink-soft mt-2 mb-0">{c.current.text}</p>
               </>
             ) : (
-              <p className="text-[15px] leading-[1.6] text-slate-500 m-0">
+              <p className="text-[15px] leading-[1.6] text-ink-mute m-0">
                 Press play to hear a monthly check-in call.
               </p>
             )}
@@ -267,14 +267,14 @@ export function DemoWithPhone() {
           <div className="relative mx-auto w-[248px] rounded-[38px] bg-navy p-[10px] shadow-[0_24px_60px_-18px_rgba(0,18,47,0.45)]">
             <div className="relative rounded-[30px] bg-[#f6f7fb] overflow-hidden h-[430px] flex flex-col">
               {/* status bar + who is calling */}
-              <div className="pt-7 pb-5 px-5 text-center bg-white">
+              <div className="pt-7 pb-5 px-5 text-center bg-paper-bright">
                 <span className="mx-auto block w-[52px] h-[52px] rounded-full bg-[#e8ecfb] grid place-items-center text-[15px] font-bold text-brand">
                   DW
                 </span>
                 <p className="text-[14.5px] font-semibold text-navy mt-3 mb-0">
                   Dr. Whitfield's Office
                 </p>
-                <p className="text-[12px] tabular-nums text-slate-500 mt-1 mb-0">
+                <p className="text-[12px] tabular-nums text-ink-mute mt-1 mb-0">
                   {c.playing ? `Connected · ${mmss(c.time)}` : "Incoming call"}
                 </p>
               </div>
@@ -289,7 +289,7 @@ export function DemoWithPhone() {
                     transition={{ duration: 0.3 }}
                     className={`max-w-[86%] rounded-2xl px-3.5 py-2.5 text-[12.5px] leading-[1.45] ${
                       turn.who === "hana"
-                        ? "bg-white border border-[#e8ebf2] text-slate-700"
+                        ? "bg-paper-bright border border-[#e8ebf2] text-ink-soft"
                         : "ml-auto bg-brand text-white"
                     }`}
                   >
@@ -304,8 +304,8 @@ export function DemoWithPhone() {
               </div>
 
               {/* the practice's own caller ID, which is the point of the panel */}
-              <div className="px-4 py-3 bg-white border-t border-[#e8ebf2] text-center">
-                <p className="text-[10.5px] font-bold uppercase tracking-[1.3px] text-slate-500 m-0">
+              <div className="px-4 py-3 bg-paper-bright border-t border-[#e8ebf2] text-center">
+                <p className="text-[10.5px] font-bold uppercase tracking-[1.3px] text-ink-mute m-0">
                   Your practice's number
                 </p>
               </div>
@@ -314,7 +314,7 @@ export function DemoWithPhone() {
 
           <div className="flex items-center justify-center gap-4 mt-7">
             <PlayButton playing={c.playing} onClick={c.toggle} />
-            <span className="text-[13px] tabular-nums text-slate-500">
+            <span className="text-[13px] tabular-nums text-ink-mute">
               {c.hasFile ? `${mmss(c.time)} / ${mmss(DURATION)}` : "simulated"}
             </span>
           </div>
@@ -354,7 +354,7 @@ export function DemoWithPulse() {
               {[8, 14, 20, 12, 7].map((h, i) => (
                 <motion.span
                   key={i}
-                  className="w-[3px] rounded-full bg-white/90"
+                  className="w-[3px] rounded-full bg-paper-bright/90"
                   initial={{ height: h }}
                   animate={{ height: [h, h * 0.5, h] }}
                   transition={{ duration: 1.1 + i * 0.13, repeat: Infinity, ease: "easeInOut" }}
@@ -378,7 +378,7 @@ export function DemoWithCaptions() {
         <div className="w-full max-w-[420px] flex flex-col justify-center min-h-[300px]">
           {c.current ? (
             <motion.div key={c.idx} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
-              <p className={`text-[11px] font-bold uppercase tracking-[2px] m-0 ${c.current.who === "hana" ? "text-brand" : "text-slate-500"}`}>
+              <p className={`text-[11px] font-bold uppercase tracking-[2px] m-0 ${c.current.who === "hana" ? "text-brand" : "text-ink-mute"}`}>
                 {c.current.who === "hana" ? "Hana" : "Patient"}
               </p>
               <p className="font-serif text-[24px] md:text-[28px] leading-[1.32] text-navy mt-4 mb-0">
@@ -400,10 +400,10 @@ export function DemoWithCaptions() {
             </div>
             <div className="flex items-center gap-4 mt-6">
               <PlayButton playing={c.playing} onClick={c.toggle} />
-              <span className="text-[14px] tabular-nums text-slate-500">
+              <span className="text-[14px] tabular-nums text-ink-mute">
                 {mmss(c.time)} / {mmss(DURATION)}
               </span>
-              <span className="ml-auto text-[12px] text-slate-500">
+              <span className="ml-auto text-[12px] text-ink-mute">
                 {c.hasFile ? "Monthly check-in" : "simulated · recording pending"}
               </span>
             </div>
@@ -597,20 +597,20 @@ function SiriPanel({ kind }: { kind: "radial" | "orb" | "halo" }) {
           <Art playing={c.playing} />
           <div className="flex items-center gap-4 mt-2">
             <PlayButton playing={c.playing} onClick={c.toggle} />
-            <span className="text-[14px] tabular-nums text-slate-500">
+            <span className="text-[14px] tabular-nums text-ink-mute">
               {mmss(c.time)} / {mmss(DURATION)}
             </span>
           </div>
           <div className="mt-6 min-h-[64px] max-w-[400px] text-center">
             {c.current ? (
-              <p className="text-[14.5px] leading-[1.6] text-slate-700 m-0">
-                <span className={`font-bold uppercase tracking-[1.2px] text-[10.5px] mr-2 ${c.current.who === "hana" ? "text-brand" : "text-slate-500"}`}>
+              <p className="text-[14.5px] leading-[1.6] text-ink-soft m-0">
+                <span className={`font-bold uppercase tracking-[1.2px] text-[10.5px] mr-2 ${c.current.who === "hana" ? "text-brand" : "text-ink-mute"}`}>
                   {c.current.who === "hana" ? "Hana" : "Patient"}
                 </span>
                 {c.current.text}
               </p>
             ) : (
-              <p className="text-[14.5px] leading-[1.6] text-slate-500 m-0">
+              <p className="text-[14.5px] leading-[1.6] text-ink-mute m-0">
                 Press play to hear a monthly check-in call.
               </p>
             )}
@@ -794,7 +794,7 @@ function SonicLines({ playing }: { playing: boolean }) {
           {[8, 14, 20, 12, 7].map((hh, i) => (
             <motion.span
               key={i}
-              className="w-[3px] rounded-full bg-white/90"
+              className="w-[3px] rounded-full bg-paper-bright/90"
               initial={{ height: hh }}
               animate={playing ? { height: [hh * 0.5, hh, hh * 0.6] } : { height: [hh, hh * 0.7, hh] }}
               transition={{ duration: playing ? 0.8 + i * 0.1 : 2.4 + i * 0.25, repeat: Infinity, ease: "easeInOut" }}
@@ -816,20 +816,20 @@ function CanvasPanel({ kind }: { kind: "ribbons" | "lines" }) {
           {kind === "ribbons" ? <SiriRibbons playing={c.playing} /> : <SonicLines playing={c.playing} />}
           <div className="flex items-center gap-4 mt-4">
             <PlayButton playing={c.playing} onClick={c.toggle} />
-            <span className="text-[14px] tabular-nums text-slate-500">
+            <span className="text-[14px] tabular-nums text-ink-mute">
               {mmss(c.time)} / {mmss(DURATION)}
             </span>
           </div>
           <div className="mt-5 min-h-[64px] max-w-[400px] text-center">
             {c.current ? (
-              <p className="text-[14.5px] leading-[1.6] text-slate-700 m-0">
-                <span className={`font-bold uppercase tracking-[1.2px] text-[10.5px] mr-2 ${c.current.who === "hana" ? "text-brand" : "text-slate-500"}`}>
+              <p className="text-[14.5px] leading-[1.6] text-ink-soft m-0">
+                <span className={`font-bold uppercase tracking-[1.2px] text-[10.5px] mr-2 ${c.current.who === "hana" ? "text-brand" : "text-ink-mute"}`}>
                   {c.current.who === "hana" ? "Hana" : "Patient"}
                 </span>
                 {c.current.text}
               </p>
             ) : (
-              <p className="text-[14.5px] leading-[1.6] text-slate-500 m-0">
+              <p className="text-[14.5px] leading-[1.6] text-ink-mute m-0">
                 Press play to hear a monthly check-in call.
               </p>
             )}
@@ -1009,20 +1009,20 @@ function SonicHeroForm({ theme }: { theme: SonicTheme }) {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="text-center"
         >
-          <span className={`inline-flex items-center gap-2.5 rounded-full backdrop-blur-sm px-4 py-1.5 ${dark ? "bg-white/[0.10] border border-white/15" : "bg-white/70 border border-[#e2e6f4]"}`}>
+          <span className={`inline-flex items-center gap-2.5 rounded-full backdrop-blur-sm px-4 py-1.5 ${dark ? "bg-paper-bright/[0.10] border border-white/15" : "bg-paper-bright/70 border border-[#e2e6f4]"}`}>
             <span
               className={`w-2 h-2 rounded-full ${dark ? "bg-[#8ab4ff]" : "bg-brand"}`}
               style={{ animation: "hana-glow 2.4s ease-in-out infinite" }}
             />
-            <span className={`text-[13px] font-medium ${dark ? "text-white/85" : "text-slate-600"}`}>
+            <span className={`text-[13px] font-medium ${dark ? "text-white/85" : "text-ink-soft"}`}>
               {c.playing ? "Hana is speaking" : "Hana is listening"}
             </span>
           </span>
 
-          <h2 className={`font-serif text-4xl md:text-6xl leading-[1.05] tracking-tight mt-7 mb-4 ${dark ? "text-white" : "text-slate-900"}`}>
+          <h2 className={`font-serif text-4xl md:text-6xl leading-[1.05] tracking-tight mt-7 mb-4 ${dark ? "text-white" : "text-ink"}`}>
             Don't take our word for it. Take the call.
           </h2>
-          <p className={`text-lg max-w-2xl mx-auto leading-relaxed mb-10 ${dark ? "text-white/65" : "text-slate-500"}`}>
+          <p className={`text-lg max-w-2xl mx-auto leading-relaxed mb-10 ${dark ? "text-white/65" : "text-ink-mute"}`}>
             Drop your number and Hana calls you right now. The agent works out the right demo as you
             talk.
           </p>
@@ -1034,7 +1034,7 @@ function SonicHeroForm({ theme }: { theme: SonicTheme }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-          className={`w-full max-w-[560px] rounded-[24px] backdrop-blur-xl p-7 sm:p-9 ${dark ? "bg-white/[0.07] border border-white/15 shadow-[0_40px_90px_-30px_rgba(0,0,0,0.7)]" : "bg-white/85 border border-[#e8ebf2] shadow-[0_30px_70px_-24px_rgba(0,18,47,0.22)]"}`}
+          className={`w-full max-w-[560px] rounded-[24px] backdrop-blur-xl p-7 sm:p-9 ${dark ? "bg-paper-bright/[0.07] border border-white/15 shadow-[0_40px_90px_-30px_rgba(0,0,0,0.7)]" : "bg-paper-bright/85 border border-[#e8ebf2] shadow-[0_30px_70px_-24px_rgba(0,18,47,0.22)]"}`}
         >
           <div className="space-y-7">
             <div>
@@ -1047,28 +1047,28 @@ function SonicHeroForm({ theme }: { theme: SonicTheme }) {
             </div>
             <div>
               <span className={labelClass}>Phone</span>
-              <div className={`mb-4 inline-flex items-center gap-1 rounded-[10px] p-1 ${dark ? "bg-white/[0.08] border border-white/15" : "bg-[#eef0f5] border border-[#e2e6f4]"}`}>
-                <span className="rounded-[7px] bg-white text-navy px-3 py-1.5 text-[13px] font-semibold shadow-sm">
+              <div className={`mb-4 inline-flex items-center gap-1 rounded-[10px] p-1 ${dark ? "bg-paper-bright/[0.08] border border-white/15" : "bg-[#eef0f5] border border-[#e2e6f4]"}`}>
+                <span className="rounded-[7px] bg-paper-bright text-navy px-3 py-1.5 text-[13px] font-semibold shadow-sm">
                   🇺🇸 US / Canada
                 </span>
-                <span className={`px-3 py-1.5 text-[13px] font-medium ${dark ? "text-white/60" : "text-slate-500"}`}>🇪🇺 Europe</span>
+                <span className={`px-3 py-1.5 text-[13px] font-medium ${dark ? "text-white/60" : "text-ink-mute"}`}>🇪🇺 Europe</span>
               </div>
               <input className={inputClass} placeholder="+1 555 123 4567" />
             </div>
           </div>
 
-          <button className={`mt-9 w-full rounded-xl text-[15px] font-semibold py-4 border-0 cursor-pointer inline-flex items-center justify-center gap-2 transition-colors ${dark ? "bg-white text-navy hover:bg-brand-tint" : "bg-[#111c33] text-white hover:bg-navy"}`}>
+          <button className={`mt-9 w-full rounded-xl text-[15px] font-semibold py-4 border-0 cursor-pointer inline-flex items-center justify-center gap-2 transition-colors ${dark ? "bg-paper-bright text-navy hover:bg-brand-tint" : "bg-[#111c33] text-white hover:bg-navy"}`}>
             <Phone className="w-4 h-4" strokeWidth={2.2} />
             Text me &amp; call me
           </button>
 
           <div className="flex items-center gap-3 my-5">
-            <span className={`flex-1 h-px ${dark ? "bg-white/15" : "bg-[#e2e6f4]"}`} />
+            <span className={`flex-1 h-px ${dark ? "bg-paper-bright/15" : "bg-[#e2e6f4]"}`} />
             <span className={`text-[11px] font-bold uppercase tracking-[1.6px] ${dark ? "text-white/45" : "text-slate-400"}`}>or</span>
-            <span className={`flex-1 h-px ${dark ? "bg-white/15" : "bg-[#e2e6f4]"}`} />
+            <span className={`flex-1 h-px ${dark ? "bg-paper-bright/15" : "bg-[#e2e6f4]"}`} />
           </div>
 
-          <button className={`w-full rounded-xl text-[15px] font-semibold py-4 cursor-pointer inline-flex items-center justify-center gap-2 transition-colors ${dark ? "bg-transparent border border-white/25 text-white hover:bg-white/[0.08]" : "bg-white border border-[#e2e6f4] text-navy hover:bg-[#f6f7fb]"}`}>
+          <button className={`w-full rounded-xl text-[15px] font-semibold py-4 cursor-pointer inline-flex items-center justify-center gap-2 transition-colors ${dark ? "bg-transparent border border-white/25 text-white hover:bg-paper-bright/[0.08]" : "bg-paper-bright border border-[#e2e6f4] text-navy hover:bg-[#f6f7fb]"}`}>
             Prefer to talk now? Start a web call
             <ArrowRight className="w-4 h-4" strokeWidth={2.2} />
           </button>
@@ -1078,7 +1078,7 @@ function SonicHeroForm({ theme }: { theme: SonicTheme }) {
             <button
               onClick={c.toggle}
               aria-label={c.playing ? "Pause" : "Play the call"}
-              className={`shrink-0 w-11 h-11 rounded-full grid place-items-center cursor-pointer transition-colors ${dark ? "bg-white/15 border border-white/20 hover:bg-white/25" : "bg-navy hover:bg-[#111c33]"}`}
+              className={`shrink-0 w-11 h-11 rounded-full grid place-items-center cursor-pointer transition-colors ${dark ? "bg-paper-bright/15 border border-white/20 hover:bg-paper-bright/25" : "bg-navy hover:bg-[#111c33]"}`}
             >
               {c.playing ? (
                 <Pause className="w-4 h-4 text-white" strokeWidth={2.4} />
@@ -1086,7 +1086,7 @@ function SonicHeroForm({ theme }: { theme: SonicTheme }) {
                 <Play className="w-4 h-4 text-white ml-0.5" strokeWidth={2.4} />
               )}
             </button>
-            <span className={`text-[13px] ${dark ? "text-white/60" : "text-slate-500"}`}>
+            <span className={`text-[13px] ${dark ? "text-white/60" : "text-ink-mute"}`}>
               {c.current ? c.current.text.slice(0, 54) + "…" : "Hear a monthly check-in first"}
             </span>
             <span className={`text-[12.5px] tabular-nums ml-auto ${dark ? "text-white/45" : "text-slate-400"}`}>

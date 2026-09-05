@@ -5,7 +5,7 @@ import { getLocale } from "../../lib/i18n";
 function Section({ number, title, children }: { number?: string; title: string; children: React.ReactNode }) {
   return (
     <div className="mb-10">
-      <div className="border-b border-slate-200 pb-3 mb-6">
+      <div className="border-b border-rule pb-3 mb-6">
         <h2 className="text-xl font-semibold text-navy-soft tracking-tight">
           {number ? `${number}. ${title}` : title}
         </h2>
@@ -45,7 +45,7 @@ export function AUP() {
         path="/aup"
       />
 
-      <div className="bg-white min-h-screen">
+      <div className="bg-paper-bright min-h-screen">
         {/* Hero */}
         <section className="bg-navy text-white py-20 px-4">
           <div className="max-w-3xl mx-auto text-center">
@@ -363,14 +363,14 @@ export function AUP() {
 
           <Section number="8" title={it ? "Contatti" : "Contact"}>
             <p>{it ? "Le domande relative alla presente AUP possono essere indirizzate a:" : "Questions regarding this AUP can be directed to:"}</p>
-            <div className="mt-4 p-5 bg-slate-50 rounded-xl border border-slate-200 text-[15px]">
+            <div className="mt-4 p-5 bg-paper-2 rounded-xl border border-rule text-[15px]">
               <p className="font-semibold text-navy-soft mb-1">HANA Health, Inc.</p>
               <p>{it ? "Email: " : "Email: "}<a href="mailto:legal@hana.health" className="text-blue-600 hover:underline">legal@hana.health</a></p>
               <p>{it ? "Web: " : "Web: "}<a href="https://hana.health/aup" className="text-blue-600 hover:underline">hana.health/aup</a></p>
             </div>
           </Section>
 
-          <div className="border-t border-slate-200 pt-8 mt-4">
+          <div className="border-t border-rule pt-8 mt-4">
             <p className="text-[13px] text-slate-400 italic">
               {it
                 ? "La presente AUP è incorporata mediante rinvio nel Contratto Quadro di Servizi HANA e nell'Ordine sottoscritto tra HANA Health, Inc. e il Cliente. In caso di conflitto, prevale il Contratto."

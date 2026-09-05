@@ -209,13 +209,13 @@ export default function RadialOrbitalTimeline({
             return (
               <div
                 key={item.id}
-                className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden cursor-pointer"
+                className="rounded-2xl border border-white/10 bg-paper-bright/5 overflow-hidden cursor-pointer"
                 onClick={(e) => { e.stopPropagation(); toggleItem(item.id); }}
               >
                 <div className="flex items-center gap-4 px-4 py-4">
                   <div className={cn(
                     "w-10 h-10 rounded-full flex items-center justify-center border-2 shrink-0 transition-colors",
-                    isExpanded ? "bg-navy text-white border-white" : "bg-white text-slate-600 border-slate-300"
+                    isExpanded ? "bg-navy text-white border-white" : "bg-paper-bright text-ink-soft border-rule"
                   )}>
                     <Icon className="w-5 h-5" strokeWidth={2} />
                   </div>
@@ -223,9 +223,9 @@ export default function RadialOrbitalTimeline({
                     <p className={cn("font-serif text-base font-medium", isExpanded ? "text-white" : "text-slate-300")}>
                       {item.title}
                     </p>
-                    <p className="text-xs text-slate-500 font-mono">{item.date}</p>
+                    <p className="text-xs text-ink-mute font-mono">{item.date}</p>
                   </div>
-                  <span className="text-slate-500 text-sm">{isExpanded ? "−" : "+"}</span>
+                  <span className="text-ink-mute text-sm">{isExpanded ? "−" : "+"}</span>
                 </div>
                 {isExpanded && (
                   <div className="px-4 pb-4 text-sm text-slate-400 leading-relaxed border-t border-white/10 pt-3">
@@ -262,8 +262,8 @@ export default function RadialOrbitalTimeline({
           </div>
 
           {/* Orbital Rings */}
-          <div className="absolute rounded-full border-[3px] border-slate-700 opacity-70 w-[600px] h-[600px]" />
-          <div className="absolute rounded-full border-[3px] border-slate-800 border-dashed opacity-70 w-[400px] h-[400px]" />
+          <div className="absolute rounded-full border-[3px] border-navy-soft opacity-70 w-[600px] h-[600px]" />
+          <div className="absolute rounded-full border-[3px] border-navy-soft border-dashed opacity-70 w-[400px] h-[400px]" />
 
           {timelineData.map((item, index) => {
             const position = calculateNodePosition(index, timelineData.length);
@@ -309,8 +309,8 @@ export default function RadialOrbitalTimeline({
                     isExpanded
                       ? "bg-navy text-white border-white shadow-md"
                       : isRelated
-                      ? "bg-white text-slate-900 border-blue-500"
-                      : "bg-white text-slate-600 border-slate-300"
+                      ? "bg-paper-bright text-ink border-blue-500"
+                      : "bg-paper-bright text-ink-soft border-rule"
                   )}
                 >
                   <Icon className="w-8 h-8" strokeWidth={2} />
@@ -328,16 +328,16 @@ export default function RadialOrbitalTimeline({
 
                 {/* Expanded Card */}
                 {isExpanded && (
-                  <Card className="absolute top-20 left-1/2 -translate-x-1/2 w-[350px] bg-white/95 backdrop-blur-xl border-slate-200 shadow-xl overflow-visible z-50 text-left">
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-px h-3 bg-slate-300"></div>
+                  <Card className="absolute top-20 left-1/2 -translate-x-1/2 w-[350px] bg-paper-bright/95 backdrop-blur-xl border-rule shadow-xl overflow-visible z-50 text-left">
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-px h-3 bg-rule"></div>
                     <CardHeader className="pb-3 pt-4 px-6">
                       <div className="flex justify-between items-center mb-1">
-                        <span className="text-2xl font-bold text-slate-900 font-[Courier_Prime]">
+                        <span className="text-2xl font-bold text-ink font-[Courier_Prime]">
                           {item.date}
                         </span>
                       </div>
                     </CardHeader>
-                    <CardContent className="px-6 pb-6 text-base text-slate-600">
+                    <CardContent className="px-6 pb-6 text-base text-ink-soft">
                       <p className="mb-0 leading-relaxed">{item.content}</p>
                     </CardContent>
                   </Card>

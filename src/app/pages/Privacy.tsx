@@ -494,7 +494,7 @@ export function Privacy() {
         path="/privacy"
       />
 
-      <div className="bg-white min-h-screen">
+      <div className="bg-paper-bright min-h-screen">
         {/* Hero */}
         <section className="bg-navy text-white py-20 px-4">
           <div className="max-w-3xl mx-auto text-center">
@@ -525,11 +525,11 @@ export function Privacy() {
           <Section number="2" title={COPY.s2Title}>
             <p className="mb-4">{COPY.s2Lead}</p>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
+              <table className="w-full text-sm border border-rule rounded-lg overflow-hidden">
                 <thead>
-                  <tr className="bg-slate-50">
-                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200 w-1/3">{COPY.s2ColCategory}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{COPY.s2ColExamples}</th>
+                  <tr className="bg-paper-2">
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-rule w-1/3">{COPY.s2ColCategory}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-rule">{COPY.s2ColExamples}</th>
                   </tr>
                 </thead>
                 <tbody className="text-[#718096]">
@@ -578,11 +578,11 @@ export function Privacy() {
           {/* 5 */}
           <Section number="5" title={COPY.s5Title}>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
+              <table className="w-full text-sm border border-rule rounded-lg overflow-hidden">
                 <thead>
-                  <tr className="bg-slate-50">
-                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200 w-2/5">{COPY.s5ColProvider}</th>
-                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-slate-200">{COPY.s5ColPurpose}</th>
+                  <tr className="bg-paper-2">
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-rule w-2/5">{COPY.s5ColProvider}</th>
+                    <th className="text-left px-4 py-3 font-semibold text-navy-soft border-b border-rule">{COPY.s5ColPurpose}</th>
                   </tr>
                 </thead>
                 <tbody className="text-[#718096]">
@@ -709,7 +709,7 @@ export function Privacy() {
 
           {/* 19 */}
           <Section number="19" title={COPY.s16Title}>
-            <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 text-[15px]">
+            <div className="p-5 bg-paper-2 rounded-xl border border-rule text-[15px]">
               <p className="font-semibold text-navy-soft mb-1">{COPY.s16Company}</p>
               <p>{COPY.s16Privacy} <a href="mailto:privacy@hana.health" className="text-blue-600 hover:underline">privacy@hana.health</a></p>
               <p>{COPY.s16General} <a href="mailto:hello@hana.health" className="text-blue-600 hover:underline">hello@hana.health</a></p>
@@ -741,7 +741,7 @@ function Section({ number, title, children }: { number: string; title: string; c
 /* Reusable table row */
 function DefRow({ term, meaning }: { term: string; meaning: string }) {
   return (
-    <tr className="border-b border-slate-100 last:border-0">
+    <tr className="border-b border-rule-soft last:border-0">
       <td className="px-4 py-3 font-medium text-navy-soft align-top">{term}</td>
       <td className="px-4 py-3">{meaning}</td>
     </tr>

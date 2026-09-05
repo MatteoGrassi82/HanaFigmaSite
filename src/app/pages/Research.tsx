@@ -118,14 +118,14 @@ function PublicationRow({ pub, isLast, index, readArticleLabel }: { pub: any, is
     <FadeIn delay={Math.min(index * 0.04, 0.25)}>
       <div className="group">
         <div className="grid grid-cols-1 md:grid-cols-[1.5fr_2fr_0.5fr_auto] gap-6 md:gap-10 items-start py-8 md:py-12">
-          <h3 className="text-xl font-medium leading-tight text-slate-900 group-hover:text-blue-700 transition-colors">
+          <h3 className="text-xl font-medium leading-tight text-ink group-hover:text-blue-700 transition-colors">
             {pub.title}
           </h3>
-          <p className="text-base leading-relaxed text-slate-600 font-normal">
+          <p className="text-base leading-relaxed text-ink-soft font-normal">
             {pub.description}
           </p>
           <div className="flex items-center justify-start md:justify-center min-h-[40px]">
-            <span className="font-serif text-xl sm:text-2xl md:text-3xl italic text-slate-400 group-hover:text-slate-900 transition-colors">
+            <span className="font-serif text-xl sm:text-2xl md:text-3xl italic text-slate-400 group-hover:text-ink transition-colors">
               {pub.journal}
             </span>
           </div>
@@ -134,7 +134,7 @@ function PublicationRow({ pub, isLast, index, readArticleLabel }: { pub: any, is
               href={pub.articleUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 md:py-2 border border-slate-200 rounded-full text-xs font-semibold uppercase tracking-wider text-slate-900 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300 whitespace-nowrap"
+              className="inline-flex items-center gap-2 px-5 py-2.5 md:py-2 border border-rule rounded-full text-xs font-semibold uppercase tracking-wider text-ink hover:bg-navy hover:text-white hover:border-navy transition-all duration-300 whitespace-nowrap"
               onMouseEnter={() => setHovered(true)}
               onMouseLeave={() => setHovered(false)}
             >
@@ -142,7 +142,7 @@ function PublicationRow({ pub, isLast, index, readArticleLabel }: { pub: any, is
             </a>
           </div>
         </div>
-        {!isLast && <div className="h-px w-full bg-slate-200" />}
+        {!isLast && <div className="h-px w-full bg-rule-soft" />}
       </div>
     </FadeIn>
   );
@@ -152,7 +152,7 @@ export function Research() {
   const t = useTranslations();
   const lb = t.labs;
   return (
-    <div className="bg-slate-50 min-h-screen">
+    <div className="bg-paper-2 min-h-screen">
       <SEO
         title={lb.seoTitle}
         useExactTitle={true}
@@ -165,18 +165,18 @@ export function Research() {
         ])}
       />
       {/* Hero Section */}
-      <section className="pt-16 pb-16 md:pt-24 md:pb-20 px-6 relative bg-slate-50 overflow-hidden">
+      <section className="pt-16 pb-16 md:pt-24 md:pb-20 px-6 relative bg-paper-2 overflow-hidden">
         <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[120%] h-[80%] rounded-[100%] bg-blue-100/30 blur-[120px] pointer-events-none" />
 
         <div className="max-w-4xl mx-auto text-center relative z-10">
            <FadeIn>
-              <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-normal text-slate-900 mb-6 leading-[1.1]">
+              <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-normal text-ink mb-6 leading-[1.1]">
                  {lb.h1}
               </h1>
            </FadeIn>
            <FadeIn delay={0.1}>
              <div className="space-y-6 max-w-2xl mx-auto">
-                <p className="text-lg text-slate-600 leading-relaxed">
+                <p className="text-lg text-ink-soft leading-relaxed">
                    {lb.subheading}
                 </p>
              </div>
@@ -185,28 +185,28 @@ export function Research() {
       </section>
 
       {/* Adaptive Engagement Engine Section */}
-      <section className="py-16 md:py-24 bg-white border-y border-slate-200/60">
+      <section className="py-16 md:py-24 bg-paper-bright border-y border-rule/60">
          <div className="max-w-3xl mx-auto px-6 text-center">
              <FadeIn>
-               <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-6 tracking-normal">
+               <h2 className="font-serif text-4xl md:text-5xl text-ink mb-6 tracking-normal">
                   The Adaptive Engagement Engine
                </h2>
              </FadeIn>
              <FadeIn delay={0.1}>
-               <p className="text-lg md:text-xl text-slate-600 mb-12 leading-relaxed">
+               <p className="text-lg md:text-xl text-ink-soft mb-12 leading-relaxed">
                   Our proprietary multi-model intelligence system translates research into practice by continuously monitoring conversations, analyzing vocal biomarkers, and adapting engagement in real time.
                </p>
              </FadeIn>
 
              {/* Capabilities List - Centered */}
              <FadeIn delay={0.2}>
-               <div className="bg-slate-50 rounded-2xl p-8 md:p-10 border border-slate-100 mb-10 text-left shadow-sm">
+               <div className="bg-paper-2 rounded-2xl p-8 md:p-10 border border-rule-soft mb-10 text-left shadow-sm">
                   <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-6 text-center">Core Capabilities</h3>
                   <div className="grid gap-4">
                       {capabilities.map((cap, i) => (
                          <div key={i} className="flex items-start gap-3">
                             <div className="mt-1 min-w-[20px]"><CheckCircle2 className="w-5 h-5 text-emerald-500" /></div>
-                            <span className="text-slate-700 font-medium">{cap}</span>
+                            <span className="text-ink-soft font-medium">{cap}</span>
                          </div>
                       ))}
                   </div>
@@ -219,7 +219,7 @@ export function Research() {
                  href="https://docs.hana.health/"
                  target="_blank"
                  rel="noopener noreferrer"
-                 className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white rounded-full font-medium text-lg hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-blue-600/20 transform hover:-translate-y-0.5"
+                 className="inline-flex items-center gap-2 px-8 py-4 bg-navy text-white rounded-full font-medium text-lg hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-blue-600/20 transform hover:-translate-y-0.5"
                >
                   {lb.readDocs} <ArrowRight className="w-4 h-4" />
                </a>
@@ -228,16 +228,16 @@ export function Research() {
       </section>
 
       {/* Publications Section */}
-      <section className="py-16 md:py-24 bg-slate-50">
+      <section className="py-16 md:py-24 bg-paper-2">
          <div className="max-w-6xl mx-auto px-6">
              <div className="text-center mb-12 md:mb-20 max-w-3xl mx-auto">
                  <FadeIn>
-                   <h2 className="font-serif text-4xl md:text-5xl text-slate-900 mb-6">{lb.publicationsTitle}</h2>
-                   <p className="text-xl text-slate-600">{lb.publicationsBody}</p>
+                   <h2 className="font-serif text-4xl md:text-5xl text-ink mb-6">{lb.publicationsTitle}</h2>
+                   <p className="text-xl text-ink-soft">{lb.publicationsBody}</p>
                  </FadeIn>
              </div>
 
-             <div className="bg-white rounded-[2rem] p-6 md:p-12 shadow-sm border border-slate-100/80">
+             <div className="bg-paper-bright rounded-[2rem] p-6 md:p-12 shadow-sm border border-rule-soft/80">
                  {publications.map((pub, i) => (
                    <PublicationRow key={pub.id} pub={pub} isLast={i === publications.length - 1} index={i} readArticleLabel={lb.readArticle} />
                  ))}

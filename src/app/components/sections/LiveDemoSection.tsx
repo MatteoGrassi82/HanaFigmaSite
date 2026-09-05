@@ -107,13 +107,13 @@ export function LiveDemoSection({
                         <div className="absolute inset-0 bg-green-500/10 rounded-full animate-pulse" />
                       )}
                       <div className={cn(
-                        "absolute inset-2 bg-white rounded-full flex items-center justify-center border shadow-sm",
+                        "absolute inset-2 bg-paper-bright rounded-full flex items-center justify-center border shadow-sm",
                         webCallStatus === "active" ? "border-green-100" : "border-blue-100"
                       )}>
                         <Globe className={cn("w-8 h-8", webCallStatus === "active" ? "text-green-600" : "text-blue-600")} />
                       </div>
                       <div className={cn(
-                        "absolute -right-1 -top-1 text-white p-1.5 rounded-full border-4 border-slate-50",
+                        "absolute -right-1 -top-1 text-white p-1.5 rounded-full border-4 border-rule-soft",
                         webCallStatus === "active" ? "bg-green-500" : "bg-blue-500"
                       )}>
                         {webCallStatus === "active"
@@ -123,10 +123,10 @@ export function LiveDemoSection({
                     </div>
   
                     <div>
-                      <p className="text-xl font-medium text-slate-900 mb-1">
+                      <p className="text-xl font-medium text-ink mb-1">
                         {webCallStatus === "active" ? ld.speakingWithHana : ld.connecting}
                       </p>
-                      <p className="text-sm text-slate-500">
+                      <p className="text-sm text-ink-mute">
                         {webCallStatus === "active" ? ld.clickEndCall : ld.establishingConnection}
                       </p>
                     </div>
@@ -185,7 +185,7 @@ export function LiveDemoSection({
                     <button
                       onClick={handleWebCallClick}
                       disabled={webCallStatus !== "idle"}
-                      className="w-full inline-flex items-center justify-center gap-2.5 bg-white border border-[#dfe3ee] text-navy text-[16px] font-semibold rounded-xl py-[18px] transition-all hover:-translate-y-0.5 hover:border-[#c7cfe0] hover:shadow-[0_10px_24px_rgba(0,18,47,0.08)] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                      className="w-full inline-flex items-center justify-center gap-2.5 bg-paper-bright border border-[#dfe3ee] text-navy text-[16px] font-semibold rounded-xl py-[18px] transition-all hover:-translate-y-0.5 hover:border-[#c7cfe0] hover:shadow-[0_10px_24px_rgba(0,18,47,0.08)] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
                     >
                       <Globe className="w-[18px] h-[18px] text-brand" />
                       {ld.webCallButton}
@@ -213,14 +213,14 @@ export function LiveDemoSection({
     );
 
   return (
-    <section id="live-demo-section" className="py-12 sm:py-16 lg:py-20 px-4 md:px-8 bg-white">
+    <section id="live-demo-section" className="py-12 sm:py-16 lg:py-20 px-4 md:px-8 bg-paper-bright">
       <div className="max-w-7xl mx-auto">
 
         {/* Headline */}
-        <h2 className="font-serif text-4xl md:text-6xl text-slate-900 leading-[1.05] text-center mb-4 tracking-tight">
+        <h2 className="font-serif text-4xl md:text-6xl text-ink leading-[1.05] text-center mb-4 tracking-tight">
           {ld.heading}
         </h2>
-        <p className="text-lg text-slate-500 text-center max-w-2xl mx-auto mb-8 sm:mb-12 lg:mb-14 leading-relaxed">
+        <p className="text-lg text-ink-mute text-center max-w-2xl mx-auto mb-8 sm:mb-12 lg:mb-14 leading-relaxed">
           {ld.subheading}
         </p>
 
@@ -228,7 +228,7 @@ export function LiveDemoSection({
         <div className="flex flex-col lg:flex-row gap-0 border border-[#e8ebf2] rounded-[20px] overflow-hidden shadow-[0_24px_64px_rgba(0,18,47,0.10)]">
 
           {/* Left — fluid bloom orb */}
-          <div className="relative lg:w-1/2 bg-white overflow-hidden flex items-center justify-center min-h-[320px] lg:min-h-[520px] px-12 py-16">
+          <div className="relative lg:w-1/2 bg-paper-bright overflow-hidden flex items-center justify-center min-h-[320px] lg:min-h-[520px] px-12 py-16">
             <div className="relative z-10 scale-90 sm:scale-100">
               <HanaBloomOrb />
             </div>

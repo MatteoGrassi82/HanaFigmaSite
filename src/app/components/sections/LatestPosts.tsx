@@ -44,14 +44,14 @@ export function LatestPosts() {
   const it = getLocale() === "it";
 
   return (
-    <section className="bg-white py-20 md:py-28">
+    <section className="bg-paper-bright py-20 md:py-28">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="mb-12 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
           <div>
             <p className="mb-3 text-[11px] font-semibold uppercase tracking-[2.5px] text-slate-400">
               {it ? "Dal blog" : "From the blog"}
             </p>
-            <h2 className="font-serif text-3xl leading-tight text-slate-900 md:text-4xl">
+            <h2 className="font-serif text-3xl leading-tight text-ink md:text-4xl">
               {it ? "Come le cliniche mettono Hana al lavoro." : "How clinics are putting Hana to work."}
             </h2>
           </div>
@@ -70,7 +70,7 @@ export function LatestPosts() {
               <Link
                 key={(post as Post)._id}
                 to={`/blog/${(post as Post).slug.current}`}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-slate-100 transition-all duration-200 hover:border-slate-200 hover:shadow-lg"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-rule-soft transition-all duration-200 hover:border-rule hover:shadow-lg"
               >
                 <PostCover post={post as Post} size="card" className="aspect-[16/9] w-full" />
                 <div className="flex flex-1 flex-col p-5">
@@ -89,11 +89,11 @@ export function LatestPosts() {
                       </span>
                     )}
                   </div>
-                  <h3 className="mb-2 font-serif text-xl leading-snug text-slate-900 transition-colors group-hover:text-blue-700">
+                  <h3 className="mb-2 font-serif text-xl leading-snug text-ink transition-colors group-hover:text-blue-700">
                     {(post as Post).title}
                   </h3>
                   {(post as Post).excerpt && (
-                    <p className="line-clamp-3 flex-1 text-sm leading-relaxed text-slate-500">
+                    <p className="line-clamp-3 flex-1 text-sm leading-relaxed text-ink-mute">
                       {(post as Post).excerpt}
                     </p>
                   )}
@@ -103,13 +103,13 @@ export function LatestPosts() {
               // loading skeleton
               <div
                 key={i}
-                className="flex flex-col overflow-hidden rounded-2xl border border-slate-100"
+                className="flex flex-col overflow-hidden rounded-2xl border border-rule-soft"
               >
-                <div className="aspect-[16/9] w-full animate-pulse bg-slate-100" />
+                <div className="aspect-[16/9] w-full animate-pulse bg-paper-2" />
                 <div className="space-y-3 p-5">
-                  <div className="h-3 w-24 animate-pulse rounded bg-slate-100" />
-                  <div className="h-5 w-3/4 animate-pulse rounded bg-slate-100" />
-                  <div className="h-3 w-full animate-pulse rounded bg-slate-100" />
+                  <div className="h-3 w-24 animate-pulse rounded bg-paper-2" />
+                  <div className="h-5 w-3/4 animate-pulse rounded bg-paper-2" />
+                  <div className="h-3 w-full animate-pulse rounded bg-paper-2" />
                 </div>
               </div>
             )

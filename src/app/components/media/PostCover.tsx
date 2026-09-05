@@ -51,7 +51,7 @@ export function PostCover({
 
   if (imageUrl) {
     return (
-      <div className={`relative overflow-hidden bg-slate-100 ${className}`}>
+      <div className={`relative overflow-hidden bg-paper-2 ${className}`}>
         <img
           src={imageUrl}
           alt={post.title}

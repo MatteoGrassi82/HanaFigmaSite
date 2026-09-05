@@ -118,21 +118,21 @@ export function ProgramsStack() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="bg-white py-24 md:py-32 px-6 md:px-16">
+    <section className="bg-paper-bright py-24 md:py-32 px-6 md:px-16">
       <div className="max-w-[1100px] mx-auto">
         <motion.div {...fadeUp} className="max-w-[58ch]">
           <p className={`${eyebrow} text-[#2563EB] mt-0 mb-4`}>Programs</p>
           <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-[#0A1633] m-0 max-w-[24ch]">
             Every program is a <em className="text-[#2563EB]">calling problem.</em>
           </h2>
-          <p className="text-[17px] leading-[1.7] text-slate-600 mt-5 mb-0">
+          <p className="text-[17px] leading-[1.7] text-ink-soft mt-5 mb-0">
             CCM wants twenty minutes a month. APCM wants no minutes and a whole panel. BHI wants the
             call between the visits. Different rules, one bottleneck: somebody has to pick up the
             phone, every month, for everybody.
           </p>
         </motion.div>
 
-        <div className="mt-12 md:mt-14 border-t border-slate-200">
+        <div className="mt-12 md:mt-14 border-t border-rule">
           {PROGRAMS.map((x, i) => {
             const on = open === i;
             return (
@@ -140,7 +140,7 @@ export function ProgramsStack() {
                 key={x.code}
                 {...fadeUp}
                 transition={{ duration: 0.5, delay: 0.03 + i * 0.05 }}
-                className="border-b border-slate-200"
+                className="border-b border-rule"
               >
                 <button
                   onClick={() => setOpen(on ? null : i)}
@@ -156,16 +156,16 @@ export function ProgramsStack() {
                   </span>
                   <span className="flex-1 min-w-0">
                     <span className="block text-[16.5px] font-semibold text-[#0A1633]">{x.name}</span>
-                    <span className="block text-[14px] leading-[1.6] text-slate-500 mt-1 max-w-[62ch]">
+                    <span className="block text-[14px] leading-[1.6] text-ink-mute mt-1 max-w-[62ch]">
                       {x.who}
                     </span>
                   </span>
-                  <span className="hidden md:block shrink-0 text-[12.5px] tabular-nums text-slate-500 w-[190px] text-right">
+                  <span className="hidden md:block shrink-0 text-[12.5px] tabular-nums text-ink-mute w-[190px] text-right">
                     {x.codes}
                   </span>
                   <span
                     className={`shrink-0 w-8 h-8 rounded-full grid place-items-center transition-colors ${
-                      on ? "bg-[#0A1633] text-white" : "bg-slate-100 text-[#0A1633] group-hover:bg-slate-200"
+                      on ? "bg-[#0A1633] text-white" : "bg-paper-2 text-[#0A1633] group-hover:bg-rule-soft"
                     }`}
                   >
                     <ChevronRight
@@ -182,24 +182,24 @@ export function ProgramsStack() {
                   <div className="overflow-hidden">
                     <div className="pb-9 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 md:pl-[100px]">
                       <div>
-                        <p className="text-[11px] font-bold uppercase tracking-[1.2px] text-slate-500 m-0">
+                        <p className="text-[11px] font-bold uppercase tracking-[1.2px] text-ink-mute m-0">
                           What the month requires
                         </p>
-                        <p className="text-[14.5px] leading-[1.7] text-slate-600 mt-2.5 mb-0">{x.rule}</p>
+                        <p className="text-[14.5px] leading-[1.7] text-ink-soft mt-2.5 mb-0">{x.rule}</p>
 
-                        <p className="text-[11px] font-bold uppercase tracking-[1.2px] text-slate-500 mt-7 mb-0">
+                        <p className="text-[11px] font-bold uppercase tracking-[1.2px] text-ink-mute mt-7 mb-0">
                           Where your team stays
                         </p>
                         <p className="text-[14.5px] leading-[1.7] text-[#0A1633] mt-2.5 mb-0">{x.team}</p>
 
                         {x.note && (
-                          <p className="text-[13px] leading-[1.6] text-slate-600 mt-6 mb-0 pl-4 border-l-2 border-[#E8A06A]">
+                          <p className="text-[13px] leading-[1.6] text-ink-soft mt-6 mb-0 pl-4 border-l-2 border-[#E8A06A]">
                             {x.note}
                           </p>
                         )}
                       </div>
 
-                      <div className="rounded-[18px] bg-[#F7F9FC] border border-slate-200 p-6">
+                      <div className="rounded-[18px] bg-[#F7F9FC] border border-rule p-6">
                         <p className="text-[11px] font-bold uppercase tracking-[1.2px] text-[#2563EB] m-0">
                           What HANA does in it
                         </p>
@@ -207,15 +207,15 @@ export function ProgramsStack() {
                           {x.hana.map((h) => (
                             <li key={h} className="flex gap-3">
                               <Check className="w-4 h-4 text-[#2563EB] shrink-0 mt-1" strokeWidth={2.8} />
-                              <span className="text-[14.5px] leading-[1.6] text-slate-700">{h}</span>
+                              <span className="text-[14.5px] leading-[1.6] text-ink-soft">{h}</span>
                             </li>
                           ))}
                         </ul>
-                        <div className="flex flex-wrap gap-2 mt-5 pt-5 border-t border-slate-200">
+                        <div className="flex flex-wrap gap-2 mt-5 pt-5 border-t border-rule">
                           {x.lands.map((l) => (
                             <span
                               key={l}
-                              className="rounded-full bg-white border border-slate-200 text-slate-600 text-[12px] font-semibold px-3 py-1"
+                              className="rounded-full bg-paper-bright border border-rule text-ink-soft text-[12px] font-semibold px-3 py-1"
                             >
                               {l}
                             </span>
@@ -230,7 +230,7 @@ export function ProgramsStack() {
           })}
         </div>
 
-        <motion.p {...fadeUp} className="text-[13px] leading-[1.7] text-slate-600 mt-8 mb-0 max-w-[86ch]">
+        <motion.p {...fadeUp} className="text-[13px] leading-[1.7] text-ink-soft mt-8 mb-0 max-w-[86ch]">
           {PROGRAM_FOOTNOTE}
         </motion.p>
       </div>

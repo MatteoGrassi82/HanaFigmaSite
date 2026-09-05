@@ -222,7 +222,7 @@ function HowItWorksFlow() {
                 onClick={() => setActive(i)}
                 aria-pressed={is}
                 className={`group relative flex-1 min-w-[150px] lg:min-w-0 snap-start text-left rounded-2xl p-5 transition-all duration-500 ${
-                  is ? "bg-[#2347e6] shadow-[0_18px_50px_rgba(35,71,230,0.45)]" : "bg-white/[0.04] hover:bg-white/[0.07]"
+                  is ? "bg-[#2347e6] shadow-[0_18px_50px_rgba(35,71,230,0.45)]" : "bg-paper-bright/[0.04] hover:bg-paper-bright/[0.07]"
                 }`}
                 style={{ flexGrow: is ? 1.5 : 1 }}
               >
@@ -253,7 +253,7 @@ function HowItWorksFlow() {
       </div>
 
       {/* Detail panel — cross-fades on stage change */}
-      <div className="mt-8 rounded-2xl bg-white/[0.03] border border-white/[0.06] p-7 md:p-9 grid grid-cols-1 md:grid-cols-[1fr_220px] gap-8 items-center min-h-[200px]">
+      <div className="mt-8 rounded-2xl bg-paper-bright/[0.03] border border-white/[0.06] p-7 md:p-9 grid grid-cols-1 md:grid-cols-[1fr_220px] gap-8 items-center min-h-[200px]">
         <AnimatePresence mode="wait">
           <motion.div
             key={cur.key}
@@ -290,7 +290,7 @@ function HowItWorksFlow() {
             key={b.key}
             onClick={() => setActive(i)}
             aria-label={`Show ${b.title}`}
-            className={`h-2 rounded-full transition-all duration-500 ${i === active ? "w-8 bg-brand-soft" : "w-2 bg-white/25 hover:bg-white/40"}`}
+            className={`h-2 rounded-full transition-all duration-500 ${i === active ? "w-8 bg-brand-soft" : "w-2 bg-paper-bright/25 hover:bg-paper-bright/40"}`}
           />
         ))}
       </div>
@@ -363,9 +363,9 @@ function PatientAgentSection() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="relative mx-auto w-full max-w-[440px]"
           >
-            <div className="rounded-[24px] bg-white/[0.06] backdrop-blur-sm border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.4)] p-5 md:p-6">
+            <div className="rounded-[24px] bg-paper-bright/[0.06] backdrop-blur-sm border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.4)] p-5 md:p-6">
               <div className="flex items-center gap-2.5 pb-4 mb-2 border-b border-white/10">
-                <span className="relative flex items-center justify-center w-9 h-9 rounded-full bg-white/10 text-brand-soft">
+                <span className="relative flex items-center justify-center w-9 h-9 rounded-full bg-paper-bright/10 text-brand-soft">
                   <Glyph d={RI.phone} className="w-4 h-4" />
                   <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-[#0a1c3d]" />
                 </span>
@@ -388,7 +388,7 @@ function PatientAgentSection() {
                       className={`max-w-[82%] rounded-2xl px-3.5 py-2.5 text-[13.5px] leading-[1.55] ${
                         turn.who === "hana"
                           ? "bg-brand text-white rounded-bl-md"
-                          : "bg-white/[0.08] text-white/90 border border-white/10 rounded-br-md"
+                          : "bg-paper-bright/[0.08] text-white/90 border border-white/10 rounded-br-md"
                       }`}
                     >
                       {turn.text}
@@ -418,7 +418,7 @@ function PatientAgentSection() {
                 transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
                 className="flex items-start gap-4"
               >
-                <span className="flex items-center justify-center w-11 h-11 rounded-[12px] bg-white/[0.06] border border-white/10 text-brand-soft shrink-0">
+                <span className="flex items-center justify-center w-11 h-11 rounded-[12px] bg-paper-bright/[0.06] border border-white/10 text-brand-soft shrink-0">
                   <Glyph d={p.icon} className="w-5 h-5" />
                 </span>
                 <div>
@@ -447,7 +447,7 @@ type DeltaRow = { k: string; pct: number; v: string; hi?: boolean };
 function SDeltaStat({ big, suffix, label, rows }: { big: string; suffix?: string; label: string; rows: DeltaRow[] }) {
   const reduce = useReducedMotion();
   return (
-    <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 md:p-7 flex flex-col sm:flex-row sm:items-center gap-5 md:gap-7">
+    <div className="rounded-2xl bg-paper-bright/[0.04] border border-white/10 p-6 md:p-7 flex flex-col sm:flex-row sm:items-center gap-5 md:gap-7">
       <div className="sm:w-[150px] shrink-0">
         <div className="font-serif text-[52px] md:text-[64px] leading-[0.9] text-white">
           {big}
@@ -459,9 +459,9 @@ function SDeltaStat({ big, suffix, label, rows }: { big: string; suffix?: string
         {rows.map((r) => (
           <div key={r.k} className="flex items-center gap-3">
             <span className={`w-[76px] shrink-0 text-[12px] ${r.hi ? "font-semibold text-brand-soft" : "text-white/55"}`}>{r.k}</span>
-            <div className="flex-1 h-2.5 rounded-full bg-white/10 overflow-hidden">
+            <div className="flex-1 h-2.5 rounded-full bg-paper-bright/10 overflow-hidden">
               <motion.div
-                className={`h-full rounded-full ${r.hi ? "bg-brand-soft" : "bg-white/25"}`}
+                className={`h-full rounded-full ${r.hi ? "bg-brand-soft" : "bg-paper-bright/25"}`}
                 initial={{ width: reduce ? `${r.pct}%` : 0 }}
                 whileInView={{ width: `${r.pct}%` }}
                 viewport={{ once: true }}
@@ -577,7 +577,7 @@ export function HanaSleepCPAP() {
             href={DEMO_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 bg-white text-navy text-[15px] font-semibold px-8 py-[15px] rounded-[10px] no-underline hover:opacity-90 transition-opacity mt-9 md:mt-10"
+            className="inline-flex items-center gap-2.5 bg-paper-bright text-navy text-[15px] font-semibold px-8 py-[15px] rounded-[10px] no-underline hover:opacity-90 transition-opacity mt-9 md:mt-10"
           >
             Book a demo →
           </motion.a>
@@ -633,7 +633,7 @@ export function HanaSleepCPAP() {
                 key={s.v}
                 {...fadeUp}
                 transition={{ duration: 0.5, delay: 0.04 + i * 0.07 }}
-                className="flex items-center gap-5 rounded-2xl bg-white/[0.04] border border-white/10 p-5 md:p-6"
+                className="flex items-center gap-5 rounded-2xl bg-paper-bright/[0.04] border border-white/10 p-5 md:p-6"
               >
                 <div className="font-serif text-[34px] md:text-[44px] leading-[0.95] text-white shrink-0 w-[104px] md:w-[124px]">{s.v}</div>
                 <div className="text-[14px] leading-[1.55] text-white/65">{s.l}</div>
@@ -665,8 +665,8 @@ export function HanaSleepCPAP() {
               <p className="text-[12px] font-semibold tracking-[1.5px] uppercase text-brand-soft mb-4">Whatever they already wear</p>
               <div className="grid grid-cols-2 gap-3">
                 {["Apple Watch", "Oura", "Fitbit", "Garmin"].map((d) => (
-                  <div key={d} className="flex items-center gap-3 rounded-xl bg-white/[0.04] border border-white/10 px-4 py-3.5">
-                    <span className="flex items-center justify-center w-9 h-9 rounded-lg bg-white/[0.06] text-brand-soft shrink-0">
+                  <div key={d} className="flex items-center gap-3 rounded-xl bg-paper-bright/[0.04] border border-white/10 px-4 py-3.5">
+                    <span className="flex items-center justify-center w-9 h-9 rounded-lg bg-paper-bright/[0.06] text-brand-soft shrink-0">
                       <Glyph d={RI.watch} className="w-[18px] h-[18px]" />
                     </span>
                     <span className="text-[14px] font-medium text-white/90">{d}</span>
@@ -679,7 +679,7 @@ export function HanaSleepCPAP() {
             </motion.div>
 
             {/* Right — the hypnogram it already recorded; HANA interprets it */}
-            <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.08 }} className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 md:p-7">
+            <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.08 }} className="rounded-2xl bg-paper-bright/[0.04] border border-white/10 p-6 md:p-7">
               <div className="flex items-center justify-between mb-4">
                 <span className="text-[12px] font-semibold tracking-[1.5px] uppercase text-brand-soft">The night it already recorded</span>
                 <span className="inline-flex items-center gap-1.5 text-[11px] text-white/45">
@@ -718,7 +718,7 @@ export function HanaSleepCPAP() {
             </h2>
             <div className="flex flex-wrap gap-2.5">
               {["Reads Apple Watch · Oura · Fitbit · Garmin", "Clinically-guided interpretation", "Built-in memory across calls", "HIPAA-aware by design", "Clinical decision support — not a device"].map((c) => (
-                <span key={c} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 text-[13px] font-medium text-white/90">
+                <span key={c} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-paper-bright/[0.04] border border-white/10 text-[13px] font-medium text-white/90">
                   <span className="w-1.5 h-1.5 rounded-full bg-brand-soft" aria-hidden="true" />
                   {c}
                 </span>
@@ -790,14 +790,14 @@ export function HanaSleepCPAP() {
             href={DEMO_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 bg-white text-navy rounded-[10px] font-semibold text-[15px] px-8 py-[15px] no-underline hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2.5 bg-paper-bright text-navy rounded-[10px] font-semibold text-[15px] px-8 py-[15px] no-underline hover:opacity-90 transition-opacity"
           >
             Book a demo →
           </a>
           {/* Transparent terms — true claims only */}
           <div className="flex flex-wrap items-center justify-center gap-2.5 mt-8">
             {["Reads any wearable", "No app to download", "HIPAA-aware by design", "Clinical decision support"].map((t) => (
-              <span key={t} className="inline-flex items-center gap-1.5 text-[13px] font-medium text-white/90 bg-white/[0.06] border border-white/10 rounded-full px-3.5 py-1.5">
+              <span key={t} className="inline-flex items-center gap-1.5 text-[13px] font-medium text-white/90 bg-paper-bright/[0.06] border border-white/10 rounded-full px-3.5 py-1.5">
                 <Check className="w-3.5 h-3.5 text-brand-soft" strokeWidth={3} /> {t}
               </span>
             ))}

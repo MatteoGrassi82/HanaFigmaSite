@@ -43,7 +43,7 @@ function WhitepaperCard({ wp, index }: { wp: typeof WHITEPAPERS[0]; index: numbe
     >
       <Link
         to={wp.href}
-        className="group flex flex-col h-full rounded-2xl border border-slate-200 bg-white hover:border-blue-200 hover:shadow-lg transition-all duration-200 overflow-hidden"
+        className="group flex flex-col h-full rounded-2xl border border-rule bg-paper-bright hover:border-blue-200 hover:shadow-lg transition-all duration-200 overflow-hidden"
       >
         <div className="bg-navy px-6 py-5 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-40 h-40 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
@@ -56,9 +56,9 @@ function WhitepaperCard({ wp, index }: { wp: typeof WHITEPAPERS[0]; index: numbe
             {wp.tags.map(t => (
               <span key={t} className="text-[10px] font-semibold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">{t}</span>
             ))}
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">{wp.year}</span>
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 bg-paper-2 px-2 py-0.5 rounded-full">{wp.year}</span>
           </div>
-          <p className="text-sm text-slate-600 leading-relaxed flex-1">{wp.description}</p>
+          <p className="text-sm text-ink-soft leading-relaxed flex-1">{wp.description}</p>
           <div className="mt-5 flex items-center gap-1.5 text-blue-600 text-sm font-semibold group-hover:gap-2.5 transition-all">
             {it ? "Leggi il whitepaper" : "Read whitepaper"} <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
           </div>
@@ -95,14 +95,14 @@ export function Whitepapers() {
         </div>
       </div>
 
-      <div className="bg-slate-50 min-h-screen">
+      <div className="bg-paper-2 min-h-screen">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {WHITEPAPERS.map((wp, i) => <WhitepaperCard key={wp.id} wp={wp} index={i} />)}
             <motion.div
               initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.15 }}
-              className="rounded-2xl border-2 border-dashed border-slate-200 bg-white/50 flex flex-col items-center justify-center p-8 text-center min-h-[220px]"
+              className="rounded-2xl border-2 border-dashed border-rule bg-paper-bright/50 flex flex-col items-center justify-center p-8 text-center min-h-[220px]"
             >
               <FileText size={28} className="text-slate-300 mb-3" />
               <p className="text-sm font-semibold text-slate-400">{it ? "Altri whitepaper in arrivo" : "More whitepapers coming"}</p>
