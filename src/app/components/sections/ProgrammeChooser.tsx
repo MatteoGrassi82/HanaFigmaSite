@@ -33,12 +33,13 @@ import { cn } from "../../../lib/utils";
  *         conditions, so two questions.
  *
  * WHERE IT STOPS
- * Two branches stop short, on purpose. Collaborative care names all three of its
+ * Three branches stop short, on purpose. Collaborative care names all three of its
  * codes and no single one, because they split on minutes and PROGRAMS does not
  * say which code carries which. A short RTM month gets no code at all, because
  * nothing we hold says what a broken data window leaves you. Both say so, in
  * those words, and send you to the requirement and to your MAC. A chooser that
  * always has an answer is a chooser you cannot trust with the ones it does have.
+ * The third is RTM against RPM. See RPM_OR_RTM below.
  *
  * PRERENDER
  * The default is two or more chronic conditions, minutes in the month, twenty
@@ -64,6 +65,23 @@ const BY_CODE = Object.fromEntries(PROGRAMS.map((p) => [p.code, p])) as Record<
   "CCM" | "APCM" | "BHI" | "RTM",
   Program
 >;
+
+/* ── The third place this chooser stops ────────────────────────────────────
+ * RPM was added to the site after this tree was written, and the tree does not
+ * branch on it. RTM and RPM are the same shape and differ only in what the
+ * device records: a therapy response for RTM, a physiologic reading for RPM.
+ * That is a clinical distinction about somebody's actual device, and inventing
+ * a branch for it would mean this chooser guessing at the one thing it cannot
+ * see. So the monitoring outcomes say the distinction out loud instead, in the
+ * same way the collaborative-care and short-month branches say where they stop.
+ * If PROGRAMS ever carries an RPM entry with its own eligibility rule, this
+ * becomes a real branch and this constant goes away. */
+const RPM_OR_RTM =
+  "This branch assumes the device records a therapy: adherence to it, or the response to it. " +
+  "If what it records is a physiologic reading such as blood pressure, weight or oxygen saturation, " +
+  "the family is remote physiologic monitoring rather than RTM, and the codes are different. " +
+  "This chooser does not draw that line for you. Read both requirements, then confirm against your MAC.";
+
 
 /* ── Choice ────────────────────────────────────────────────────────────────
  * The kit has no primitive for picking one of a set, so this is composed here
@@ -439,6 +457,7 @@ function decide(picture: PictureId, month: YesNo, level: YesNo): Outcome {
         { value: "16 days", label: "of data in thirty" },
         { value: talked ? "1" : "no", label: "interactive conversation" },
       ],
+      caveat: RPM_OR_RTM,
     };
   }
 
@@ -447,7 +466,8 @@ function decide(picture: PictureId, month: YesNo, level: YesNo): Outcome {
     codes: null,
     trail: [{ value: "under 16 days", label: "of data in thirty" }],
     caveat:
-      "The supply codes ask for sixteen days of data in thirty, and this month is short. What a short month leaves you is not something this chooser settles. Read the requirement, then confirm it against your MAC.",
+      "The supply codes ask for sixteen days of data in thirty, and this month is short. What a short month leaves you is not something this chooser settles. Read the requirement, then confirm it against your MAC. " +
+      RPM_OR_RTM,
   };
 }
 

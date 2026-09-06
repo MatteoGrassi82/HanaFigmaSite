@@ -213,6 +213,60 @@ export const PROGRAMMES: Programme[] = [
     lands: ["Interactive-contact record", "Patient-reported context beside the data"],
     payment: rateFor("rtm"),
   },
+  {
+    /* REMOTE PHYSIOLOGIC MONITORING.
+     * The twin of RTM, and it carries the same single guardrail: HANA IS NEVER
+     * THE DEVICE. RPM pays for two separable things. The device half (99453
+     * setup, 99454 or 99445 supply) turns on hardware the practice already has,
+     * recording and transmitting a physiologic reading. The conversation half
+     * (99457, 99458, 99470) turns on a live interactive communication with the
+     * patient inside the calendar month. HANA does the second and only ever the
+     * second. `alsoBillable` below lists the device codes with their sourced
+     * amounts because a practice deserves to see the whole family, NOT because
+     * they are revenue HANA produces. */
+    id: "rpm",
+    slug: "remote-physiologic-monitoring",
+    path: path("remote-physiologic-monitoring"),
+    code: "RPM",
+    codes: "99453 · 99454 · 99445 · 99457 · 99458 · 99470",
+    name: "Remote Physiologic Monitoring",
+    summary:
+      "The live conversation the month requires, beside the readings your device already sends.",
+    who: "Patients whose physiologic readings a device already records and transmits.",
+    rule: "Sixteen days of readings in thirty for 99454, and 99457 needs at least one live interactive communication with the patient or caregiver inside the month.",
+    hana: [
+      "Makes the live interactive communication happen on schedule and writes it up the same day.",
+      "Brings the reading into the call: what was going on at home on the days the numbers moved.",
+      "Checks what it hears against the threshold a clinician set, and flags instead of concluding.",
+    ],
+    team: "The device is yours and reading it is yours. HANA summarises the conversation, never interprets a reading, and never changes therapy.",
+    lands: ["Interactive-communication record", "Patient-reported context beside the readings"],
+    note: "The figure on this page is 99457 alone, the conversation code. The device codes are yours and are billed separately.",
+    payment: rateFor("rpm"),
+    alsoBillable: [
+      {
+        code: "99458",
+        what: "Each further twenty minutes of treatment management in the same month.",
+        rate: 41.42,
+        caveat: "An add-on to 99457, never billed alone.",
+      },
+      {
+        code: "99454",
+        what: "Supply of the device, for a thirty-day period with at least sixteen days of readings.",
+        // 1.56 total non-facility RVUs x $33.4009 = $52.1054, which rounds to
+        // $52.11. Secondary write-ups print $52.10 because they truncate rather
+        // than round; do not "correct" this back to match them.
+        rate: 52.11,
+        caveat: "This is your device, not HANA's. HANA does not supply hardware and does not generate readings.",
+      },
+      {
+        code: "99453",
+        what: "One-off setup and patient education on using the device.",
+        rate: 21.71,
+        caveat: "Billed once per episode, not monthly. Again, your device.",
+      },
+    ],
+  },
 ];
 
 /** Carried verbatim from lab/ProgramsStack.tsx. Every programme page needs it. */

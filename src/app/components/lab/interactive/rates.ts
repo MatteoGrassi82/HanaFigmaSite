@@ -48,7 +48,7 @@ export const RATES_CONFIRMED = true;
 
 export interface ProgrammeRate {
   /** Stable key. Also the value written to the URL, so do not rename casually. */
-  id: "ccm" | "apcm" | "bhi" | "rtm";
+  id: "ccm" | "apcm" | "bhi" | "rtm" | "rpm";
   /** Chip label. */
   short: string;
   /** Full program name. */
@@ -167,6 +167,36 @@ export const PROGRAMME_RATES: ProgrammeRate[] = [
     placeholder: false,
     year: "CY2026",
     source: "CMS CY2026 PFS Final Rule (CMS-1832-F) Addendum B: 98980 total non-facility RVUs 1.62 x non-qualifying-APM conversion factor $33.4009. Independently reproduced from CMS primary files.",
+  },
+  {
+    // REMOTE PHYSIOLOGIC MONITORING.
+    // The base code modelled here is 99457, the treatment-management code, and
+    // it is chosen for the same reason 98980 is chosen for RTM: it is the only
+    // RPM code whose work is a conversation. 99457 requires at least one live
+    // interactive communication with the patient or caregiver in the month.
+    //
+    // THE DEVICE CODES ARE NOT MODELLED AND MUST NEVER BE. 99453 (setup) and
+    // 99454 (device supply) are sourced and carried in `alsoBillable` on the
+    // programme so a practice can see the whole family, but they belong to the
+    // practice's device, not to HANA, and no page may present their amounts as
+    // something HANA earns you. See the guardrail block in the RPM page file.
+    //
+    // TWO CY2026 CODES ARE DELIBERATELY UNSOURCED: 99470 (first 10 minutes of
+    // treatment management) and 99445 (device supply for 2 to 15 days of data),
+    // both new in CY2026. Secondary write-ups put them near $26 and $47, which
+    // is not the standard this file holds, so they are named on the page
+    // WITHOUT a figure rather than quoted from a blog.
+    id: "rpm",
+    short: "RPM",
+    name: "Remote Physiologic Monitoring",
+    code: "99457",
+    codes: "99453 · 99454 · 99445 · 99457 · 99458 · 99470",
+    basis: "The first twenty minutes of treatment management in a month, and it needs at least one live interactive communication with the patient.",
+    eligible: "Patients whose physiologic readings a device already records and transmits.",
+    rate: 51.77,
+    placeholder: false,
+    year: "CY2026",
+    source: "CMS CY2026 PFS: 99457 total non-facility RVUs 1.55 x non-qualifying-APM conversion factor $33.4009 = $51.77. Cross-checked against an independent CY2026 summary quoting approximately $52 national non-facility.",
   },
 ];
 

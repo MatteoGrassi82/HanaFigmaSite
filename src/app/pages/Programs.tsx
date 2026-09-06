@@ -18,25 +18,25 @@ import { PROGRAMMES, PROGRAMME_FOOTNOTE } from "../../content/programmes/index";
  *
  * So the order is different too:
  *   1. The chooser, first. It is the job.
- *   2. The four programmes as cards, for anyone who already knows.
- *   3. The code table, all four at once, which is the comparison a hub can make
+ *   2. The five programmes as cards, for anyone who already knows.
+ *   3. The code table, all five at once, which is the comparison a hub can make
  *      and a programme page cannot.
  *   4. The loop, because the month is the same shape whichever one you bill.
  *
  * NO REVENUE ESTIMATOR HERE. It is locked per programme on the programme pages,
- * and an unlocked four-way version on the hub invites comparing programmes by
+ * and an unlocked five-way version on the hub invites comparing programmes by
  * their rate, which is the wrong basis: a patient qualifies for one or another,
  * they are not alternatives you pick by price.
  *
- * NOINDEX for now, because it links to four pages that are themselves noindex
+ * NOINDEX for now, because it links to five pages that are themselves noindex
  * pending their open questions. Publishing the hub before them would strand a
- * crawler on four dead ends. All five move together.
+ * crawler on five dead ends. All six move together.
  */
 
 const COPY = {
   title: "The care programmes you are already eligible to bill",
   description:
-    "Chronic care management, advanced primary care management, behavioral health integration and remote therapeutic monitoring. Which one fits a patient, what each pays, and what your team still does.",
+    "Chronic care management, advanced primary care management, behavioral health integration, and remote therapeutic and physiologic monitoring. Which one fits a patient, what each pays, and what your team still does.",
 };
 
 const HUB_FAQS = [
@@ -58,7 +58,7 @@ const HUB_FAQS = [
   },
   {
     q: "What about remote patient monitoring?",
-    a: "Not on this site yet. RPM turns on a device recording a physiological reading, and HANA is never the device. When there is a page for it, it will say exactly that.",
+    a: "It has its own page now, and it says the thing you would want it to say: RPM turns on a device recording a physiologic reading, and HANA is never the device. What HANA does is the other half, the live interactive communication the treatment-management codes require. The device stays yours.",
   },
 ];
 
@@ -80,7 +80,7 @@ export function Programs() {
 
       <Hero
         eyebrow="Care programmes"
-        headline={<>One loop. <em>Four ways to bill it.</em></>}
+        headline={<>One loop. <em>Five ways to bill it.</em></>}
         body="Your patients already qualify for more than you are running. The difference between these programmes is who counts and what the month has to show, not how the work gets done."
         primaryCta={{ label: "Talk to HANA", href: "/demo" }}
         secondaryCta={{ label: "Compare the codes", href: "#codes" }}
@@ -93,7 +93,7 @@ export function Programs() {
       {/* For anyone who already knows which one they want. */}
       <section id="all" className="scroll-mt-24 bg-paper py-20 md:py-24 px-6 md:px-16">
         <div className="max-w-[1120px] mx-auto">
-          <p className="text-eyebrow font-bold uppercase text-ink-mute m-0 mb-4">All four</p>
+          <p className="text-eyebrow font-bold uppercase text-ink-mute m-0 mb-4">All five</p>
           <h2 className="font-serif text-h2 text-ink m-0 mb-10 max-w-[20ch]">
             Or go straight to the one you meant.
           </h2>
