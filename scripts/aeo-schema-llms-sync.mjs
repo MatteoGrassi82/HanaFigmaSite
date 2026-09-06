@@ -126,7 +126,7 @@ async function checkLlms(routes) {
   // /research redirects to /labs; the product pages are the ones answer engines
   // most need to find, so they belong in llms.txt too.
   const keyPages = ['/', '/case-studies', '/pricing', '/labs', '/state-of-ai', '/blog', '/contact',
-    '/whitepapers', '/whitepapers/adhd-intake', '/hana-remote', '/hana-contact', '/hana-sleep', '/access'];
+    '/whitepapers', '/whitepapers/adhd-intake', '/hana-remote', '/hana-contact', '/sleep', '/programs/access-model'];
   for (const p of keyPages) {
     const norm = p.replace(/\/$/, '') || '/';
     if (!linked.has(norm)) note('warn', `llms.txt does not link key page: ${DOMAIN}${p}`);

@@ -36,12 +36,12 @@ export const DEFAULT_DESCRIPTION =
  *
  * Must match the <Route> list in src/app/App.tsx. This lived in two scripts with
  * different contents, which is how the sitemap ended up advertising /research
- * (a redirect) while omitting /access, /hana-remote, /hana-sleep/*, /privacy and
+ * (a redirect) while omitting /programs/access-model, /hana-remote, /sleep/*, /privacy and
  * /cookies. Both scripts import this now.
  */
 export const STATIC_ROUTES = [
   '/',
-  '/access',
+  '/programs/access-model',
   '/case-studies',
   '/pricing',
   '/state-of-ai',
@@ -50,9 +50,9 @@ export const STATIC_ROUTES = [
   '/contact',
   '/hana-contact',
   '/hana-remote',
-  '/hana-sleep',
-  '/hana-sleep/analysis',
-  '/hana-sleep/cpap',
+  '/sleep',
+  '/sleep/analysis',
+  '/sleep/cpap',
   '/terms',
   '/aup',
   '/privacy',
@@ -65,7 +65,7 @@ export const STATIC_ROUTES = [
 
 // Routes App.tsx renders only when !isItalian — on ita.hana.health these fall
 // through to <NotFound>, so they must not be prerendered or listed in its sitemap.
-export const EN_ONLY_ROUTES = ['/access', '/case-studies', '/state-of-ai', '/use-cases'];
+export const EN_ONLY_ROUTES = ['/programs/access-model', '/case-studies', '/state-of-ai', '/use-cases'];
 
 /**
  * Real app routes that must answer 200 but must never be indexed.
@@ -100,6 +100,23 @@ export const NOINDEX_ROUTES = [
   '/programs/advanced-primary-care-management',
   '/programs/behavioral-health-integration',
   '/programs/remote-therapeutic-monitoring',
+  '/programs/remote-physiologic-monitoring',
+  // Audience and comparison pages. They close by sending the reader to a
+  // /programs/* page, so they publish together with those routes: shipping them
+  // first would hand a crawler five pages whose only call to action is a noindex
+  // dead end. Moving these five out of the list is the same publish step.
+  '/for-practices',
+  '/for-health-systems',
+  '/compare/vs-care-management-software',
+  '/compare/vs-outsourced-care-management',
+  '/compare/vs-doing-nothing',
+  // /security restates compliance claims that predate the move to HANA Health,
+  // Inc. and need re-confirming against the current entity. /academy and /faq
+  // both link into the noindex routes above and publish with them; /faq also
+  // sidesteps pricing, which /pricing still contradicts.
+  '/security',
+  '/academy',
+  '/faq',
 ];
 
 /**
@@ -110,7 +127,12 @@ export const NOINDEX_ROUTES = [
  * 200, not a redirect. Listed here so the App.tsx coverage check below knows they
  * are accounted for rather than missing.
  */
-export const REDIRECT_ROUTES = ['/research', '/use-cases'];
+export const REDIRECT_ROUTES = [
+  '/research', '/use-cases',
+  // Renamed 6 Sept 2026. /hana-sleep* lost the product prefix; /access moved
+  // under /programs because it is a CMS model a practice bills, not a product.
+  '/hana-sleep', '/hana-sleep/analysis', '/hana-sleep/cpap', '/access',
+];
 
 /**
  * Routes that exist in App.tsx for local development but must NOT be reachable in
@@ -130,8 +152,8 @@ export const NAV_LINKS = [
   ['/', 'Home'],
   ['/hana-remote', 'HANA Remote — engagement layer for remote care'],
   ['/hana-contact', 'HANA Contact — front desk'],
-  ['/hana-sleep', 'HANA Sleep'],
-  ['/access', 'CMS ACCESS program'],
+  ['/sleep', 'HANA Sleep'],
+  ['/programs/access-model', 'CMS ACCESS program'],
   ['/pricing', 'Pricing'],
   ['/case-studies', 'Case studies'],
   ['/blog', 'Blog'],
@@ -441,7 +463,7 @@ export function collectRouteMeta(srcDir, locale = 'en') {
  * Build sitemap.xml from the same route list the prerender walks.
  *
  * The hand-maintained public/sitemap.xml had drifted to 43 URLs against 96 real
- * pages — /access, /privacy, /cookies, both /hana-sleep sub-pages and 52 blog
+ * pages — /programs/access-model, /privacy, /cookies, both /sleep sub-pages and 52 blog
  * posts were missing, and every entry carried the same frozen lastmod. Generating
  * it from the build makes drift impossible.
  *
@@ -539,7 +561,7 @@ export function injectHead(shell, m) {
   //
   // Only for routes that actually exist in BOTH locales. EN_ONLY_ROUTES are
   // filtered out of the Italian build (see prerender.mjs), so emitting
-  // hreflang="it" for /access, /case-studies and /state-of-ai pointed Google at
+  // hreflang="it" for /programs/access-model, /case-studies and /state-of-ai pointed Google at
   // three ita.hana.health URLs that do not exist — an unreciprocated hreflang,
   // which Google discards and which fed the "alternate page"/duplicate buckets.
   // NOINDEX_ROUTES are internal previews with no translated counterpart either.

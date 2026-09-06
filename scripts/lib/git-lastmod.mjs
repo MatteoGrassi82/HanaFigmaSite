@@ -4,7 +4,7 @@
  * WHY THIS EXISTS
  * sitemap.xml carries <lastmod> for the 75 blog posts (Sanity gives us
  * `_updatedAt`) and nothing at all for the 21 static routes — so the pages whose
- * HTML changed most recently (/hana-remote, /hana-sleep/*, the footer-linked
+ * HTML changed most recently (/hana-remote, /sleep/*, the footer-linked
  * product pages) shipped with the weakest possible recrawl signal, while Google
  * kept serving pre-prerender-fix titles for them. This supplies the missing date.
  *

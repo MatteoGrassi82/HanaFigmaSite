@@ -140,13 +140,13 @@ export function HanaSleepAnalysis() {
         useExactTitle
         type="product"
         description="HANA Sleep is a wearable-agnostic sleep analysis platform. A novel, AI-driven algorithm extracts clinically meaningful insight from the hypnogram consumer wearables and Type III/IV home testing already produce — bridging consumer sleep technology and clinical sleep medicine. Clinical decision support that complements HST and PSG."
-        path="/hana-sleep/analysis"
+        path="/sleep/analysis"
         keywords="sleep analysis, wearable sleep analysis, hypnogram interpretation, wearable-agnostic sleep platform, Type III sleep testing, Type IV sleep testing, HST, PSG, longitudinal sleep assessment, clinical decision support sleep"
         jsonLd={[
           breadcrumbSchema([
           { name: "Home", url: "https://www.hana.health/" },
-          { name: "HANA Sleep", url: "https://www.hana.health/hana-sleep" },
-          { name: "Sleep Analysis", url: "https://www.hana.health/hana-sleep/analysis" },
+          { name: "HANA Sleep", url: "https://www.hana.health/sleep" },
+          { name: "Sleep Analysis", url: "https://www.hana.health/sleep/analysis" },
         ]),
           faqSchema(A_FAQS.map((f) => ({ question: f.q, answer: f.a }))),
         ]}

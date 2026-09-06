@@ -142,7 +142,7 @@ export function SleepNoteBeforeTime() {
               </div>
 
               <a
-                href="/hana-sleep"
+                href="/sleep"
                 className="group inline-flex items-center gap-2 text-[15px] font-semibold text-white no-underline mt-9 border-b border-white/30 pb-1 hover:border-white transition-colors"
               >
                 See HANA Sleep

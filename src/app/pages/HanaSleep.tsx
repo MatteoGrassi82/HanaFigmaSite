@@ -12,7 +12,7 @@ import { Glyph, RI } from "../components/media/CompassDashboard";
 const DEMO_URL = "https://calendly.com/matteowastaken/discoverycall";
 
 // Canonical main-site origin. On the standalone sleep.html Vercel project the
-// sub-pages (/hana-sleep/analysis, /hana-sleep/cpap) don't exist as routes, so
+// sub-pages (/sleep/analysis, /sleep/cpap) don't exist as routes, so
 // the umbrella links out to the main site instead of using an in-app <Link>.
 const MAIN_SITE = "https://www.hana.health";
 
@@ -21,13 +21,13 @@ const MAIN_SITE = "https://www.hana.health";
  * solutions for sleep medicine and wellness, not a single product. This page is
  * the umbrella: it introduces the suite and routes to each solution's own page:
  *
- *   • Sleep Analysis (HanaSleepAnalysis.tsx, /hana-sleep/analysis) — the
+ *   • Sleep Analysis (HanaSleepAnalysis.tsx, /sleep/analysis) — the
  *     wearable-agnostic, AI-driven analysis of the hypnogram.
- *   • CPAP Adherence Program (HanaSleepCPAP.tsx, /hana-sleep/cpap) — the
+ *   • CPAP Adherence Program (HanaSleepCPAP.tsx, /sleep/cpap) — the
  *     autonomous voice follow-up that keeps patients on therapy.
  *   • Remote Therapeutic Monitoring — on the roadmap.
  *
- * Rendered both at /hana-sleep on the main site (with Navbar) and as the
+ * Rendered both at /sleep on the main site (with Navbar) and as the
  * standalone sleep.html Vercel landing page (via sleep-main.tsx, wrapped in a
  * Router so <Link> resolves). Shares the design language of HANA Remote /
  * HANA Contact and reuses the closed-loop diagram.
@@ -62,7 +62,7 @@ const SOLUTIONS: Solution[] = [
     body: "A novel, AI-driven algorithm that extracts clinically meaningful insight from the hypnogram any wearable — or a Type III/IV home test — already produces. Wearable-agnostic, longitudinal, and built to complement HST and PSG.",
     points: ["Reads any wearable + Type III/IV", "Clinically meaningful insight, not more data", "Complements HST & PSG"],
     icon: RI.activity,
-    href: "/hana-sleep/analysis",
+    href: "/sleep/analysis",
     cta: "Explore Sleep Analysis",
   },
   {
@@ -71,7 +71,7 @@ const SOLUTIONS: Solution[] = [
     body: "An autonomous follow-up engine for CPAP adherence. HANA calls patients like a human would through the first 90 days, holds them to the plan without judgment, and documents every follow-up to the chart — built for RPM and RTM programs.",
     points: ["Voice follow-up with memory", "Non-adherence ~50% → ~22% in production", "Built for RPM & RTM"],
     icon: RI.phone,
-    href: "/hana-sleep/cpap",
+    href: "/sleep/cpap",
     cta: "Explore the CPAP Program",
   },
   {
@@ -143,12 +143,12 @@ export function HanaSleep({ standalone = false }: { standalone?: boolean } = {})
         useExactTitle
         type="product"
         description="HANA Sleep is a suite of solutions for sleep medicine and wellness: wearable-agnostic sleep analysis, the CPAP Adherence Program, and remote therapeutic monitoring. Clinical decision support that reads any wearable and follows up like a human would — HIPAA-aware by design."
-        path="/hana-sleep"
+        path="/sleep"
         keywords="HANA Sleep, sleep medicine AI, sleep wellness platform, CPAP adherence, wearable sleep analysis, hypnogram interpretation, remote therapeutic monitoring, RTM, sleep clinic AI, sleep telehealth"
         jsonLd={[
           breadcrumbSchema([
           { name: "Home", url: "https://www.hana.health/" },
-          { name: "HANA Sleep", url: "https://www.hana.health/hana-sleep" },
+          { name: "HANA Sleep", url: "https://www.hana.health/sleep" },
         ]),
           faqSchema(SUITE_FAQS.map((f) => ({ question: f.q, answer: f.a }))),
         ]}

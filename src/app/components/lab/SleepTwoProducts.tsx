@@ -13,10 +13,10 @@ const eyebrow = "text-[13px] font-bold tracking-[2.5px] uppercase";
 /* ── HANA Sleep, as its two actual products ────────────────────────────────
  * Matteo, 2026-08-19: build the sleep section out of the two HANA Sleep
  * products rather than inventing a third framing.
- *   · /hana-sleep/analysis — wearable-agnostic analysis. It READS the hypnogram
+ *   · /sleep/analysis — wearable-agnostic analysis. It READS the hypnogram
  *     consumer wearables and Type III/IV home tests already produce; it does not
  *     generate one. Clinical decision support, complements HST and PSG.
- *   · /hana-sleep/cpap — the CPAP adherence programme. The coach: calls through
+ *   · /sleep/cpap — the CPAP adherence programme. The coach: calls through
  *     the first 90 days and documents every follow-up to the chart.
  * Both claims are lifted from those live pages, so nothing new is asserted here.
  */
@@ -129,7 +129,7 @@ export function SleepTwoProducts() {
 
               <div className="mt-auto pt-7">
                 <a
-                  href="/hana-sleep/analysis"
+                  href="/sleep/analysis"
                   className="group inline-flex items-center gap-2 text-[15px] font-semibold text-white no-underline border-b border-white/30 pb-1 hover:border-white transition-colors"
                 >
                   See HANA Sleep Analysis
@@ -222,7 +222,7 @@ export function SleepTwoProducts() {
 
               <div className="mt-auto pt-7">
                 <a
-                  href="/hana-sleep/cpap"
+                  href="/sleep/cpap"
                   className="group inline-flex items-center gap-2 text-[15px] font-semibold text-white no-underline border-b border-white/30 pb-1 hover:border-white transition-colors"
                 >
                   See the CPAP Adherence Program

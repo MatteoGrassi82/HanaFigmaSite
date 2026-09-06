@@ -11,13 +11,13 @@ import { ChevronRight } from "lucide-react";
  *
  * So: a photo card, a New label (his words: new product, new protocol, new
  * system, NOT "coming soon"), the two Sleep products as rows you can click, and
- * one link out to /hana-sleep. Roughly a third of the height of the two-card
+ * one link out to /sleep. Roughly a third of the height of the two-card
  * feature version it replaced (SleepTwoProducts, still in this folder).
  *
  * PHOTO TODO: Matteo wants a sleep image behind this one. The patient-call photo
  * below is a stand-in, and it is the only thing here that needs swapping.
  *
- * Both product lines come off the live /hana-sleep pages, so nothing new is
+ * Both product lines come off the live /sleep pages, so nothing new is
  * claimed: Analysis READS the hypnogram a wearable or home test already records
  * (it does not produce one), and the CPAP programme calls through the first
  * ninety days and documents each follow-up.
@@ -26,12 +26,12 @@ const SLEEP_PRODUCTS = [
   {
     name: "HANA Sleep Analysis",
     line: "Reads the hypnogram any wearable or home sleep test already records, against the patient's own baseline.",
-    href: "/hana-sleep/analysis",
+    href: "/sleep/analysis",
   },
   {
     name: "CPAP Adherence Program",
     line: "Calls new CPAP patients through the ninety days that decide whether therapy holds, and documents each follow-up.",
-    href: "/hana-sleep/cpap",
+    href: "/sleep/cpap",
   },
 ];
 
@@ -83,7 +83,7 @@ export function SleepBand() {
               </p>
 
               <a
-                href="/hana-sleep"
+                href="/sleep"
                 className="group inline-flex items-center gap-2 text-[15px] font-semibold text-white no-underline mt-7 border-b border-white/30 pb-1 hover:border-white transition-colors"
               >
                 See HANA Sleep

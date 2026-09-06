@@ -135,7 +135,7 @@ export function Access({ activeAgentId, webCallStatus, handleStartWebCall, handl
       <SEO
         title="CMS ACCESS Model — Patient Outreach That Gets You Paid"
         description="CMS holds back half your ACCESS payments until your patients respond. Hana calls and texts them so you earn it back. Five dollars a patient, a month."
-        path="/access"
+        path="/programs/access-model"
       />
 
       <div className="min-h-screen bg-paper-bright">

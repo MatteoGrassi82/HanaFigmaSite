@@ -131,7 +131,7 @@ export const Navbar = (props: NavbarProps) => {
       {
         url: "#",
         title: isItalian ? "Piattaforma" : "Platform",
-        // Sleep dropped from the nav (Matteo, 2026-08-04) — the /hana-sleep
+        // Sleep dropped from the nav (Matteo, 2026-08-04) — the /sleep
         // routes stay live, they're just not a headline product up here.
         subMenuLinks: [
           { url: "/hana-contact", title: "HANA Contact" },

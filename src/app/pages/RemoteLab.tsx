@@ -34,7 +34,7 @@ import { EligibilityCheck } from "../components/sections/EligibilityCheck";
 import { PROGRAMMES } from "../../content/programmes/index";
 import { CtaBand } from "../components/sections/CtaBand";
 import { CaseloadSlider } from "../components/lab/interactive/CaseloadSlider";
-import { EligibilityGap } from "../components/lab/interactive/EligibilityGap";
+import { EligibilityGap } from "../components/sections/EligibilityGap";
 import { RevenueEstimator } from "../components/sections/RevenueEstimator";
 import { ProgrammeChooser } from "../components/sections/ProgrammeChooser";
 
@@ -203,7 +203,7 @@ function SleepNinetyDayClock() {
 
         <motion.div {...fadeUp} className="mt-14 flex flex-wrap items-center gap-4">
           <a
-            href="/hana-sleep"
+            href="/sleep"
             className="group inline-flex items-center gap-2 bg-navy text-white text-[15px] font-semibold pl-6 pr-5 py-3.5 rounded-full no-underline hover:opacity-90 transition-opacity"
           >
             See HANA Sleep
@@ -440,18 +440,18 @@ function RemoteBothSides() {
  * version: one line of context, the two Sleep products as two rows you can
  * click, and one link out. Roughly a third of the height of variant D, and it
  * reads as "there is also this" rather than "this is what you are buying".
- * Both product descriptions come off the live /hana-sleep pages.
+ * Both product descriptions come off the live /sleep pages.
  */
 const SLEEP_PRODUCTS = [
   {
     name: "HANA Sleep Analysis",
     line: "Reads the hypnogram any wearable or home sleep test already records, against the patient's own baseline.",
-    href: "/hana-sleep/analysis",
+    href: "/sleep/analysis",
   },
   {
     name: "CPAP Adherence Program",
     line: "Calls new CPAP patients through the ninety days that decide whether therapy holds, and documents each follow-up.",
-    href: "/hana-sleep/cpap",
+    href: "/sleep/cpap",
   },
 ];
 

@@ -11,7 +11,7 @@ const IT_DOMAIN = "https://ita.hana.health";
  * Mirror of EN_ONLY_ROUTES in scripts/lib/route-seo.mjs — that file cannot be
  * imported here because it reads node:fs. Used to suppress unreciprocated hreflang.
  */
-const EN_ONLY_PATHS = ["/access", "/case-studies", "/state-of-ai", "/use-cases"];
+const EN_ONLY_PATHS = ["/programs/access-model", "/case-studies", "/state-of-ai", "/use-cases"];
 
 function getSiteDomain(): string {
   return getLocale() === "it" ? IT_DOMAIN : EN_DOMAIN;
@@ -108,7 +108,7 @@ export function SEO({
     //
     // Only for paths that exist in BOTH locales. App.tsx renders EN_ONLY_PATHS
     // behind {!isItalian}, and the Italian build excludes them entirely, so
-    // advertising hreflang="it" for /access, /case-studies or /state-of-ai sent
+    // advertising hreflang="it" for /programs/access-model, /case-studies or /state-of-ai sent
     // Google to three ita.hana.health URLs that do not exist. An hreflang the
     // other side doesn't reciprocate is discarded, and the bad pairs fed the
     // "alternate page with proper canonical" and duplicate buckets in GSC.

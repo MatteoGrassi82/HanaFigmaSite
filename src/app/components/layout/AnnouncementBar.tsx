@@ -47,7 +47,7 @@ export function AnnouncementBar() {
         <p className="text-[13.5px] leading-snug m-0">
           We just launched a new sleep protocol.{" "}
           <a
-            href="/hana-sleep"
+            href="/sleep"
             className="group inline-flex items-center gap-1 font-semibold text-white underline decoration-white/40 underline-offset-2 hover:decoration-white"
           >
             See it

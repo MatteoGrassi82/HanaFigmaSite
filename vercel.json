@@ -3,8 +3,36 @@
   "buildCommand": "npm run build",
   "trailingSlash": false,
   "redirects": [
-    { "source": "/research", "destination": "/labs", "permanent": true },
-    { "source": "/use-cases", "destination": "/case-studies", "permanent": true }
+    {
+      "source": "/research",
+      "destination": "/labs",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases",
+      "destination": "/case-studies",
+      "permanent": true
+    },
+    {
+      "source": "/hana-sleep/analysis",
+      "destination": "/sleep/analysis",
+      "permanent": true
+    },
+    {
+      "source": "/hana-sleep/cpap",
+      "destination": "/sleep/cpap",
+      "permanent": true
+    },
+    {
+      "source": "/hana-sleep",
+      "destination": "/sleep",
+      "permanent": true
+    },
+    {
+      "source": "/access",
+      "destination": "/programs/access-model",
+      "permanent": true
+    }
   ],
   "rewrites": [
     {
@@ -16,7 +44,10 @@
     {
       "source": "/assets/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     }
   ]

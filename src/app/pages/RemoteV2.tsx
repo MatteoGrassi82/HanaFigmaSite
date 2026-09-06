@@ -53,7 +53,7 @@ const DEMO_URL = "https://calendly.com/matteowastaken/discoverycall";
  *   9  Programs: the CCM / APCM / BHI / RTM stack
  *   10 Integrations (EHR logos orbiting the core)
  *   11 Numbers band
- *   12 HANA Sleep, one section, labelled New, links to /hana-sleep
+ *   12 HANA Sleep, one section, labelled New, links to /sleep
  *   13 Audit-ready  14 SafetyStack  15 FAQ · CTA
  *
  * PULLED on 2026-08-19, all still in the file or one import away:

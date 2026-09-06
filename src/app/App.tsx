@@ -57,6 +57,23 @@ const BehavioralHealthIntegration = lazy(() =>
 const RemoteTherapeuticMonitoring = lazy(() =>
   import("./pages/RemoteTherapeuticMonitoring").then((m) => ({ default: m.RemoteTherapeuticMonitoring }))
 );
+const ForPractices = lazy(() => import("./pages/ForPractices").then((m) => ({ default: m.ForPractices })));
+const ForHealthSystems = lazy(() => import("./pages/ForHealthSystems").then((m) => ({ default: m.ForHealthSystems })));
+const VsCareManagementSoftware = lazy(() =>
+  import("./pages/compare/VsCareManagementSoftware").then((m) => ({ default: m.VsCareManagementSoftware }))
+);
+const VsOutsourcedCareManagement = lazy(() =>
+  import("./pages/compare/VsOutsourcedCareManagement").then((m) => ({ default: m.VsOutsourcedCareManagement }))
+);
+const VsDoingNothing = lazy(() =>
+  import("./pages/compare/VsDoingNothing").then((m) => ({ default: m.VsDoingNothing }))
+);
+const Security = lazy(() => import("./pages/Security").then((m) => ({ default: m.Security })));
+const Academy = lazy(() => import("./pages/Academy").then((m) => ({ default: m.Academy })));
+const Faq = lazy(() => import("./pages/Faq").then((m) => ({ default: m.Faq })));
+const RemotePhysiologicMonitoring = lazy(() =>
+  import("./pages/RemotePhysiologicMonitoring").then((m) => ({ default: m.RemotePhysiologicMonitoring }))
+);
 
 // Configuration
 const VAPI_PUBLIC_KEY = "5dfc26c6-90a6-4efe-907b-7bd0d690dc6e";
@@ -275,13 +292,19 @@ function AppContent() {
               <Route path="/timeline" element={<RadialOrbitalTimelineDemo />} />
               <Route path="/labs" element={<Research />} />
               <Route path="/research" element={<Navigate to="/labs" replace />} />
+              {/* Renamed 6 Sept 2026. The real 301s live in vercel.json; these
+                  only catch in-app navigation from a stale internal link. */}
+              <Route path="/hana-sleep" element={<Navigate to="/sleep" replace />} />
+              <Route path="/hana-sleep/analysis" element={<Navigate to="/sleep/analysis" replace />} />
+              <Route path="/hana-sleep/cpap" element={<Navigate to="/sleep/cpap" replace />} />
+              <Route path="/access" element={<Navigate to="/programs/access-model" replace />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/hana-contact" element={<HanaContact />} />
               <Route path="/hana-remote" element={<HanaRemote />} />
-              <Route path="/hana-sleep" element={<HanaSleep />} />
-              <Route path="/hana-sleep/analysis" element={<HanaSleepAnalysis />} />
-              <Route path="/hana-sleep/cpap" element={<HanaSleepCPAP />} />
+              <Route path="/sleep" element={<HanaSleep />} />
+              <Route path="/sleep/analysis" element={<HanaSleepAnalysis />} />
+              <Route path="/sleep/cpap" element={<HanaSleepCPAP />} />
               <Route path="/test-webhook" element={<TestWebhook />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/aup" element={<AUP />} />
@@ -303,6 +326,15 @@ function AppContent() {
               <Route path="/programs/advanced-primary-care-management" element={<AdvancedPrimaryCareManagement />} />
               <Route path="/programs/behavioral-health-integration" element={<BehavioralHealthIntegration />} />
               <Route path="/programs/remote-therapeutic-monitoring" element={<RemoteTherapeuticMonitoring />} />
+              <Route path="/programs/remote-physiologic-monitoring" element={<RemotePhysiologicMonitoring />} />
+              <Route path="/for-practices" element={<ForPractices />} />
+              <Route path="/for-health-systems" element={<ForHealthSystems />} />
+              <Route path="/compare/vs-care-management-software" element={<VsCareManagementSoftware />} />
+              <Route path="/compare/vs-outsourced-care-management" element={<VsOutsourcedCareManagement />} />
+              <Route path="/compare/vs-doing-nothing" element={<VsDoingNothing />} />
+              <Route path="/security" element={<Security />} />
+              <Route path="/academy" element={<Academy />} />
+              <Route path="/faq" element={<Faq />} />
               <Route path="/remote-v2" element={
                 <RemoteV2
                   activeAgentId={activeAgentId}
@@ -322,7 +354,7 @@ function AppContent() {
                 } />
               )}
               {!isItalian && (
-                <Route path="/access" element={
+                <Route path="/programs/access-model" element={
                   <Access
                     activeAgentId={activeAgentId}
                     webCallStatus={webCallStatus}

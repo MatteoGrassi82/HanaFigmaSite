@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from "motion/react";
-import { Arithmetic, BigStat, Dial, Note, Panel, clamp, formatInt, useUrlState } from "./kit";
-import { ILLUSTRATIVE_PANEL, ILLUSTRATIVE_SHARE } from "./eligibility-todo-figures";
-import { MARKET } from "./rates";
+import { Arithmetic, BigStat, Dial, Note, Panel, clamp, formatInt, useUrlState } from "../lab/interactive/kit";
+import { ILLUSTRATIVE_PANEL, ILLUSTRATIVE_SHARE } from "../lab/interactive/eligibility-todo-figures";
+import { MARKET } from "../lab/interactive/rates";
 
 /* ─────────────────────────────────────────────────────────────────────────────
  * EligibilityGap — the subtraction that is the whole argument.
