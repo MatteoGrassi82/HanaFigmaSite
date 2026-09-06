@@ -26,9 +26,10 @@
  * that header expressed as renderable data so a page can put the caveat next to
  * the figure. A dollar amount is never presented as "what you get paid".
  *
- * WHAT IS DELIBERATELY ABSENT. TCM (99495 / 99496) and PCM (99424 to 99427) are
- * not here because there is no module for either, and RPM is off entirely
- * because HANA is never the device. See the TODOs at the foot of this file.
+ * ALL SEVEN PROGRAMMES ARE HERE as of 6 Sept 2026. TCM, PCM and RPM were the
+ * last three in; see DONE(scope) at the foot of this file for why each was held
+ * back and what unblocked it. TCM is the one that does not share the monthly
+ * shape: it is billed per qualifying discharge, not per patient per month.
  * ─────────────────────────────────────────────────────────────────────────── */
 
 import {
@@ -51,8 +52,12 @@ export interface RelatedCode {
   code: string;
   /** What the code is for, in one line. Present tense, plain words. */
   what: string;
-  /** CY2026 national non-facility amount. Same basis as `payment`. */
-  rate: number;
+  /** CY2026 national non-facility amount. Same basis as `payment`.
+   *  OPTIONAL ON PURPOSE. A code we can name but cannot price to this file's
+   *  standard omits it, and CodeTable prints "not sourced" rather than a
+   *  number. A zero here would render as a dollar amount, which is worse than
+   *  no figure: it reads as "this code pays nothing". */
+  rate?: number;
   /** Anything that would make the figure misleading on its own. */
   caveat?: string;
 }
@@ -267,6 +272,92 @@ export const PROGRAMMES: Programme[] = [
       },
     ],
   },
+  {
+    /* PRINCIPAL CARE MANAGEMENT.
+     * The programme for the patient CCM turns away. CCM needs two or more
+     * chronic conditions; PCM is the one-condition programme, for a single
+     * complex condition serious enough to need its own care plan.
+     *
+     * WATCH THE CODE NUMBERING. It is the reverse of CCM's. 99426/99427 are
+     * the CLINICAL STAFF track (the figure on this page) and 99424/99425 are
+     * the PHYSICIAN track. See the guardrail in rates.ts. */
+    id: "pcm",
+    slug: "principal-care-management",
+    path: path("principal-care-management"),
+    code: "PCM",
+    codes: "99424 · 99425 · 99426 · 99427",
+    name: "Principal Care Management",
+    summary:
+      "Thirty minutes a month on one condition, for the patient who does not qualify for chronic care management.",
+    who: "One complex chronic condition expected to last at least three months, serious enough to risk hospitalisation or decline.",
+    rule: "Thirty minutes of clinical staff time in a calendar month, directed at that single condition, against a disease-specific care plan the patient has consented to.",
+    hana: [
+      "Makes the monthly contact and keeps it on the one condition, rather than drifting across the whole chart.",
+      "Asks the disease-specific questions your clinicians scoped, in 30+ languages.",
+      "Writes it up the same day with the time attributed, ready for review.",
+    ],
+    team: "Your clinicians set the care plan and own every clinical decision on it. HANA makes the contact and documents it, and nothing bills until a person on your team approves it.",
+    lands: ["Monthly time log against one condition", "Disease-specific contact record"],
+    note: "PCM cannot be billed in the same month as advanced primary care management for the same patient. 99424 and 99426 are also mutually exclusive: one month is either the physician track or the clinical staff track, never both.",
+    payment: rateFor("pcm"),
+    alsoBillable: [
+      {
+        code: "99427",
+        what: "Each further thirty minutes of clinical staff time in the same month.",
+        caveat: "No sourced CY2026 amount yet, so no figure is shown. An add-on to 99426, never billed alone.",
+      },
+      {
+        code: "99424 / 99425",
+        what: "The physician or QHP track, where the practitioner rather than clinical staff does the thirty minutes.",
+        caveat: "No figure shown on purpose: two independent CY2026 chains disagree on 99424's RVUs (2.62 against 2.63). Mutually exclusive with 99426 in the same month.",
+      },
+    ],
+  },
+  {
+    /* TRANSITIONAL CARE MANAGEMENT.
+     *
+     * TWO THINGS MAKE THIS PAGE DIFFERENT FROM EVERY OTHER PROGRAMME PAGE.
+     *
+     * 1. IT IS NOT A MONTHLY PROGRAMME. TCM is billed once per qualifying
+     *    discharge across a thirty-day service period. The page ships with
+     *    showEstimator={false} because RevenueEstimator models a monthly
+     *    enrolled panel and would put a confidently wrong number on screen.
+     *
+     * 2. IT REQUIRES A FACE-TO-FACE VISIT, AND HANA CANNOT DO ONE. The claim
+     *    needs interactive contact within 2 business days of discharge,
+     *    medication reconciliation, and a face-to-face visit inside 14 days
+     *    (99495) or 7 days (99496). HANA does the FIRST of those three and
+     *    only the first. It happens to be the one that fails most often and
+     *    takes the whole claim with it, which is the argument this page makes.
+     *    It must never be written so as to imply HANA supplies the visit. */
+    id: "tcm",
+    slug: "transitional-care-management",
+    path: path("transitional-care-management"),
+    code: "TCM",
+    codes: "99495 · 99496",
+    name: "Transitional Care Management",
+    summary:
+      "The two-business-day call after discharge, which is the requirement that most often goes missing.",
+    who: "Patients discharged from an inpatient or observation stay back into the community.",
+    rule: "Interactive contact within two business days of discharge, medication reconciliation by the date of the visit, and a face-to-face visit inside fourteen days for 99495 or seven for 99496.",
+    hana: [
+      "Makes the interactive contact inside the two-business-day window, including evenings and weekends, when a discharge on a Friday is otherwise lost.",
+      "Attempts again and documents every attempt, which is what the requirement actually asks for.",
+      "Writes up what it hears and flags anything your clinicians said to escalate, before the visit rather than at it.",
+    ],
+    team: "The face-to-face visit is yours and only yours, and so is the medication reconciliation and every clinical decision. HANA does the two-business-day contact and documents it.",
+    lands: ["Two-business-day contact record, with every attempt timed", "Patient-reported state before the visit"],
+    note: "The figure on this page is per qualifying DISCHARGE, not per patient per month, which is the one place this programme does not work like the others. HANA does the two-business-day contact only. The face-to-face visit the claim requires is yours.",
+    payment: rateFor("tcm"),
+    alsoBillable: [
+      {
+        code: "99496",
+        what: "High complexity, with the face-to-face visit inside seven days of discharge rather than fourteen.",
+        rate: 298.60,
+        caveat: "Same discharge, higher medical decision making and a tighter visit window. Never billed alongside 99495 for the same discharge.",
+      },
+    ],
+  },
 ];
 
 /** Carried verbatim from lab/ProgramsStack.tsx. Every programme page needs it. */
@@ -381,11 +472,17 @@ export function isProgrammeId(raw: string): raw is ProgrammeId {
  * invent a statistic, a rate, a CPT code or an eligibility rule to fill one.
  *
  * STRUCTURE AND ROUTING
- * TODO(scope): the brief says seven programme pages. This data covers four.
- *   Name the other three. TCM (99495 / 99496) and PCM (99424 to 99427) are the
- *   obvious candidates and both are deliberately absent because no module
- *   ships; RPM is off entirely because HANA is never the device. Each new page
- *   needs its own fact check and its own sourced rate before it can exist.
+ * DONE(scope) 2026-09-06: the brief asked for seven programme pages and this
+ *   data now covers seven. RPM, PCM and TCM were the three missing, and each
+ *   was held back for a different reason worth remembering:
+ *     RPM  "HANA is never the device" was read as a reason to have no page.
+ *          It is a reason to have a page that says so: RPM splits into a
+ *          device half and a conversation half, and HANA does the second.
+ *     PCM  simply had no module. Its rate is sourced now (99426, the CLINICAL
+ *          STAFF track, whose numbering is the reverse of CCM's).
+ *     TCM  had no module, and also does not fit the monthly shape the other
+ *          six share. It is per discharge, which is why ProgrammePage grew
+ *          showEstimator={false}.
  * TODO(url): confirm `PROGRAMME_PATH_PREFIX`. "/programs/..." assumes a US
  *   audience and US spelling; the hub page slug and the breadcrumb label need
  *   the same decision.

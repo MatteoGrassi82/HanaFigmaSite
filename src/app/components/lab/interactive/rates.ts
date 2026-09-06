@@ -48,7 +48,7 @@ export const RATES_CONFIRMED = true;
 
 export interface ProgrammeRate {
   /** Stable key. Also the value written to the URL, so do not rename casually. */
-  id: "ccm" | "apcm" | "bhi" | "rtm" | "rpm";
+  id: "ccm" | "apcm" | "bhi" | "rtm" | "rpm" | "pcm" | "tcm";
   /** Chip label. */
   short: string;
   /** Full program name. */
@@ -197,6 +197,66 @@ export const PROGRAMME_RATES: ProgrammeRate[] = [
     placeholder: false,
     year: "CY2026",
     source: "CMS CY2026 PFS: 99457 total non-facility RVUs 1.55 x non-qualifying-APM conversion factor $33.4009 = $51.77. Cross-checked against an independent CY2026 summary quoting approximately $52 national non-facility.",
+  },
+  {
+    // PRINCIPAL CARE MANAGEMENT.
+    // Base code is 99426, the CLINICAL STAFF track, because that is the track
+    // HANA's model sits in and it is the direct parallel to CCM's 99490.
+    //
+    // ███ PCM CODE NUMBERING IS THE REVERSE OF CCM'S. ███
+    // In CCM, 99490 is clinical staff and 99491 is the physician. In PCM it
+    // flips: 99424/99425 are the PHYSICIAN/QHP track and 99426/99427 are the
+    // CLINICAL STAFF track. Getting this backwards puts the wrong figure on the
+    // page and the wrong code on a claim, and it is the most common PCM billing
+    // error there is. 99424 and 99426 are mutually exclusive in a month.
+    //
+    // 99424 IS DELIBERATELY UNPRICED. Two independent chains disagree on its
+    // total non-facility RVUs: 2.62 (giving $87.51) against 2.63 (giving
+    // $87.84, printed elsewhere as "$88" using a rounded $33.40 factor). One
+    // hundredth of an RVU is not a rounding difference, it is two different
+    // source values, so the page names the physician track WITHOUT a figure
+    // until one of them is confirmed against CMS primary files. 99425 and 99427
+    // have no sourced value at all.
+    id: "pcm",
+    short: "PCM",
+    name: "Principal Care Management",
+    code: "99426",
+    codes: "99424 · 99425 · 99426 · 99427",
+    basis: "The first thirty minutes of clinical staff time in a month, directed at one high-risk condition rather than the whole chart.",
+    eligible: "Patients with ONE complex chronic condition expected to last at least three months.",
+    rate: 67.80,
+    placeholder: false,
+    year: "CY2026",
+    source: "CMS CY2026 PFS: 99426 total non-facility RVUs 2.03 x non-qualifying-APM conversion factor $33.4009 = $67.80. Reproduced from two independent CY2026 chains, both landing on 2.03 and $67.80.",
+  },
+  {
+    // TRANSITIONAL CARE MANAGEMENT.
+    //
+    // ███ THIS ONE IS NOT PER CALENDAR MONTH. ███
+    // Every other entry in this file is one base code per enrolled patient per
+    // calendar month. TCM is billed ONCE PER QUALIFYING DISCHARGE, across a
+    // thirty-day service period. RevenueEstimator models a monthly enrolled
+    // panel and every string in it says "per month", so pointing it at TCM
+    // produces a confidently wrong number. ProgrammePage takes
+    // `showEstimator={false}` for exactly this reason. Do not add TCM to the
+    // estimator without changing its unit.
+    //
+    // ███ TCM REQUIRES A FACE-TO-FACE VISIT AND HANA CANNOT DO ONE. ███
+    // The claim needs three things: interactive contact within 2 business days
+    // of discharge, medication reconciliation, and a face-to-face visit inside
+    // 14 days (99495) or 7 days (99496). HANA does the FIRST of those and only
+    // the first. The page must never imply otherwise.
+    id: "tcm",
+    short: "TCM",
+    name: "Transitional Care Management",
+    code: "99495",
+    codes: "99495 · 99496",
+    basis: "One qualifying discharge, moderate complexity, with the face-to-face visit inside fourteen days. Billed per discharge, not per month.",
+    eligible: "Patients discharged from an inpatient or observation stay back into the community.",
+    rate: 220.11,
+    placeholder: false,
+    year: "CY2026",
+    source: "CMS CY2026 PFS: 99495 total non-facility RVUs 6.59 x non-qualifying-APM conversion factor $33.4009 = $220.11. Reproduced from two independent CY2026 chains. 99496 is 8.94 RVUs = $298.60 on the same basis.",
   },
 ];
 

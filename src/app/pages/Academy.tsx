@@ -40,7 +40,7 @@ const PATHS = [
     href: "/programs",
     kicker: "Start here",
     title: "Which programme is my patient?",
-    body: "Three questions, one answer. The single most confusing thing about this category is which of the five a given patient belongs in, and the chooser settles it.",
+    body: "Three questions, one answer. The single most confusing thing about this category is which of the seven a given patient belongs in, and the chooser settles it.",
   },
   {
     href: "/compare/vs-doing-nothing",
@@ -114,7 +114,7 @@ export function Academy() {
         <div className="max-w-[1120px] mx-auto">
           <p className="text-eyebrow font-bold uppercase text-ink-mute m-0 mb-4">One page each</p>
           <h2 className="font-serif text-h2 text-ink m-0 mb-3 max-w-[24ch]">
-            The five programmes, in full.
+            The seven programmes, in full.
           </h2>
           <p className="text-[16.5px] leading-[1.7] text-ink-soft m-0 mb-8 max-w-[62ch]">
             Each page sets out who is eligible, what the month has to show, what your team still

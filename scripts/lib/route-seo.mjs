@@ -101,6 +101,8 @@ export const NOINDEX_ROUTES = [
   '/programs/behavioral-health-integration',
   '/programs/remote-therapeutic-monitoring',
   '/programs/remote-physiologic-monitoring',
+  '/programs/principal-care-management',
+  '/programs/transitional-care-management',
   // Audience and comparison pages. They close by sending the reader to a
   // /programs/* page, so they publish together with those routes: shipping them
   // first would hand a crawler five pages whose only call to action is a noindex

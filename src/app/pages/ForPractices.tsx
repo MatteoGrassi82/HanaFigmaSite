@@ -102,11 +102,11 @@ export function ForPractices() {
         <div className="max-w-[1120px] mx-auto">
           <p className="text-eyebrow font-bold uppercase text-ink-mute m-0 mb-4">What you can bill</p>
           <h2 className="font-serif text-h2 text-ink m-0 mb-3 max-w-[22ch]">
-            Five programmes. One loop.
+            Seven programmes. One loop.
           </h2>
           <p className="text-[16.5px] leading-[1.7] text-ink-soft m-0 mb-10 max-w-[62ch]">
             The difference between them is who counts and what the month has to show. The work is
-            the same shape in all five.
+            the same shape in all seven.
           </p>
           <ul className="m-0 p-0 list-none grid gap-4 md:grid-cols-2">
             {PROGRAMMES.map((p) => (

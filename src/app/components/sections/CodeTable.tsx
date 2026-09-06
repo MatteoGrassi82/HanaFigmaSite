@@ -376,9 +376,19 @@ export function CodeTable({
                         )}
                       </td>
                       <td className={TD}>
-                        <span className="block font-serif text-[20px] leading-none text-ink tabular-nums">
-                          {formatUsd(rc.rate)}
-                        </span>
+                        {/* A code we can name but not price prints words, never
+                            a number. formatUsd(0) would render "$0", which reads
+                            as "this code pays nothing" rather than "we have not
+                            sourced it". See RelatedCode.rate in the content module. */}
+                        {rc.rate === undefined ? (
+                          <span className="block text-[13.5px] leading-[1.4] text-ink-mute">
+                            not sourced
+                          </span>
+                        ) : (
+                          <span className="block font-serif text-[20px] leading-none text-ink tabular-nums">
+                            {formatUsd(rc.rate)}
+                          </span>
+                        )}
                       </td>
                     </tr>
                   ))}

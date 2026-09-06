@@ -74,6 +74,12 @@ const Faq = lazy(() => import("./pages/Faq").then((m) => ({ default: m.Faq })));
 const RemotePhysiologicMonitoring = lazy(() =>
   import("./pages/RemotePhysiologicMonitoring").then((m) => ({ default: m.RemotePhysiologicMonitoring }))
 );
+const PrincipalCareManagement = lazy(() =>
+  import("./pages/PrincipalCareManagement").then((m) => ({ default: m.PrincipalCareManagement }))
+);
+const TransitionalCareManagement = lazy(() =>
+  import("./pages/TransitionalCareManagement").then((m) => ({ default: m.TransitionalCareManagement }))
+);
 
 // Configuration
 const VAPI_PUBLIC_KEY = "5dfc26c6-90a6-4efe-907b-7bd0d690dc6e";
@@ -327,6 +333,8 @@ function AppContent() {
               <Route path="/programs/behavioral-health-integration" element={<BehavioralHealthIntegration />} />
               <Route path="/programs/remote-therapeutic-monitoring" element={<RemoteTherapeuticMonitoring />} />
               <Route path="/programs/remote-physiologic-monitoring" element={<RemotePhysiologicMonitoring />} />
+              <Route path="/programs/principal-care-management" element={<PrincipalCareManagement />} />
+              <Route path="/programs/transitional-care-management" element={<TransitionalCareManagement />} />
               <Route path="/for-practices" element={<ForPractices />} />
               <Route path="/for-health-systems" element={<ForHealthSystems />} />
               <Route path="/compare/vs-care-management-software" element={<VsCareManagementSoftware />} />

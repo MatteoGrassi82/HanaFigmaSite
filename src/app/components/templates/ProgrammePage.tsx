@@ -32,7 +32,9 @@ import type { Programme } from "../../../content/programmes/index";
  *   2. What does it pay?      CodeTable
  *   3. What do I have to do?  WhoDoesWhat        <- the one that closes it
  *   4. How does it run?       HowItWorksLoop + the programme's own workflows
- *   5. What is it worth?      RevenueEstimator, locked to this programme
+ *   5. What is it worth?      RevenueEstimator, locked to this programme.
+ *                             Suppressed by showEstimator={false} for a
+ *                             programme not billed per patient per month.
  *   6. What is the catch?     openQuestions, stated rather than hidden
  * A page that reorders these is answering questions nobody has asked yet. If a
  * programme genuinely needs a different order, that is a signal it is not a
@@ -71,6 +73,19 @@ export interface ProgrammePageProps {
 
   /** Defaults to `data.rule`, which is what both hand-built pages used. */
   heroBody?: string;
+
+  /** Whether to show RevenueEstimator. Defaults to true.
+   *
+   *  SET THIS FALSE WHEN THE PROGRAMME IS NOT BILLED PER PATIENT PER MONTH.
+   *  RevenueEstimator models a monthly enrolled panel and every string inside
+   *  it says so: "One program, one month", "What a month of this program comes
+   *  to", "estimated, per month". TCM is billed once per qualifying DISCHARGE
+   *  across a thirty-day service period, so pointing the estimator at it does
+   *  not merely mislabel the output, it multiplies a per-discharge amount by a
+   *  monthly enrolled panel and prints a number that is wrong by however many
+   *  of those patients were never discharged. A wrong number with a confident
+   *  serif on it is worse than no number, so TCM shows none. */
+  showEstimator?: boolean;
 }
 
 export function ProgrammePage({
@@ -79,6 +94,7 @@ export function ProgrammePage({
   faqs,
   openQuestions = [],
   heroBody,
+  showEstimator = true,
 }: ProgrammePageProps) {
   return (
     <>
@@ -129,7 +145,7 @@ export function ProgrammePage({
       <HowItWorksLoop id="how-it-works" />
 
 
-      <RevenueEstimator programme={data.id} id="what-it-is-worth" />
+      {showEstimator && <RevenueEstimator programme={data.id} id="what-it-is-worth" />}
 
       <FaqSection
         items={faqs}
