@@ -17,6 +17,7 @@ import { LatestPosts } from "../components/sections/LatestPosts";
 import { AskAiAboutUs } from "../components/sections/AskAiAboutUs";
 import { FaqSection } from "../components/sections/FaqSection";
 import { HowItWorksLoop } from "../components/sections/HowItWorksLoop";
+import { VideoSection } from "../components/sections/VideoSection";
 import { WhatIsHanaCompare } from "../components/sections/WhatIsHanaCompare";
 import { BuiltByClinicians } from "../components/sections/BuiltByClinicians";
 import { TeamSection } from "../components/sections/TeamSection";
@@ -494,6 +495,31 @@ interface RemoteV2Props {
   handleEndWebCall: () => void;
 }
 
+/* ── §3b THE VIDEO ─────────────────────────────────────────────────────────
+ * ███ PLACEHOLDER FILE. public/video1.mp4 IS NOT THE EXPLAINER. ███
+ * It is a 5.8-second 1080x1080 social loop that was sitting unreferenced in
+ * public/, used here only so the section is reviewable in the page rather than
+ * as an empty box. `aspect` is "1 / 1" because that is the real shape of THAT
+ * file; the frame reserves space from this value, so when the real explainer
+ * lands, change src, poster, aspect and duration together or the layout shifts
+ * on load and the video letterboxes inside the wrong-shaped box.
+ *
+ * The poster was generated from the placeholder with
+ *   ffmpeg -ss 1.2 -i public/video1.mp4 -frames:v 1 -q:v 3 \
+ *     public/video/explainer-poster.jpg
+ * sampled 1.2s in because frame 0 of that file is black. Regenerate the same
+ * way for the real file.
+ *
+ * STILL OWED: a captions .vtt. VideoSection takes `captionsSrc` and renders a
+ * <track> from it. A spoken explainer with no captions is not accessible, and
+ * on this site it is also a transcript the crawler could have read but cannot. */
+const EXPLAINER = {
+  src: "/video1.mp4",
+  poster: "/video/explainer-poster.jpg",
+  aspect: "1 / 1",
+  duration: "0:06",
+} as const;
+
 export function RemoteV2({
   activeAgentId,
   webCallStatus,
@@ -531,6 +557,24 @@ export function RemoteV2({
           step (replaced the imported LoopDiagram, whose Read/Reason/Engage/Write-Back
           stations didn't carry the practice-vs-HANA split) */}
       <HowItWorksLoop />
+
+      {/* §3b THE VIDEO — placed straight after the loop on purpose. The reader
+          has just been told how a month runs; this is the moment they want to
+          see one, and it is the last cheap moment before the page starts
+          asking for their number in §5. See EXPLAINER above for the
+          placeholder-file caveat. */}
+      <VideoSection
+        id="see-it-work"
+        tone="band"
+        eyebrow="See it work"
+        heading={<>See the month <em>actually run.</em></>}
+        body="The loop above is the shape of it. This is a real call going out, the note landing in the chart, and the time attributed against the code."
+        src={EXPLAINER.src}
+        poster={EXPLAINER.poster}
+        aspect={EXPLAINER.aspect}
+        duration={EXPLAINER.duration}
+        note={<>No sound needed. Your team reviews every note before anything bills.</>}
+      />
 
       {/* §3c was the 85% reached-by-channel column. Pulled 2026-08-19 (call):
           §2's three-way comparison already does the comparing, and comparing
