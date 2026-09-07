@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { SEO, breadcrumbSchema, faqSchema } from "../components/SEO";
-import { ProgrammePage } from "../components/templates/ProgrammePage";
+import { ProgrammePage, type WebCallProps } from "../components/templates/ProgrammePage";
 import { programmeById } from "../../content/programmes/index";
 
 /**
@@ -69,7 +69,7 @@ const OPEN_QUESTIONS: { q: string; needs: string }[] = [
   { q: "What changes under the CY2027 proposed rule?", needs: "Wording for the proposed rule, from Matteo and counsel. Always described as proposed, never as settled. RTM is the programme most exposed to it." },
 ];
 
-export function RemoteTherapeuticMonitoring() {
+export function RemoteTherapeuticMonitoring(webCall: WebCallProps) {
   return (
     <div className="bg-paper text-ink font-sans overflow-x-hidden">
       <SEO
@@ -93,6 +93,7 @@ export function RemoteTherapeuticMonitoring() {
         headline={HERO_HEADLINE}
         faqs={RTM_FAQS}
         openQuestions={OPEN_QUESTIONS}
+        webCall={webCall}
       />
     </div>
   );

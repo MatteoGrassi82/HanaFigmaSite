@@ -1,55 +1,91 @@
 import type { ReactNode } from "react";
-import { Hero } from "../sections/Hero";
+import { ProgrammeHero, type HeroCardRow } from "../sections/ProgrammeHero";
 import { EligibilityCheck } from "../sections/EligibilityCheck";
-import { CodeTable } from "../sections/CodeTable";
+import { PayVisual } from "../sections/PayVisual";
 import { WhoDoesWhat } from "../sections/WhoDoesWhat";
+import { WhyHana } from "../sections/WhyHana";
 import { HowItWorksLoop } from "../sections/HowItWorksLoop";
+import { MonthWrittenUp, type LogEntry } from "../sections/MonthWrittenUp";
 import { RevenueEstimator } from "../sections/RevenueEstimator";
+import { SonicDemoSection } from "../sections/SonicDemoSection";
 import { FaqSection } from "../sections/FaqSection";
 import { CtaBand, DEMO_HREF } from "../sections/CtaBand";
 import { Footer } from "../layout/Footer";
-import type { Programme } from "../../../content/programmes/index";
+import type { Programme, ProgrammeId } from "../../../content/programmes/index";
 
 /**
  * ProgrammePage — the body of a /programs/* page.
  *
  * EXTRACTED FROM TWO REAL PAGES, NOT DESIGNED UP FRONT. CCM and APCM were each
  * written by hand first; this is what turned out to be identical between them.
- * If a third programme needs something this does not take, add the prop rather
- * than forking the template.
+ * If a programme needs something this does not take, add the prop rather than
+ * forking the template.
  *
  * IT IS A BODY, NOT A PAGE. The <SEO> block stays in the page file and must be a
  * LITERAL there. scripts/lib/route-seo.mjs regex-scrapes it and requires `path`
  * to be a plain double-quoted string starting with "/". Put the SEO block in here
  * and the parser finds one unresolvable path, skips the route, and EVERY
  * programme page prerenders with the generic default title and description, with
- * no build error. You would find out from Search Console. That single constraint
- * is why this component renders from <Hero> down and never owns the head.
+ * no build error. You would find out from Search Console.
  *
- * THE ORDER IS THE ARGUMENT, and it is the reason this is a template at all. It
- * answers the five questions a practice manager asks, in the order they ask them:
- *   1. Is this me?            EligibilityCheck
- *   2. What does it pay?      CodeTable
- *   3. What do I have to do?  WhoDoesWhat        <- the one that closes it
- *   4. How does it run?       HowItWorksLoop + the programme's own workflows
- *   5. What is it worth?      RevenueEstimator, locked to this programme.
- *                             Suppressed by showEstimator={false} for a
- *                             programme not billed per patient per month.
- *   6. What is the catch?     openQuestions, stated rather than hidden
- * A page that reorders these is answering questions nobody has asked yet. If a
- * programme genuinely needs a different order, that is a signal it is not a
- * programme page, not a signal to add an `order` prop.
+ * ── 7 SEPT 2026: THE SOUL PASS ────────────────────────────────────────────
+ * Matteo reviewed /programs/chronic-care-management and named three faults:
+ * the hero was "bland, missing the soul" (it opened on a CPT string), the pay
+ * table was "too much text" (1,692px: five prose rows + six caveat paragraphs),
+ * and the page had no live content. He pointed at the sections on the current
+ * site that DO have soul -- the reach bars, the photo cards, the written-up
+ * month, the chat with HANA -- and asked for them here. So:
  *
- * NO WORKFLOW MARQUEE. It ran at 609 words against HowItWorksLoop's 231 and
- * answered the same question, "how does the month run". Two sections answering
- * one question is what makes a page feel long. The marquee stays on the homepage
- * where breadth is the point; a programme page wants one answer, not two.
+ *   Hero            -> ProgrammeHero   a person in a photo, the month's activity
+ *                                      card floated over it. The CPT codes moved
+ *                                      down to the pay section where they belong.
+ *   CodeTable       -> PayVisual       one number, one 80/20 bar, the family as
+ *                                      chips, all six caveats folded behind one
+ *                                      disclosure. Nothing cut; folded.
+ *   + WhyHana                          the reach-by-channel bars. SEE THE FLAG
+ *                                      BELOW before treating them as evidence.
+ *   + MonthWrittenUp                   the time log already full when the
+ *                                      clinician presses start. Illustrative.
+ *   + SonicDemoSection                 "Have a chat with HANA". Live: the real
+ *                                      LiveDemoSection form and the Vapi web-call
+ *                                      handlers, threaded in from App.tsx as
+ *                                      `webCall`. Rendered only when provided.
  *
- * NO PROOF SECTION. ProofBento carries generic HANA proof and quotes that are not
- * about any particular programme, so on a programme page it reads as borrowed
- * credibility. It comes back per-programme when there is a case study for that
- * programme to put in it.
+ * THE ORDER IS STILL THE ARGUMENT. Six questions a practice manager asks, in
+ * the order they ask them; the new sections slot into that order rather than
+ * reordering it:
+ *   0. Is this a real patient and a real month?   ProgrammeHero
+ *   1. Is this me?                                EligibilityCheck
+ *   2. What does it pay?                          PayVisual
+ *   3. What do I have to do?                      WhoDoesWhat  <- closes it
+ *      Why does the month actually happen?        WhyHana (reach)
+ *   4. How does it run?                           HowItWorksLoop
+ *      What does the month produce?               MonthWrittenUp
+ *   5. What is it worth?                          RevenueEstimator (locked)
+ *      Can I hear it?                             SonicDemoSection
+ *   6. What is the catch?                         openQuestions, stated
+ *
+ * ███ THE WHYHANA FLAG. ███ The four percentages in WhyHana (58 / 30 / 85 / 33,
+ * share of patients reached by channel) carry NO citation anywhere in this
+ * repo. They are on the homepage today and Matteo asked for them here, so they
+ * are here -- but they are the only figures on a programme page that are not a
+ * CMS rate or an attributed third-party statistic, and the audience pages were
+ * built under a rule that excludes exactly this. Source them or retire them
+ * before these routes leave NOINDEX_ROUTES. `reach={false}` turns them off.
+ *
+ * NO WORKFLOW MARQUEE. It answered the same question as HowItWorksLoop at 609
+ * words to its 231. Two sections answering one question is what makes a page
+ * feel long. NO PROOFBENTO: generic quotes on a programme page read as borrowed
+ * credibility. It comes back per-programme when there is a case study for it.
  */
+
+/** The web-call handlers App.tsx owns. Same shape RemoteV2 takes. */
+export interface WebCallProps {
+  activeAgentId: string | null;
+  webCallStatus: "idle" | "connecting" | "active";
+  handleStartWebCall: (agentId: string, assistantId: string) => void;
+  handleEndWebCall: () => void;
+}
 
 export interface ProgrammePageProps {
   /** The programme. Everything downstream reads from this one object. */
@@ -70,23 +106,57 @@ export interface ProgrammePageProps {
    *  also the moment the route can move out of NOINDEX_ROUTES. */
   openQuestions?: { q: string; needs: string }[];
 
-
-  /** Defaults to `data.rule`, which is what both hand-built pages used. */
+  /** Defaults to `data.summary`. */
   heroBody?: string;
+
+  /** Rows for the hero's activity card. Defaults to the loop, which is true for
+   *  every programme; pass rows when this programme's month has its own shape. */
+  heroRows?: HeroCardRow[];
+
+  /** Entries for the written-up month. Defaults per programme (see LOG_BY_ID),
+   *  falling back to a generic month. Illustrative, and labelled so on screen. */
+  monthLog?: LogEntry[];
 
   /** Whether to show RevenueEstimator. Defaults to true.
    *
    *  SET THIS FALSE WHEN THE PROGRAMME IS NOT BILLED PER PATIENT PER MONTH.
    *  RevenueEstimator models a monthly enrolled panel and every string inside
-   *  it says so: "One program, one month", "What a month of this program comes
-   *  to", "estimated, per month". TCM is billed once per qualifying DISCHARGE
-   *  across a thirty-day service period, so pointing the estimator at it does
-   *  not merely mislabel the output, it multiplies a per-discharge amount by a
-   *  monthly enrolled panel and prints a number that is wrong by however many
-   *  of those patients were never discharged. A wrong number with a confident
-   *  serif on it is worse than no number, so TCM shows none. */
+   *  it says so. TCM is billed once per qualifying DISCHARGE, so pointing the
+   *  estimator at it multiplies a per-discharge amount by a monthly enrolled
+   *  panel and prints a number that is wrong by however many of those patients
+   *  were never discharged. A wrong number with a confident serif on it is
+   *  worse than no number, so TCM shows none. */
   showEstimator?: boolean;
+
+  /** The reach-by-channel bars. See THE WHYHANA FLAG in the docblock. */
+  reach?: boolean;
+
+  /** App.tsx's web-call handlers. When present, "Have a chat with HANA" renders
+   *  with the real form and the real Vapi handlers. When absent, no section. */
+  webCall?: WebCallProps;
 }
+
+/* ── Example months, per programme ──────────────────────────────────────────
+ * ILLUSTRATIVE. Not real patients, not real readings, and the card says so.
+ * Each is shaped to the programme's actual requirement (CCM: 20 min of staff
+ * time across the month on two-plus conditions). Programmes without an entry
+ * get GENERIC_LOG, which is the loop and true for all of them. Add a real one
+ * here when a programme page is reviewed, the way CCM's was on 7 Sept 2026. */
+const CCM_LOG: LogEntry[] = [
+  { day: "Aug 3", title: "Monthly check-in", body: "Taking both blood pressure meds. Home reading 138/86.", src: "HANA call · summarised", len: "6 min" },
+  { day: "Aug 11", title: "Refill and diet", body: "Metformin refill due Friday. Two skipped breakfasts this week.", src: "HANA call · summarised", len: "5 min" },
+  { day: "Aug 18", title: "Threshold crossed", body: "158/94 on two home readings. Escalated to Dr Reyes with the full call.", src: "HANA call · flagged to the threshold you set", len: "7 min" },
+  { day: "Aug 26", title: "Care plan review", body: "Dose adjusted 20 Aug. Back to 134/84. Goals reconfirmed with the patient.", src: "HANA call · summarised", len: "4 min" },
+];
+
+const GENERIC_LOG: LogEntry[] = [
+  { day: "Wk 1", title: "First contact of the month", body: "Reached on the second attempt. Symptoms stable, questions answered.", src: "HANA call · summarised", len: "6 min" },
+  { day: "Wk 2", title: "Follow-up", body: "Medication taken as planned. One new concern noted for the clinician.", src: "HANA call · summarised", len: "5 min" },
+  { day: "Wk 3", title: "Flag", body: "Reported change against the threshold your clinicians set. Escalated live.", src: "HANA call · flagged to the threshold you set", len: "6 min" },
+  { day: "Wk 4", title: "Month closed", body: "Plan reconfirmed. Time attributed, note in the chart, waiting for review.", src: "HANA call · summarised", len: "4 min" },
+];
+
+const LOG_BY_ID: Partial<Record<ProgrammeId, LogEntry[]>> = { ccm: CCM_LOG };
 
 export function ProgrammePage({
   data,
@@ -94,58 +164,50 @@ export function ProgrammePage({
   faqs,
   openQuestions = [],
   heroBody,
+  heroRows,
+  monthLog,
   showEstimator = true,
+  reach = true,
+  webCall,
 }: ProgrammePageProps) {
+  const log = monthLog ?? LOG_BY_ID[data.id] ?? GENERIC_LOG;
+  const contacts = log.length;
+
   return (
     <>
-      <Hero
-        eyebrow={`${data.code} · ${data.codes}`}
-        headline={headline}
-        body={heroBody ?? data.summary}
-        primaryCta={{ label: "Book a demo", href: DEMO_HREF }}
-        secondaryCta={{ label: "See what it pays", href: "#codes" }}
-        trustLine="Your team reviews. Your provider signs."
-      />
+      <ProgrammeHero data={data} headline={headline} body={heroBody} rows={heroRows} />
 
       <EligibilityCheck data={data} id="eligibility" />
 
-      {/* ONE programme, not all four. The hub compares; a programme page does
-          not. This was 734 words showing three programmes the reader did not
-          ask about. `compact` also collapses the caveats behind a disclosure
-          rather than printing all five expanded. */}
-      <CodeTable
-        id="codes"
-        tone="band"
-        rows={[data]}
-        compact
-        heading={<>What <em>{data.code}</em> pays.</>}
-        body="One base code, one patient, one month, before adjustment. Not what you collect."
-      />
-
-      {/* A programme that cannot run beside another gets its own moment here,
-          not a footnote inside the table. A practice already billing something
-          else has to see it before it reads anything further. CCM has no note;
-          APCM's same-month exclusion is exactly this case. */}
-      {data.note && (
-        <section id="not-with" className="scroll-mt-24 bg-paper py-14 md:py-16 px-6 md:px-16">
-          <div className="max-w-[820px] mx-auto flex gap-4 rounded-tile border border-rule bg-paper-2 p-6">
-            <span aria-hidden className="mt-1 h-8 w-1 shrink-0 rounded-pill bg-signal-amber" />
-            <div>
-              <p className="text-eyebrow font-bold uppercase text-ink-mute m-0 mb-2">
-                Before you switch anyone over
-              </p>
-              <p className="text-[16.5px] leading-[1.65] text-ink m-0">{data.note}</p>
-            </div>
-          </div>
-        </section>
-      )}
+      <PayVisual data={data} id="pays" />
 
       <WhoDoesWhat data={data} id="who-does-what" />
 
+      {reach && (
+        <WhyHana
+          eyebrow="Reach"
+          heading={<>Why the month <em>actually happens.</em></>}
+        />
+      )}
+
       <HowItWorksLoop id="how-it-works" />
 
+      <MonthWrittenUp
+        id="written-up"
+        entries={log}
+        badge={data.code}
+        pill={data.name}
+        chip={`${data.code} ${data.payment.code}`}
+        body="Every contact HANA makes is recorded and summarised straight into the time log, with the minutes attributed against the code. When your clinician opens the patient, the month is already there. The clock they start runs on reading and attesting, not typing."
+        stats={[
+          { value: "0:00", label: "Time your team spends writing the month up" },
+          { value: String(contacts), label: "Documented contacts waiting when they open the chart" },
+        ]}
+      />
 
       {showEstimator && <RevenueEstimator programme={data.id} id="what-it-is-worth" />}
+
+      {webCall && <SonicDemoSection {...webCall} />}
 
       <FaqSection
         items={faqs}
@@ -156,16 +218,12 @@ export function ProgrammePage({
       {openQuestions.length > 0 && (
         <section id="open" className="scroll-mt-24 bg-band border-y border-rule py-16 md:py-20 px-6 md:px-16">
           <div className="max-w-[820px] mx-auto">
-            <p className="text-eyebrow font-bold uppercase text-ink-mute m-0 mb-4">
-              Not answered on this page yet
-            </p>
+            <p className="text-eyebrow font-bold uppercase text-ink-mute m-0 mb-4">Not answered on this page yet</p>
             <h2 className="font-serif text-h2 text-ink m-0 mb-4">
-              {openQuestions.length === 1
-                ? "One thing we will not guess at."
-                : `${countWord(openQuestions.length)} things we will not guess at.`}
+              {openQuestions.length === 1 ? "One thing we will not guess at." : `${countWord(openQuestions.length)} things we will not guess at.`}
             </h2>
             <p className="text-[16.5px] leading-[1.7] text-ink-soft m-0 mb-8 max-w-[62ch]">
-Billing rules. We confirm each one before this page publishes.
+              Billing rules. We confirm each one before this page publishes.
             </p>
             <ul className="m-0 p-0 list-none grid gap-3">
               {openQuestions.map((o) => (
@@ -175,9 +233,7 @@ Billing rules. We confirm each one before this page publishes.
                 </li>
               ))}
             </ul>
-            <p className="text-[14px] leading-[1.6] text-ink-mute m-0 mt-6">
-              Medicare rules as they stand in August 2026. Figures are CY2026.
-            </p>
+            <p className="text-[14px] leading-[1.6] text-ink-mute m-0 mt-6">Medicare rules as they stand in September 2026. Figures are CY2026.</p>
           </div>
         </section>
       )}
@@ -189,11 +245,7 @@ Billing rules. We confirm each one before this page publishes.
           { label: "Book a demo", href: DEMO_HREF },
           { label: "Talk to us", href: "/contact", variant: "ghost" },
         ]}
-        reassurances={[
-          "Your patients, your claim",
-          "Your team reviews and attests",
-          "Nothing bills until a person approves",
-        ]}
+        reassurances={["Your patients, your claim", "Your team reviews and attests", "Nothing bills until a person approves"]}
       />
 
       <Footer />

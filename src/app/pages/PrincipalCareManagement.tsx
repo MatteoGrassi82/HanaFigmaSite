@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { SEO, breadcrumbSchema, faqSchema } from "../components/SEO";
-import { ProgrammePage } from "../components/templates/ProgrammePage";
+import { ProgrammePage, type WebCallProps } from "../components/templates/ProgrammePage";
 import { programmeById } from "../../content/programmes/index";
 
 /**
@@ -86,7 +86,7 @@ const OPEN_QUESTIONS: { q: string; needs: string }[] = [
   { q: "What changes under the CY2027 proposed rule?", needs: "Wording for the proposed rule, from Matteo and counsel. Always described as proposed, never as settled." },
 ];
 
-export function PrincipalCareManagement() {
+export function PrincipalCareManagement(webCall: WebCallProps) {
   return (
     <div className="bg-paper text-ink font-sans overflow-x-hidden">
       <SEO
@@ -110,6 +110,7 @@ export function PrincipalCareManagement() {
         headline={HERO_HEADLINE}
         faqs={PCM_FAQS}
         openQuestions={OPEN_QUESTIONS}
+        webCall={webCall}
       />
     </div>
   );

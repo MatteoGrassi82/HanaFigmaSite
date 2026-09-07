@@ -328,13 +328,62 @@ function AppContent() {
               <Route path="/proof" element={<ProofShowcase />} />
               <Route path="/remote-lab" element={<RemoteLab />} />
               <Route path="/programs" element={<Programs />} />
-              <Route path="/programs/chronic-care-management" element={<ChronicCareManagement />} />
-              <Route path="/programs/advanced-primary-care-management" element={<AdvancedPrimaryCareManagement />} />
-              <Route path="/programs/behavioral-health-integration" element={<BehavioralHealthIntegration />} />
-              <Route path="/programs/remote-therapeutic-monitoring" element={<RemoteTherapeuticMonitoring />} />
-              <Route path="/programs/remote-physiologic-monitoring" element={<RemotePhysiologicMonitoring />} />
-              <Route path="/programs/principal-care-management" element={<PrincipalCareManagement />} />
-              <Route path="/programs/transitional-care-management" element={<TransitionalCareManagement />} />
+              <Route path="/programs/chronic-care-management" element={
+                <ChronicCareManagement
+                  activeAgentId={activeAgentId}
+                  webCallStatus={webCallStatus}
+                  handleStartWebCall={handleStartWebCall}
+                  handleEndWebCall={handleEndWebCall}
+                />
+              } />
+              <Route path="/programs/advanced-primary-care-management" element={
+                <AdvancedPrimaryCareManagement
+                  activeAgentId={activeAgentId}
+                  webCallStatus={webCallStatus}
+                  handleStartWebCall={handleStartWebCall}
+                  handleEndWebCall={handleEndWebCall}
+                />
+              } />
+              <Route path="/programs/behavioral-health-integration" element={
+                <BehavioralHealthIntegration
+                  activeAgentId={activeAgentId}
+                  webCallStatus={webCallStatus}
+                  handleStartWebCall={handleStartWebCall}
+                  handleEndWebCall={handleEndWebCall}
+                />
+              } />
+              <Route path="/programs/remote-therapeutic-monitoring" element={
+                <RemoteTherapeuticMonitoring
+                  activeAgentId={activeAgentId}
+                  webCallStatus={webCallStatus}
+                  handleStartWebCall={handleStartWebCall}
+                  handleEndWebCall={handleEndWebCall}
+                />
+              } />
+              <Route path="/programs/remote-physiologic-monitoring" element={
+                <RemotePhysiologicMonitoring
+                  activeAgentId={activeAgentId}
+                  webCallStatus={webCallStatus}
+                  handleStartWebCall={handleStartWebCall}
+                  handleEndWebCall={handleEndWebCall}
+                />
+              } />
+              <Route path="/programs/principal-care-management" element={
+                <PrincipalCareManagement
+                  activeAgentId={activeAgentId}
+                  webCallStatus={webCallStatus}
+                  handleStartWebCall={handleStartWebCall}
+                  handleEndWebCall={handleEndWebCall}
+                />
+              } />
+              <Route path="/programs/transitional-care-management" element={
+                <TransitionalCareManagement
+                  activeAgentId={activeAgentId}
+                  webCallStatus={webCallStatus}
+                  handleStartWebCall={handleStartWebCall}
+                  handleEndWebCall={handleEndWebCall}
+                />
+              } />
               <Route path="/for-practices" element={<ForPractices />} />
               <Route path="/for-health-systems" element={<ForHealthSystems />} />
               <Route path="/compare/vs-care-management-software" element={<VsCareManagementSoftware />} />

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { SEO, breadcrumbSchema, faqSchema } from "../components/SEO";
-import { ProgrammePage } from "../components/templates/ProgrammePage";
+import { ProgrammePage, type WebCallProps } from "../components/templates/ProgrammePage";
 import { programmeById } from "../../content/programmes/index";
 
 /**
@@ -100,7 +100,7 @@ const OPEN_QUESTIONS: { q: string; needs: string }[] = [
   { q: "Are we speaking to RHCs and FQHCs?", needs: "G0511 stopped being payable on 1 October 2025, so they now bill these individual codes or APCM. Decide whether the page addresses them." },
 ];
 
-export function ChronicCareManagement() {
+export function ChronicCareManagement(webCall: WebCallProps) {
   return (
     <div className="bg-paper text-ink font-sans overflow-x-hidden">
       <SEO
@@ -128,6 +128,7 @@ export function ChronicCareManagement() {
         headline={HERO_HEADLINE}
         faqs={CCM_FAQS}
         openQuestions={OPEN_QUESTIONS}
+        webCall={webCall}
       />
     </div>
   );
