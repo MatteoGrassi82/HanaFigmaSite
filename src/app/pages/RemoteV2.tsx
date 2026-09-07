@@ -533,7 +533,11 @@ const EXPLAINER = {
   //   "https://<id>.public.blob.vercel-storage.com/hana-explainer.mp4"
   src: "/video1.mp4",
   poster: "/video/explainer-poster.jpg",
-  aspect: "1 / 1",
+  // 16/9 while the placeholder is square ON PURPOSE, so the section under
+  // review has the proportions it will actually ship with. object-cover crops
+  // the square file to this box rather than letterboxing it. When the real
+  // 16/9 file lands this value is already correct.
+  aspect: "16 / 9",
   duration: "0:06",
 } as const;
 

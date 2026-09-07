@@ -51,10 +51,15 @@ import { cn } from "../../../lib/utils";
  * the section's text regardless. That text plus the captions track is the ONLY
  * indexable content here; a video itself contributes nothing to a crawler.
  *
- * ASPECT RATIO IS A PROP AND MUST MATCH THE FILE. The frame reserves space from
- * it, so a wrong value both letterboxes the video and shifts the layout on
- * load. public/video1.mp4 is 1080x1080, i.e. "1 / 1", not the 16/9 you would
- * assume by default.
+ * ASPECT RATIO IS A PROP, AND IT DECIDES THE CROP.
+ * The frame reserves its space from `aspect`, and the video is object-cover
+ * inside it. So a value that does not match the file does NOT letterbox and
+ * does NOT shift the layout -- it silently CROPS, centred, losing the top and
+ * bottom (or the sides) of every frame. That is the failure to watch for: a
+ * 16/9 box over a square file looks intentional and quietly cuts the subject's
+ * head off. Set it from the real file's dimensions, and if you deliberately
+ * mismatch it (a square placeholder previewed at 16/9, say) know that you are
+ * choosing a crop.
  * ─────────────────────────────────────────────────────────────────────────── */
 
 export interface VideoSource {
