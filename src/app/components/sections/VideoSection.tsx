@@ -1,67 +1,97 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { Play, Pause, Volume2, VolumeX } from "lucide-react";
+import { Play, Pause, Volume2, VolumeX, Loader2, TriangleAlert } from "lucide-react";
 import { cn } from "../../../lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
- * VideoSection — a real .mp4, in a native <video>.
+ * VideoSection — a real video file, in a native <video>.
  *
- * WHY NOT REMOTION, SINCE THE REPO ALREADY HAS IT.
+ * WHY NOT REMOTION, GIVEN THE REPO HAS IT AND USES IT.
  * @remotion/player renders a Remotion COMPOSITION: a React component drawn per
- * frame. It is not an .mp4 player. You can wrap a file in <OffthreadVideo>
+ * frame. It is not a file player. You can wrap an mp4 in <OffthreadVideo>
  * inside a composition and drive that through <Player>, and on a marketing page
- * that is a bad trade: it ships the Remotion runtime to do what the browser
- * does natively, and it costs you native fullscreen, picture-in-picture,
- * captions, hardware decode and the browser's own buffering. AccordionPlayer is
- * the right home for <Player>, because there the thing being played genuinely
- * IS a composition. Here it is a file. Different tool.
+ * that is a bad trade -- it ships the Remotion runtime to do what the browser
+ * does natively, and costs native fullscreen, picture-in-picture, captions,
+ * hardware decode and the browser's own buffering. AccordionPlayer keeps
+ * <Player> because there the thing played genuinely IS a composition.
  *
- * THE IDLE STATE IS THE DESIGNED ONE, THE PLAYING STATE IS THE NATIVE ONE.
- * Before first play the video is covered by a poster and one large play target,
- * so the section looks composed rather than like a browser widget parked in a
- * page. On first play `controls` is switched on and stays on, which hands the
- * viewer the whole native control set (scrub, fullscreen, PiP, speed, captions,
- * download-block honouring) instead of a half-built custom one. Custom chrome
- * for a marketing video is a lot of code to end up worse than the platform.
+ * BUILT FOR A REMOTE FILE, NOT A COMMITTED ONE.
+ * The explainer is expected to live on object storage (Vercel Blob or similar)
+ * and arrive here as an absolute URL, because this repo is PUBLIC, has no
+ * git-lfs, and the largest blob ever committed to it is 1.56 MB -- a 15 MB
+ * video would enter git history permanently, once per re-encode. `sources`
+ * takes several encodings so the browser can pick (put the modern codec first,
+ * h264 last as the guaranteed fallback).
  *
- * IT NEVER AUTOPLAYS. Not muted-autoplay either. A care-coordination page is
- * read by compliance officers in open-plan offices, and an explainer that
- * starts talking on scroll is the kind of thing that gets a site closed. It
- * also means no reduced-motion special case is needed for playback: nothing
- * moves until a person asks it to. `useReducedMotion` here only governs the
- * section's own entrance.
+ * A REMOTE FILE IS WHY THIS COMPONENT HAS STATES A LOCAL ONE WOULD NOT NEED:
+ *  · BUFFERING. Tapping play on a 15 MB file over a bad connection does nothing
+ *    visible for several seconds. Without a spinner that reads as a dead
+ *    button and people tap it again. Driven by `waiting`/`playing`/`canplay`.
+ *  · ERROR. A URL can 404, expire, or be blocked by a corporate proxy -- which
+ *    is a realistic failure for exactly this audience. On error the frame says
+ *    so and offers the direct link, rather than leaving a poster with a play
+ *    button that silently does nothing.
+ * Both are load-bearing for a hosted file. Do not simplify them away.
+ *
+ * THE IDLE STATE IS DESIGNED, THE PLAYING STATE IS NATIVE. Before first play:
+ * poster, ambient glow, one large play target. On first play `controls` goes on
+ * and stays on, handing over the whole native control set rather than a
+ * half-built custom one. A second always-visible play/mute pair sits under the
+ * frame because the native bar lives inside a dark frame and vanishes between
+ * taps on some mobile browsers.
+ *
+ * IT NEVER AUTOPLAYS, not even muted. This page is read by compliance officers
+ * in open-plan offices. That also means playback needs no reduced-motion case:
+ * nothing moves until a person asks. useReducedMotion governs the entrance and
+ * the glow only.
  *
  * PRERENDER SAFETY. preload="metadata" means the headless snapshot fetches a
- * few KB of container, not the file. The headline, body and transcript slot are
- * plain DOM, so the crawler gets the section's text whether or not it can play
- * video, which is the only part of this section that is indexable at all.
+ * few KB of container, not the file -- and for a remote URL it may fetch
+ * nothing at all. Headline, body and note are plain DOM, so the crawler gets
+ * the section's text regardless. That text plus the captions track is the ONLY
+ * indexable content here; a video itself contributes nothing to a crawler.
  *
- * ASPECT RATIO IS A PROP AND MUST MATCH THE FILE. The wrapper reserves space
- * with `aspect-ratio` so nothing reflows when the file loads. Pass the real
- * ratio: public/video1.mp4 is 1080x1080, which is "1 / 1", NOT the 16/9 a
- * default would assume. Getting this wrong letterboxes the video inside a box
- * of the wrong shape and the layout shifts on load.
+ * ASPECT RATIO IS A PROP AND MUST MATCH THE FILE. The frame reserves space from
+ * it, so a wrong value both letterboxes the video and shifts the layout on
+ * load. public/video1.mp4 is 1080x1080, i.e. "1 / 1", not the 16/9 you would
+ * assume by default.
  * ─────────────────────────────────────────────────────────────────────────── */
 
-export interface VideoSectionProps {
-  /** Path under public/, or an absolute URL. */
+export interface VideoSource {
   src: string;
-  /** Still frame shown before first play. Strongly recommended: without one the
-   *  browser shows a black rectangle until it has decoded a frame. */
+  /** e.g. 'video/mp4; codecs="avc1.42E01E"' or just 'video/webm'. The browser
+   *  picks the first it can play, so order matters: modern first, h264 last. */
+  type?: string;
+}
+
+export interface VideoSectionProps {
+  /** A single file: path under public/, or an absolute URL (the expected case). */
+  src?: string;
+  /** Several encodings, tried in order. Use instead of `src`, not alongside. */
+  sources?: VideoSource[];
+  /** Still frame shown before first play. Without one the browser shows a black
+   *  rectangle until it has decoded a frame, and the glow has nothing to sample. */
   poster?: string;
   /** CSS aspect-ratio for the frame. MUST match the file. */
   aspect?: string;
-  /** WebVTT captions. A spoken explainer without these is not accessible, and
-   *  on this site it is also a lost transcript the crawler could have read. */
+  /** WebVTT captions. Also the transcript, and the only part a crawler reads. */
   captionsSrc?: string;
+  /** Set when the video and captions are cross-origin AND you need canvas or
+   *  text-track access. Requires CORS headers on the bucket; if they are
+   *  missing this BLOCKS playback, so leave it undefined unless needed. */
+  crossOrigin?: "anonymous" | "use-credentials";
   eyebrow?: string;
   heading?: ReactNode;
   body?: string;
-  /** Text under the frame: what the viewer is about to see, in words, for
-   *  anyone who will not or cannot play it. */
+  /** Text under the frame: what the viewer is about to see, for anyone who
+   *  will not or cannot play it. */
   note?: ReactNode;
-  /** Length shown beside the play button, e.g. "1:20". Set expectations. */
+  /** Length beside the play button, e.g. "1:20". Sets expectations. */
   duration?: string;
+  /** The blurred poster bloom behind the frame. Cheap (one scaled <img>, no
+   *  per-frame canvas work) and it is what makes the frame read as placed
+   *  rather than pasted. Off automatically with no poster or reduced motion. */
+  glow?: boolean;
   tone?: "light" | "band";
   className?: string;
   id?: string;
@@ -74,14 +104,17 @@ const TONE = {
 
 export function VideoSection({
   src,
+  sources,
   poster,
   aspect = "16 / 9",
   captionsSrc,
+  crossOrigin,
   eyebrow = "See it work",
   heading,
   body,
   note,
   duration,
+  glow = true,
   tone = "band",
   className,
   id,
@@ -91,19 +124,25 @@ export function VideoSection({
   const [started, setStarted] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(false);
+  const [buffering, setBuffering] = useState(false);
+  const [failed, setFailed] = useState(false);
 
-  /* One play path, used by the overlay button and by the keyboard. */
+  /** The direct link offered when playback fails. */
+  const directHref = src ?? sources?.[sources.length - 1]?.src;
+
   const start = useCallback(() => {
     const v = videoRef.current;
-    if (!v) return;
+    if (!v || failed) return;
     setStarted(true);
+    setBuffering(true);
     v.play().catch(() => {
-      /* A blocked play() must not leave the overlay hidden over a dead frame:
-         put the poster back so the viewer can try again. */
+      /* A blocked or failed play() must not leave the overlay hidden over a
+         dead frame: put the poster back so the viewer can try again. */
       setStarted(false);
       setPlaying(false);
+      setBuffering(false);
     });
-  }, []);
+  }, [failed]);
 
   const toggle = useCallback(() => {
     const v = videoRef.current;
@@ -112,21 +151,33 @@ export function VideoSection({
     else v.pause();
   }, [start]);
 
-  /* Mirror the element's own state rather than tracking it ourselves: the
-     native controls, the keyboard and PiP can all change it behind our back. */
+  /* Mirror the element rather than tracking state ourselves: native controls,
+     the keyboard, PiP and the network all change it behind our back. */
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
     const onPlay = () => { setPlaying(true); setStarted(true); };
+    const onPlaying = () => { setPlaying(true); setBuffering(false); };
     const onPause = () => setPlaying(false);
+    const onWaiting = () => setBuffering(true);
+    const onCanPlay = () => setBuffering(false);
     const onVol = () => setMuted(v.muted);
+    const onError = () => { setFailed(true); setBuffering(false); setStarted(false); };
     v.addEventListener("play", onPlay);
+    v.addEventListener("playing", onPlaying);
     v.addEventListener("pause", onPause);
+    v.addEventListener("waiting", onWaiting);
+    v.addEventListener("canplay", onCanPlay);
     v.addEventListener("volumechange", onVol);
+    v.addEventListener("error", onError);
     return () => {
       v.removeEventListener("play", onPlay);
+      v.removeEventListener("playing", onPlaying);
       v.removeEventListener("pause", onPause);
+      v.removeEventListener("waiting", onWaiting);
+      v.removeEventListener("canplay", onCanPlay);
       v.removeEventListener("volumechange", onVol);
+      v.removeEventListener("error", onError);
     };
   }, []);
 
@@ -138,6 +189,19 @@ export function VideoSection({
         viewport: { once: true, margin: "-80px" },
         transition: { duration: 0.5 },
       };
+
+  /* The frame gets a slightly later, slightly scaled entrance so it settles
+     after the copy rather than with it. */
+  const frameIn = reduce
+    ? {}
+    : {
+        initial: { opacity: 0, y: 28, scale: 0.985 },
+        whileInView: { opacity: 1, y: 0, scale: 1 },
+        viewport: { once: true, margin: "-80px" },
+        transition: { duration: 0.6, delay: 0.08, ease: [0.2, 0.7, 0.2, 1] as const },
+      };
+
+  const showGlow = glow && !!poster && !reduce;
 
   return (
     <section
@@ -157,30 +221,46 @@ export function VideoSection({
           )}
         </motion.div>
 
-        <motion.figure {...fade} className="m-0">
+        <motion.figure {...frameIn} className="m-0 relative">
+          {/* Ambient bloom: the poster again, scaled up, blurred, behind the
+              frame. Decorative and inert. One <img> the browser has already
+              cached for the poster, so it costs a paint and no extra request. */}
+          {showGlow && (
+            <img
+              src={poster}
+              alt=""
+              aria-hidden
+              className="pointer-events-none absolute -inset-6 -z-10 h-[calc(100%+3rem)] w-[calc(100%+3rem)] scale-[1.04] rounded-card object-cover opacity-30 blur-[42px] saturate-150"
+            />
+          )}
+
           <div
             className="relative overflow-hidden rounded-card border border-rule bg-navy shadow-card"
             style={{ aspectRatio: aspect }}
           >
             <video
               ref={videoRef}
-              src={src}
+              src={sources ? undefined : src}
               poster={poster}
-              controls={started}
+              controls={started && !failed}
               controlsList="nodownload"
+              crossOrigin={crossOrigin}
               playsInline
               preload="metadata"
               className="absolute inset-0 h-full w-full object-cover"
               onClick={started ? undefined : start}
             >
+              {sources?.map((s) => (
+                <source key={s.src} src={s.src} type={s.type} />
+              ))}
               {captionsSrc && (
                 <track kind="captions" src={captionsSrc} srcLang="en" label="English" default />
               )}
             </video>
 
-            {/* The designed idle state. Removed for good on first play so the
-                native controls are never fighting an overlay for the pointer. */}
-            {!started && (
+            {/* Idle state. Unmounted for good on first play so native controls
+                never fight an overlay for the pointer. */}
+            {!started && !failed && (
               <button
                 type="button"
                 onClick={start}
@@ -196,12 +276,47 @@ export function VideoSection({
                 </span>
               </button>
             )}
+
+            {/* Buffering. The reason this exists: on a hosted file, play() can
+                take seconds before a frame moves, and a play button that
+                appears to do nothing gets tapped again. */}
+            {buffering && !failed && (
+              <div
+                role="status"
+                aria-live="polite"
+                className="pointer-events-none absolute inset-0 flex items-center justify-center bg-navy/25"
+              >
+                <span className="flex items-center gap-3 rounded-pill bg-paper-bright px-5 py-3 shadow-float">
+                  <Loader2 size={17} className="animate-spin text-brand" aria-hidden />
+                  <span className="text-[14.5px] font-semibold text-ink">Loading</span>
+                </span>
+              </div>
+            )}
+
+            {/* Error. A hosted URL can 404, expire, or be stopped by a
+                corporate proxy, which is a real failure mode for this audience. */}
+            {failed && (
+              <div className="absolute inset-0 flex items-center justify-center p-6">
+                <div className="max-w-[42ch] rounded-tile border border-rule bg-paper-bright p-5 text-center">
+                  <TriangleAlert size={20} className="mx-auto mb-2 text-signal-amber" aria-hidden />
+                  <p className="text-[15px] font-semibold text-ink m-0">The video would not load.</p>
+                  <p className="text-[14px] leading-[1.55] text-ink-soft m-0 mt-1.5">
+                    Some networks block video. The note below says what it shows.
+                  </p>
+                  {directHref && (
+                    <a
+                      href={directHref}
+                      className="mt-3 inline-block text-[14px] font-semibold text-ink underline underline-offset-4 decoration-rule hover:decoration-ink-soft"
+                    >
+                      Open the file directly
+                    </a>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* A second, always-present control pair. The native bar is inside a
-              dark frame and disappears on some mobile browsers between taps;
-              these stay put and stay keyboard-reachable. */}
-          {started && (
+          {started && !failed && (
             <div className="mt-3 flex items-center gap-2">
               <button
                 type="button"

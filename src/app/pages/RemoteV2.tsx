@@ -498,22 +498,39 @@ interface RemoteV2Props {
 /* ── §3b THE VIDEO ─────────────────────────────────────────────────────────
  * ███ PLACEHOLDER FILE. public/video1.mp4 IS NOT THE EXPLAINER. ███
  * It is a 5.8-second 1080x1080 social loop that was sitting unreferenced in
- * public/, used here only so the section is reviewable in the page rather than
- * as an empty box. `aspect` is "1 / 1" because that is the real shape of THAT
- * file; the frame reserves space from this value, so when the real explainer
- * lands, change src, poster, aspect and duration together or the layout shifts
- * on load and the video letterboxes inside the wrong-shaped box.
+ * public/, wired here only so the section is reviewable in place rather than
+ * as an empty box. Hence aspect "1 / 1" and duration "0:06".
  *
- * The poster was generated from the placeholder with
- *   ffmpeg -ss 1.2 -i public/video1.mp4 -frames:v 1 -q:v 3 \
- *     public/video/explainer-poster.jpg
- * sampled 1.2s in because frame 0 of that file is black. Regenerate the same
- * way for the real file.
+ * ── SWAPPING IN THE REAL FILE ────────────────────────────────────────────
+ * HOST IT, DO NOT COMMIT IT. This repo is PUBLIC, has no git-lfs, and the
+ * largest blob ever committed to it is 1.56 MB. A 10-15 MB explainer would
+ * enter git history permanently, once per re-encode. Put it on Vercel Blob (or
+ * any bucket) and paste the absolute URL below; <video> does not care whether
+ * the URL is local or remote, and VideoSection already carries the buffering
+ * and error states a hosted file needs.
  *
- * STILL OWED: a captions .vtt. VideoSection takes `captionsSrc` and renders a
- * <track> from it. A spoken explainer with no captions is not accessible, and
- * on this site it is also a transcript the crawler could have read but cannot. */
+ * Encoding target: ~10-15 MB. Screen capture compresses well, so 1080p h264 at
+ * about 1.5 Mbps is 11 MB per minute and looks clean.
+ *
+ * CHANGE ALL FOUR TOGETHER. `aspect` reserves the frame's space, so a stale
+ * value both letterboxes the video and shifts the layout on load. A normal
+ * explainer is "16 / 9", not the placeholder's "1 / 1".
+ *
+ * Poster, regenerated the same way for the real file (frame 0 of the
+ * placeholder is black, hence the 1.2s seek):
+ *   ffmpeg -ss 1.2 -i <file> -frames:v 1 -q:v 3 public/video/explainer-poster.jpg
+ * The poster is also what the ambient glow samples, so it is not optional.
+ *
+ * STILL OWED: captions. Pass `captionsSrc` and VideoSection renders a <track>.
+ * A spoken explainer without them is not accessible, and on this site it is
+ * also the only part of a video a crawler can read.
+ *
+ * If the bucket is cross-origin AND captions need reading, add
+ * crossOrigin="anonymous" AND CORS headers on the bucket. Without the headers
+ * that attribute BLOCKS playback, so do not add it speculatively. */
 const EXPLAINER = {
+  // TODO(video): replace with the hosted URL, e.g.
+  //   "https://<id>.public.blob.vercel-storage.com/hana-explainer.mp4"
   src: "/video1.mp4",
   poster: "/video/explainer-poster.jpg",
   aspect: "1 / 1",
