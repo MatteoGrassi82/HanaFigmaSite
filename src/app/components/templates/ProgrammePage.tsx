@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
-import { ProgrammeHero, type HeroCardRow } from "../sections/ProgrammeHero";
+import { ProgrammeHero } from "../sections/ProgrammeHero";
+import type { HeroCardRow } from "../sections/PhotoHero";
 import { EligibilityCheck } from "../sections/EligibilityCheck";
 import { PayVisual } from "../sections/PayVisual";
 import { WhoDoesWhat } from "../sections/WhoDoesWhat";

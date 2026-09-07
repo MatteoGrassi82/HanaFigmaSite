@@ -1,6 +1,8 @@
 import { SEO, breadcrumbSchema, faqSchema } from "../components/SEO";
 import { Footer } from "../components/layout/Footer";
-import { Hero } from "../components/sections/Hero";
+import { PhotoHero, CLINICIAN_PHOTO } from "../components/sections/PhotoHero";
+import { MonthWrittenUp } from "../components/sections/MonthWrittenUp";
+import { PatientEngagement } from "../components/sections/PatientEngagement";
 import { EligibilityGap } from "../components/sections/EligibilityGap";
 import { HowItWorksLoop } from "../components/sections/HowItWorksLoop";
 import { FaqSection } from "../components/sections/FaqSection";
@@ -39,6 +41,18 @@ const COPY = {
   description:
     "Most of your Medicare panel already qualifies for a care management programme. Almost none of them are enrolled. HANA makes the monthly contact and writes it up. Your team reviews, your provider signs.",
 };
+
+/* The example month shown in the written-up section. ILLUSTRATIVE: not a real
+ * patient and not real readings, and the card header says "an example month".
+ * Shaped to CCM's actual requirement, twenty minutes of clinical staff time
+ * across the month on a two-or-more-conditions patient, because this page's
+ * programme cards land on CCM more often than anything else. */
+const MONTH = [
+  { day: "Aug 3", title: "Monthly check-in", body: "Taking both blood pressure meds. Home reading 138/86.", src: "HANA call · summarised", len: "6 min" },
+  { day: "Aug 11", title: "Refill and diet", body: "Metformin refill due Friday. Two skipped breakfasts this week.", src: "HANA call · summarised", len: "5 min" },
+  { day: "Aug 18", title: "Threshold crossed", body: "158/94 on two home readings. Escalated to Dr Reyes with the full call.", src: "HANA call · flagged to the threshold you set", len: "7 min" },
+  { day: "Aug 26", title: "Care plan review", body: "Dose adjusted 20 Aug. Back to 134/84. Goals reconfirmed with the patient.", src: "HANA call · summarised", len: "4 min" },
+];
 
 const FAQS = [
   {
@@ -83,17 +97,40 @@ export function ForPractices() {
         ]}
       />
 
-      <Hero
+      {/* The page had NO image anywhere across 7,300px, which is why it read as
+          a document rather than a page -- and it is the funnel's front door.
+          A CLINICIAN, not a patient: this page's reader is the practice, so the
+          hero shows the reader's side of the work. The patient photograph stays
+          on the written-up month below, which is genuinely about a patient's
+          month -- so the page runs practice side, then patient side. */}
+      <PhotoHero
         eyebrow="For practices"
         headline={<>You are already eligible. <em>Nobody has time to call.</em></>}
         body="Most of your Medicare panel qualifies for a care management programme today. Almost none of them are enrolled, and the reason is never the billing. It is the phone."
-        primaryCta={{ label: "Book a demo", href: DEMO_HREF }}
+        image={CLINICIAN_PHOTO}
         secondaryCta={{ label: "See the gap on your panel", href: "#gap" }}
-        trustLine="Your team reviews. Your provider signs."
       />
 
       {/* The only quantitative argument on the page, and it is not ours. */}
       <EligibilityGap />
+
+      {/* The gap above argues that nobody is calling. This is the artefact that
+          answers "so what arrives if somebody does": a month already written up
+          when the clinician presses start. It also breaks up 3,400px of
+          unbroken type between the gap and the programme cards. */}
+      <MonthWrittenUp
+        id="written-up"
+        entries={MONTH}
+        badge="CCM"
+        pill="Chronic Care Management"
+        chip="CCM 99490"
+        body="Every contact HANA makes is recorded and summarised straight into the time log, with the minutes attributed against the code. When your clinician opens the patient, the month is already there. The clock they start runs on reading and attesting, not typing."
+        stats={[
+          { value: "0:00", label: "Time your team spends writing the month up" },
+          { value: "4", label: "Documented contacts waiting when they open the chart" },
+        ]}
+        cta={{ label: "See the CCM page", href: "/programs/chronic-care-management" }}
+      />
 
       {/* What actually changes in a month. */}
       <HowItWorksLoop id="how-it-works" />
@@ -141,6 +178,12 @@ export function ForPractices() {
           </p>
         </div>
       </section>
+
+      {/* "What do I actually get" -- the one question the page never answered.
+          Borrowed from Home, where the catalogue showed it was stranded on a
+          single page. `white` puts it on the bright ground rather than its
+          grey default, so it does not read as a second band after the cards. */}
+      <PatientEngagement white />
 
       <FaqSection
         items={FAQS}
