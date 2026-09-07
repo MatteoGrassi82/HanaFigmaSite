@@ -5,7 +5,7 @@ import { EligibilityGap } from "../../components/sections/EligibilityGap";
 import { RevenueEstimator } from "../../components/sections/RevenueEstimator";
 import { WhatIsHanaCompare } from "../../components/sections/WhatIsHanaCompare";
 import { FaqSection } from "../../components/sections/FaqSection";
-import { CtaBand } from "../../components/sections/CtaBand";
+import { CtaBand, DEMO_HREF } from "../../components/sections/CtaBand";
 
 /**
  * /compare/vs-doing-nothing
@@ -111,7 +111,7 @@ export function VsDoingNothing() {
         eyebrow="Compared with doing nothing"
         headline={<>The gap is not effort. <em>It is hours.</em></>}
         body="Most patients who qualify for chronic care management are not enrolled anywhere. The work is already being done in your practice. It is happening in a form that cannot be billed, to a fraction of the people who qualify."
-        primaryCta={{ label: "Talk to HANA", href: "/demo" }}
+        primaryCta={{ label: "Book a demo", href: DEMO_HREF }}
         secondaryCta={{ label: "See the arithmetic", href: "#gap" }}
         trustLine="Your team reviews. Your provider signs."
       />
@@ -136,12 +136,37 @@ export function VsDoingNothing() {
         heading={<>Before you <em>leave it another year.</em></>}
       />
 
+
+      {/* The other two comparisons. Sibling links, added because these three
+          pages had no inbound links from anywhere except one mention on
+          /academy, which left two of the three fully orphaned. A reader who
+          rejects this comparison is usually holding one of the others. */}
+      <section className="bg-paper py-14 md:py-16 px-6 md:px-16">
+        <div className="max-w-[1120px] mx-auto">
+          <p className="text-eyebrow font-bold uppercase text-ink-mute m-0 mb-4">The other comparisons</p>
+          <ul className="m-0 p-0 list-none grid gap-3 sm:grid-cols-2">
+              <li>
+                <a href="/compare/vs-care-management-software" className="group flex h-full flex-col rounded-tile border border-rule bg-paper-bright p-5 no-underline transition-colors hover:border-rule-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">
+                  <span className="text-[15.5px] font-semibold text-ink">Compared with care management software</span>
+                  <span className="mt-2 text-[14px] font-medium text-ink-soft underline underline-offset-4 decoration-rule group-hover:decoration-ink-soft">Read it</span>
+                </a>
+              </li>
+              <li>
+                <a href="/compare/vs-outsourced-care-management" className="group flex h-full flex-col rounded-tile border border-rule bg-paper-bright p-5 no-underline transition-colors hover:border-rule-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">
+                  <span className="text-[15.5px] font-semibold text-ink">Compared with outsourced care management</span>
+                  <span className="mt-2 text-[14px] font-medium text-ink-soft underline underline-offset-4 decoration-rule group-hover:decoration-ink-soft">Read it</span>
+                </a>
+              </li>
+          </ul>
+        </div>
+      </section>
+
       <CtaBand
         heading={<>Hear it make the call. <em>Then decide.</em></>}
-        body="Drop your number and HANA calls you. The agent works out the right demo as you talk."
+        body="Bring your panel numbers. We will go through which programmes your patients already qualify for, and what your team would still do."
         buttons={[
-          { label: "Talk to HANA", href: "/demo" },
-          { label: "Book a demo", href: "/contact", variant: "ghost" },
+          { label: "Book a demo", href: DEMO_HREF },
+          { label: "Talk to us", href: "/contact", variant: "ghost" },
         ]}
         reassurances={[
           "Your patients, your claim",

@@ -48,6 +48,34 @@ export function Footer() {
           </ul>
         </nav>
 
+        {/* Care programmes. Added 6 Sept 2026 for the same reason the Platform
+            column above exists, and after making the identical mistake: the 17
+            pages of the care-coordination site had ZERO inbound internal links
+            from anywhere in the repo. A page nothing links to is orphaned even
+            once it is indexed, and these are the pages we most want crawled.
+            The hub carries the seven programme pages, so linking it links them.
+
+            EN-ONLY, hardcoded English, matching the CMS ACCESS Model row above.
+            These are US Medicare programmes and there is no Italian version of
+            any of them. This guard is presentational only: the routes are still
+            declared unconditionally in App.tsx, so it hides the links without
+            fixing the underlying ita.hana.health exposure. That is tracked
+            separately as the EN_ONLY_ROUTES work. */}
+        {!isItalian && (
+          <nav aria-label="Care programmes navigation">
+            <h4 className="text-white font-medium mb-4">Care programmes</h4>
+            <ul className="space-y-2 text-sm">
+              <li><Link to="/programs" className="inline-block py-2 hover:text-white transition-colors">All programmes</Link></li>
+              <li><Link to="/for-practices" className="inline-block py-2 hover:text-white transition-colors">For practices</Link></li>
+              <li><Link to="/for-health-systems" className="inline-block py-2 hover:text-white transition-colors">For health systems</Link></li>
+              <li><Link to="/compare/vs-doing-nothing" className="inline-block py-2 hover:text-white transition-colors">What the gap is worth</Link></li>
+              <li><Link to="/academy" className="inline-block py-2 hover:text-white transition-colors">Academy</Link></li>
+              <li><Link to="/faq" className="inline-block py-2 hover:text-white transition-colors">FAQ</Link></li>
+              <li><Link to="/security" className="inline-block py-2 hover:text-white transition-colors">Security</Link></li>
+            </ul>
+          </nav>
+        )}
+
         <nav aria-label="Resources navigation">
           <h4 className="text-white font-medium mb-4">{t.footer.resources}</h4>
           <ul className="space-y-2 text-sm">

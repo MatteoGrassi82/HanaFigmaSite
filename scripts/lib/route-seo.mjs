@@ -683,7 +683,7 @@ export function collectAppRoutes(appTsxPath) {
  *
  * Returns a list of human-readable problems; empty means the lists agree.
  */
-export function checkRouteCoverage(appTsxPath) {
+export function checkRouteCoverage(appTsxPath, pagesDir) {
   const declared = collectAppRoutes(appTsxPath);
   const accounted = new Set([
     ...STATIC_ROUTES,
@@ -733,6 +733,56 @@ export function checkRouteCoverage(appTsxPath) {
         `EN_ONLY_PATHS in SEO.tsx (${inTsx.join(', ')}) does not match EN_ONLY_ROUTES in ` +
         `route-seo.mjs (${inMjs.join(', ')}). Keep them identical.`
       );
+    }
+  }
+
+
+  /* ── THE PUBLISH-STEP INVARIANT ──────────────────────────────────────────
+   * A route in STATIC_ROUTES is, by definition, one we intend Google to index
+   * and one that goes in sitemap.xml. A page whose own <SEO> block declares
+   * robots="noindex, nofollow" is the exact opposite. Both can be true at once,
+   * and until this check existed nothing in the pipeline noticed.
+   *
+   * WHY THAT COMBINATION HAPPENS, AND WHY IT IS SILENT.
+   * NOINDEX_ROUTES is a one-way ADD. prerender.mjs forces robots to noindex for
+   * any route in the list, but taking a route OUT of the list merely stops the
+   * override, it does not clear the value the page file already supplied. So
+   * the documented publish step ("move the route to STATIC_ROUTES") ships a
+   * page that is still noindex, and because collectRouteMeta then reports
+   * noindex, prerender.mjs never pushes it onto `indexable` and it silently
+   * misses sitemap.xml. seo-check.mjs cannot catch it either: it enumerates
+   * URLs from the LIVE sitemap, so the one script that does test for noindex is
+   * never handed a URL exhibiting the bug. indexnow.mjs reads that same sitemap,
+   * so the Bing/Yandex push drops the pages too.
+   *
+   * The result was a publish step with NO observable difference: same route
+   * count, same sitemap count, no warning, and pages that stay invisible.
+   * This check turns that into a build failure naming the file to edit.
+   *
+   * Publishing is therefore always a TWO-FILE edit and this makes doing half of
+   * it impossible: move the route to STATIC_ROUTES *and* delete the robots
+   * prop from the page. */
+  if (pagesDir) {
+    let meta;
+    try {
+      meta = collectRouteMeta(pagesDir);
+    } catch {
+      meta = null;
+    }
+    if (meta) {
+      for (const route of STATIC_ROUTES) {
+        const m = meta[route];
+        if (m && m.robots && /noindex/i.test(m.robots)) {
+          problems.push(
+            `"${route}" is in STATIC_ROUTES (so it is meant to be indexed and listed in ` +
+            `sitemap.xml) but its page still declares robots="${m.robots}". Moving the route ` +
+            'between the lists is only half the publish step: NOINDEX_ROUTES is a one-way ' +
+            'add, so the page\'s own <SEO robots="..."> prop still wins. Delete that prop ' +
+            'from the page file. Without this the page ships noindex and never reaches ' +
+            'sitemap.xml, and nothing else in the build would tell you.'
+          );
+        }
+      }
     }
   }
 

@@ -5,7 +5,7 @@ import { ProgrammeChooser } from "../components/sections/ProgrammeChooser";
 import { CodeTable } from "../components/sections/CodeTable";
 import { HowItWorksLoop } from "../components/sections/HowItWorksLoop";
 import { FaqSection } from "../components/sections/FaqSection";
-import { CtaBand } from "../components/sections/CtaBand";
+import { CtaBand, DEMO_HREF } from "../components/sections/CtaBand";
 import { PROGRAMMES, PROGRAMME_FOOTNOTE } from "../../content/programmes/index";
 
 /**
@@ -82,7 +82,7 @@ export function Programs() {
         eyebrow="Care programmes"
         headline={<>One loop. <em>Seven ways to bill it.</em></>}
         body="Your patients already qualify for more than you are running. The difference between these programmes is who counts and what the month has to show, not how the work gets done."
-        primaryCta={{ label: "Talk to HANA", href: "/demo" }}
+        primaryCta={{ label: "Book a demo", href: DEMO_HREF }}
         secondaryCta={{ label: "Compare the codes", href: "#codes" }}
         trustLine="Your team reviews. Your provider signs."
       />
@@ -145,10 +145,10 @@ export function Programs() {
 
       <CtaBand
         heading={<>Not sure which fits your panel? <em>Ask us.</em></>}
-        body="Drop your number and HANA calls you. The agent works out the right demo as you talk."
+        body="Bring your panel numbers. We will go through which programmes your patients already qualify for, and what your team would still do."
         buttons={[
-          { label: "Talk to HANA", href: "/demo" },
-          { label: "Book a demo", href: "/contact", variant: "ghost" },
+          { label: "Book a demo", href: DEMO_HREF },
+          { label: "Talk to us", href: "/contact", variant: "ghost" },
         ]}
         reassurances={[
           "Your patients, your claim",

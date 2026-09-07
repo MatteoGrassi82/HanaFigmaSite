@@ -4,7 +4,7 @@ import { Hero } from "../components/sections/Hero";
 import { EligibilityGap } from "../components/sections/EligibilityGap";
 import { HowItWorksLoop } from "../components/sections/HowItWorksLoop";
 import { FaqSection } from "../components/sections/FaqSection";
-import { CtaBand } from "../components/sections/CtaBand";
+import { CtaBand, DEMO_HREF } from "../components/sections/CtaBand";
 
 /**
  * /for-health-systems — the audience page for a multi-site group.
@@ -108,7 +108,7 @@ export function ForHealthSystems() {
         eyebrow="For health systems"
         headline={<>Same programmes. <em>A much bigger gap.</em></>}
         body="Your clinics already bill these codes. At group scale the number of eligible patients nobody has called is not a rounding error, it is most of the panel."
-        primaryCta={{ label: "Talk to HANA", href: "/demo" }}
+        primaryCta={{ label: "Book a demo", href: DEMO_HREF }}
         secondaryCta={{ label: "See the gap at scale", href: "#gap" }}
         trustLine="Your team reviews. Your provider signs."
       />
@@ -157,10 +157,10 @@ export function ForHealthSystems() {
 
       <CtaBand
         heading={<>Start with one clinic. <em>Then decide.</em></>}
-        body="Drop your number and HANA calls you. The agent works out the right demo as you talk."
+        body="Bring your panel numbers. We will go through which programmes your patients already qualify for, and what your team would still do."
         buttons={[
-          { label: "Talk to HANA", href: "/demo" },
-          { label: "Book a demo", href: "/contact", variant: "ghost" },
+          { label: "Book a demo", href: DEMO_HREF },
+          { label: "Talk to us", href: "/contact", variant: "ghost" },
         ]}
         reassurances={[
           "Your patients, your claim",

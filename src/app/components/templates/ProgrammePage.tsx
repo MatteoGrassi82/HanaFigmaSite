@@ -6,7 +6,7 @@ import { WhoDoesWhat } from "../sections/WhoDoesWhat";
 import { HowItWorksLoop } from "../sections/HowItWorksLoop";
 import { RevenueEstimator } from "../sections/RevenueEstimator";
 import { FaqSection } from "../sections/FaqSection";
-import { CtaBand } from "../sections/CtaBand";
+import { CtaBand, DEMO_HREF } from "../sections/CtaBand";
 import { Footer } from "../layout/Footer";
 import type { Programme } from "../../../content/programmes/index";
 
@@ -102,7 +102,7 @@ export function ProgrammePage({
         eyebrow={`${data.code} · ${data.codes}`}
         headline={headline}
         body={heroBody ?? data.summary}
-        primaryCta={{ label: "Talk to HANA", href: "/demo" }}
+        primaryCta={{ label: "Book a demo", href: DEMO_HREF }}
         secondaryCta={{ label: "See what it pays", href: "#codes" }}
         trustLine="Your team reviews. Your provider signs."
       />
@@ -184,10 +184,10 @@ Billing rules. We confirm each one before this page publishes.
 
       <CtaBand
         heading={<>Hear it make the call. <em>Then decide.</em></>}
-        body="Drop your number and HANA calls you. The agent works out the right demo as you talk."
+        body="Bring your panel numbers. We will go through which programmes your patients already qualify for, and what your team would still do."
         buttons={[
-          { label: "Talk to HANA", href: "/demo" },
-          { label: "Book a demo", href: "/contact", variant: "ghost" },
+          { label: "Book a demo", href: DEMO_HREF },
+          { label: "Talk to us", href: "/contact", variant: "ghost" },
         ]}
         reassurances={[
           "Your patients, your claim",

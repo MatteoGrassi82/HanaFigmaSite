@@ -27,8 +27,8 @@ HANA is infrastructure, not an app. Clinic partners build on it rather than buy 
 - Homepage: https://www.hana.health/
 - HANA Remote (engagement layer for remote care — CCM, APCM, BHI, RTM, ACCESS): https://www.hana.health/hana-remote
 - HANA Contact (AI front desk for clinics): https://www.hana.health/hana-contact
-- HANA Sleep (sleep medicine suite — analysis + CPAP adherence): https://www.hana.health/hana-sleep
-- CMS ACCESS Model program: https://www.hana.health/access
+- HANA Sleep (sleep medicine suite — analysis + CPAP adherence): https://www.hana.health/sleep
+- CMS ACCESS Model program: https://www.hana.health/programs/access-model
 - Case Studies: https://www.hana.health/case-studies
 - Whitepapers: https://www.hana.health/whitepapers
 - ADHD Intake Whitepaper: https://www.hana.health/whitepapers/adhd-intake

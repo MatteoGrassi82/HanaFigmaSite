@@ -4,7 +4,7 @@ import { Hero } from "../components/sections/Hero";
 import { SafetyStack } from "../components/sections/SafetyStack";
 import { ComplianceSection } from "../components/sections/ComplianceSection";
 import { FaqSection } from "../components/sections/FaqSection";
-import { CtaBand } from "../components/sections/CtaBand";
+import { CtaBand, DEMO_HREF } from "../components/sections/CtaBand";
 
 /**
  * /security
@@ -81,7 +81,7 @@ export function Security() {
         eyebrow="Security and safety"
         headline={<>Every call has a person <em>behind it.</em></>}
         body="Patient data is protected in transit and at rest, and clinical judgement never leaves your clinicians. When a call needs a human, it reaches one live rather than joining a queue."
-        primaryCta={{ label: "Talk to HANA", href: "/demo" }}
+        primaryCta={{ label: "Book a demo", href: DEMO_HREF }}
         secondaryCta={{ label: "See the controls", href: "#compliance" }}
         trustLine="Your team reviews. Your provider signs."
       />
@@ -100,10 +100,10 @@ export function Security() {
 
       <CtaBand
         heading={<>Bring your security team. <em>We will take the questions.</em></>}
-        body="Drop your number and HANA calls you. The agent works out the right demo as you talk."
+        body="Bring your panel numbers. We will go through which programmes your patients already qualify for, and what your team would still do."
         buttons={[
-          { label: "Talk to HANA", href: "/demo" },
-          { label: "Book a demo", href: "/contact", variant: "ghost" },
+          { label: "Book a demo", href: DEMO_HREF },
+          { label: "Talk to us", href: "/contact", variant: "ghost" },
         ]}
         reassurances={[
           "Your patients, your claim",

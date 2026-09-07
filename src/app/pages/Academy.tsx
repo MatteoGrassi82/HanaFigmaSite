@@ -2,7 +2,7 @@ import { SEO, breadcrumbSchema } from "../components/SEO";
 import { Footer } from "../components/layout/Footer";
 import { Hero } from "../components/sections/Hero";
 import { LatestPosts } from "../components/sections/LatestPosts";
-import { CtaBand } from "../components/sections/CtaBand";
+import { CtaBand, DEMO_HREF } from "../components/sections/CtaBand";
 import { PROGRAMMES } from "../../content/programmes/index";
 
 /**
@@ -140,10 +140,10 @@ export function Academy() {
 
       <CtaBand
         heading={<>Read enough? <em>Hear it make the call.</em></>}
-        body="Drop your number and HANA calls you. The agent works out the right demo as you talk."
+        body="Bring your panel numbers. We will go through which programmes your patients already qualify for, and what your team would still do."
         buttons={[
-          { label: "Talk to HANA", href: "/demo" },
-          { label: "Book a demo", href: "/contact", variant: "ghost" },
+          { label: "Book a demo", href: DEMO_HREF },
+          { label: "Talk to us", href: "/contact", variant: "ghost" },
         ]}
         reassurances={[
           "Your patients, your claim",

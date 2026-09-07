@@ -2,7 +2,7 @@ import { SEO, breadcrumbSchema, faqSchema } from "../components/SEO";
 import { Footer } from "../components/layout/Footer";
 import { Hero } from "../components/sections/Hero";
 import { FaqSection } from "../components/sections/FaqSection";
-import { CtaBand } from "../components/sections/CtaBand";
+import { CtaBand, DEMO_HREF } from "../components/sections/CtaBand";
 
 /**
  * /faq — the site-wide questions page.
@@ -154,7 +154,7 @@ export function Faq() {
         eyebrow="Questions"
         headline={<>The questions <em>practices actually ask.</em></>}
         body="What HANA does on a call, what your team still does, how patient data is protected, and what it takes to start."
-        primaryCta={{ label: "Talk to HANA", href: "/demo" }}
+        primaryCta={{ label: "Book a demo", href: DEMO_HREF }}
         secondaryCta={{ label: "See the programmes", href: "/programs" }}
         trustLine="Your team reviews. Your provider signs."
       />
@@ -189,10 +189,10 @@ export function Faq() {
 
       <CtaBand
         heading={<>Still have a question? <em>Ask it out loud.</em></>}
-        body="Drop your number and HANA calls you. The agent works out the right demo as you talk."
+        body="Bring your panel numbers. We will go through which programmes your patients already qualify for, and what your team would still do."
         buttons={[
-          { label: "Talk to HANA", href: "/demo" },
-          { label: "Book a demo", href: "/contact", variant: "ghost" },
+          { label: "Book a demo", href: DEMO_HREF },
+          { label: "Talk to us", href: "/contact", variant: "ghost" },
         ]}
         reassurances={[
           "Your patients, your claim",
