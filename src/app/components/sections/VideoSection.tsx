@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import { Play, Pause, Volume2, VolumeX, Loader2, TriangleAlert } from "lucide-react";
 import { cn } from "../../../lib/utils";
 
@@ -51,6 +51,36 @@ import { cn } from "../../../lib/utils";
  * the section's text regardless. That text plus the captions track is the ONLY
  * indexable content here; a video itself contributes nothing to a crawler.
  *
+ * PARALLAX IS DIFFERENTIAL, WHICH IS THE ONLY VERSION THAT READS AS DEPTH.
+ * Three layers move at three rates off one scroll progress: the glow furthest
+ * (it is the notional "background"), the frame a little, and the video inside
+ * the frame a little the other way. One element sliding is not parallax, it is
+ * a moving div, and it looks cheap at any amplitude. Amplitudes are small on
+ * purpose -- this is a 12,000-word billing site, not a product launch, and a
+ * frame that visibly swims while someone reads a CPT code is worse than no
+ * effect at all.
+ *
+ * MECHANICS, AND WHY EACH CHOICE.
+ *  · useScroll(target, ["start end", "end start"]) gives 0 as the section's top
+ *    enters the viewport bottom and 1 as its bottom leaves the top, so the
+ *    midpoint is "section centred" and every layer's rest position is its
+ *    designed position. Offsets keyed to the viewport instead would drift with
+ *    viewport height.
+ *  · useSpring over the raw progress. A transform bound straight to scroll
+ *    reproduces every trackpad tick, which on a 60fps display reads as jitter
+ *    rather than motion. Low stiffness, high damping: it smooths without
+ *    lagging behind the thumb.
+ *  · TRANSFORM ONLY. y and scale, never top/margin/height, so the browser
+ *    stays on the compositor and the effect cannot cause layout shift or move
+ *    anything the aspect box already reserved.
+ *  · The inner layer is scaled slightly so it has room to travel without
+ *    exposing an edge inside the frame. THAT SCALE COSTS EXTRA CROP on top of
+ *    whatever `aspect` already crops, which is the real price of inner
+ *    parallax -- kept at 1.06 so it is a few percent, not a reframe.
+ *  · OFF ENTIRELY under prefers-reduced-motion, where every layer renders at
+ *    its rest position rather than at progress 0. A parallax that merely
+ *    slows down is still parallax.
+ *
  * ASPECT RATIO IS A PROP, AND IT DECIDES THE CROP.
  * The frame reserves its space from `aspect`, and the video is object-cover
  * inside it. So a value that does not match the file does NOT letterbox and
@@ -93,6 +123,13 @@ export interface VideoSectionProps {
   note?: ReactNode;
   /** Length beside the play button, e.g. "1:20". Sets expectations. */
   duration?: string;
+  /** Centre the eyebrow, heading, body and note, and centre their measures.
+   *  Left-aligned is the site default and stays the default; centring suits a
+   *  section whose subject is one object under the text. */
+  align?: "start" | "center";
+  /** Differential scroll parallax across glow, frame and video. Off under
+   *  prefers-reduced-motion regardless. See the docblock. */
+  parallax?: boolean;
   /** The blurred poster bloom behind the frame. Cheap (one scaled <img>, no
    *  per-frame canvas work) and it is what makes the frame read as placed
    *  rather than pasted. Off automatically with no poster or reduced motion. */
@@ -119,6 +156,8 @@ export function VideoSection({
   body,
   note,
   duration,
+  align = "start",
+  parallax = false,
   glow = true,
   tone = "band",
   className,
@@ -131,6 +170,21 @@ export function VideoSection({
   const [muted, setMuted] = useState(false);
   const [buffering, setBuffering] = useState(false);
   const [failed, setFailed] = useState(false);
+
+  const sectionRef = useRef<HTMLElement>(null);
+
+  /* 0 as the section enters from the bottom, 1 as it leaves past the top, so
+     0.5 is "centred" and every layer rests where it was designed to sit. */
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  /* Smoothed, or each trackpad tick shows up as jitter. */
+  const p = useSpring(scrollYProgress, { stiffness: 60, damping: 24, mass: 0.4 });
+
+  const glowY = useTransform(p, [0, 1], [56, -56]);
+  const frameY = useTransform(p, [0, 1], [22, -22]);
+  const innerY = useTransform(p, [0, 1], ["-2.5%", "2.5%"]);
 
   /** The direct link offered when playback fails. */
   const directHref = src ?? sources?.[sources.length - 1]?.src;
@@ -207,22 +261,34 @@ export function VideoSection({
       };
 
   const showGlow = glow && !!poster && !reduce;
+  const px = parallax && !reduce;
+  const mid = align === "center";
+  /* Centring is three coordinated changes, not one: the text-align, the
+     auto-margins on each measure, and the figcaption. Miss the margins and a
+     62ch paragraph stays left while its words centre inside it. */
+  const centre = mid ? "text-center" : "";
+  const measure = mid ? "mx-auto" : "";
 
   return (
     <section
+      ref={sectionRef}
       id={id}
       className={cn("scroll-mt-24 py-20 md:py-24 px-6 md:px-16", TONE[tone], className)}
     >
       <div className="max-w-[1000px] mx-auto">
-        <motion.div {...fade}>
+        <motion.div {...fade} className={centre}>
           {eyebrow && (
             <p className="text-eyebrow font-bold uppercase text-ink-mute m-0 mb-4">{eyebrow}</p>
           )}
           {heading && (
-            <h2 className="font-serif text-h2 text-ink m-0 mb-3 max-w-[24ch]">{heading}</h2>
+            <h2 className={cn("font-serif text-h2 text-ink m-0 mb-3 max-w-[24ch]", measure)}>
+              {heading}
+            </h2>
           )}
           {body && (
-            <p className="text-[16.5px] leading-[1.7] text-ink-soft m-0 mb-8 max-w-[62ch]">{body}</p>
+            <p className={cn("text-[16.5px] leading-[1.7] text-ink-soft m-0 mb-8 max-w-[62ch]", measure)}>
+              {body}
+            </p>
           )}
         </motion.div>
 
@@ -231,19 +297,23 @@ export function VideoSection({
               frame. Decorative and inert. One <img> the browser has already
               cached for the poster, so it costs a paint and no extra request. */}
           {showGlow && (
-            <img
+            <motion.img
               src={poster}
               alt=""
               aria-hidden
+              style={px ? { y: glowY } : undefined}
               className="pointer-events-none absolute -inset-6 -z-10 h-[calc(100%+3rem)] w-[calc(100%+3rem)] scale-[1.04] rounded-card object-cover opacity-30 blur-[42px] saturate-150"
             />
           )}
 
-          <div
+          <motion.div
             className="relative overflow-hidden rounded-card border border-rule bg-navy shadow-card"
-            style={{ aspectRatio: aspect }}
+            style={px ? { aspectRatio: aspect, y: frameY } : { aspectRatio: aspect }}
           >
-            <video
+            {/* The inner layer travels the opposite way to the frame. Scaled
+                so it has room to move without exposing an edge; that scale is
+                extra crop on top of `aspect`, hence 1.06 and not more. */}
+            <motion.video
               ref={videoRef}
               src={sources ? undefined : src}
               poster={poster}
@@ -252,6 +322,7 @@ export function VideoSection({
               crossOrigin={crossOrigin}
               playsInline
               preload="metadata"
+              style={px ? { y: innerY, scale: 1.06 } : undefined}
               className="absolute inset-0 h-full w-full object-cover"
               onClick={started ? undefined : start}
             >
@@ -261,7 +332,7 @@ export function VideoSection({
               {captionsSrc && (
                 <track kind="captions" src={captionsSrc} srcLang="en" label="English" default />
               )}
-            </video>
+            </motion.video>
 
             {/* Idle state. Unmounted for good on first play so native controls
                 never fight an overlay for the pointer. */}
@@ -319,10 +390,10 @@ export function VideoSection({
                 </div>
               </div>
             )}
-          </div>
+          </motion.div>
 
           {started && !failed && (
-            <div className="mt-3 flex items-center gap-2">
+            <div className={cn("mt-3 flex items-center gap-2", mid && "justify-center")}>
               <button
                 type="button"
                 onClick={toggle}
@@ -348,7 +419,9 @@ export function VideoSection({
           )}
 
           {note && (
-            <figcaption className="mt-5 text-[14.5px] leading-[1.65] text-ink-soft max-w-[70ch]">
+            <figcaption
+              className={cn("mt-5 text-[14.5px] leading-[1.65] text-ink-soft max-w-[70ch]", measure, centre)}
+            >
               {note}
             </figcaption>
           )}
