@@ -10,9 +10,11 @@
  * illustrative example and the visitor should move the dials.
  *
  * WHAT IS NOT IN THIS FILE, ON PURPOSE
- * The two rates the component actually argues from (about 75% of Medicare
- * fee-for-service beneficiaries eligible for chronic care management, about 4%
- * receiving it) are cleared third-party market figures. They live in
+ * The two rates the component actually argues from (about 63% of Medicare
+ * fee-for-service beneficiaries eligible for chronic care management, and 4.0%
+ * OF THOSE ELIGIBLE receiving it) are cleared third-party market figures. Note
+ * the figure: 75% is the RETIRED number and rates.ts explains why it must not
+ * be published. They live in
  * EligibilityGap.tsx next to the arithmetic that uses them, and they are
  * attributed on screen. They are not placeholders and they do not belong here.
  *

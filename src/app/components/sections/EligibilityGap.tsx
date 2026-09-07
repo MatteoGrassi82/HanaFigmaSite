@@ -20,7 +20,7 @@ import { MARKET } from "../lab/interactive/rates";
  * they are never presented as a count of anybody's chart.
  *
  * Both rates share one denominator (Medicare fee-for-service beneficiaries),
- * which is what makes the subtraction honest: 75% and 4% are two slices of the
+ * which is what makes the subtraction honest: both rates are two slices of the
  * same population, so the difference between them is a real 71%, not two
  * unrelated percentages pushed together.
  *
@@ -155,9 +155,27 @@ export function EligibilityGap() {
           className="text-center"
         >
           <p className="text-eyebrow font-bold uppercase text-brand m-0">Eligibility math</p>
-          <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-h2 leading-[1.08] text-navy max-w-[24ch] mx-auto mt-4 mb-0">
-            Three in four Medicare fee-for-service patients qualify.{" "}
-            <em className="text-brand">One in twenty-five gets it.</em>
+          {/* DERIVED, NEVER TYPED. This heading used to read "Three in four
+              Medicare fee-for-service patients qualify. One in twenty-five gets
+              it." Both halves were wrong, and they contradicted the arithmetic
+              directly beneath them:
+                · "Three in four" is 75%, the RETIRED figure. rates.ts documents
+                  at length why it must never be published: it comes from a
+                  different study with a different denominator (FFS aged 65+)
+                  than the 4%, so the pair splices two papers. The sourced ASPE
+                  figure is 63.4%, which is nearer two in three.
+                · "One in twenty-five GETS IT" read against "…patients qualify"
+                  invites one denominator for both, and the 4.0% is a share OF
+                  THE ELIGIBLE, not of the panel. Against the whole panel it
+                  would be about 1 in 39. Hence "of them", which is the whole
+                  point of the subtraction below.
+              Both numbers now come off MARKET, so a revision in rates.ts lands
+              here and this cannot drift again. */}
+          <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-h2 leading-[1.08] text-navy max-w-[26ch] mx-auto mt-4 mb-0">
+            {Math.round(MARKET.eligiblePct)}% of Medicare fee-for-service patients qualify.{" "}
+            <em className="text-brand">
+              {MARKET.receivingPctOfEligible}% of them get it.
+            </em>
           </h2>
           <p className="text-[17px] leading-[1.7] text-ink-soft max-w-[58ch] mx-auto mt-5 mb-0">
             Chronic care management pays for the month of work that happens between visits. Most
