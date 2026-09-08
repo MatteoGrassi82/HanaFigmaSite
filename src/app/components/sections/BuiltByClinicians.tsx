@@ -157,24 +157,55 @@ export function BuiltByClinicians({
               {lead}
             </motion.span>
 
-            {/* The faces: the claim and its proof on the same line. Round crops,
-                tight overlap, sized to the cap height so the line still reads as
-                type. aria-hidden so the heading announces "Built by clinicians"
-                and not a list of names. */}
+            {/* The faces: the claim and its proof on the same line. aria-hidden
+                so the heading announces "Built by clinicians" and not a list of
+                names.
+
+                CLUSTERED 2-OVER-1, NOT A ROW OF THREE. Matteo, 8 Sept 2026:
+                "dont like the 3 dots could do 2 and one below". Three circles
+                in a line read as an ellipsis rather than as people, and they
+                cost about 2em of inline width inside a 112px serif headline --
+                which is what pushed "by" to the right and broke the line as
+                "Built ... by / clinicians". Two up and one below is the same
+                three faces in roughly 1.35em, so the headline holds together.
+
+                GEOMETRY. The cluster is a positioned box, not a flex row: two
+                circles on the top row overlapping by 0.3em, the third centred
+                beneath and pulled up 0.34em so it nests into the notch between
+                them. The box is sized to the visual bounds and given a small
+                negative vertical margin, so the taller-than-cap-height cluster
+                still sits on the type's optical centre instead of pushing the
+                line box open. Widths are in `em`, so it all tracks the
+                responsive 48/80/112px heading with no breakpoints of its own. */}
             {faces.length > 0 ? (
               <motion.span
                 aria-hidden
                 style={{ scale: faceScale, opacity: faceOpacity }}
-                className="relative inline-flex items-center shrink-0 h-[1.06em]"
+                className="relative inline-block shrink-0 align-middle w-[1.40em] h-[1.44em] -my-[0.19em]"
               >
                 {faces.map((f, i) => (
                   <span
                     key={`${f.src}-${i}`}
                     title={f.alt}
-                    className="relative inline-block w-[1.06em] h-[1.06em] rounded-full overflow-hidden ring-[0.045em] ring-paper bg-brand-tint"
+                    className="absolute w-[0.86em] h-[0.86em] rounded-full overflow-hidden ring-[0.045em] ring-paper bg-brand-tint"
                     style={{
-                      marginLeft: i === 0 ? 0 : "-0.38em",
-                      zIndex: faces.length - i,
+                      /* 0,1 -> top row; 2 -> centred below, nested up into the
+                         notch. A fourth face would need a real layout decision,
+                         so the fallback keeps it on the bottom row beside the
+                         third rather than inventing a 2x2 the copy never asks
+                         for. */
+                      left: i === 0 ? 0 : i === 1 ? "0.54em" : "0.27em",
+                      top: i < 2 ? 0 : "0.58em",
+                      /* THE BOTTOM FACE SITS BEHIND THE TOP TWO, which is the
+                         opposite of the obvious choice and the reason all three
+                         faces stay readable. Drawn in front, it overlapped the
+                         second face by 72% horizontally and buried her -- and
+                         she is a real named clinician, so a decorative stack
+                         that hides her is not a style question. Behind, the
+                         only thing occluded is the top 30% of its own disc,
+                         which is hair and field rather than a face, because the
+                         badge treatment centres every subject in its circle. */
+                      zIndex: i < 2 ? faces.length - i : 0,
                       boxShadow: "0 10px 30px color-mix(in srgb, var(--color-navy) 20%, transparent)",
                     }}
                   >
