@@ -3,6 +3,7 @@ import { Footer } from "../components/layout/Footer";
 import { PhotoHero, CLINICIAN_PHOTO } from "../components/sections/PhotoHero";
 import { MonthWrittenUp } from "../components/sections/MonthWrittenUp";
 import { InlineImageHeader } from "../components/sections/InlineImageHeader";
+import { IntegrationsSection } from "../components/sections/IntegrationsSection";
 import { SonicDemoSection } from "../components/sections/SonicDemoSection";
 import type { WebCallProps } from "../components/templates/ProgrammePage";
 import { EligibilityGap } from "../components/sections/EligibilityGap";
@@ -187,6 +188,13 @@ export function ForPractices(webCall: WebCallProps) {
           scoring, a branded dashboard) rather than care-programme flavoured,
           and it closes on a founders' card, which is an odd note to strike
           mid-funnel. It stays on Home. */}
+
+      {/* DOES IT FIT MY EHR -- a top-three practice question that neither
+          audience page answered visually. Taken from Home, where the catalogue
+          showed it stranded on one page. Placed BEFORE three phases so the
+          order matches how the objections arrive: does it fit what we run,
+          then how long until we are live. */}
+      <IntegrationsSection />
 
       {/* THREE PHASES — the section Matteo singled out as working ("I think
           it's good in the three phases"). It is InlineImageHeader, and it is
