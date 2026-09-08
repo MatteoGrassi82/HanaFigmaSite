@@ -540,7 +540,7 @@ export function SafetyMonitorComp() {
         WebkitFontSmoothing: "antialiased",
         // Subtle radial glow + faint dot grid so the canvas isn't dead-flat.
         backgroundImage: `
-          radial-gradient(130% 95% at 50% -12%, rgba(224,219,208,0.55), rgba(224,219,208,0) 56%),
+          radial-gradient(130% 95% at 50% -12%, rgba(228,234,243,0.55), rgba(228,234,243,0) 56%),
           radial-gradient(rgba(0, 18, 47,0.028) 1px, transparent 1px)
         `,
         backgroundSize: "auto, 24px 24px",
@@ -630,7 +630,7 @@ export function SafetyMonitorComp() {
             padding: "12px 22px 10px",
             borderBottom: `1px solid ${COLOR.hairline}`,
             background:
-              "linear-gradient(180deg, rgba(224,219,208,0.45), rgba(224,219,208,0))",
+              "linear-gradient(180deg, rgba(228,234,243,0.45), rgba(228,234,243,0))",
           }}
         >
           <div
@@ -1065,7 +1065,7 @@ export function SafetyMonitorComp() {
                       background: `linear-gradient(180deg, ${CONSOLE_BG2}, ${CONSOLE_BG})`,
                       border: "1px solid rgba(255,255,255,0.06)",
                       boxShadow:
-                        "0 1px 2px rgba(20,18,16,0.35), inset 0 1px 0 rgba(255,255,255,0.05)",
+                        "0 1px 2px rgba(0,18,47,0.35), inset 0 1px 0 rgba(255,255,255,0.05)",
                       flexShrink: 0,
                     }}
                   >

@@ -2171,7 +2171,7 @@ function BackgroundTexture() {
           height: 460,
           borderRadius: "50%",
           background:
-            "radial-gradient(circle, rgba(224,219,208,0.75) 0%, transparent 65%)", // band
+            "radial-gradient(circle, rgba(228,234,243,0.75) 0%, transparent 65%)", // band
         }}
       />
       {/* Subtle vignette */}

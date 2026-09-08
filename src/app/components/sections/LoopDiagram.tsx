@@ -375,7 +375,7 @@ export function LoopDiagram({
         style={{
           background:
             // navy-soft, warmed off the navy field. Decoration, so no accent.
-            "radial-gradient(circle, rgba(53,48,41,0.55) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(16,32,56,0.55) 0%, transparent 70%)",
         }}
       />
       )}

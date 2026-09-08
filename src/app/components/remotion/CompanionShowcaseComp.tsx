@@ -205,7 +205,7 @@ function HomeScreen({ frame, fps, t0 }: { frame: number; fps: number; t0: number
           style={{
             opacity: settled,
             transform: `translateY(${(1 - settled) * -26}px)`,
-            background: "rgba(20,18,16,0.92)", /* navy */
+            background: "rgba(0,18,47,0.92)", /* navy */
             backdropFilter: "blur(8px)",
             borderRadius: 20,
             padding: "11px 12px",

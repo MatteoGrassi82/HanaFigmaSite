@@ -499,7 +499,7 @@ export function PatientContextComp() {
           background:
             /* was two blue glows; the depth is now two steps of the warm
                ramp — paper-2 then band — so nothing here is a hue. */
-            "radial-gradient(620px 360px at 22% 14%, rgba(240,237,230,0.95), transparent 70%), radial-gradient(560px 420px at 86% 88%, rgba(224,219,208,0.55), transparent 72%)",
+            "radial-gradient(620px 360px at 22% 14%, rgba(246,247,251,0.95), transparent 70%), radial-gradient(560px 420px at 86% 88%, rgba(228,234,243,0.55), transparent 72%)",
         }}
       />
       {/* subtle vignette so the canvas isn't dead-flat */}
@@ -1259,7 +1259,7 @@ export function PatientContextComp() {
                     height: h,
                     borderRadius: 2,
                     /* ink-soft, so the meter is warm grey not cool slate */
-                    background: `rgba(74,66,57,${0.35 + 0.4 * clamp01(h / 16)})`,
+                    background: `rgba(30,42,58,${0.35 + 0.4 * clamp01(h / 16)})`,
                   }}
                 />
               );

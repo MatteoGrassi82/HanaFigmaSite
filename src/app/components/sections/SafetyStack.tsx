@@ -18,6 +18,26 @@ import { getLocale } from "../../../lib/i18n";
 /* Newsprint Ultramarine, as literal hex with the token name beside it. Written
    literally rather than as var() because this scene is also captured headlessly
    (canvas / video export), where the page's custom properties do not resolve. */
+/* ── THE LAYER GRADIENTS WERE STILL ON THE REJECTED WARM PALETTE ───────────
+ * Fixed 8 Sept 2026 (Matteo: "need and colors are all messed up. They're all
+ * like grays and stuff"). The scalar constants below were reverted to the cool
+ * palette when warm/beige was tried and dropped on 5 Sept, but the `glass` and
+ * `glassLight` gradients on every Layer were missed, so the stack was still
+ * built from beige: rgba(143,134,114), rgba(204,196,180), rgba(217,211,199)
+ * and friends. Against a navy-and-ultramarine site those read as muddy grey,
+ * which is exactly what he saw.
+ *
+ * The replacement keeps the SAME LIGHTNESS STEPS and changes only the hue, so
+ * the depth cue in the stack is unchanged and nothing needed re-tuning: the
+ * dark steps now walk navy -> navy-soft and up, the light steps walk
+ * brand-soft -> rule -> band -> paper-bright.
+ *
+ * WHY THESE ARE LITERALS AND NOT TOKENS: they are gradient stops with per-stop
+ * alpha, and `linear-gradient(150deg, rgba(...), rgba(...))` cannot take a
+ * var() colour and apply an alpha to it without color-mix in every stop, which
+ * this file predates. If it is rewritten, color-mix against --color-navy and
+ * --color-band is the way, and then a palette change carries automatically.
+ * Until then: A PALETTE SWEEP MUST GREP THIS FILE FOR rgba(. */
 const PAPER = "#ffffff";                     /* paper: the section ground, light */
 const NAVY = "#00122f";                      /* navy: the section ground, dark */
 const INK = "#00122f";                       /* ink: type on light */
@@ -51,9 +71,9 @@ const LAYERS_EN: Layer[] = [
     line: "Non-deterministic agents are continuously monitored: every decision logged, anomalies caught and circuit-broken.",
     icon: Activity,
     /* deepest pane: navy → navy-soft */
-    glass: "linear-gradient(150deg, rgba(20,18,16,0.88), rgba(53,48,41,0.86))",
+    glass: "linear-gradient(150deg, rgba(0,18,47,0.88), rgba(16,32,56,0.86))",
     /* on paper: rule-strong → ink-mute, the most veiled of the four */
-    glassLight: "linear-gradient(150deg, rgba(143,134,114,0.80), rgba(111,102,89,0.78))",
+    glassLight: "linear-gradient(150deg, rgba(122,138,176,0.80), rgba(52,68,94,0.78))",
     tx: 150,
     ty: -108,
   },
@@ -63,9 +83,9 @@ const LAYERS_EN: Layer[] = [
     line: "Anything clinical or out-of-scope is handed to a human in real time, per the escalation rules you set.",
     icon: UserCheck,
     /* navy-soft → ink-soft */
-    glass: "linear-gradient(150deg, rgba(53,48,41,0.86), rgba(74,66,57,0.84))",
+    glass: "linear-gradient(150deg, rgba(16,32,56,0.86), rgba(30,42,58,0.84))",
     /* rule → rule-strong */
-    glassLight: "linear-gradient(150deg, rgba(204,196,180,0.80), rgba(143,134,114,0.78))",
+    glassLight: "linear-gradient(150deg, rgba(180,192,220,0.80), rgba(122,138,176,0.78))",
     tx: 50,
     ty: -36,
   },
@@ -75,9 +95,9 @@ const LAYERS_EN: Layer[] = [
     line: "Hana acts only inside the clinical protocols and guardrails you define, never a model's own judgment.",
     icon: BookLock,
     /* ink-soft → ink-mute */
-    glass: "linear-gradient(150deg, rgba(74,66,57,0.84), rgba(111,102,89,0.82))",
+    glass: "linear-gradient(150deg, rgba(30,42,58,0.84), rgba(52,68,94,0.82))",
     /* rule-soft → rule */
-    glassLight: "linear-gradient(150deg, rgba(217,211,199,0.86), rgba(204,196,180,0.82))",
+    glassLight: "linear-gradient(150deg, rgba(207,216,230,0.86), rgba(180,192,220,0.82))",
     tx: -50,
     ty: 36,
   },
@@ -87,9 +107,9 @@ const LAYERS_EN: Layer[] = [
     line: "Encrypted in transit (TLS 1.2/1.3) and at rest (AES-256); end-to-end where the channel supports it.",
     icon: Lock,
     /* frontmost pane: ink-mute → rule-strong, the lightest on navy */
-    glass: "linear-gradient(150deg, rgba(111,102,89,0.82), rgba(143,134,114,0.80))",
+    glass: "linear-gradient(150deg, rgba(52,68,94,0.82), rgba(122,138,176,0.80))",
     /* on paper: paper-bright → band, the pane nearest the reader */
-    glassLight: "linear-gradient(150deg, rgba(253,252,250,0.92), rgba(224,219,208,0.86))",
+    glassLight: "linear-gradient(150deg, rgba(253,252,250,0.92), rgba(228,234,243,0.86))",
     tx: -150,
     ty: 108,
   },
@@ -103,9 +123,9 @@ const LAYERS_IT: Layer[] = [
     line: "Gli agenti non deterministici sono monitorati di continuo — ogni decisione registrata, le anomalie intercettate e interrotte automaticamente.",
     icon: Activity,
     /* deepest pane: navy → navy-soft */
-    glass: "linear-gradient(150deg, rgba(20,18,16,0.88), rgba(53,48,41,0.86))",
+    glass: "linear-gradient(150deg, rgba(0,18,47,0.88), rgba(16,32,56,0.86))",
     /* on paper: rule-strong → ink-mute, the most veiled of the four */
-    glassLight: "linear-gradient(150deg, rgba(143,134,114,0.80), rgba(111,102,89,0.78))",
+    glassLight: "linear-gradient(150deg, rgba(122,138,176,0.80), rgba(52,68,94,0.78))",
     tx: 150,
     ty: -108,
   },
@@ -115,9 +135,9 @@ const LAYERS_IT: Layer[] = [
     line: "Tutto ciò che è clinico o fuori ambito viene passato a una persona in tempo reale, secondo le regole di escalation che imposti tu.",
     icon: UserCheck,
     /* navy-soft → ink-soft */
-    glass: "linear-gradient(150deg, rgba(53,48,41,0.86), rgba(74,66,57,0.84))",
+    glass: "linear-gradient(150deg, rgba(16,32,56,0.86), rgba(30,42,58,0.84))",
     /* rule → rule-strong */
-    glassLight: "linear-gradient(150deg, rgba(204,196,180,0.80), rgba(143,134,114,0.78))",
+    glassLight: "linear-gradient(150deg, rgba(180,192,220,0.80), rgba(122,138,176,0.78))",
     tx: 50,
     ty: -36,
   },
@@ -127,9 +147,9 @@ const LAYERS_IT: Layer[] = [
     line: "Hana agisce solo all'interno dei protocolli clinici e dei guardrail che definisci tu — mai secondo il giudizio autonomo di un modello.",
     icon: BookLock,
     /* ink-soft → ink-mute */
-    glass: "linear-gradient(150deg, rgba(74,66,57,0.84), rgba(111,102,89,0.82))",
+    glass: "linear-gradient(150deg, rgba(30,42,58,0.84), rgba(52,68,94,0.82))",
     /* rule-soft → rule */
-    glassLight: "linear-gradient(150deg, rgba(217,211,199,0.86), rgba(204,196,180,0.82))",
+    glassLight: "linear-gradient(150deg, rgba(207,216,230,0.86), rgba(180,192,220,0.82))",
     tx: -50,
     ty: 36,
   },
@@ -139,9 +159,9 @@ const LAYERS_IT: Layer[] = [
     line: "Crittografata in transito (TLS 1.2/1.3) e a riposo (AES-256); end-to-end dove il canale lo consente.",
     icon: Lock,
     /* frontmost pane: ink-mute → rule-strong, the lightest on navy */
-    glass: "linear-gradient(150deg, rgba(111,102,89,0.82), rgba(143,134,114,0.80))",
+    glass: "linear-gradient(150deg, rgba(52,68,94,0.82), rgba(122,138,176,0.80))",
     /* on paper: paper-bright → band, the pane nearest the reader */
-    glassLight: "linear-gradient(150deg, rgba(253,252,250,0.92), rgba(224,219,208,0.86))",
+    glassLight: "linear-gradient(150deg, rgba(253,252,250,0.92), rgba(228,234,243,0.86))",
     tx: -150,
     ty: 108,
   },
@@ -182,7 +202,7 @@ const CSS = `
      the liquid wobble is confined to the interior sheen only */
   overflow: hidden;
   border: 1.5px solid var(--ss-edge, rgba(253,252,250,.20));    /* paper-bright 20% */
-  box-shadow: var(--ss-shadow, 0 30px 64px rgba(20,18,16,.55)); /* navy 55% */
+  box-shadow: var(--ss-shadow, 0 30px 64px rgba(0,18,47,.55)); /* navy 55% */
   transform: translate3d(var(--tx), var(--ty), var(--lift, 0px));
   transition: transform .38s cubic-bezier(.2,.7,.2,1), border-color .38s ease;
 }
@@ -265,8 +285,8 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
         className="pointer-events-none absolute left-1/2 top-[-200px] z-0 h-[800px] w-[800px] -translate-x-1/2"
         style={{
           background: light
-            ? "radial-gradient(circle, rgba(224,219,208,0.55) 0%, transparent 70%)"  /* band */
-            : "radial-gradient(circle, rgba(53,48,41,0.55) 0%, transparent 70%)",    /* navy-soft */
+            ? "radial-gradient(circle, rgba(228,234,243,0.55) 0%, transparent 70%)"  /* band */
+            : "radial-gradient(circle, rgba(16,32,56,0.55) 0%, transparent 70%)",    /* navy-soft */
         }}
       />
       <div className="relative z-10 mx-auto px-4 md:px-8">
@@ -325,9 +345,9 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
                       /* three warm washes over a two-step paper ramp; the depth
                          that used to come from three hues now comes from value */
                       background: [
-                        "radial-gradient(60% 55% at 18% 12%, rgba(224,219,208,0.55) 0%, rgba(224,219,208,0) 60%)",  /* band */
-                        "radial-gradient(65% 60% at 88% 22%, rgba(204,196,180,0.50) 0%, rgba(204,196,180,0) 62%)",  /* rule */
-                        "radial-gradient(70% 60% at 16% 92%, rgba(217,211,199,0.60) 0%, rgba(217,211,199,0) 62%)",  /* rule-soft */
+                        "radial-gradient(60% 55% at 18% 12%, rgba(228,234,243,0.55) 0%, rgba(228,234,243,0) 60%)",  /* band */
+                        "radial-gradient(65% 60% at 88% 22%, rgba(180,192,220,0.50) 0%, rgba(180,192,220,0) 62%)",  /* rule */
+                        "radial-gradient(70% 60% at 16% 92%, rgba(207,216,230,0.60) 0%, rgba(207,216,230,0) 62%)",  /* rule-soft */
                         "linear-gradient(150deg, #ffffff 0%, #f6f7fb 60%, #e4eaf3 100%)",  /* paper-bright → paper-2 → band */
                       ].join(", "),
                     }
@@ -354,7 +374,7 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
                       : {
                           "--ss-edge": "rgba(253,252,250,0.20)",           /* paper-bright 20% */
                           "--ss-edge-active": ACCENT_DARK,                 /* brand-soft */
-                          "--ss-shadow": "0 30px 64px rgba(20,18,16,0.55)",/* navy 55% */
+                          "--ss-shadow": "0 30px 64px rgba(0,18,47,0.55)",/* navy 55% */
                           "--ss-active-filter": "brightness(1.3) saturate(1.06)",
                           "--ss-sheen-blend": "screen",
                           "--ss-sheen-op": ".85",
