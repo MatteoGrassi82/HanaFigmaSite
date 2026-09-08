@@ -25,6 +25,25 @@ import { cn } from "../../../lib/utils";
  * agree titles before a team page). The default below carries the placeholder
  * exactly as RemoteV2 had it. Confirm with him before /about goes indexable.
  *
+ * ALL FOUR IN COLOUR as of 8 Sept 2026 (Matteo: "use them all in color").
+ * Three new 800x800 colour originals replaced what was there:
+ *   archie    was the GREYSCALE cut-out, which made the roster read as two
+ *             colour portraits and one black-and-white one. Now colour;
+ *             measured channel spread 43.9/255 against the under-6 that
+ *             indicated greyscale before.
+ *   sthita    was the one member with NO photograph at all, so his monogram
+ *             "SP" was the first thing in the row. He now has a face.
+ *   priyanshu a NEW person, installed as /avatars/priyanshu.webp but NOT yet
+ *             placed in this roster -- see the open question below.
+ *
+ * ███ ONE THING NOT DONE, BECAUSE GUESSING IT WOULD MISLABEL A REAL PERSON. ███
+ * Matteo's instruction was "use the one I'm giving you now, like me:
+ * Massimiliano. Actually, use a different one: Sita Prianshu", and that reads
+ * two ways: either Priyanshu REPLACES Massimiliano in the fourth slot, or he is
+ * a fifth member and Massimiliano stays. Both are one line here. Putting the
+ * wrong name under a face on a team page is not a design mistake, so the
+ * roster is unchanged on that point and priyanshu.webp sits ready.
+ *
  * PHOTOS (installed 8 Sept 2026 from _TEAM-BADGES): the roster now points at
  * the CUT-OUT variants, {name}-cut.png converted to webp WITH ALPHA. Alpha is
  * load-bearing here: the frame is `rounded-pill` over `bg-brand-tint`, so a
@@ -56,6 +75,10 @@ export interface TeamMember {
   role: string;
   /** Path under /public. Falls back to the monogram tile if it fails to load. */
   photo?: string;
+  /** object-position for the crop. The four portraits are unrelated
+   *  photographs, not a shoot, so where the head sits in frame differs per
+   *  person and a single 50% 50% clips somebody. */
+  pos?: string;
   /** Oval width in px. The roster is deliberately uneven. */
   width: number;
   /** Oval height in px. */
@@ -107,8 +130,8 @@ export function initials(name: string): string {
    photographs to come. Fakhrudin and Priyanka came off with this cut; one line
    each to restore. */
 const DEFAULT_MEMBERS: TeamMember[] = [
-  { name: "Sthita Pujari", role: "Engineering & applied AI", photo: "/avatars/sthita.jpg", width: 98, height: 142, offset: 48, z: 1 },
-  { name: "Archie Defillo, MD", role: "Neuroscience, sleep & behavioral health", photo: "/avatars/archie.webp", width: 112, height: 164, offset: 18, z: 2 },
+  { name: "Sthita Pujari", role: "Engineering & applied AI", photo: "/avatars/sthita.webp", width: 98, height: 142, offset: 48, z: 1 },
+  { name: "Archie Defillo, MD", role: "Neuroscience, sleep & behavioral health", photo: "/avatars/archie.webp", pos: "50% 32%", width: 112, height: 164, offset: 18, z: 2 },
   { name: "Matteo Grassi", role: "Founder · behavioral psychologist", photo: "/avatars/matteo.webp", width: 138, height: 202, offset: 0, z: 4 },
   { name: "Massimiliano", role: "Clinical psychologist · sleep", photo: "/avatars/massimo.webp", width: 108, height: 156, offset: 26, z: 3 },
 ];
@@ -241,6 +264,7 @@ export function TeamSection({
                       alt={m.name}
                       loading="lazy"
                       className="absolute inset-0 w-full h-full object-cover"
+                      style={{ objectPosition: m.pos ?? "50% 50%" }}
                       /* the roster lists photos that are not in the repo yet;
                          until each lands, the monogram tile shows instead of a
                          broken image */
