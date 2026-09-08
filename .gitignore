@@ -48,3 +48,10 @@ dist-sleep/
 # Puppeteer Chrome download (project-local, see .puppeteerrc.cjs)
 .cache/
 .env*
+
+# The product demo video. 16MB, and this repo is PUBLIC with no git-lfs, so it
+# must NOT enter git history — the largest blob ever committed here is 1.56MB
+# and every re-encode would add another permanent copy. It lives in public/ so
+# the section works locally; for production it belongs on Vercel Blob and the
+# URL goes in EXPLAINER in RemoteV2.tsx. The poster IS committed (60KB).
+public/video/demo.mp4

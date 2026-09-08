@@ -496,49 +496,47 @@ interface RemoteV2Props {
 }
 
 /* ── §3b THE VIDEO ─────────────────────────────────────────────────────────
- * ███ PLACEHOLDER FILE. public/video1.mp4 IS NOT THE EXPLAINER. ███
- * It is a 5.8-second 1080x1080 social loop that was sitting unreferenced in
- * public/, wired here only so the section is reviewable in place rather than
- * as an empty box. Hence aspect "1 / 1" and duration "0:06".
+ * THE REAL PRODUCT DEMO, installed 8 Sept 2026 from ~/Downloads/demo.mp4. The
+ * placeholder square loop is gone, and so is the earlier confusion: there were
+ * three videos in that folder and only this one is the demo. videodemo.mp4 is
+ * a 3-minute talking head, which would have made every claim in this section's
+ * copy false -- no call, no note landing, no minutes attributed, and it needs
+ * sound. If that one ever ships it needs its own section and its own words.
  *
- * ── SWAPPING IN THE REAL FILE ────────────────────────────────────────────
- * HOST IT, DO NOT COMMIT IT. This repo is PUBLIC, has no git-lfs, and the
- * largest blob ever committed to it is 1.56 MB. A 10-15 MB explainer would
- * enter git history permanently, once per re-encode. Put it on Vercel Blob (or
- * any bucket) and paste the absolute URL below; <video> does not care whether
- * the URL is local or remote, and VideoSection already carries the buffering
- * and error states a hosted file needs.
+ * WHAT IT ACTUALLY SHOWS, which is why the copy below fits: a claymation
+ * patient, then the Patients roster with minutes accruing against each code
+ * (12/20, 7/20, 36/30), then Billing -- "August closed, nobody typed any of
+ * this", 312 calls, 312 notes, 306 ready to bill, and a monthly care note
+ * written into a CCM template.
  *
- * Encoding target: ~10-15 MB. Screen capture compresses well, so 1080p h264 at
- * about 1.5 Mbps is 11 MB per minute and looks clean.
+ * ███ THE FILE IS GITIGNORED ON PURPOSE. ███ 16MB, and this repo is PUBLIC
+ * with no git-lfs; the largest blob ever committed here is 1.56MB and every
+ * re-encode would add another permanent copy. It sits in public/ so the
+ * section works locally. FOR PRODUCTION it belongs on Vercel Blob and the URL
+ * replaces `src` below -- VideoSection already carries the buffering and error
+ * states a hosted file needs. The POSTER is committed; it is 96KB.
  *
- * CHANGE ALL FOUR TOGETHER. `aspect` reserves the frame's space, so a stale
- * value both letterboxes the video and shifts the layout on load. A normal
- * explainer is "16 / 9", not the placeholder's "1 / 1".
+ * THE ENCODE: 84MB at 4.8 Mbps -> 16MB at 900 kbps, 1080p, h264 high, yuv420p,
+ * +faststart. Verified at 4x zoom on the Billing figures that text is
+ * indistinguishable from the source, which is the only quality bar that
+ * matters for screen capture. Note that this does NOT generalise: the same
+ * bitrate on the talking-head file was visibly soft, because faces and skin
+ * are high-detail where flat UI is not.
  *
- * Poster, regenerated the same way for the real file (frame 0 of the
- * placeholder is black, hence the 1.2s seek):
- *   ffmpeg -ss 1.2 -i <file> -frames:v 1 -q:v 3 public/video/explainer-poster.jpg
- * The poster is also what the ambient glow samples, so it is not optional.
+ * IT HAS SOUND, all the way through: mean -20.4 dB, max -1.8 dB, zero silent
+ * runs across 146s. The note used to say "No sound needed", which was written
+ * for the placeholder and is false for this file.
  *
- * STILL OWED: captions. Pass `captionsSrc` and VideoSection renders a <track>.
- * A spoken explainer without them is not accessible, and on this site it is
- * also the only part of a video a crawler can read.
- *
- * If the bucket is cross-origin AND captions need reading, add
- * crossOrigin="anonymous" AND CORS headers on the bucket. Without the headers
- * that attribute BLOCKS playback, so do not add it speculatively. */
+ * STILL OWED: a captions .vtt. Pass `captionsSrc` and VideoSection renders a
+ * <track>. Two and a half minutes of narration is both an accessibility
+ * requirement and the only part of a video a crawler can read. */
 const EXPLAINER = {
-  // TODO(video): replace with the hosted URL, e.g.
-  //   "https://<id>.public.blob.vercel-storage.com/hana-explainer.mp4"
-  src: "/video1.mp4",
-  poster: "/video/explainer-poster.jpg",
-  // 16/9 while the placeholder is square ON PURPOSE, so the section under
-  // review has the proportions it will actually ship with. object-cover crops
-  // the square file to this box rather than letterboxing it. When the real
-  // 16/9 file lands this value is already correct.
+  // TODO(video): swap for the hosted URL, e.g.
+  //   "https://<id>.public.blob.vercel-storage.com/hana-demo.mp4"
+  src: "/video/demo.mp4",
+  poster: "/video/demo-poster.jpg",
   aspect: "16 / 9",
-  duration: "0:06",
+  duration: "2:26",
 } as const;
 
 export function RemoteV2({
@@ -596,7 +594,7 @@ export function RemoteV2({
         poster={EXPLAINER.poster}
         aspect={EXPLAINER.aspect}
         duration={EXPLAINER.duration}
-        note={<>No sound needed. Your team reviews every note before anything bills.</>}
+        note={<>Best with sound on. Your team reviews every note before anything bills.</>}
       />
 
       {/* §3c was the 85% reached-by-channel column. Pulled 2026-08-19 (call):
