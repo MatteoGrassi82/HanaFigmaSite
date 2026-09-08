@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Loader2, Globe, PhoneOff, CheckCircle2 } from "lucide-react";
+import { Loader2, Globe, PhoneOff, CheckCircle2, MessageSquare } from "lucide-react";
 import { cn } from "../../../lib/utils";
 import { projectId, publicAnonKey } from "../../../../utils/supabase/info";
 import { HanaBloomOrb } from "../media/HanaBloomOrb";
@@ -21,6 +21,14 @@ const IT_DEMO_AGENT_ID: string | null = null;
 // (mirrors the "agent_" prefix that routes to ElevenLabs).
 const DEMO_AGENT_ID = "squad:91b2273e-a3b2-46df-af20-193b50054921";
 
+// The phone flow: number in, HANA texts the four-agent menu, the visitor replies with
+// the one they want, that agent rings them back. The text is sent by the Pipecat app's
+// own /sms/start (menu composed from the personas, from the Telnyx line the callback
+// will come from) via our server-side proxy at /api/demo-text, which is what holds the
+// shared secret. The reply lands on that same app's /sms and places the call — so the
+// page never learns about the call; it can only truthfully say "check your texts".
+// Carrier registration for the line (10DLC, CK3JA0R) completed 2026-09-08.
+const E164 = /^\+[1-9]\d{7,14}$/;
 
 interface LiveDemoSectionProps {
   activeAgentId: string | null;
@@ -48,7 +56,11 @@ export function LiveDemoSection({
   const isItalian = getLocale() === "it";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [fieldErrors, setFieldErrors] = useState<{ name?: string; email?: string }>({});
+  const [phone, setPhone] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [smsStatus, setSmsStatus] = useState<"idle" | "sending" | "texted" | "error">("idle");
+  const [smsError, setSmsError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<{ name?: string; email?: string; phone?: string; consent?: string }>({});
 
   // Italian site serves EU only (UK/EU agent); US/Canada is not offered there.
 
@@ -68,6 +80,35 @@ export function LiveDemoSection({
 
 
   // Secondary: simple in-browser web call.
+  const handleTextMe = async () => {
+    const errors: { name?: string; email?: string; phone?: string; consent?: string } = {};
+    if (!name.trim())  errors.name  = ld.fieldNameRequired;
+    if (!email.trim()) errors.email = ld.fieldEmailRequired;
+    const to = phone.replace(/[\s().-]/g, "");
+    if (!E164.test(to)) errors.phone = ld.fieldPhoneFormat;
+    if (!consent) errors.consent = ld.fieldConsentRequired;
+    setFieldErrors(errors);
+    if (Object.keys(errors).length) return;
+    setSmsStatus("sending"); setSmsError(null);
+    captureLead("live-demo-text");
+    try {
+      const r = await fetch("/api/demo-text", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ to, name: name.trim(), lang: isItalian ? "it" : "en" }),
+      });
+      const data = await r.json().catch(() => ({}));
+      // ld.textFailed, not ld.callFailed: nothing is dialled at this step, and telling
+      // someone the CALL failed when the TEXT never sent sends them looking in the
+      // wrong place. Seen live on localhost, where /api/demo-text 404s because Vite
+      // does not serve Vercel functions — an empty body, so the fallback is what shows.
+      if (!r.ok) { setSmsStatus("error"); setSmsError(data.error || ld.textFailed); return; }
+      setSmsStatus("texted");
+    } catch {
+      setSmsStatus("error"); setSmsError(ld.networkError);
+    }
+  };
+
   const handleWebCallClick = () => {
     const errors: { name?: string; email?: string } = {};
     if (!name.trim())  errors.name  = ld.fieldNameRequired;
@@ -179,9 +220,64 @@ export function LiveDemoSection({
                       {fieldErrors.email && <p className="mt-1 text-xs text-red-500">{fieldErrors.email}</p>}
                     </div>
   
-                    {/* The only action while the phone flow waits on carrier registration.
-                        The numbers stay wired server-side — texting them still works — the
-                        page just does not advertise them yet. */}
+                    {/* Phone */}
+                    <div>
+                      <label className={labelClass}>{ld.phoneLabel}</label>
+                      <input
+                        type="tel"
+                        inputMode="tel"
+                        autoComplete="tel"
+                        value={phone}
+                        onChange={(e) => { setPhone(e.target.value); setFieldErrors((p) => ({ ...p, phone: undefined })); }}
+                        placeholder="+1 555 123 4567"
+                        className={inputClass(fieldErrors.phone)}
+                        disabled={smsStatus === "texted"}
+                      />
+                      {fieldErrors.phone && <p className="mt-1 text-xs text-red-500">{fieldErrors.phone}</p>}
+                    </div>
+
+                    {/* Consent. A2P 10DLC review requires the disclosure ON the form:
+                        express consent, frequency, rates, STOP/HELP, Terms and Privacy. */}
+                    <label className="flex items-start gap-3 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        checked={consent}
+                        onChange={(e) => { setConsent(e.target.checked); setFieldErrors((p) => ({ ...p, consent: undefined })); }}
+                        className="mt-1 h-4 w-4 rounded border-[#c7cfe0] text-brand focus:ring-brand"
+                        disabled={smsStatus === "texted"}
+                      />
+                      <span className="text-[13px] leading-[1.6] text-ink-mute">
+                        <span className="text-ink font-medium">{ld.smsConsentLabel}</span>{" "}
+                        {ld.smsConsentFinePrint}{" "}
+                        <a href="/terms" className="underline underline-offset-2">{ld.termsLinkLabel}</a>{" · "}
+                        <a href="/privacy" className="underline underline-offset-2">{ld.privacyLinkLabel}</a>
+                      </span>
+                    </label>
+                    {fieldErrors.consent && <p className="-mt-4 text-xs text-red-500">{fieldErrors.consent}</p>}
+
+                    {smsStatus === "texted" ? (
+                      <div className="rounded-xl border border-green-200 bg-green-50 px-5 py-4 text-[15px] text-green-900 flex items-start gap-3">
+                        <CheckCircle2 className="mt-0.5 w-5 h-5 shrink-0 text-green-600" />
+                        <span>{ld.textedStatus}</span>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={handleTextMe}
+                        disabled={smsStatus === "sending" || webCallStatus !== "idle"}
+                        className="w-full inline-flex items-center justify-center gap-2.5 bg-navy text-white text-[16px] font-semibold rounded-xl py-[18px] transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(0,18,47,0.18)] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                      >
+                        {smsStatus === "sending"
+                          ? <><Loader2 className="w-[18px] h-[18px] animate-spin" /> {ld.textingButton}</>
+                          : <><MessageSquare className="w-[18px] h-[18px]" /> {ld.textMeButton}</>}
+                      </button>
+                    )}
+                    {smsStatus === "error" && smsError && <p className="-mt-3 text-xs text-red-500">{smsError}</p>}
+
+                    <div className="flex items-center gap-3 text-[12px] font-bold tracking-[2px] uppercase text-ink-mute">
+                      <span className="h-px flex-1 bg-[#dfe3ee]" />{ld.or}<span className="h-px flex-1 bg-[#dfe3ee]" />
+                    </div>
+
+                    {/* The web call stays as the desktop path — no handset needed. */}
                     <button
                       onClick={handleWebCallClick}
                       disabled={webCallStatus !== "idle"}

@@ -147,6 +147,7 @@ export interface Translations {
     fieldPhoneFormat: string;
     networkError: string;
     callFailed: string;
+    textFailed: string;
     // A2P 10DLC campaign review requires the opt-in disclosure to live on the
     // form itself: express consent, frequency, rates, STOP/HELP, and direct
     // links to Terms and Privacy. Do not shorten these without re-reading
@@ -158,14 +159,14 @@ export interface Translations {
     textInBody: string;
     textInNumber: string;
     textInFallback: string;
+    optEnroll: string;
+    optEnrollSub: string;
     optMonitoring: string;
     optMonitoringSub: string;
-    optIntake: string;
-    optIntakeSub: string;
+    optBehavioral: string;
+    optBehavioralSub: string;
     optOutreach: string;
     optOutreachSub: string;
-    optCoordination: string;
-    optCoordinationSub: string;
     smsConsentLabel: string;
     smsConsentFinePrint: string;
     termsLinkLabel: string;
@@ -576,18 +577,19 @@ const en: Translations = {
     fieldPhoneFormat: "Enter your number in international format, e.g. +1 555 123 4567.",
     networkError: "Network error. Please try again.",
     callFailed: "We couldn't place the call. Please try again.",
+    textFailed: "We couldn't send the text. Please check the number and try again.",
     textInHeading: "Pick a demo — Hana calls you back",
     textInBody: "Tap one and we'll open a text. Send it, and your phone rings in a few seconds.",
     textInNumber: "+1 313 514 6395",
     textInFallback: "On a computer? Text the word to",
-    optMonitoring: "Weekly check-in",
-    optMonitoringSub: "Between-visit monitoring, with a red-flag stop",
-    optIntake: "New patient intake",
-    optIntakeSub: "Everything the front desk needs, before the visit",
+    optEnroll: "Care program enrollment",
+    optEnrollSub: "Introduces the program, one thing at a time, and asks once",
+    optMonitoring: "Between-visit check-in",
+    optMonitoringSub: "Captures a home reading, with a red-flag stop",
+    optBehavioral: "Behavioral health check-in",
+    optBehavioralSub: "The PHQ-9, read as written, with a real safety path",
     optOutreach: "Been-a-while outreach",
-    optOutreachSub: "Reactivating a lapsed patient",
-    optCoordination: "Rebook a missed visit",
-    optCoordinationSub: "No-show recovery that finds the real reason",
+    optOutreachSub: "Reactivating a lapsed patient, without the guilt",
     smsConsentLabel: "Text me the demo options.",
     smsConsentFinePrint: "Message frequency may vary. Message and data rates may apply. Reply STOP to opt out, HELP for help.",
     termsLinkLabel: "Terms",
@@ -993,18 +995,19 @@ const it: Translations = {
     fieldPhoneFormat: "Inserisci il numero in formato internazionale, es. +39 02 1234 5678.",
     networkError: "Errore di rete. Riprova.",
     callFailed: "Non siamo riusciti a effettuare la chiamata. Riprova.",
+    textFailed: "Non siamo riusciti a inviare l'SMS. Controlla il numero e riprova.",
     textInHeading: "Scegli una demo — Hana ti richiama",
     textInBody: "Tocca un'opzione e apriamo un SMS. Invialo e il telefono squilla in pochi secondi.",
     textInNumber: "+1 313 514 6395",
     textInFallback: "Sei al computer? Invia la parola al",
-    optMonitoring: "Check-in settimanale",
-    optMonitoringSub: "Monitoraggio tra una visita e l'altra, con stop per i segnali d'allarme",
-    optIntake: "Accoglienza nuovo paziente",
-    optIntakeSub: "Tutto ciò che serve alla reception, prima della visita",
+    optEnroll: "Iscrizione a un programma di cura",
+    optEnrollSub: "Presenta il programma, una cosa alla volta, e chiede una volta sola",
+    optMonitoring: "Check-in tra le visite",
+    optMonitoringSub: "Raccoglie una misurazione a casa, con stop per i segnali d'allarme",
+    optBehavioral: "Check-in di salute mentale",
+    optBehavioralSub: "Il PHQ-9 letto com'è scritto, con un vero percorso di sicurezza",
     optOutreach: "Contatto dopo tanto tempo",
-    optOutreachSub: "Riattivare un paziente che non si vede da un po'",
-    optCoordination: "Riprenota una visita saltata",
-    optCoordinationSub: "Recupero dei no-show, trovando il motivo reale",
+    optOutreachSub: "Riattivare un paziente che non si vede da un po', senza colpevolizzare",
     smsConsentLabel: "Inviami le opzioni della demo via SMS.",
     smsConsentFinePrint: "La frequenza dei messaggi può variare. Possono applicarsi tariffe per messaggi e dati. Rispondi STOP per annullare l'iscrizione, HELP per assistenza.",
     termsLinkLabel: "Termini",
