@@ -126,7 +126,8 @@ export function initials(name: string): string {
     .join("");
 }
 
-/* Roster set 2026-08-25 (Matteo): Grassi, Archie, Sthita and Massimo, with real
+/* Roster set 2026-08-25 (Matteo): Grassi, Archie, Sthita and Massimo; Fakhrudin
+   added 2026-09-08. With real
    photographs to come. Fakhrudin and Priyanka came off with this cut; one line
    each to restore. */
 const DEFAULT_MEMBERS: TeamMember[] = [
@@ -134,6 +135,15 @@ const DEFAULT_MEMBERS: TeamMember[] = [
   { name: "Archie Defillo, MD", role: "Neuroscience, sleep & behavioral health", photo: "/avatars/archie.webp", pos: "50% 32%", width: 112, height: 164, offset: 18, z: 2 },
   { name: "Matteo Grassi", role: "Founder · behavioral psychologist", photo: "/avatars/matteo.webp", width: 138, height: 202, offset: 0, z: 4 },
   { name: "Massimiliano", role: "Clinical psychologist · sleep", photo: "/avatars/massimo.webp", width: 108, height: 156, offset: 26, z: 3 },
+  /* Added 8 Sept 2026 (Matteo: "add fahruin as well"). He was already in
+     BuiltByClinicians and missing from this roster. Uses the FULL-FRAME studio
+     photograph rather than the cut-out variant: at 1722x1598 it is the
+     highest-resolution source in the set, and three of the other four are now
+     full-frame too, so it matches them rather than the transparent cut-outs.
+     Sized to continue the descent outward from the centre -- Matteo is the
+     tallest at 202 and each step out gets shorter, so he takes 96/138 and the
+     largest offset. */
+  { name: "Fakhrudin Mohamed, MD", role: "Clinical medicine & care operations", photo: "/avatars/fakhrudin.webp", pos: "50% 30%", width: 96, height: 138, offset: 54, z: 0 },
 ];
 
 const DEFAULT_STATS: TeamStat[] = [
