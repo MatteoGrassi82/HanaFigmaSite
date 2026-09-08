@@ -564,6 +564,30 @@ export function RemoteV2({
           replaces the WhyHana channel bars, which are one import away if wanted back */}
       <WhatIsHanaCompare />
 
+      {/* §2b THE VIDEO — moved up under §2 on 8 Sept 2026 (Matteo: "can you put
+          under section 2?"). It sat after the loop at §3b, which meant a reader
+          met the three-way comparison, then borrowed proof, then a diagram,
+          before anything showed them the product. Under §2 the sequence is the
+          argument and then the evidence for it: here are three ways to run this
+          and ours is the third, now watch the third one happen. It also puts the
+          only moving thing on the page above the fold-and-a-half rather than
+          five sections down. See EXPLAINER for the file and the encode. */}
+      <VideoSection
+        id="see-it-work"
+        tone="band"
+        align="center"
+        parallax
+        eyebrow="See it work"
+        heading={<>See the month <em>actually run.</em></>}
+        body="The loop above is the shape of it. This is a real call going out, the note landing in the chart, and the time attributed against the code."
+        autoPlay
+        src={EXPLAINER.src}
+        poster={EXPLAINER.poster}
+        aspect={EXPLAINER.aspect}
+        duration={EXPLAINER.duration}
+        note={<>Best with sound on. Your team reviews every note before anything bills.</>}
+      />
+
       {/* §2c PROOF — directly under What is Hana? (Matteo 2026-08-25) — the bento, kept as-is structurally (Matteo 2026-08-12: keep the
           same structure) but rendered in `soft` mode: gradient tiles instead of the
           navy checkerboard, and the decorative doodles dropped. */}
@@ -577,25 +601,7 @@ export function RemoteV2({
           stations didn't carry the practice-vs-HANA split) */}
       <HowItWorksLoop />
 
-      {/* §3b THE VIDEO — placed straight after the loop on purpose. The reader
-          has just been told how a month runs; this is the moment they want to
-          see one, and it is the last cheap moment before the page starts
-          asking for their number in §5. See EXPLAINER above for the
-          placeholder-file caveat. */}
-      <VideoSection
-        id="see-it-work"
-        tone="band"
-        align="center"
-        parallax
-        eyebrow="See it work"
-        heading={<>See the month <em>actually run.</em></>}
-        body="The loop above is the shape of it. This is a real call going out, the note landing in the chart, and the time attributed against the code."
-        src={EXPLAINER.src}
-        poster={EXPLAINER.poster}
-        aspect={EXPLAINER.aspect}
-        duration={EXPLAINER.duration}
-        note={<>Best with sound on. Your team reviews every note before anything bills.</>}
-      />
+
 
       {/* §3c was the 85% reached-by-channel column. Pulled 2026-08-19 (call):
           §2's three-way comparison already does the comparing, and comparing

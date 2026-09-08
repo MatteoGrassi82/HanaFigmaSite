@@ -40,10 +40,31 @@ import { cn } from "../../../lib/utils";
  * frame because the native bar lives inside a dark frame and vanishes between
  * taps on some mobile browsers.
  *
- * IT NEVER AUTOPLAYS, not even muted. This page is read by compliance officers
- * in open-plan offices. That also means playback needs no reduced-motion case:
- * nothing moves until a person asks. useReducedMotion governs the entrance and
- * the glow only.
+ * AUTOPLAY IS OPT-IN, MUTED, AND GATED ON SCROLL. The rule here used to be
+ * "never autoplays, not even muted", on the grounds that this page is read by
+ * compliance officers in open-plan offices. That objection was about SOUND, and
+ * it still holds: nothing here ever plays audio unasked. What changed is the
+ * footage -- the demo now carries BURNED-IN CAPTIONS, so a muted play still
+ * communicates, which it would not have when the file was a silent loop with
+ * narration to come. Matteo asked for it on 8 Sept 2026 and it is defensible
+ * now in a way it was not before.
+ *
+ * FOUR CONSTRAINTS IT IS BUILT AROUND, none of them optional:
+ *  · MUTED OR NOTHING. Every current browser blocks autoplay with audio, so
+ *    `autoPlay` implies muted. play() is still wrapped: a rejection falls back
+ *    to the poster and the play button rather than leaving a dead frame.
+ *  · GATED ON INTERSECTION, NOT ON LOAD. The file is 16MB. Autoplaying at page
+ *    load would spend that on every visitor including the ones who never reach
+ *    the section. It starts at 45% visibility and PAUSES when scrolled away,
+ *    which also stops a decode running behind six other sections.
+ *  · REDUCED MOTION MEANS NO AUTOPLAY. A 2.5-minute moving image is exactly
+ *    what that preference is for, so the poster holds and the viewer presses
+ *    play. This is the reduced-motion case playback did not previously need.
+ *  · THE VIEWER MUST BE ABLE TO GET THE SOUND. There IS narration, so a muted
+ *    autoplay silently withholds half the content. The unmute control is
+ *    promoted into the frame while muted rather than sitting under it, and
+ *    unmuting once is remembered for the session so scrolling back does not
+ *    re-mute.
  *
  * PRERENDER SAFETY. preload="metadata" means the headless snapshot fetches a
  * few KB of container, not the file -- and for a remote URL it may fetch
@@ -123,6 +144,10 @@ export interface VideoSectionProps {
   note?: ReactNode;
   /** Length beside the play button, e.g. "1:20". Sets expectations. */
   duration?: string;
+  /** Start playing, muted, once the frame is 45% visible. Implies muted, is
+   *  ignored under prefers-reduced-motion, and pauses when scrolled away.
+   *  Only sensible for footage that reads without sound. */
+  autoPlay?: boolean;
   /** Centre the eyebrow, heading, body and note, and centre their measures.
    *  Left-aligned is the site default and stays the default; centring suits a
    *  section whose subject is one object under the text. */
@@ -156,6 +181,7 @@ export function VideoSection({
   body,
   note,
   duration,
+  autoPlay = false,
   align = "start",
   parallax = false,
   glow = true,
@@ -170,8 +196,38 @@ export function VideoSection({
   const [muted, setMuted] = useState(false);
   const [buffering, setBuffering] = useState(false);
   const [failed, setFailed] = useState(false);
+  /** True while autoplay is driving playback and the viewer has not unmuted. */
+  const [autoMuted, setAutoMuted] = useState(false);
 
   const sectionRef = useRef<HTMLElement>(null);
+  const figureRef = useRef<HTMLElement>(null);
+  /** Once the viewer unmutes, never re-mute on a later scroll-in. */
+  const unmutedOnce = useRef(false);
+
+  /* Scroll-gated muted autoplay. Deliberately keyed to the FIGURE rather than
+     the section, so it fires on the frame being visible and not on the heading
+     scrolling past. 45% keeps it from starting on a sliver. */
+  useEffect(() => {
+    if (!autoPlay || reduce) return;
+    const el = figureRef.current;
+    const v = videoRef.current;
+    if (!el || !v) return;
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        const vid = videoRef.current;
+        if (!vid || failed) return;
+        if (e.isIntersecting) {
+          if (!unmutedOnce.current) { vid.muted = true; setAutoMuted(true); }
+          vid.play().catch(() => { setStarted(false); setAutoMuted(false); });
+        } else if (!vid.paused) {
+          vid.pause();
+        }
+      },
+      { threshold: 0.45 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [autoPlay, reduce, failed]);
 
   /* 0 as the section enters from the bottom, 1 as it leaves past the top, so
      0.5 is "centred" and every layer rests where it was designed to sit. */
@@ -292,7 +348,7 @@ export function VideoSection({
           )}
         </motion.div>
 
-        <motion.figure {...frameIn} className="m-0 relative">
+        <motion.figure ref={figureRef} {...frameIn} className="m-0 relative">
           {/* Ambient bloom: the poster again, scaled up, blurred, behind the
               frame. Decorative and inert. One <img> the browser has already
               cached for the poster, so it costs a paint and no extra request. */}
@@ -353,6 +409,27 @@ export function VideoSection({
               </button>
             )}
 
+            {/* THE UNMUTE PROMPT. A muted autoplay withholds the narration, so
+                this sits IN the frame rather than under it, and only while the
+                autoplay is the thing that muted it. Clicking it also sets
+                unmutedOnce, so scrolling away and back does not re-mute. */}
+            {autoMuted && started && !failed && (
+              <button
+                type="button"
+                onClick={() => {
+                  const v = videoRef.current;
+                  if (!v) return;
+                  v.muted = false;
+                  unmutedOnce.current = true;
+                  setAutoMuted(false);
+                }}
+                className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 inline-flex items-center gap-2 rounded-pill bg-paper-bright/95 px-5 py-2.5 text-[14px] font-semibold text-ink shadow-float backdrop-blur-sm hover:bg-paper-bright transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              >
+                <VolumeX size={15} className="text-brand" aria-hidden />
+                Tap for sound
+              </button>
+            )}
+
             {/* Buffering. The reason this exists: on a hosted file, play() can
                 take seconds before a frame moves, and a play button that
                 appears to do nothing gets tapped again. */}
@@ -407,7 +484,9 @@ export function VideoSection({
                 type="button"
                 onClick={() => {
                   const v = videoRef.current;
-                  if (v) v.muted = !v.muted;
+                  if (!v) return;
+                  v.muted = !v.muted;
+                  if (!v.muted) { unmutedOnce.current = true; setAutoMuted(false); }
                 }}
                 aria-label={muted ? "Unmute" : "Mute"}
                 className="inline-flex items-center gap-2 rounded-pill border border-rule bg-paper-bright px-4 py-2 text-[14px] font-semibold text-ink transition-colors hover:border-rule-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
