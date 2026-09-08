@@ -25,8 +25,20 @@ import { cn } from "../../../lib/utils";
  * agree titles before a team page). The default below carries the placeholder
  * exactly as RemoteV2 had it. Confirm with him before /about goes indexable.
  *
- * PHOTOS: none of the four portraits are in /public/avatars yet. Drop a file in
- * and the roster picks it up; until then the <img> fails, hides itself, and the
+ * PHOTOS (installed 8 Sept 2026 from _TEAM-BADGES): the roster now points at
+ * the CUT-OUT variants, {name}-cut.png converted to webp WITH ALPHA. Alpha is
+ * load-bearing here: the frame is `rounded-pill` over `bg-brand-tint`, so a
+ * transparent background lets the tint show around the person. Flatten these to
+ * jpg and you get white corners inside a periwinkle pill.
+ *
+ * The BADGE variants (duotone halftone on a circular field) are the other set
+ * in that folder and are NOT used here -- object-cover would crop a 1080 square
+ * badge to a 138x202 pill and cut the circular field into a stadium. They are
+ * installed as /avatars/badge-*.webp and used by BuiltByClinicians, whose
+ * frames are actual circles. If this roster should carry the duotone treatment
+ * too, the frames need to become circles first.
+ *
+ * Any name still without a file: the <img> fails, hides itself, and the
  * monogram tile underneath shows through. That fallback is deliberate, not a
  * broken-image accident.
  *
@@ -96,9 +108,9 @@ export function initials(name: string): string {
    each to restore. */
 const DEFAULT_MEMBERS: TeamMember[] = [
   { name: "Sthita Pujari", role: "Engineering & applied AI", photo: "/avatars/sthita.jpg", width: 98, height: 142, offset: 48, z: 1 },
-  { name: "Archie Defillo, MD", role: "Neuroscience, sleep & behavioral health", photo: "/avatars/archie.jpg", width: 112, height: 164, offset: 18, z: 2 },
-  { name: "Matteo Grassi", role: "Founder · behavioral psychologist", photo: "/avatars/matteo.jpg", width: 138, height: 202, offset: 0, z: 4 },
-  { name: "Massimiliano", role: "Clinical psychologist · sleep", photo: "/avatars/massimo.jpg", width: 108, height: 156, offset: 26, z: 3 },
+  { name: "Archie Defillo, MD", role: "Neuroscience, sleep & behavioral health", photo: "/avatars/archie.webp", width: 112, height: 164, offset: 18, z: 2 },
+  { name: "Matteo Grassi", role: "Founder · behavioral psychologist", photo: "/avatars/matteo.webp", width: 138, height: 202, offset: 0, z: 4 },
+  { name: "Massimiliano", role: "Clinical psychologist · sleep", photo: "/avatars/massimo.webp", width: 108, height: 156, offset: 26, z: 3 },
 ];
 
 const DEFAULT_STATS: TeamStat[] = [

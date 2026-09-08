@@ -71,9 +71,17 @@ export interface BuiltByCliniciansProps {
 
 /** The three clinicians in the headline, left to right. */
 const DEFAULT_FACES: BuiltByFace[] = [
-  { src: "/avatars/archie.jpg", alt: "Archie Defillo, MD", pos: "50% 25%" },
-  { src: "/avatars/fakhrudin.png", alt: "Fakhrudin Mohamed, MD", pos: "50% 20%" },
-  { src: "/avatars/matteo.jpg", alt: "Matteo Grassi", pos: "50% 25%" },
+  /* The BADGE variants from _TEAM-BADGES, installed 8 Sept 2026: duotone
+     halftone portraits on a circular periwinkle field, transparent outside the
+     circle. They are the right set for THIS section and the wrong set for
+     TeamSection: these frames are real circles (rounded-full at 1.06em), so the
+     badge's own circular field lands exactly inside the mask and its designed
+     edge survives. objectPosition is "50% 50%" rather than the old "50% 25%"
+     because a badge is already composed and centred -- pulling it up 25% would
+     crop the field the design puts around the face. */
+  { src: "/avatars/badge-archie.webp", alt: "Archie Defillo, MD", pos: "50% 50%" },
+  { src: "/avatars/badge-mohamed.webp", alt: "Fakhrudin Mohamed, MD", pos: "50% 50%" },
+  { src: "/avatars/badge-matteo.webp", alt: "Matteo Grassi", pos: "50% 50%" },
 ];
 
 /* Two grounds over one layout, token-only, so a palette change carries through
