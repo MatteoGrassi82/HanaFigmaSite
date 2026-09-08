@@ -1,6 +1,9 @@
 import { SEO, breadcrumbSchema, faqSchema } from "../../components/SEO";
 import { Footer } from "../../components/layout/Footer";
 import { Hero } from "../../components/sections/Hero";
+import { CostOfDelay } from "../../components/sections/CostOfDelay";
+import { SonicDemoSection } from "../../components/sections/SonicDemoSection";
+import type { WebCallProps } from "../../components/templates/ProgrammePage";
 import { EligibilityGap } from "../../components/sections/EligibilityGap";
 import { RevenueEstimator } from "../../components/sections/RevenueEstimator";
 import { WhatIsHanaCompare } from "../../components/sections/WhatIsHanaCompare";
@@ -89,7 +92,7 @@ const FAQS = [
   },
 ];
 
-export function VsDoingNothing() {
+export function VsDoingNothing(webCall: WebCallProps) {
   return (
     <div className="bg-paper text-ink font-sans overflow-x-hidden">
       <SEO
@@ -107,12 +110,19 @@ export function VsDoingNothing() {
         ]}
       />
 
+      {/* NO PHOTO HERO HERE, deliberately, and this page is the one exception
+          among the three. Matteo, 8 Sept 2026: it "doesn't have to include
+          heroes ... could be a table. Be more inventive." A portrait was the
+          lazy answer: the other two compare a thing to a thing, so a face
+          works as a way in. This page compares NOW TO LATER, and the
+          invention it needed was the argument nothing else on the site makes,
+          not a picture. That argument is CostOfDelay below. */}
       <Hero
         eyebrow="Compared with doing nothing"
         headline={<>The gap is not effort. <em>It is hours.</em></>}
         body="Most patients who qualify for chronic care management are not enrolled anywhere. The work is already being done in your practice. It is happening in a form that cannot be billed, to a fraction of the people who qualify."
         primaryCta={{ label: "Book a demo", href: DEMO_HREF }}
-        secondaryCta={{ label: "See the arithmetic", href: "#gap" }}
+        secondaryCta={{ label: "See what a month costs", href: "#cost-of-delay" }}
         trustLine="Your team reviews. Your provider signs."
       />
 
@@ -122,13 +132,21 @@ export function VsDoingNothing() {
       {/* What the gap is worth, at published CMS amounts. */}
       <RevenueEstimator programme="ccm" id="what-it-is-worth" />
 
-      <WhatIsHanaCompare
-        id="compare"
-        tone="band"
-        eyebrow="Two versions of next month"
-        heading={<>Same panel. <em>Different month.</em></>}
-        columns={COLUMNS}
-      />
+      {/* THE TABLE, and it replaces the two-column compare that used to sit
+          here ("Same panel. Different month."). Two columns said today versus
+          with HANA as a list of assertions. The table says the same thing as
+          arithmetic a reader can check, and adds the part the columns could
+          not carry: that the loss is PERMANENT, because the code is billed per
+          calendar month and there is no back-billing a month nobody worked.
+          COLUMNS is left in the file, one line from being restored. */}
+      <CostOfDelay id="cost-of-delay" />
+
+
+      {/* Try it. A comparison page is exactly where "so let me hear it" lands:
+          the reader has just been told what the difference is and the cheapest
+          way to settle it is to talk to the thing. Real form, real Vapi
+          handlers, threaded from App.tsx. */}
+      <SonicDemoSection {...webCall} />
 
       <FaqSection
         items={FAQS}

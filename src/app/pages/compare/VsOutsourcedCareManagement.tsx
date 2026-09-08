@@ -2,7 +2,10 @@ import { SEO, breadcrumbSchema, faqSchema } from "../../components/SEO";
 import { Footer } from "../../components/layout/Footer";
 import { Hero } from "../../components/sections/Hero";
 import { WhatIsHanaCompare } from "../../components/sections/WhatIsHanaCompare";
+import { MonthWrittenUp } from "../../components/sections/MonthWrittenUp";
+import { SonicDemoSection } from "../../components/sections/SonicDemoSection";
 import { FaqSection } from "../../components/sections/FaqSection";
+import type { WebCallProps } from "../../components/templates/ProgrammePage";
 import { CtaBand, DEMO_HREF } from "../../components/sections/CtaBand";
 
 /**
@@ -86,6 +89,15 @@ const OWNERSHIP = [
   },
 ];
 
+/* The example month. ILLUSTRATIVE: not a real patient, not real readings, and
+ * the card header says "an example month" on screen. */
+const MONTH = [
+  { day: "Aug 3", title: "Monthly check-in", body: "Taking both blood pressure meds. Home reading 138/86.", src: "HANA call · summarised", len: "6 min" },
+  { day: "Aug 11", title: "Refill and diet", body: "Metformin refill due Friday. Two skipped breakfasts this week.", src: "HANA call · summarised", len: "5 min" },
+  { day: "Aug 18", title: "Threshold crossed", body: "158/94 on two home readings. Escalated to the treating clinician with the full call.", src: "HANA call · flagged to the threshold you set", len: "7 min" },
+  { day: "Aug 26", title: "Care plan review", body: "Dose adjusted 20 Aug. Back to 134/84. Goals reconfirmed with the patient.", src: "HANA call · summarised", len: "4 min" },
+];
+
 const FAQS = [
   {
     q: "Is HANA a care management service?",
@@ -113,7 +125,7 @@ const FAQS = [
   },
 ];
 
-export function VsOutsourcedCareManagement() {
+export function VsOutsourcedCareManagement(webCall: WebCallProps) {
   return (
     <div className="bg-paper text-ink font-sans overflow-x-hidden">
       <SEO
@@ -172,6 +184,30 @@ export function VsOutsourcedCareManagement() {
           </ul>
         </div>
       </section>
+
+      {/* THE OWNERSHIP ARGUMENT, SHOWN. The tiles above say the record stays
+          yours; this is the record. On this page the load-bearing detail is
+          WHERE the note lands -- in your chart, not handed back at month end --
+          so the copy leads on that rather than on the time saved. Also the
+          page's first image: it ran 4,152px with none, the thinnest on the
+          site. */}
+      <MonthWrittenUp
+        id="written-up"
+        entries={MONTH}
+        badge="CCM"
+        pill="Chronic Care Management"
+        chip="CCM 99490"
+        body="Nothing here was handed back to you at month end. Each contact was written straight into your chart as it happened, with the minutes attributed against the code, under your practice's name. The record is yours before anyone reviews it."
+        stats={[
+          { value: "0:00", label: "Time spent reconciling somebody else's notes" },
+          { value: "4", label: "Documented contacts already in your chart" },
+        ]}
+        cta={{ label: "See the CCM page", href: "/programs/chronic-care-management" }}
+      />
+
+      {/* Try it. A comparison page is exactly where "so let me hear it" lands.
+          Real form, real Vapi handlers, threaded from App.tsx. */}
+      <SonicDemoSection {...webCall} />
 
       <FaqSection
         items={FAQS}

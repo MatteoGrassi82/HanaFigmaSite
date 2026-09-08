@@ -400,9 +400,30 @@ function AppContent() {
                   handleEndWebCall={handleEndWebCall}
                 />
               } />
-              <Route path="/compare/vs-care-management-software" element={<VsCareManagementSoftware />} />
-              <Route path="/compare/vs-outsourced-care-management" element={<VsOutsourcedCareManagement />} />
-              <Route path="/compare/vs-doing-nothing" element={<VsDoingNothing />} />
+              <Route path="/compare/vs-care-management-software" element={
+                <VsCareManagementSoftware
+                  activeAgentId={activeAgentId}
+                  webCallStatus={webCallStatus}
+                  handleStartWebCall={handleStartWebCall}
+                  handleEndWebCall={handleEndWebCall}
+                />
+              } />
+              <Route path="/compare/vs-outsourced-care-management" element={
+                <VsOutsourcedCareManagement
+                  activeAgentId={activeAgentId}
+                  webCallStatus={webCallStatus}
+                  handleStartWebCall={handleStartWebCall}
+                  handleEndWebCall={handleEndWebCall}
+                />
+              } />
+              <Route path="/compare/vs-doing-nothing" element={
+                <VsDoingNothing
+                  activeAgentId={activeAgentId}
+                  webCallStatus={webCallStatus}
+                  handleStartWebCall={handleStartWebCall}
+                  handleEndWebCall={handleEndWebCall}
+                />
+              } />
               <Route path="/security" element={<Security />} />
               <Route path="/academy" element={<Academy />} />
               <Route path="/faq" element={<Faq />} />

@@ -3,6 +3,9 @@ import { Footer } from "../../components/layout/Footer";
 import { Hero } from "../../components/sections/Hero";
 import { WhatIsHanaCompare } from "../../components/sections/WhatIsHanaCompare";
 import { HowItWorksLoop } from "../../components/sections/HowItWorksLoop";
+import { MonthWrittenUp } from "../../components/sections/MonthWrittenUp";
+import { SonicDemoSection } from "../../components/sections/SonicDemoSection";
+import type { WebCallProps } from "../../components/templates/ProgrammePage";
 import { FaqSection } from "../../components/sections/FaqSection";
 import { CtaBand, DEMO_HREF } from "../../components/sections/CtaBand";
 
@@ -68,6 +71,15 @@ const COLUMNS = [
   },
 ];
 
+/* The example month. ILLUSTRATIVE: not a real patient, not real readings, and
+ * the card header says "an example month" on screen. */
+const MONTH = [
+  { day: "Aug 3", title: "Monthly check-in", body: "Taking both blood pressure meds. Home reading 138/86.", src: "HANA call · summarised", len: "6 min" },
+  { day: "Aug 11", title: "Refill and diet", body: "Metformin refill due Friday. Two skipped breakfasts this week.", src: "HANA call · summarised", len: "5 min" },
+  { day: "Aug 18", title: "Threshold crossed", body: "158/94 on two home readings. Escalated to the treating clinician with the full call.", src: "HANA call · flagged to the threshold you set", len: "7 min" },
+  { day: "Aug 26", title: "Care plan review", body: "Dose adjusted 20 Aug. Back to 134/84. Goals reconfirmed with the patient.", src: "HANA call · summarised", len: "4 min" },
+];
+
 const FAQS = [
   {
     q: "Does HANA replace our care management software?",
@@ -91,7 +103,7 @@ const FAQS = [
   },
 ];
 
-export function VsCareManagementSoftware() {
+export function VsCareManagementSoftware(webCall: WebCallProps) {
   return (
     <div className="bg-paper text-ink font-sans overflow-x-hidden">
       <SEO
@@ -128,7 +140,31 @@ export function VsCareManagementSoftware() {
         footnote="Describing a category, not any particular product. Check anything you are evaluating against its own documentation."
       />
 
+      {/* THE ARTEFACT IS THIS PAGE'S ARGUMENT, not decoration. The whole claim
+          is that one category records the work and the other does it, and a
+          time log that is already full when the clinician presses start is the
+          only thing that shows the difference rather than asserting it. It is
+          also the page's first image: it ran 5,052px with none. */}
+      <MonthWrittenUp
+        id="written-up"
+        entries={MONTH}
+        badge="CCM"
+        pill="Chronic Care Management"
+        chip="CCM 99490"
+        body="This is the part a system of record cannot do for you. Every contact is made, recorded and summarised straight into the time log, with the minutes attributed against the code. Nobody typed it up. The clock your clinician starts runs on reading and attesting."
+        stats={[
+          { value: "0:00", label: "Time your team spends writing the month up" },
+          { value: "4", label: "Documented contacts waiting when they open the chart" },
+        ]}
+        cta={{ label: "See the CCM page", href: "/programs/chronic-care-management" }}
+      />
+
       <HowItWorksLoop id="how-it-works" />
+
+
+      {/* Try it. A comparison page is exactly where "so let me hear it" lands.
+          Real form, real Vapi handlers, threaded from App.tsx. */}
+      <SonicDemoSection {...webCall} />
 
       <FaqSection
         items={FAQS}
