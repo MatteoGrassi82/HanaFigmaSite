@@ -2,7 +2,9 @@ import { SEO, breadcrumbSchema, faqSchema } from "../components/SEO";
 import { Footer } from "../components/layout/Footer";
 import { PhotoHero, CLINICIAN_PHOTO } from "../components/sections/PhotoHero";
 import { MonthWrittenUp } from "../components/sections/MonthWrittenUp";
-import { PatientEngagement } from "../components/sections/PatientEngagement";
+import { InlineImageHeader } from "../components/sections/InlineImageHeader";
+import { SonicDemoSection } from "../components/sections/SonicDemoSection";
+import type { WebCallProps } from "../components/templates/ProgrammePage";
 import { EligibilityGap } from "../components/sections/EligibilityGap";
 import { HowItWorksLoop } from "../components/sections/HowItWorksLoop";
 import { FaqSection } from "../components/sections/FaqSection";
@@ -81,7 +83,7 @@ const FAQS = [
   },
 ];
 
-export function ForPractices() {
+export function ForPractices(webCall: WebCallProps) {
   return (
     <div className="bg-paper text-ink font-sans overflow-x-hidden">
       <SEO
@@ -179,11 +181,26 @@ export function ForPractices() {
         </div>
       </section>
 
-      {/* "What do I actually get" -- the one question the page never answered.
-          Borrowed from Home, where the catalogue showed it was stranded on a
-          single page. `white` puts it on the bright ground rather than its
-          grey default, so it does not read as a second band after the cards. */}
-      <PatientEngagement white />
+      {/* WAS PatientEngagement ("Every patient conversation, handled"). Pulled
+          7 Sept 2026: Matteo was unconvinced by it, and on a second look he is
+          right for this page -- its four tiles are HANA Contact flavoured (QA
+          scoring, a branded dashboard) rather than care-programme flavoured,
+          and it closes on a founders' card, which is an odd note to strike
+          mid-funnel. It stays on Home. */}
+
+      {/* THREE PHASES — the section Matteo singled out as working ("I think
+          it's good in the three phases"). It is InlineImageHeader, and it is
+          DARK BY DESIGN: its three step animations are white artwork on navy,
+          and although it takes a `light` prop the artwork washes out on a light
+          ground until it is recoloured (see the note at RemoteV2 §16a). So it
+          runs dark here, which is a considered exception to "no dark bands
+          mid-page": the page already carries one full-bleed dark media band in
+          MonthWrittenUp, and the palette rule allows full-bleed media. It is
+          placed several sections clear of that one so the two never abut. */}
+      <InlineImageHeader />
+
+      {/* Try it. Real form, real Vapi handlers, threaded from App.tsx. */}
+      <SonicDemoSection {...webCall} />
 
       <FaqSection
         items={FAQS}

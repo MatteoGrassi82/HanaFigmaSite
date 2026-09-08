@@ -384,8 +384,22 @@ function AppContent() {
                   handleEndWebCall={handleEndWebCall}
                 />
               } />
-              <Route path="/for-practices" element={<ForPractices />} />
-              <Route path="/for-health-systems" element={<ForHealthSystems />} />
+              <Route path="/for-practices" element={
+                <ForPractices
+                  activeAgentId={activeAgentId}
+                  webCallStatus={webCallStatus}
+                  handleStartWebCall={handleStartWebCall}
+                  handleEndWebCall={handleEndWebCall}
+                />
+              } />
+              <Route path="/for-health-systems" element={
+                <ForHealthSystems
+                  activeAgentId={activeAgentId}
+                  webCallStatus={webCallStatus}
+                  handleStartWebCall={handleStartWebCall}
+                  handleEndWebCall={handleEndWebCall}
+                />
+              } />
               <Route path="/compare/vs-care-management-software" element={<VsCareManagementSoftware />} />
               <Route path="/compare/vs-outsourced-care-management" element={<VsOutsourcedCareManagement />} />
               <Route path="/compare/vs-doing-nothing" element={<VsDoingNothing />} />

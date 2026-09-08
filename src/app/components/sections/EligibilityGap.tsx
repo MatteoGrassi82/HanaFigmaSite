@@ -1,5 +1,7 @@
 import { motion, useReducedMotion } from "motion/react";
-import { Arithmetic, BigStat, Dial, Note, Panel, clamp, formatInt, useUrlState } from "../lab/interactive/kit";
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
+import { BigStat, Dial, Note, Panel, clamp, formatInt, useUrlState } from "../lab/interactive/kit";
 import { ILLUSTRATIVE_PANEL, ILLUSTRATIVE_SHARE } from "../lab/interactive/eligibility-todo-figures";
 import { MARKET } from "../lab/interactive/rates";
 
@@ -63,6 +65,9 @@ const RATE_RECEIVING = MARKET.receivingPctOfEligible / 100;
 /** The citation both rates come from. Pending until rates.ts carries it. */
 const RATE_SOURCE = MARKET.citation || "citation pending";
 
+/** The folded citation panel, for aria-controls. */
+const SOURCE_ID = "eligibility-gap-source";
+
 /** The element both dials describe, so a screen reader hears the consequence. */
 const GAP_ID = "eligibility-gap-consequence";
 
@@ -110,6 +115,7 @@ function Term({ op, value, label }: { op?: string; value: string; label: string 
 }
 
 export function EligibilityGap() {
+  const [sourceOpen, setSourceOpen] = useState(false);
   const reduce = useReducedMotion();
 
   // Linkable, but the start value is what renders first and what gets indexed.
@@ -306,64 +312,56 @@ export function EligibilityGap() {
             </div>
           </div>
 
-          {/* ── The working, and where the rates came from ── */}
-          <div className="mt-10 pt-8 border-t border-rule grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-            <div>
-              <p className="text-[11.5px] font-bold uppercase tracking-[1.4px] text-ink-mute m-0 mb-3">
-                The arithmetic
-              </p>
-              <div className="space-y-2">
-                <Arithmetic
-                  parts={[
-                    { value: formatInt(panel), label: "patients" },
-                    { value: `${share}%`, label: "Medicare fee-for-service" },
-                  ]}
-                  result={{ value: formatInt(medicare), label: "Medicare patients" }}
-                />
-                <Arithmetic
-                  parts={[
-                    { value: formatInt(medicare), label: "Medicare patients" },
-                    { value: `${MARKET.eligiblePct}%`, label: "eligible" },
-                  ]}
-                  result={{ value: formatInt(eligible), label: "eligible" }}
-                />
-                <Arithmetic
-                  parts={[
-                    { value: formatInt(eligible), label: "eligible" },
-                    { value: `${MARKET.receivingPctOfEligible}%`, label: "of them enrolled" },
-                  ]}
-                  result={{ value: formatInt(receiving), label: "getting it" }}
-                />
-                <Arithmetic
-                  op="−"
-                  parts={[
-                    { value: formatInt(eligible), label: "eligible" },
-                    { value: formatInt(receiving), label: "getting it" },
-                  ]}
-                  result={{ value: formatInt(gap), label: "not getting it" }}
-                />
+          {/* ── Where the rates came from, folded ──────────────────────────
+           * "The arithmetic" used to sit here: four rows showing panel x share
+           * -> Medicare -> eligible -> enrolled -> gap. Matteo, 7 Sept 2026:
+           * "Arithmetic, where the totals come from, and all of that: we don't
+           * need all of that. Again, the thing needs to be central." He is
+           * right that it was redundant -- the two dials ARE the inputs and the
+           * big number IS the result, so the working restated on screen what
+           * the reader had just done with their own hands.
+           *
+           * THE CITATION IS NOT REDUNDANT AND DOES NOT GET DELETED. These two
+           * rates are third-party figures, and this whole site's proof rule is
+           * that such figures are attributed ON SCREEN. Deleting the source
+           * would turn a cited statistic into a bare claim. So it is FOLDED,
+           * not cut -- one line a click away, the same treatment PayVisual
+           * gives its six caveats. Nothing was lost; the page got shorter. */}
+          <div className="mt-8 pt-6 border-t border-rule">
+            <button
+              type="button"
+              onClick={() => setSourceOpen((o) => !o)}
+              aria-expanded={sourceOpen}
+              aria-controls={SOURCE_ID}
+              className="flex w-full items-center justify-between gap-4 text-left group focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+            >
+              <span className="text-[13.5px] font-semibold text-ink-soft group-hover:text-ink">
+                Where these two rates come from
+              </span>
+              <ChevronDown
+                size={16}
+                aria-hidden
+                className={`shrink-0 text-ink-mute transition-transform ${sourceOpen ? "rotate-180" : ""}`}
+              />
+            </button>
+            {sourceOpen && (
+              <div id={SOURCE_ID} className="mt-4 grid gap-3">
+                <Note>
+                  In {MARKET.dataYear}, {MARKET.eligiblePct}% of Medicare fee-for-service
+                  beneficiaries were potentially eligible for chronic care management, and{" "}
+                  {MARKET.receivingPctOfEligible}% of those eligible received any. Those are
+                  third-party figures describing the Medicare fee-for-service population in{" "}
+                  {MARKET.dataYear}. They are not HANA's data, and they are not a measurement of
+                  your practice. Source: {RATE_SOURCE}.
+                </Note>
+                <Note>
+                  The two rates nest rather than sit side by side: the second is a share of the
+                  first, so the subtraction is one population minus a slice of itself. Both
+                  describe {MARKET.dataYear} and enrollment has grown since, so read this as the
+                  shape of the gap, not today's count.
+                </Note>
               </div>
-            </div>
-
-            <div>
-              <p className="text-[11.5px] font-bold uppercase tracking-[1.4px] text-ink-mute m-0 mb-3">
-                Where the two rates come from
-              </p>
-              <Note>
-                In {MARKET.dataYear}, {MARKET.eligiblePct}% of Medicare fee-for-service
-                beneficiaries were potentially eligible for chronic care management, and{" "}
-                {MARKET.receivingPctOfEligible}% of those eligible received any. Those are
-                third-party figures describing the Medicare fee-for-service population in{" "}
-                {MARKET.dataYear}. They are not HANA's data, and they are not a measurement of your
-                practice. Source: {RATE_SOURCE}.
-              </Note>
-              <Note className="mt-3">
-                The two rates nest rather than sit side by side: the second is a share of the
-                first, so the subtraction is one population minus a slice of itself. Both describe{" "}
-                {MARKET.dataYear} and enrollment has grown since, so read this as the shape of the
-                gap, not today's count.
-              </Note>
-            </div>
+            )}
           </div>
         </Panel>
       </div>

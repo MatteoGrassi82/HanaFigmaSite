@@ -1,6 +1,10 @@
 import { SEO, breadcrumbSchema, faqSchema } from "../components/SEO";
 import { Footer } from "../components/layout/Footer";
-import { Hero } from "../components/sections/Hero";
+import { PhotoHero, CARE_TEAM_PHOTO } from "../components/sections/PhotoHero";
+import { MonthWrittenUp } from "../components/sections/MonthWrittenUp";
+import { InlineImageHeader } from "../components/sections/InlineImageHeader";
+import { SonicDemoSection } from "../components/sections/SonicDemoSection";
+import type { WebCallProps } from "../components/templates/ProgrammePage";
 import { EligibilityGap } from "../components/sections/EligibilityGap";
 import { HowItWorksLoop } from "../components/sections/HowItWorksLoop";
 import { FaqSection } from "../components/sections/FaqSection";
@@ -40,6 +44,15 @@ const COPY = {
   description:
     "The same care management programmes your practices already bill, run across every clinic in the group. One contract, one configuration, and each site keeps its own patients and its own claim.",
 };
+
+/* The example month shown in the written-up section. ILLUSTRATIVE: not a real
+ * patient, not real readings, and the card header says "an example month". */
+const MONTH = [
+  { day: "Aug 3", title: "Monthly check-in", body: "Taking both blood pressure meds. Home reading 138/86.", src: "HANA call · summarised", len: "6 min" },
+  { day: "Aug 11", title: "Refill and diet", body: "Metformin refill due Friday. Two skipped breakfasts this week.", src: "HANA call · summarised", len: "5 min" },
+  { day: "Aug 18", title: "Threshold crossed", body: "158/94 on two home readings. Escalated to the treating clinician with the full call.", src: "HANA call · flagged to the threshold you set", len: "7 min" },
+  { day: "Aug 26", title: "Care plan review", body: "Dose adjusted 20 Aug. Back to 134/84. Goals reconfirmed with the patient.", src: "HANA call · summarised", len: "4 min" },
+];
 
 const ROLLOUT = [
   {
@@ -86,7 +99,7 @@ const FAQS = [
   },
 ];
 
-export function ForHealthSystems() {
+export function ForHealthSystems(webCall: WebCallProps) {
   return (
     <div className="bg-paper text-ink font-sans overflow-x-hidden">
       <SEO
@@ -104,13 +117,16 @@ export function ForHealthSystems() {
         ]}
       />
 
-      <Hero
+      {/* Same fault /for-practices had: 6,345px with no image anywhere. A CARE
+          TEAM rather than one clinician, because this page's reader runs
+          several sites and the argument is scale -- and because the sibling
+          page opens on a single physician, so the two do not share a face. */}
+      <PhotoHero
         eyebrow="For health systems"
         headline={<>Same programmes. <em>A much bigger gap.</em></>}
         body="Your clinics already bill these codes. At group scale the number of eligible patients nobody has called is not a rounding error, it is most of the panel."
-        primaryCta={{ label: "Book a demo", href: DEMO_HREF }}
+        image={CARE_TEAM_PHOTO}
         secondaryCta={{ label: "See the gap at scale", href: "#gap" }}
-        trustLine="Your team reviews. Your provider signs."
       />
 
       {/* Move the dials to a group panel and the subtraction does the arguing. */}
@@ -147,7 +163,44 @@ export function ForHealthSystems() {
         </div>
       </section>
 
+      {/* The artefact, after the rollout tiles so this page's distinctive
+          content still leads. Deliberately the same section /for-practices
+          carries: a group arriving here and a practice arriving there should
+          see the same evidence of what a month produces, and duplication
+          between two audience pages costs far less than either page being
+          6,000px of unbroken type. The stats are per clinic, which is the
+          only thing that changes at scale. */}
+      <MonthWrittenUp
+        id="written-up"
+        entries={MONTH}
+        badge="CCM"
+        pill="Chronic Care Management"
+        chip="CCM 99490"
+        body="Every contact HANA makes is recorded and summarised straight into the time log, with the minutes attributed against the code. Whichever clinic the patient belongs to, when your clinician opens them the month is already there. The clock they start runs on reading and attesting, not typing."
+        stats={[
+          { value: "0:00", label: "Time any of your sites spends writing the month up" },
+          { value: "4", label: "Documented contacts waiting when a clinician opens the chart" },
+        ]}
+        cta={{ label: "See the CCM page", href: "/programs/chronic-care-management" }}
+      />
+
       <HowItWorksLoop id="how-it-works" />
+
+      {/* THREE PHASES — the section Matteo singled out as working ("I think
+          it's good in the three phases"). It is InlineImageHeader, and it is
+          DARK BY DESIGN: its three step animations are white artwork on navy,
+          and although it takes a `light` prop the artwork washes out on a light
+          ground until it is recoloured (see the note at RemoteV2 §16a). So it
+          runs dark here, which is a considered exception to "no dark bands
+          mid-page": the page already carries one full-bleed dark media band in
+          MonthWrittenUp, and the palette rule allows full-bleed media. It is
+          placed several sections clear of that one so the two never abut. */}
+      <InlineImageHeader />
+
+      {/* TRY HANA. Matteo, 7 Sept 2026: "I think Try Hana is missing in the
+          health system." It was missing from both audience pages. Real form,
+          real Vapi handlers, threaded from App.tsx. */}
+      <SonicDemoSection {...webCall} />
 
       <FaqSection
         items={FAQS}
