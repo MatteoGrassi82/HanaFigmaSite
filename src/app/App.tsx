@@ -327,7 +327,14 @@ function AppContent() {
               <Route path="/bento" element={<BentoShowcase />} />
               <Route path="/proof" element={<ProofShowcase />} />
               <Route path="/remote-lab" element={<RemoteLab />} />
-              <Route path="/programs" element={<Programs />} />
+              <Route path="/programs" element={
+                <Programs
+                  activeAgentId={activeAgentId}
+                  webCallStatus={webCallStatus}
+                  handleStartWebCall={handleStartWebCall}
+                  handleEndWebCall={handleEndWebCall}
+                />
+              } />
               <Route path="/programs/chronic-care-management" element={
                 <ChronicCareManagement
                   activeAgentId={activeAgentId}
@@ -424,7 +431,14 @@ function AppContent() {
                   handleEndWebCall={handleEndWebCall}
                 />
               } />
-              <Route path="/security" element={<Security />} />
+              <Route path="/security" element={
+                <Security
+                  activeAgentId={activeAgentId}
+                  webCallStatus={webCallStatus}
+                  handleStartWebCall={handleStartWebCall}
+                  handleEndWebCall={handleEndWebCall}
+                />
+              } />
               <Route path="/academy" element={<Academy />} />
               <Route path="/faq" element={<Faq />} />
               <Route path="/remote-v2" element={

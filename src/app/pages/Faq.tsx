@@ -2,6 +2,7 @@ import { SEO, breadcrumbSchema, faqSchema } from "../components/SEO";
 import { Footer } from "../components/layout/Footer";
 import { Hero } from "../components/sections/Hero";
 import { FaqSection } from "../components/sections/FaqSection";
+import { AskAiAboutUs } from "../components/sections/AskAiAboutUs";
 import { CtaBand, DEMO_HREF } from "../components/sections/CtaBand";
 
 /**
@@ -186,6 +187,13 @@ export function Faq() {
         eyebrow="Getting started"
         heading={<>What it takes <em>to begin.</em></>}
       />
+
+      {/* NOT A FIFTH ACCORDION. Four in a row is already the page's weakness --
+          the same control repeated, which is monotonous however good the
+          answers are. The honest close for a page of questions is a way to ask
+          one that is not on it, so this is the live ask box rather than more
+          list. It is also the only section here that is not static text. */}
+      <AskAiAboutUs className="py-16 md:py-20" />
 
       <CtaBand
         heading={<>Still have a question? <em>Ask it out loud.</em></>}

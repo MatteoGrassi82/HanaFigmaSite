@@ -1,6 +1,8 @@
 import { SEO, breadcrumbSchema, faqSchema } from "../components/SEO";
 import { Footer } from "../components/layout/Footer";
-import { Hero } from "../components/sections/Hero";
+import { PhotoHero, KITCHEN_PHOTO } from "../components/sections/PhotoHero";
+import { SonicDemoSection } from "../components/sections/SonicDemoSection";
+import type { WebCallProps } from "../components/templates/ProgrammePage";
 import { ProgrammeChooser } from "../components/sections/ProgrammeChooser";
 import { CodeTable } from "../components/sections/CodeTable";
 import { HowItWorksLoop } from "../components/sections/HowItWorksLoop";
@@ -62,7 +64,7 @@ const HUB_FAQS = [
   },
 ];
 
-export function Programs() {
+export function Programs(webCall: WebCallProps) {
   return (
     <div className="bg-paper text-ink font-sans overflow-x-hidden">
       <SEO
@@ -78,13 +80,17 @@ export function Programs() {
         ]}
       />
 
-      <Hero
+      {/* The hub is the front door of the whole /programs cluster, so it opens
+          the way a programme page does. Same kitchen photograph the programme
+          pages use, on purpose: a reader who clicks through to CCM should feel
+          they stayed in the same place, and the hub is the one page where
+          repeating that face is continuity rather than reuse. */}
+      <PhotoHero
         eyebrow="Care programmes"
         headline={<>One loop. <em>Seven ways to bill it.</em></>}
         body="Your patients already qualify for more than you are running. The difference between these programmes is who counts and what the month has to show, not how the work gets done."
-        primaryCta={{ label: "Book a demo", href: DEMO_HREF }}
+        image={KITCHEN_PHOTO}
         secondaryCta={{ label: "Compare the codes", href: "#codes" }}
-        trustLine="Your team reviews. Your provider signs."
       />
 
       {/* The job of this page. Three questions, one answer. */}
@@ -132,7 +138,12 @@ export function Programs() {
       </section>
 
       {/* The comparison a hub can make and a programme page cannot. */}
-      <CodeTable id="codes" tone="band" />
+      {/* `compact` folds the caveats behind a disclosure instead of printing
+          them expanded, which is what ran this section to 2,651px -- the same
+          fault PayVisual fixed on the programme pages. The seven-way table
+          itself stays: comparing all of them at once is the hub's actual job
+          and the one thing a programme page cannot do. */}
+      <CodeTable id="codes" tone="band" compact />
 
       {/* The month is the same shape whichever one you bill. */}
       <HowItWorksLoop id="how-it-works" />
@@ -142,6 +153,10 @@ export function Programs() {
         eyebrow="Questions practices ask"
         heading={<>Before you <em>pick one.</em></>}
       />
+
+      {/* High intent: a reader on the hub has decided the category and is
+          picking inside it. That is the moment to let them hear it. */}
+      <SonicDemoSection {...webCall} />
 
       <CtaBand
         heading={<>Not sure which fits your panel? <em>Ask us.</em></>}

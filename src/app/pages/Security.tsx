@@ -3,7 +3,9 @@ import { Footer } from "../components/layout/Footer";
 import { Hero } from "../components/sections/Hero";
 import { SafetyStack } from "../components/sections/SafetyStack";
 import { ComplianceSection } from "../components/sections/ComplianceSection";
+import { SonicDemoSection } from "../components/sections/SonicDemoSection";
 import { FaqSection } from "../components/sections/FaqSection";
+import type { WebCallProps } from "../components/templates/ProgrammePage";
 import { CtaBand, DEMO_HREF } from "../components/sections/CtaBand";
 
 /**
@@ -61,7 +63,7 @@ const FAQS = [
   },
 ];
 
-export function Security() {
+export function Security(webCall: WebCallProps) {
   return (
     <div className="bg-paper text-ink font-sans overflow-x-hidden">
       <SEO
@@ -91,6 +93,13 @@ export function Security() {
       <div id="compliance" className="scroll-mt-24">
         <ComplianceSection white />
       </div>
+
+      {/* THE ONE DEMO THAT BELONGS ON A SECURITY PAGE. Everything above is a
+          description of a control; this is the control. A reader here wants to
+          know what actually happens when a patient says something that needs a
+          person, and the cheapest way to answer that is to let them try it
+          rather than read another paragraph about escalation. */}
+      <SonicDemoSection {...webCall} />
 
       <FaqSection
         items={FAQS}
