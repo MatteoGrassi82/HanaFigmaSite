@@ -51,7 +51,20 @@ import { cn } from "../../../lib/utils";
  *
  * COLOUR (third pass, 9 Sept 2026, "better accents, that orange we had
  * before, too much blue sharing"). Three jobs, one colour each:
- *   INK    what the reader chose, and every number they read.
+ * The described patient is read back as a sentence at the TOP OF THE ANSWER,
+ * not under the controls: "A patient with two or more chronic conditions and
+ * a device sending readings" sitting above "6 of 8" is the whole cause and
+ * effect in one line, and it keeps the two columns near the same height.
+ *
+ *   INK    what the reader chose, and every number they read. The choice is
+ *          marked by a rule on the left of the option, not a filled pill
+ *          (Matteo, 9 Sept: "the selector could be better: just the line on
+ *          the left"), which gives five axes one vertical rhythm in place of
+ *          five segmented tracks of differing width, and reads the same on a
+ *          phone as on a desktop. The four ACCESS tracks are options in that
+ *          list now, so there is no nested control: track only ever decides
+ *          whether the ACCESS card lights, so "enrolled, track unknown" and
+ *          "any" produced the same answer and one of them had to go.
  *   BRAND  the lit signal, and only that: a 3px rail on a row that fits.
  *          No blue words, and no rails at all until the reader has described
  *          somebody, because eight rails at rest is a blue column that means
@@ -71,7 +84,7 @@ import { cn } from "../../../lib/utils";
 type Count = "any" | "0" | "1" | "2+";
 type Device = "any" | "none" | "physiologic" | "therapeutic";
 type YesNo = "any" | "yes" | "no";
-type Track = "any" | "none" | "enrolled" | "CKM" | "eCKM" | "BH" | "MSK";
+type Track = "any" | "none" | "CKM" | "eCKM" | "BH" | "MSK";
 
 interface Answers { count: Count; device: Device; behavioral: YesNo; discharged: YesNo; track: Track }
 const NONE: Answers = { count: "any", device: "any", behavioral: "any", discharged: "any", track: "any" };
@@ -141,7 +154,7 @@ const AXES: Axis[] = [
   { key: "device", legend: "A device at home", hint: "Readings: blood pressure, weight, oxygen. Therapy: CPAP, adherence.", options: [{ v: "any", label: "Any" }, { v: "none", label: "None" }, { v: "physiologic", label: "Readings" }, { v: "therapeutic", label: "Therapy" }] },
   { key: "behavioral", legend: "Behavioural health condition", options: [{ v: "any", label: "Any" }, { v: "yes", label: "Yes" }, { v: "no", label: "No" }] },
   { key: "discharged", legend: "Discharged in the last 30 days", options: [{ v: "any", label: "Any" }, { v: "yes", label: "Yes" }, { v: "no", label: "No" }] },
-  { key: "track", legend: "ACCESS model", options: [{ v: "any", label: "Any" }, { v: "none", label: "Not enrolled" }, { v: "enrolled", label: "Enrolled" }] },
+  { key: "track", legend: "ACCESS model", options: [{ v: "any", label: "Any" }, { v: "none", label: "Not enrolled" }, { v: "CKM", label: "CKM track" }, { v: "eCKM", label: "eCKM track" }, { v: "BH", label: "BH track" }, { v: "MSK", label: "MSK track" }] },
 ];
 const TRACKS: Track[] = ["CKM", "eCKM", "BH", "MSK"];
 
@@ -159,7 +172,6 @@ function describe(a: Answers): string | null {
   if (a.discharged === "yes") parts.push("a discharge in the last 30 days");
   if (a.discharged === "no") parts.push("no recent discharge");
   if (a.track === "none") parts.push("not enrolled in ACCESS");
-  if (a.track === "enrolled") parts.push("enrolled in ACCESS");
   if (TRACKS.includes(a.track)) parts.push(`on the ACCESS ${a.track} track`);
   if (!parts.length) return null;
   const last = parts.pop()!;
@@ -185,7 +197,6 @@ export function ProgrammeFilter({
   const litCount = rows.filter((r) => r.on).length + (accessOn ? 1 : 0);
   const stacks = useMemo(() => buildStacks(rows.filter((r) => r.on).map((r) => r.p)), [rows]);
   const sentence = describe(a);
-  const enrolled = a.track !== "any" && a.track !== "none";
 
   const fade = reduce ? {} : { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: "-80px" }, transition: { duration: 0.5 } };
 
@@ -200,7 +211,7 @@ export function ProgrammeFilter({
 
         <motion.div {...fade} className="mt-10 grid gap-5 lg:grid-cols-[5fr_7fr] lg:items-start">
           {/* ── left: the patient ── */}
-          <div className="rounded-card border border-rule bg-paper-bright p-5 md:p-6 lg:sticky lg:top-24">
+          <div className="rounded-card border border-rule bg-paper-bright p-5 md:p-6">
             <div className="flex items-baseline justify-between gap-3">
               <p className="text-[12px] font-bold uppercase tracking-[1.2px] text-ink-mute m-0">The patient</p>
               {touched && (
@@ -210,13 +221,13 @@ export function ProgrammeFilter({
               )}
             </div>
 
-            <div className="mt-4 flex flex-col gap-5">
+            <div className="mt-5 flex flex-col gap-5">
               {AXES.map((ax) => (
                 <fieldset key={ax.key} className="m-0 min-w-0 border-0 p-0">
-                  <legend className="text-[15px] font-semibold text-ink mb-2 px-0">{ax.legend}</legend>
-                  <div role="group" className={cn("grid gap-1 rounded-[28px] bg-band p-1", ax.options.length === 4 ? "grid-cols-2 sm:grid-cols-4" : "grid-cols-3")}>
+                  <legend className="text-[12px] font-bold uppercase tracking-[1.2px] text-ink-mute mb-1 px-0">{ax.legend}</legend>
+                  <div role="group" className="flex flex-col">
                     {ax.options.map((o) => {
-                      const on = ax.key === "track" && o.v === "enrolled" ? enrolled : a[ax.key] === o.v;
+                      const on = a[ax.key] === o.v;
                       return (
                         <button
                           key={o.v}
@@ -224,8 +235,8 @@ export function ProgrammeFilter({
                           onClick={() => set(ax.key, o.v)}
                           aria-pressed={on}
                           className={cn(
-                            "min-w-0 truncate rounded-pill px-1 py-3 text-[13px] lg:text-[14px] xl:text-[15px] font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
-                            on ? "bg-ink text-white shadow-[0_1px_2px_rgba(0,18,47,0.18)]" : "text-ink-soft hover:bg-paper-bright hover:text-ink"
+                            "border-l-[3px] py-2.5 pl-4 text-left text-[15.5px] leading-[1.4] transition-colors sm:py-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
+                            on ? "border-ink font-semibold text-ink" : "border-rule-soft text-ink-soft hover:border-rule-strong hover:text-ink"
                           )}
                         >
                           {o.label}
@@ -233,24 +244,11 @@ export function ProgrammeFilter({
                       );
                     })}
                   </div>
-                  {ax.hint && <p className="mt-2 text-[12.5px] leading-[1.5] text-ink-mute m-0">{ax.hint}</p>}
-                  {ax.key === "track" && enrolled && (
-                    <div role="group" aria-label="ACCESS track" className="mt-2 grid grid-cols-4 gap-1 rounded-pill bg-band p-1">
-                      {TRACKS.map((t) => (
-                        <button key={t} type="button" onClick={() => set("track", t)} aria-pressed={a.track === t}
-                          className={cn("rounded-pill px-2 py-2 text-[13.5px] font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand", a.track === t ? "bg-ink text-white" : "text-ink-soft hover:bg-paper-bright hover:text-ink")}>
-                          {t}
-                        </button>
-                      ))}
-                    </div>
-                  )}
+                  {ax.hint && <p className="mt-2 pl-4 text-[12.5px] leading-[1.5] text-ink-mute m-0">{ax.hint}</p>}
                 </fieldset>
               ))}
             </div>
 
-            <p className={cn("m-0 mt-6 border-l-[3px] pl-4 font-serif text-[18px] leading-[1.45]", sentence ? "border-ink text-ink" : "border-rule text-ink-soft")} aria-live="polite">
-              {sentence ?? <span className="text-ink-soft">Any patient on your panel. Toggle to describe one.</span>}
-            </p>
           </div>
 
           {/* ── right: the answer ── */}
@@ -262,6 +260,9 @@ export function ProgrammeFilter({
                   {touched ? <><strong className="text-ink">{litCount}</strong> of 8</> : "All 8"}
                 </p>
               </div>
+              <p className={cn("m-0 mt-2 font-serif text-[19px] leading-[1.4]", sentence ? "text-ink" : "text-ink-soft")} aria-live="polite">
+                {sentence ?? "Any patient on your panel. Describe one on the left."}
+              </p>
               <ul className="m-0 mt-3 p-0 list-none flex flex-col divide-y divide-rule-soft" aria-label="Programmes">
                 {rows.map(({ p, on }) => (
                   <li key={p.id} data-lit={on} className={cn("transition-all duration-300 border-l-[3px] pl-4", !touched ? "border-transparent" : on ? "border-brand" : "border-transparent opacity-35")} aria-hidden={!on && touched ? true : undefined}>
