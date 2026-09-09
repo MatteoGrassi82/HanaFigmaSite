@@ -71,7 +71,7 @@ export interface HeroProps {
    *  to this component keeps that behaviour by owning the ref and the
    *  useInView/useReducedMotion effect in its own file. */
   visual?: ReactNode;
-  tone?: "light" | "navy";
+  tone?: "light" | "navy" | "orbs";
   /** Tighter type and rhythm, for a hero that is an introduction rather than the
    *  page's whole first screen. */
   compact?: boolean;
@@ -131,7 +131,69 @@ const TONES = {
     panel: "bg-paper",
     glow: "bg-brand/10",
   },
+  /* The dark one, and the only genuinely dark hero on the site: it is the
+     opener the live homepage has always used (CTASection in
+     HeroDitheringCard.tsx), lifted here so a second page can have it without a
+     second copy of the artwork. Dark is legal at the top of a page; the rule it
+     must not break is the mid-page one, which is why nothing else uses it. */
+  orbs: {
+    section: "bg-navy",
+    eyebrow: "text-white/70",
+    /* signal-sky is 9.4:1 on navy. The accent stays ITALIC, unlike the
+       homepage's upright one, because it has to: serif-display.css sets
+       font-style on :is(h1,h2,.font-serif) :is(em,i) OUTSIDE any layer, and an
+       unlayered rule beats every layered utility whatever its specificity, so
+       [&_em]:not-italic here is a no-op. Italic is also the house accent
+       everywhere else on the site, so this is the deviation to keep. */
+    heading: "text-white [&_em]:font-normal [&_em]:text-signal-sky",
+    body: "text-white/65",
+    trust: "text-white/60",
+    rule: "border-white/20",
+    primary: "bg-paper-bright text-ink hover:bg-white shadow-float",
+    ghost: "text-white border border-white/25 hover:border-white/45 hover:bg-white/10",
+    focus: "focus-visible:ring-signal-sky focus-visible:ring-offset-navy",
+    panel: "bg-white/5",
+    glow: "bg-signal-sky/20",
+  },
 } as const;
+
+/* The three orbs, in the order they are painted. #3b82f6 is the one colour on
+   this page with no token behind it: it is the azure the live homepage hero has
+   always used, and matching it is the whole point of this tone, so it lives
+   here in one place where a palette sweep will find it rather than inline. */
+const ORBS = [
+  { cls: "hero-orb-a", box: "-left-[8%] top-0 h-[90%] w-[70%]", fill: "bg-[#3b82f6]/50", blur: "blur-[90px]" },
+  { cls: "hero-orb-b", box: "left-[38%] -bottom-[20%] h-[65%] w-[55%]", fill: "bg-signal-sky/[0.22]", blur: "blur-[80px]" },
+  { cls: "hero-orb-c", box: "-right-[5%] -top-[8%] h-[50%] w-[40%]", fill: "bg-signal-sky/[0.18]", blur: "blur-[80px]" },
+] as const;
+
+/**
+ * The animated mesh behind the `orbs` tone. The keyframes are declared here and
+ * applied only under `prefers-reduced-motion: no-preference`, which is the one
+ * thing the homepage copy does not do: three 90px-blurred layers drifting for
+ * ever is exactly what that setting is for. Class names are prefixed so they
+ * cannot collide with the homepage's own global `orb1/2/3` keyframes if both
+ * ever render on one page.
+ */
+function OrbField() {
+  return (
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+      <style>{`
+        @keyframes heroOrbA { 0%,100% { transform: translate(0,0) scale(1) } 50% { transform: translate(6%,10%) scale(1.12) } }
+        @keyframes heroOrbB { 0%,100% { transform: translate(0,0) scale(1) } 50% { transform: translate(-10%,-7%) scale(1.08) } }
+        @keyframes heroOrbC { 0%,100% { transform: translate(0,0) scale(1) } 50% { transform: translate(-5%,14%) scale(0.92) } }
+        @media (prefers-reduced-motion: no-preference) {
+          .hero-orb-a { animation: heroOrbA 11s ease-in-out infinite }
+          .hero-orb-b { animation: heroOrbB 14s ease-in-out infinite }
+          .hero-orb-c { animation: heroOrbC 9s ease-in-out infinite }
+        }
+      `}</style>
+      {ORBS.map((o) => (
+        <div key={o.cls} className={cn("absolute rounded-full", o.cls, o.box, o.fill, o.blur)} />
+      ))}
+    </div>
+  );
+}
 
 const BUTTON_BASE =
   "group inline-flex items-center justify-center gap-2 rounded-pill px-7 py-3.5 text-[15px] font-semibold no-underline " +
@@ -218,9 +280,17 @@ export function Hero({
   const claim = (
     <div className={cn("relative", centred ? "mx-auto max-w-[820px] text-center" : "w-full max-w-[42rem]")}>
       {eyebrow ? (
-        <p className={cn("text-eyebrow font-bold uppercase m-0", compact ? "mb-4" : "mb-6", c.eyebrow)}>
-          {eyebrow}
-        </p>
+        tone === "orbs" ? (
+          /* The homepage's badge, not an eyebrow: a pill with a lit dot. */
+          <p className={cn("m-0 inline-flex items-center gap-2 rounded-pill border border-white/20 bg-white/10 px-4 py-1.5 backdrop-blur-sm", compact ? "mb-5" : "mb-7")}>
+            <span aria-hidden className="h-1.5 w-1.5 shrink-0 rounded-full bg-signal-sky" />
+            <span className={cn("text-[13.5px] font-medium tracking-wide", c.eyebrow)}>{eyebrow}</span>
+          </p>
+        ) : (
+          <p className={cn("text-eyebrow font-bold uppercase m-0", compact ? "mb-4" : "mb-6", c.eyebrow)}>
+            {eyebrow}
+          </p>
+        )
       ) : null}
 
       <h1
@@ -290,19 +360,24 @@ export function Hero({
         className={cn(
           "relative overflow-hidden px-6 md:px-16",
           compact ? "py-16 md:py-24" : "py-24 md:py-32 lg:py-36",
+          tone === "orbs" && "flex min-h-[78dvh] flex-col items-center justify-center md:min-h-[660px]",
           c.section,
           className
         )}
       >
         {/* Decoration only. Never announced, never clickable. */}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div
-            className={cn(
-              "absolute -top-[300px] left-1/2 h-[700px] w-[980px] max-w-none -translate-x-1/2 rounded-full blur-[130px]",
-              c.glow
-            )}
-          />
-        </div>
+        {tone === "orbs" ? (
+          <OrbField />
+        ) : (
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+            <div
+              className={cn(
+                "absolute -top-[300px] left-1/2 h-[700px] w-[980px] max-w-none -translate-x-1/2 rounded-full blur-[130px]",
+                c.glow
+              )}
+            />
+          </div>
+        )}
         {claim}
       </section>
     );

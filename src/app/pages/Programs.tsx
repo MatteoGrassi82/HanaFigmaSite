@@ -78,12 +78,16 @@ export function Programs(webCall: WebCallProps) {
         ]}
       />
 
-      {/* Centred, no photograph. Matteo, 9 Sept 2026: "I don't like the one
-          with the image. It should just be the one in the middle." The
-          programme pages draw their rule in the hero; the hub has no single
-          rule to draw, so it says the one sentence and gets out of the way. */}
+      {/* The homepage opener, on the hub. Matteo, 9 Sept 2026: "need the hero
+          to be better I think could be like the current homepage in
+          hana.health" -- so tone="orbs", which is that hero (navy, three
+          drifting orbs, a badge, a sky accent) generalised into Hero rather
+          than copied. Centred and imageless, per the note before it: the
+          programme pages draw their own rule in the hero, and the hub has no
+          single rule to draw. */}
       <Hero
-        eyebrow="Care programmes"
+        tone="orbs"
+        eyebrow="Seven Medicare programmes"
         headline={<>One loop. <em>Seven ways to bill it.</em></>}
         body="Your patients already qualify for more than you are running. The difference between these programmes is who counts and what the month has to show, not how the work gets done."
         primaryCta={{ label: "Book a demo", href: DEMO_HREF }}

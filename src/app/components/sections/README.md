@@ -48,6 +48,7 @@ change here lands on seven pages at once.
 
 | Section | Answers | Key props |
 |---|---|---|
+| `Hero` | The general opener. `tone`: `light`, `navy` (a light band, misnamed) or `orbs` (the live homepage's dark animated hero, badge and sky accent included; reduced-motion aware) | `eyebrow` `headline` `body` `primaryCta` `secondaryCta` `trustLine` `visual` `tone` |
 | `ProgrammeHero` | What is the one rule this programme turns on? | `data` `headline` `rows`; draws a `RuleDiagram` from `data`, or a photo if `image` is passed |
 | `RuleDiagram` | The rule as a drawing: minute arc, 13-element grid, 16-of-30 day strip, discharge timeline | `programme`; SVG from tokens, no photo, so seven pages get seven different heroes |
 | `EligibilityCheck` | Is this me? | `data` `id` |
