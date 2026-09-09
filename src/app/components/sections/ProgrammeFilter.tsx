@@ -57,9 +57,11 @@ import { cn } from "../../../lib/utils";
  * share and the escalation flag. It is a deliberate exception, asked for
  * twice, and it holds only because nothing else in this section competes:
  *   INK    what the reader chose, and every number they read. The choice is
- *          marked by a rule on the left of the option, not a filled pill
- *          (Matteo, 9 Sept: "the selector could be better: just the line on
- *          the left"), which gives five axes one vertical rhythm in place of
+ *          marked by an ink dot and a band ground on the chosen row, the
+ *          same on/off shape the answer uses in amber ("make it nicer with
+ *          nicer buttons", after "just the line on the left" replaced five
+ *          segmented tracks). One option per row gives five axes one rhythm
+ *          in place of
  *          five segmented tracks of differing width, and reads the same on a
  *          phone as on a desktop. The four ACCESS tracks are options in that
  *          list now, so there is no nested control: track only ever decides
@@ -80,9 +82,11 @@ import { cn } from "../../../lib/utils";
  * effect in one line, and it keeps the two columns near the same height.
  *
  *   INK    what the reader chose, and every number they read. The choice is
- *          marked by a rule on the left of the option, not a filled pill
- *          (Matteo, 9 Sept: "the selector could be better: just the line on
- *          the left"), which gives five axes one vertical rhythm in place of
+ *          marked by an ink dot and a band ground on the chosen row, the
+ *          same on/off shape the answer uses in amber ("make it nicer with
+ *          nicer buttons", after "just the line on the left" replaced five
+ *          segmented tracks). One option per row gives five axes one rhythm
+ *          in place of
  *          five segmented tracks of differing width, and reads the same on a
  *          phone as on a desktop. The four ACCESS tracks are options in that
  *          list now, so there is no nested control: track only ever decides
@@ -137,18 +141,21 @@ function apcmCode(count: Count): string {
 const CODE: Record<ProgrammeId, string> = Object.fromEntries(PROGRAMMES.map((p) => [p.id, p.code])) as Record<ProgrammeId, string>;
 
 /**
- * The lit signal: a lamp in the gutter, on in signal-amber or off as an empty
- * ring. Amber carries no text here, only the disc and its halo, because
- * #e8a06a is 2.0:1 on paper and could never be read as type.
+ * One dot, two tones. AMBER is the answer (a programme is lit), INK is the
+ * choice (this option is the one you picked), and both read as a shape too:
+ * filled when on, an empty ring when off, so neither depends on colour alone.
+ * Neither tone ever carries text; #e8a06a is 2.0:1 on paper.
  */
-function Lamp({ on }: { on: boolean }) {
+function Dot({ on, tone = "amber" }: { on: boolean; tone?: "amber" | "ink" }) {
   return (
-    <span aria-hidden className="flex h-3 w-3 items-center justify-center">
+    <span aria-hidden className="flex h-3 w-3 shrink-0 items-center justify-center">
       <span
         className={cn(
           "block rounded-full transition-all duration-300",
           on
-            ? "h-3 w-3 bg-signal-amber ring-4 ring-signal-amber/25"
+            ? tone === "amber"
+              ? "h-3 w-3 bg-signal-amber ring-4 ring-signal-amber/25"
+              : "h-3 w-3 bg-ink ring-4 ring-ink/10"
             : "h-2.5 w-2.5 border border-rule-strong bg-paper"
         )}
       />
@@ -191,13 +198,22 @@ function buildStacks(on: Programme[]): Stacks {
 }
 
 
-type Axis = { key: keyof Answers; legend: string; hint?: string; options: { v: string; label: string }[] };
+type Axis = {
+  key: keyof Answers;
+  legend: string;
+  hint?: string;
+  /** Explicit, not inferred from the option count: it depends on the longest
+   *  label, and only the ACCESS tracks are long enough to need a phone row of
+   *  their own. Checked against 360px, where "Not enrolled" is the tight one. */
+  cols: string;
+  options: { v: string; label: string }[];
+};
 const AXES: Axis[] = [
-  { key: "count", legend: "Chronic conditions", options: [{ v: "any", label: "Any" }, { v: "0", label: "None" }, { v: "1", label: "One" }, { v: "2+", label: "2 or more" }] },
-  { key: "device", legend: "A device at home", hint: "Readings: blood pressure, weight, oxygen. Therapy: CPAP, adherence.", options: [{ v: "any", label: "Any" }, { v: "none", label: "None" }, { v: "physiologic", label: "Readings" }, { v: "therapeutic", label: "Therapy" }] },
-  { key: "behavioral", legend: "Behavioural health condition", options: [{ v: "any", label: "Any" }, { v: "yes", label: "Yes" }, { v: "no", label: "No" }] },
-  { key: "discharged", legend: "Discharged in the last 30 days", options: [{ v: "any", label: "Any" }, { v: "yes", label: "Yes" }, { v: "no", label: "No" }] },
-  { key: "track", legend: "ACCESS model", options: [{ v: "any", label: "Any" }, { v: "none", label: "Not enrolled" }, { v: "CKM", label: "CKM track" }, { v: "eCKM", label: "eCKM track" }, { v: "BH", label: "BH track" }, { v: "MSK", label: "MSK track" }] },
+  { key: "count", cols: "grid-cols-2", legend: "Chronic conditions", options: [{ v: "any", label: "Any" }, { v: "0", label: "None" }, { v: "1", label: "One" }, { v: "2+", label: "2 or more" }] },
+  { key: "device", cols: "grid-cols-2", legend: "A device at home", hint: "Readings: blood pressure, weight, oxygen. Therapy: CPAP, adherence.", options: [{ v: "any", label: "Any" }, { v: "none", label: "None" }, { v: "physiologic", label: "Readings" }, { v: "therapeutic", label: "Therapy" }] },
+  { key: "behavioral", cols: "grid-cols-3", legend: "Behavioural health condition", options: [{ v: "any", label: "Any" }, { v: "yes", label: "Yes" }, { v: "no", label: "No" }] },
+  { key: "discharged", cols: "grid-cols-3", legend: "Discharged in the last 30 days", options: [{ v: "any", label: "Any" }, { v: "yes", label: "Yes" }, { v: "no", label: "No" }] },
+  { key: "track", cols: "grid-cols-1 sm:grid-cols-2", legend: "ACCESS model", options: [{ v: "any", label: "Any" }, { v: "none", label: "Not enrolled" }, { v: "CKM", label: "CKM track" }, { v: "eCKM", label: "eCKM track" }, { v: "BH", label: "BH track" }, { v: "MSK", label: "MSK track" }] },
 ];
 const TRACKS: Track[] = ["CKM", "eCKM", "BH", "MSK"];
 
@@ -253,12 +269,18 @@ export function ProgrammeFilter({
         </motion.div>
 
         <motion.div {...fade} className="mt-10 grid gap-5 lg:grid-cols-[5fr_7fr] lg:items-start">
-          {/* ── left: the patient ── */}
-          <div className="rounded-card border border-rule bg-paper-bright p-5 md:p-6">
+          {/* ── left: the patient. Sticky, because the grid brought it to 711px
+                 against the answer's 1130px, so it fits a viewport and can
+                 follow the rows and the stacks as they scroll past. ── */}
+          <div className="rounded-card border border-rule bg-paper-bright p-5 md:p-6 lg:sticky lg:top-24">
             <div className="flex items-baseline justify-between gap-3">
               <p className="text-[12px] font-bold uppercase tracking-[1.2px] text-ink-mute m-0">The patient</p>
               {touched && (
-                <button type="button" onClick={() => setA(NONE)} className="text-[13.5px] font-semibold text-ink underline underline-offset-4 decoration-rule hover:decoration-ink-soft">
+                <button
+                  type="button"
+                  onClick={() => setA(NONE)}
+                  className="rounded-pill border border-rule px-3 py-1 text-[13px] font-semibold text-ink-soft transition-colors hover:border-rule-strong hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                >
                   Reset
                 </button>
               )}
@@ -267,8 +289,11 @@ export function ProgrammeFilter({
             <div className="mt-5 flex flex-col gap-5">
               {AXES.map((ax) => (
                 <fieldset key={ax.key} className="m-0 min-w-0 border-0 p-0">
-                  <legend className="text-[12px] font-bold uppercase tracking-[1.2px] text-ink-mute mb-1 px-0">{ax.legend}</legend>
-                  <div role="group" className="flex flex-col">
+                  <legend className="text-[12px] font-bold uppercase tracking-[1.2px] text-ink-mute mb-1.5 px-3">{ax.legend}</legend>
+                  <div
+                    role="group"
+                    className={cn("grid gap-1.5", ax.cols)}
+                  >
                     {ax.options.map((o) => {
                       const on = a[ax.key] === o.v;
                       return (
@@ -278,16 +303,17 @@ export function ProgrammeFilter({
                           onClick={() => set(ax.key, o.v)}
                           aria-pressed={on}
                           className={cn(
-                            "border-l-[3px] py-2.5 pl-4 text-left text-[15.5px] leading-[1.4] transition-colors sm:py-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
-                            on ? "border-ink font-semibold text-ink" : "border-rule-soft text-ink-soft hover:border-rule-strong hover:text-ink"
+                            "flex w-full min-w-0 items-center gap-2.5 rounded-tile px-3 py-2.5 text-left text-[15px] leading-[1.3] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
+                            on ? "bg-band font-semibold text-ink" : "text-ink-soft hover:bg-paper-2 hover:text-ink"
                           )}
                         >
-                          {o.label}
+                          <Dot on={on} tone="ink" />
+                          <span className="min-w-0 truncate">{o.label}</span>
                         </button>
                       );
                     })}
                   </div>
-                  {ax.hint && <p className="mt-2 pl-4 text-[12.5px] leading-[1.5] text-ink-mute m-0">{ax.hint}</p>}
+                  {ax.hint && <p className="mt-1.5 px-3 text-[12.5px] leading-[1.5] text-ink-mute m-0">{ax.hint}</p>}
                 </fieldset>
               ))}
             </div>
@@ -312,7 +338,7 @@ export function ProgrammeFilter({
                   <li key={p.id} data-lit={on} className={cn("transition-opacity duration-300", on ? "opacity-100" : "opacity-40")} aria-hidden={!on && touched ? true : undefined}>
                     <a href={p.path} tabIndex={on ? 0 : -1}
                       className="group grid grid-cols-[12px_66px_1fr_auto] items-center gap-x-4 py-3.5 no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">
-                      <Lamp on={on} />
+                      <Dot on={on} />
                       <span className={cn("font-serif text-[24px] leading-none", on ? "text-ink" : "text-ink-mute")}>{p.code}</span>
                       <span className="min-w-0">
                         <span className="block text-[15px] font-medium text-ink leading-[1.3] group-hover:underline underline-offset-4 decoration-rule">{p.name}</span>
@@ -328,7 +354,7 @@ export function ProgrammeFilter({
                 <li data-lit={accessOn} className={cn("transition-opacity duration-300", accessOn ? "opacity-100" : "opacity-40")} aria-hidden={!accessOn && touched ? true : undefined}>
                   <a href="/programs/access-model" tabIndex={accessOn ? 0 : -1}
                     className="group grid grid-cols-[12px_66px_1fr_auto] items-center gap-x-4 py-3.5 no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">
-                    <Lamp on={accessOn} />
+                    <Dot on={accessOn} />
                     <span className={cn("font-serif text-[19px] leading-none", accessOn ? "text-ink" : "text-ink-mute")}>ACCESS</span>
                     <span className="min-w-0">
                       <span className="block text-[15px] font-medium text-ink leading-[1.3] group-hover:underline underline-offset-4 decoration-rule">CMS payment model</span>
