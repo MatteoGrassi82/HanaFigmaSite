@@ -49,8 +49,31 @@ import { cn } from "../../../lib/utils";
  * the same minutes never count twice, and a stack is what MAY be billed, not
  * what this patient qualifies for.
  *
- * COLOUR (third pass, 9 Sept 2026, "better accents, that orange we had
- * before, too much blue sharing"). Three jobs, one colour each:
+ * COLOUR (fourth pass, 9 Sept 2026). Matteo, twice: "that orange we had
+ * before, too much blue sharing", then "instead of just the blue, I would
+ * like the orange one highlighted". So signal-amber IS the lit colour here,
+ * which reads against tokens.css ("signals are never for series or
+ * decoration") and against amber's other job on this site, the patient's
+ * share and the escalation flag. It is a deliberate exception, asked for
+ * twice, and it holds only because nothing else in this section competes:
+ *   INK    what the reader chose, and every number they read. The choice is
+ *          marked by a rule on the left of the option, not a filled pill
+ *          (Matteo, 9 Sept: "the selector could be better: just the line on
+ *          the left"), which gives five axes one vertical rhythm in place of
+ *          five segmented tracks of differing width, and reads the same on a
+ *          phone as on a desktop. The four ACCESS tracks are options in that
+ *          list now, so there is no nested control: track only ever decides
+ *          whether the ACCESS card lights, so "enrolled, track unknown" and
+ *          "any" produced the same answer and one of them had to go.
+ *   AMBER  lit, and only lit: the lamp in each row's gutter, the dot beside
+ *          the count, the tint on the stack chips. A stack then reads as the
+ *          lamps that stayed on, which is what a stack is.
+ *   GREY   the caution block, which used to be the amber one. Two ambers in
+ *          one card, one meaning "this is available" and one meaning "this is
+ *          barred", would have cancelled each other out.
+ * AMBER NEVER CARRIES TEXT. #e8a06a is 2.0:1 on paper. It is a disc, a halo
+ * and a chip ground; the type on and beside it is ink.
+ *
  * The described patient is read back as a sentence at the TOP OF THE ANSWER,
  * not under the controls: "A patient with two or more chronic conditions and
  * a device sending readings" sitting above "6 of 8" is the whole cause and
@@ -112,6 +135,26 @@ function apcmCode(count: Count): string {
 
 /** Short code per programme, for the stack chips. */
 const CODE: Record<ProgrammeId, string> = Object.fromEntries(PROGRAMMES.map((p) => [p.id, p.code])) as Record<ProgrammeId, string>;
+
+/**
+ * The lit signal: a lamp in the gutter, on in signal-amber or off as an empty
+ * ring. Amber carries no text here, only the disc and its halo, because
+ * #e8a06a is 2.0:1 on paper and could never be read as type.
+ */
+function Lamp({ on }: { on: boolean }) {
+  return (
+    <span aria-hidden className="flex h-3 w-3 items-center justify-center">
+      <span
+        className={cn(
+          "block rounded-full transition-all duration-300",
+          on
+            ? "h-3 w-3 bg-signal-amber ring-4 ring-signal-amber/25"
+            : "h-2.5 w-2.5 border border-rule-strong bg-paper"
+        )}
+      />
+    </span>
+  );
+}
 
 interface Stack { ids: ProgrammeId[]; total: number }
 interface Stacks { sets: Stack[]; barred: [ProgrammeId, ProgrammeId][]; open: [ProgrammeId, ProgrammeId][] }
@@ -256,8 +299,9 @@ export function ProgrammeFilter({
             <div className="rounded-card border border-rule bg-paper-bright p-5 md:p-6">
               <div className="flex items-baseline justify-between gap-3">
                 <p className="text-[12px] font-bold uppercase tracking-[1.2px] text-ink-mute m-0">Programmes to consider</p>
-                <p className="text-[13.5px] text-ink-soft m-0 tabular-nums" aria-live="polite">
-                  {touched ? <><strong className="text-ink">{litCount}</strong> of 8</> : "All 8"}
+                <p className="flex items-center gap-2 text-[13.5px] text-ink-soft m-0 tabular-nums" aria-live="polite">
+                  <span aria-hidden className="h-2.5 w-2.5 rounded-full bg-signal-amber" />
+                  {touched ? <><strong className="text-ink">{litCount}</strong> of 8 lit</> : "All 8 lit"}
                 </p>
               </div>
               <p className={cn("m-0 mt-2 font-serif text-[19px] leading-[1.4]", sentence ? "text-ink" : "text-ink-soft")} aria-live="polite">
@@ -265,9 +309,10 @@ export function ProgrammeFilter({
               </p>
               <ul className="m-0 mt-3 p-0 list-none flex flex-col divide-y divide-rule-soft" aria-label="Programmes">
                 {rows.map(({ p, on }) => (
-                  <li key={p.id} data-lit={on} className={cn("transition-all duration-300 border-l-[3px] pl-4", !touched ? "border-transparent" : on ? "border-brand" : "border-transparent opacity-35")} aria-hidden={!on && touched ? true : undefined}>
+                  <li key={p.id} data-lit={on} className={cn("transition-opacity duration-300", on ? "opacity-100" : "opacity-40")} aria-hidden={!on && touched ? true : undefined}>
                     <a href={p.path} tabIndex={on ? 0 : -1}
-                      className="group grid grid-cols-[72px_1fr_auto] items-center gap-4 py-3.5 no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">
+                      className="group grid grid-cols-[12px_66px_1fr_auto] items-center gap-x-4 py-3.5 no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">
+                      <Lamp on={on} />
                       <span className={cn("font-serif text-[24px] leading-none", on ? "text-ink" : "text-ink-mute")}>{p.code}</span>
                       <span className="min-w-0">
                         <span className="block text-[15px] font-medium text-ink leading-[1.3] group-hover:underline underline-offset-4 decoration-rule">{p.name}</span>
@@ -280,10 +325,11 @@ export function ProgrammeFilter({
                     </a>
                   </li>
                 ))}
-                <li data-lit={accessOn} className={cn("transition-all duration-300 border-l-[3px] pl-4", !touched ? "border-transparent" : accessOn ? "border-brand" : "border-transparent opacity-35")} aria-hidden={!accessOn && touched ? true : undefined}>
+                <li data-lit={accessOn} className={cn("transition-opacity duration-300", accessOn ? "opacity-100" : "opacity-40")} aria-hidden={!accessOn && touched ? true : undefined}>
                   <a href="/programs/access-model" tabIndex={accessOn ? 0 : -1}
-                    className="group grid grid-cols-[72px_1fr_auto] items-center gap-4 py-3.5 no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">
-                    <span className={cn("font-serif text-[24px] leading-none", accessOn ? "text-ink" : "text-ink-mute")}>ACCESS</span>
+                    className="group grid grid-cols-[12px_66px_1fr_auto] items-center gap-x-4 py-3.5 no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">
+                    <Lamp on={accessOn} />
+                    <span className={cn("font-serif text-[19px] leading-none", accessOn ? "text-ink" : "text-ink-mute")}>ACCESS</span>
                     <span className="min-w-0">
                       <span className="block text-[15px] font-medium text-ink leading-[1.3] group-hover:underline underline-offset-4 decoration-rule">CMS payment model</span>
                       <span className="block font-mono text-[12px] text-ink-mute mt-0.5">{TRACKS.includes(a.track) ? `${a.track} track` : "4 tracks"}</span>
@@ -306,7 +352,7 @@ export function ProgrammeFilter({
                         {st.ids.map((pid, i) => (
                           <span key={pid} className="flex items-center gap-1.5">
                             {i > 0 && <span aria-hidden className="text-ink-mute text-[13px]">+</span>}
-                            <span className="rounded-pill bg-brand-tint px-2.5 py-1 font-serif text-[16px] leading-none text-ink">{CODE[pid]}</span>
+                            <span className="rounded-pill bg-signal-amber/20 px-2.5 py-1 font-serif text-[16px] leading-none text-ink ring-1 ring-signal-amber/35">{CODE[pid]}</span>
                           </span>
                         ))}
                       </span>
@@ -317,7 +363,7 @@ export function ProgrammeFilter({
                     </li>
                   ))}
                 </ul>
-                <div className="mt-4 border-l-4 border-signal-amber pl-4">
+                <div className="mt-4 border-l-[3px] border-rule-strong pl-4">
                   <p className="text-[13.5px] leading-[1.6] text-ink m-0">
                     The same minutes never count twice, whichever codes the month carries.
                   </p>
