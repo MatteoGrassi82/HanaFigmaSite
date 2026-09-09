@@ -49,6 +49,21 @@ import { cn } from "../../../lib/utils";
  * the same minutes never count twice, and a stack is what MAY be billed, not
  * what this patient qualifies for.
  *
+ * COLOUR (third pass, 9 Sept 2026, "better accents, that orange we had
+ * before, too much blue sharing"). Three jobs, one colour each:
+ *   INK    what the reader chose, and every number they read.
+ *   BRAND  the lit signal, and only that: a 3px rail on a row that fits.
+ *          No blue words, and no rails at all until the reader has described
+ *          somebody, because eight rails at rest is a blue column that means
+ *          nothing. The rail is an answer, so it arrives with the question.
+ *   AMBER  the caution, which is what signal-amber means everywhere else on
+ *          this site (the patient's share in PayVisual, an escalation in the
+ *          loop, the illustrative frame on the estimator). tokens.css says
+ *          signals are never decoration, so it is NOT the lit colour: it
+ *          carries the one block that says what the month cannot hold.
+ * The chips use --color-brand-tint, the token that exists for the accent as a
+ * surface wash, in place of the hand-mixed brand-soft/45.
+ *
  * ACCESS IS A CARD IN ITS OWN SHAPE, same as on the hub: a payment model by
  * track, not a monthly code, so it carries the track name instead of a rate.
  * ─────────────────────────────────────────────────────────────────────────── */
@@ -233,7 +248,7 @@ export function ProgrammeFilter({
               ))}
             </div>
 
-            <p className={cn("m-0 mt-6 rounded-tile px-4 py-3 font-serif text-[18px] leading-[1.4]", sentence ? "bg-brand-soft/25 text-ink" : "bg-band/60 text-ink-soft")} aria-live="polite">
+            <p className={cn("m-0 mt-6 border-l-[3px] pl-4 font-serif text-[18px] leading-[1.45]", sentence ? "border-ink text-ink" : "border-rule text-ink-soft")} aria-live="polite">
               {sentence ?? <span className="text-ink-soft">Any patient on your panel. Toggle to describe one.</span>}
             </p>
           </div>
@@ -244,15 +259,15 @@ export function ProgrammeFilter({
               <div className="flex items-baseline justify-between gap-3">
                 <p className="text-[12px] font-bold uppercase tracking-[1.2px] text-ink-mute m-0">Programmes to consider</p>
                 <p className="text-[13.5px] text-ink-soft m-0 tabular-nums" aria-live="polite">
-                  {touched ? <><strong className="text-brand">{litCount}</strong> of 8</> : "All 8"}
+                  {touched ? <><strong className="text-ink">{litCount}</strong> of 8</> : "All 8"}
                 </p>
               </div>
               <ul className="m-0 mt-3 p-0 list-none flex flex-col divide-y divide-rule-soft" aria-label="Programmes">
                 {rows.map(({ p, on }) => (
-                  <li key={p.id} data-lit={on} className={cn("transition-all duration-300 border-l-[3px] pl-4", on ? "border-brand opacity-100" : "border-transparent opacity-35")} aria-hidden={!on && touched ? true : undefined}>
+                  <li key={p.id} data-lit={on} className={cn("transition-all duration-300 border-l-[3px] pl-4", !touched ? "border-transparent" : on ? "border-brand" : "border-transparent opacity-35")} aria-hidden={!on && touched ? true : undefined}>
                     <a href={p.path} tabIndex={on ? 0 : -1}
                       className="group grid grid-cols-[72px_1fr_auto] items-center gap-4 py-3.5 no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">
-                      <span className={cn("font-serif text-[24px] leading-none", on ? "text-brand" : "text-ink-mute")}>{p.code}</span>
+                      <span className={cn("font-serif text-[24px] leading-none", on ? "text-ink" : "text-ink-mute")}>{p.code}</span>
                       <span className="min-w-0">
                         <span className="block text-[15px] font-medium text-ink leading-[1.3] group-hover:underline underline-offset-4 decoration-rule">{p.name}</span>
                         <span className="block font-mono text-[12px] text-ink-mute mt-0.5">{p.id === "apcm" ? apcmCode(a.count) : p.payment.code}</span>
@@ -264,10 +279,10 @@ export function ProgrammeFilter({
                     </a>
                   </li>
                 ))}
-                <li data-lit={accessOn} className={cn("transition-all duration-300 border-l-[3px] pl-4", accessOn ? "border-brand opacity-100" : "border-transparent opacity-35")} aria-hidden={!accessOn && touched ? true : undefined}>
+                <li data-lit={accessOn} className={cn("transition-all duration-300 border-l-[3px] pl-4", !touched ? "border-transparent" : accessOn ? "border-brand" : "border-transparent opacity-35")} aria-hidden={!accessOn && touched ? true : undefined}>
                   <a href="/programs/access-model" tabIndex={accessOn ? 0 : -1}
                     className="group grid grid-cols-[72px_1fr_auto] items-center gap-4 py-3.5 no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">
-                    <span className={cn("font-serif text-[24px] leading-none", accessOn ? "text-brand" : "text-ink-mute")}>ACCESS</span>
+                    <span className={cn("font-serif text-[24px] leading-none", accessOn ? "text-ink" : "text-ink-mute")}>ACCESS</span>
                     <span className="min-w-0">
                       <span className="block text-[15px] font-medium text-ink leading-[1.3] group-hover:underline underline-offset-4 decoration-rule">CMS payment model</span>
                       <span className="block font-mono text-[12px] text-ink-mute mt-0.5">{TRACKS.includes(a.track) ? `${a.track} track` : "4 tracks"}</span>
@@ -282,7 +297,7 @@ export function ProgrammeFilter({
             {stacks.sets.length > 0 && (
               <div className="rounded-card border border-rule bg-paper-bright p-5 md:p-6">
                 <p className="text-[12px] font-bold uppercase tracking-[1.2px] text-ink-mute m-0">Can they stack?</p>
-                <p className="text-[13.5px] leading-[1.6] text-ink-soft m-0 mt-1">Same patient, same month. The same minutes never count twice.</p>
+                <p className="text-[13.5px] leading-[1.6] text-ink-soft m-0 mt-1">What one month can hold for the same patient, and what it adds up to.</p>
                 <ul className="m-0 mt-4 p-0 list-none flex flex-col divide-y divide-rule-soft">
                   {stacks.sets.map((st) => (
                     <li key={st.ids.join("+")} className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-3">
@@ -290,33 +305,36 @@ export function ProgrammeFilter({
                         {st.ids.map((pid, i) => (
                           <span key={pid} className="flex items-center gap-1.5">
                             {i > 0 && <span aria-hidden className="text-ink-mute text-[13px]">+</span>}
-                            <span className="rounded-pill bg-brand-soft/45 px-2.5 py-1 font-serif text-[16px] leading-none text-ink">{CODE[pid]}</span>
+                            <span className="rounded-pill bg-brand-tint px-2.5 py-1 font-serif text-[16px] leading-none text-ink">{CODE[pid]}</span>
                           </span>
                         ))}
                       </span>
                       <span className="flex items-baseline gap-1.5">
-                        <span className="font-serif text-[24px] leading-none text-brand tabular-nums">${st.total.toFixed(2)}</span>
+                        <span className="font-serif text-[24px] leading-none text-ink tabular-nums">${st.total.toFixed(2)}</span>
                         <span className="text-[12px] text-ink-mute">{st.ids.includes("tcm") ? "with a discharge" : "in one month"}</span>
                       </span>
                     </li>
                   ))}
                 </ul>
-                {(stacks.barred.length > 0 || stacks.open.length > 0) && (
-                  <ul className="m-0 mt-3 p-0 list-none flex flex-wrap gap-x-5 gap-y-1.5 text-[13px] leading-[1.6] border-t border-rule-soft pt-3">
-                    {stacks.barred.map(([x, y]) => (
-                      <li key={x + y} className="flex items-center gap-2 text-ink">
-                        <span aria-hidden className="h-3.5 w-1 shrink-0 rounded-pill bg-signal-amber" />
-                        {CODE[x]} and {CODE[y]}: not the same month
-                      </li>
-                    ))}
-                    {stacks.open.map(([x, y]) => (
-                      <li key={x + y} className="flex items-center gap-2 text-ink-soft">
-                        <span aria-hidden className="h-3.5 w-1 shrink-0 rounded-pill bg-rule-strong" />
-                        {CODE[x]} and {CODE[y]}: not settled, ask your biller
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <div className="mt-4 border-l-4 border-signal-amber pl-4">
+                  <p className="text-[13.5px] leading-[1.6] text-ink m-0">
+                    The same minutes never count twice, whichever codes the month carries.
+                  </p>
+                  {stacks.barred.length > 0 && (
+                    <p className="text-[13.5px] leading-[1.6] text-ink-soft m-0 mt-1.5">
+                      Not in the same month: {stacks.barred.map(([x, y], i) => (
+                        <span key={x + y}>{i > 0 && "; "}{CODE[x]} and {CODE[y]}</span>
+                      ))}.
+                    </p>
+                  )}
+                  {stacks.open.length > 0 && (
+                    <p className="text-[13.5px] leading-[1.6] text-ink-soft m-0 mt-1.5">
+                      Not settled, ask your biller: {stacks.open.map(([x, y], i) => (
+                        <span key={x + y}>{i > 0 && "; "}{CODE[x]} and {CODE[y]}</span>
+                      ))}.
+                    </p>
+                  )}
+                </div>
               </div>
             )}
           </div>
