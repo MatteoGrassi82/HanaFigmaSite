@@ -2,11 +2,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Loader2, Globe, PhoneOff, CheckCircle2, MessageSquare } from "lucide-react";
 import { cn } from "../../../lib/utils";
-import { projectId, publicAnonKey } from "../../../../utils/supabase/info";
 import { HanaBloomOrb } from "../media/HanaBloomOrb";
 import { useTranslations, getLocale } from "../../../lib/i18n";
-
-const FN_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-77ada9a1`;
 
 // The SMS callback flow sends `lang` so the backend dials the Italian Vapi
 // assistant twins (see docs/italian-demo-agents-handoff.md). The in-browser web
@@ -74,14 +71,19 @@ export function LiveDemoSection({
   // Italian site serves EU only (UK/EU agent); US/Canada is not offered there.
 
 
-  // Lead notification → Resend (via our Vercel function), not Zapier.
+  // Lead capture → /api/lead, which both records the lead in the CRM and
+  // emails the team (see api/_crm.ts). The phone number goes with it whenever
+  // the visitor typed one: on the text flow it is the only way to reach them,
+  // and it was dropped here even though the handler already accepted it.
   const captureLead = (page: string) => {
+    const trimmedPhone = phone.replace(/[\s().-]/g, "");
     fetch("/api/lead", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name: name.trim(),
         email: email.trim(),
+        ...(trimmedPhone ? { phone: trimmedPhone } : {}),
         page,
       }),
     }).catch((err) => console.error("Failed to capture lead:", err));

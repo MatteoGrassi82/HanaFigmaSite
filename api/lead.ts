@@ -1,10 +1,20 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { Resend } from "resend";
+import { sendToCrm, reportDelivery, settled, type LegResult } from "./_crm";
 
 /**
- * Live-demo lead notification. Emails the lead via Resend (no Zapier).
- * Reuses the same env as api/contact.ts: RESEND_API_KEY, CONTACT_FROM_EMAIL
- * (verified usehana.com sender), and CONTACT_TO_EMAIL (defaults to matteo@usehana.com).
+ * Live-demo lead capture. Does two things with every lead, together:
+ *   1. records it in the CRM (POST /api/inbound/site-lead) — the system of record
+ *   2. emails the team via Resend — the alert
+ *
+ * Both legs run in one `Promise.allSettled` below. Keep them there. From
+ * 2026-09-05 to 2026-09-09 this handler did only (2), because the write that
+ * fed the CRM lived in a component and was removed as dead code; every lead in
+ * that window exists solely as an email — and each of those people had already
+ * been sent the Calendly auto-reply by this very handler. See api/_crm.ts.
+ *
+ * Env: RESEND_API_KEY, CONTACT_FROM_EMAIL (verified sender), CONTACT_TO_EMAIL
+ * (defaults to matteo@usehana.com), CRM_LEAD_INGEST_URL, CRM_LEAD_INGEST_SECRET.
  */
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
@@ -29,24 +39,52 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     process.env.CONTACT_FROM_EMAIL || "HANA Website <noreply@usehana.com>";
   const toEmail = process.env.CONTACT_TO_EMAIL || "matteo@usehana.com";
 
+  // The lead as the CRM will see it. `auto_replied` is true because this
+  // handler sends the prospect the Calendly note below, so the CRM drafts the
+  // NEXT touch instead of a second copy of the same email.
+  const lead = {
+    name: name ? String(name) : undefined,
+    email: email ? String(email) : undefined,
+    phone: phone ? String(phone) : undefined,
+    page: page ? String(page) : undefined,
+    auto_replied: true,
+  };
+
   try {
     const resend = new Resend(apiKey);
 
-    // 1) Notify the team of the new lead.
-    const { error } = await resend.emails.send({
-      from: fromEmail,
-      to: [toEmail],
-      replyTo: email ? String(email) : undefined,
-      subject: `New live-demo lead${name ? ` — ${name}` : ""}`,
-      text:
-        `New lead from the live demo${page ? ` (${page})` : ""}:\n\n` +
-        `Name:  ${name || "(not provided)"}\n` +
-        `Email: ${email || "(not provided)"}\n` +
-        `Phone: ${phone || "(not provided)"}\n`,
-    });
+    // 1) Record the lead and notify the team. Two sinks, one statement, on
+    //    purpose: the CRM is the system of record and the email is only the
+    //    alert, and losing either silently is the failure this shape prevents.
+    const [notifyLeg, crmLeg] = await Promise.allSettled<LegResult>([
+      resend.emails
+        .send({
+          from: fromEmail,
+          to: [toEmail],
+          replyTo: email ? String(email) : undefined,
+          subject: `New live-demo lead${name ? ` — ${name}` : ""}`,
+          text:
+            `New lead from the live demo${page ? ` (${page})` : ""}:\n\n` +
+            `Name:  ${name || "(not provided)"}\n` +
+            `Email: ${email || "(not provided)"}\n` +
+            `Phone: ${phone || "(not provided)"}\n`,
+        })
+        .then(({ error }) =>
+          error
+            ? ({ ok: false, error: String(error) } as LegResult)
+            : ({ ok: true } as LegResult),
+        ),
+      sendToCrm(lead),
+    ]);
 
-    if (error) {
-      console.error("Resend error:", error);
+    const notify = settled(notifyLeg);
+    const crm = settled(crmLeg);
+    reportDelivery("lead", lead, { notify, crm });
+
+    // Only a failed notification is worth a non-2xx: the CRM leg failing still
+    // leaves the lead in the inbox, and the visitor should not be blocked from
+    // their demo by our bookkeeping.
+    if (!notify.ok) {
       return res.status(502).json({ error: "Could not send the lead notification." });
     }
 
@@ -81,7 +119,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
-    return res.status(200).json({ ok: true });
+    // `recorded` tells a caller (and anyone reading the network tab) whether
+    // the lead actually reached the CRM, rather than implying it from a 200.
+    return res.status(200).json({ ok: true, recorded: crm.ok });
   } catch (err) {
     console.error("Lead handler error:", err);
     return res.status(500).json({ error: "Unexpected error." });
