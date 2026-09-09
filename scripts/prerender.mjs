@@ -342,9 +342,29 @@ async function main() {
   const { routes: blogRoutes, cache } = await getBlogDataOrFail();
   const staticRoutes =
     LOCALE === 'it' ? STATIC_ROUTES.filter((r) => !EN_ONLY_ROUTES.includes(r)) : STATIC_ROUTES;
-  // Internal preview pages: prerendered so they keep answering 200, forced to
-  // noindex below so they never enter the index or the sitemap.
-  const routes = [...staticRoutes, ...NOINDEX_ROUTES, ...blogRoutes];
+  // UNPUBLISHED PAGES ARE NOT RENDERED AT ALL, so they do not exist in production.
+  //
+  // These were prerendered-but-noindex: reachable at their real URL, kept out of
+  // Google. That is the right shape for a page under review and the wrong one for a
+  // site that has not launched — the pages for the new site are written but not
+  // announced, and "anyone with the URL" is not the same as hidden. vercel.json
+  // rewrites every path with no matching file to /api/not-found, so leaving a route
+  // out of this list IS the hiding mechanism; it is what DEV_ONLY_ROUTES has always
+  // relied on. Publishing is then one edit: move the route out of NOINDEX_ROUTES and
+  // into STATIC_ROUTES, and it gains both a rendered page and an index entry.
+  //
+  // It is also most of the build. These 22 routes include /remote-lab at 212s,
+  // /compare/vs-doing-nothing at 58s and eight /programs/* pages, against a total of
+  // ~1400s for all 168 — so hiding them roughly halves every deploy.
+  //
+  // PRERENDER_INCLUDE_NOINDEX=1 puts them back for one build, which is how to review
+  // one on a preview URL without publishing it.
+  const includeNoindex = process.env.PRERENDER_INCLUDE_NOINDEX === '1';
+  const hidden = includeNoindex ? [] : NOINDEX_ROUTES;
+  const routes = [...staticRoutes, ...(includeNoindex ? NOINDEX_ROUTES : []), ...blogRoutes];
+  if (hidden.length) {
+    console.log(`▸ ${hidden.length} unpublished route(s) NOT rendered — they will 404: ${hidden.join(', ')}`);
+  }
   console.log(`▸ ${routes.length} routes to prerender (locale: ${LOCALE}, ${DOMAIN}).`);
 
   // Layer 1: always, no browser. Read the shell first — later layer-2 writes
