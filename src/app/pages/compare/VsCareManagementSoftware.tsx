@@ -122,6 +122,7 @@ export function VsCareManagementSoftware(webCall: WebCallProps) {
       />
 
       <Hero
+        tone="orbs"
         eyebrow="Compared with care management software"
         headline={<>Tracking the minutes <em>does not create them.</em></>}
         body="Care management software is a system of record for work a person still has to do. It holds the care plan, counts the time and builds the claim, and none of it starts until somebody dials."

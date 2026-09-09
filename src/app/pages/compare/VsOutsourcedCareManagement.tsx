@@ -147,6 +147,7 @@ export function VsOutsourcedCareManagement(webCall: WebCallProps) {
       />
 
       <Hero
+        tone="orbs"
         eyebrow="Compared with outsourced care management"
         headline={<>Your patients. <em>Your claim.</em></>}
         body="Contracting the calling out fills the gap with somebody else's staff. It works, and it means the conversation with your patient, the note and the capacity all sit outside your practice."

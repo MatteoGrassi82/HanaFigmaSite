@@ -118,6 +118,7 @@ export function VsDoingNothing(webCall: WebCallProps) {
           invention it needed was the argument nothing else on the site makes,
           not a picture. That argument is CostOfDelay below. */}
       <Hero
+        tone="orbs"
         eyebrow="Compared with doing nothing"
         headline={<>The gap is not effort. <em>It is hours.</em></>}
         body="Most patients who qualify for chronic care management are not enrolled anywhere. The work is already being done in your practice. It is happening in a form that cannot be billed, to a fraction of the people who qualify."

@@ -76,6 +76,7 @@ export function Academy() {
       />
 
       <Hero
+        tone="orbs"
         eyebrow="Academy"
         headline={<>How these programmes <em>actually work.</em></>}
         body="Who qualifies, what the month has to show, what the codes pay, and where the rules are still open. Written for the person who has to run it."

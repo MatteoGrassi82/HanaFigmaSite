@@ -135,7 +135,20 @@ const TONES = {
      opener the live homepage has always used (CTASection in
      HeroDitheringCard.tsx), lifted here so a second page can have it without a
      second copy of the artwork. Dark is legal at the top of a page; the rule it
-     must not break is the mid-page one, which is why nothing else uses it. */
+     must not break is the mid-page one, which is why no SECTION uses it.
+
+     WHERE IT GOES. The pages a stranger lands on and has to be persuaded by,
+     and only where the page does not already own its opener: /programs,
+     /academy and the three /compare pages. NOT /faq, which is a reference
+     page people scan, and a 78dvh dark opener pushes the answers they came
+     for below the fold. NOT /security, which was tried and reverted: its
+     flagship SafetyStack sits directly under the hero and is itself navy, so
+     the page opened on 1,683px of unbroken dark and the hero stopped reading
+     as an opener at all. A dark hero needs paper or band beneath it. NOT /for-practices or /for-health-systems,
+     which open on a clinician photograph on purpose. NOT the seven programme
+     pages, which draw their own rule in the hero. /pricing, /about and
+     /case-studies build their openers by hand and would each need
+     restructuring, so they are still on paper. */
   orbs: {
     section: "bg-navy",
     eyebrow: "text-white/70",
