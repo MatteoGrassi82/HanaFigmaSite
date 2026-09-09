@@ -452,6 +452,46 @@ export function programmeById(id: ProgrammeId): Programme | undefined {
   return PROGRAMMES.find((p) => p.id === id);
 }
 
+/**
+ * SAME MONTH: which pairs of programmes CMS lets a practice bill for the same
+ * patient in the same month. Drives the stack readout in ProgrammeFilter.
+ *
+ *   "yes"  CMS has said so in a PFS final rule or FAQ (cited per pair).
+ *   "no"   CMS or CPT bars it.
+ *   "open" we have not found the ruling and will not guess. Shown as unsettled.
+ *
+ * Two things every "yes" carries and the UI must repeat: the same minutes can
+ * never count toward two codes, and this is about what may be billed, not what
+ * a given patient qualifies for. Keys are the two ids sorted, joined with "+".
+ *
+ * Sources
+ *   APCM × CCM/PCM/TCM barred; APCM × BHI, RPM, RTM allowed:
+ *     CMS, CY2025 PFS final rule (CMS-1807-F), APCM section.
+ *   CCM × PCM barred: CPT 2022 parenthetical, do not report 99424-99427 in the
+ *     same month as 99487-99491.
+ *   RPM × RTM barred: CMS, CY2022 PFS final rule (CMS-1751-F), RTM section.
+ *   CCM/TCM/BHI/PCM × RPM allowed: CMS, CY2020 (CMS-1715-F) and CY2021
+ *     (CMS-1734-F) PFS final rules.
+ *   CCM/PCM/TCM/BHI × RTM allowed: CMS, CY2022 PFS final rule (CMS-1751-F).
+ *   CCM × TCM allowed: CMS, CY2020 PFS final rule (CMS-1715-F).
+ *   CCM × BHI, TCM × BHI allowed: CMS, Behavioral Health Integration FAQ.
+ */
+export type SameMonth = "yes" | "no" | "open";
+export const SAME_MONTH: Record<string, SameMonth> = {
+  "apcm+ccm": "no", "apcm+pcm": "no", "apcm+tcm": "no",
+  "apcm+bhi": "yes", "apcm+rpm": "yes", "apcm+rtm": "yes",
+  "ccm+pcm": "no",
+  "rpm+rtm": "no",
+  "bhi+ccm": "yes", "ccm+rpm": "yes", "ccm+rtm": "yes", "ccm+tcm": "yes",
+  "bhi+rpm": "yes", "bhi+rtm": "yes", "bhi+tcm": "yes",
+  "pcm+rpm": "yes", "pcm+rtm": "yes",
+  "rpm+tcm": "yes", "rtm+tcm": "yes",
+  "bhi+pcm": "open", "pcm+tcm": "open",
+};
+export function sameMonth(a: ProgrammeId, b: ProgrammeId): SameMonth {
+  return SAME_MONTH[[a, b].sort().join("+")] ?? "open";
+}
+
 export function programmeBySlug(slug: string): Programme | undefined {
   return PROGRAMMES.find((p) => p.slug === slug);
 }

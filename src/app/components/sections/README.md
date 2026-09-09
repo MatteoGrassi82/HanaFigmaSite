@@ -76,7 +76,7 @@ Client-side state, and each one shows its own arithmetic.
 |---|---|---|
 | `EligibilityGap` | Panel dials → the eligible-vs-enrolled gap | Third-party figures, cited on screen |
 | `RevenueEstimator` | Panel × enrolment × rate | Locked per programme |
-| `ProgrammeFilter` | Describe the patient, the fitting programmes stay lit | Hub; all 8 lit by default, so untouched it IS the card grid. Replaced `ProgrammeChooser` + the static grid + `CodeTable` on `/programs` |
+| `ProgrammeFilter` | Describe the patient, the fitting programmes stay lit, and the stacks CMS allows in one month | Hub; all 8 lit by default, so untouched it IS the card grid. Same-month pairs come from `SAME_MONTH` in the content module, each cited. Replaced `ProgrammeChooser` + the static grid + `CodeTable` |
 | `ProgrammeChooser` | Three questions → one programme | **Unused** since 9 Sept 2026 (hub moved to `ProgrammeFilter`) |
 | `EligibilityCheck` | Per-programme eligibility rule | Reads the content module |
 | `CodeTable` | All seven programmes' codes at once | **Unused** since 9 Sept 2026; `PayVisual` per programme, `ProgrammeFilter` on the hub |

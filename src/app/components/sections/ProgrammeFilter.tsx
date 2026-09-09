@@ -1,6 +1,6 @@
 import { useMemo, useState, type ReactNode } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { PROGRAMMES, PROGRAMME_FOOTNOTE, type Programme, type ProgrammeId } from "../../../content/programmes/index";
+import { PROGRAMMES, PROGRAMME_FOOTNOTE, sameMonth, type Programme, type ProgrammeId } from "../../../content/programmes/index";
 import { cn } from "../../../lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -37,9 +37,17 @@ import { cn } from "../../../lib/utils";
  * CONSIDERED for this programme", not "is eligible" -- consent, initiating
  * visit, who may bill and the concurrency rules are open questions listed on
  * every programme page, and this component cannot check any of them. The
- * footnote says so in those words. The one concurrency rule the site DOES hold
- * (APCM excludes CCM, PCM and TCM in the same month, from data.note) is shown
- * when it applies, and nothing else is guessed at.
+ * footnote says so in those words.
+ *
+ * STACKS. Matteo, 9 Sept 2026: "I want to make sure these happen if there is
+ * any possibility I can stack them." So under the cards the section works out
+ * which of the lit programmes CMS lets a practice bill for the same patient in
+ * the same month, from SAME_MONTH in the content module (every pair cited
+ * there). It lists the largest compatible sets with their combined figure, the
+ * pairs that are barred, and the pairs we have not found a ruling on, which it
+ * calls unsettled rather than guessing. Two caveats travel with every stack:
+ * the same minutes never count twice, and a stack is what MAY be billed, not
+ * what this patient qualifies for.
  *
  * ACCESS IS A CARD IN ITS OWN SHAPE, same as on the hub: a payment model by
  * track, not a monthly code, so it carries the track name instead of a rate.
@@ -74,6 +82,43 @@ function apcmCode(count: Count): string {
   return "G0556 · G0557";
 }
 
+/** Short code per programme, for the stack chips. */
+const CODE: Record<ProgrammeId, string> = Object.fromEntries(PROGRAMMES.map((p) => [p.id, p.code])) as Record<ProgrammeId, string>;
+
+interface Stack { ids: ProgrammeId[]; total: number }
+interface Stacks { sets: Stack[]; barred: [ProgrammeId, ProgrammeId][]; open: [ProgrammeId, ProgrammeId][] }
+
+/**
+ * The largest sets of lit programmes that may all share a month, by combined
+ * figure, plus the lit pairs that are barred or unsettled. Only "yes" edges
+ * join a set; an "open" pair keeps the two apart and is reported instead.
+ * Seven programmes at most, so every subset is checked, there are 128.
+ */
+function buildStacks(on: Programme[]): Stacks {
+  const ids = on.map((p) => p.id);
+  const rate = (id: ProgrammeId) => on.find((p) => p.id === id)!.payment.rate;
+  const barred: [ProgrammeId, ProgrammeId][] = [];
+  const open: [ProgrammeId, ProgrammeId][] = [];
+  for (let i = 0; i < ids.length; i++) for (let j = i + 1; j < ids.length; j++) {
+    const v = sameMonth(ids[i], ids[j]);
+    if (v === "no") barred.push([ids[i], ids[j]]);
+    if (v === "open") open.push([ids[i], ids[j]]);
+  }
+  const cliques: ProgrammeId[][] = [];
+  for (let m = 1; m < 1 << ids.length; m++) {
+    const set = ids.filter((_, i) => m & (1 << i));
+    if (set.length < 2) continue;
+    if (set.every((x, i) => set.slice(i + 1).every((y) => sameMonth(x, y) === "yes"))) cliques.push(set);
+  }
+  // maximal only: drop any set contained in a larger one
+  const maximal = cliques.filter((c) => !cliques.some((d) => d.length > c.length && c.every((x) => d.includes(x))));
+  const sets = maximal
+    .map((c) => ({ ids: c, total: c.reduce((n, id) => n + rate(id), 0) }))
+    .sort((x, y) => y.total - x.total)
+    .slice(0, 4);
+  return { sets, barred, open };
+}
+
 const AXES: { key: keyof Answers; legend: string; options: { v: string; label: string }[] }[] = [
   { key: "count", legend: "Chronic conditions", options: [{ v: "any", label: "Any" }, { v: "0", label: "None" }, { v: "1", label: "One" }, { v: "2+", label: "Two or more" }] },
   { key: "device", legend: "A device at home", options: [{ v: "any", label: "Any" }, { v: "none", label: "No device" }, { v: "physiologic", label: "Readings: BP, weight, O₂" }, { v: "therapeutic", label: "Therapy: CPAP, adherence" }] },
@@ -100,16 +145,14 @@ export function ProgrammeFilter({
   const accessOn = lit("access", a);
   const litCount = rows.filter((r) => r.on).length + (accessOn ? 1 : 0);
 
-  // the one concurrency rule the site holds, surfaced only when it bites
-  const apcm = rows.find((r) => r.p.id === "apcm")?.on;
-  const clash = apcm && rows.some((r) => r.on && (r.p.id === "ccm" || r.p.id === "pcm" || r.p.id === "tcm"));
+  const stacks = useMemo(() => buildStacks(rows.filter((r) => r.on).map((r) => r.p)), [rows]);
 
   const fade = reduce ? {} : { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: "-80px" }, transition: { duration: 0.5 } };
 
   return (
     <section id={id} className={cn("scroll-mt-24 py-20 md:py-24 px-6 md:px-16", tone === "band" ? "bg-band border-y border-rule" : "bg-paper")}>
       <div className="max-w-[1120px] mx-auto">
-        <motion.div {...fade} className="max-w-[64ch]">
+        <motion.div {...fade} className="max-w-[64ch] mx-auto text-center">
           <p className="text-eyebrow font-bold uppercase text-ink-mute m-0 mb-4">{eyebrow}</p>
           <h2 className="font-serif text-h2 text-ink m-0 mb-3">{heading}</h2>
           <p className="text-[16.5px] leading-[1.7] text-ink-soft m-0">{body}</p>
@@ -119,8 +162,8 @@ export function ProgrammeFilter({
         <motion.div {...fade} className="mt-9 grid gap-4 rounded-card border border-rule bg-paper-bright p-5 md:p-6 md:grid-cols-2 lg:grid-cols-3">
           {AXES.map((ax) => (
             <fieldset key={ax.key} className="m-0 min-w-0 border-0 p-0">
-              <legend className="text-[12px] font-bold uppercase tracking-[1.2px] text-ink-mute mb-2 px-0">{ax.legend}</legend>
-              <div className="flex flex-wrap gap-1.5">
+              <legend className="text-[12px] font-bold uppercase tracking-[1.2px] text-ink-mute mb-2.5 px-0">{ax.legend}</legend>
+              <div className="flex flex-wrap gap-2">
                 {ax.options.map((o) => {
                   const on = a[ax.key] === o.v;
                   return (
@@ -130,7 +173,7 @@ export function ProgrammeFilter({
                       onClick={() => set(ax.key, o.v)}
                       aria-pressed={on}
                       className={cn(
-                        "rounded-pill border px-3 py-1.5 text-[13.5px] font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
+                        "rounded-pill border px-4 py-2.5 text-[15px] font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
                         on ? "border-brand bg-brand text-white" : "border-rule bg-paper-bright text-ink hover:border-rule-strong"
                       )}
                     >
@@ -199,15 +242,52 @@ export function ProgrammeFilter({
           </li>
         </ul>
 
-        {clash && (
-          <p className="mt-4 flex gap-3 rounded-tile border border-rule bg-paper-bright p-4 text-[13.5px] leading-[1.6] text-ink m-0 max-w-[76ch]">
-            <span aria-hidden className="mt-0.5 h-4 w-1 shrink-0 rounded-pill bg-signal-amber" />
-            <span>APCM cannot be billed in the same month as CCM, PCM or TCM for the same patient. A patient who lights both is one or the other in a given month, not both.</span>
-          </p>
+        {/* ── can they stack? ── */}
+        {stacks.sets.length > 0 && (
+          <div className="mt-6 rounded-card border border-rule bg-paper-bright p-5 md:p-6">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+              <p className="text-[12px] font-bold uppercase tracking-[1.2px] text-ink-mute m-0">Can they stack?</p>
+              <p className="text-[13px] text-ink-mute m-0">Same patient, same month. The same minutes never count twice.</p>
+            </div>
+            <ul className="m-0 mt-4 p-0 list-none grid gap-3 md:grid-cols-2">
+              {stacks.sets.map((st) => (
+                <li key={st.ids.join("+")} className="flex flex-col gap-3 rounded-tile border border-rule-soft bg-paper p-4">
+                  <span className="flex flex-wrap items-center gap-1.5">
+                    {st.ids.map((id, i) => (
+                      <span key={id} className="flex items-center gap-1.5">
+                        {i > 0 && <span aria-hidden className="text-ink-mute text-[13px]">+</span>}
+                        <span className="rounded-pill bg-brand-soft/40 px-2.5 py-1 font-serif text-[16px] leading-none text-ink">{CODE[id]}</span>
+                      </span>
+                    ))}
+                  </span>
+                  <span className="flex items-baseline gap-1.5">
+                    <span className="font-serif text-[26px] leading-none text-ink tabular-nums">${st.total.toFixed(2)}</span>
+                    <span className="text-[12px] text-ink-mute">{st.ids.includes("tcm") ? "in a month with a discharge" : "in one month"}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+            {(stacks.barred.length > 0 || stacks.open.length > 0) && (
+              <ul className="m-0 mt-4 p-0 list-none flex flex-wrap gap-x-5 gap-y-1.5 text-[13.5px] leading-[1.6]">
+                {stacks.barred.map(([x, y]) => (
+                  <li key={x + y} className="flex items-center gap-2 text-ink">
+                    <span aria-hidden className="h-3.5 w-1 shrink-0 rounded-pill bg-signal-amber" />
+                    {CODE[x]} and {CODE[y]}: not the same month
+                  </li>
+                ))}
+                {stacks.open.map(([x, y]) => (
+                  <li key={x + y} className="flex items-center gap-2 text-ink-soft">
+                    <span aria-hidden className="h-3.5 w-1 shrink-0 rounded-pill bg-rule-strong" />
+                    {CODE[x]} and {CODE[y]}: not settled, ask your biller
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         )}
 
-        <p className="text-[13px] leading-[1.65] text-ink-mute mt-5 mb-0 max-w-[76ch]">
-          A lit card means a patient like this can be considered for that programme, not that they are eligible. Consent, the initiating visit, who may bill and the other concurrency rules are open questions listed on each programme page, and this cannot check them. {PROGRAMME_FOOTNOTE}
+        <p className="text-[13px] leading-[1.65] text-ink-mute mt-5 mb-0 max-w-[76ch] mx-auto text-center">
+          A lit card means a patient like this can be considered for that programme, not that they are eligible. Consent, the initiating visit, who may bill and the rest of the fine print are open questions listed on each programme page, and this cannot check them. A stack is what may be billed together, not what this patient qualifies for. {PROGRAMME_FOOTNOTE}
         </p>
       </div>
     </section>

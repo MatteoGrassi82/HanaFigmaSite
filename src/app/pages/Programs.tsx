@@ -1,6 +1,6 @@
 import { SEO, breadcrumbSchema, faqSchema } from "../components/SEO";
 import { Footer } from "../components/layout/Footer";
-import { PhotoHero, KITCHEN_PHOTO } from "../components/sections/PhotoHero";
+import { Hero } from "../components/sections/Hero";
 import { SonicDemoSection } from "../components/sections/SonicDemoSection";
 import type { WebCallProps } from "../components/templates/ProgrammePage";
 import { ProgrammeFilter } from "../components/sections/ProgrammeFilter";
@@ -46,7 +46,7 @@ const HUB_FAQS = [
   },
   {
     q: "Can a patient be on more than one?",
-    a: "Sometimes, and the rules are specific. Advanced primary care management cannot be billed in the same month as chronic care management, principal care management or transitional care management for the same patient. The other combinations are not settled on this page, and we will not guess at them. Ask your biller, or ask us and we will go through it with you.",
+    a: "Often, and the filter above works it out for you: describe the patient and it shows the largest sets CMS lets a practice bill in the same month, with the combined figure. Advanced primary care management cannot share a month with chronic care management, principal care management or transitional care management, and remote physiologic and remote therapeutic monitoring cannot share one either. Two pairs we have not found a ruling on are marked unsettled rather than guessed. The same minutes never count toward two codes, and a stack is what may be billed, not what a given patient qualifies for.",
   },
   {
     q: "Do we need different staff for each one?",
@@ -78,17 +78,17 @@ export function Programs(webCall: WebCallProps) {
         ]}
       />
 
-      {/* The hub is the front door of the whole /programs cluster, so it opens
-          the way a programme page does. Same kitchen photograph the programme
-          pages use, on purpose: a reader who clicks through to CCM should feel
-          they stayed in the same place, and the hub is the one page where
-          repeating that face is continuity rather than reuse. */}
-      <PhotoHero
+      {/* Centred, no photograph. Matteo, 9 Sept 2026: "I don't like the one
+          with the image. It should just be the one in the middle." The
+          programme pages draw their rule in the hero; the hub has no single
+          rule to draw, so it says the one sentence and gets out of the way. */}
+      <Hero
         eyebrow="Care programmes"
         headline={<>One loop. <em>Seven ways to bill it.</em></>}
         body="Your patients already qualify for more than you are running. The difference between these programmes is who counts and what the month has to show, not how the work gets done."
-        image={KITCHEN_PHOTO}
-        secondaryCta={{ label: "Compare the codes", href: "#codes" }}
+        primaryCta={{ label: "Book a demo", href: DEMO_HREF }}
+        secondaryCta={{ label: "Which fits my patient?", href: "#codes" }}
+        trustLine="Your team reviews. Your provider signs."
       />
 
       {/* ONE SECTION WHERE THERE WERE THREE. The three-question chooser
