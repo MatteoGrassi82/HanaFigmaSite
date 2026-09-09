@@ -3,12 +3,10 @@ import { Footer } from "../components/layout/Footer";
 import { PhotoHero, KITCHEN_PHOTO } from "../components/sections/PhotoHero";
 import { SonicDemoSection } from "../components/sections/SonicDemoSection";
 import type { WebCallProps } from "../components/templates/ProgrammePage";
-import { ProgrammeChooser } from "../components/sections/ProgrammeChooser";
-import { CodeTable } from "../components/sections/CodeTable";
+import { ProgrammeFilter } from "../components/sections/ProgrammeFilter";
 import { HowItWorksLoop } from "../components/sections/HowItWorksLoop";
 import { FaqSection } from "../components/sections/FaqSection";
 import { CtaBand, DEMO_HREF } from "../components/sections/CtaBand";
-import { PROGRAMMES, PROGRAMME_FOOTNOTE } from "../../content/programmes/index";
 
 /**
  * /programs — the hub.
@@ -18,12 +16,12 @@ import { PROGRAMMES, PROGRAMME_FOOTNOTE } from "../../content/programmes/index";
  * "which of these is my patient", which is the single most confusing thing about
  * the category and the reason this page exists at all.
  *
- * So the order is different too:
- *   1. The chooser, first. It is the job.
- *   2. The seven programmes as cards, for anyone who already knows.
- *   3. The code table, all seven at once, which is the comparison a hub can make
- *      and a programme page cannot.
- *   4. The loop, because the month is the same shape whichever one you bill.
+ * So the order is different too (rewritten 9 Sept 2026 -- the chooser, the card
+ * grid and the code table collapsed into ProgrammeFilter, see that file):
+ *   1. The filter, first. It is the job: describe the patient, the fitting
+ *      programmes stay lit. With nothing toggled it is the card grid, and every
+ *      card carries its code family, so it is the comparison too.
+ *   2. The loop, because the month is the same shape whichever one you bill.
  *
  * NO REVENUE ESTIMATOR HERE. It is locked per programme on the programme pages,
  * and an unlocked seven-way version on the hub invites comparing programmes by
@@ -93,88 +91,14 @@ export function Programs(webCall: WebCallProps) {
         secondaryCta={{ label: "Compare the codes", href: "#codes" }}
       />
 
-      {/* The job of this page. Three questions, one answer. */}
-      <ProgrammeChooser programsHref="/programs" />
-
-      {/* For anyone who already knows which one they want. */}
-      <section id="all" className="scroll-mt-24 bg-paper py-20 md:py-24 px-6 md:px-16">
-        <div className="max-w-[1120px] mx-auto">
-          <p className="text-eyebrow font-bold uppercase text-ink-mute m-0 mb-4">All seven, and the model</p>
-          <h2 className="font-serif text-h2 text-ink m-0 mb-10 max-w-[20ch]">
-            Or go straight to the one you meant.
-          </h2>
-          <ul className="m-0 p-0 list-none grid gap-4 md:grid-cols-2">
-            {PROGRAMMES.map((p) => (
-              <li key={p.id}>
-                <a
-                  href={p.path}
-                  className="group flex h-full flex-col rounded-card border border-rule bg-paper-bright p-6 md:p-7 no-underline transition-colors hover:border-rule-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-                >
-                  <span className="flex items-baseline gap-3">
-                    <span className="font-serif text-[26px] leading-none text-ink">{p.code}</span>
-                    <span className="text-[12.5px] text-ink-mute tabular-nums">{p.codes}</span>
-                  </span>
-                  <span className="mt-1 text-[15px] font-medium text-ink-soft">{p.name}</span>
-                  <span className="mt-4 text-[15px] leading-[1.65] text-ink-soft">{p.summary}</span>
-                  <span className="mt-5 flex items-baseline gap-2 border-t border-rule-soft pt-4">
-                    <span className="font-serif text-[22px] text-ink tabular-nums">
-                      ${p.payment.rate.toFixed(2)}
-                    </span>
-                    <span className="text-[12.5px] text-ink-mute">
-                      {p.payment.year} national, before adjustment
-                    </span>
-                  </span>
-                  <span className="mt-3 text-[14px] font-semibold text-ink-soft underline underline-offset-4 decoration-rule group-hover:decoration-ink-soft">
-                    Read the {p.code} page
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-
-          {/* THE ACCESS MODEL, as an eighth card in its own shape. It was renamed
-              INTO /programs/ on 6 Sept and then never linked from here, so a
-              reader on this hub had no way to find it. It is deliberately NOT a
-              PROGRAMMES entry and NOT a ProgrammePage: it is a CMS payment
-              model billed by TRACK with a 50% withhold, not a monthly CPT with a
-              twenty-minute rule, and forcing it into the template would
-              misdescribe it. So: same card grammar, different fields, own page. */}
-          <a
-            href="/programs/access-model"
-            className="group mt-4 flex flex-col gap-4 rounded-card border border-rule bg-paper-2 p-6 md:p-7 no-underline transition-colors hover:border-rule-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand sm:flex-row sm:items-center sm:justify-between"
-          >
-            <span className="min-w-0">
-              <span className="flex items-baseline gap-3">
-                <span className="font-serif text-[26px] leading-none text-ink">ACCESS</span>
-                <span className="text-[12.5px] text-ink-mute">CMS model · four tracks</span>
-              </span>
-              <span className="mt-1 block text-[15px] font-medium text-ink-soft">
-                Cardiometabolic, enhanced cardiometabolic, behavioral health, musculoskeletal
-              </span>
-              <span className="mt-3 block text-[15px] leading-[1.65] text-ink-soft max-w-[62ch]">
-                Not a monthly code. A payment model that pays per track, with half of it withheld
-                until the outcomes are submitted. HANA keeps the readings and labs current so the
-                withheld half is actually paid.
-              </span>
-            </span>
-            <span className="shrink-0 text-[14px] font-semibold text-ink-soft underline underline-offset-4 decoration-rule group-hover:decoration-ink-soft">
-              Read the ACCESS page
-            </span>
-          </a>
-
-          <p className="text-[14px] leading-[1.6] text-ink-mute m-0 mt-6 max-w-[70ch]">
-            {PROGRAMME_FOOTNOTE}
-          </p>
-        </div>
-      </section>
-
-      {/* The comparison a hub can make and a programme page cannot. */}
-      {/* `compact` folds the caveats behind a disclosure instead of printing
-          them expanded, which is what ran this section to 2,651px -- the same
-          fault PayVisual fixed on the programme pages. The seven-way table
-          itself stays: comparing all of them at once is the hub's actual job
-          and the one thing a programme page cannot do. */}
-      <CodeTable id="codes" tone="band" compact />
+      {/* ONE SECTION WHERE THERE WERE THREE. The three-question chooser
+          (1,668px, 450 words), the static card grid (1,621px) and the seven-way
+          code table (2,539px, 1,109 words) all answered "which programme is
+          this patient" -- one by asking, one by listing, one by tabulating. The
+          filter does it by pointing: describe the patient, the fitting
+          programmes stay lit, and with nothing toggled it IS the card grid. The
+          hero's "Compare the codes" anchor still lands here (#codes). */}
+      <ProgrammeFilter id="codes" />
 
       {/* The month is the same shape whichever one you bill. */}
       <HowItWorksLoop id="how-it-works" />

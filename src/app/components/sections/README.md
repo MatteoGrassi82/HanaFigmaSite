@@ -48,7 +48,8 @@ change here lands on seven pages at once.
 
 | Section | Answers | Key props |
 |---|---|---|
-| `ProgrammeHero` | Is this a real patient and a real month? | `data` `headline` `rows` `image` |
+| `ProgrammeHero` | What is the one rule this programme turns on? | `data` `headline` `rows`; draws a `RuleDiagram` from `data`, or a photo if `image` is passed |
+| `RuleDiagram` | The rule as a drawing: minute arc, 13-element grid, 16-of-30 day strip, discharge timeline | `programme`; SVG from tokens, no photo, so seven pages get seven different heroes |
 | `EligibilityCheck` | Is this me? | `data` `id` |
 | `PayVisual` | What does it pay? | `data` `heading` `tone` |
 | `WhoDoesWhat` | What do I still have to do? | `data` `id` |
@@ -75,9 +76,11 @@ Client-side state, and each one shows its own arithmetic.
 |---|---|---|
 | `EligibilityGap` | Panel dials → the eligible-vs-enrolled gap | Third-party figures, cited on screen |
 | `RevenueEstimator` | Panel × enrolment × rate | Locked per programme |
-| `ProgrammeChooser` | Three questions → one programme | Declines to answer three branches on purpose |
+| `ProgrammeFilter` | Describe the patient, the fitting programmes stay lit | Hub; all 8 lit by default, so untouched it IS the card grid. Replaced `ProgrammeChooser` + the static grid + `CodeTable` on `/programs` |
+| `ProgrammeChooser` | Three questions → one programme | **Unused** since 9 Sept 2026 (hub moved to `ProgrammeFilter`) |
 | `EligibilityCheck` | Per-programme eligibility rule | Reads the content module |
-| `CodeTable` | All seven programmes' codes at once | Hub only; `PayVisual` replaced it per-programme |
+| `CodeTable` | All seven programmes' codes at once | **Unused** since 9 Sept 2026; `PayVisual` per programme, `ProgrammeFilter` on the hub |
+| `CostOfDelay` | Months unbilled → revenue that never comes back | `/compare/vs-doing-nothing`; real `<table>`, gross/net toggle |
 | `AccordionPlayer` | Accordion ↔ Remotion `<Player>`, two-way scrub | Compositions only, never a video file |
 | `VideoSection` | A real `.mp4`, native `<video>` | Buffering + error states for hosted files |
 
@@ -112,7 +115,7 @@ The site owns **two** real product photos and **two** AI-generated ones.
 |---|---|---|
 | `products/contact-front-desk.webp` | HANA Contact | Real |
 | `products/remote-patient-call.webp` | HANA Remote, `MonthWrittenUp`, homepage | Real |
-| `products/programme-hero-kitchen.webp` | `ProgrammeHero` default | **AI-generated** |
+| `products/programme-hero-kitchen.webp` | `/programs` hub hero only | **AI-generated**; programme pages draw `RuleDiagram` instead |
 | `products/programme-hero-armchair.webp` | unused | **AI-generated**, warmer, better uncovered |
 
 ⚠ **The people in the generated photos do not exist.** Fine for an illustrative
