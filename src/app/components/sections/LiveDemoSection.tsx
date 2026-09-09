@@ -27,14 +27,16 @@ const DEMO_AGENT_ID = "squad:91b2273e-a3b2-46df-af20-193b50054921";
 // Carrier registration for the line (10DLC, CK3JA0R) completed 2026-09-08.
 const E164 = /^\+[1-9]\d{7,14}$/;
 
-// The text flow ships DARK until its reply->call leg is proven on a real handset.
+// LIVE. The US path is the one being opened: _callback_line texts a +1 visitor from
+// the Telnyx line (+1 313 514 6395), which has been in the agent's number->agent map
+// from the start, so the fault that dropped the Irish reply never applied to it.
 // Everything up to that leg works: the menu sends, and on 2026-09-08 an Irish tester
 // got it and replied "monitoring" (Twilio has both messages). The reply was then
 // dropped, because the UK line it landed on was not in the agent's number->agent map.
 // That is fixed and deployed, but not yet re-tested with a real message — and a
 // visitor who fills in the form and never gets a call is a worse demo than no form.
 // Flip to true once a reply has produced a call, and redeploy.
-const TEXT_IN_ENABLED = false;
+const TEXT_IN_ENABLED = true;
 
 interface LiveDemoSectionProps {
   activeAgentId: string | null;
