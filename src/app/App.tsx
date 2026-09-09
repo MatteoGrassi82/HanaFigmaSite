@@ -84,6 +84,21 @@ const TransitionalCareManagement = lazy(() =>
 // Configuration
 const VAPI_PUBLIC_KEY = "5dfc26c6-90a6-4efe-907b-7bd0d690dc6e";
 
+// The in-browser demo now runs on HANA's OWN pipeline over WebRTC, not on a hosted
+// vendor. Same agent, same personas and same cloned voice the phone demo uses, so the
+// browser and the phone finally demonstrate the same product.
+//
+// It replaces a Vapi squad that could not work at all: all five of its assistants were
+// set to rime-ai/ozu on model `arcana`, and `ozu` is a CODA speaker — Rime answers
+// "Invalid speaker: ozu", so every web call ended pipeline-error-rimeai-voice-failed.
+// Bland was considered and ruled out: its browser SDK is text webchat, no mic capture.
+//
+// No persona is passed. The agent's `inbound` persona is written as a greeter — it
+// offers the four demos in one line and runs whichever the visitor picks — which is
+// exactly what the Vapi greeter squad was doing, without the routing.
+const AGENT_URL = "https://hana-kat-clinic.fly.dev";
+const AGENT_WEBRTC = `${AGENT_URL}/webrtc/offer?agent=sitedemo&voice=cartesia-hana-v3&llm=google&noises=on`;
+
 export default function App() {
   return (
     <ConversationProvider>
@@ -97,6 +112,10 @@ function AppContent() {
   const [webCallStatus, setWebCallStatus] = useState<"idle" | "connecting" | "active">("idle");
   const vapiRef = useRef<any>(null);
   const vapiLoadedRef = useRef(false);
+  // The WebRTC leg: the peer connection and the <audio> sink that plays the agent.
+  const pcRef = useRef<RTCPeerConnection | null>(null);
+  const micRef = useRef<MediaStream | null>(null);
+  const sinkRef = useRef<HTMLAudioElement | null>(null);
 
   const elevenLabsConversation = useConversation({
     onConnect: () => {
@@ -219,47 +238,88 @@ function AppContent() {
         });
       }
     } else {
-      if (!vapiRef.current) {
-        toast.error("Voice SDK not loaded", { description: "Please wait a moment and try again." });
-        return;
-      }
-
       if (activeAgentId && activeAgentId !== agentId) return;
 
       setActiveAgentId(agentId);
       setWebCallStatus("connecting");
 
+      let mic: MediaStream;
       try {
-        await navigator.mediaDevices.getUserMedia({ audio: true });
+        mic = await navigator.mediaDevices.getUserMedia({ audio: true });
       } catch (err: any) {
         setWebCallStatus("idle");
         setActiveAgentId(null);
-
-        if (err.name === "NotAllowedError" || err.name === "PermissionDeniedError") {
-          toast.error("Microphone Access Blocked", {
-            description: "Browser denied microphone access. Check permissions or try opening in a new window."
-          });
-        } else {
-          console.error("Microphone Error:", err);
-          toast.error("Microphone Error", {
-            description: "Could not access microphone. Please check your device settings."
-          });
-        }
+        toast.error(
+          err?.name === "NotAllowedError" || err?.name === "PermissionDeniedError"
+            ? "Microphone Access Blocked"
+            : "Microphone Error",
+          { description: "HANA needs your microphone for a web call. Check the browser's permissions and try again." }
+        );
         return;
       }
+      micRef.current = mic;
 
       try {
-        // Vapi's start() is positional: start(assistant, overrides, squad, …).
-        // A squad goes in the 3rd slot; a single assistant in the 1st.
-        if (squadId) {
-          await vapiRef.current.start(undefined, undefined, squadId);
-        } else {
-          await vapiRef.current.start(assistantId);
+        const pc = new RTCPeerConnection({
+          iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
+        });
+        pcRef.current = pc;
+
+        // Play whatever the agent sends. Created here rather than in JSX because it
+        // never renders: it exists only as an audio sink, and autoplay is allowed
+        // because we are inside the click that started the call.
+        const sink = sinkRef.current ?? new Audio();
+        sink.autoplay = true;
+        sinkRef.current = sink;
+        pc.ontrack = (e) => { sink.srcObject = e.streams[0]; };
+
+        mic.getTracks().forEach((t) => pc.addTrack(t, mic));
+
+        pc.onconnectionstatechange = () => {
+          const st = pc.connectionState;
+          if (st === "connected") setWebCallStatus("active");
+          if (st === "failed" || st === "closed" || st === "disconnected") {
+            setWebCallStatus("idle");
+            setActiveAgentId(null);
+          }
+        };
+
+        await pc.setLocalDescription(await pc.createOffer());
+        // Wait for ICE gathering: the server answers once, from the SDP we post, so a
+        // half-gathered offer means candidates it never learns about and no audio.
+        if (pc.iceGatheringState !== "complete") {
+          await new Promise<void>((resolve) => {
+            const done = () => {
+              if (pc.iceGatheringState === "complete") {
+                pc.removeEventListener("icegatheringstatechange", done);
+                resolve();
+              }
+            };
+            pc.addEventListener("icegatheringstatechange", done);
+            setTimeout(resolve, 3000); // never hang the UI on a slow STUN server
+          });
         }
-      } catch (error) {
-        console.error("Vapi start error:", error);
+
+        const r = await fetch(AGENT_WEBRTC, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            sdp: pc.localDescription?.sdp,
+            type: pc.localDescription?.type,
+          }),
+        });
+        if (!r.ok) throw new Error(`agent answered ${r.status}`);
+        await pc.setRemoteDescription(await r.json());
+      } catch (error: any) {
+        console.error("web call error:", error);
+        micRef.current?.getTracks().forEach((t) => t.stop());
+        pcRef.current?.close();
+        pcRef.current = null;
         setWebCallStatus("idle");
         setActiveAgentId(null);
+        toast.error("Couldn't start the call", {
+          description: error?.message || "The agent didn't answer. Please try again.",
+        });
       }
     }
   };
@@ -269,6 +329,16 @@ function AppContent() {
     if (vapiRef.current) {
       vapiRef.current.stop();
     }
+    // Release the microphone as well as the connection. Closing the peer connection
+    // alone leaves the browser's recording indicator on, which reads as "this site is
+    // still listening to me" long after the call ended.
+    micRef.current?.getTracks().forEach((t) => t.stop());
+    micRef.current = null;
+    pcRef.current?.close();
+    pcRef.current = null;
+    if (sinkRef.current) sinkRef.current.srcObject = null;
+    setWebCallStatus("idle");
+    setActiveAgentId(null);
   };
 
   // The Access page is a US-specific promo; it doesn't apply to the Italian

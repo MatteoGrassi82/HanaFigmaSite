@@ -30,6 +30,15 @@ const DEMO_AGENT_ID = "squad:91b2273e-a3b2-46df-af20-193b50054921";
 // Carrier registration for the line (10DLC, CK3JA0R) completed 2026-09-08.
 const E164 = /^\+[1-9]\d{7,14}$/;
 
+// The text flow ships DARK until its reply->call leg is proven on a real handset.
+// Everything up to that leg works: the menu sends, and on 2026-09-08 an Irish tester
+// got it and replied "monitoring" (Twilio has both messages). The reply was then
+// dropped, because the UK line it landed on was not in the agent's number->agent map.
+// That is fixed and deployed, but not yet re-tested with a real message — and a
+// visitor who fills in the form and never gets a call is a worse demo than no form.
+// Flip to true once a reply has produced a call, and redeploy.
+const TEXT_IN_ENABLED = false;
+
 interface LiveDemoSectionProps {
   activeAgentId: string | null;
   webCallStatus: "idle" | "connecting" | "active";
@@ -220,6 +229,7 @@ export function LiveDemoSection({
                       {fieldErrors.email && <p className="mt-1 text-xs text-red-500">{fieldErrors.email}</p>}
                     </div>
   
+                    {TEXT_IN_ENABLED && <>
                     {/* Phone */}
                     <div>
                       <label className={labelClass}>{ld.phoneLabel}</label>
@@ -276,6 +286,7 @@ export function LiveDemoSection({
                     <div className="flex items-center gap-3 text-[12px] font-bold tracking-[2px] uppercase text-ink-mute">
                       <span className="h-px flex-1 bg-[#dfe3ee]" />{ld.or}<span className="h-px flex-1 bg-[#dfe3ee]" />
                     </div>
+                    </>}
 
                     {/* The web call stays as the desktop path — no handset needed. */}
                     <button
