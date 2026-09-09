@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
-import { PhotoHero, KITCHEN_PHOTO, type HeroCardRow } from "./PhotoHero";
+import { PhotoHero, type HeroCardRow } from "./PhotoHero";
+import { RuleDiagram } from "./RuleDiagram";
 import type { Programme } from "../../../content/programmes/index";
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -44,7 +45,7 @@ export interface ProgrammeHeroProps {
   id?: string;
 }
 
-export function ProgrammeHero({ data, headline, body, rows, image = KITCHEN_PHOTO, trustLine, id }: ProgrammeHeroProps) {
+export function ProgrammeHero({ data, headline, body, rows, image, trustLine, id }: ProgrammeHeroProps) {
   return (
     <PhotoHero
       id={id}
@@ -53,6 +54,12 @@ export function ProgrammeHero({ data, headline, body, rows, image = KITCHEN_PHOT
       body={body ?? data.summary}
       rows={rows}
       image={image}
+      /* THE RULE, DRAWN, in place of a photograph. 9 Sept 2026, after all seven
+         programme heroes were found to carry the same face: the programmes
+         differ by rule, code and rate, so the rule is the visual. Passing an
+         `image` explicitly still wins, for a page that has a real photograph. */
+      visual={image ? undefined : <RuleDiagram programme={data} />}
+      caption={image ? undefined : data.rule}
       secondaryCta={{ label: "See what it pays", href: "#pays" }}
       trustLine={trustLine}
     />

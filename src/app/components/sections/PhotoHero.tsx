@@ -44,6 +44,10 @@ export interface PhotoHeroProps {
   trustLine?: string;
   /** Text under the card. Defaults to the illustrative disclaimer. */
   caption?: string;
+  /** Replaces the photograph and activity card entirely. Used by the programme
+   *  pages to draw the programme's own rule instead of a stock face -- seven
+   *  heroes that differ by data should not share a photo. */
+  visual?: import("react").ReactNode;
   id?: string;
 }
 
@@ -108,6 +112,7 @@ export function PhotoHero({
   secondaryCta,
   trustLine = "Your team reviews. Your provider signs.",
   caption = "Illustrative. Names and readings are not real patients.",
+  visual,
   id,
 }: PhotoHeroProps) {
   const reduce = useReducedMotion();
@@ -156,34 +161,40 @@ export function PhotoHero({
           {...(reduce ? {} : { initial: { opacity: 0, y: 24 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] as const } })}
           className="m-0 w-full lg:justify-self-end lg:max-w-[520px]"
         >
-          <div className="relative rounded-card overflow-hidden border border-rule bg-paper-bright shadow-card">
-            <div className="relative">
-              <img
-                src={image.src}
-                alt={image.alt}
-                className="w-full h-[260px] sm:h-[300px] object-cover block"
-                style={{ objectPosition: image.position }}
-              />
-              <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-navy/35 via-transparent to-transparent" />
+          {visual ? (
+            <div className="relative rounded-card overflow-hidden border border-rule bg-paper-bright shadow-card p-6 sm:p-8 aspect-[5/3]">
+              {visual}
             </div>
-            <div className="relative z-10 mx-5 sm:mx-7 -mt-14 mb-6 bg-paper-bright rounded-tile border border-rule shadow-[0_12px_30px_rgba(0,18,47,0.14)] px-5 py-1.5">
-              <p className="text-[11px] font-bold uppercase tracking-[1.2px] text-ink-mute m-0 pt-3 pb-1">
-                One month · an example
-              </p>
-              {rows.map((row, i) => (
-                <div
-                  key={row.label}
-                  className={`flex items-center justify-between gap-3 py-3 ${i > 0 ? "border-t border-rule-soft" : ""}`}
-                >
-                  <span className="text-[13.5px] text-ink truncate">{row.label}</span>
-                  <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-ink-soft whitespace-nowrap">
-                    <span aria-hidden className={`w-[6px] h-[6px] rounded-full shrink-0 ${DOT[row.tone ?? "accent"]}`} />
-                    {row.chip}
-                  </span>
-                </div>
-              ))}
+          ) : (
+            <div className="relative rounded-card overflow-hidden border border-rule bg-paper-bright shadow-card">
+              <div className="relative">
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  className="w-full h-[260px] sm:h-[300px] object-cover block"
+                  style={{ objectPosition: image.position }}
+                />
+                <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-navy/35 via-transparent to-transparent" />
+              </div>
+              <div className="relative z-10 mx-5 sm:mx-7 -mt-14 mb-6 bg-paper-bright rounded-tile border border-rule shadow-[0_12px_30px_rgba(0,18,47,0.14)] px-5 py-1.5">
+                <p className="text-[11px] font-bold uppercase tracking-[1.2px] text-ink-mute m-0 pt-3 pb-1">
+                  One month · an example
+                </p>
+                {rows.map((row, i) => (
+                  <div
+                    key={row.label}
+                    className={`flex items-center justify-between gap-3 py-3 ${i > 0 ? "border-t border-rule-soft" : ""}`}
+                  >
+                    <span className="text-[13.5px] text-ink truncate">{row.label}</span>
+                    <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-ink-soft whitespace-nowrap">
+                      <span aria-hidden className={`w-[6px] h-[6px] rounded-full shrink-0 ${DOT[row.tone ?? "accent"]}`} />
+                      {row.chip}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
           {caption && (
             <figcaption className="text-[12.5px] leading-[1.5] text-ink-mute mt-3 mb-0 text-center">
               {caption}
