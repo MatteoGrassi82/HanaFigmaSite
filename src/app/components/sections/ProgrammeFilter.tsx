@@ -199,7 +199,7 @@ export function ProgrammeFilter({
               {AXES.map((ax) => (
                 <fieldset key={ax.key} className="m-0 min-w-0 border-0 p-0">
                   <legend className="text-[15px] font-semibold text-ink mb-2 px-0">{ax.legend}</legend>
-                  <div role="group" className={cn("grid gap-1 rounded-[28px] border border-rule bg-paper p-1", ax.options.length === 4 ? "grid-cols-2 sm:grid-cols-4" : "grid-cols-3")}>
+                  <div role="group" className={cn("grid gap-1 rounded-[28px] bg-band p-1", ax.options.length === 4 ? "grid-cols-2 sm:grid-cols-4" : "grid-cols-3")}>
                     {ax.options.map((o) => {
                       const on = ax.key === "track" && o.v === "enrolled" ? enrolled : a[ax.key] === o.v;
                       return (
@@ -210,7 +210,7 @@ export function ProgrammeFilter({
                           aria-pressed={on}
                           className={cn(
                             "min-w-0 truncate rounded-pill px-1 py-3 text-[13px] lg:text-[14px] xl:text-[15px] font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
-                            on ? "bg-brand text-white" : "text-ink hover:bg-band"
+                            on ? "bg-ink text-white shadow-[0_1px_2px_rgba(0,18,47,0.18)]" : "text-ink-soft hover:bg-paper-bright hover:text-ink"
                           )}
                         >
                           {o.label}
@@ -220,10 +220,10 @@ export function ProgrammeFilter({
                   </div>
                   {ax.hint && <p className="mt-2 text-[12.5px] leading-[1.5] text-ink-mute m-0">{ax.hint}</p>}
                   {ax.key === "track" && enrolled && (
-                    <div role="group" aria-label="ACCESS track" className="mt-2 grid grid-cols-4 gap-1 rounded-pill border border-rule-soft bg-paper p-1">
+                    <div role="group" aria-label="ACCESS track" className="mt-2 grid grid-cols-4 gap-1 rounded-pill bg-band p-1">
                       {TRACKS.map((t) => (
                         <button key={t} type="button" onClick={() => set("track", t)} aria-pressed={a.track === t}
-                          className={cn("rounded-pill px-2 py-2 text-[13.5px] font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand", a.track === t ? "bg-ink text-white" : "text-ink-soft hover:bg-band")}>
+                          className={cn("rounded-pill px-2 py-2 text-[13.5px] font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand", a.track === t ? "bg-ink text-white" : "text-ink-soft hover:bg-paper-bright hover:text-ink")}>
                           {t}
                         </button>
                       ))}
@@ -233,7 +233,7 @@ export function ProgrammeFilter({
               ))}
             </div>
 
-            <p className="mt-6 border-t border-rule-soft pt-4 font-serif text-[18px] leading-[1.4] text-ink m-0" aria-live="polite">
+            <p className={cn("m-0 mt-6 rounded-tile px-4 py-3 font-serif text-[18px] leading-[1.4]", sentence ? "bg-brand-soft/25 text-ink" : "bg-band/60 text-ink-soft")} aria-live="polite">
               {sentence ?? <span className="text-ink-soft">Any patient on your panel. Toggle to describe one.</span>}
             </p>
           </div>
@@ -244,15 +244,15 @@ export function ProgrammeFilter({
               <div className="flex items-baseline justify-between gap-3">
                 <p className="text-[12px] font-bold uppercase tracking-[1.2px] text-ink-mute m-0">Programmes to consider</p>
                 <p className="text-[13.5px] text-ink-soft m-0 tabular-nums" aria-live="polite">
-                  {touched ? <><strong className="text-ink">{litCount}</strong> of 8</> : "All 8"}
+                  {touched ? <><strong className="text-brand">{litCount}</strong> of 8</> : "All 8"}
                 </p>
               </div>
               <ul className="m-0 mt-3 p-0 list-none flex flex-col divide-y divide-rule-soft" aria-label="Programmes">
                 {rows.map(({ p, on }) => (
-                  <li key={p.id} data-lit={on} className={cn("transition-opacity duration-300", on ? "opacity-100" : "opacity-30")} aria-hidden={!on && touched ? true : undefined}>
+                  <li key={p.id} data-lit={on} className={cn("transition-all duration-300 border-l-[3px] pl-4", on ? "border-brand opacity-100" : "border-transparent opacity-35")} aria-hidden={!on && touched ? true : undefined}>
                     <a href={p.path} tabIndex={on ? 0 : -1}
                       className="group grid grid-cols-[72px_1fr_auto] items-center gap-4 py-3.5 no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">
-                      <span className="font-serif text-[24px] leading-none text-ink">{p.code}</span>
+                      <span className={cn("font-serif text-[24px] leading-none", on ? "text-brand" : "text-ink-mute")}>{p.code}</span>
                       <span className="min-w-0">
                         <span className="block text-[15px] font-medium text-ink leading-[1.3] group-hover:underline underline-offset-4 decoration-rule">{p.name}</span>
                         <span className="block font-mono text-[12px] text-ink-mute mt-0.5">{p.id === "apcm" ? apcmCode(a.count) : p.payment.code}</span>
@@ -264,10 +264,10 @@ export function ProgrammeFilter({
                     </a>
                   </li>
                 ))}
-                <li data-lit={accessOn} className={cn("transition-opacity duration-300", accessOn ? "opacity-100" : "opacity-30")} aria-hidden={!accessOn && touched ? true : undefined}>
+                <li data-lit={accessOn} className={cn("transition-all duration-300 border-l-[3px] pl-4", accessOn ? "border-brand opacity-100" : "border-transparent opacity-35")} aria-hidden={!accessOn && touched ? true : undefined}>
                   <a href="/programs/access-model" tabIndex={accessOn ? 0 : -1}
                     className="group grid grid-cols-[72px_1fr_auto] items-center gap-4 py-3.5 no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">
-                    <span className="font-serif text-[24px] leading-none text-ink">ACCESS</span>
+                    <span className={cn("font-serif text-[24px] leading-none", accessOn ? "text-brand" : "text-ink-mute")}>ACCESS</span>
                     <span className="min-w-0">
                       <span className="block text-[15px] font-medium text-ink leading-[1.3] group-hover:underline underline-offset-4 decoration-rule">CMS payment model</span>
                       <span className="block font-mono text-[12px] text-ink-mute mt-0.5">{TRACKS.includes(a.track) ? `${a.track} track` : "4 tracks"}</span>
@@ -290,12 +290,12 @@ export function ProgrammeFilter({
                         {st.ids.map((pid, i) => (
                           <span key={pid} className="flex items-center gap-1.5">
                             {i > 0 && <span aria-hidden className="text-ink-mute text-[13px]">+</span>}
-                            <span className="rounded-pill bg-brand-soft/40 px-2.5 py-1 font-serif text-[16px] leading-none text-ink">{CODE[pid]}</span>
+                            <span className="rounded-pill bg-brand-soft/45 px-2.5 py-1 font-serif text-[16px] leading-none text-ink">{CODE[pid]}</span>
                           </span>
                         ))}
                       </span>
                       <span className="flex items-baseline gap-1.5">
-                        <span className="font-serif text-[24px] leading-none text-ink tabular-nums">${st.total.toFixed(2)}</span>
+                        <span className="font-serif text-[24px] leading-none text-brand tabular-nums">${st.total.toFixed(2)}</span>
                         <span className="text-[12px] text-ink-mute">{st.ids.includes("tcm") ? "with a discharge" : "in one month"}</span>
                       </span>
                     </li>
