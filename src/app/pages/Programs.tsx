@@ -99,7 +99,7 @@ export function Programs(webCall: WebCallProps) {
       {/* For anyone who already knows which one they want. */}
       <section id="all" className="scroll-mt-24 bg-paper py-20 md:py-24 px-6 md:px-16">
         <div className="max-w-[1120px] mx-auto">
-          <p className="text-eyebrow font-bold uppercase text-ink-mute m-0 mb-4">All seven</p>
+          <p className="text-eyebrow font-bold uppercase text-ink-mute m-0 mb-4">All seven, and the model</p>
           <h2 className="font-serif text-h2 text-ink m-0 mb-10 max-w-[20ch]">
             Or go straight to the one you meant.
           </h2>
@@ -131,6 +131,37 @@ export function Programs(webCall: WebCallProps) {
               </li>
             ))}
           </ul>
+
+          {/* THE ACCESS MODEL, as an eighth card in its own shape. It was renamed
+              INTO /programs/ on 6 Sept and then never linked from here, so a
+              reader on this hub had no way to find it. It is deliberately NOT a
+              PROGRAMMES entry and NOT a ProgrammePage: it is a CMS payment
+              model billed by TRACK with a 50% withhold, not a monthly CPT with a
+              twenty-minute rule, and forcing it into the template would
+              misdescribe it. So: same card grammar, different fields, own page. */}
+          <a
+            href="/programs/access-model"
+            className="group mt-4 flex flex-col gap-4 rounded-card border border-rule bg-paper-2 p-6 md:p-7 no-underline transition-colors hover:border-rule-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand sm:flex-row sm:items-center sm:justify-between"
+          >
+            <span className="min-w-0">
+              <span className="flex items-baseline gap-3">
+                <span className="font-serif text-[26px] leading-none text-ink">ACCESS</span>
+                <span className="text-[12.5px] text-ink-mute">CMS model · four tracks</span>
+              </span>
+              <span className="mt-1 block text-[15px] font-medium text-ink-soft">
+                Cardiometabolic, enhanced cardiometabolic, behavioral health, musculoskeletal
+              </span>
+              <span className="mt-3 block text-[15px] leading-[1.65] text-ink-soft max-w-[62ch]">
+                Not a monthly code. A payment model that pays per track, with half of it withheld
+                until the outcomes are submitted. HANA keeps the readings and labs current so the
+                withheld half is actually paid.
+              </span>
+            </span>
+            <span className="shrink-0 text-[14px] font-semibold text-ink-soft underline underline-offset-4 decoration-rule group-hover:decoration-ink-soft">
+              Read the ACCESS page
+            </span>
+          </a>
+
           <p className="text-[14px] leading-[1.6] text-ink-mute m-0 mt-6 max-w-[70ch]">
             {PROGRAMME_FOOTNOTE}
           </p>

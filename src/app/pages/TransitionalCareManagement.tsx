@@ -49,7 +49,7 @@ const HERO_HEADLINE: ReactNode = (
 const TCM_FAQS = [
   {
     q: "Who counts as eligible?",
-    a: `${TCM.who} The clock starts at discharge, not at the next appointment.`,
+    a: `${TCM.who} That includes a discharge after surgery: a post-operative patient going home is a qualifying discharge like any other, and the two-business-day contact is the one most often missed in exactly that week. The clock starts at discharge, not at the next appointment.`,
   },
   {
     q: "What does the claim have to show?",

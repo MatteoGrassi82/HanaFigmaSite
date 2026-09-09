@@ -43,6 +43,10 @@ const RTM_FAQS = [
     a: RTM.rule,
   },
   {
+    q: "Is CPAP adherence an RTM programme?",
+    a: "Yes, and it is the clearest one. A CPAP machine records adherence and the response to therapy every night, which is exactly the therapeutic data the RTM supply codes describe, and the first weeks on the device are when a patient decides whether therapy holds. HANA runs that month as a sleep programme: the calls through week one, the nightly threshold your clinician sets, the note into the chart. See the HANA Sleep CPAP page for how it runs, and this page for what it bills.",
+  },
+  {
     q: "Is HANA the device?",
     a: "No, and it never will be. RTM has two halves. The supply codes cover a device recording sixteen days of data in thirty, and that device is yours. HANA does the other half: the interactive conversation 98980 requires. It does not supply hardware and it does not generate the data.",
   },
@@ -88,8 +92,13 @@ export function RemoteTherapeuticMonitoring(webCall: WebCallProps) {
         ]}
       />
 
+      {/* Sleep/CPAP bills as THIS programme, and until 9 Sept 2026 the two
+          pages did not know about each other: this one never mentioned CPAP,
+          and /sleep/cpap never named 98980. The FAQ entry above and the
+          heroBody line carry the link both ways. */}
       <ProgrammePage
         data={RTM}
+        heroBody="The interactive conversation the month requires, beside the data your device already records. CPAP adherence is the clearest case, and it is why HANA Sleep exists."
         headline={HERO_HEADLINE}
         faqs={RTM_FAQS}
         openQuestions={OPEN_QUESTIONS}

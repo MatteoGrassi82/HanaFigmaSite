@@ -118,7 +118,7 @@ const S_FAQS = [
   },
   {
     q: "Does it only do sleep?",
-    a: "Sleep and CPAP adherence are the wedge — the sharpest pain and the clearest reimbursement. The same monitoring engine extends to insomnia, chronic-condition coaching, and athletic recovery when you're ready to widen.",
+    a: "Sleep and CPAP adherence are the wedge — the sharpest pain and the clearest reimbursement. The same monitoring engine extends to insomnia, chronic-condition coaching, and athletic recovery when you're ready to widen. On the billing side this is remote therapeutic monitoring: the device supply codes for the CPAP data, and 98980 for the interactive conversation inside the month. The RTM programme page sets out what each pays and what the month has to show.",
   },
 ];
 
