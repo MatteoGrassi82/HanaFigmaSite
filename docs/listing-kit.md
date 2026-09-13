@@ -15,11 +15,12 @@ listing is much harder to correct than a page you control.
 | Item | Status |
 |---|---|
 | Patient-interaction count | **Site says three different things**: 1M (i18n.ts), 2M+ (llms.txt), 4M+ (HanaRemote.tsx). Pick one, fix all three, then use it here. |
-| Founded year | TO FILL |
-| HQ city / state | TO FILL |
-| Headcount band | TO FILL |
-| Funding stage | TO FILL |
-| Pricing model shown publicly | TO FILL — most directories require at least a band or "Contact us" |
+| Founded year | **STILL OPEN — the only entity fact that is.** Three candidates: 2022 (CB Insights), 2023 (LinkedIn), 2025 (the documented Delaware incorporation, 1 Jul 2025). Pick one meaning — date of incorporation, or date the company started operating — and use it everywhere. This is the field that propagates to Wikidata and then into every answer engine, so it is effectively permanent. |
+| HQ city / state | **SETTLED: 1432 Seyburn Street, Detroit, MI 48214.** This is the address on the SS-4 and on the A2P 10DLC brand record, and it is already published on /contact deliberately (i18n.ts:807) because campaign reviewers compare the site against the registration. **LinkedIn ("New York") and CB Insights ("123 Innovation Drive, San Francisco") are both wrong and should be corrected to Detroit.** Never publish the registered agent's Newark DE address instead. |
+| Legal entity / state | **SETTLED: HANA HEALTH INC**, Delaware C-corp, incorporated 1 Jul 2025, file 10246638. Use the IRS 147C spelling exactly on any carrier, tax or registration form; "HANA Health, Inc." is fine in prose. |
+| Headcount band | Do not invent one. Mirror whatever band the LinkedIn company page itself displays. The "+20" chip in the repo is only mounted on /remote-v2, which is unpublished, so it is not a live claim. |
+| Funding stage | No round appears in the incorporation documents and the stock certificate shows a sole stockholder. Answer **"Private — funding undisclosed"** or leave blank. Never assert a stage. |
+| Pricing model shown publicly | **Custom pricing, typically per actively managed patient per month** (Matteo, 13 Sep 2026). Answer directory pricing fields as "Custom / Contact us" — never a fixed figure. **Live contradiction to fix:** /pricing currently states "$150 per provider per month, everything included, no contract", and /faq calls pricing "a conversation rather than a figure". Two indexed pages, two models, neither matching the real one. The Organization/SoftwareApplication schema now asserts no price at all. |
 
 Everything below is safe to use as-is except where marked `[TO FILL]`.
 
@@ -36,6 +37,11 @@ Everything below is safe to use as-is except where marked `[TO FILL]`.
 | Contact email | hello@hana.health |
 | Demo booking | https://calendly.com/matteowastaken/discoverycall |
 | LinkedIn | https://www.linkedin.com/company/usehana |
+| Former domain | usehana.com — **stays live on purpose.** Google Workspace mail runs on it, and links to usehana.com pages are already in sent email and agreements. Do not redirect it. Every page there already canonicals to hana.health, and AI crawlers are pointed at hana.health by a host-scoped robots.txt (public/robots-usehana.txt). Always give hana.health as the website on a form. |
+| Docs | https://docs.hana.health |
+| Founders | Matteo Grassi (clinical psychologist, https://www.linkedin.com/in/matteowastaken) · Sthita Pragyan Pujari |
+| Name to type everywhere | **HANA Health** (legal: HANA Health, Inc.). Never "Hana Health" in one place and "HANA" in another; engines score the variants as weak evidence of the same entity. |
+| Disambiguation line (paste where a form allows) | Not affiliated with Hāna Health (Maui), Hana Health Canada, Hanna Health Centre (Alberta), SAP HANA or Hana Compass. |
 | Category (primary) | Patient engagement / clinical voice AI |
 | Category (secondary) | Care coordination · chronic care management · patient access |
 
@@ -85,7 +91,7 @@ Use the shortest one that fills the field. Do not blend them.
 
 Most directories want 6–10. Ordered by how often they're asked for.
 
-- Outbound and inbound patient calls in any language, switching per patient
+- Outbound and inbound patient calls in 30+ languages, switching per patient
 - New-patient intake with insurance verification and chart creation
 - Post-discharge follow-up inside the 48-hour readmission window
 - Monthly CCM / APCM care-coordination calls, documented for clinician attestation
@@ -168,7 +174,10 @@ Ordered by leverage. The top three are where AI answer engines actually pull fro
 |---|---|---|---|---|
 | 1 | **G2** — g2.com/products/new | Review sites are cited heavily in AI answers | Business email, assets, then chase 3–5 customer reviews | ☐ |
 | 2 | **Capterra / GetApp / Software Advice** — one Gartner submission covers all three | Same reason; strong for "best X software" queries | Assets, category, pricing band | ☐ |
-| 3 | **Elion Health** — elion.health | **Already lists HANA in two categories** — claim and complete it. Cheapest win available. | Claim the existing listing | ☐ |
+| 3 | **Elion Health** — elion.health | **Checked 12 Sep 2026: HANA is NOT listed.** The "Hana" in the Patient-Facing AI Phone Calls category (168 vendors) is Hana Compass, a maternal-health company. Submit a new listing; Perplexity pulls this category for voice-AI queries. | New vendor submission | ☐ |
+| 3b | **Wikidata** — wikidata.org | The structured backbone engines resolve entities against. The single fastest fix for the "hana health = Maui clinic" collision. Item: instance of *software company*; official website; founders; inception; HQ; all name variants as aliases. | Free account, 20 minutes | ☐ |
+| 3c | **CB Insights** — cbinsights.com/company/hana-health | Already exists with a wrong HQ and founding year (see §0). Engines read it. | Claim + correct | ☐ |
+| 3d | **HealthcareIntel** — healthcareintel.ai | Already lists HANA accurately (Patient Engagement · Software/SaaS · AI-enabled). Nothing to do except keep the description in sync with §2. | — | ✔ |
 | 4 | **Google Search Console + Bing Webmaster Tools** | Not a directory, but the gate on everything else | DNS TXT verification | ☐ |
 | 5 | **athenahealth Marketplace** | You claim 150+ EHR integrations; high-intent buyers | Partner application | ☐ |
 | 6 | **Epic Showroom / Toolbox** | Highest authority in the category | Epic partnership status | ☐ |
@@ -182,6 +191,48 @@ Ordered by leverage. The top three are where AI answer engines actually pull fro
 Skip Yext / BrightLocal / Uberall. They manage local-business listings for
 multi-location brands; for B2B SaaS they'd bill you monthly for signups you can
 do once by hand.
+
+---
+
+## 9b. Wikidata item — paste-ready
+
+Wikidata is the structured backbone most answer engines resolve entities against, and it is the
+single fastest fix for "hana health" returning the Maui clinic. It is free, takes about twenty
+minutes, and needs no approval from anyone.
+
+Create at https://www.wikidata.org/wiki/Special:NewItem (free account, no waiting period).
+
+**Label (English):** HANA Health
+**Description (English):** American clinical voice AI company
+> The description is what disambiguates the item in every picker and in engine output. Keep it short
+> and say "company", so nothing confuses it with the Hāna, Maui health center.
+
+**Also known as (aliases — add every one):**
+HANA · Hana Health · Hana Health, Inc. · HANA Health, Inc. · Hana Voice AI · HANA Voice AI · usehana
+
+**Statements:**
+
+| Property | Value | Note |
+|---|---|---|
+| instance of (P31) | business (Q4830453) | Add *software company* (Q1058914) as a second value. |
+| official website (P856) | https://www.hana.health | Mark this one "preferred" rank. |
+| official website (P856) | https://www.usehana.com | Second value, "normal" rank, so the alias domain is declared as ours rather than read as a different company. |
+| industry (P452) | artificial intelligence (Q11660) | Add *health technology* if a suitable item exists. |
+| country (P17) | United States of America (Q30) | |
+| legal form (P1454) | corporation | HANA HEALTH INC, Delaware C-corp, file 10246638. |
+| founded by (P112) | Matteo Grassi | Create a person item first if none exists. |
+| founded by (P112) | Sthita Pragyan Pujari | Second value. |
+| inception (P571) | **[BLOCKED — see §0]** | LinkedIn says 2023, CB Insights says 2022. Do not guess here; a wrong date on Wikidata propagates everywhere. |
+| headquarters location (P159) | Detroit (Q12439) | Settled — see §0. Matches the SS-4 and the A2P 10DLC brand record. |
+
+**References.** Wikidata wants a source on statements. Use the official website as the reference URL
+for the website, founders and industry statements. For inception and headquarters, add them only once
+you have a page on hana.health (the About page is ideal) that states them, then cite that page. That
+makes the /about page load-bearing: **putting the founding year and HQ city on /about is what lets
+the Wikidata statements stand.**
+
+**Do not** create a separate item for "Hana" the product. One company item with the product names as
+aliases is stronger than two thin items competing.
 
 ---
 

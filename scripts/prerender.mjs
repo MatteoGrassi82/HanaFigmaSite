@@ -332,7 +332,11 @@ async function main() {
   // Unknown paths now return a real 404 (vercel.json → api/not-found.ts), so a
   // route that exists in App.tsx but is missing from the lists below is no longer
   // a quiet SEO problem — it is a live page returning 404. Fail loudly instead.
-  const coverage = checkRouteCoverage(join(ROOT, 'src', 'app', 'App.tsx'), join(ROOT, 'src', 'app'));
+  const coverage = checkRouteCoverage(
+    join(ROOT, 'src', 'app', 'App.tsx'),
+    join(ROOT, 'src', 'app'),
+    join(ROOT, 'src', 'app', 'components', 'layout', 'Footer.tsx'),
+  );
   if (coverage.length) {
     console.error('✗ Route coverage check failed:\n' + coverage.map((p) => `  • ${p}`).join('\n'));
     process.exit(1);

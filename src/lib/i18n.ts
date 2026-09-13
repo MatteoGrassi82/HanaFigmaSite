@@ -109,12 +109,8 @@ export interface Translations {
     soc2Desc: string;
     hipaa: string;
     hipaaDesc: string;
-    pdl: string;
-    pdlDesc: string;
     gdpr: string;
     gdprDesc: string;
-    pipeda: string;
-    pipedaDesc: string;
     environmentsTitle: string;
     environments: string;
   };
@@ -534,18 +530,14 @@ const en: Translations = {
   compliance: {
     tag: "Enterprise-Grade Compliance and Security",
     heading: "Compliance and security best hospitals already trust",
-    iso: "ISO 27001",
-    isoDesc: "Implementing ISO 27001 information security controls across EHR systems with real-time monitoring and compliance reporting.",
-    soc2: "SOC 2 Type II",
-    soc2Desc: "Delivering continuous monitoring and automated evidence collection for SOC 2 Type II audits across different EHR environments.",
-    hipaa: "HIPAA",
-    hipaaDesc: "Ensuring HIPAA compliance through encryption, access controls, and audit logging across EHR integrations.",
-    pdl: "PDL",
-    pdlDesc: "Maintaining comprehensive data governance controls for Personal Data Law compliance across EHR systems.",
+    iso: "ISO 27001-aligned",
+    isoDesc: "ISMS implemented against ISO 27001 information security controls across EHR systems, with certification on our roadmap.",
+    soc2: "SOC 2 Type II (audit in progress)",
+    soc2Desc: "Readiness assessment complete and a Type II audit underway, with continuous monitoring and automated evidence collection across EHR environments.",
+    hipaa: "HIPAA-aligned",
+    hipaaDesc: "HIPAA controls in place — encryption, access controls, and audit logging across EHR integrations — with a BAA available.",
     gdpr: "GDPR",
     gdprDesc: "Providing GDPR-compliant data processing with automated data mapping, consent management, and data subject request tools for EHR systems.",
-    pipeda: "PIPEDA",
-    pipedaDesc: "Meeting Canadian privacy requirements through automated privacy assessments and consent tracking across EHR platforms.",
     environmentsTitle: "Deploys into what you already run",
     environments: "Connect your EHR and carry patient calls over Vonage, Twilio, Telnyx, or any SIP provider. No EHR? No integration needed — run on our SDK or fully white-labeled. Cloud, private cloud, or on-prem — same standards, every way.",
   },
@@ -952,18 +944,14 @@ const it: Translations = {
   compliance: {
     tag: "Compliance e sicurezza di livello enterprise",
     heading: "La compliance e la sicurezza di cui si fidano i migliori ospedali",
-    iso: "ISO 27001",
-    isoDesc: "Implementazione dei controlli di sicurezza informatica ISO 27001 su tutti i sistemi EHR, con monitoraggio in tempo reale e reportistica di conformità.",
-    soc2: "SOC 2 Type II",
-    soc2Desc: "Monitoraggio continuo e raccolta automatizzata delle prove per gli audit SOC 2 Type II su tutti gli ambienti EHR.",
-    hipaa: "HIPAA",
-    hipaaDesc: "Conformità HIPAA garantita tramite crittografia, controlli di accesso e audit logging su tutte le integrazioni EHR.",
-    pdl: "PDL",
-    pdlDesc: "Controlli completi di data governance per la conformità alle leggi sui dati personali su tutti i sistemi EHR.",
+    iso: "Allineato ISO 27001",
+    isoDesc: "ISMS implementato secondo i controlli di sicurezza informatica ISO 27001 su tutti i sistemi EHR, con certificazione nel nostro roadmap.",
+    soc2: "SOC 2 Type II (audit in corso)",
+    soc2Desc: "Valutazione di idoneità completata e audit di Tipo II in corso, con monitoraggio continuo e raccolta automatizzata di prove su tutti gli ambienti EHR.",
+    hipaa: "Allineato HIPAA",
+    hipaaDesc: "Controlli HIPAA in atto — crittografia, controlli di accesso e audit logging su tutte le integrazioni EHR — con BAA disponibile.",
     gdpr: "GDPR",
     gdprDesc: "Elaborazione dei dati conforme al GDPR con data mapping automatizzato, gestione del consenso e strumenti per le richieste degli interessati sui sistemi EHR.",
-    pipeda: "PIPEDA",
-    pipedaDesc: "Requisiti di privacy canadesi soddisfatti tramite valutazioni automatizzate della privacy e tracciamento del consenso su tutte le piattaforme EHR.",
     environmentsTitle: "Si integra in ciò che già usi",
     environments: "Collega il tuo EHR e gestisci le chiamate ai pazienti su Vonage, Twilio, Telnyx o qualsiasi provider SIP. Nessun EHR? Nessuna integrazione necessaria — usa il nostro SDK o una versione completamente white-label. Cloud, private cloud o on-prem — stessi standard, in ogni caso.",
   },

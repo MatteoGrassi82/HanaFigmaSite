@@ -683,7 +683,7 @@ export function collectAppRoutes(appTsxPath) {
  *
  * Returns a list of human-readable problems; empty means the lists agree.
  */
-export function checkRouteCoverage(appTsxPath, pagesDir) {
+export function checkRouteCoverage(appTsxPath, pagesDir, footerPath) {
   const declared = collectAppRoutes(appTsxPath);
   const accounted = new Set([
     ...STATIC_ROUTES,
@@ -782,6 +782,48 @@ export function checkRouteCoverage(appTsxPath, pagesDir) {
             'sitemap.xml, and nothing else in the build would tell you.'
           );
         }
+      }
+    }
+  }
+
+  /* The footer links to routes from a hardcoded list, and that list silently went
+   * stale once. 857aaa6 (7 Sep 2026) added a "Care programmes" column pointing at the
+   * gated pages while they were still prerendered-but-noindex, so every link resolved.
+   * 6e391a7 (9 Sep 2026) stopped rendering unpublished routes at all and did not touch
+   * the footer. From that commit until 12 Sep 2026 every page on the site - the
+   * homepage included - shipped seven footer links that returned 404 to both visitors
+   * and crawlers. sitemap.xml stayed clean the whole time, so nothing flagged it.
+   *
+   * Footer.tsx mirrors NOINDEX_ROUTES in its own HELD_ROUTES constant because it cannot
+   * import this module (node:fs). This check is what keeps the mirror honest: it fails
+   * the build the moment the footer offers a link to a route that is not published. */
+  if (footerPath) {
+    let footer = null;
+    try {
+      footer = readFileSync(footerPath, 'utf8');
+    } catch {
+      footer = null;
+    }
+    if (footer) {
+      // Footer.tsx declares its links in one array and filters them through its own
+      // HELD_ROUTES constant, so a route appearing in the source is not proof it renders.
+      // The invariant to enforce is: every unpublished route the footer mentions must be
+      // listed in HELD_ROUTES. Parse that constant and check the difference.
+      const heldBlock = footer.match(/const HELD_ROUTES\s*=\s*\[([\s\S]*?)\]/);
+      const declaredHeld = new Set(
+        heldBlock ? [...heldBlock[1].matchAll(/["'](\/[^"'\s]*)["']/g)].map((m) => m[1]) : []
+      );
+      const unpublished = new Set(NOINDEX_ROUTES);
+      const linked = [...footer.matchAll(/(?:to|href)[=:]\s*["'](\/[^"'\s]*)["']/g)].map((m) => m[1]);
+      const offenders = [...new Set(linked.filter((r) => unpublished.has(r) && !declaredHeld.has(r)))];
+      if (offenders.length) {
+        problems.push(
+          `Footer.tsx links to ${offenders.length} route(s) that are in NOINDEX_ROUTES and ` +
+          `therefore return 404 in production: ${offenders.join(', ')}. Every page on the site ` +
+          'renders the footer, so each of these is a dead link on every URL we publish. Either ' +
+          'publish the route (move it to STATIC_ROUTES and delete the page\'s robots prop) or ' +
+          'add it to HELD_ROUTES in Footer.tsx so the link is not rendered.'
+        );
       }
     }
   }

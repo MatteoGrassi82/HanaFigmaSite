@@ -189,13 +189,38 @@ export function SEO({
 export const organizationSchema: Record<string, unknown> = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Hana Health",
-  "alternateName": "Hana Voice AI",
+  "@id": `${SITE_DOMAIN}/#organization`,
+  "name": "HANA Health",
+  "legalName": "HANA Health, Inc.",
+  "alternateName": ["HANA", "Hana Health", "Hana Voice AI", "usehana"],
   "url": SITE_DOMAIN,
-  "logo": `${SITE_DOMAIN}/logo.png`,
-  "description": "Hana Health builds clinical Voice AI agents that automate patient engagement, intake, monitoring, and care coordination for healthcare organizations.",
+  "logo": {
+    "@type": "ImageObject",
+    "url": `${SITE_DOMAIN}/logo.png`,
+    "width": 1024,
+    "height": 389
+  },
+  "description": "HANA Health builds clinical Voice AI agents that automate patient engagement, intake, monitoring, and care coordination for healthcare organizations.",
+  "disambiguatingDescription": "Clinical voice AI company (hana.health, formerly usehana.com). Not affiliated with Hāna Health in Maui, Hana Health Canada, Hanna Health Centre in Alberta, or SAP HANA.",
+  "founder": [
+    { "@type": "Person", "name": "Matteo Grassi", "jobTitle": "Co-founder", "sameAs": ["https://www.linkedin.com/in/matteowastaken"] },
+    { "@type": "Person", "name": "Sthita Pragyan Pujari", "jobTitle": "Co-founder" }
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1432 Seyburn Street",
+    "addressLocality": "Detroit",
+    "addressRegion": "MI",
+    "postalCode": "48214",
+    "addressCountry": "US"
+  },
   "sameAs": [
-    "https://www.linkedin.com/company/usehana"
+    "https://www.linkedin.com/company/usehana",
+    "https://docs.hana.health",
+    "https://www.usehana.com",
+    "https://huggingface.co/Usehana",
+    "https://www.cbinsights.com/company/hana-health",
+    "https://healthcareintel.ai/company/aae53065-4f61-4925-969b-d32ca8606a2d"
   ],
   "contactPoint": {
     "@type": "ContactPoint",
@@ -228,9 +253,9 @@ export const softwareApplicationSchema: Record<string, unknown> = {
   "description": "AI-powered clinical voice agents for patient engagement, intake automation, remote monitoring, and care coordination.",
   "offers": {
     "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD",
-    "description": "Contact us for enterprise pricing"
+    "availability": "https://schema.org/InStock",
+    "url": `${SITE_DOMAIN}/pricing`,
+    "description": "Custom pricing, typically per actively managed patient per month. Contact sales for a quote."
   },
   "creator": {
     "@type": "Organization",

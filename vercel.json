@@ -32,9 +32,139 @@
       "source": "/access",
       "destination": "/programs/access-model",
       "permanent": true
+    },
+    {
+      "source": "/chronic-care",
+      "destination": "/hana-remote",
+      "permanent": true
+    },
+    {
+      "source": "/voice-chat",
+      "destination": "/hana-contact",
+      "permanent": true
+    },
+    {
+      "source": "/hana-companion",
+      "destination": "/hana-remote",
+      "permanent": true
+    },
+    {
+      "source": "/primary-care",
+      "destination": "/hana-remote",
+      "permanent": true
+    },
+    {
+      "source": "/transitional-care",
+      "destination": "/hana-remote",
+      "permanent": true
+    },
+    {
+      "source": "/blog/annual-wellness-visit-care-coordination",
+      "destination": "/blog/apcm-2025-13-service-elements-explained",
+      "permanent": true
+    },
+    {
+      "source": "/blog/physicians-returning-to-independent-practice",
+      "destination": "/blog/outbound-voice-agents-worth-it-practice",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/behavioral-health",
+      "destination": "/hana-remote",
+      "permanent": true
+    },
+    {
+      "source": "/psychiatry-behavioral-health",
+      "destination": "/hana-remote",
+      "permanent": true
+    },
+    {
+      "source": "/remote-therapeutic-monitoring",
+      "destination": "/hana-remote",
+      "permanent": true
+    },
+    {
+      "source": "/population-outreach",
+      "destination": "/hana-remote",
+      "permanent": true
+    },
+    {
+      "source": "/value-based-care",
+      "destination": "/hana-remote",
+      "permanent": true
+    },
+    {
+      "source": "/hana-coach",
+      "destination": "/hana-remote",
+      "permanent": true
+    },
+    {
+      "source": "/hana-compass",
+      "destination": "/hana-remote",
+      "permanent": true
+    },
+    {
+      "source": "/hana-connect",
+      "destination": "/hana-contact",
+      "permanent": true
+    },
+    {
+      "source": "/talk-to-hana",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/partner-program",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/blog/community-resource-partnerships-outcomes",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/comprehensive-care-plan-creation",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/ehr-integration-with-ai-voice-technology-challenges-and-wins",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/integrating-ai-health-assistants-with-ehrs-challenges-and",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/medicare-acos-care-management-challenges",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/reimbursement-competitive-advantage",
+      "destination": "/blog",
+      "permanent": true
     }
   ],
   "rewrites": [
+    {
+      "source": "/robots.txt",
+      "has": [
+        {
+          "type": "host",
+          "value": "^(www\\.)?usehana\\.com$"
+        }
+      ],
+      "destination": "/robots-usehana.txt"
+    },
     {
       "source": "/((?!api/|assets/|.*\\.[a-zA-Z0-9]+$).*)",
       "destination": "/api/not-found"

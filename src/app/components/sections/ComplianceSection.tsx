@@ -1,7 +1,5 @@
 import {
   ShieldCheck,
-  HeartPulse,
-  Plus,
   Command,
   Shield,
   Stethoscope
@@ -22,9 +20,7 @@ export function ComplianceSection({ white = false }: { white?: boolean } = {}) {
     { icon: Shield,      title: t.compliance.iso,    description: t.compliance.isoDesc },
     { icon: Stethoscope, title: t.compliance.soc2,   description: t.compliance.soc2Desc },
     { icon: Command,     title: t.compliance.hipaa,  description: t.compliance.hipaaDesc },
-    { icon: HeartPulse,  title: t.compliance.pdl,    description: t.compliance.pdlDesc },
     { icon: ShieldCheck, title: t.compliance.gdpr,   description: t.compliance.gdprDesc },
-    { icon: Plus,        title: t.compliance.pipeda, description: t.compliance.pipedaDesc },
   ];
   return (
     <section

@@ -3,13 +3,82 @@ import { Link } from "react-router";
 import logoImage from 'figma:asset/55130a9cc9a8f890dc08e580a5cf6dd0df0df413.png';
 import { useTranslations, getLocale } from "../../../lib/i18n";
 
+/**
+ * Routes this column links to that are NOT published yet.
+ *
+ * Mirror of NOINDEX_ROUTES in scripts/lib/route-seo.mjs. It cannot be imported
+ * here - that module reads node:fs - so it is duplicated, exactly like
+ * EN_ONLY_PATHS in SEO.tsx. checkRouteCoverage() fails the build if the two
+ * drift, so this cannot silently rot.
+ *
+ * WHY THIS EXISTS. 857aaa6 (7 Sep 2026) added this column while the gated pages
+ * were prerendered-but-noindex, so the links resolved. 6e391a7 (9 Sep 2026)
+ * stopped rendering unpublished routes entirely and did not revisit the footer,
+ * so from that commit every page on the site - homepage included - shipped seven
+ * links that returned 404 to visitors and crawlers alike. Found 12 Sep 2026.
+ *
+ * THIS IS TEMPORARY (Matteo, 13 Sep 2026): these pages ship with the new site, and
+ * the links come back then. Until that launch a dead link is worse than no link, for
+ * a reader and for a crawler both.
+ *
+ * Publishing a route is a three-file edit: move it to STATIC_ROUTES, delete the page's
+ * robots prop, and remove it from this list. checkRouteCoverage() enforces all three,
+ * so a half-done publish fails the build rather than shipping quietly.
+ */
+/**
+ * TEMPORARY: the footer is cut back to company and legal links only.
+ *
+ * Matteo, 13 Sep 2026: "hide all the footers. Just keep About, Privacy, etc. but
+ * hide all the other links." The product, care-programme and resource columns are
+ * suppressed until the new site launches, when the held pages publish alongside it.
+ *
+ * Flip this to true to restore the full footer in one edit. The markup is kept
+ * rather than deleted so that restoring it is a one-word change and none of the
+ * internal-linking work has to be rebuilt.
+ *
+ * KNOWN COST, accepted and time-boxed. Measured against the built dist/ after the
+ * change, exactly TWO pages drop to zero inbound internal links while this is false:
+ *   /labs         0 inbound
+ *   /state-of-ai  0 inbound
+ * Both stay in sitemap.xml, so they remain crawlable and should not drop out of the
+ * index - they lose internal link equity, not discoverability. Worth knowing that
+ * /state-of-ai is currently the only HANA page ranking for a non-brand category query
+ * (page 1 for "voice AI for CCM patient outreach", Sept 2026), so if a ranking slips
+ * while this flag is false, that is the first place to look.
+ *
+ * Everything else survives on links from the page bodies: /hana-remote and
+ * /hana-contact 7 inbound each via ProductsIntro, /pricing 7, /sleep 6,
+ * /programs/access-model 6, /case-studies 155.
+ */
+const FULL_FOOTER = false;
+
+const HELD_ROUTES = [
+  "/programs",
+  "/for-practices",
+  "/for-health-systems",
+  "/compare/vs-doing-nothing",
+  "/academy",
+  "/faq",
+  "/security",
+];
+
+const PROGRAMME_LINKS = [
+  { to: "/programs", label: "All programmes" },
+  { to: "/for-practices", label: "For practices" },
+  { to: "/for-health-systems", label: "For health systems" },
+  { to: "/compare/vs-doing-nothing", label: "What the gap is worth" },
+  { to: "/academy", label: "Academy" },
+  { to: "/faq", label: "FAQ" },
+  { to: "/security", label: "Security" },
+].filter((l) => !HELD_ROUTES.includes(l.to));
+
 export function Footer() {
   const t = useTranslations();
   // State of Voice AI + Case Studies (via /use-cases) are US-specific; dropped on Italian.
   const isItalian = getLocale() === "it";
   return (
     <footer className="bg-[rgb(0,18,47)] text-white/75 py-12 px-4" role="contentinfo">
-      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-8 mb-8">
+      <div className={`max-w-7xl mx-auto grid grid-cols-2 gap-8 mb-8 ${FULL_FOOTER ? "md:grid-cols-5" : "md:grid-cols-3"}`}>
         <div className="col-span-2 md:col-span-1">
           <Link to="/" aria-label="Hana Health Home">
             <img
@@ -35,6 +104,7 @@ export function Footer() {
             not one of the 96 built pages contained a link to /hana-remote,
             /hana-contact or /sleep. They are the pages we most want crawled
             and they had zero internal links. Keep them linked from here. */}
+        {FULL_FOOTER && (
         <nav aria-label="Platform navigation">
           <h4 className="text-white font-medium mb-4">{t.footer.platform}</h4>
           <ul className="space-y-2 text-sm">
@@ -47,6 +117,7 @@ export function Footer() {
             <li><a href="https://docs.hana.health/" target="_blank" rel="noopener noreferrer" className="inline-block py-2 hover:text-white transition-colors">{t.footer.sdk}</a></li>
           </ul>
         </nav>
+        )}
 
         {/* Care programmes. Added 6 Sept 2026 for the same reason the Platform
             column above exists, and after making the identical mistake: the 17
@@ -61,21 +132,18 @@ export function Footer() {
             declared unconditionally in App.tsx, so it hides the links without
             fixing the underlying ita.hana.health exposure. That is tracked
             separately as the EN_ONLY_ROUTES work. */}
-        {!isItalian && (
+        {FULL_FOOTER && !isItalian && PROGRAMME_LINKS.length > 0 && (
           <nav aria-label="Care programmes navigation">
             <h4 className="text-white font-medium mb-4">Care programmes</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/programs" className="inline-block py-2 hover:text-white transition-colors">All programmes</Link></li>
-              <li><Link to="/for-practices" className="inline-block py-2 hover:text-white transition-colors">For practices</Link></li>
-              <li><Link to="/for-health-systems" className="inline-block py-2 hover:text-white transition-colors">For health systems</Link></li>
-              <li><Link to="/compare/vs-doing-nothing" className="inline-block py-2 hover:text-white transition-colors">What the gap is worth</Link></li>
-              <li><Link to="/academy" className="inline-block py-2 hover:text-white transition-colors">Academy</Link></li>
-              <li><Link to="/faq" className="inline-block py-2 hover:text-white transition-colors">FAQ</Link></li>
-              <li><Link to="/security" className="inline-block py-2 hover:text-white transition-colors">Security</Link></li>
+              {PROGRAMME_LINKS.map(({ to, label }) => (
+                <li key={to}><Link to={to} className="inline-block py-2 hover:text-white transition-colors">{label}</Link></li>
+              ))}
             </ul>
           </nav>
         )}
 
+        {FULL_FOOTER && (
         <nav aria-label="Resources navigation">
           <h4 className="text-white font-medium mb-4">{t.footer.resources}</h4>
           <ul className="space-y-2 text-sm">
@@ -88,15 +156,16 @@ export function Footer() {
             {!isItalian && <li><Link to="/case-studies" className="inline-block py-2 hover:text-white transition-colors">{t.footer.useCases}</Link></li>}
           </ul>
         </nav>
+        )}
 
         <nav aria-label="Company navigation">
           <h4 className="text-white font-medium mb-4">{t.footer.company}</h4>
           <ul className="space-y-2 text-sm">
-            <li><Link to="/pricing" className="inline-block py-2 hover:text-white transition-colors">{t.footer.pricing}</Link></li>
+            {FULL_FOOTER && <li><Link to="/pricing" className="inline-block py-2 hover:text-white transition-colors">{t.footer.pricing}</Link></li>}
             <li><Link to="/about" className="inline-block py-2 hover:text-white transition-colors">{t.footer.aboutUs}</Link></li>
             <li><Link to="/contact" className="inline-block py-2 hover:text-white transition-colors">{t.footer.contact}</Link></li>
-            <li><Link to="/contact" className="inline-block py-2 hover:text-white transition-colors">{t.footer.partnerships}</Link></li>
-            <li><a href="https://calendly.com/matteowastaken/discoverycall" target="_blank" rel="noopener noreferrer" className="inline-block py-2 hover:text-white transition-colors">{t.footer.bookDemo}</a></li>
+            {FULL_FOOTER && <li><Link to="/contact" className="inline-block py-2 hover:text-white transition-colors">{t.footer.partnerships}</Link></li>}
+            {FULL_FOOTER && <li><a href="https://calendly.com/matteowastaken/discoverycall" target="_blank" rel="noopener noreferrer" className="inline-block py-2 hover:text-white transition-colors">{t.footer.bookDemo}</a></li>}
           </ul>
         </nav>
 

@@ -1,0 +1,1423 @@
+{
+  "date": "2026-09-12",
+  "engines": [
+    "google",
+    "perplexity",
+    "chatgpt"
+  ],
+  "queries": {
+    "hana health": "brand",
+    "hana health voice ai": "brand",
+    "hana health reviews": "brand",
+    "hana health alternatives": "brand",
+    "what is Hana Health voice AI": "brand",
+    "hana health vs thoroughcare": "comparison",
+    "thoroughcare alternatives": "comparison",
+    "alternatives to ThoroughCare for CCM and APCM": "comparison",
+    "healtharc vs hana health": "comparison",
+    "chartspan alternatives in-house CCM": "comparison",
+    "best voice AI for chronic care management patient outreach": "category",
+    "best chronic care management software 2026": "category",
+    "AI patient engagement platform for chronic care management": "category",
+    "AI agent that calls patients between visits for CCM programs": "category",
+    "HIPAA compliant voice AI that calls patients and writes back to the EHR": "category",
+    "voice AI for post-discharge follow-up calls to reduce readmissions": "category",
+    "AI voice agent for ADHD intake behavioral health": "category",
+    "CPAP adherence voice AI for sleep medicine": "category"
+  },
+  "records": [
+    {
+      "date": "2026-09-12",
+      "engine": "perplexity",
+      "group": "brand",
+      "query": "hana health",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/",
+        "https://docs.hana.health/getting-started/overview",
+        "https://docs.hana.health/enterprise/enterprise-guide",
+        "https://www.hana.health/blog",
+        "https://hana.health/chronic-care",
+        "https://hana.health/primary-care",
+        "https://www.hana.health/contact"
+      ],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "hana.health",
+        "hanahealth.org",
+        "docs.hana.health",
+        "healthy.kaiserpermanente.org",
+        "governor.hawaii.gov",
+        "hawaiipca.net",
+        "hanahealth.ca",
+        "hanamaui.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "perplexity",
+      "group": "comparison",
+      "query": "thoroughcare alternatives",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "Omada",
+        "CCN Health"
+      ],
+      "topDomains": [
+        "sourceforge.net",
+        "ccnhealth.com",
+        "healtharc.io",
+        "thoroughcare.net",
+        "g2.com",
+        "growjo.com",
+        "circle.healthcare",
+        "slashdot.org"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "perplexity",
+      "group": "brand",
+      "query": "hana health reviews",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://hana.health/chronic-care",
+        "https://www.hana.health/",
+        "https://www.hana.health/hana-remote"
+      ],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "hana.health",
+        "yelp.com",
+        "zocdoc.com",
+        "hanahealth.org",
+        "js.trustburn.com",
+        "thelowdown.com",
+        "medino.com",
+        "healthgrades.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "perplexity",
+      "group": "brand",
+      "query": "what is Hana Health voice AI",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://hana.health/voice-chat",
+        "https://www.hana.health/",
+        "https://www.hana.health/labs",
+        "https://docs.hana.health/reasoning-models/vocal-intelligence",
+        "https://docs.hana.health/enterprise/enterprise-guide",
+        "https://docs.hana.health/getting-started/overview",
+        "https://www.usehana.com/about",
+        "https://docs.hana.health/research/active-research",
+        "https://www.hana.health/state-of-ai",
+        "https://www.usehana.com/hana-companion",
+        "https://www.hana.health/hana-contact",
+        "https://www.hana.health/blog",
+        "https://docs.hana.health/reasoning-models/self-hosted-architecture"
+      ],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "hana.health",
+        "docs.hana.health",
+        "usehana.com",
+        "linkedin.com",
+        "theorg.com",
+        "play.google.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "perplexity",
+      "group": "brand",
+      "query": "hana health voice ai",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/",
+        "https://hana.health/voice-chat",
+        "https://docs.hana.health/reasoning-models/vocal-intelligence",
+        "https://www.hana.health/labs",
+        "https://docs.hana.health/enterprise/enterprise-guide",
+        "https://docs.hana.health/getting-started/overview",
+        "https://www.hana.health/state-of-ai",
+        "https://www.usehana.com/about",
+        "https://www.usehana.com/hana-companion",
+        "https://www.hana.health/blog",
+        "https://docs.hana.health/research/active-research",
+        "https://www.hana.health/blog/why-clinic-patient-app-15-percent-engagement-voice-ai",
+        "https://www.hana.health/contact"
+      ],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "hana.health",
+        "docs.hana.health",
+        "usehana.com",
+        "play.google.com",
+        "linkedin.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "perplexity",
+      "group": "comparison",
+      "query": "hana health vs thoroughcare",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/",
+        "https://hana.health/transitional-care",
+        "https://www.hana.health/hana-remote",
+        "https://hana.health/blog/annual-wellness-visit-care-coordination",
+        "https://www.hana.health/labs",
+        "https://www.hana.health/hana-contact"
+      ],
+      "position": null,
+      "competitors": [
+        "ThoroughCare"
+      ],
+      "topDomains": [
+        "hana.health",
+        "hanahealth.org",
+        "thoroughcare.net",
+        "healthy.kaiserpermanente.org",
+        "medicare.gov",
+        "circle.healthcare",
+        "intuitionlabs.ai",
+        "ccnhealth.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "perplexity",
+      "group": "comparison",
+      "query": "chartspan alternatives in-house CCM",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "Prevounce",
+        "ChronicCareIQ",
+        "TimeDoc",
+        "ChartSpan"
+      ],
+      "topDomains": [
+        "chartspan.com",
+        "healtharc.io",
+        "softwarefinder.com",
+        "omnimd.com",
+        "digitalhealth.folio3.com",
+        "caesarhealth.com",
+        "simbie.ai",
+        "kangaroohealth.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "perplexity",
+      "group": "category",
+      "query": "AI agent that calls patients between visits for CCM programs",
+      "mentioned": false,
+      "cited": true,
+      "ourUrls": [
+        "https://hana.health/chronic-care"
+      ],
+      "position": null,
+      "competitors": [
+        "Carenox"
+      ],
+      "topDomains": [
+        "tilehealthcare.com",
+        "quadrant.health",
+        "carenox.ai",
+        "managecare.ai",
+        "thinkitive.com",
+        "mindbowser.com",
+        "circlelinkhealth.com",
+        "aqurio.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "perplexity",
+      "group": "comparison",
+      "query": "healtharc vs hana health",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/"
+      ],
+      "position": null,
+      "competitors": [
+        "HealthArc"
+      ],
+      "topDomains": [
+        "healtharc.io",
+        "hanahealth.org",
+        "hart.com",
+        "play.google.com",
+        "finance.yahoo.com",
+        "circle.healthcare",
+        "ccnhealth.com",
+        "hana.health"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "perplexity",
+      "group": "category",
+      "query": "voice AI for post-discharge follow-up calls to reduce readmissions",
+      "mentioned": false,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/blog/post-discharge-follow-up-voice-ai-clinics"
+      ],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "edesy.in",
+        "parloa.com",
+        "cubettech.com",
+        "callsphere.ai",
+        "plivo.com",
+        "healthcareitnews.com",
+        "keruu.ai",
+        "enginevult.ai"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "perplexity",
+      "group": "category",
+      "query": "HIPAA compliant voice AI that calls patients and writes back to the EHR",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "Retell",
+        "Synthflow"
+      ],
+      "topDomains": [
+        "retellai.com",
+        "getprosper.ai",
+        "linear.health",
+        "voiceai.guide",
+        "cloudtalk.io",
+        "rivvi.ai",
+        "brilo.ai",
+        "aws.amazon.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "perplexity",
+      "group": "category",
+      "query": "AI voice agent for ADHD intake behavioral health",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "dial3d.ai",
+        "producthunt.com",
+        "fiercehealthcare.com",
+        "neuronavsam.com",
+        "nextlevel.ai",
+        "reddit.com",
+        "lucybrain.com",
+        "carefulai.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "perplexity",
+      "group": "category",
+      "query": "AI patient engagement platform for chronic care management",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "Clinii",
+        "Commure"
+      ],
+      "topDomains": [
+        "friska.ai",
+        "pmc.ncbi.nlm.nih.gov",
+        "commure.com",
+        "sweetch.com",
+        "nextigent.ai",
+        "play.google.com",
+        "businesswire.com",
+        "frontiersin.org"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "perplexity",
+      "group": "category",
+      "query": "best voice AI for chronic care management patient outreach",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "Hippocratic",
+        "Retell",
+        "CloudTalk"
+      ],
+      "topDomains": [
+        "retellai.com",
+        "simbie.ai",
+        "cloudtalk.io",
+        "omnimd.com",
+        "caller.digital",
+        "telnyx.com",
+        "callsphere.ai",
+        "11x.ai"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "perplexity",
+      "group": "category",
+      "query": "CPAP adherence voice AI for sleep medicine",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/hana-sleep",
+        "https://www.hana.health/sleep/cpap",
+        "https://www.hana.health/hana-sleep/cpap"
+      ],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "pmc.ncbi.nlm.nih.gov",
+        "hana.health",
+        "sleepreviewmag.com",
+        "academic.oup.com",
+        "digital.hmenews.com",
+        "sciencedirect.com",
+        "managecare.ai",
+        "dox.care"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "perplexity",
+      "group": "brand",
+      "query": "hana health alternatives",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://hana.health/blog/physicians-returning-to-independent-practice",
+        "https://www.hana.health/",
+        "https://docs.hana.health/getting-started/overview"
+      ],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "g2.com",
+        "hana.health",
+        "nccih.nih.gov",
+        "hanahealth.org",
+        "capterra.com",
+        "findhelp.org",
+        "bestforyall.com",
+        "healthy.kaiserpermanente.org"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "perplexity",
+      "group": "category",
+      "query": "best chronic care management software 2026",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "HealthArc",
+        "ChronicCareIQ",
+        "TimeDoc",
+        "CCN Health"
+      ],
+      "topDomains": [
+        "ccnhealth.com",
+        "worldmetrics.org",
+        "gitnux.org",
+        "healtharc.io",
+        "digitalhealth.folio3.com",
+        "wifitalents.com",
+        "f6s.com",
+        "softwarefinder.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "perplexity",
+      "group": "comparison",
+      "query": "alternatives to ThoroughCare for CCM and APCM",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "Prevounce",
+        "ChronicCareIQ",
+        "TimeDoc",
+        "ChartSpan",
+        "CareHarmony",
+        "HealthSnap"
+      ],
+      "topDomains": [
+        "ccnhealth.com",
+        "healtharc.io",
+        "sourceforge.net",
+        "omnimd.com",
+        "innovaccer.com",
+        "simbie.ai",
+        "caesarhealth.com",
+        "circle.healthcare"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "google",
+      "group": "brand",
+      "query": "hana health",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/",
+        "https://www.hana.health/blog"
+      ],
+      "position": 1,
+      "aiOverview": {
+        "present": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "hana.health",
+        "hanahealth.org",
+        "linkedin.com",
+        "hanahealth.in",
+        "hanah.health",
+        "facebook.com",
+        "instagram.com",
+        "hanahealthcare.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "google",
+      "group": "brand",
+      "query": "hana health voice ai",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/"
+      ],
+      "position": 1,
+      "aiOverview": {
+        "present": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "linkedin.com",
+        "hana.health",
+        "hanamedical.net",
+        "hanah.health",
+        "unicorns.club",
+        "youtube.com",
+        "researchgate.net"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "google",
+      "group": "brand",
+      "query": "what is Hana Health voice AI",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/"
+      ],
+      "position": 1,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": true,
+        "citesUs": true
+      },
+      "competitors": [
+        "Hippocratic"
+      ],
+      "topDomains": [
+        "linkedin.com",
+        "hana.health",
+        "hanamedical.net",
+        "researchgate.net",
+        "pmc.ncbi.nlm.nih.gov",
+        "unicorns.club",
+        "hanah.health",
+        "hippocraticai.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "google",
+      "group": "comparison",
+      "query": "thoroughcare alternatives",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "Prevounce",
+        "ChronicCareIQ",
+        "TimeDoc",
+        "CCN Health"
+      ],
+      "topDomains": [
+        "healtharc.io",
+        "ccnhealth.com",
+        "racingsa.com.au",
+        "marketplace.aviahealth.com",
+        "getlatka.com",
+        "thoroughcare.net",
+        "linkedin.com",
+        "circle.healthcare"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "google",
+      "group": "comparison",
+      "query": "healtharc vs hana health",
+      "mentioned": true,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": true,
+        "citesUs": false
+      },
+      "competitors": [
+        "HealthArc",
+        "CCN Health"
+      ],
+      "topDomains": [
+        "healtharc.io",
+        "linkedin.com",
+        "play.google.com",
+        "instagram.com",
+        "softwareadvice.com",
+        "getapp.com.au",
+        "athenaconnect.athenahealth.com",
+        "marketplace.aviahealth.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "google",
+      "group": "comparison",
+      "query": "hana health vs thoroughcare",
+      "mentioned": true,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": true,
+        "citesUs": false
+      },
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "CCN Health"
+      ],
+      "topDomains": [
+        "thoroughcare.net",
+        "ccnhealth.com",
+        "intuitionlabs.ai",
+        "healtharc.io",
+        "youtube.com",
+        "mobihealthnews.com",
+        "facebook.com",
+        "sourceforge.net"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "google",
+      "group": "brand",
+      "query": "hana health reviews",
+      "mentioned": true,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "glassdoor.co.in",
+        "justdial.com",
+        "yelp.com",
+        "indeed.com",
+        "thelowdown.com",
+        "medino.com",
+        "ambitionbox.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "google",
+      "group": "comparison",
+      "query": "alternatives to ThoroughCare for CCM and APCM",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "Prevounce",
+        "TimeDoc",
+        "ChartSpan",
+        "CCN Health"
+      ],
+      "topDomains": [
+        "thoroughcare.net",
+        "youtube.com",
+        "blog.prevounce.com",
+        "ccnhealth.com",
+        "eclinicalworks.com",
+        "chartspan.com",
+        "coachcare.com",
+        "linkedin.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "google",
+      "group": "category",
+      "query": "best voice AI for chronic care management patient outreach",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "Hippocratic",
+        "Hyro",
+        "Retell"
+      ],
+      "topDomains": [
+        "digitalhealthcanada.com",
+        "getprosper.ai",
+        "pegasusone.health",
+        "nextlevel.ai",
+        "callsphere.ai",
+        "simbie.ai",
+        "prevounce.com",
+        "pmc.ncbi.nlm.nih.gov"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "google",
+      "group": "category",
+      "query": "CPAP adherence voice AI for sleep medicine",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/sleep/cpap"
+      ],
+      "position": 2,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": true,
+        "citesUs": true
+      },
+      "competitors": [],
+      "topDomains": [
+        "pmc.ncbi.nlm.nih.gov",
+        "hana.health",
+        "sciencedirect.com",
+        "facebook.com",
+        "betternight.com",
+        "aasm.org",
+        "sleepreviewmag.com",
+        "researchgate.net"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "google",
+      "group": "category",
+      "query": "voice AI for post-discharge follow-up calls to reduce readmissions",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "Hippocratic",
+        "Hyro"
+      ],
+      "topDomains": [
+        "parloa.com",
+        "edesy.in",
+        "cipherhealth.com",
+        "callsphere.ai",
+        "mindbowser.com",
+        "pmc.ncbi.nlm.nih.gov",
+        "linkedin.com",
+        "vaiu.ai"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "google",
+      "group": "category",
+      "query": "best chronic care management software 2026",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "ChronicCareIQ",
+        "TimeDoc",
+        "ChartSpan",
+        "CCN Health",
+        "HealthSnap"
+      ],
+      "topDomains": [
+        "omnimd.com",
+        "humhealth.com",
+        "ccnhealth.com",
+        "arcadia.io",
+        "mayamd.ai",
+        "1bioshealth.com",
+        "healtharc.io",
+        "digitalhealth.folio3.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "google",
+      "group": "category",
+      "query": "AI agent that calls patients between visits for CCM programs",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/"
+      ],
+      "position": 1,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": true
+      },
+      "competitors": [
+        "Retell"
+      ],
+      "topDomains": [
+        "hana.health",
+        "nutaan.com",
+        "kaicare.ai",
+        "cadence.care",
+        "retellai.com",
+        "gabbyhealth.ai",
+        "assorthealth.com",
+        "centricallai.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "google",
+      "group": "category",
+      "query": "HIPAA compliant voice AI that calls patients and writes back to the EHR",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "Assort",
+        "Hyro",
+        "Retell",
+        "CloudTalk"
+      ],
+      "topDomains": [
+        "cloudtalk.io",
+        "retellai.com",
+        "elion.health",
+        "elevenlabs.io",
+        "telnyx.com",
+        "youtube.com",
+        "hyro.ai",
+        "quensultingai.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "google",
+      "group": "comparison",
+      "query": "chartspan alternatives in-house CCM",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "Prevounce",
+        "ChronicCareIQ",
+        "TimeDoc",
+        "ChartSpan",
+        "CareHarmony"
+      ],
+      "topDomains": [
+        "chartspan.com",
+        "kaicare.ai",
+        "omnimd.com",
+        "simbie.ai",
+        "linkedin.com",
+        "healtharc.io",
+        "marketplace.aviahealth.com",
+        "mindbowser.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "google",
+      "group": "category",
+      "query": "AI patient engagement platform for chronic care management",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "Clinii",
+        "CareMessage"
+      ],
+      "topDomains": [
+        "johnsnowlabs.com",
+        "commure.com",
+        "botmd.com",
+        "clinii.com",
+        "f6s.com",
+        "chartspan.com",
+        "drkumo.com",
+        "linkedin.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "google",
+      "group": "brand",
+      "query": "hana health alternatives",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/"
+      ],
+      "position": 2,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": true,
+        "citesUs": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "hanahealth.org",
+        "hana.health",
+        "healthy.kaiserpermanente.org",
+        "community.sap.com",
+        "linkedin.com",
+        "gartner.com",
+        "rsfsocialfinance.org",
+        "capterra.it"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "google",
+      "group": "brand",
+      "query": "hana health alternatives",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/"
+      ],
+      "position": 3,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": true,
+        "citesUs": false
+      },
+      "competitors": [
+        "Luma Health"
+      ],
+      "topDomains": [
+        "hanahealth.org",
+        "healthy.kaiserpermanente.org",
+        "hana.health",
+        "facebook.com",
+        "mauinuistrong.info",
+        "spectrumlocalnews.com",
+        "healthgrades.com",
+        "findhelp.org"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "google",
+      "group": "category",
+      "query": "AI voice agent for ADHD intake behavioral health",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "Assort"
+      ],
+      "topDomains": [
+        "nextlevel.ai",
+        "assorthealth.com",
+        "getprosper.ai",
+        "ainora.lt",
+        "linkedin.com",
+        "fiercehealthcare.com",
+        "medicaldaily.com",
+        "vapi.ai"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "chatgpt",
+      "group": "comparison",
+      "query": "thoroughcare alternatives",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "Prevounce",
+        "ChronicCareIQ",
+        "TimeDoc",
+        "ChartSpan",
+        "CCN Health",
+        "HealthSnap"
+      ],
+      "topDomains": [
+        "ccnhealth.com",
+        "healtharc.io",
+        "cbinsights.com",
+        "circle.healthcare"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "chatgpt",
+      "group": "comparison",
+      "query": "hana health vs thoroughcare",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/"
+      ],
+      "position": null,
+      "competitors": [
+        "ThoroughCare"
+      ],
+      "topDomains": [
+        "thoroughcare.net",
+        "hana.health"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "chatgpt",
+      "group": "comparison",
+      "query": "alternatives to ThoroughCare for CCM and APCM",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "Prevounce",
+        "ChronicCareIQ",
+        "TimeDoc",
+        "ChartSpan",
+        "Accelerate"
+      ],
+      "topDomains": [
+        "prevounce.com",
+        "healtharc.io",
+        "chroniccareiq.com",
+        "vivocaresolutions.com",
+        "accelerate.systems",
+        "timedochealth.com",
+        "chartspan.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "chatgpt",
+      "group": "brand",
+      "query": "hana health alternatives",
+      "mentioned": true,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "virtualcarefinder.com",
+        "vitalitymatch.com",
+        "ratedbypatients.com",
+        "medswitcher.com",
+        "pmarketresearch.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "chatgpt",
+      "group": "brand",
+      "query": "hana health",
+      "mentioned": true,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "hanahealth.org"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "chatgpt",
+      "group": "brand",
+      "query": "hana health voice ai",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/",
+        "https://www.usehana.com/"
+      ],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "hana.health",
+        "usehana.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "chatgpt",
+      "group": "brand",
+      "query": "what is Hana Health voice AI",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/",
+        "https://www.usehana.com/"
+      ],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "hana.health",
+        "usehana.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "chatgpt",
+      "group": "brand",
+      "query": "hana health reviews",
+      "mentioned": true,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": []
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "chatgpt",
+      "group": "comparison",
+      "query": "chartspan alternatives in-house CCM",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "ThoroughCare",
+        "Prevounce",
+        "ChartSpan",
+        "CareHarmony"
+      ],
+      "topDomains": [
+        "chartspan.com",
+        "cbinsights.com",
+        "vivocaresolutions.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "chatgpt",
+      "group": "category",
+      "query": "best voice AI for chronic care management patient outreach",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "Hippocratic",
+        "Assort",
+        "Hyro",
+        "Retell",
+        "Artera"
+      ],
+      "topDomains": [
+        "retellai.com",
+        "themedicalpractice.com",
+        "hellopatient.com",
+        "cloudtalk.io",
+        "interactly.ai",
+        "thoughtly.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "chatgpt",
+      "group": "category",
+      "query": "HIPAA compliant voice AI that calls patients and writes back to the EHR",
+      "mentioned": false,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/",
+        "https://www.usehana.com/"
+      ],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "hana.health",
+        "usehana.com",
+        "keruu.ai",
+        "oreya.health",
+        "confidohealth.com",
+        "hellopatient.com",
+        "sempera.org",
+        "retellai.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "chatgpt",
+      "group": "category",
+      "query": "voice AI for post-discharge follow-up calls to reduce readmissions",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "pubmed.ncbi.nlm.nih.gov",
+        "pmc.ncbi.nlm.nih.gov"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "chatgpt",
+      "group": "category",
+      "query": "AI agent that calls patients between visits for CCM programs",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/"
+      ],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "hana.health",
+        "theohealth.org",
+        "positivecheck.com",
+        "chronii.com",
+        "carenox.ai",
+        "actiumhealth.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "chatgpt",
+      "group": "category",
+      "query": "CPAP adherence voice AI for sleep medicine",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "pubmed.ncbi.nlm.nih.gov",
+        "pmc.ncbi.nlm.nih.gov",
+        "nice.org.uk",
+        "publications.ersnet.org"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "chatgpt",
+      "group": "category",
+      "query": "best chronic care management software 2026",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "ThoroughCare",
+        "Prevounce",
+        "ChronicCareIQ",
+        "TimeDoc",
+        "ChartSpan"
+      ],
+      "topDomains": [
+        "chroniccareiq.com",
+        "timedochealth.com",
+        "cms.gov",
+        "thoroughcare.net",
+        "prevounce.com",
+        "chartspan.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "chatgpt",
+      "group": "comparison",
+      "query": "healtharc vs hana health",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/",
+        "https://www.usehana.com/"
+      ],
+      "position": null,
+      "competitors": [
+        "HealthArc"
+      ],
+      "topDomains": [
+        "healtharc.io",
+        "linkedin.com",
+        "hana.health",
+        "usehana.com",
+        "uk.linkedin.com"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "chatgpt",
+      "group": "category",
+      "query": "AI voice agent for ADHD intake behavioral health",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "psyfipractice.com",
+        "cetrai.com",
+        "dial3d.ai",
+        "nibanna.ai",
+        "elitehq.ai"
+      ]
+    },
+    {
+      "date": "2026-09-12",
+      "engine": "chatgpt",
+      "group": "category",
+      "query": "AI patient engagement platform for chronic care management",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": []
+    }
+  ]
+}

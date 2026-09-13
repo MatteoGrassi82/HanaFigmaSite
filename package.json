@@ -14,7 +14,8 @@
     "prerender": "node scripts/prerender.mjs",
     "aeo:sync": "node scripts/aeo-schema-llms-sync.mjs",
     "aeo:draft": "node scripts/aeo-content-drafter.mjs",
-    "dev": "vite"
+    "dev": "vite",
+    "aeo:monitor": "node scripts/aeo-visibility-monitor.mjs"
   },
   "dependencies": {
     "@elevenlabs/client": "^1.2.0",
