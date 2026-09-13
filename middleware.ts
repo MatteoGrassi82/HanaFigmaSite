@@ -23,7 +23,11 @@ import { next } from "@vercel/edge";
 export const config = {
   // Skip Vercel internals, the API functions, and anything that looks like a
   // static asset (has a file extension). Only real page navigations are matched.
-  matcher: ["/((?!api/|_next/|_vercel/|.*\\.[a-zA-Z0-9]+$).*)"],
+  //
+  // "/robots.txt" is listed explicitly because the pattern above excludes every
+  // path with a file extension, and the robots rule below has to see it. It is
+  // the ONE static path this middleware handles.
+  matcher: ["/((?!api/|_next/|_vercel/|.*\\.[a-zA-Z0-9]+$).*)", "/robots.txt"],
 };
 
 const IT_HOST = "ita.hana.health";
@@ -35,6 +39,30 @@ const BOT_RE =
 export default function middleware(req: Request) {
   const url = new URL(req.url);
   const host = (req.headers.get("host") || url.hostname).toLowerCase();
+
+  /* usehana.com serves its own robots.txt.
+   *
+   * The domain stays live on purpose: Google Workspace mail runs on it and links
+   * to usehana.com pages are already in sent agreements. Every page there already
+   * canonicals to hana.health, which Google and Bing honour — but AI answer engines
+   * ignore canonical tags, so they were crawling this host and citing usehana.com
+   * URLs in answers, splitting the brand across two domains. public/robots-usehana.txt
+   * keeps search crawlers allowed (they must fetch the page to read the canonical)
+   * and points the AI crawlers at hana.health instead.
+   *
+   * THIS HAS TO LIVE IN MIDDLEWARE. A `has: host` rewrite in vercel.json does not
+   * work for this: Vercel serves an existing static file from the filesystem BEFORE
+   * it evaluates rewrites, and public/robots.txt exists, so the rewrite never fires.
+   * Middleware runs ahead of the filesystem, so it does. Verified in production on
+   * 13 Sep 2026 — the vercel.json version silently served the wrong file. */
+  if (url.pathname === "/robots.txt") {
+    if (host === "usehana.com" || host === "www.usehana.com") {
+      return new Response(null, {
+        headers: { "x-middleware-rewrite": new URL("/robots-usehana.txt", url).toString() },
+      });
+    }
+    return next();
+  }
 
   // Never act on the Italian host (same repo deploys there) → no redirect loop.
   // Only act on the English production host(s); leave Vercel preview URLs alone.

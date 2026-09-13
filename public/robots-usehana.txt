@@ -1,5 +1,11 @@
 # robots.txt served ONLY on usehana.com / www.usehana.com
-# (vercel.json rewrites /robots.txt to this file when the Host is usehana.com)
+# (middleware.ts rewrites /robots.txt to this file when the Host is usehana.com)
+#
+# It must be middleware, not a vercel.json rewrite: Vercel serves an existing static
+# file from the filesystem BEFORE evaluating rewrites, and public/robots.txt exists,
+# so a rewrite never fires for this path. Middleware runs ahead of the filesystem.
+# The vercel.json version was deployed on 13 Sep 2026 and silently served the wrong
+# file until production verification caught it.
 #
 # WHY THIS FILE EXISTS
 # usehana.com is the former brand domain. It must stay reachable: its Google

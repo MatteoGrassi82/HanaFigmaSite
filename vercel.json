@@ -156,16 +156,6 @@
   ],
   "rewrites": [
     {
-      "source": "/robots.txt",
-      "has": [
-        {
-          "type": "host",
-          "value": "^(www\\.)?usehana\\.com$"
-        }
-      ],
-      "destination": "/robots-usehana.txt"
-    },
-    {
       "source": "/((?!api/|assets/|.*\\.[a-zA-Z0-9]+$).*)",
       "destination": "/api/not-found"
     }
