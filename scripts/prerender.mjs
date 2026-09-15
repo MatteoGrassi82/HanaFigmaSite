@@ -195,6 +195,25 @@ async function getBlogDataOrFail(attempts = 3) {
  * Anything present in the shell is left alone, so GTM, GA4 and Gleap still load
  * on these pages exactly as they do everywhere else.
  */
+function stripUnusedModulePreloads(html) {
+  return html.replace(/\s*<link\b[^>]*\brel="modulepreload"[^>]*>/gi, '');
+}
+
+/**
+ * Drop <link rel="modulepreload"> hints from a page that does not need them.
+ *
+ * App.tsx imports Home statically (every other route is lazy), so Home's whole
+ * component graph — the carousel, the slick bundle, the safety monitor, the
+ * patient context panel — sits in the entry chunk's static import graph, and Vite
+ * writes a modulepreload link for each one into the shell. Every route inherits
+ * them. On most pages that is a fair trade for the homepage being instant.
+ *
+ * On /go it is about 110KB gzipped of chunks the page never renders, downloading
+ * in parallel with the film on a connection that has a two-second budget. The
+ * hints are only hints: anything actually needed is still reached through the
+ * entry chunk's own imports, just without the head start. Stylesheets and the
+ * entry <script> are untouched, so nothing about how the page renders changes.
+ */
 function stripRuntimeInjectedScripts(html, shellSrcs) {
   return html.replace(
     /<script\b[^>]*\bsrc="([^"]*)"[^>]*>\s*<\/script>/gi,
@@ -566,6 +585,7 @@ async function main() {
         // /go and friends: keep the snapshot down to what the page asked for.
         if (UNLISTED_ROUTES.includes(route)) {
           html = stripRuntimeInjectedScripts(html, shellSrcs);
+          html = stripUnusedModulePreloads(html);
         }
 
         // Never trust the snapshot's <head>. A page that renders no <SEO> block

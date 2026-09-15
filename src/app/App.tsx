@@ -22,9 +22,10 @@ function ScrollToTop() {
 const BARE_ROUTES = ["/go"];
 
 function Chrome({ children }: { children: ReactNode }) {
+  const { pathname } = useLocation();
   const fallback = <div className="min-h-screen" aria-busy="true" />;
 
-  if (BARE_ROUTES.includes(useLocation().pathname)) {
+  if (BARE_ROUTES.includes(pathname)) {
     return (
       <div className="min-h-screen bg-paper font-sans text-ink">
         <main>
