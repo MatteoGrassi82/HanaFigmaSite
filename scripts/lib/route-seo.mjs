@@ -122,6 +122,28 @@ export const NOINDEX_ROUTES = [
 ];
 
 /**
+ * Routes that are PUBLISHED but UNLISTED: rendered, answering 200 for anyone who
+ * has the URL, forced to noindex, and absent from sitemap.xml and hreflang.
+ *
+ * This is the shape NOINDEX_ROUTES used to have before 6e391a7, which redefined
+ * that list as "not built at all" so unannounced pages would really 404. That was
+ * the right call for a page under review. It is the wrong one for a page whose URL
+ * is already in the world, and there is now such a page:
+ *
+ * /go is the destination of a QR code printed on 247 physical letters. It MUST be
+ * rendered — a scan is a hard navigation, and a route in App.tsx that is in no
+ * render list is served a 404 (api/not-found.ts). It must ALSO never be indexed: it
+ * has no navigation and no argument, and a physician who arrived from a search
+ * result would land on a page that makes no sense without the letter in hand.
+ * Neither existing list can express both, which is why this one exists.
+ *
+ * THE URL IS PERMANENT. Once the letters are posted, removing /go from this list
+ * turns a printed QR code into a 404 that cannot be corrected without reprinting.
+ * Nothing here is "unpublished"; do not treat this list as a staging area.
+ */
+export const UNLISTED_ROUTES = ['/go'];
+
+/**
  * Paths handled by a real server-side 301 in vercel.json.
  *
  * App.tsx also declares these as client-side <Navigate>, which only ever runs for
@@ -566,9 +588,14 @@ export function injectHead(shell, m) {
   // hreflang="it" for /programs/access-model, /case-studies and /state-of-ai pointed Google at
   // three ita.hana.health URLs that do not exist — an unreciprocated hreflang,
   // which Google discards and which fed the "alternate page"/duplicate buckets.
-  // NOINDEX_ROUTES are internal previews with no translated counterpart either.
+  // NOINDEX_ROUTES are internal previews with no translated counterpart either,
+  // and UNLISTED_ROUTES (/go) are English-only campaign pages by definition.
   html = html.replace(/\s*<link\s+rel="alternate"[^>]*>/gi, '');
-  if (!EN_ONLY_ROUTES.includes(m.path) && !NOINDEX_ROUTES.includes(m.path)) {
+  if (
+    !EN_ONLY_ROUTES.includes(m.path) &&
+    !NOINDEX_ROUTES.includes(m.path) &&
+    !UNLISTED_ROUTES.includes(m.path)
+  ) {
     const alternates = [
       ['en', `${EN_DOMAIN}${m.path}`],
       ['it', `${IT_DOMAIN}${m.path}`],
@@ -688,6 +715,7 @@ export function checkRouteCoverage(appTsxPath, pagesDir, footerPath) {
   const accounted = new Set([
     ...STATIC_ROUTES,
     ...NOINDEX_ROUTES,
+    ...UNLISTED_ROUTES,
     ...REDIRECT_ROUTES,
     ...DEV_ONLY_ROUTES,
   ]);
@@ -696,15 +724,15 @@ export function checkRouteCoverage(appTsxPath, pagesDir, footerPath) {
   for (const route of declared) {
     if (!accounted.has(route)) {
       problems.push(
-        `App.tsx declares <Route path="${route}"> but it is in neither STATIC_ROUTES, ` +
-        'NOINDEX_ROUTES nor REDIRECT_ROUTES in scripts/lib/route-seo.mjs. It would be ' +
-        'served a 404 in production. Add it to one of them.'
+        `App.tsx declares <Route path="${route}"> but it is in none of STATIC_ROUTES, ` +
+        'NOINDEX_ROUTES, UNLISTED_ROUTES or REDIRECT_ROUTES in scripts/lib/route-seo.mjs. ' +
+        'It would be served a 404 in production. Add it to one of them.'
       );
     }
   }
 
   const declaredSet = new Set(declared);
-  for (const route of [...STATIC_ROUTES, ...NOINDEX_ROUTES]) {
+  for (const route of [...STATIC_ROUTES, ...NOINDEX_ROUTES, ...UNLISTED_ROUTES]) {
     if (!declaredSet.has(route)) {
       problems.push(
         `route-seo.mjs prerenders "${route}" but App.tsx has no <Route path="${route}">. ` +

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, lazy, Suspense } from "react";
+import { useState, useEffect, useRef, lazy, Suspense, type ReactNode } from "react";
 import { useConversation, ConversationProvider } from "@elevenlabs/react";
 import { toast, Toaster } from "sonner";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router";
@@ -7,6 +7,44 @@ function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   return null;
+}
+
+/**
+ * Routes that render with no site chrome at all.
+ *
+ * /go is the destination of a QR code printed on 247 physical letters whose
+ * first line is "This letter is plain on purpose." A navbar on that page is a
+ * door into the whole marketing site, which breaks the promise the letter just
+ * made, so the route gets the page and nothing else: no nav, no footer, no
+ * toaster, and a plain white ground rather than the site's banded one. One page,
+ * one exit, and the exit is the booking. See src/app/pages/Go.tsx.
+ */
+const BARE_ROUTES = ["/go"];
+
+function Chrome({ children }: { children: ReactNode }) {
+  const fallback = <div className="min-h-screen" aria-busy="true" />;
+
+  if (BARE_ROUTES.includes(useLocation().pathname)) {
+    return (
+      <div className="min-h-screen bg-paper font-sans text-ink">
+        <main>
+          <Suspense fallback={fallback}>{children}</Suspense>
+        </main>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-paper-2 dark:bg-navy font-sans text-ink dark:text-slate-100 pb-12 relative">
+      <Toaster position="top-center" />
+
+      <Navbar />
+
+      <main>
+        <Suspense fallback={fallback}>{children}</Suspense>
+      </main>
+    </div>
+  );
 }
 import { Navbar } from "./components/layout/Navbar";
 import { getLocale } from "../lib/i18n";
@@ -80,6 +118,7 @@ const PrincipalCareManagement = lazy(() =>
 const TransitionalCareManagement = lazy(() =>
   import("./pages/TransitionalCareManagement").then((m) => ({ default: m.TransitionalCareManagement }))
 );
+const Go = lazy(() => import("./pages/Go").then((m) => ({ default: m.Go })));
 
 // Configuration
 const VAPI_PUBLIC_KEY = "5dfc26c6-90a6-4efe-907b-7bd0d690dc6e";
@@ -348,13 +387,7 @@ function AppContent() {
   return (
     <BrowserRouter>
         <ScrollToTop />
-        <div className="min-h-screen bg-paper-2 dark:bg-navy font-sans text-ink dark:text-slate-100 pb-12 relative">
-          <Toaster position="top-center" />
-
-          <Navbar />
-
-          <main>
-            <Suspense fallback={<div className="min-h-screen" aria-busy="true" />}>
+        <Chrome>
             <Routes>
               <Route path="/" element={
                 <Home
@@ -539,11 +572,12 @@ function AppContent() {
                   />
                 } />
               )}
+              {/* The direct-mail campaign landing page. Chromeless (see BARE_ROUTES
+                  above) and noindexed: it exists for 247 letters, not for search. */}
+              <Route path="/go" element={<Go />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
-            </Suspense>
-          </main>
-        </div>
+        </Chrome>
     </BrowserRouter>
   );
 }

@@ -41,6 +41,7 @@ import {
   STATIC_ROUTES,
   EN_ONLY_ROUTES,
   NOINDEX_ROUTES,
+  UNLISTED_ROUTES,
   checkRouteCoverage,
 } from './lib/route-seo.mjs';
 import { staticRouteLastmod } from './lib/git-lastmod.mjs';
@@ -172,6 +173,35 @@ async function getBlogDataOrFail(attempts = 3) {
   process.exit(1);
 }
 
+/**
+ * Strip third-party <script src> tags that were injected at RUNTIME, keeping the
+ * ones the built shell actually ships.
+ *
+ * Layer 2 serialises whatever the headless browser ended up with, and Google Tag
+ * Manager spends that render injecting its own tags. So every prerendered page in
+ * dist/ has hardcoded <script> tags for Wistia's player, Sentry, leadsy.ai and a
+ * second gtag — none of which are in index.html, all of which GTM would inject
+ * again at runtime anyway. Baked into the HTML they become parser-discovered
+ * downloads on first paint instead of asynchronous ones after it.
+ *
+ * That is a site-wide condition and predates this function; it is NOT fixed here,
+ * because changing what loads on 160 pages is a decision about analytics, not a
+ * prerender detail. This is applied only to UNLISTED_ROUTES, where it has to be:
+ * /go has a two-second budget on 4G, and one of the tags being baked in is the
+ * Calendly widget, which the page deliberately defers until the reader scrolls
+ * near it (see CalendlyInline in src/app/pages/Go.tsx). Serialising it defeats
+ * that on the one page where the deferral was the point.
+ *
+ * Anything present in the shell is left alone, so GTM, GA4 and Gleap still load
+ * on these pages exactly as they do everywhere else.
+ */
+function stripRuntimeInjectedScripts(html, shellSrcs) {
+  return html.replace(
+    /<script\b[^>]*\bsrc="([^"]*)"[^>]*>\s*<\/script>/gi,
+    (tag, src) => (shellSrcs.has(src) || src.startsWith('/') ? tag : '')
+  );
+}
+
 function routeToFile(route) {
   // "/"            -> dist/index.html
   // "/pricing"     -> dist/pricing/index.html
@@ -233,7 +263,7 @@ async function writeHeadOnly(routes, shell, cache) {
     if (!m) {
       // Internal preview routes are expected to have no <SEO> block — don't warn
       // about them, and don't let them inherit the homepage's generic title.
-      if (NOINDEX_ROUTES.includes(route)) {
+      if (NOINDEX_ROUTES.includes(route) || UNLISTED_ROUTES.includes(route)) {
         m = { title: fullTitle(`Internal preview: ${route}`), description: DEFAULT_DESCRIPTION, type: 'website' };
       } else {
         unknown.push(route);
@@ -245,7 +275,13 @@ async function writeHeadOnly(routes, shell, cache) {
     // /preview already sets it via <SEO robots="noindex, nofollow">; /demo, /bento
     // and /proof have no <SEO> at all and would otherwise default to index,follow.
     // This is also what keeps them out of sitemap.xml (see `indexable` below).
-    if (NOINDEX_ROUTES.includes(route)) m = { ...m, robots: 'noindex, nofollow' };
+    // UNLISTED_ROUTES get the same override for the opposite reason: /go is
+    // published and permanent, but it is for 247 letter recipients, not for
+    // search. Forcing it here means the page cannot drift into the sitemap by
+    // someone editing its <SEO> block.
+    if (NOINDEX_ROUTES.includes(route) || UNLISTED_ROUTES.includes(route)) {
+      m = { ...m, robots: 'noindex, nofollow' };
+    }
 
     const meta = { ...m, path: route, locale: LOCALE };
     resolved[route] = meta;
@@ -365,7 +401,15 @@ async function main() {
   // one on a preview URL without publishing it.
   const includeNoindex = process.env.PRERENDER_INCLUDE_NOINDEX === '1';
   const hidden = includeNoindex ? [] : NOINDEX_ROUTES;
-  const routes = [...staticRoutes, ...(includeNoindex ? NOINDEX_ROUTES : []), ...blogRoutes];
+  // UNLISTED_ROUTES are always rendered, in every build and both locales. They are
+  // published pages that simply are not advertised — /go is a printed QR code's
+  // destination, and a build that skipped it would 404 a letter. See route-seo.mjs.
+  const routes = [
+    ...staticRoutes,
+    ...UNLISTED_ROUTES,
+    ...(includeNoindex ? NOINDEX_ROUTES : []),
+    ...blogRoutes,
+  ];
   if (hidden.length) {
     console.log(`▸ ${hidden.length} unpublished route(s) NOT rendered — they will 404: ${hidden.join(', ')}`);
   }
@@ -414,6 +458,12 @@ async function main() {
   let ok = 0;
   let failed = 0;
   const headFixes = [];
+  // Every <script src> the built shell genuinely ships. Anything outside this set
+  // in a rendered snapshot was injected while the page ran. See
+  // stripRuntimeInjectedScripts.
+  const shellSrcs = new Set(
+    [...shell.matchAll(/<script\b[^>]*\bsrc="([^"]+)"/gi)].map((m) => m[1])
+  );
   try {
     for (const route of routes) {
       const page = await browser.newPage();
@@ -428,10 +478,21 @@ async function main() {
 
         // Wait until the app has mounted real content and isn't on a loading
         // skeleton. With the injected cache, blog data resolves synchronously-ish.
+        //
+        // The 200-character floor is a proxy for "this is a real page, not a
+        // spinner", and it is right for every page that argues something. It is
+        // wrong for a page whose whole point is that it says almost nothing: /go
+        // carries about 147 characters of visible text on purpose, and it timed
+        // out here rather than rendering. So a page may also declare itself ready
+        // by putting data-rendered="true" on an element — an attribute that only
+        // exists once React has actually rendered, which is the same guarantee
+        // the text length was standing in for. Use it sparingly; the heuristic is
+        // the default for a reason.
         await page.waitForFunction(
           () => {
             const root = document.getElementById('root');
             if (!root) return false;
+            if (root.querySelector('[data-rendered="true"]')) return true;
             const text = (root.innerText || '').trim();
             if (text.length < 200) return false;
             if (text === 'Loading...') return false;
@@ -501,6 +562,11 @@ async function main() {
         // The rendered body supersedes the layer-1 skeleton (and preview's SPA
         // fallback means the skeleton in hand is the homepage's, not this route's).
         html = stripFallbackNoscript(html);
+
+        // /go and friends: keep the snapshot down to what the page asked for.
+        if (UNLISTED_ROUTES.includes(route)) {
+          html = stripRuntimeInjectedScripts(html, shellSrcs);
+        }
 
         // Never trust the snapshot's <head>. A page that renders no <SEO> block
         // leaves the homepage's canonical and robots in place, because vite

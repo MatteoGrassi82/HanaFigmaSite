@@ -13,6 +13,14 @@ const IT_DOMAIN = "https://ita.hana.health";
  */
 const EN_ONLY_PATHS = ["/programs/access-model", "/case-studies", "/state-of-ai", "/use-cases"];
 
+/**
+ * Published-but-unlisted paths. Mirror of UNLISTED_ROUTES in
+ * scripts/lib/route-seo.mjs. These answer 200 for anyone holding the URL and are
+ * noindex everywhere, so an hreflang pair on them advertises nothing to nobody.
+ * /go is a printed QR code's destination, English-only by construction.
+ */
+const UNLISTED_PATHS = ["/go"];
+
 function getSiteDomain(): string {
   return getLocale() === "it" ? IT_DOMAIN : EN_DOMAIN;
 }
@@ -115,7 +123,7 @@ export function SEO({
     //
     // Keep EN_ONLY_PATHS in step with EN_ONLY_ROUTES in scripts/lib/route-seo.mjs,
     // which applies the same rule to the prerendered layer-1 head.
-    if (path && !EN_ONLY_PATHS.includes(path)) {
+    if (path && !EN_ONLY_PATHS.includes(path) && !UNLISTED_PATHS.includes(path)) {
       const setHreflang = (hreflang: string, href: string) => {
         const sel = `link[rel="alternate"][hreflang="${hreflang}"]`;
         let el = document.querySelector(sel) as HTMLLinkElement | null;

@@ -64,6 +64,17 @@ export default function middleware(req: Request) {
     return next();
   }
 
+  /* /go is never redirected, by geo or by anything else.
+   *
+   * It is the destination of a QR code printed on 247 physical letters, so the
+   * URL cannot be corrected after the fact. The geo rule below would send a
+   * visitor Vercel reads as Italian to ita.hana.health/go, and that page does
+   * not exist on the Italian project — a 404 at the end of a printed QR code,
+   * with no way to fix it short of reprinting. The campaign is US-only, so this
+   * should never fire; it is here because the cost of it firing once is a dead
+   * letter, and the cost of the guard is one line. */
+  if (url.pathname === "/go") return next();
+
   // Never act on the Italian host (same repo deploys there) → no redirect loop.
   // Only act on the English production host(s); leave Vercel preview URLs alone.
   const isEnglishProd = host === "hana.health" || host === "www.hana.health" || host === "usehana.com" || host === "www.usehana.com";
