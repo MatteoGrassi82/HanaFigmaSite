@@ -26,13 +26,15 @@ import { SEO } from "../components/SEO";
  * than navigating away. Resist adding to this page. Every addition costs the
  * letter its credibility.
  *
- * THE FILM IS SILENT AND THE CAPTIONS ARE THE SOUNDTRACK
- * public/video/hana-part1.mp4 has no audio track yet. Captions are therefore not
- * an accessibility nicety here: without them the video says nothing at all. The
- * <track> is marked default AND forced to mode "showing" on mount, because
- * `default` alone is not honoured everywhere (iOS Safari defers to the system
- * caption setting). When the voiceover is laid in, swap the mp4 and nothing else:
- * the VTT timings are cut to the same 57.000s and still hold.
+ * THE FILM CARRIES ITS OWN CAPTIONS
+ * The film is the narrated product cut, the same one /remote-v2 plays, and its
+ * captions are burned into the picture rather than supplied as a text track. So
+ * there is no <track> here and no VTT, and adding either would draw a second set
+ * of captions over the first. It also means the page is honest with muted
+ * autoplay: a phone that blocks sound still gets every word.
+ *
+ * This replaced the 57s part-one picture edit on 16 Sept at Matteo's direction.
+ * See FILM below for the encode and what was checked.
  *
  * WHAT COMES BACK
  * The QR carries ?r=143, unique per letter, 1 to 247. It is read, recorded via
@@ -57,18 +59,27 @@ const CALENDLY_URL = "https://calendly.com/matteowastaken/discoverycall";
 const PHONE_DISPLAY = "+1 (517) 300-7189";
 const PHONE_TEL = "+15173007189";
 
-/* HANA, part one. 57.000s, 1280x720, no audio track, +faststart so it streams
- * rather than waiting on the whole file. Encoded from the 41.8MB 1080p picture
- * master in ~/Downloads/HANA-part1-FOR-EDITOR at CRF 32, which lands at 2.6MB:
- * checked frame by frame against the master, the typeset "400" stays crisp and
- * the flat clay backgrounds show no banding, which is the only quality bar a
- * matte stop-motion film has. Committed rather than hosted because this page
- * has to work in production and the video IS the page; if it moves to Vercel
- * Blob later, only `src` changes. */
+/* The product film, the same cut /remote-v2 plays (Matteo, 16 Sept: the part one
+ * picture edit was the wrong video for this page). 2:26, 1280x720, narrated, and
+ * +faststart so it streams rather than making a phone wait on the whole file.
+ *
+ * IT CARRIES ITS OWN CAPTIONS, BURNED IN. That is why there is no <track> here and
+ * no captions file: the words are part of the picture, bottom centre, for the whole
+ * run. Adding a VTT would render a second set of captions on top of the first.
+ * Checked at 0:08, 1:15 and through the Billing section before the track was
+ * dropped. It also means muted autoplay still says everything the film says, which
+ * is what the page needs on a phone, where sound would be blocked anyway.
+ *
+ * Encoded from the 16.5MB 1080p master at public/video/demo.mp4 (gitignored, too
+ * big for a public repo) down to 6.6MB at CRF 31. The bar for a screen capture is
+ * whether the figures hold up: checked against the master on the Billing frame,
+ * "312", "306" and "Monthly care note · Kate Morgan · August" are all crisp.
+ *
+ * Committed rather than hosted because this page has to work in production and the
+ * video IS the page. If it moves to Vercel Blob later, only `src` changes. */
 const FILM = {
-  src: "/video/hana-part1.mp4",
-  poster: "/video/hana-part1-poster.jpg",
-  captions: "/video/hana-part1.en.vtt",
+  src: "/video/go-film.mp4",
+  poster: "/video/go-film-poster.jpg",
 } as const;
 
 /** Letters are numbered 1 to 247. Anything else is treated as absent. */
@@ -214,9 +225,9 @@ export function Go() {
   useRecordVisit();
   const video = useRef<HTMLVideoElement>(null);
 
-  /* Force the captions on. The film is silent, so a viewer who does not see
-   * captions sees 57 seconds of clay and learns nothing. `default` on the
-   * <track> is the declaration; this is the enforcement. */
+  /* The one thing this effect still exists for is the muted attribute, below.
+   * There is no caption wrangling any more: the film burns its own captions into
+   * the picture, so there is no text track to put into "showing" mode. */
   useEffect(() => {
     const v = video.current;
     if (!v) return;
@@ -230,13 +241,6 @@ export function Go() {
     v.muted = true;
     v.setAttribute("muted", "");
 
-    const show = () => {
-      const track = v.textTracks?.[0];
-      if (track) track.mode = "showing";
-    };
-    show();
-    v.addEventListener("loadedmetadata", show);
-    return () => v.removeEventListener("loadedmetadata", show);
   }, []);
 
   /* index.html boots Gleap site-wide and it floats a feedback bubble over every
@@ -277,7 +281,7 @@ export function Go() {
         useExactTitle
         path="/go"
         robots="noindex, nofollow"
-        description="The ninety seconds the letter was too short to include."
+        description="The two minutes the letter was too short to include."
       />
 
       <div className="mx-auto w-full max-w-[680px] px-5 pb-20 pt-12 sm:px-8 sm:pt-16">
@@ -286,12 +290,14 @@ export function Go() {
           You got a letter.
         </h1>
         <p className="mt-4 text-[17px] leading-[1.5] text-ink-soft sm:text-[19px]">
-          Here is the ninety seconds it was too short to include.
+          Here is the two minutes it was too short to include.
         </p>
 
-        {/* The film. Muted autoplay so it starts on its own on a phone held in
-            one hand, controls visible so it can be stopped, captions on because
-            they are the only voice it has. */}
+        {/* The film. Muted autoplay so it starts on its own on a phone held in one
+            hand, and controls visible so it can be stopped or its sound turned on.
+            It is narrated, but it reads perfectly well silent because its captions
+            are burned into the picture, which is what makes muted autoplay honest
+            here rather than a video playing to nobody. */}
         <div className="mt-8 overflow-hidden rounded-xl border border-rule bg-navy sm:mt-10">
           <video
             ref={video}
@@ -303,15 +309,7 @@ export function Go() {
             playsInline
             controls
             preload="metadata"
-          >
-            <track
-              kind="captions"
-              src={FILM.captions}
-              srcLang="en"
-              label="English"
-              default
-            />
-          </video>
+          />
         </div>
 
         {/* The booking. */}

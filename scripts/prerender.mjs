@@ -493,7 +493,22 @@ async function main() {
           window.__PRERENDER__ = data;
         }, cache);
 
-        await page.goto(`${base}${route}`, { waitUntil: 'networkidle0', timeout: 45000 });
+        // networkidle0 is the right default: it waits out the data fetches most
+        // routes do before they have anything to serialise. But it is a wait for
+        // SILENCE on the network, and a page that streams media never goes quiet.
+        // /go autoplays a 6.6MB film, so it never reaches idle and the navigation
+        // times out — which used to abandon the route at its layer-1 head-only
+        // file, losing the rendered body, the video markup and the muted attribute
+        // that markup exists to carry.
+        //
+        // A timeout here is not a failed render, it is an unanswered question. The
+        // waits below are the real test of whether the app mounted, so let them
+        // answer it. Any other navigation error is still a genuine failure.
+        await page.goto(`${base}${route}`, { waitUntil: 'networkidle0', timeout: 45000 })
+          .catch((err) => {
+            if (!/timeout/i.test(String(err?.message || err))) throw err;
+            console.log(`  ↳ ${route} never reached network idle (streaming media); continuing`);
+          });
 
         // Wait until the app has mounted real content and isn't on a loading
         // skeleton. With the injected cache, blog data resolves synchronously-ish.

@@ -39,8 +39,8 @@ that looks designed works against it.
 > clinical is decided by software, and nothing bills until one of your people has
 > looked at it.
 >
-> There is a short film that explains this better than another page of typing would.
-> It is shorter than this letter.
+> There is a film that shows this better than another page of typing would. It runs
+> a little over two minutes and it is the whole of what we do.
 >
 > [ QR CODE ]
 >
@@ -52,8 +52,10 @@ that looks designed works against it.
 
 ### What is deliberately not in it
 
-- **No patient, interaction or practice counts.** Same rule as the film. The one
-  number is a published CMS rate, not capacity arithmetic.
+- **No counts in the letter.** Its one number is a published CMS rate, not capacity
+  arithmetic. The film on the page does show its own figures (312 calls, 306 ready
+  to bill), cleared separately on 16 Sept; that clearance was for the film, so keep
+  the letter's single number a rate.
 - **No "AI calls your patients."** The word is *assistants*, and the sentence about
   who decides is load-bearing, not decoration. Keep both if you rewrite.
 - **No second call to action.** The QR is the letter's only exit. A reply card, a
