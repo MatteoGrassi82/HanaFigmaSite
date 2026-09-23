@@ -17,14 +17,20 @@ import { SEO } from "../components/SEO";
  * codes. They have never heard of HANA. They are on a phone, one-handed, with
  * about forty seconds of patience.
  *
- * WHY THERE IS NOTHING ELSE ON IT
+ * WHY THERE IS ALMOST NOTHING ON IT
  * The letter's first line is "This letter is plain on purpose." A page that opens
  * into the full marketing site breaks the promise the letter made. So: no navbar
  * (App.tsx renders the chrome conditionally for this route and this route only),
- * no footer, no feature grid, no logos, and no link that leaves the page except
- * the booking itself. The phone number is a tel: link, which places a call rather
- * than navigating away. Resist adding to this page. Every addition costs the
- * letter its credibility.
+ * no footer, no feature grid, no logos. The phone number is a tel: link, which
+ * places a call rather than navigating away.
+ *
+ * THREE LINKS, AND THAT IS THE BUDGET. The booking, the phone number, and one
+ * "Learn more about HANA Health" under the film, which Matteo asked for on
+ * 23 Sept after the page went from "You got a letter" straight into a film
+ * without ever naming whose film it was. The brief originally forbade exactly
+ * that link; it was spent knowingly, once, and it opens in a new tab so the
+ * booking survives the click. Resist adding a fourth. Every addition costs the
+ * letter its credibility, and this page has now used its allowance.
  *
  * THE FILM CARRIES ITS OWN CAPTIONS
  * The film is the narrated product cut, the same one /remote-v2 plays, and its
@@ -53,6 +59,10 @@ import { SEO } from "../components/SEO";
  * Note it can be changed at any time, including after the letters are posted:
  * the thing that must never move is /go, not what /go embeds. */
 const CALENDLY_URL = "https://calendly.com/matteowastaken/discoverycall";
+
+/* The marketing site, linked once under the film. See the comment at the link
+ * itself for why it opens in a new tab. */
+const SITE_URL = "https://www.hana.health/";
 
 /* The number printed in the letter. Kept as two constants so the dialled string
  * and the read string can never drift apart. */
@@ -146,9 +156,8 @@ function useRecordVisit() {
  *
  * The <a> underneath is not decoration. It is the booking as a plain link, and
  * it is what a reader gets if the script is blocked, fails, or is simply slow;
- * Calendly's iframe covers it once it mounts. It is also the only link on the
- * page that leaves it, which the brief allows precisely because it is the
- * booking.
+ * Calendly's iframe covers it once it mounts. It is the link this page is FOR,
+ * and the only one that should ever be the loudest thing on screen.
  */
 function CalendlyInline({ url }: { url: string }) {
   const holder = useRef<HTMLDivElement>(null);
@@ -317,6 +326,25 @@ export function Go() {
             preload="metadata"
           />
         </div>
+
+        {/* The one deliberate exception to the single-exit rule (Matteo, 23 Sept,
+            asked for twice and chosen over a quieter wordmark at the foot of the
+            page). It opens in a new tab ON PURPOSE: the risk this link carries is
+            a reader wandering into the marketing site and never coming back to
+            book, and a new tab leaves /go, the film and the calendar sitting
+            exactly where they left them. It is set at 15px and sits below the
+            film rather than beside the booking so that it reads as the smaller of
+            the two things to do here. */}
+        <p className="mt-6 text-[15px] leading-[1.5]">
+          <a
+            href={SITE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-brand underline underline-offset-4"
+          >
+            Learn more about HANA Health
+          </a>
+        </p>
 
         {/* The booking. */}
         <h2 className="mt-14 font-serif text-[26px] font-medium leading-[1.2] text-ink sm:mt-16 sm:text-[30px]">
