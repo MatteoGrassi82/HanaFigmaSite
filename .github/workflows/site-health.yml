@@ -1,0 +1,41 @@
+# The live demo's lead capture returned 500 to every request from 9 to 23 Sept 2026
+# and nobody knew. The visitor saw an error, the alert email never went (it is sent
+# by the same function that crashed), and no row reached the CRM.
+#
+# Each probe here is a request the endpoint must REJECT. A 400 proves the module
+# loaded and the handler ran, without sending a text, an email or a lead. A 500 or a
+# timeout fails the run, and GitHub emails whoever last edited this schedule.
+name: site-health
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Probe the lead, contact and demo endpoints
+        run: |
+          fail=0
+          check() {  # label, expected status, curl args...
+            label=$1; want=$2; shift 2
+            got=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "$@") || got=000
+            if [ "$got" = "$want" ]; then
+              echo "ok    $label -> $got"
+            else
+              echo "FAIL  $label -> $got, expected $want"; fail=1
+            fi
+          }
+          J='content-type: application/json'
+          check "/api/lead, empty body"          400 -X POST https://www.hana.health/api/lead      -H "$J" -d '{}'
+          check "/api/contact, empty body"       400 -X POST https://www.hana.health/api/contact   -H "$J" -d '{}'
+          check "/api/demo-text, invalid number" 400 -X POST https://www.hana.health/api/demo-text -H "$J" -d '{"to":"x"}'
+          check "demo agent /health"             200 https://hana-kat-clinic.fly.dev/health
+          # /go is printed on 247 letters. It must never 404.
+          check "/go, the QR destination"        200 https://www.hana.health/go
+          exit $fail
