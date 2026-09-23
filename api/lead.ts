@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { Resend } from "resend";
-import { sendToCrm, reportDelivery, settled, type LegResult } from "./_crm";
+import { sendToCrm, reportDelivery, settled, type LegResult } from "./_crm.js";
 
 /**
  * Live-demo lead capture. Does two things with every lead, together:

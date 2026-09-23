@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { Resend } from "resend";
-import { sendToCrm, reportDelivery, settled, type LegResult } from "./_crm";
+import { sendToCrm, reportDelivery, settled, type LegResult } from "./_crm.js";
 
 /**
  * Contact-form handler. Receives a JSON POST from the Contact page and sends the
