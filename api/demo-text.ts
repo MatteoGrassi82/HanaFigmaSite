@@ -34,6 +34,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!E164.test(to)) {
     return res.status(400).json({ error: "Enter your number in international format, e.g. +1 555 123 4567." });
   }
+  // Numbers the demo never serves and SMS-pumping fraud favours. UK 070 is personal
+  // numbering and 076 is pagers, bar 07624 (Isle of Man mobiles): neither is a handset
+  // a visitor holds. Twilio's log for 15-19 Sept 2026 shows the same name submitted
+  // twice on +447010830006, undelivered (30005) and paid for regardless. This proxy
+  // is the only thing between a public form and a billed text, and the agent's own
+  // docstring says rate limits belong here; this is the first of them.
+  if (/^\+447(?:0|6(?!24))/.test(to)) {
+    return res.status(400).json({ error: "Please enter a mobile number." });
+  }
   try {
     const r = await fetch(`${AGENT_URL.replace(/\/$/, "")}/sms/start`, {
       method: "POST",
