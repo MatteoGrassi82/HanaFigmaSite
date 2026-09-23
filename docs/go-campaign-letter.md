@@ -58,6 +58,9 @@ that looks designed works against it.
   the letter's single number a rate.
 - **No "AI calls your patients."** The word is *assistants*, and the sentence about
   who decides is load-bearing, not decoration. Keep both if you rewrite.
+- **No email in the letter.** Matteo, 23 Sept: too late to change the printed piece.
+  The address lives on the landing page instead, in the last line under the calendar,
+  so a reader who will not scan and will not phone still has a way back.
 - **No second call to action.** The QR is the letter's only exit. A reply card, a
   website address and a QR code all competing is three exits and no conversion. The
   phone number is the fallback, not a second ask.

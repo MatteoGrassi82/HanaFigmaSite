@@ -69,6 +69,19 @@ const SITE_URL = "https://www.hana.health/";
 const PHONE_DISPLAY = "+1 (517) 300-7189";
 const PHONE_TEL = "+15173007189";
 
+/* Matteo's address, asked for on 23 Sept so a reader who will not book and will
+ * not phone still has a way back.
+ *
+ * NOTE THE DOMAIN. Every public address on the rest of the site is @hana.health
+ * (privacy@, security@, hello@, legal@, abuse@ and more, 44 uses); usehana.com
+ * survives because Google Workspace mail runs on it, and it appears elsewhere in
+ * this repo only as an internal notification recipient in api/. So this is the
+ * one customer-facing usehana.com address on the site, and it is here because it
+ * is the address known to receive. If matteo@hana.health receives too, switch
+ * this line: a letter signed HANA Health whose QR points at hana.health reads
+ * better with an address to match. */
+const EMAIL = "matteo@usehana.com";
+
 /* The product film, the same cut /remote-v2 plays (Matteo, 16 Sept: the part one
  * picture edit was the wrong video for this page). 2:26, 1280x720, narrated, and
  * +faststart so it streams rather than making a phone wait on the whole file.
@@ -362,6 +375,13 @@ export function Go() {
             className="whitespace-nowrap font-medium text-brand underline underline-offset-4"
           >
             {PHONE_DISPLAY}
+          </a>
+          , or email{" "}
+          <a
+            href={`mailto:${EMAIL}`}
+            className="whitespace-nowrap font-medium text-brand underline underline-offset-4"
+          >
+            {EMAIL}
           </a>
           .
         </p>
