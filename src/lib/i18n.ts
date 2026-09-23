@@ -141,6 +141,7 @@ export interface Translations {
     fieldNameRequired: string;
     fieldEmailRequired: string;
     fieldPhoneFormat: string;
+    fieldPhoneCompleted: string;
     networkError: string;
     callFailed: string;
     textFailed: string;
@@ -567,6 +568,7 @@ const en: Translations = {
     fieldNameRequired: "Name is required",
     fieldEmailRequired: "Email is required",
     fieldPhoneFormat: "Enter your number in international format, e.g. +1 555 123 4567.",
+    fieldPhoneCompleted: "We added your country code. Check the number is right, then press the button again.",
     networkError: "Network error. Please try again.",
     callFailed: "We couldn't place the call. Please try again.",
     textFailed: "We couldn't send the text. Please check the number and try again.",
@@ -981,6 +983,7 @@ const it: Translations = {
     fieldNameRequired: "Il nome è obbligatorio",
     fieldEmailRequired: "L'email è obbligatoria",
     fieldPhoneFormat: "Inserisci il numero in formato internazionale, es. +39 02 1234 5678.",
+    fieldPhoneCompleted: "Abbiamo aggiunto il prefisso internazionale. Controlla che il numero sia giusto, poi premi di nuovo il pulsante.",
     networkError: "Errore di rete. Riprova.",
     callFailed: "Non siamo riusciti a effettuare la chiamata. Riprova.",
     textFailed: "Non siamo riusciti a inviare l'SMS. Controlla il numero e riprova.",

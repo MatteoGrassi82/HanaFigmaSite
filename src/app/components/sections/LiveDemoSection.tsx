@@ -27,6 +27,30 @@ const DEMO_AGENT_ID = "squad:91b2273e-a3b2-46df-af20-193b50054921";
 // Carrier registration for the line (10DLC, CK3JA0R) completed 2026-09-08.
 const E164 = /^\+[1-9]\d{7,14}$/;
 
+// A US visitor types "(555) 123-4567". That strips to ten digits and fails E164
+// before any request is sent: no log anywhere, only a format error and a visitor who
+// leaves. So an unambiguous local number is completed with its country code, but
+// only where the browser's own clock puts the visitor in that country, and never
+// silently. The completed number is written back into the field and the visitor
+// presses again. Guessing wrong and sending would put the menu on a stranger's
+// phone, which is a TCPA problem rather than a UX one: an Indian mobile such as
+// 8123456789 is also a valid Indiana number. Returns null when nothing is safe.
+function completeLocalNumber(stripped: string): string | null {
+  let tz = "";
+  try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch { /* no Intl */ }
+  if (tz.startsWith("America/")) {
+    // NANP: area code and exchange both start 2-9, with or without the leading 1.
+    const m = stripped.match(/^1?([2-9]\d{2})([2-9]\d{2})(\d{4})$/);
+    if (m) return `+1 ${m[1]} ${m[2]} ${m[3]}`;
+  }
+  if (tz === "Europe/London") {
+    // UK mobile, trunk 0 dropped.
+    const m = stripped.match(/^0(7\d{3})(\d{6})$/);
+    if (m) return `+44 ${m[1]} ${m[2]}`;
+  }
+  return null;
+}
+
 // LIVE. The US path is the one being opened: _callback_line texts a +1 visitor from
 // the Telnyx line (+1 313 514 6395), which has been in the agent's number->agent map
 // from the start, so the fault that dropped the Irish reply never applied to it.
@@ -77,8 +101,8 @@ export function LiveDemoSection({
   // emails the team (see api/_crm.ts). The phone number goes with it whenever
   // the visitor typed one: on the text flow it is the only way to reach them,
   // and it was dropped here even though the handler already accepted it.
-  const captureLead = (page: string) => {
-    const trimmedPhone = phone.replace(/[\s().-]/g, "");
+  const captureLead = (page: string, textedPhone?: string) => {
+    const trimmedPhone = textedPhone ?? phone.replace(/[\s().-]/g, "");
     fetch("/api/lead", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -97,13 +121,24 @@ export function LiveDemoSection({
     const errors: { name?: string; email?: string; phone?: string; consent?: string } = {};
     if (!name.trim())  errors.name  = ld.fieldNameRequired;
     if (!email.trim()) errors.email = ld.fieldEmailRequired;
-    const to = phone.replace(/[\s().-]/g, "");
-    if (!E164.test(to)) errors.phone = ld.fieldPhoneFormat;
+    // "00" is how most of Europe types "+", so it is the visitor's own country code,
+    // not a guess, and needs no confirming.
+    const to = phone.replace(/[\s().-]/g, "").replace(/^00/, "+");
+    if (!E164.test(to)) {
+      const completed = isItalian ? null : completeLocalNumber(to);
+      if (completed) {
+        // Shown, not sent. The next press sends it, because it now passes E164.
+        setPhone(completed);
+        errors.phone = ld.fieldPhoneCompleted;
+      } else {
+        errors.phone = ld.fieldPhoneFormat;
+      }
+    }
     if (!consent) errors.consent = ld.fieldConsentRequired;
     setFieldErrors(errors);
     if (Object.keys(errors).length) return;
     setSmsStatus("sending"); setSmsError(null);
-    captureLead("live-demo-text");
+    captureLead("live-demo-text", to);
     try {
       const r = await fetch("/api/demo-text", {
         method: "POST",
