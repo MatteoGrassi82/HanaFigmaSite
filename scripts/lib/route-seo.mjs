@@ -92,32 +92,12 @@ export const EN_ONLY_ROUTES = ['/programs/access-model', '/case-studies', '/stat
 // — remove it from here and from App.tsx when it replaces the live page.
 export const NOINDEX_ROUTES = [
   '/demo', '/preview', '/bento', '/proof', '/remote-v2', '/remote-lab',
-  // The reference programme page. Live at its real URL for review, deliberately
-  // not indexed: it renders five open billing questions on the page, and those
-  // are answered before it moves to STATIC_ROUTES. Moving it is the publish step.
-  '/programs',
-  '/programs/chronic-care-management',
-  '/programs/advanced-primary-care-management',
-  '/programs/behavioral-health-integration',
-  '/programs/remote-therapeutic-monitoring',
-  '/programs/remote-physiologic-monitoring',
-  '/programs/principal-care-management',
-  '/programs/transitional-care-management',
-  // Audience and comparison pages. They close by sending the reader to a
-  // /programs/* page, so they publish together with those routes: shipping them
-  // first would hand a crawler five pages whose only call to action is a noindex
-  // dead end. Moving these five out of the list is the same publish step.
-  '/for-practices',
-  '/for-health-systems',
-  '/compare/vs-care-management-software',
-  '/compare/vs-outsourced-care-management',
-  '/compare/vs-doing-nothing',
   // /security restates compliance claims that predate the move to HANA Health,
-  // Inc. and need re-confirming against the current entity. /academy and /faq
-  // both link into the noindex routes above and publish with them; /faq also
-  // sidesteps pricing, which /pricing still contradicts.
+  // Inc. and need re-confirming against the current entity. /faq sidesteps
+  // pricing, which /pricing still contradicts. Both state something to a reader
+  // rather than merely being unfinished, so neither belongs in REVIEW_ROUTES:
+  // a wrong claim is worse behind a shared link than behind a 404.
   '/security',
-  '/academy',
   '/faq',
 ];
 
@@ -142,6 +122,51 @@ export const NOINDEX_ROUTES = [
  * Nothing here is "unpublished"; do not treat this list as a staging area.
  */
 export const UNLISTED_ROUTES = ['/go'];
+
+/**
+ * Routes that are RENDERED FOR REVIEW: they answer 200 for anyone holding the
+ * URL, are forced to noindex, and never reach sitemap.xml or hreflang. Same
+ * rendering as UNLISTED_ROUTES, opposite promise.
+ *
+ * UNLISTED_ROUTES says "this URL is permanent"; /go is printed on 247 letters and
+ * can never 404 again. This list says the opposite: a route here is finished
+ * enough to send to a colleague and not finished enough to announce, and it may
+ * move to STATIC_ROUTES or back to a 404 without notice. Never print one of these
+ * URLs, never link one from a page a crawler can reach, and never send one to a
+ * prospect: the programme pages still render open billing questions in their copy.
+ *
+ * They lived in NOINDEX_ROUTES until now, which does not build them at all, so
+ * every one of them 404ed in production — written, deployed, unreachable. That is
+ * the right shape for a page nobody should see and the wrong one for a page whose
+ * whole purpose right now is internal review.
+ *
+ * Publishing is still one edit: move the route out of here into STATIC_ROUTES and
+ * it gains an index entry, a sitemap row and hreflang. Rendering is not publishing.
+ *
+ * COST: these are prerendered in the EN build, which is most of a deploy's time.
+ * /remote-lab (212s) stays in NOINDEX_ROUTES deliberately.
+ */
+export const REVIEW_ROUTES = [
+  // The seven programme pages and their hub. Each renders open billing questions
+  // that are answered before it moves to STATIC_ROUTES.
+  '/programs',
+  '/programs/chronic-care-management',
+  '/programs/advanced-primary-care-management',
+  '/programs/behavioral-health-integration',
+  '/programs/remote-therapeutic-monitoring',
+  '/programs/remote-physiologic-monitoring',
+  '/programs/principal-care-management',
+  '/programs/transitional-care-management',
+  // Audience and comparison pages. They close by sending the reader to a
+  // /programs/* page, so they are reviewable only while those pages answer 200.
+  '/for-practices',
+  '/for-health-systems',
+  '/compare/vs-care-management-software',
+  '/compare/vs-outsourced-care-management',
+  '/compare/vs-doing-nothing',
+  // Links into the programme pages above, so it reviews with them.
+  '/academy',
+];
 
 /**
  * Paths handled by a real server-side 301 in vercel.json.
@@ -589,12 +614,15 @@ export function injectHead(shell, m) {
   // three ita.hana.health URLs that do not exist — an unreciprocated hreflang,
   // which Google discards and which fed the "alternate page"/duplicate buckets.
   // NOINDEX_ROUTES are internal previews with no translated counterpart either,
-  // and UNLISTED_ROUTES (/go) are English-only campaign pages by definition.
+  // UNLISTED_ROUTES (/go) are English-only campaign pages by definition, and
+  // REVIEW_ROUTES are rendered in the EN build only, so an hreflang="it" would
+  // point at an ita.hana.health URL that 404s.
   html = html.replace(/\s*<link\s+rel="alternate"[^>]*>/gi, '');
   if (
     !EN_ONLY_ROUTES.includes(m.path) &&
     !NOINDEX_ROUTES.includes(m.path) &&
-    !UNLISTED_ROUTES.includes(m.path)
+    !UNLISTED_ROUTES.includes(m.path) &&
+    !REVIEW_ROUTES.includes(m.path)
   ) {
     const alternates = [
       ['en', `${EN_DOMAIN}${m.path}`],
@@ -669,6 +697,25 @@ export function verifyAndFixHead(html, m) {
   //
   // The failure that actually matters is a page inheriting the HOMEPAGE's title,
   // which is what a missing <SEO> block produces. Check only for that.
+  // hreflang. Layer 1 omits alternates on noindex routes, then the rendered
+  // snapshot puts them back: <SEO> decides hreflang from its own hand-copied
+  // EN_ONLY_PATHS / UNLISTED_PATHS mirrors, and a route those lists have never
+  // heard of — every REVIEW_ROUTE — keeps an hreflang="it" aimed at an
+  // ita.hana.health URL that 404s. That is the unreciprocated pair that fed the
+  // duplicate buckets in GSC, arriving by the one door layer 1 does not watch.
+  //
+  // The rule needs no fourth mirror: a noindex page advertises nothing to nobody,
+  // so it carries no alternates. Derived from the robots value this function is
+  // already given, it holds for any route added later.
+  if (/noindex/i.test(expectedRobots)) {
+    const alt = /<link\b(?=[^>]*rel="alternate")(?=[^>]*hreflang=)[^>]*>/gi;
+    const found = html.match(alt);
+    if (found) {
+      fixed.push(`removed ${found.length} hreflang alternate(s) from a noindex page`);
+      html = html.replace(/\s*<link\b(?=[^>]*rel="alternate")(?=[^>]*hreflang=)[^>]*>/gi, '');
+    }
+  }
+
   const title = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1]?.trim() ?? null;
   const looksInherited = m.path !== '/' && m.homeTitle && title === m.homeTitle;
   if (m.title && (!title || looksInherited)) {
@@ -716,6 +763,7 @@ export function checkRouteCoverage(appTsxPath, pagesDir, footerPath) {
     ...STATIC_ROUTES,
     ...NOINDEX_ROUTES,
     ...UNLISTED_ROUTES,
+    ...REVIEW_ROUTES,
     ...REDIRECT_ROUTES,
     ...DEV_ONLY_ROUTES,
   ]);
@@ -725,14 +773,14 @@ export function checkRouteCoverage(appTsxPath, pagesDir, footerPath) {
     if (!accounted.has(route)) {
       problems.push(
         `App.tsx declares <Route path="${route}"> but it is in none of STATIC_ROUTES, ` +
-        'NOINDEX_ROUTES, UNLISTED_ROUTES or REDIRECT_ROUTES in scripts/lib/route-seo.mjs. ' +
+        'NOINDEX_ROUTES, UNLISTED_ROUTES, REVIEW_ROUTES or REDIRECT_ROUTES in scripts/lib/route-seo.mjs. ' +
         'It would be served a 404 in production. Add it to one of them.'
       );
     }
   }
 
   const declaredSet = new Set(declared);
-  for (const route of [...STATIC_ROUTES, ...NOINDEX_ROUTES, ...UNLISTED_ROUTES]) {
+  for (const route of [...STATIC_ROUTES, ...NOINDEX_ROUTES, ...UNLISTED_ROUTES, ...REVIEW_ROUTES]) {
     if (!declaredSet.has(route)) {
       problems.push(
         `route-seo.mjs prerenders "${route}" but App.tsx has no <Route path="${route}">. ` +

@@ -42,6 +42,7 @@ import {
   EN_ONLY_ROUTES,
   NOINDEX_ROUTES,
   UNLISTED_ROUTES,
+  REVIEW_ROUTES,
   checkRouteCoverage,
 } from './lib/route-seo.mjs';
 import { staticRouteLastmod } from './lib/git-lastmod.mjs';
@@ -282,7 +283,11 @@ async function writeHeadOnly(routes, shell, cache) {
     if (!m) {
       // Internal preview routes are expected to have no <SEO> block — don't warn
       // about them, and don't let them inherit the homepage's generic title.
-      if (NOINDEX_ROUTES.includes(route) || UNLISTED_ROUTES.includes(route)) {
+      if (
+        NOINDEX_ROUTES.includes(route) ||
+        UNLISTED_ROUTES.includes(route) ||
+        REVIEW_ROUTES.includes(route)
+      ) {
         m = { title: fullTitle(`Internal preview: ${route}`), description: DEFAULT_DESCRIPTION, type: 'website' };
       } else {
         unknown.push(route);
@@ -298,7 +303,11 @@ async function writeHeadOnly(routes, shell, cache) {
     // published and permanent, but it is for 247 letter recipients, not for
     // search. Forcing it here means the page cannot drift into the sitemap by
     // someone editing its <SEO> block.
-    if (NOINDEX_ROUTES.includes(route) || UNLISTED_ROUTES.includes(route)) {
+    if (
+      NOINDEX_ROUTES.includes(route) ||
+      UNLISTED_ROUTES.includes(route) ||
+      REVIEW_ROUTES.includes(route)
+    ) {
       m = { ...m, robots: 'noindex, nofollow' };
     }
 
@@ -412,6 +421,12 @@ async function main() {
   // relied on. Publishing is then one edit: move the route out of NOINDEX_ROUTES and
   // into STATIC_ROUTES, and it gains both a rendered page and an index entry.
   //
+  // What this list is NOT for: a finished page that someone needs to open from a
+  // link you sent them. Hiding a page from Google and hiding it from a colleague
+  // are different jobs, and this list does both at once. The programme and
+  // comparison pages sat here for two weeks and 404ed for everybody, which is why
+  // REVIEW_ROUTES now exists — rendered, noindex, absent from the sitemap.
+  //
   // It is also most of the build. These 22 routes include /remote-lab at 212s,
   // /compare/vs-doing-nothing at 58s and eight /programs/* pages, against a total of
   // ~1400s for all 168 — so hiding them roughly halves every deploy.
@@ -423,14 +438,25 @@ async function main() {
   // UNLISTED_ROUTES are always rendered, in every build and both locales. They are
   // published pages that simply are not advertised — /go is a printed QR code's
   // destination, and a build that skipped it would 404 a letter. See route-seo.mjs.
+  //
+  // REVIEW_ROUTES are rendered too, but in the EN build only: they have no Italian
+  // copy, and rendering them on ita.hana.health would publish English pages there
+  // and pay their build cost twice. They are noindex and absent from the sitemap,
+  // so rendering them announces nothing — it only makes the URL openable by
+  // someone who was sent it.
+  const reviewRoutes = LOCALE === 'it' ? [] : REVIEW_ROUTES;
   const routes = [
     ...staticRoutes,
     ...UNLISTED_ROUTES,
+    ...reviewRoutes,
     ...(includeNoindex ? NOINDEX_ROUTES : []),
     ...blogRoutes,
   ];
   if (hidden.length) {
     console.log(`▸ ${hidden.length} unpublished route(s) NOT rendered — they will 404: ${hidden.join(', ')}`);
+  }
+  if (reviewRoutes.length) {
+    console.log(`▸ ${reviewRoutes.length} review route(s) rendered noindex, absent from sitemap: ${reviewRoutes.join(', ')}`);
   }
   console.log(`▸ ${routes.length} routes to prerender (locale: ${LOCALE}, ${DOMAIN}).`);
 

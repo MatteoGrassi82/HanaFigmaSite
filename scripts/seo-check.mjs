@@ -96,7 +96,13 @@ async function checkNotFound() {
     '/blog/this-post-does-not-exist-seocheck',
     '/a/b/c/nope-seocheck',
   ];
-  const shouldWork = ['/', '/pricing', '/blog', '/hana-remote', '/demo', '/preview'];
+  // /go is UNLISTED and /programs/chronic-care-management is a REVIEW route: both
+  // are rendered noindex, so a 404 here means a build dropped them. /demo and
+  // /preview used to be listed and are deliberately not: they are in
+  // NOINDEX_ROUTES, which is not rendered at all, so they 404 by design.
+  const shouldWork = [
+    '/', '/pricing', '/blog', '/hana-remote', '/go', '/programs/chronic-care-management',
+  ];
   const shouldRedirect = [
     ['/research', '/labs'],
     ['/use-cases', '/case-studies'],
@@ -123,7 +129,7 @@ async function checkNotFound() {
       if (res.status !== 200) {
         problems.push(
           `${path} returned HTTP ${res.status}, expected 200. A real route lost its ` +
-          'prerendered file — add it to STATIC_ROUTES or NOINDEX_ROUTES in scripts/lib/route-seo.mjs.'
+          'prerendered file — add it to STATIC_ROUTES or REVIEW_ROUTES in scripts/lib/route-seo.mjs.'
         );
       }
     } catch (err) {

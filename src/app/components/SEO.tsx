@@ -18,6 +18,13 @@ const EN_ONLY_PATHS = ["/programs/access-model", "/case-studies", "/state-of-ai"
  * scripts/lib/route-seo.mjs. These answer 200 for anyone holding the URL and are
  * noindex everywhere, so an hreflang pair on them advertises nothing to nobody.
  * /go is a printed QR code's destination, English-only by construction.
+ *
+ * REVIEW_ROUTES are deliberately NOT mirrored here. They are noindex only because
+ * prerender.mjs forces it, not because the page says so, so this component cannot
+ * see it — and a fourth hand-copied list is a fourth thing to drift. What a
+ * crawler reads is the prerendered file, and verifyAndFixHead strips alternates
+ * from any noindex page there. In the browser, after a client-side navigation to
+ * one of those routes, a stale hreflang may linger; no crawler sees it.
  */
 const UNLISTED_PATHS = ["/go"];
 
