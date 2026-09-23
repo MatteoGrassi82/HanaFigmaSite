@@ -281,7 +281,7 @@ export function Go() {
         useExactTitle
         path="/go"
         robots="noindex, nofollow"
-        description="The two minutes the letter was too short to include."
+        description="The two minutes the letter was too short to include. This is HANA Health, and what we do."
       />
 
       <div className="mx-auto w-full max-w-[680px] px-5 pb-20 pt-12 sm:px-8 sm:pt-16">
@@ -289,8 +289,14 @@ export function Go() {
         <h1 className="font-serif text-[34px] font-medium leading-[1.12] tracking-[-0.01em] text-ink sm:text-[46px]">
           You got a letter.
         </h1>
+        {/* The second sentence names the company, which the letter deliberately
+            underplays and the reader has never heard of (Matteo, 23 Sept). It is a
+            line of copy, NOT a "learn more" link: the film is where they learn
+            more, and a link to the marketing site would be the second exit this
+            page exists to refuse. */}
         <p className="mt-4 text-[17px] leading-[1.5] text-ink-soft sm:text-[19px]">
-          Here is the two minutes it was too short to include.
+          Here is the two minutes it was too short to include. This is HANA Health,
+          and what we do.
         </p>
 
         {/* The film. Muted autoplay so it starts on its own on a phone held in one
