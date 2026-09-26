@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import { PaletteSwitcher } from "../components/lab/PaletteSwitcher";
 import { motion, useReducedMotion, useInView } from "motion/react";
 import { Check } from "lucide-react";
 import { SEO } from "../components/SEO";
@@ -20,7 +19,7 @@ import { HowItWorksLoop } from "../components/sections/HowItWorksLoop";
 import { VideoSection } from "../components/sections/VideoSection";
 import { WhatIsHanaCompare } from "../components/sections/WhatIsHanaCompare";
 import { BuiltByClinicians } from "../components/sections/BuiltByClinicians";
-import { TeamSection } from "../components/sections/TeamSection";
+import { TeamFaces } from "../components/sections/TeamSection";
 import { AccordionPlayer, type AccordionPlayerItem } from "../components/sections/AccordionPlayer";
 import { Player, type PlayerRef } from "@remotion/player";
 import { CareJourneyComp, CARE_JOURNEY_DURATION } from "../components/remotion/CareJourneyComp";
@@ -69,8 +68,12 @@ const DEMO_URL = "https://calendly.com/matteowastaken/discoverycall";
  * CUT vs live page: "The questions every clinic asks" QBlocks (each block
  * duplicated a surviving section); the standalone testimonials (folded into §6).
  *
- * HERO copy — "Built by clinicians. Supervised by yours." (kept per Matteo).
- * Alternates still on the table:
+ * HERO copy (Matteo 2026-09-22): "Better outcomes. More revenue. Same team."
+ * under the eyebrow "The care team that scales". Earlier heroes: "More patients.
+ * Same team. Better outcomes." (2026-08-26), "Built by clinicians. Supervised
+ * by yours." Keep "between visits" out of the headline line: every competitor
+ * leads with it. It is fine in body copy and headings.
+ * Older alternates:
  *   - "A care coordinator built by clinicians."   (noun flip; prices vs salary)
  *   - "Your patients get a call. Your team gets a worklist."
  *   - "Every patient called. No new hires."
@@ -136,7 +139,7 @@ const R_FAQS = [
   },
   {
     q: "Is this device-less RPM?",
-    a: "No, and we're deliberate about that. RPM codes (99453/99454/99457) require an FDA-defined medical device that transmits readings automatically. A patient reading a number to us over the phone does not satisfy them, and billing RPM that way is what the DOJ's first RPM False Claims settlement was about. On RPM, HANA is the engagement layer on top of the devices you already use: the device transmits, HANA keeps the patient engaged and transmitting. The device-free programs are CCM, APCM and BHI.",
+    a: "No, and we're deliberate about that. RPM codes (99453/99454/99457) require an FDA-defined medical device that transmits readings automatically. A patient reading a number to us over the phone does not satisfy them, and billing RPM that way is what the DOJ's first RPM False Claims settlement was about. The programs HANA runs are the device-free ones: CCM, APCM, PCM, BHI and CoCM.",
   },
   {
     q: "Does this replace my clinicians' billable time?",
@@ -144,15 +147,11 @@ const R_FAQS = [
   },
   {
     q: "How does the billing actually work?",
-    a: "HANA produces the documentation the codes require; your qualified staff supply and attest to the time. Every interaction is written back as a structured note attributed to a named clinician, across CCM, APCM, BHI and RTM (98975–98981), so the person who bills is the person who did the clinical work, with the record to show it.",
+    a: "HANA produces the documentation the codes require; your qualified staff supply and attest to the time. Every interaction is written back as a structured note attributed to a named clinician, across CCM, TCM, APCM, PCM, BHI and CoCM, so the person who bills is the person who did the clinical work, with the record to show it.",
   },
   {
     q: "How is this different from care management software?",
     a: "Care management software is a co-pilot for your care manager: conversation guides, call summaries, auto-populated care plans, a dialer. Every feature makes a human's call better, and none of them makes the call. HANA does the call itself, then writes the note, so your care manager supervises a panel instead of phoning through a list. A co-pilot makes one person somewhat faster. Removing the dialing is what changes how many patients one person can hold.",
-  },
-  {
-    q: "We already run RPM with devices. Why would we add this?",
-    a: "Because the devices aren't the problem. Engagement is. HANA is the engagement layer that keeps your existing RPM program transmitting: it handles the between-visit contact, chases the days where the device went quiet, and recovers the patients who've drifted. The readings still come from the device, exactly as the codes require.",
   },
   {
     q: "What happens if we get audited?",
@@ -294,23 +293,27 @@ function HeroCareJourney() {
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.16fr)_minmax(0,0.84fr)] lg:min-h-[calc(100vh-40px)]">
         {/* LEFT — the claim, static */}
         <div className="px-6 md:px-16 py-20 md:py-24 lg:py-28 flex flex-col justify-center">
-          {/* Hero copy set by Matteo 2026-08-26. Only the HANDWRITING EFFECT was
-              reverted, not the words: the third line is the serif italic accent,
-              the same treatment as every other accent line on the page.
-              <HandwritingText> is still in components/ui if it finds a home. */}
+          {/* Hero copy set by Matteo 2026-09-22 (was "More patients. Same team. Better
+              outcomes.", 2026-08-26). Outcomes for the patient and revenue for the
+              practice come from the same work, so both sit in the claim; the subhead
+              carries eligibility, coordination and the clinician sign-off. The
+              subhead names no payer on purpose: HANA is multi-payer. The third line
+              is the serif italic accent, the same treatment as every other accent
+              line on the page. <HandwritingText> is still in components/ui. */}
           <p className={`${eyebrow} text-brand mt-0 mb-6`}>
-            AI care coordination that reaches every patient
+            The care team that scales
           </p>
           <h1 className="font-serif font-normal text-[42px] sm:text-[54px] md:text-[64px] lg:text-[74px] leading-[1.02] tracking-[-0.018em] m-0">
-            More patients.
+            Better outcomes.
             <br />
-            Same team.
+            More revenue.
             <br />
-            <em className="text-brand">Better outcomes.</em>
+            <em className="text-brand">Same team.</em>
           </h1>
           <p className="text-[16px] md:text-[17.5px] leading-[1.65] text-ink-soft mt-7 mb-0 max-w-[48ch]">
-            Every reimbursable care program, run in house from enrollment to billing. HANA's AI
-            does the calls and the documentation. Your clinicians review and sign.
+            Most of your patients qualify for care programs their insurance already pays for.
+            HANA finds which ones, coordinates the care every month in 30+ languages, and writes
+            the note. Your clinicians review and sign.
           </p>
           <a
             href={DEMO_URL}
@@ -398,8 +401,8 @@ const COMPANION_ITEMS: AccordionPlayerItem[] = [
     body: "Your name on the caller ID, not a number she has been told to ignore. And it works the other way: she rings that number back and HANA answers, any hour, and writes that conversation up too.",
   },
   {
-    title: "It calls back next month, and it remembers",
-    body: "Every call opens where the last one ended, in the patient's own words. Most patients drift out of a program within months. Remembering is what keeps them in.",
+    title: "It explains what she is actually getting",
+    body: "Patients rarely leave because the calls stopped. They leave because nobody explained what the program was for, or what it costs them. Every call opens where the last one ended, in her own words, and answers the question that quietly ends most enrollments: what am I paying for this. For a patient whose Medicaid covers the coinsurance, the answer is nothing, and until now nobody had the time to tell her.",
   },
   {
     title: "It works in the language they actually speak",
@@ -626,10 +629,13 @@ export function RemoteV2({
         handleEndWebCall={handleEndWebCall}
       />
 
-      {/* §6 COMPASS — the care team's side */}
+      {/* §6 COMPASS — the care team's side. Named as a surface, not as the noun
+          for HANA: the standing rule is that "software" in the headline gets us
+          priced in the $1-8 tool band instead of against the work. So the
+          dashboard is where you watch it happen; the promise stays the work. */}
       <section className="bg-paper-bright text-navy py-24 md:py-32 px-6 md:px-16">
         <div className="max-w-[1200px] mx-auto">
-          <AccordionPlayer />
+          <AccordionPlayer body="The care coordination dashboard your team actually works in: who was reached, who needs a person, whose month is documented and ready to bill." />
         </div>
       </section>
 
@@ -657,18 +663,22 @@ export function RemoteV2({
 
       {/* §9 THE PROGRAMS — the moving cards, badged by billable program
           (Matteo 2026-08-20, brought over from /remote-lab and placed directly
-          under the patient companion). Chips read CCM / APCM / BHI / RTM. `tags`
+          under the patient companion). Chips read CCM / APCM / BHI; RTM is filtered out below. `tags`
           is still passed so an Italian visitor keeps the filtered Italian
           recipes, because PROGRAM_CARDS is US Medicare and English only.
           ProgramsStack, the scannable accordion version, is still in
           components/remote and is a one-line swap. */}
       <RecipesMarquee
         soft
-        items={PROGRAM_CARDS}
+        /* The three RTM cards are filtered out here, not deleted from the shared
+           content file (RemoteLab still reads it). RTM is roadmap, and one card
+           was titled "Make the interactive contact the code requires", which
+           claims the AI satisfies a contact the practice's own staff must make. */
+        items={PROGRAM_CARDS.filter((c) => c.tag !== "RTM")}
         tags={CARE_COORDINATION_TAGS}
         tag="Programs"
         heading="Every program is a phone call somebody has to make."
-        body="Any program where the same patient needs a call next month. CCM, APCM, BHI, RTM, RPM, the ACCESS Model. Different rules, same phone call. Tap any card to see the steps it runs."
+        body="Any program where the same patient needs a call next month. CCM, APCM, PCM, BHI and CoCM. Different rules, same phone call. Tap any card to see the steps it runs."
       />
 
       {/* §9a THE MONTH, ALREADY WRITTEN UP — what a program month produces:
@@ -679,28 +689,24 @@ export function RemoteV2({
       {/* §10a2 GETTING LIVE — onboarding and the academy (Matteo + Dr Mohamed,
           2026-08-25). The answer to "my staff has no bandwidth", which is the
           objection that sells the staffing model CY2027 is closing. */}
-      <GetYouLive />
-
-      {/* §10b INTEGRATIONS — EHR logos orbiting the HANA core. Replaced the phone
-          carousel version ("The phone they have. The chart you use."), which is
-          kept in the file as IntegrationsSection for easy re-add. */}
-      <section className="bg-paper-bright pt-24 md:pt-32 px-6 md:px-16 overflow-hidden">
-        <div className="max-w-[1200px] mx-auto">
-          <motion.div {...fadeUp} className="text-center">
-            <p className={`${eyebrow} text-brand mt-0 mb-4`}>Integrations</p>
-            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-navy mx-auto max-w-[24ch] m-0">
-              It lands in the chart <em className="text-brand">you already use.</em>
-            </h2>
-            <p className="text-[17px] leading-[1.7] text-ink-soft max-w-[54ch] mx-auto mt-5 mb-0">
-              Your EHR. Your phone system. Nothing to rip out. The note is written the moment the
-              call ends, attributed to whoever owns the patient.
-            </p>
-          </motion.div>
-        </div>
-        <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }} className="mt-8 md:mt-4">
-          <OrbitingCirclesGlobe />
-        </motion.div>
-      </section>
+      {/* §10a2 THE PARTNERSHIP — onboarding and the roster, merged into one
+          section (Matteo 2026-09-26, after seeing them stacked: "I need one
+          section"). GetYouLive grew three optional slots for it; passing none
+          renders the old standalone layout, so the merge is reversible from
+          here. TeamSection is no longer on this page: the faces now sit beside
+          the claim they prove instead of restating it underneath. */}
+      <GetYouLive
+        faces={<TeamFaces />}
+        note="Your staff do the billable work, under your own NPIs. We never supply the clinician."
+        stats={[
+          { value: "75", label: "years of combined clinical and AI experience" },
+          /* "100+ peer reviewed publications" sat here and is named in the
+             numbers embargo, so it is out until the traction figures are
+             reconciled. "45+ care protocols deployed" is the borderline one and
+             is still Matteo's call. */
+          { value: "45+", label: "care protocols deployed" },
+        ]}
+      />
 
       {/* §11 was Home's "Every patient conversation, handled". Pulled 2026-08-19
           (call): §9's patient companion makes the same argument with the phone
@@ -733,10 +739,6 @@ export function RemoteV2({
           A light variant would mean rewriting its whole palette. */}
       <SafetyStack light />
 
-      {/* §15b OUR TEAM — moved under Security & Safety (Matteo 2026-08-25) — the credential behind Built by clinicians, which now
-          sits up at §3b. Say the word and the roster follows it up there. */}
-      <TeamSection />
-
 
       {/* §16a HOW WE START — pulled 2026-08-12 for the same reason as SafetyStack:
           InlineImageHeader is dark by design (its three step animations are white
@@ -747,6 +749,29 @@ export function RemoteV2({
           (Matteo 2026-08-20). Sits right after SafetyStack, same pairing as Home:
           the defense-in-depth argument, then the certifications behind it. */}
       <ComplianceSection white />
+
+      {/* §15c INTEGRATIONS — EHR logos orbiting the HANA core. Moved down from §10b
+          (it used to sit between Getting live and the safety block) to under
+          Safety, Matteo 2026-09-20. Replaced the phone
+          carousel version ("The phone they have. The chart you use."), which is
+          kept in the file as IntegrationsSection for easy re-add. */}
+      <section className="bg-paper-bright pt-24 md:pt-32 px-6 md:px-16 overflow-hidden">
+        <div className="max-w-[1200px] mx-auto">
+          <motion.div {...fadeUp} className="text-center">
+            <p className={`${eyebrow} text-brand mt-0 mb-4`}>Integrations</p>
+            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-navy mx-auto max-w-[24ch] m-0">
+              It lands in the chart <em className="text-brand">you already use.</em>
+            </h2>
+            <p className="text-[17px] leading-[1.7] text-ink-soft max-w-[54ch] mx-auto mt-5 mb-0">
+              Your EHR. Your phone system. Nothing to rip out. The note is written the moment the
+              call ends, attributed to whoever owns the patient.
+            </p>
+          </motion.div>
+        </div>
+        <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }} className="mt-8 md:mt-4">
+          <OrbitingCirclesGlobe />
+        </motion.div>
+      </section>
 
       {/* §16b FAQ — the shared section. This page was the seventh copy of the
           same expanding row; FaqSection is the one implementation now. */}
@@ -786,7 +811,6 @@ export function RemoteV2({
         </motion.div>
       </section>
 
-      <PaletteSwitcher startOpen={false} />
       <Footer />
     </div>
   );

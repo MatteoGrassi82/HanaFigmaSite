@@ -88,10 +88,8 @@ export const EN_ONLY_ROUTES = ['/programs/access-model', '/case-studies', '/stat
  * anyone inject test leads by loading the URL. Leaving it out of every route list
  * means it now 404s in production while still working in `npm run dev`.
  */
-// /remote-v2 is the in-progress rebuild of /hana-remote (src/app/pages/RemoteV2.tsx)
-// — remove it from here and from App.tsx when it replaces the live page.
 export const NOINDEX_ROUTES = [
-  '/demo', '/preview', '/bento', '/proof', '/remote-v2', '/remote-lab',
+  '/demo', '/preview', '/bento', '/proof', '/remote-lab',
   // /security restates compliance claims that predate the move to HANA Health,
   // Inc. and need re-confirming against the current entity. /faq sidesteps
   // pricing, which /pricing still contradicts. Both state something to a reader
@@ -147,6 +145,13 @@ export const UNLISTED_ROUTES = ['/go'];
  * /remote-lab (212s) stays in NOINDEX_ROUTES deliberately.
  */
 export const REVIEW_ROUTES = [
+  // The future homepage (Matteo 2026-09-26). Staged here so launch is a swap,
+  // not a publishing job: it renders, answers 200 to anyone with the URL, stays
+  // noindex and out of the sitemap. At launch it replaces Home at "/" and this
+  // entry becomes a redirect. Its three review blockers were fixed before it
+  // moved here: the RPM / RTM / ACCESS programme claims, the RTM cards, and the
+  // palette switcher. The proof bento is the one open content decision.
+  '/remote-v2',
   // The seven programme pages and their hub. Each renders open billing questions
   // that are answered before it moves to STATIC_ROUTES.
   '/programs',

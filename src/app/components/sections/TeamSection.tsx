@@ -109,6 +109,8 @@ export interface TeamSectionProps {
   cta?: { label: string; href: string } | null;
   /** The trailing headcount chip. null to drop it. */
   wider?: { label: string; title?: string } | null;
+  /** Photo treatment for the roster. Defaults to mono (grayscale, colour on hover). */
+  treatment?: FaceTreatment;
   /** "light" is the paper ground; "band" separates on bg-band with a hairline. */
   tone?: "light" | "band";
   className?: string;
@@ -177,6 +179,109 @@ const MONOGRAM_TILE: CSSProperties = {
     "radial-gradient(120% 90% at 30% 15%, color-mix(in srgb, var(--color-brand) 16%, transparent) 0%, transparent 62%), linear-gradient(160deg, var(--color-paper-2) 0%, var(--color-brand-tint) 100%)",
 };
 
+
+/* The overlapping portrait row, split out so a page can place the roster inside
+   another section instead of rendering a second standalone one. GetYouLive uses
+   it that way: "You're not buying software, you're getting a team" and the faces
+   that prove it are one argument, so they are now one section (Matteo
+   2026-09-26, looking at the two stacked). TeamSection still renders it. */
+/* The roster photos are stock-mixed: different lighting, different backgrounds,
+   different white balance, so in colour they read as five unrelated pictures
+   rather than one team. Same problem BrandLogos already solves for the logo wall
+   by recolouring at render time. `treatment` does it here.
+     mono     grayscale, colour restored on hover  <- chosen, and the default
+     duotone  grayscale under an ultramarine mix-blend-color layer
+     color    untouched, the original
+   The photos are the real roster but were sourced individually rather than in
+   one shoot, so the backgrounds and white balance never matched. Nothing is
+   baked into the assets, so switching is one prop. */
+export type FaceTreatment = "color" | "mono" | "duotone";
+
+export function TeamFaces({
+  members = DEFAULT_MEMBERS,
+  wider = { label: "+20", title: "Plus the wider team" },
+  treatment = "mono",
+  className,
+}: {
+  members?: TeamMember[];
+  wider?: { label: string; title?: string } | null;
+  treatment?: FaceTreatment;
+  className?: string;
+} = {}) {
+  // The chip trails the last portrait whatever the roster length.
+  const widerDelay = 0.05 + members.length * 0.07 + 0.09;
+  return (
+              <div className={cn("flex items-start justify-start lg:justify-end overflow-x-auto lg:overflow-visible pb-2 pt-2", className)}>
+          {members.map((m, i) => (
+            <motion.div
+              key={m.name}
+              initial={{ opacity: 0, y: 18, scale: 0.94 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.55, delay: 0.05 + i * 0.07, ease: [0.16, 1, 0.3, 1] }}
+              style={{ marginTop: m.offset, marginLeft: i === 0 ? 0 : -20, zIndex: m.z }}
+              className="relative shrink-0"
+              title={`${m.name} · ${m.role}`}
+            >
+              <div
+                style={{ width: m.width, height: m.height }}
+                className="group/face relative rounded-pill overflow-hidden bg-brand-tint ring-[5px] ring-paper-bright"
+              >
+                <span
+                  className="absolute inset-0 grid place-items-center font-serif text-brand"
+                  style={{ ...MONOGRAM_TILE, fontSize: Math.round(m.width * 0.33) }}
+                >
+                  {initials(m.name)}
+                </span>
+                {m.photo && (
+                  <img
+                    src={m.photo}
+                    alt={m.name}
+                    loading="lazy"
+                    className={cn(
+                      "absolute inset-0 w-full h-full object-cover transition-[filter] duration-500",
+                      treatment === "mono" && "grayscale contrast-[1.06] group-hover/face:grayscale-0",
+                      treatment === "duotone" && "grayscale contrast-[1.08]",
+                    )}
+                    style={{ objectPosition: m.pos ?? "50% 50%" }}
+                    /* the roster lists photos that are not in the repo yet;
+                       until each lands, the monogram tile shows instead of a
+                       broken image */
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                    }}
+                  />
+                )}
+                {treatment === "duotone" && m.photo ? (
+                  <span
+                    aria-hidden
+                    className="absolute inset-0 bg-brand mix-blend-color opacity-[0.62] pointer-events-none"
+                  />
+                ) : null}
+              </div>
+            </motion.div>
+          ))}
+
+          {/* the wider team */}
+          {wider ? (
+            <motion.div
+              initial={{ opacity: 0, y: 18, scale: 0.94 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.55, delay: widerDelay, ease: [0.16, 1, 0.3, 1] }}
+              style={{ marginTop: 70, marginLeft: -20, zIndex: 0 }}
+              className="relative shrink-0"
+              title={wider.title}
+            >
+              <div className="w-[78px] h-[112px] rounded-pill ring-[5px] ring-paper-bright bg-navy grid place-items-center">
+                <span className="font-serif text-[22px] text-white">{wider.label}</span>
+              </div>
+            </motion.div>
+          ) : null}
+        </div>
+  );
+}
+
 export function TeamSection({
   eyebrow = "Our team",
   heading = (
@@ -191,6 +296,7 @@ export function TeamSection({
   stats = DEFAULT_STATS,
   cta = { label: "About us", href: "/about" },
   wider = { label: "+20", title: "Plus the wider team" },
+  treatment = "mono",
   tone = "light",
   className,
   id,
@@ -198,10 +304,6 @@ export function TeamSection({
   const uid = useId();
   const headingId = `${uid}-team-heading`;
   const skin = TONE[tone];
-
-  // The chip trails the last portrait whatever the roster length. Four members
-  // put it at 0.42, which is where RemoteV2 had it hardcoded.
-  const widerDelay = 0.05 + members.length * 0.07 + 0.09;
 
   return (
     <section
@@ -245,65 +347,7 @@ export function TeamSection({
             ) : null}
           </div>
 
-          {/* right: overlapping oval portraits */}
-          <div className="flex items-start justify-start lg:justify-end overflow-x-auto lg:overflow-visible pb-2 pt-2">
-            {members.map((m, i) => (
-              <motion.div
-                key={m.name}
-                initial={{ opacity: 0, y: 18, scale: 0.94 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.55, delay: 0.05 + i * 0.07, ease: [0.16, 1, 0.3, 1] }}
-                style={{ marginTop: m.offset, marginLeft: i === 0 ? 0 : -20, zIndex: m.z }}
-                className="relative shrink-0"
-                title={`${m.name} · ${m.role}`}
-              >
-                <div
-                  style={{ width: m.width, height: m.height }}
-                  className="relative rounded-pill overflow-hidden bg-brand-tint ring-[5px] ring-paper-bright"
-                >
-                  <span
-                    className="absolute inset-0 grid place-items-center font-serif text-brand"
-                    style={{ ...MONOGRAM_TILE, fontSize: Math.round(m.width * 0.33) }}
-                  >
-                    {initials(m.name)}
-                  </span>
-                  {m.photo && (
-                    <img
-                      src={m.photo}
-                      alt={m.name}
-                      loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover"
-                      style={{ objectPosition: m.pos ?? "50% 50%" }}
-                      /* the roster lists photos that are not in the repo yet;
-                         until each lands, the monogram tile shows instead of a
-                         broken image */
-                      onError={(e) => {
-                        e.currentTarget.style.display = "none";
-                      }}
-                    />
-                  )}
-                </div>
-              </motion.div>
-            ))}
-
-            {/* the wider team */}
-            {wider ? (
-              <motion.div
-                initial={{ opacity: 0, y: 18, scale: 0.94 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.55, delay: widerDelay, ease: [0.16, 1, 0.3, 1] }}
-                style={{ marginTop: 70, marginLeft: -20, zIndex: 0 }}
-                className="relative shrink-0"
-                title={wider.title}
-              >
-                <div className="w-[78px] h-[112px] rounded-pill ring-[5px] ring-paper-bright bg-navy grid place-items-center">
-                  <span className="font-serif text-[22px] text-white">{wider.label}</span>
-                </div>
-              </motion.div>
-            ) : null}
-          </div>
+          <TeamFaces members={members} wider={wider} treatment={treatment} />
         </div>
 
         {/* stats. Static for the same prerender reason: these captions are real
