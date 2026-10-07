@@ -49,11 +49,16 @@ function Chrome({ children }: { children: ReactNode }) {
 }
 import { Navbar } from "./components/layout/Navbar";
 import { getLocale } from "../lib/i18n";
-import { Home } from "./pages/Home";
 
 // Route components are code-split — each page is fetched on demand so the initial
 // download is just the chrome + the landing page, not all 20 routes at once.
 // React.lazy needs a default export, so named page exports are mapped through.
+//
+// Home used to be the one static import, so its whole graph was modulepreloaded
+// on every page. Since 7 Oct 2026 it only renders on ita.hana.health (RemoteV2
+// is the English homepage), so it is lazy like everything else. The prerendered
+// HTML for "/" carries the preload hints for whichever page renders there.
+const Home = lazy(() => import("./pages/Home").then((m) => ({ default: m.Home })));
 const Research = lazy(() => import("./pages/Research").then((m) => ({ default: m.Research })));
 const About = lazy(() => import("./pages/About").then((m) => ({ default: m.About })));
 const RadialOrbitalTimelineDemo = lazy(() => import("./pages/Timeline").then((m) => ({ default: m.RadialOrbitalTimelineDemo })));
@@ -390,13 +395,24 @@ function AppContent() {
         <ScrollToTop />
         <Chrome>
             <Routes>
+              {/* The homepage. RemoteV2 since 7 Oct 2026; the Italian site keeps
+                  the old Home because the new page has no translation. */}
               <Route path="/" element={
-                <Home
-                  activeAgentId={activeAgentId}
-                  webCallStatus={webCallStatus}
-                  handleStartWebCall={handleStartWebCall}
-                  handleEndWebCall={handleEndWebCall}
-                />
+                isItalian ? (
+                  <Home
+                    activeAgentId={activeAgentId}
+                    webCallStatus={webCallStatus}
+                    handleStartWebCall={handleStartWebCall}
+                    handleEndWebCall={handleEndWebCall}
+                  />
+                ) : (
+                  <RemoteV2
+                    activeAgentId={activeAgentId}
+                    webCallStatus={webCallStatus}
+                    handleStartWebCall={handleStartWebCall}
+                    handleEndWebCall={handleEndWebCall}
+                  />
+                )
               } />
               {!isItalian && <Route path="/use-cases" element={<Navigate to="/case-studies" replace />} />}
               <Route path="/timeline" element={<RadialOrbitalTimelineDemo />} />
@@ -411,7 +427,9 @@ function AppContent() {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/hana-contact" element={<HanaContact />} />
-              <Route path="/hana-remote" element={<HanaRemote />} />
+              {/* Replaced by the English homepage. A 301 in vercel.json on
+                  hana.health; this covers in-app navigation. */}
+              <Route path="/hana-remote" element={isItalian ? <HanaRemote /> : <Navigate to="/" replace />} />
               <Route path="/sleep" element={<HanaSleep />} />
               <Route path="/sleep/analysis" element={<HanaSleepAnalysis />} />
               <Route path="/sleep/cpap" element={<HanaSleepCPAP />} />
@@ -545,14 +563,7 @@ function AppContent() {
               } />
               <Route path="/academy" element={<Academy />} />
               <Route path="/faq" element={<Faq />} />
-              <Route path="/remote-v2" element={
-                <RemoteV2
-                  activeAgentId={activeAgentId}
-                  webCallStatus={webCallStatus}
-                  handleStartWebCall={handleStartWebCall}
-                  handleEndWebCall={handleEndWebCall}
-                />
-              } />
+              <Route path="/remote-v2" element={<Navigate to="/" replace />} />
               {!isItalian && (
                 <Route path="/case-studies" element={
                   <CaseStudies

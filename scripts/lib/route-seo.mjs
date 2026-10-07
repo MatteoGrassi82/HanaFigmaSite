@@ -21,7 +21,7 @@
  */
 
 import { readFileSync, readdirSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { basename, dirname, join } from 'node:path';
 
 export const SITE_NAME = 'Hana Voice AI';
 export const EN_DOMAIN = 'https://www.hana.health';
@@ -66,6 +66,15 @@ export const STATIC_ROUTES = [
 // Routes App.tsx renders only when !isItalian — on ita.hana.health these fall
 // through to <NotFound>, so they must not be prerendered or listed in its sitemap.
 export const EN_ONLY_ROUTES = ['/programs/access-model', '/case-studies', '/state-of-ai', '/use-cases'];
+
+// The reverse: routes only ita.hana.health renders. On hana.health they are a
+// 301 in vercel.json (host-scoped) and a client <Navigate>, so the EN build must
+// not prerender them or list them in its sitemap.
+//
+// /hana-remote since the 2026-10-07 relaunch: the page it described became the
+// English homepage. The Italian site has no translation of that page, so it
+// keeps the old Home at "/" and this page beside it.
+export const IT_ONLY_ROUTES = ['/hana-remote'];
 
 /**
  * Real app routes that must answer 200 but must never be indexed.
@@ -145,13 +154,6 @@ export const UNLISTED_ROUTES = ['/go'];
  * /remote-lab (212s) stays in NOINDEX_ROUTES deliberately.
  */
 export const REVIEW_ROUTES = [
-  // The future homepage (Matteo 2026-09-26). Staged here so launch is a swap,
-  // not a publishing job: it renders, answers 200 to anyone with the URL, stays
-  // noindex and out of the sitemap. At launch it replaces Home at "/" and this
-  // entry becomes a redirect. Its three review blockers were fixed before it
-  // moved here: the RPM / RTM / ACCESS programme claims, the RTM cards, and the
-  // palette switcher. The proof bento is the one open content decision.
-  '/remote-v2',
   // The seven programme pages and their hub. Each renders open billing questions
   // that are answered before it moves to STATIC_ROUTES.
   '/programs',
@@ -186,6 +188,8 @@ export const REDIRECT_ROUTES = [
   // Renamed 6 Sept 2026. /hana-sleep* lost the product prefix; /access moved
   // under /programs because it is a CMS model a practice bills, not a product.
   '/hana-sleep', '/hana-sleep/analysis', '/hana-sleep/cpap', '/access',
+  // Staged for review from 26 Sept, became the English homepage on 7 Oct 2026.
+  '/remote-v2',
 ];
 
 /**
@@ -480,6 +484,20 @@ export function fullTitle(title, useExactTitle) {
  * Scan the app sources for every `<SEO … path="/x" />` usage and return a map of
  * route path → { title, description, type, robots }.
  */
+/**
+ * Paths that two page files legitimately both declare, and which file owns each
+ * per locale.
+ *
+ * "/" is RemoteV2 on hana.health and the old Home on ita.hana.health (App.tsx
+ * picks by locale; the Italian site has no translation of the new page). Without
+ * this, the last file walk() happened to read would win, and readdir order is
+ * alphabetical on a Mac but not on Vercel's Linux builders, so the homepage's
+ * baked <title> would depend on the filesystem.
+ */
+const PATH_OWNERS = {
+  '/': { en: 'RemoteV2.tsx', it: 'Home.tsx' },
+};
+
 export function collectRouteMeta(srcDir, locale = 'en') {
   const i18nEn = loadI18n(srcDir, locale);
   const meta = {};
@@ -492,6 +510,17 @@ export function collectRouteMeta(srcDir, locale = 'en') {
       const body = m[1];
       const path = strProp(body, 'path');
       if (!path || !path.startsWith('/')) continue; // dynamic (blog posts) — handled by caller
+
+      const owner = PATH_OWNERS[path]?.[locale === 'it' ? 'it' : 'en'];
+      if (owner && basename(file) !== owner) continue;
+      // Any other path declared twice has the same filesystem-order problem, so
+      // it fails loudly here instead of picking a title at random.
+      if (!owner && meta[path] && meta[path].source !== file) {
+        throw new Error(
+          `<SEO path="${path}"> is declared in both ${meta[path].source} and ${file}. ` +
+          'Remove one, or name the owner per locale in PATH_OWNERS in scripts/lib/route-seo.mjs.'
+        );
+      }
 
       const prop = (name) => {
         const literal = strProp(body, name);
@@ -625,6 +654,7 @@ export function injectHead(shell, m) {
   html = html.replace(/\s*<link\s+rel="alternate"[^>]*>/gi, '');
   if (
     !EN_ONLY_ROUTES.includes(m.path) &&
+    !IT_ONLY_ROUTES.includes(m.path) &&
     !NOINDEX_ROUTES.includes(m.path) &&
     !UNLISTED_ROUTES.includes(m.path) &&
     !REVIEW_ROUTES.includes(m.path)
@@ -641,7 +671,8 @@ export function injectHead(shell, m) {
 
   // A crawlable skeleton for the no-JS case. Overwritten wholesale when the
   // headless-Chrome snapshot succeeds; this is the floor, not the goal.
-  const nav = NAV_LINKS.filter(([href]) => href !== m.path)
+  const otherLocaleOnly = locale === 'it' ? EN_ONLY_ROUTES : IT_ONLY_ROUTES;
+  const nav = NAV_LINKS.filter(([href]) => href !== m.path && !otherLocaleOnly.includes(href))
     .map(([href, label]) => `      <li><a href="${href}">${esc(label)}</a></li>`)
     .join('\n');
   const noscript = `<noscript data-prerender-fallback>
@@ -794,24 +825,29 @@ export function checkRouteCoverage(appTsxPath, pagesDir, footerPath) {
     }
   }
 
-  // EN_ONLY_ROUTES is duplicated as EN_ONLY_PATHS in src/app/components/SEO.tsx —
-  // that file runs in the browser and cannot import this one (node:fs). The two
-  // decide hreflang for the prerendered head and the rendered head respectively,
-  // so a silent drift would put back exactly the unreciprocated hreflang we just
-  // removed, on half the pages.
+  // EN_ONLY_ROUTES and IT_ONLY_ROUTES are duplicated as EN_ONLY_PATHS and
+  // IT_ONLY_PATHS in src/app/components/SEO.tsx — that file runs in the browser
+  // and cannot import this one (node:fs). The two decide hreflang for the
+  // prerendered head and the rendered head respectively, so a silent drift would
+  // put back exactly the unreciprocated hreflang we just removed, on half the pages.
   const seoTsx = join(dirname(appTsxPath), 'components', 'SEO.tsx');
   const seoSrc = readFileSync(seoTsx, 'utf8');
-  const enOnlyLiteral = seoSrc.match(/const\s+EN_ONLY_PATHS\s*=\s*\[([^\]]*)\]/);
-  if (!enOnlyLiteral) {
-    problems.push(`Could not find EN_ONLY_PATHS in ${seoTsx} — the hreflang drift check cannot run.`);
-  } else {
-    const inTsx = [...enOnlyLiteral[1].matchAll(/"([^"]+)"|'([^']+)'/g)]
+  for (const [tsxName, mjsName, mjsList] of [
+    ['EN_ONLY_PATHS', 'EN_ONLY_ROUTES', EN_ONLY_ROUTES],
+    ['IT_ONLY_PATHS', 'IT_ONLY_ROUTES', IT_ONLY_ROUTES],
+  ]) {
+    const literal = seoSrc.match(new RegExp(`const\\s+${tsxName}\\s*=\\s*\\[([^\\]]*)\\]`));
+    if (!literal) {
+      problems.push(`Could not find ${tsxName} in ${seoTsx} — the hreflang drift check cannot run.`);
+      continue;
+    }
+    const inTsx = [...literal[1].matchAll(/"([^"]+)"|'([^']+)'/g)]
       .map((mm) => mm[1] ?? mm[2])
       .sort();
-    const inMjs = [...EN_ONLY_ROUTES].sort();
+    const inMjs = [...mjsList].sort();
     if (inTsx.join(',') !== inMjs.join(',')) {
       problems.push(
-        `EN_ONLY_PATHS in SEO.tsx (${inTsx.join(', ')}) does not match EN_ONLY_ROUTES in ` +
+        `${tsxName} in SEO.tsx (${inTsx.join(', ')}) does not match ${mjsName} in ` +
         `route-seo.mjs (${inMjs.join(', ')}). Keep them identical.`
       );
     }

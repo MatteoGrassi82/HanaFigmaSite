@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { motion, useReducedMotion, useInView } from "motion/react";
 import { Check } from "lucide-react";
-import { SEO } from "../components/SEO";
+import { SEO, organizationSchema, websiteSchema, faqSchema } from "../components/SEO";
 import { Footer } from "../components/layout/Footer";
 import { RecipesMarquee } from "../components/sections/RecipesMarquee";
 import { PROGRAM_CARDS } from "../../content/programmes";
@@ -11,7 +11,6 @@ import { SonicDemoSection } from "../components/sections/SonicDemoSection";
 import { GetYouLive } from "../components/sections/GetYouLive";
 import { AnnouncementBar } from "../components/layout/AnnouncementBar";
 import { SafetyStack } from "../components/sections/SafetyStack";
-import { ComplianceSection } from "../components/sections/ComplianceSection";
 import { LatestPosts } from "../components/sections/LatestPosts";
 import { AskAiAboutUs } from "../components/sections/AskAiAboutUs";
 import { FaqSection } from "../components/sections/FaqSection";
@@ -31,10 +30,19 @@ import { ShaderBackground } from "../components/media/ShaderBackground";
 const DEMO_URL = "https://calendly.com/matteowastaken/discoverycall";
 
 /**
- * /remote-v2 — DRAFT rebuild of the HANA page. NOT linked from any nav,
- * noindex (see NOINDEX_ROUTES in scripts/lib/route-seo.mjs). Working canvas:
- * iterate here, then replace HanaRemote.tsx wholesale when approved, and
- * remove this route.
+ * "/" — THE ENGLISH HOMEPAGE since 7 Oct 2026 (hana.health only; ita.hana.health
+ * keeps the old Home, see App.tsx). Built as /remote-v2, the rebuild of the
+ * HANA Remote page, and promoted wholesale: /remote-v2 and /hana-remote now 301
+ * here (vercel.json). The file and component keep the RemoteV2 name so the
+ * history below still reads.
+ *
+ * SEO: the <SEO> block below owns path="/" for the English build. Home.tsx
+ * declares the same path for Italian, and PATH_OWNERS in
+ * scripts/lib/route-seo.mjs says which file wins in which locale.
+ *
+ * STRUCTURED DATA: organisation, website and the FAQ below, per the Aug 2026
+ * site brief. Home's softwareApplicationSchema is deliberately not carried
+ * over; it names "Hana Voice AI" and the front-desk positioning.
  *
  * Skeleton v4 (2026-08-19, after Matteo's call with Sthita). Remote is what
  * this page sells; Sleep gets one hand-off section and nothing more. The page was
@@ -182,6 +190,14 @@ const R_FAQS = [
     q: "What does it cost?",
     a: "Usage-based, per actively managed patient per month, so the cost moves with the panel you actually run rather than with a seat count or a platform tier. We will put the number in front of you on the call, along with the arithmetic against a coordinator's fully loaded cost, because that is the comparison that decides it.",
   },
+];
+
+// Hoisted so <SEO>'s effect, which depends on jsonLd, does not re-run on every
+// render of a page whose props change during a live demo call.
+const HOME_JSON_LD = [
+  organizationSchema,
+  websiteSchema,
+  faqSchema(R_FAQS.map((f) => ({ question: f.q, answer: f.a }))),
 ];
 
 // ── Five-step flow (unchanged from live page) ────────────────────────────────
@@ -551,10 +567,11 @@ export function RemoteV2({
   return (
     <div className="bg-paper-bright text-navy font-sans overflow-x-hidden">
       <SEO
-        title="HANA · Draft"
+        title="HANA Health | Care coordination for CCM, APCM and BHI"
         useExactTitle
-        path="/remote-v2"
-        robots="noindex, nofollow"
+        description="HANA helps clinics run the care programs Medicare already pays for, without hiring more staff. It calls patients every month, flags what needs a clinician, and drafts the note your team signs."
+        path="/"
+        jsonLd={HOME_JSON_LD}
       />
 
       {/* §0 ANNOUNCEMENT — above everything (Matteo 2026-09-02) */}
@@ -639,10 +656,21 @@ export function RemoteV2({
         </div>
       </section>
 
-      {/* §7 BUILT BY CLINICIANS — giant inline-image statement. Sits between the
+      {/* §7 BUILT BY CLINICIANS — the statement, words only. Sits between the
           two product views (Matteo 2026-08-20): Compass is what your team gets,
-          the statement, then what the patient gets. */}
-      <BuiltByClinicians />
+          the statement, then what the patient gets.
+
+          NO FACES since 2026-09-26 (Matteo, after a trial of eight options):
+          the partnership section further down now carries the whole roster, so
+          faces here showed the same people twice. The subline is what makes the
+          headline more than the claim every competitor makes: a physician who
+          reviews claims for a payer is the one clinician credential nobody else
+          can copy. It is a present-tense claim about a current role, so it
+          changes the day that role does. */}
+      <BuiltByClinicians
+        faces={[]}
+        body="Our clinical director still reviews medical necessity for a payer. So every note HANA drafts is written to pass the review it will actually get."
+      />
 
       {/* §8 THE PATIENT COMPANION — the patient's side (Retell accordion pattern
           + Remotion, twin of §8 Compass; replaced PatientAgentSection, which is
@@ -733,11 +761,52 @@ export function RemoteV2({
           get". Pulled 2026-08-20. AuditSection is still in this file; the FAQ
           carries the CY2027 answer. */}
 
-      {/* §15 SAFETY — clinical trust after billing trust. Imported from Home as-is:
-          SafetyStack is dark by design (white type on translucent glass panels
-          that need a dark ground), so it lands as the page's one dark section.
-          A light variant would mean rewriting its whole palette. */}
-      <SafetyStack light />
+      {/* §15 SAFETY — clinical trust after billing trust. Chosen 2026-09-26 as
+          "S4b" from a trial of five layouts: the same layered glass stack, with
+          (1) each layer's name on its pane, so the picture reads without the
+          list; (2) the four layers rewritten from the safeguards page of HANA's
+          customer compliance brief, the one security document a customer's lawyers have
+          seen, instead of the generic AI layers; (3) the list at 14px and never
+          dimmed to light gray; (4) the tint moved from a boxed panel onto the
+          whole section. Labelled panes highlight in place rather than lifting,
+          because a lifted pane ghosts across the labels in front of it.
+
+          The credential strip replaces the ComplianceSection that used to follow.
+          SOC 2, ISO 27001 and GDPR are deliberately NOT on it: the live site
+          claims them in hedged form, the compliance brief does not mention them at all.
+          Confirm their status before any of them is added back. */}
+      <SafetyStack
+        light
+        stage="section"
+        paneLabels
+        readable
+        intro="Every call opens by telling the patient it's an AI. Behind that sit four layers of protection."
+        layerCopy={{
+          encryption: {
+            name: "Your data",
+            line: "Encrypted in transit and at rest, on AWS in the US, under a BAA. Every vendor that touches it signs one too.",
+          },
+          protocols: {
+            name: "Your rules",
+            line: "HANA works only inside the protocols and escalation criteria your clinicians set. It never gives clinical advice.",
+          },
+          human: {
+            name: "Your clinicians",
+            line: "Anything clinical goes to your team, a crisis goes to emergency services, and nothing bills until your clinician signs.",
+          },
+          observability: {
+            name: "The record",
+            line: "Every contact keeps its recording, transcript, summary and the reason for any alert.",
+          },
+        }}
+        credentials={[
+          "Opt-outs honored within 24 hours",
+          "HIPAA business associate",
+          "BAA available",
+          "Hosted on AWS in the US",
+          "Pledged participant, CMS Health Tech Ecosystem",
+        ]}
+      />
 
 
       {/* §16a HOW WE START — pulled 2026-08-12 for the same reason as SafetyStack:
@@ -745,10 +814,11 @@ export function RemoteV2({
           artwork on navy, so they wash out on a light ground). It now takes a
           `light` prop, but the artwork needs recoloring before it can come back. */}
 
-      {/* §15b COMPLIANCE — the credentials view, imported from Home as-is
-          (Matteo 2026-08-20). Sits right after SafetyStack, same pairing as Home:
-          the defense-in-depth argument, then the certifications behind it. */}
-      <ComplianceSection white />
+      {/* §15b COMPLIANCE was the certifications grid (ISO 27001-aligned, SOC 2
+          Type II in progress, HIPAA-aligned, GDPR) under "Compliance and security
+          best hospitals already trust". Folded into the Safety credential strip
+          on 2026-09-26. One-line re-add: <ComplianceSection white />, but read
+          the note on §15 about which certifications are confirmed first. */}
 
       {/* §15c INTEGRATIONS — EHR logos orbiting the HANA core. Moved down from §10b
           (it used to sit between Getting live and the safety block) to under

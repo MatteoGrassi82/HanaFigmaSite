@@ -4,6 +4,22 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/remote-v2",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/hana-remote",
+      "missing": [
+        {
+          "type": "host",
+          "value": "ita.hana.health"
+        }
+      ],
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/research",
       "destination": "/labs",
       "permanent": true
@@ -35,7 +51,7 @@
     },
     {
       "source": "/chronic-care",
-      "destination": "/hana-remote",
+      "destination": "/",
       "permanent": true
     },
     {
@@ -45,17 +61,17 @@
     },
     {
       "source": "/hana-companion",
-      "destination": "/hana-remote",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/primary-care",
-      "destination": "/hana-remote",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/transitional-care",
-      "destination": "/hana-remote",
+      "destination": "/",
       "permanent": true
     },
     {
@@ -75,37 +91,37 @@
     },
     {
       "source": "/behavioral-health",
-      "destination": "/hana-remote",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/psychiatry-behavioral-health",
-      "destination": "/hana-remote",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/remote-therapeutic-monitoring",
-      "destination": "/hana-remote",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/population-outreach",
-      "destination": "/hana-remote",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/value-based-care",
-      "destination": "/hana-remote",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/hana-coach",
-      "destination": "/hana-remote",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/hana-compass",
-      "destination": "/hana-remote",
+      "destination": "/",
       "permanent": true
     },
     {

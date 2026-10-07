@@ -14,6 +14,12 @@ const IT_DOMAIN = "https://ita.hana.health";
 const EN_ONLY_PATHS = ["/programs/access-model", "/case-studies", "/state-of-ai", "/use-cases"];
 
 /**
+ * The reverse: paths only ita.hana.health renders (hana.health redirects them).
+ * Mirror of IT_ONLY_ROUTES in scripts/lib/route-seo.mjs.
+ */
+const IT_ONLY_PATHS = ["/hana-remote"];
+
+/**
  * Published-but-unlisted paths. Mirror of UNLISTED_ROUTES in
  * scripts/lib/route-seo.mjs. These answer 200 for anyone holding the URL and are
  * noindex everywhere, so an hreflang pair on them advertises nothing to nobody.
@@ -130,7 +136,7 @@ export function SEO({
     //
     // Keep EN_ONLY_PATHS in step with EN_ONLY_ROUTES in scripts/lib/route-seo.mjs,
     // which applies the same rule to the prerendered layer-1 head.
-    if (path && !EN_ONLY_PATHS.includes(path) && !UNLISTED_PATHS.includes(path)) {
+    if (path && !EN_ONLY_PATHS.includes(path) && !IT_ONLY_PATHS.includes(path) && !UNLISTED_PATHS.includes(path)) {
       const setHreflang = (hreflang: string, href: string) => {
         const sel = `link[rel="alternate"][hreflang="${hreflang}"]`;
         let el = document.querySelector(sel) as HTMLLinkElement | null;

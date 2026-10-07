@@ -131,12 +131,20 @@ export const Navbar = (props: NavbarProps) => {
       {
         url: "#",
         title: isItalian ? "Piattaforma" : "Platform",
-        // Sleep dropped from the nav (Matteo, 2026-08-04) — the /sleep
-        // routes stay live, they're just not a headline product up here.
-        subMenuLinks: [
-          { url: "/hana-contact", title: "HANA Contact" },
-          { url: "/hana-remote", title: "HANA Remote" },
-        ],
+        // English since the 7 Oct 2026 relaunch: care coordination is the
+        // homepage itself and Sleep is back as the one other product, the nav
+        // planned on the 2026-08-19 call. /hana-remote redirects to "/" there.
+        // Italian keeps the old pair: its homepage and /hana-remote are unchanged.
+        subMenuLinks: isItalian
+          ? [
+              { url: "/hana-contact", title: "HANA Contact" },
+              { url: "/hana-remote", title: "HANA Remote" },
+            ]
+          : [
+              { url: "/", title: "Care coordination" },
+              { url: "/sleep", title: "HANA Sleep" },
+              { url: "/hana-contact", title: "HANA Contact" },
+            ],
       },
       ...(isItalian ? [] : [{ url: "/case-studies", title: t.nav.caseStudies }]),
       {
@@ -187,7 +195,7 @@ export const Navbar = (props: NavbarProps) => {
   // Routes with a full-height animated hero opt out of the sticky bar: an opaque
   // sticky navbar slices the top of the hero artwork as soon as you scroll.
   // Everywhere else the navbar stays sticky exactly as before.
-  const staticNavRoutes = ["/remote-v2"];
+  const staticNavRoutes = isItalian ? [] : ["/"];
   const isStaticNav = staticNavRoutes.includes(useLocation().pathname);
 
   return (

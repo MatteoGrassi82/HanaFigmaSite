@@ -38,8 +38,7 @@ const COPY = {
     home: "Go to the homepage",
     more: "Or try",
     links: [
-      ["/hana-remote", "HANA Remote"],
-      ["/hana-contact", "HANA Contact"],
+      ["/sleep", "HANA Sleep"],
       ["/blog", "Blog"],
       ["/contact", "Contact"],
     ],

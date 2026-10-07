@@ -109,7 +109,7 @@ export function Footer() {
           <h4 className="text-white font-medium mb-4">{t.footer.platform}</h4>
           <ul className="space-y-2 text-sm">
             <li><Link to="/hana-contact" className="inline-block py-2 hover:text-white transition-colors">HANA Contact</Link></li>
-            <li><Link to="/hana-remote" className="inline-block py-2 hover:text-white transition-colors">HANA Remote</Link></li>
+            {isItalian && <li><Link to="/hana-remote" className="inline-block py-2 hover:text-white transition-colors">HANA Remote</Link></li>}
             <li><Link to="/sleep" className="inline-block py-2 hover:text-white transition-colors">HANA Sleep</Link></li>
             <li><Link to="/sleep/analysis" className="inline-block py-2 hover:text-white transition-colors">Sleep Analysis</Link></li>
             <li><Link to="/sleep/cpap" className="inline-block py-2 hover:text-white transition-colors">CPAP Adherence Program</Link></li>

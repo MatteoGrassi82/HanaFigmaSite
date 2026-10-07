@@ -40,6 +40,7 @@ import {
   IT_DOMAIN,
   STATIC_ROUTES,
   EN_ONLY_ROUTES,
+  IT_ONLY_ROUTES,
   NOINDEX_ROUTES,
   UNLISTED_ROUTES,
   REVIEW_ROUTES,
@@ -409,7 +410,9 @@ async function main() {
   console.log('▸ Prerender: collecting routes…');
   const { routes: blogRoutes, cache } = await getBlogDataOrFail();
   const staticRoutes =
-    LOCALE === 'it' ? STATIC_ROUTES.filter((r) => !EN_ONLY_ROUTES.includes(r)) : STATIC_ROUTES;
+    LOCALE === 'it'
+      ? STATIC_ROUTES.filter((r) => !EN_ONLY_ROUTES.includes(r))
+      : STATIC_ROUTES.filter((r) => !IT_ONLY_ROUTES.includes(r));
   // UNPUBLISHED PAGES ARE NOT RENDERED AT ALL, so they do not exist in production.
   //
   // These were prerendered-but-noindex: reachable at their real URL, kept out of
