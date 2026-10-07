@@ -3,7 +3,7 @@ import { Footer } from "../components/layout/Footer";
 import { Hero } from "../components/sections/Hero";
 import { LatestPosts } from "../components/sections/LatestPosts";
 import { CtaBand, DEMO_HREF } from "../components/sections/CtaBand";
-import { PROGRAMMES } from "../../content/programmes/index";
+import { PUBLISHED_PROGRAMMES } from "../../content/programmes/index";
 
 /**
  * /academy — the learning hub.
@@ -122,7 +122,7 @@ export function Academy() {
             does, what the code pays, and the questions we will not guess at.
           </p>
           <ul className="m-0 p-0 list-none grid gap-3 sm:grid-cols-2">
-            {PROGRAMMES.map((p) => (
+            {PUBLISHED_PROGRAMMES.map((p) => (
               <li key={p.id}>
                 <a
                   href={p.path}

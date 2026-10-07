@@ -707,6 +707,10 @@ export function RemoteV2({
         tag="Programs"
         heading="Every program is a phone call somebody has to make."
         body="Any program where the same patient needs a call next month. CCM, APCM, PCM, BHI and CoCM. Different rules, same phone call. Tap any card to see the steps it runs."
+        /* The homepage's one link into the programme pages (published 7 Oct
+           2026). The nav is Care and Sleep only, so without this the hub and
+           its four pages would be reachable from the sitemap alone. */
+        link={{ label: "What each program requires and pays", href: "/programs" }}
       />
 
       {/* §9a THE MONTH, ALREADY WRITTEN UP — what a program month produces:

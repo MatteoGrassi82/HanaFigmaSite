@@ -210,13 +210,11 @@ export const PROGRAMME_RATES: ProgrammeRate[] = [
     // page and the wrong code on a claim, and it is the most common PCM billing
     // error there is. 99424 and 99426 are mutually exclusive in a month.
     //
-    // 99424 IS DELIBERATELY UNPRICED. Two independent chains disagree on its
-    // total non-facility RVUs: 2.62 (giving $87.51) against 2.63 (giving
-    // $87.84, printed elsewhere as "$88" using a rounded $33.40 factor). One
-    // hundredth of an RVU is not a rounding difference, it is two different
-    // source values, so the page names the physician track WITHOUT a figure
-    // until one of them is confirmed against CMS primary files. 99425 and 99427
-    // have no sourced value at all.
+    // 99424 WAS UNPRICED until 7 Oct 2026, when two chains disagreed on its
+    // total non-facility RVUs (2.62 against 2.63). Settled at 2.62 ($87.51):
+    // CMS Addendum B for CMS-1832-F, RVU26A and RVU26D all carry it. The PCM
+    // add-on and physician-track amounts live in the programme content module's
+    // alsoBillable, not here, because this file holds one base code each.
     id: "pcm",
     short: "PCM",
     name: "Principal Care Management",

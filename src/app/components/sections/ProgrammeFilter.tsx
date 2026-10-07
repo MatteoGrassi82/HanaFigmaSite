@@ -1,10 +1,17 @@
 import { useMemo, useState, type ReactNode } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { PROGRAMMES, PROGRAMME_FOOTNOTE, sameMonth, type Programme, type ProgrammeId } from "../../../content/programmes/index";
+import { PUBLISHED_PROGRAMMES, PROGRAMME_FOOTNOTE, sameMonth, type Programme, type ProgrammeId } from "../../../content/programmes/index";
 import { cn } from "../../../lib/utils";
 
 /* ─────────────────────────────────────────────────────────────────────────────
  * ProgrammeFilter — describe a patient with toggles; the programmes light up.
+ *
+ * 7 OCT 2026: FOUR PROGRAMMES, TWO AXES. Only CCM, APCM, BHI and PCM publish
+ * (PUBLISHED_PROGRAMMES), so the device, discharge and ACCESS axes went with the
+ * programmes they lit (RPM, RTM, TCM, ACCESS). The stack readout learned the
+ * "split" verdict: most same-month bars are "not by the same practitioner",
+ * which the old "Not in the same month" line overstated. Much of the history
+ * below describes the eight-row version.
  *
  * REPLACES THREE SECTIONS ON THE HUB: the three-question ProgrammeChooser
  * (1,668px, 450 words, prose at every branch), the static seven-card grid
@@ -109,36 +116,31 @@ import { cn } from "../../../lib/utils";
  * ─────────────────────────────────────────────────────────────────────────── */
 
 type Count = "any" | "0" | "1" | "2+";
-type Device = "any" | "none" | "physiologic" | "therapeutic";
 type YesNo = "any" | "yes" | "no";
-type Track = "any" | "none" | "CKM" | "eCKM" | "BH" | "MSK";
 
-interface Answers { count: Count; device: Device; behavioral: YesNo; discharged: YesNo; track: Track }
-const NONE: Answers = { count: "any", device: "any", behavioral: "any", discharged: "any", track: "any" };
+interface Answers { count: Count; behavioral: YesNo }
+const NONE: Answers = { count: "any", behavioral: "any" };
 
 /** Does this programme light for these answers? "any" on an axis never excludes. */
-function lit(id: ProgrammeId | "access", a: Answers): boolean {
+function lit(id: ProgrammeId, a: Answers): boolean {
   switch (id) {
     case "ccm":  return a.count === "any" || a.count === "2+";
     case "pcm":  return a.count === "any" || a.count === "1";
     case "apcm": return true; // every count has a G-code
     case "bhi":  return a.behavioral !== "no";
-    case "rtm":  return a.device === "any" || a.device === "therapeutic";
-    case "rpm":  return a.device === "any" || a.device === "physiologic";
-    case "tcm":  return a.discharged !== "no";
-    case "access": return a.track !== "none";
+    default:     return false; // parked programmes never render here
   }
 }
 
 /** The APCM code the count implies, so the card can say which one. */
 function apcmCode(count: Count): string {
-  if (count === "2+") return "G0557";
+  if (count === "2+") return "G0557 · G0558";
   if (count === "0" || count === "1") return "G0556";
-  return "G0556 · G0557";
+  return "G0556 to G0558";
 }
 
 /** Short code per programme, for the stack chips. */
-const CODE: Record<ProgrammeId, string> = Object.fromEntries(PROGRAMMES.map((p) => [p.id, p.code])) as Record<ProgrammeId, string>;
+const CODE: Record<ProgrammeId, string> = Object.fromEntries(PUBLISHED_PROGRAMMES.map((p) => [p.id, p.code])) as Record<ProgrammeId, string>;
 
 /**
  * One dot, two tones. AMBER is the answer (a programme is lit), INK is the
@@ -164,7 +166,7 @@ function Dot({ on, tone = "amber" }: { on: boolean; tone?: "amber" | "ink" }) {
 }
 
 interface Stack { ids: ProgrammeId[]; total: number }
-interface Stacks { sets: Stack[]; barred: [ProgrammeId, ProgrammeId][]; open: [ProgrammeId, ProgrammeId][] }
+interface Stacks { sets: Stack[]; barred: [ProgrammeId, ProgrammeId][]; split: [ProgrammeId, ProgrammeId][]; open: [ProgrammeId, ProgrammeId][] }
 
 /**
  * The largest sets of lit programmes that may all share a month, by combined
@@ -176,10 +178,12 @@ function buildStacks(on: Programme[]): Stacks {
   const ids = on.map((p) => p.id);
   const rate = (id: ProgrammeId) => on.find((p) => p.id === id)!.payment.rate;
   const barred: [ProgrammeId, ProgrammeId][] = [];
+  const split: [ProgrammeId, ProgrammeId][] = [];
   const open: [ProgrammeId, ProgrammeId][] = [];
   for (let i = 0; i < ids.length; i++) for (let j = i + 1; j < ids.length; j++) {
     const v = sameMonth(ids[i], ids[j]);
     if (v === "no") barred.push([ids[i], ids[j]]);
+    if (v === "split") split.push([ids[i], ids[j]]);
     if (v === "open") open.push([ids[i], ids[j]]);
   }
   const cliques: ProgrammeId[][] = [];
@@ -194,7 +198,7 @@ function buildStacks(on: Programme[]): Stacks {
     .map((c) => ({ ids: c, total: c.reduce((n, id) => n + rate(id), 0) }))
     .sort((x, y) => y.total - x.total)
     .slice(0, 4);
-  return { sets, barred, open };
+  return { sets, barred, split, open };
 }
 
 
@@ -210,12 +214,8 @@ type Axis = {
 };
 const AXES: Axis[] = [
   { key: "count", cols: "grid-cols-2", legend: "Chronic conditions", options: [{ v: "any", label: "Any" }, { v: "0", label: "None" }, { v: "1", label: "One" }, { v: "2+", label: "2 or more" }] },
-  { key: "device", cols: "grid-cols-2", legend: "A device at home", hint: "Readings: blood pressure, weight, oxygen. Therapy: CPAP, adherence.", options: [{ v: "any", label: "Any" }, { v: "none", label: "None" }, { v: "physiologic", label: "Readings" }, { v: "therapeutic", label: "Therapy" }] },
   { key: "behavioral", cols: "grid-cols-3", legend: "Behavioural health condition", options: [{ v: "any", label: "Any" }, { v: "yes", label: "Yes" }, { v: "no", label: "No" }] },
-  { key: "discharged", cols: "grid-cols-3", legend: "Discharged in the last 30 days", options: [{ v: "any", label: "Any" }, { v: "yes", label: "Yes" }, { v: "no", label: "No" }] },
-  { key: "track", cols: "grid-cols-1 sm:grid-cols-2", legend: "ACCESS model", options: [{ v: "any", label: "Any" }, { v: "none", label: "Not enrolled" }, { v: "CKM", label: "CKM track" }, { v: "eCKM", label: "eCKM track" }, { v: "BH", label: "BH track" }, { v: "MSK", label: "MSK track" }] },
 ];
-const TRACKS: Track[] = ["CKM", "eCKM", "BH", "MSK"];
 
 /** The toggles read back as one sentence, so the reader can check the patient. */
 function describe(a: Answers): string | null {
@@ -223,15 +223,8 @@ function describe(a: Answers): string | null {
   if (a.count === "0") parts.push("no chronic condition");
   if (a.count === "1") parts.push("one chronic condition");
   if (a.count === "2+") parts.push("two or more chronic conditions");
-  if (a.device === "none") parts.push("no device at home");
-  if (a.device === "physiologic") parts.push("a device sending readings");
-  if (a.device === "therapeutic") parts.push("a therapy device at home");
   if (a.behavioral === "yes") parts.push("a behavioural health condition");
   if (a.behavioral === "no") parts.push("no behavioural health condition");
-  if (a.discharged === "yes") parts.push("a discharge in the last 30 days");
-  if (a.discharged === "no") parts.push("no recent discharge");
-  if (a.track === "none") parts.push("not enrolled in ACCESS");
-  if (TRACKS.includes(a.track)) parts.push(`on the ACCESS ${a.track} track`);
   if (!parts.length) return null;
   const last = parts.pop()!;
   return `A patient with ${parts.length ? parts.join(", ") + " and " : ""}${last}.`;
@@ -251,9 +244,9 @@ export function ProgrammeFilter({
   const touched = Object.values(a).some((v) => v !== "any");
   const set = (k: keyof Answers, v: string) => setA((s) => ({ ...s, [k]: v as never }));
 
-  const rows = useMemo(() => PROGRAMMES.map((p) => ({ p, on: lit(p.id, a) })), [a]);
-  const accessOn = lit("access", a);
-  const litCount = rows.filter((r) => r.on).length + (accessOn ? 1 : 0);
+  const rows = useMemo(() => PUBLISHED_PROGRAMMES.map((p) => ({ p, on: lit(p.id, a) })), [a]);
+  const litCount = rows.filter((r) => r.on).length;
+  const total = rows.length;
   const stacks = useMemo(() => buildStacks(rows.filter((r) => r.on).map((r) => r.p)), [rows]);
   const sentence = describe(a);
 
@@ -327,7 +320,7 @@ export function ProgrammeFilter({
                 <p className="text-[12px] font-bold uppercase tracking-[1.2px] text-ink-mute m-0">Programmes to consider</p>
                 <p className="flex items-center gap-2 text-[13.5px] text-ink-soft m-0 tabular-nums" aria-live="polite">
                   <span aria-hidden className="h-2.5 w-2.5 rounded-full bg-signal-amber" />
-                  {touched ? <><strong className="text-ink">{litCount}</strong> of 8 lit</> : "All 8 lit"}
+                  {touched ? <><strong className="text-ink">{litCount}</strong> of {total} lit</> : `All ${total} lit`}
                 </p>
               </div>
               <p className={cn("m-0 mt-2 font-serif text-[19px] leading-[1.4]", sentence ? "text-ink" : "text-ink-soft")} aria-live="polite">
@@ -346,23 +339,11 @@ export function ProgrammeFilter({
                       </span>
                       <span className="text-right">
                         <span className="block font-serif text-[20px] leading-none text-ink tabular-nums">${p.payment.rate.toFixed(2)}</span>
-                        <span className="block text-[11.5px] text-ink-mute mt-1">{p.id === "tcm" ? "per discharge" : "per month"}</span>
+                        <span className="block text-[11.5px] text-ink-mute mt-1">per month</span>
                       </span>
                     </a>
                   </li>
                 ))}
-                <li data-lit={accessOn} className={cn("transition-opacity duration-300", accessOn ? "opacity-100" : "opacity-40")} aria-hidden={!accessOn && touched ? true : undefined}>
-                  <a href="/programs/access-model" tabIndex={accessOn ? 0 : -1}
-                    className="group grid grid-cols-[12px_66px_1fr_auto] items-center gap-x-4 py-3.5 no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">
-                    <Dot on={accessOn} />
-                    <span className={cn("font-serif text-[19px] leading-none", accessOn ? "text-ink" : "text-ink-mute")}>ACCESS</span>
-                    <span className="min-w-0">
-                      <span className="block text-[15px] font-medium text-ink leading-[1.3] group-hover:underline underline-offset-4 decoration-rule">CMS payment model</span>
-                      <span className="block font-mono text-[12px] text-ink-mute mt-0.5">{TRACKS.includes(a.track) ? `${a.track} track` : "4 tracks"}</span>
-                    </span>
-                    <span className="text-right text-[12px] leading-[1.4] text-ink-soft max-w-[13ch]">Paid per track, half withheld for outcomes</span>
-                  </a>
-                </li>
               </ul>
             </div>
 
@@ -384,7 +365,7 @@ export function ProgrammeFilter({
                       </span>
                       <span className="flex items-baseline gap-1.5">
                         <span className="font-serif text-[24px] leading-none text-ink tabular-nums">${st.total.toFixed(2)}</span>
-                        <span className="text-[12px] text-ink-mute">{st.ids.includes("tcm") ? "with a discharge" : "in one month"}</span>
+                        <span className="text-[12px] text-ink-mute">in one month</span>
                       </span>
                     </li>
                   ))}
@@ -393,6 +374,13 @@ export function ProgrammeFilter({
                   <p className="text-[13.5px] leading-[1.6] text-ink m-0">
                     The same minutes never count twice, whichever codes the month carries.
                   </p>
+                  {stacks.split.length > 0 && (
+                    <p className="text-[13.5px] leading-[1.6] text-ink-soft m-0 mt-1.5">
+                      Not by the same practitioner in the same month: {stacks.split.map(([x, y], i) => (
+                        <span key={x + y}>{i > 0 && "; "}{CODE[x]} and {CODE[y]}</span>
+                      ))}.
+                    </p>
+                  )}
                   {stacks.barred.length > 0 && (
                     <p className="text-[13.5px] leading-[1.6] text-ink-soft m-0 mt-1.5">
                       Not in the same month: {stacks.barred.map(([x, y], i) => (
@@ -414,7 +402,7 @@ export function ProgrammeFilter({
         </motion.div>
 
         <p className="text-[13px] leading-[1.65] text-ink-mute mt-6 mb-0 max-w-[76ch] mx-auto text-center">
-          A lit row means a patient like this can be considered for that programme, not that they are eligible. Consent, the initiating visit, who may bill and the rest of the fine print are open questions listed on each programme page, and this cannot check them. A stack is what may be billed together, not what this patient qualifies for. {PROGRAMME_FOOTNOTE}
+          A lit row means a patient like this can be considered for that programme, not that they are eligible. Consent, the initiating visit and who may bill are covered on each programme page, and this cannot check them for a patient. A stack is what may be billed together, not what this patient qualifies for. {PROGRAMME_FOOTNOTE}
         </p>
       </div>
     </section>

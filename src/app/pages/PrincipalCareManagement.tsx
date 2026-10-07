@@ -21,14 +21,13 @@ import { programmeById } from "../../content/programmes/index";
  * this backwards and the page puts the wrong number on screen and encourages
  * the wrong code on a claim. 99424 and 99426 are mutually exclusive in a month.
  *
- * THREE CODES ARE NAMED WITHOUT A FIGURE. 99427 has no sourced CY2026 amount.
- * 99424 and 99425 are worse than unsourced: two independent chains disagree on
- * 99424's total non-facility RVUs, 2.62 against 2.63, which is $87.51 against
- * $87.84 and is two different source values rather than a rounding difference.
- * Naming a code without pricing it costs nothing. Printing the wrong one of two
- * candidate figures costs the reader their arithmetic.
+ * ALL FOUR CODES ARE PRICED since 7 Oct 2026. 99424 used to be named without a
+ * figure because two chains disagreed on its RVUs (2.62 against 2.63). CMS
+ * Addendum B, RVU26A and RVU26D all carry 2.62, so it is $87.51. 99425 and
+ * 99427 were sourced the same day. See alsoBillable in the content module.
  *
- * NOINDEX until OPEN_QUESTIONS are answered. See ChronicCareManagement.tsx.
+ * PUBLISHED 7 Oct 2026, its open questions answered from primary sources and
+ * moved into the FAQ. See ChronicCareManagement.tsx.
  */
 
 const PCM = programmeById("pcm")!;
@@ -60,11 +59,11 @@ const PCM_FAQS = [
   },
   {
     q: "Which code do we actually bill?",
-    a: "99426 if clinical staff did the thirty minutes, 99424 if the physician or another qualified professional did. They are mutually exclusive in a month, so it is one or the other, never both. Note that this numbering is the reverse of CCM's, where 99490 is the clinical staff code and 99491 is the physician code. It is the single most common PCM billing mistake.",
+    a: "99426 if clinical staff did the thirty minutes, 99424 if the physician or another qualified professional did. They are mutually exclusive in a month, so it is one or the other, never both. Note that this numbering is the reverse of CCM's, where 99490 is the clinical staff code and 99491 is the physician code.",
   },
   {
     q: "What does it pay?",
-    a: `${PCM.payment.code} is ${PCM.payment.year} $${PCM.payment.rate.toFixed(2)} national non-facility, before geographic adjustment, for one patient in one calendar month. It is not what the practice collects: sequestration and the standard Part B patient coinsurance both come off, and the amount varies by locality. The physician track is named on this page without a figure, because two sources disagree on it and we will not pick one for you.`,
+    a: `${PCM.payment.code} is ${PCM.payment.year} $${PCM.payment.rate.toFixed(2)} national non-facility, before geographic adjustment, for one patient in one calendar month. It is not what the practice collects: sequestration and the standard Part B patient coinsurance both come off, and the amount varies by locality. On the same basis the physician track, 99424, is $87.51, and each further thirty minutes is 99427 ($54.11) for staff time or 99425 ($61.46) for the practitioner's own.`,
   },
   {
     q: "Can it run alongside our other programmes?",
@@ -72,18 +71,34 @@ const PCM_FAQS = [
   },
   {
     q: "What does HANA actually do here?",
-    a: "It makes the monthly contact and keeps it on the one condition rather than drifting across the whole chart, asks what your clinicians scoped, in 30+ languages, and writes it up the same day with the time attributed. Your clinicians own the care plan and every decision on it, and nothing bills until a person on your team approves the note.",
+    a: "It makes the monthly contact and keeps it on the one condition rather than drifting across the whole chart, asks what your clinicians scoped, in 30+ languages, and writes it up the same day for your clinician to review. Your clinicians own the care plan and every decision on it, and nothing bills until a person on your team approves the note.",
   },
-];
-
-const OPEN_QUESTIONS: { q: string; needs: string }[] = [
-  { q: "What are 99424, 99425 and 99427 worth?", needs: "99427 has no sourced CY2026 amount. 99424 has two conflicting ones (2.62 RVUs giving $87.51, against 2.63 giving $87.84). Resolve 99424 against CMS Addendum B and source the other two, or keep naming all three without a figure." },
-  { q: "Can PCM and CCM run for the same patient in the same month?", needs: "Confirm the rule, including whether it changes when a different practitioner or a different practice bills each one. The page currently states only the APCM exclusion, which is the one we hold." },
-  { q: "What makes a condition 'complex' enough?", needs: "Confirm the standard CMS applies, and whether it is a documented clinical judgement or a defined list. This is the eligibility gate for the whole programme and the page should not paraphrase it." },
-  { q: "How is patient consent obtained and recorded?", needs: "Confirm how consent is captured, by whom, and whether it is once or annual." },
-  { q: "Who in the practice may bill this?", needs: "Confirm practitioner types, and the supervision level the clinical staff time on 99426 sits under." },
-  { q: "Is an initiating visit required?", needs: "Confirm whether PCM needs one, and for which patients." },
-  { q: "What changes under the CY2027 proposed rule?", needs: "Wording for the proposed rule, from Matteo and counsel. Always described as proposed, never as settled." },
+  /* The CPT descriptor as CMS reprints it, 89 FR 97812. CMS declined to define
+     "complex" further when asked (84 FR 62696). */
+  {
+    q: "What makes a condition complex enough?",
+    a: "CMS uses the CPT definition rather than a list. One complex chronic condition expected to last at least three months, that puts the patient at significant risk of hospitalisation, acute exacerbation, functional decline or death, and that needs a disease-specific care plan developed, monitored or revised. It also needs frequent medication adjustments or management made unusually complex by other conditions. It is a clinical judgement your practitioner documents.",
+  },
+  /* 84 FR 62694 (CY2020 final rule): the CCM scope of service, consent included, applies to PCM. */
+  {
+    q: "How is patient consent obtained?",
+    a: "The same way as for chronic care management: verbally or in writing, before the service starts, documented in the patient's record.",
+  },
+  /* 84 FR 62694; MLN909188 p.11. */
+  {
+    q: "Does a patient need a visit first?",
+    a: "Yes. PCM starts at an initiating visit with the billing practitioner, and CMS's guidance asks for another one after a year to keep the service going.",
+  },
+  /* MLN909188 p.4; 42 CFR 410.26(b)(5); CY2026 designated care management list. */
+  {
+    q: "Who in the practice may bill it?",
+    a: "Physicians, nurse practitioners, physician assistants, clinical nurse specialists and certified nurse midwives. On 99426 the thirty minutes are clinical staff time under general supervision; on 99424 they are the practitioner's own. Only clinical staff time counts, so HANA's call time never does.",
+  },
+  /* 91 FR 43893 and 43938-39 (CMS-1848-P, published 16 July 2026). */
+  {
+    q: "What does the proposed 2027 rule change?",
+    a: "As proposed in July 2026, nothing for PCM. The proposal that would require staff employed by the practice covers remote monitoring only. CMS asked for comments on supervision across care management, so this is one to re-check when the final rule lands, expected around November 2026.",
+  },
 ];
 
 export function PrincipalCareManagement(webCall: WebCallProps) {
@@ -94,7 +109,6 @@ export function PrincipalCareManagement(webCall: WebCallProps) {
         description={COPY.description}
         path="/programs/principal-care-management"
         useExactTitle
-        robots="noindex, nofollow"
         keywords="principal care management, PCM, CPT 99426, 99424, single chronic condition, Medicare care management"
         jsonLd={[
           breadcrumbSchema([
@@ -109,7 +123,6 @@ export function PrincipalCareManagement(webCall: WebCallProps) {
         data={PCM}
         headline={HERO_HEADLINE}
         faqs={PCM_FAQS}
-        openQuestions={OPEN_QUESTIONS}
         webCall={webCall}
       />
     </div>

@@ -32,16 +32,11 @@ import { programmeById } from "../../content/programmes/index";
  * Search Console. title/description may read from a const in THIS file, which is
  * what COPY below is for.
  *
- * NOINDEX FOR NOW. The route is in NOINDEX_ROUTES so it is live at its real URL
- * for review but not indexed. Moving it to STATIC_ROUTES is the publish step, and
- * it should not happen until the open questions below are answered.
- *
- * WHAT IS DELIBERATELY MISSING, and rendered as visible gaps rather than papered
- * over with plausible copy: consent handling, the initiating-visit rule, who may
- * bill and under what supervision, the concurrency matrix, and the CY2027 line.
- * See OPEN_QUESTIONS. Every one is a fact somebody has to supply, not a writing
- * problem, and a programme page that guesses at any of them is worse than one
- * that says it does not know yet.
+ * PUBLISHED 7 Oct 2026. Until then the page rendered its open billing questions
+ * as a visible block, on the rule that a guessed billing answer is worse than an
+ * admitted gap. They were answered that day from primary sources and moved into
+ * the FAQ below, each with its source beside it. Keep that rule for any new
+ * answer: a primary CMS document, the Federal Register or eCFR, never a vendor.
  */
 
 const CCM = programmeById("ccm")!;
@@ -61,10 +56,9 @@ const HERO_HEADLINE: ReactNode = (
 );
 
 
-/* Answerable from the sourced data and nothing else. Every answer below traces to
-   src/content/programmes/index.ts or to rates.ts. Questions that need a fact we do
-   not have are in OPEN_QUESTIONS instead, where they read as open rather than
-   getting a confident invented answer. */
+/* The first five trace to src/content/programmes/index.ts or rates.ts. The rest
+   are the questions that used to sit in an "open" block, answered 7 Oct 2026;
+   the source for each is in the comment above it. */
 const CCM_FAQS = [
   {
     q: "Who counts as eligible?",
@@ -86,18 +80,36 @@ const CCM_FAQS = [
     q: "Is this HANA billing on our behalf?",
     a: "No. Your patients, your claim. HANA supplies the reach and the documentation. Your team supplies the judgement.",
   },
-];
-
-/* Rendered on the page, not hidden in a comment. A practice manager reading this
-   page will ask every one of these, and an honest gap is worth more than a
-   confident guess. Each is a fact somebody has to supply. */
-const OPEN_QUESTIONS: { q: string; needs: string }[] = [
-  { q: "How is patient consent obtained and recorded?", needs: "How it is captured, by whom, once or annual." },
-  { q: "Does a patient need an initiating visit first?", needs: "Which patients need one, and who may perform it." },
-  { q: "Who in the practice may bill this?", needs: "Practitioner types, and the supervision level the staff time sits under." },
-  { q: "Can it run alongside our other programmes?", needs: "The rules beyond the APCM exclusion, and how minutes avoid double counting." },
-  { q: "What changes under the CY2027 proposed rule?", needs: "Wording from Matteo and counsel. Always described as proposed." },
-  { q: "Are we speaking to RHCs and FQHCs?", needs: "G0511 stopped being payable on 1 October 2025, so they now bill these individual codes or APCM. Decide whether the page addresses them." },
+  /* MLN909188 (June 2025) p.6; CMS CCM FAQ (8/16/2022) p.5. */
+  {
+    q: "How is patient consent obtained?",
+    a: "Verbally or in writing, once, before CCM starts, and documented in the patient's record. The patient has to be told that the service is available, that cost sharing applies, that only one practitioner can bill CCM in a month, and that they can stop at any time. A new consent is only needed if they move to a different billing practitioner.",
+  },
+  /* CMS CCM FAQ p.5. */
+  {
+    q: "Does a patient need a visit first?",
+    a: "Only new patients, or patients the billing practitioner has not seen in the past year. For them, CCM starts at a face-to-face visit where it is discussed: a level 2 to 5 office visit, an annual wellness visit, an initial preventive physical exam, or the visit inside transitional care management. The billing practitioner does that visit, and it is billed on its own.",
+  },
+  /* MLN909188 p.4; 42 CFR 410.26(b)(5); CMS CCM FAQ p.1. */
+  {
+    q: "Who in the practice may bill it?",
+    a: "Physicians, nurse practitioners, physician assistants, clinical nurse specialists and certified nurse midwives. The clinical staff time on 99490 runs under general supervision, so the practitioner does not have to be in the room. CMS counts only time spent by clinical staff toward the twenty minutes, which is why HANA's call time never counts. The time your staff spend reviewing and acting on what HANA hands them does.",
+  },
+  /* CMS CCM FAQ p.7; BHI FAQ (12/5/2023) Q2; 89 FR 97896. */
+  {
+    q: "Can it run alongside our other programmes?",
+    a: "Behavioral health integration, yes, in the same month, with consent for both. Principal care management, not by the same practitioner: a specialist can bill PCM for a different condition while your practice bills CCM. Advanced primary care management, not by the practitioner billing APCM that month. In every case a minute counts toward one code only.",
+  },
+  /* 91 FR 43893 and 43938-39 (CMS-1848-P, published 16 July 2026). */
+  {
+    q: "What does the proposed 2027 rule change?",
+    a: "As proposed in July 2026, nothing for CCM. The proposal that would require staff employed by the practice covers remote physiologic and therapeutic monitoring only. CMS also asked for comments on supervision across care management, so the final rule, expected around November 2026, could still move. This page will say so when it does.",
+  },
+  /* MLN Connects 2025-06-05; 89 FR 98009-12. */
+  {
+    q: "Can FQHCs and rural health clinics bill it?",
+    a: "Yes. G0511 stopped being billable on 30 September 2025, and FQHCs and RHCs now bill the same CCM codes as everyone else, paid at the national non-facility rate on top of the visit payment.",
+  },
 ];
 
 export function ChronicCareManagement(webCall: WebCallProps) {
@@ -108,11 +120,6 @@ export function ChronicCareManagement(webCall: WebCallProps) {
         description={COPY.description}
         path="/programs/chronic-care-management"
         useExactTitle
-        /* NOINDEX_ROUTES in route-seo.mjs governs the PRERENDERED head. This prop
-           governs the head the runtime renders. Both are needed, and RemoteV2 does
-           the same. Delete this line and move the route to STATIC_ROUTES together,
-           as one publish step, once OPEN_QUESTIONS are answered. */
-        robots="noindex, nofollow"
         keywords="chronic care management, CPT 99490, CCM billing, Medicare chronic care management, care coordination"
         jsonLd={[
           breadcrumbSchema([
@@ -127,7 +134,6 @@ export function ChronicCareManagement(webCall: WebCallProps) {
         data={CCM}
         headline={HERO_HEADLINE}
         faqs={CCM_FAQS}
-        openQuestions={OPEN_QUESTIONS}
         webCall={webCall}
       />
     </div>

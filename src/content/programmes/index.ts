@@ -26,10 +26,13 @@
  * that header expressed as renderable data so a page can put the caveat next to
  * the figure. A dollar amount is never presented as "what you get paid".
  *
- * ALL SEVEN PROGRAMMES ARE HERE as of 6 Sept 2026. TCM, PCM and RPM were the
- * last three in; see DONE(scope) at the foot of this file for why each was held
- * back and what unblocked it. TCM is the one that does not share the monthly
- * shape: it is billed per qualifying discharge, not per patient per month.
+ * ALL SEVEN PROGRAMMES ARE HERE as of 6 Sept 2026, BUT ONLY FOUR ARE PUBLISHED.
+ * Matteo, 7 Oct 2026: CCM, APCM, BHI and PCM go live; RPM, RTM and TCM are
+ * parked. RPM and RTM are roadmap (HANA never supplies the device, and only a
+ * live interactive communication by staff meets their management codes). TCM
+ * pays for a two-business-day contact that must be made by clinical staff, so a
+ * page selling it invites the one claim the site must never make. Their data
+ * stays below; everything that LISTS programmes reads PUBLISHED_PROGRAMMES.
  * ─────────────────────────────────────────────────────────────────────────── */
 
 import {
@@ -175,8 +178,23 @@ export const PROGRAMMES: Programme[] = [
     ],
     team: "Owns the care plan, the round-the-clock access and every clinical judgement. HANA is the capacity behind the elements.",
     lands: ["Monthly contact record", "Consent and initiating-visit trail"],
-    note: "APCM cannot be billed in the same month as CCM, PCM or TCM for the same patient, and practices billing it report the Value in Primary Care MVP from 2026.",
+    note: "The practitioner billing APCM cannot also bill CCM, PCM or TCM for that patient in the same month, though a different practitioner can. Practices billing it report the Value in Primary Care MVP from 2026.",
     payment: rateFor("apcm"),
+    /* G0556 and G0558 sourced 2026-10-07 from CMS RVU26A and RVU26D (identical):
+     * 0.49 and 3.51 total non-facility RVUs x $33.4009. Level is set by the
+     * count of chronic conditions, and G0558 additionally by QMB status. */
+    alsoBillable: [
+      {
+        code: "G0556",
+        what: "Level 1, for a patient with no chronic condition or one.",
+        rate: 16.37,
+      },
+      {
+        code: "G0558",
+        what: "Level 3, for two or more chronic conditions when the patient is a Qualified Medicare Beneficiary.",
+        rate: 117.24,
+      },
+    ],
   },
   {
     id: "bhi",
@@ -294,22 +312,33 @@ export const PROGRAMMES: Programme[] = [
     hana: [
       "Makes the monthly contact and keeps it on the one condition, rather than drifting across the whole chart.",
       "Asks the disease-specific questions your clinicians scoped, in 30+ languages.",
-      "Writes it up the same day with the time attributed, ready for review.",
+      "Writes it up the same day, ready for your clinician to review.",
     ],
     team: "Your clinicians set the care plan and own every clinical decision on it. HANA makes the contact and documents it, and nothing bills until a person on your team approves it.",
     lands: ["Monthly time log against one condition", "Disease-specific contact record"],
-    note: "PCM cannot be billed in the same month as advanced primary care management for the same patient. 99424 and 99426 are also mutually exclusive: one month is either the physician track or the clinical staff track, never both.",
+    note: "The same practitioner cannot bill PCM and CCM, or PCM and APCM, for a patient in the same month, though a specialist can bill PCM for a different condition while the primary care practice bills CCM. 99424 and 99426 are also one or the other: a month is either the physician track or the clinical staff track, never both.",
     payment: rateFor("pcm"),
     alsoBillable: [
+      /* Sourced 2026-10-07. The 99424 conflict (2.62 against 2.63 RVUs) is
+       * settled at 2.62: CMS Addendum B for CMS-1832-F, RVU26A and RVU26D all
+       * carry it. 99425 1.84 and 99427 1.62 RVUs, x $33.4009. */
       {
         code: "99427",
         what: "Each further thirty minutes of clinical staff time in the same month.",
-        caveat: "No sourced CY2026 amount yet, so no figure is shown. An add-on to 99426, never billed alone.",
+        rate: 54.11,
+        caveat: "An add-on to 99426, never billed alone.",
       },
       {
-        code: "99424 / 99425",
+        code: "99424",
         what: "The physician or QHP track, where the practitioner rather than clinical staff does the thirty minutes.",
-        caveat: "No figure shown on purpose: two independent CY2026 chains disagree on 99424's RVUs (2.62 against 2.63). Mutually exclusive with 99426 in the same month.",
+        rate: 87.51,
+        caveat: "Mutually exclusive with 99426 in the same month.",
+      },
+      {
+        code: "99425",
+        what: "Each further thirty minutes of the practitioner's own time.",
+        rate: 61.46,
+        caveat: "An add-on to 99424, never billed alone.",
       },
     ],
   },
@@ -362,7 +391,7 @@ export const PROGRAMMES: Programme[] = [
 
 /** Carried verbatim from lab/ProgramsStack.tsx. Every programme page needs it. */
 export const PROGRAMME_FOOTNOTE =
-  "Programs are what your practice bills. HANA does not bill, and its call time is never counted as clinical time. Requirements here are the Medicare rules as they stand in August 2026 and are worth checking against your MAC before you rely on them.";
+  "Programs are what your practice bills. HANA does not bill, and its call time is never counted as clinical time. Requirements here are the Medicare rules as they stand in October 2026 and are worth checking against your MAC before you rely on them.";
 
 /* ── The caveats that travel with a dollar figure ──────────────────────────
  * This is the rates.ts header as data, so a page can render the caveat next to
@@ -448,6 +477,14 @@ export function formatUsd(amount: number): string {
 
 export const PROGRAMME_IDS: ProgrammeId[] = PROGRAMMES.map((p) => p.id);
 
+/** The programmes with a live page (Matteo, 7 Oct 2026). Anything that LISTS or
+ *  LINKS programmes reads this, so a parked one never gets a link to a page
+ *  that redirects. RPM, RTM and TCM stay in PROGRAMMES as parked data. */
+export const PUBLISHED_PROGRAMME_IDS: ProgrammeId[] = ["ccm", "apcm", "bhi", "pcm"];
+export const PUBLISHED_PROGRAMMES: Programme[] = PROGRAMMES.filter((p) =>
+  PUBLISHED_PROGRAMME_IDS.includes(p.id),
+);
+
 export function programmeById(id: ProgrammeId): Programme | undefined {
   return PROGRAMMES.find((p) => p.id === id);
 }
@@ -456,37 +493,51 @@ export function programmeById(id: ProgrammeId): Programme | undefined {
  * SAME MONTH: which pairs of programmes CMS lets a practice bill for the same
  * patient in the same month. Drives the stack readout in ProgrammeFilter.
  *
- *   "yes"  CMS has said so in a PFS final rule or FAQ (cited per pair).
- *   "no"   CMS or CPT bars it.
- *   "open" we have not found the ruling and will not guess. Shown as unsettled.
+ *   "yes"   CMS has said so in a PFS final rule or FAQ (cited per pair).
+ *   "split" not by the SAME practitioner. Most of CMS's same-month bars are
+ *           this shape, which "no" overstated until 7 Oct 2026: a different
+ *           practitioner, even in the same practice, may bill the other one.
+ *   "no"    barred outright.
+ *   "open"  we have not found the ruling and will not guess.
  *
  * Two things every "yes" carries and the UI must repeat: the same minutes can
  * never count toward two codes, and this is about what may be billed, not what
  * a given patient qualifies for. Keys are the two ids sorted, joined with "+".
  *
- * Sources
- *   APCM × CCM/PCM/TCM barred; APCM × BHI, RPM, RTM allowed:
- *     CMS, CY2025 PFS final rule (CMS-1807-F), APCM section.
- *   CCM × PCM barred: CPT 2022 parenthetical, do not report 99424-99427 in the
- *     same month as 99487-99491.
- *   RPM × RTM barred: CMS, CY2022 PFS final rule (CMS-1751-F), RTM section.
- *   CCM/TCM/BHI/PCM × RPM allowed: CMS, CY2020 (CMS-1715-F) and CY2021
- *     (CMS-1734-F) PFS final rules.
- *   CCM/PCM/TCM/BHI × RTM allowed: CMS, CY2022 PFS final rule (CMS-1751-F).
- *   CCM × TCM allowed: CMS, CY2020 PFS final rule (CMS-1715-F).
- *   CCM × BHI, TCM × BHI allowed: CMS, Behavioral Health Integration FAQ.
+ * Sources (re-verified 2026-10-07 against the primary documents)
+ *   APCM x CCM/PCM/TCM split: CY2025 PFS final rule, 89 FR 97896, "may not be
+ *     billed ... by the same practitioner but may be billed ... by a
+ *     practitioner other than the practitioner furnishing APCM services".
+ *   APCM x BHI, RPM, RTM allowed: 89 FR 97897; BHI add-ons G0568 to G0570 from
+ *     CY2026 (90 FR 49470).
+ *   CCM x PCM split: CMS CCM FAQ (8/16/2022) p.7, "cannot be billed by the same
+ *     practitioner ... However, it is allowable ... for a primary care
+ *     practitioner to offer CCM and a specialist to offer PCM". Was "no", from
+ *     a CPT parenthetical that CMS's own FAQ contradicts.
+ *   BHI x PCM split: CY2020 PFS final rule, 84 FR 62697, PCM "should not be
+ *     furnished with other care management services by the same practitioner".
+ *     Whether a DIFFERENT practitioner may is not stated, so the UI wording for
+ *     "split" must stay "not by the same practitioner" and never "yes if".
+ *   RPM x RTM barred: CY2022 PFS final rule (CMS-1751-F), RTM section; MLN909188.
+ *   CCM/TCM/BHI/PCM x RPM allowed: CY2020 and CY2021 PFS final rules.
+ *   CCM/PCM/TCM/BHI x RTM allowed: CY2022 PFS final rule.
+ *   CCM x TCM allowed: CY2020 PFS final rule; MLN909188.
+ *   CCM x BHI allowed: CMS BHI FAQ (12/5/2023) Q2, with consent for both and no
+ *     time counted twice.
+ *   BHI x TCM: the BHI FAQ only says the TCM visit can initiate BHI. Weak, so
+ *     it is "open" now. PCM x TCM: not found.
  */
-export type SameMonth = "yes" | "no" | "open";
+export type SameMonth = "yes" | "split" | "no" | "open";
 export const SAME_MONTH: Record<string, SameMonth> = {
-  "apcm+ccm": "no", "apcm+pcm": "no", "apcm+tcm": "no",
+  "apcm+ccm": "split", "apcm+pcm": "split", "apcm+tcm": "split",
   "apcm+bhi": "yes", "apcm+rpm": "yes", "apcm+rtm": "yes",
-  "ccm+pcm": "no",
+  "ccm+pcm": "split", "bhi+pcm": "split",
   "rpm+rtm": "no",
   "bhi+ccm": "yes", "ccm+rpm": "yes", "ccm+rtm": "yes", "ccm+tcm": "yes",
-  "bhi+rpm": "yes", "bhi+rtm": "yes", "bhi+tcm": "yes",
+  "bhi+rpm": "yes", "bhi+rtm": "yes",
   "pcm+rpm": "yes", "pcm+rtm": "yes",
   "rpm+tcm": "yes", "rtm+tcm": "yes",
-  "bhi+pcm": "open", "pcm+tcm": "open",
+  "bhi+tcm": "open", "pcm+tcm": "open",
 };
 export function sameMonth(a: ProgrammeId, b: ProgrammeId): SameMonth {
   return SAME_MONTH[[a, b].sort().join("+")] ?? "open";
@@ -536,22 +587,12 @@ export function isProgrammeId(raw: string): raw is ProgrammeId {
  *   off the table, so decide the phrase once and use it on all seven.
  *
  * RULES THE PAGES WILL BE ASKED ABOUT AND THIS FILE CANNOT ANSWER
- * TODO(consent): how consent is obtained and documented per programme, who
- *   obtains it, and whether it is once or annual.
- * TODO(initiating-visit): which programmes need an initiating visit, and for
- *   which patients. APCM's `lands` promises an initiating-visit trail and the
- *   rule behind it is not written down here.
- * TODO(who-bills): which practitioner types may bill, the one-practitioner-per-
- *   patient-per-month rule, and the supervision level the clinical staff time
- *   sits under.
- * TODO(concurrency): the full same-month matrix. Only APCM's exclusion of CCM,
- *   PCM and TCM is captured. CCM beside BHI, CCM beside RTM, and how time is
- *   kept from being counted twice, are all unwritten.
- * TODO(cy2027): the per-programme line on the PROPOSED CY2027 rule and its
- *   own-staff test. It is always described as proposed, never as settled, and
- *   the wording needs Matteo plus counsel. Never name the account it came from.
- * TODO(fqhc-rhc): whether these pages speak to FQHCs and RHCs at all, and if so
- *   what the correct code and payment story is for them.
+ * DONE 2026-10-07, consent / initiating-visit / who-bills / concurrency /
+ *   cy2027 / fqhc-rhc: answered from primary sources (MLN909188, MLN909432, the
+ *   CMS CCM, BHI and APCM FAQs, 42 CFR 410.26, 89 FR, 90 FR and the CY2027
+ *   proposed rule at 91 FR 43842) and written into each published page's FAQ,
+ *   which is where a reader asks them. The CY2027 answers say "proposed" and
+ *   carry the expected final-rule date; re-check them when it lands.
  * TODO(payers): whether Medicare Advantage, Medicaid and commercial plans cover
  *   these codes, and what a page may say about that.
  * TODO(coinsurance-handling): what a practice does about the patient share in
@@ -567,8 +608,8 @@ export function isProgrammeId(raw: string): raw is ProgrammeId {
  *   rates.ts. Do not retype the numbers here.
  * TODO(add-ons): whether a page shows add-on codes at all. 99439, 98981 and the
  *   G0556 / G0558 levels each need their own sourced amount before they appear.
- * TODO(apcm-levels): APCM is modelled at level 2 only. If a page shows all
- *   three levels, G0556 and G0558 need their own sourced amounts.
+ * DONE(apcm-levels) 2026-10-07: G0556 and G0558 are sourced in APCM's
+ *   alsoBillable. The estimator still models level 2.
  * TODO(cocm): Collaborative Care (99492 / 99493 / 99494) is out of scope in the
  *   rate data on purpose. A BHI page that mentions it must not put a figure on
  *   it, and must say it needs a care manager and a psychiatric consultant.

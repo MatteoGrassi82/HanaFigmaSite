@@ -20,6 +20,21 @@
       "permanent": true
     },
     {
+      "source": "/programs/remote-therapeutic-monitoring",
+      "destination": "/programs",
+      "permanent": true
+    },
+    {
+      "source": "/programs/remote-physiologic-monitoring",
+      "destination": "/programs",
+      "permanent": true
+    },
+    {
+      "source": "/programs/transitional-care-management",
+      "destination": "/programs",
+      "permanent": true
+    },
+    {
       "source": "/research",
       "destination": "/labs",
       "permanent": true

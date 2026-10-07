@@ -28,25 +28,25 @@ import { CtaBand, DEMO_HREF } from "../components/sections/CtaBand";
  * their rate, which is the wrong basis: a patient qualifies for one or another,
  * they are not alternatives you pick by price.
  *
- * NOINDEX for now, because it links to seven pages that are themselves noindex
- * pending their open questions. Publishing the hub before them would strand a
- * crawler on seven dead ends. All eight move together.
+ * PUBLISHED 7 Oct 2026 with the four programme pages it links to: CCM, APCM,
+ * BHI and PCM. RPM, RTM and TCM are parked (see the content module's header)
+ * and their URLs redirect here. The hub and its pages move together.
  */
 
 const COPY = {
-  title: "The care programmes you are already eligible to bill",
+  title: "The Medicare care programs your practice can already bill",
   description:
-    "Chronic care management, advanced primary care management, behavioral health integration, and remote therapeutic and physiologic monitoring. Which one fits a patient, what each pays, and what your team still does.",
+    "Chronic care management, advanced primary care management, behavioral health integration and principal care management. Which one fits a patient, what each pays, and what your team still does.",
 };
 
 const HUB_FAQS = [
   {
     q: "Which programme should we start with?",
-    a: "Whichever fits the patients you already have. The chooser above asks three questions and lands on one. Most practices start with chronic care management because the eligibility is the widest, but that is a fact about panels, not a recommendation.",
+    a: "Whichever fits the patients you already have. Describe a patient in the filter above and the programmes they could be considered for stay lit. Chronic care management has the widest eligibility, and advanced primary care management counts no minutes at all, but that is a fact about panels, not a recommendation.",
   },
   {
     q: "Can a patient be on more than one?",
-    a: "Often, and the filter above works it out for you: describe the patient and it shows the largest sets CMS lets a practice bill in the same month, with the combined figure. Advanced primary care management cannot share a month with chronic care management, principal care management or transitional care management, and remote physiologic and remote therapeutic monitoring cannot share one either. Two pairs we have not found a ruling on are marked unsettled rather than guessed. The same minutes never count toward two codes, and a stack is what may be billed, not what a given patient qualifies for.",
+    a: "Often, and the filter above works it out for you: describe the patient and it shows the sets CMS lets a practice bill in the same month, with the combined figure. Behavioral health integration can run alongside chronic care management or advanced primary care management. Most of the other limits are about the practitioner, not the patient: the practitioner billing advanced primary care management cannot also bill chronic or principal care management that month, and one practitioner cannot bill both chronic and principal care management, though a specialist can bill PCM for a different condition while the primary care practice bills CCM. The same minutes never count toward two codes.",
   },
   {
     q: "Do we need different staff for each one?",
@@ -58,7 +58,7 @@ const HUB_FAQS = [
   },
   {
     q: "What about remote patient monitoring?",
-    a: "It has its own page now, and it says the thing you would want it to say: RPM turns on a device recording a physiologic reading, and HANA is never the device. What HANA does is the other half, the live interactive communication the treatment-management codes require. The device stays yours.",
+    a: "Not today. Remote physiologic and therapeutic monitoring turn on a device recording readings at home, and HANA does not supply devices. The four programmes on this page need none.",
   },
 ];
 
@@ -70,8 +70,7 @@ export function Programs(webCall: WebCallProps) {
         description={COPY.description}
         path="/programs"
         useExactTitle
-        robots="noindex, nofollow"
-        keywords="Medicare care management programs, CCM, APCM, BHI, RTM, chronic care management, care coordination billing"
+        keywords="Medicare care management programs, CCM, APCM, BHI, PCM, chronic care management, care coordination billing"
         jsonLd={[
           breadcrumbSchema([{ name: "Programs", url: "https://www.hana.health/programs" }]),
           faqSchema(HUB_FAQS.map((f) => ({ question: f.q, answer: f.a }))),
@@ -87,8 +86,8 @@ export function Programs(webCall: WebCallProps) {
           single rule to draw. */}
       <Hero
         tone="orbs"
-        eyebrow="Seven Medicare programmes"
-        headline={<>One loop. <em>Seven ways to bill it.</em></>}
+        eyebrow="Four Medicare programs"
+        headline={<>One loop. <em>Four ways to bill it.</em></>}
         body="Your patients already qualify for more than you are running. The difference between these programmes is who counts and what the month has to show, not how the work gets done."
         primaryCta={{ label: "Book a demo", href: DEMO_HREF }}
         secondaryCta={{ label: "Which fits my patient?", href: "#codes" }}

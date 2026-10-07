@@ -98,9 +98,6 @@ const AdvancedPrimaryCareManagement = lazy(() =>
 const BehavioralHealthIntegration = lazy(() =>
   import("./pages/BehavioralHealthIntegration").then((m) => ({ default: m.BehavioralHealthIntegration }))
 );
-const RemoteTherapeuticMonitoring = lazy(() =>
-  import("./pages/RemoteTherapeuticMonitoring").then((m) => ({ default: m.RemoteTherapeuticMonitoring }))
-);
 const ForPractices = lazy(() => import("./pages/ForPractices").then((m) => ({ default: m.ForPractices })));
 const ForHealthSystems = lazy(() => import("./pages/ForHealthSystems").then((m) => ({ default: m.ForHealthSystems })));
 const VsCareManagementSoftware = lazy(() =>
@@ -115,14 +112,8 @@ const VsDoingNothing = lazy(() =>
 const Security = lazy(() => import("./pages/Security").then((m) => ({ default: m.Security })));
 const Academy = lazy(() => import("./pages/Academy").then((m) => ({ default: m.Academy })));
 const Faq = lazy(() => import("./pages/Faq").then((m) => ({ default: m.Faq })));
-const RemotePhysiologicMonitoring = lazy(() =>
-  import("./pages/RemotePhysiologicMonitoring").then((m) => ({ default: m.RemotePhysiologicMonitoring }))
-);
 const PrincipalCareManagement = lazy(() =>
   import("./pages/PrincipalCareManagement").then((m) => ({ default: m.PrincipalCareManagement }))
-);
-const TransitionalCareManagement = lazy(() =>
-  import("./pages/TransitionalCareManagement").then((m) => ({ default: m.TransitionalCareManagement }))
 );
 const Go = lazy(() => import("./pages/Go").then((m) => ({ default: m.Go })));
 
@@ -481,22 +472,8 @@ function AppContent() {
                   handleEndWebCall={handleEndWebCall}
                 />
               } />
-              <Route path="/programs/remote-therapeutic-monitoring" element={
-                <RemoteTherapeuticMonitoring
-                  activeAgentId={activeAgentId}
-                  webCallStatus={webCallStatus}
-                  handleStartWebCall={handleStartWebCall}
-                  handleEndWebCall={handleEndWebCall}
-                />
-              } />
-              <Route path="/programs/remote-physiologic-monitoring" element={
-                <RemotePhysiologicMonitoring
-                  activeAgentId={activeAgentId}
-                  webCallStatus={webCallStatus}
-                  handleStartWebCall={handleStartWebCall}
-                  handleEndWebCall={handleEndWebCall}
-                />
-              } />
+              <Route path="/programs/remote-therapeutic-monitoring" element={<Navigate to="/programs" replace />} />
+              <Route path="/programs/remote-physiologic-monitoring" element={<Navigate to="/programs" replace />} />
               <Route path="/programs/principal-care-management" element={
                 <PrincipalCareManagement
                   activeAgentId={activeAgentId}
@@ -505,14 +482,7 @@ function AppContent() {
                   handleEndWebCall={handleEndWebCall}
                 />
               } />
-              <Route path="/programs/transitional-care-management" element={
-                <TransitionalCareManagement
-                  activeAgentId={activeAgentId}
-                  webCallStatus={webCallStatus}
-                  handleStartWebCall={handleStartWebCall}
-                  handleEndWebCall={handleEndWebCall}
-                />
-              } />
+              <Route path="/programs/transitional-care-management" element={<Navigate to="/programs" replace />} />
               <Route path="/for-practices" element={
                 <ForPractices
                   activeAgentId={activeAgentId}

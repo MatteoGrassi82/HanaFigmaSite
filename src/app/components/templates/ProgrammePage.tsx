@@ -168,7 +168,10 @@ export function ProgrammePage({
   heroRows,
   monthLog,
   showEstimator = true,
-  reach = true,
+  /* Off by default since 7 Oct 2026, the day these pages published: the four
+     WhyHana percentages still carry no citation anywhere in the repo (see THE
+     WHYHANA FLAG above), and a published page does not run unsourced figures. */
+  reach = false,
   webCall,
 }: ProgrammePageProps) {
   const log = monthLog ?? LOG_BY_ID[data.id] ?? GENERIC_LOG;
@@ -199,7 +202,11 @@ export function ProgrammePage({
         badge={data.code}
         pill={data.name}
         chip={`${data.code} ${data.payment.code}`}
-        body="Every contact HANA makes is recorded and summarised straight into the time log, with the minutes attributed against the code. When your clinician opens the patient, the month is already there. The clock they start runs on reading and attesting, not typing."
+        /* Was "with the minutes attributed against the code", which reads as
+           HANA's call time counting toward the billing threshold. It never does:
+           CMS counts only clinical staff time (CCM FAQ p.1). The record is
+           HANA's; the time on the claim is your staff's. */
+        body="Every contact HANA makes is recorded and summarised straight into the patient's record. When your clinician opens the patient, the month is already there, and the time they log is their own: reviewing, acting on what HANA flagged, and attesting. Not typing."
         stats={[
           { value: "0:00", label: "Time your team spends writing the month up" },
           { value: String(contacts), label: "Documented contacts waiting when they open the chart" },

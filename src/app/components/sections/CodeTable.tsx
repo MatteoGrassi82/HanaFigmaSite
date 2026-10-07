@@ -3,7 +3,7 @@ import { useReducedMotion } from "motion/react";
 import { ChevronDown } from "lucide-react";
 import { Link } from "react-router";
 import {
-  PROGRAMMES,
+  PUBLISHED_PROGRAMMES,
   PROGRAMME_FOOTNOTE,
   RATES_ARE_PLACEHOLDER,
   RATE_CAVEATS,
@@ -140,7 +140,7 @@ const TD = "px-5 py-5 align-top";
 
 export function CodeTable({
   data,
-  rows = PROGRAMMES,
+  rows = PUBLISHED_PROGRAMMES,
   eyebrow = "The billing, in one table",
   heading,
   body,

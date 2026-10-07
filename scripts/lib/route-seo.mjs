@@ -61,6 +61,13 @@ export const STATIC_ROUTES = [
   '/whitepapers',
   '/whitepapers/adhd-intake',
   '/timeline',
+  // The programme hub and the four published programme pages (7 Oct 2026), once
+  // their open billing questions were answered from primary sources.
+  '/programs',
+  '/programs/chronic-care-management',
+  '/programs/advanced-primary-care-management',
+  '/programs/behavioral-health-integration',
+  '/programs/principal-care-management',
 ];
 
 // Routes App.tsx renders only when !isItalian — on ita.hana.health these fall
@@ -160,16 +167,6 @@ export const UNLISTED_ROUTES = ['/go'];
  * /remote-lab (212s) stays in NOINDEX_ROUTES deliberately.
  */
 export const REVIEW_ROUTES = [
-  // The seven programme pages and their hub. Each renders open billing questions
-  // that are answered before it moves to STATIC_ROUTES.
-  '/programs',
-  '/programs/chronic-care-management',
-  '/programs/advanced-primary-care-management',
-  '/programs/behavioral-health-integration',
-  '/programs/remote-therapeutic-monitoring',
-  '/programs/remote-physiologic-monitoring',
-  '/programs/principal-care-management',
-  '/programs/transitional-care-management',
   // Audience and comparison pages. They close by sending the reader to a
   // /programs/* page, so they are reviewable only while those pages answer 200.
   '/for-practices',
@@ -196,6 +193,11 @@ export const REDIRECT_ROUTES = [
   '/hana-sleep', '/hana-sleep/analysis', '/hana-sleep/cpap', '/access',
   // Staged for review from 26 Sept, became the English homepage on 7 Oct 2026.
   '/remote-v2',
+  // Parked programmes (7 Oct 2026): RPM and RTM are roadmap, and TCM's paid
+  // contact must be made by clinical staff. They 301 to the hub.
+  '/programs/remote-therapeutic-monitoring',
+  '/programs/remote-physiologic-monitoring',
+  '/programs/transitional-care-management',
 ];
 
 /**

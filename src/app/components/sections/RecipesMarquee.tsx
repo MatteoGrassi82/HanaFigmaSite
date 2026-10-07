@@ -1,4 +1,5 @@
 "use client";
+import { Link } from "react-router";
 
 import React, { useState, useCallback } from "react";
 import { X, ArrowRight } from "lucide-react";
@@ -498,6 +499,7 @@ export function RecipesMarquee({
   tag: tagOverride,
   heading: headingOverride,
   body: bodyOverride,
+  link,
   soft = false,
 }: {
   tags?: string[];
@@ -510,6 +512,8 @@ export function RecipesMarquee({
   tag?: string;
   heading?: string;
   body?: string;
+  /** One text link under the body, e.g. to the programmes hub. Absent: none. */
+  link?: { label: string; href: string };
   soft?: boolean;
 } = {}) {
   const t = useTranslations();
@@ -601,6 +605,13 @@ export function RecipesMarquee({
         <p className="text-base md:text-lg text-ink-mute max-w-2xl mx-auto leading-relaxed">
           {rm.body}
         </p>
+        {link && (
+          <p className="mt-4 mb-0 text-[15px]">
+            <Link to={link.href} className="inline-flex items-center gap-1.5 font-semibold text-brand underline underline-offset-4 decoration-brand/40 hover:decoration-brand">
+              {link.label} <ArrowRight size={14} />
+            </Link>
+          </p>
+        )}
         <div className="flex flex-wrap justify-center gap-4 mt-6">
           {(Object.keys(CHANNELS) as Channel[])
             .filter((key) => RECIPES.some((r) => r.flow.includes(key)))
