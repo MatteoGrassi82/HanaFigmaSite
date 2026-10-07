@@ -10,7 +10,7 @@ import { EligibilityGap } from "../components/sections/EligibilityGap";
 import { HowItWorksLoop } from "../components/sections/HowItWorksLoop";
 import { FaqSection } from "../components/sections/FaqSection";
 import { CtaBand, DEMO_HREF } from "../components/sections/CtaBand";
-import { PROGRAMMES, PROGRAMME_FOOTNOTE } from "../../content/programmes/index";
+import { PUBLISHED_PROGRAMMES, PROGRAMME_FOOTNOTE } from "../../content/programmes/index";
 
 /**
  * /for-practices — the audience page for an independent practice or small group.
@@ -127,7 +127,7 @@ export function ForPractices(webCall: WebCallProps) {
         badge="CCM"
         pill="Chronic Care Management"
         chip="CCM 99490"
-        body="Every contact HANA makes is recorded and summarised straight into the time log, with the minutes attributed against the code. When your clinician opens the patient, the month is already there. The clock they start runs on reading and attesting, not typing."
+        body="Every contact HANA makes is recorded and summarised straight into the patient's record. When your clinician opens the patient, the month is already there. The clock they start runs on reading and attesting, not typing."
         stats={[
           { value: "0:00", label: "Time your team spends writing the month up" },
           { value: "4", label: "Documented contacts waiting when they open the chart" },
@@ -149,7 +149,7 @@ export function ForPractices(webCall: WebCallProps) {
             the same shape in all seven.
           </p>
           <ul className="m-0 p-0 list-none grid gap-4 md:grid-cols-2">
-            {PROGRAMMES.map((p) => (
+            {PUBLISHED_PROGRAMMES.map((p) => (
               <li key={p.id}>
                 <a
                   href={p.path}

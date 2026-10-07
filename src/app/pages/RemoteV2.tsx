@@ -599,7 +599,7 @@ export function RemoteV2({
         parallax
         eyebrow="See it work"
         heading={<>See the month <em>actually run.</em></>}
-        body="The loop above is the shape of it. This is a real call going out, the note landing in the chart, and the time attributed against the code."
+        body="The loop above is the shape of it. This is a real call going out, the note landing in the chart, and the month ready for your clinician to review and sign."
         autoPlay
         src={EXPLAINER.src}
         poster={EXPLAINER.poster}

@@ -177,7 +177,7 @@ export function ForHealthSystems(webCall: WebCallProps) {
         badge="CCM"
         pill="Chronic Care Management"
         chip="CCM 99490"
-        body="Every contact HANA makes is recorded and summarised straight into the time log, with the minutes attributed against the code. Whichever clinic the patient belongs to, when your clinician opens them the month is already there. The clock they start runs on reading and attesting, not typing."
+        body="Every contact HANA makes is recorded and summarised straight into the patient's record. Whichever clinic the patient belongs to, when your clinician opens them the month is already there. The clock they start runs on reading and attesting, not typing."
         stats={[
           { value: "0:00", label: "Time any of your sites spends writing the month up" },
           { value: "4", label: "Documented contacts waiting when a clinician opens the chart" },

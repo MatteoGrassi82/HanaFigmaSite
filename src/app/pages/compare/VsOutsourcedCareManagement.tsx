@@ -198,7 +198,7 @@ export function VsOutsourcedCareManagement(webCall: WebCallProps) {
         badge="CCM"
         pill="Chronic Care Management"
         chip="CCM 99490"
-        body="Nothing here was handed back to you at month end. Each contact was written straight into your chart as it happened, with the minutes attributed against the code, under your practice's name. The record is yours before anyone reviews it."
+        body="Nothing here was handed back to you at month end. Each contact was written straight into your chart as it happened, under your practice's name. The record is yours before anyone reviews it."
         stats={[
           { value: "0:00", label: "Time spent reconciling somebody else's notes" },
           { value: "4", label: "Documented contacts already in your chart" },

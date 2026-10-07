@@ -152,7 +152,7 @@ export function VsCareManagementSoftware(webCall: WebCallProps) {
         badge="CCM"
         pill="Chronic Care Management"
         chip="CCM 99490"
-        body="This is the part a system of record cannot do for you. Every contact is made, recorded and summarised straight into the time log, with the minutes attributed against the code. Nobody typed it up. The clock your clinician starts runs on reading and attesting."
+        body="This is the part a system of record cannot do for you. Every contact is made, recorded and summarised straight into the patient's record. Nobody typed it up. The clock your clinician starts runs on reading and attesting."
         stats={[
           { value: "0:00", label: "Time your team spends writing the month up" },
           { value: "4", label: "Documented contacts waiting when they open the chart" },
