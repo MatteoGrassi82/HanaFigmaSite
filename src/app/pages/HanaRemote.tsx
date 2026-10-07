@@ -8,32 +8,35 @@ import { RecipesMarquee } from "../components/sections/RecipesMarquee";
 import { InlineImageHeader } from "../components/sections/InlineImageHeader";
 import { FaqSection } from "../components/sections/FaqSection";
 import { CompassDashboard, Glyph, RI } from "../components/media/CompassDashboard";
-import { Stats } from "../components/sections/StatisticsCard";
 
 const DEMO_URL = "https://calendly.com/matteowastaken/discoverycall";
 
 /**
- * HANA Remote — product page for the engagement layer that sits on top of
- * remote care programs (CCM / APCM / BHI / RTM / Sleep, plus RPM where
- * the practice already has devices).
+ * /care — the care coordination page (since 7 Oct 2026).
  *
- * POSITIONING GUARDRAIL — read before editing copy on this page.
- * "Device-less RPM" is not a claim we make. RPM codes (99453/99454/99457) require
- * an FDA-defined medical device that transmits data automatically; patient
- * self-report does not qualify, and DOJ's first RPM False Claims settlement
- * (Health Wealth Safe, $1.29M) was exactly this fact pattern. So:
- *   - device-less = CCM / APCM / BHI (and RTM where a SaMD determination
- *     applies). Voice check-ins are legitimately the covered activity there.
- *   - RPM is supported as an *engagement layer* on top of the customer's existing
- *     devices — device/wearable API data, never self-reported readings.
- *   - HANA never "generates billable minutes" or "auto-bills". It prepares
- *     structured documentation; a named clinician's time is what is billed, and
- *     that clinician attests. Keep every billing string phrased that way.
+ * This was /hana-remote, the HANA Remote product page. When the rebuilt page
+ * became the homepage, Matteo asked for this one back as its own page beside
+ * /sleep: "need to build CARE page, homepage stay the same, the page you have
+ * about Remote before". It came back CLEANED, because the old page carried what
+ * the rebuild was made to remove:
+ *   - "HANA Remote" (a retired name) and "device-less engagement layer".
+ *   - RPM and RTM sold as current (they are roadmap; 90 FR 49397), including
+ *     the "keeps your RPM devices transmitting" pitch and its FAQ.
+ *   - Embargoed or retired numbers: 85% vs 20% engagement, $1,400 and "$1.4K
+ *     recovered", 4M+ interactions, 22% CPAP non-adherence "in production", 85%
+ *     CPAP adherence at 12 months, 2.3x coordinators, 150+ EHRs, $3/call.
+ *   - The sleep/DME calculator (sleep economics on a care page) and the
+ *     uncited Stats bars.
+ *   - "Live in days" (a time promise).
+ * The problem band now uses the two sourced figures (ASPE/NORC 2019, JAMA 2018),
+ * the patient conversation is a care example rather than CPAP, and the Compass
+ * mock's data was cleaned the same day (see its header).
  *
- * Shares the design language and interaction patterns of the HANA Contact page:
- * light field, navy + periwinkle, serif display type, slider calculator, tabbed
- * explorer, stat band, FAQ. Signature piece: an animated SaaS-dashboard mock
- * (worklist / patient timeline / billing readiness).
+ * BILLING GUARDRAIL, unchanged: HANA never "generates billable minutes" or
+ * "auto-bills". It prepares the record; a named clinician's time is what is
+ * billed, and that clinician attests. CMS counts only clinical staff time
+ * (CCM FAQ p.1). "45+ protocols" stays because the homepage carries it too; it
+ * is still Matteo's open call.
  */
 
 const fadeUp = {
@@ -50,33 +53,33 @@ const eyebrow = "text-[13px] font-bold tracking-[2.5px] uppercase";
 
 // The five-step monitoring flow (ported from Contact's five-step-flow pipeline,
 // applied to device-free care management): enroll → check in → flag → escalate → document.
-const HOW_SOURCES = ["New enrollments", "Scheduled check-ins", "Wearable & device data", "Patient-reported symptoms"];
+const HOW_SOURCES = ["New enrollments", "Scheduled check-ins", "Patient-reported symptoms"];
 const HOW_OUTCOMES = ["Higher adherence", "Every flag reviewed", "Documentation that holds up"];
 
 const HOW_BLOCKS = [
   {
     key: "Enroll",
     title: "Enroll by phone, on day one",
-    short: "Consent and onboarding on a call — no app to download.",
-    detail: "HANA Remote calls the patient, explains the program, captures consent, and sets up the right clinical protocol for their condition. No device to ship, no app to download, no behavior change asked of the patient.",
+    short: "Onboarding on a call. No app to download.",
+    detail: "HANA calls the patient, explains the program, records their consent in their own words, and starts the protocol your clinicians chose for their condition. No device to ship, no app to download, no behavior change asked of the patient.",
     stat: "Day 1",
     statLabel: "consent + onboarding, entirely by phone",
-    proof: "Consent captured on the call",
+    proof: "Consent recorded on the call",
   },
   {
     key: "Check in",
     title: "Check in on the right cadence",
     short: "The conversation is the care contact.",
     detail: "Scheduled voice calls capture symptoms, adherence, and how the plan is actually going, in the patient's language, on the cadence their protocol needs. Where a device is part of the program, its readings flow in via API alongside the conversation.",
-    stat: "85%",
-    statLabel: "pick up and engage — vs 20% for apps",
-    proof: "Voice + wearable data",
+    stat: "30+",
+    statLabel: "languages, switched per patient",
+    proof: "In the patient's language",
   },
   {
     key: "Flag",
     title: "Flag what matters",
     short: "45+ clinical protocols score every response.",
-    detail: "Every answer is scored against the protocol — MSK, CPAP/sleep, diabetes, hypertension, behavioral health, post-op, chronic care. When a threshold trips or risk rises, HANA surfaces it instead of burying it in a log.",
+    detail: "Every answer is checked against the thresholds your clinicians set: diabetes, hypertension, heart failure, COPD, behavioral health, post-op. When one trips, HANA surfaces it instead of burying it in a log. It flags; it never diagnoses.",
     stat: "45+",
     statLabel: "clinical protocols across conditions",
     proof: "Protocol-scored in real time",
@@ -84,8 +87,8 @@ const HOW_BLOCKS = [
   {
     key: "Escalate",
     title: "Escalate to a clinician",
-    short: "A clinician on every flag — the rest is handled.",
-    detail: "Clinical flags route straight to your worklist with the full context of the call. Your team reviews only what matters, on one flagged queue — not a phone list and not every check-in.",
+    short: "A clinician on every flag. The rest is handled.",
+    detail: "Clinical flags route straight to your worklist with the full context of the call. Your team reviews only what matters, on one flagged queue, not a phone list and not every check-in.",
     stat: "1",
     statLabel: "flagged worklist is all your team reviews",
     proof: "Straight to the worklist",
@@ -94,9 +97,9 @@ const HOW_BLOCKS = [
     key: "Document",
     title: "Document to the EHR",
     short: "Structured data, ready for your clinician to attest.",
-    detail: "The moment the call ends, structured data is written back to your EHR — attributed to the named clinician who owns the patient, ready for their review and attestation across CCM, APCM, BHI and RTM. 150+ integrations.",
-    stat: "150+",
-    statLabel: "EHR integrations · CCM · APCM · RTM",
+    detail: "The moment the call ends, a structured note is written to the patient's record, assigned to the named clinician who owns the patient, ready for their review and attestation. CCM, APCM, PCM and BHI.",
+    stat: "Same day",
+    statLabel: "note in the chart, ready to attest",
     proof: "Direct EHR write-back",
   },
 ];
@@ -112,27 +115,23 @@ const PROGRAM_WORKFLOW_TAGS = [
 const R_FAQS = [
   {
     q: "Do my patients need a device or an app?",
-    a: "Not for the programs HANA Remote runs device-free — CCM, APCM and behavioral health integration, where the covered activity is the care-management contact itself. Nothing is shipped, downloaded, or charged to the patient. If your patients already use wearables or connected devices, that device data flows in via API alongside the conversation.",
+    a: "No. Chronic care management, advanced primary care management, principal care management and behavioral health integration are device-free: the care-management contact is the covered activity. Nothing is shipped, downloaded or charged to the patient.",
   },
   {
     q: "Is this device-less RPM?",
-    a: "No, and we're deliberate about that. RPM codes (99453/99454/99457) require an FDA-defined medical device that transmits readings automatically — a patient reading a number to us over the phone does not satisfy them, and billing RPM that way is what the DOJ's first RPM False Claims settlement was about. On RPM, HANA Remote is the engagement layer on top of the devices you already use: the device transmits, HANA keeps the patient engaged and transmitting. The device-free programs are CCM, APCM and BHI.",
+    a: "No, and we're deliberate about that. RPM codes (99453/99454/99457) require an FDA-defined medical device that transmits readings automatically. A patient reading a number to us over the phone does not satisfy them, and billing RPM that way is what the DOJ's first RPM False Claims settlement was about. The programs HANA runs are the device-free ones: CCM, APCM, PCM, BHI and CoCM.",
   },
   {
     q: "Does this replace my clinicians' billable time?",
-    a: "No — the opposite. We don't replace the clinician's billable interaction, and HANA's call time is not billed as clinical time. HANA captures the data, drives the adherence, and prepares the documentation so your clinician reviews a flagged worklist and attests, instead of chasing patients.",
+    a: "No, the opposite. HANA's call time is never billed as clinical time: CMS counts only time spent by clinical staff. HANA makes the call, captures what the patient said and writes the note, so your clinician reviews a flagged worklist and attests instead of chasing patients.",
   },
   {
     q: "How does the billing actually work?",
-    a: "HANA Remote produces the documentation the codes require; your qualified staff supply and attest to the time. Every interaction is written back as a structured note attributed to a named clinician, across CCM, APCM, BHI and RTM (98975–98981) — so the person who bills is the person who did the clinical work, with the record to show it.",
-  },
-  {
-    q: "We already run RPM with devices. Why would we add this?",
-    a: "Because the devices aren't the problem — engagement is. HANA Remote is the engagement layer that keeps your existing RPM program transmitting: it handles the between-visit contact, chases the days where the device went quiet, and recovers the patients who've drifted. The readings still come from the device, exactly as the codes require.",
+    a: "HANA produces the record the codes require; your qualified staff supply and attest to the time. Every call is written back as a structured note assigned to a named clinician, across CCM, APCM, PCM and BHI, so the person who bills is the person who did the clinical work, with the record to show it.",
   },
   {
     q: "What happens if we get audited?",
-    a: "You export the month and hand it over. Every check-in stores its transcript and structured note, every care-management minute is attributed to the named clinician who supplied it, every escalation records who received it and what they did, and program consent is captured in the patient's own words on the enrollment call. That's the packet an auditor asks for — assembled as the program runs, not reconstructed afterwards.",
+    a: "You export the month and hand it over. Every check-in stores its transcript and structured note, every care-management minute is attributed to the named clinician who supplied it, every escalation records who received it and what they did, and program consent is recorded in the patient's own words on the enrollment call. That's the packet an auditor asks for, assembled as the program runs rather than reconstructed afterwards.",
   },
   {
     q: "What languages do you support?",
@@ -316,135 +315,30 @@ function HowItWorksFlow() {
   );
 }
 
-// ── Sleep / CPAP recovery calculator (Contact calculator chassis) ────────────
-
-const HANA_NONADHERENCE = 22; // % non-adherent with HANA, in production
-const PER_PATIENT_DEFAULT = 1400;
-
-function SleepCalculator() {
-  const [setups, setSetups] = useState(300);
-  const [nonAdherence, setNonAdherence] = useState(50); // current %
-  const [perPatient, setPerPatient] = useState(PER_PATIENT_DEFAULT);
-
-  const { patientsSaved, recovered } = useMemo(() => {
-    const delta = Math.max(0, nonAdherence - HANA_NONADHERENCE) / 100;
-    const saved = setups * 12 * delta;
-    return { patientsSaved: saved, recovered: saved * perPatient };
-  }, [setups, nonAdherence, perPatient]);
-
-  const money = (n: number) =>
-    n >= 1_000_000 ? `$${(n / 1_000_000).toFixed(1)}M` : `$${Math.round(n / 1000)}K`;
-  const count = (n: number) => Math.round(n).toLocaleString();
-
-  const field = (
-    label: string,
-    value: number,
-    set: (v: number) => void,
-    opts: { min: number; max: number; step?: number; prefix?: string; suffix?: string },
-  ) => (
-    <div>
-      <div className="flex items-center justify-between gap-3">
-        <span className="text-[13px] text-ink-soft">{label}</span>
-        <div className="flex items-center rounded-lg border border-rule bg-paper-bright px-2.5 py-1 focus-within:border-brand focus-within:ring-2 focus-within:ring-brand/20 transition shrink-0">
-          {opts.prefix && <span className="text-ink-mute text-[13px] mr-0.5">{opts.prefix}</span>}
-          <input
-            type="number"
-            value={value}
-            min={opts.min}
-            step={opts.step}
-            onChange={(e) => set(Math.max(0, Number(e.target.value) || 0))}
-            className="w-[64px] bg-transparent outline-none text-[15px] font-semibold text-navy text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-          />
-          {opts.suffix && <span className="text-ink-mute text-[13px] ml-0.5">{opts.suffix}</span>}
-        </div>
-      </div>
-      <input
-        type="range"
-        aria-label={label}
-        value={Math.min(value, opts.max)}
-        min={opts.min}
-        max={opts.max}
-        step={opts.step ?? 1}
-        onChange={(e) => set(Number(e.target.value))}
-        className="mt-3 w-full h-1.5 cursor-pointer accent-brand"
-      />
-    </div>
-  );
-
-  return (
-    <motion.div
-      {...fadeUp}
-      transition={{ duration: 0.5, delay: 0.1 }}
-      className="grid grid-cols-1 lg:grid-cols-2 rounded-2xl overflow-hidden border border-rule shadow-[0_20px_60px_rgba(0,18,47,0.08)]"
-    >
-      <div className="bg-paper-bright p-7 md:p-9">
-        <p className={`${eyebrow} text-brand mt-0 mb-5`}>Your sleep / DME program</p>
-        <div className="grid grid-cols-1 gap-5">
-          {field("New CPAP setups / month", setups, setSetups, { min: 25, max: 1000, step: 25 })}
-          {field("Current 90-day non-adherence", nonAdherence, setNonAdherence, { min: 25, max: 83, suffix: "%" })}
-          {field("Reimbursement per adherent patient", perPatient, setPerPatient, { min: 500, max: 3000, step: 100, prefix: "$" })}
-        </div>
-        <p className="text-[12px] text-ink-mute mt-5 leading-[1.6]">
-          Estimates only, for illustration. Assumes HANA Remote brings non-adherence to ~22%, its
-          production figure. 46–83% of new CPAP patients fail Medicare's 90-day threshold today.{" "}
-          <a href={DEMO_URL} target="_blank" rel="noopener noreferrer" className="text-brand underline">Get a tailored assessment →</a>
-        </p>
-      </div>
-      <div className="bg-navy text-white p-7 md:p-9 flex flex-col justify-center">
-        <p className={`${eyebrow} text-brand-soft mt-0 mb-3`}>Patients kept adherent</p>
-        <div className="font-serif text-[56px] md:text-[72px] leading-[0.95]">
-          ≈ {count(patientsSaved)}
-          <span className="font-sans text-[18px] md:text-[22px] font-medium text-white/75"> / year</span>
-        </div>
-        <p className="text-[15px] text-white/80 mt-3">
-          That's roughly <span className="font-semibold text-white">{money(recovered)}/year</span> in reimbursement that currently walks out the door.
-        </p>
-        <div className="mt-6 pt-6 border-t border-white/10">
-          <p className="text-[15px] leading-[1.6] text-white/80 m-0">
-            Recovered with a phone call that actually works — non-adherence drops from{" "}
-            <span className="font-semibold text-brand-soft">{nonAdherence}% to ~22%</span> in production.
-          </p>
-          <div className="mt-5 h-2 rounded-full bg-paper-bright/10 overflow-hidden">
-            <motion.div
-              className="h-full rounded-full bg-brand-soft"
-              initial={{ width: "0%" }}
-              whileInView={{ width: `${Math.max(0, Math.min(100, ((nonAdherence - HANA_NONADHERENCE) / Math.max(nonAdherence, 1)) * 100))}%` }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-            />
-          </div>
-          <div className="flex justify-between text-[11px] font-semibold tracking-[1px] uppercase text-white/40 mt-2">
-            <span>Share of non-adherence eliminated</span>
-            <span>{nonAdherence > 0 ? Math.round(((nonAdherence - HANA_NONADHERENCE) / nonAdherence) * 100) : 0}%</span>
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
 // ── The patient agent — accountability + protocol, conversation over the orb ──
 
 // A short behavioral-change exchange: HANA isn't recording a number, it's
 // holding the patient to the plan. Bubbles reveal one at a time on scroll.
+/* A care example since the move to /care (was a CPAP check-in). HANA asks,
+   records and routes to the clinician; it does not advise on the medication. */
 const AGENT_TURNS: { who: "hana" | "patient"; text: string }[] = [
-  { who: "hana", text: "Hi Maria, it's HANA calling for your evening check-in. How many hours did you wear the CPAP last night?" },
-  { who: "patient", text: "Only about two. I took it off, it felt too tight." },
-  { who: "hana", text: "That's really common in week one — let's fix the fit, not give up. Try loosening the top strap one notch tonight. Can we aim for four hours?" },
-  { who: "patient", text: "Okay, I can try that." },
-  { who: "hana", text: "Great. I'll check back tomorrow to see how it went. You're doing the hard part — showing up." },
+  { who: "hana", text: "Hi Maria, it's HANA calling from Dr. Reyes's office for your monthly check-in. Have you been able to take your blood pressure medication every day?" },
+  { who: "patient", text: "Not every day. It makes me dizzy in the mornings, so I skipped a few." },
+  { who: "hana", text: "Thank you for telling me. I'm passing that to Dr. Reyes's team today so they can look at it, and someone from the office will call you." },
+  { who: "patient", text: "Okay, thank you." },
+  { who: "hana", text: "You're welcome. I'll call again next month, and you can call the office any time before then." },
 ];
 
 const AGENT_PILLARS = [
   {
     icon: RI.heart,
     title: "An accountability partner",
-    body: "Patients don't fail because they can't — they drift. HANA calls on cadence, notices when adherence slips, encourages, and holds them to the plan. That follow-through is what actually moves the number.",
+    body: "Patients don't fail because they can't. They drift. HANA calls on cadence, notices when the plan slips, and makes sure your team hears about it. That follow-through is what keeps a care plan alive between visits.",
   },
   {
     icon: RI.clipboard,
     title: "Running a real protocol",
-    body: "Every conversation runs a clinician-built protocol for the condition — the right questions, the right thresholds, the right escalation. The warmth is human; the rigor is clinical.",
+    body: "Every conversation runs the protocol your clinicians set for the condition: the right questions, the right thresholds, the right escalation. It never gives clinical advice.",
   },
 ];
 
@@ -471,7 +365,7 @@ function PatientAgentSection() {
           </h2>
           <p className="text-[17px] leading-[1.7] text-ink-soft max-w-[58ch] mx-auto mt-4">
             Data alone doesn't change behavior. A patient who feels seen does. HANA is the voice on
-            the other end of the line — an accountability partner running a real clinical protocol.
+            the other end of the line, running the protocol your clinicians wrote.
           </p>
         </motion.div>
 
@@ -491,8 +385,8 @@ function PatientAgentSection() {
                   <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-white" />
                 </span>
                 <div>
-                  <div className="text-[13px] font-semibold text-navy">HANA · evening check-in</div>
-                  <div className="text-[11px] text-ink-mute">CPAP adherence · HANA Sleep protocol</div>
+                  <div className="text-[13px] font-semibold text-navy">HANA · monthly check-in</div>
+                  <div className="text-[11px] text-ink-mute">Hypertension · your clinic's protocol</div>
                 </div>
               </div>
               <div className="space-y-2.5">
@@ -524,7 +418,7 @@ function PatientAgentSection() {
                   className="flex items-center gap-2 pt-1 text-[11px] text-ink-mute"
                 >
                   <Check className="w-3.5 h-3.5 text-emerald-500" strokeWidth={3} />
-                  Logged to chart · follow-up scheduled for tomorrow
+                  Note in the chart · flagged to Dr. Reyes
                 </motion.div>
               </div>
             </div>
@@ -550,7 +444,7 @@ function PatientAgentSection() {
             ))}
             <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.3 }} className="pt-2">
               <p className="font-serif text-[20px] md:text-[22px] leading-[1.3] text-navy m-0">
-                85% of patients pick up and engage — <em className="text-brand">because it doesn't feel like a machine.</em>
+                In 30+ languages, <em className="text-brand">on the cadence your protocol sets.</em>
               </p>
             </motion.div>
           </div>
@@ -576,17 +470,17 @@ const AUDIT_PILLARS = [
   {
     icon: RI.alert,
     title: "Every escalation reaches a qualified human",
-    body: "Clinical flags route to a named clinician, not a shared queue. The record shows who received it, when it was opened, and what was done — so \"a clinician reviewed it\" is a fact you can produce, not a claim you make.",
+    body: "Clinical flags route to a named clinician, not a shared queue. The record shows who received it, when it was opened, and what was done, so \"a clinician reviewed it\" is a fact you can produce, not a claim you make.",
   },
   {
     icon: RI.phone,
     title: "Consent recorded on the call",
-    body: "Program consent is captured in the patient's own words at enrollment — the program, the date, and the cost-sharing disclosure, stored with the recording. It's the first thing an auditor asks for and the thing practices most often can't produce.",
+    body: "Program consent is recorded in the patient's own words at enrollment: the program, the date and the cost-sharing disclosure, stored with the recording. It's the first thing an auditor asks for and the thing practices most often can't produce.",
   },
   {
     icon: RI.database,
     title: "One-click audit export",
-    body: "Any month, any patient, any program: one export with transcripts, structured notes, time attribution, escalation trail, and attestations. Ready to hand to a payer, an auditor, or your counsel — without a chart-by-chart reconstruction.",
+    body: "Any month, any patient, any program: one export with transcripts, structured notes, time attribution, escalation trail, and attestations. Ready to hand to a payer, an auditor, or your counsel, without a chart-by-chart reconstruction.",
   },
 ];
 
@@ -600,7 +494,7 @@ function AuditSection() {
             Built for the audit <em className="text-brand-soft">you'll eventually get.</em>
           </h2>
           <p className="text-[17px] leading-[1.7] text-white/80 max-w-[62ch] mx-auto mt-5">
-            Remote care billing is under real scrutiny — OIG has published its remote-monitoring
+            Remote care billing is under real scrutiny. OIG has published its remote-monitoring
             audit work, and DOJ has already settled its first remote-monitoring False Claims case.
             The four things an auditor asks for are the four things HANA records on every call,
             for every patient, whether or not anyone ever asks.
@@ -627,7 +521,7 @@ function AuditSection() {
         </div>
 
         <motion.p {...fadeUp} transition={{ duration: 0.5, delay: 0.35 }} className="text-[17px] md:text-[19px] leading-[1.6] text-white/90 text-center max-w-[54ch] mx-auto mt-12">
-          We don't bill, and we don't generate clinical time.{" "}
+          We don't bill, and our call time is never clinical time.{" "}
           <span className="text-brand-soft">We produce the record that proves yours was real.</span>
         </motion.p>
       </div>
@@ -636,41 +530,6 @@ function AuditSection() {
 }
 
 // ── Small shared bits (Contact patterns) ─────────────────────────────────────
-
-// A before→after outcome stat: the big "after" number, plus two length bars
-// (baseline vs HANA) so the delta reads as a visible change on the side.
-type DeltaRow = { k: string; pct: number; v: string; hi?: boolean };
-function RDeltaStat({ big, suffix, label, rows }: { big: string; suffix?: string; label: string; rows: DeltaRow[] }) {
-  const reduce = useReducedMotion();
-  return (
-    <div className="rounded-2xl bg-paper-bright border border-rule p-6 md:p-7 flex flex-col sm:flex-row sm:items-center gap-5 md:gap-7">
-      <div className="sm:w-[150px] shrink-0">
-        <div className="font-serif text-[52px] md:text-[64px] leading-[0.9] text-navy">
-          {big}
-          {suffix && <span className="text-[28px] md:text-[34px] text-brand">{suffix}</span>}
-        </div>
-        <div className="text-[14px] text-ink-soft leading-[1.5] mt-2">{label}</div>
-      </div>
-      <div className="flex-1 min-w-0 space-y-2.5">
-        {rows.map((r) => (
-          <div key={r.k} className="flex items-center gap-3">
-            <span className={`w-[76px] shrink-0 text-[12px] ${r.hi ? "font-semibold text-brand" : "text-ink-soft"}`}>{r.k}</span>
-            <div className="flex-1 h-2.5 rounded-full bg-paper-2 overflow-hidden">
-              <motion.div
-                className={`h-full rounded-full ${r.hi ? "bg-brand" : "bg-rule"}`}
-                initial={{ width: reduce ? `${r.pct}%` : 0 }}
-                whileInView={{ width: `${r.pct}%` }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              />
-            </div>
-            <span className={`w-11 text-right text-[12px] tabular-nums ${r.hi ? "font-semibold text-navy" : "text-ink-soft"}`}>{r.v}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 // A question-framed feature block: the question, a short answer, and a small
 // live-UI snippet (children) that animates in on scroll.
@@ -684,45 +543,25 @@ function QBlock({ q, a, children }: { q: string; a: string; children: React.Reac
   );
 }
 
-// Labelled mini bar used inside a QBlock (Apps vs HANA, etc.).
-function QBar({ k, pct, v, hi }: { k: string; pct: number; v: string; hi?: boolean }) {
-  const reduce = useReducedMotion();
-  return (
-    <div className="flex items-center gap-3 mb-2 last:mb-0">
-      <span className={`w-12 shrink-0 text-[12px] ${hi ? "font-semibold text-brand" : "text-ink-mute"}`}>{k}</span>
-      <div className="flex-1 h-2.5 rounded-full bg-paper-2 overflow-hidden">
-        <motion.div
-          className={`h-full rounded-full ${hi ? "bg-brand" : "bg-rule"}`}
-          initial={{ width: reduce ? `${pct}%` : 0 }}
-          whileInView={{ width: `${pct}%` }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        />
-      </div>
-      <span className={`w-10 text-right text-[12px] tabular-nums ${hi ? "font-semibold text-navy" : "text-ink-mute"}`}>{v}</span>
-    </div>
-  );
-}
-
 // ── Page ─────────────────────────────────────────────────────────────────────
 
 export function HanaRemote() {
   return (
     <div className="bg-paper-bright text-navy font-sans overflow-x-hidden">
       <SEO
-        title="HANA Remote — The Engagement Layer for Remote Care"
+        title="Care coordination: the monthly calls, made and written up | HANA Health"
         useExactTitle
         type="product"
-        description="HANA Remote is the device-less engagement layer for remote care programs — CCM, APCM, BHI and RTM. Voice check-ins reach 85% of patients and produce structured documentation your clinician attests to, inside your EHR."
-        path="/hana-remote"
-        keywords="remote care engagement layer, device-less patient engagement, chronic care management software, APCM, behavioral health integration, remote therapeutic monitoring, CPAP adherence program, voice AI patient outreach, RPM engagement layer"
-        // FAQPage as well as the breadcrumb: these six Q&As are the most
-        // directly citable content on the page — "Is this device-less RPM?"
-        // has a definitive answer that answer engines can lift verbatim.
+        description="HANA calls your chronic care, principal care, APCM and BHI patients every month, flags what needs a clinician, and writes the note your team reviews and attests. No device, no app, no new hires."
+        path="/care"
+        keywords="care coordination, chronic care management, principal care management, APCM, behavioral health integration, voice AI patient outreach, care management calls"
+        // FAQPage as well as the breadcrumb: the Q&As are the most directly
+        // citable content on the page. "Is this device-less RPM?" has a
+        // definitive answer that answer engines can lift verbatim.
         jsonLd={[
           breadcrumbSchema([
             { name: "Home", url: "https://www.hana.health/" },
-            { name: "HANA Remote", url: "https://www.hana.health/hana-remote" },
+            { name: "Care coordination", url: "https://www.hana.health/care" },
           ]),
           faqSchema(R_FAQS.map((f) => ({ question: f.q, answer: f.a }))),
         ]}
@@ -732,14 +571,14 @@ export function HanaRemote() {
       <header className="bg-paper-2 pt-32 pb-16 md:pt-40 md:pb-20">
         <div className="max-w-[1200px] mx-auto px-6 md:px-16 text-center">
           <motion.p {...fadeUp} className={`${eyebrow} text-brand m-0`}>
-            HANA Remote · The engagement layer for remote care
+            Care coordination
           </motion.p>
           <motion.h1
             {...fadeUp}
             transition={{ duration: 0.5, delay: 0.05 }}
             className="font-serif font-normal text-[44px] sm:text-[60px] md:text-[80px] leading-[1.02] tracking-[-0.015em] mt-6 mb-0 mx-auto max-w-[18ch]"
           >
-            Turn remote care into <em className="text-brand">monthly revenue</em>,
+            Run the care programs <em className="text-brand">Medicare already pays for</em>,
             <br />
             without adding staff.
           </motion.h1>
@@ -748,9 +587,9 @@ export function HanaRemote() {
             transition={{ duration: 0.5, delay: 0.12 }}
             className="text-[17px] md:text-[19px] leading-[1.6] text-ink-soft mt-7 mb-0 mx-auto max-w-[54ch]"
           >
-            HANA keeps patients engaged across CCM, APCM, BHI &amp; RTM — and keeps the
-            devices in your existing RPM program transmitting.
-            <em className="text-brand not-italic font-semibold"> Documented to your EHR, ready for your clinician to attest.</em>
+            HANA calls your patients every month for chronic care, principal care, advanced
+            primary care and behavioral health, flags what needs a clinician, and writes the note.
+            <em className="text-brand not-italic font-semibold"> Your clinician reviews and attests.</em>
           </motion.p>
           <motion.a
             {...fadeUp}
@@ -772,50 +611,54 @@ export function HanaRemote() {
           <motion.div {...fadeUp} className="text-center mb-10 md:mb-14">
             <p className={`${eyebrow} text-brand-soft mt-0 mb-4`}>The five-step flow</p>
             <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch]">
-              From first call to documented — <em className="text-brand-soft">in five steps.</em>
+              From first call to documented, <em className="text-brand-soft">in five steps.</em>
             </h2>
           </motion.div>
           <HowItWorksFlow />
         </div>
       </section>
 
-      {/* THE PROBLEM — cost-of-inaction band (Tile-style hard stats) */}
+      {/* THE PROBLEM. Was four unsourced or retired stats ($1,400, 20% for apps,
+          $3/call, a CPAP range). Now the two figures the site may publish, each
+          with its year and source, per the copy guardrails:
+            4.0%: ASPE/NORC for HHS, 2019 Medicare fee-for-service claims, share
+                  OF THE ELIGIBLE (63.4% potentially eligible) who received CCM.
+            93%:  Agarwal et al., JAMA 320(24), Dec 2018, primary care practices
+                  billing no CCM in 2016 (3,347 of 48,113, 6.9%, billed any).
+          Both are floors from years ago, never current figures. */}
       <section className="py-20 md:py-24 px-6 md:px-16 bg-paper-bright">
         <div className="max-w-[1200px] mx-auto">
           <motion.div {...fadeUp} className="mb-10 md:mb-14 max-w-[46ch]">
             <p className={`${eyebrow} text-brand mt-0 mb-4`}>The cost of doing nothing</p>
             <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] text-navy mt-0 mb-4">
-              The program dies before it pays for itself.
+              The care is paid for. The calls never happen.
             </h2>
             <p className="text-[16px] leading-[1.7] text-ink-soft m-0">
-              Remote care is reimbursable — CCM, APCM, BHI, RTM, RPM. The codes exist and the
-              money is there. Programs still fail for one reason: patients don't answer, don't use the
-              devices you ship, and don't open the apps you send. No engagement, no data, nothing to bill.
+              Medicare pays for the care between visits: chronic care management, principal care
+              management, advanced primary care management, behavioral health integration. Almost none
+              of it gets done, for one reason. Somebody has to call every patient, every month, and
+              nobody has the hours.
             </p>
           </motion.div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10 border-t border-rule pt-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-10 border-t border-rule pt-10 max-w-[900px]">
             {[
-              { v: "46–83%", l: "of new CPAP patients fail Medicare's adherence threshold in the first 90 days" },
-              { v: "$1,400", l: "lost per patient who walks out the door" },
-              { v: "20%", l: "all the engagement an app gets — patients won't open it" },
-              { v: "$3/call", l: "offshore call centers that still don't move the needle" },
+              { v: "4.0%", l: "of Medicare fee-for-service patients eligible for chronic care management received it in 2019.", src: "ASPE / NORC for HHS" },
+              { v: "93%", l: "of US primary care practices billed no chronic care management at all in 2016.", src: "Agarwal et al., JAMA, 2018" },
             ].map((s, i) => (
               <motion.div key={s.v} {...fadeUp} transition={{ duration: 0.5, delay: 0.04 + i * 0.07 }}>
                 <div className="font-serif text-[40px] md:text-[56px] leading-[0.95] text-navy mb-3">{s.v}</div>
                 <div className="text-[14px] leading-[1.55] text-ink-soft">{s.l}</div>
+                <div className="text-[12.5px] leading-[1.5] text-ink-mute mt-2">{s.src}</div>
               </motion.div>
             ))}
           </div>
           <motion.p {...fadeUp} transition={{ duration: 0.5, delay: 0.1 }} className="text-[18px] md:text-[20px] leading-[1.5] font-semibold text-navy mt-12 max-w-[34ch]">
-            The problem was never the monitoring. <span className="text-brand">It was the engagement.</span>
+            The problem was never the billing codes. <span className="text-brand">It was the phone calls.</span>
           </motion.p>
         </div>
       </section>
 
-      {/* THE PROOF — voice reaches patients where passive channels don't (was homepage §2) */}
-      <Stats />
-
-      {/* WHAT HANA REMOTE DOES — question-framed feature blocks (Tile pattern) */}
+      {/* WHAT HANA DOES — question-framed feature blocks (Tile pattern) */}
       <section className="py-20 md:py-24 px-6 md:px-16 bg-paper-2">
         <div className="max-w-[1200px] mx-auto">
           <motion.div {...fadeUp} className="text-center mb-10 md:mb-14">
@@ -825,17 +668,23 @@ export function HanaRemote() {
             </h2>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Was an 85% vs 20% bar pair, which is embargoed and unsourced. */}
             <QBlock
               q="Will patients actually pick up?"
-              a="The whole model rests on it — so it's the number we lead with. We call; they answer."
+              a="The whole model rests on it. HANA calls in the patient's language, on the cadence the protocol sets, and tries again when nobody answers. Reach is the first thing we show you on your own panel."
             >
-              <QBar k="Apps" pct={20} v="20%" />
-              <QBar k="HANA" pct={85} v="85%" hi />
+              <div className="flex flex-wrap gap-2 text-[13px] font-semibold text-navy">
+                {["30+ languages", "Repeat attempts", "Your protocol's cadence"].map((t) => (
+                  <span key={t} className="inline-flex items-center gap-1.5 bg-paper-bright border border-rule rounded-full px-3 py-1">
+                    <Check className="w-3.5 h-3.5 text-brand" strokeWidth={3} /> {t}
+                  </span>
+                ))}
+              </div>
             </QBlock>
 
             <QBlock
               q="What happens when something looks wrong?"
-              a="A tripped threshold routes to your worklist in real time — a qualified human on every flag, not a log nobody reads."
+              a="A tripped threshold routes to your worklist in real time: a qualified human on every flag, not a log nobody reads."
             >
               <div className="flex items-center gap-2 text-[13px]">
                 <span className="font-mono text-ink-soft bg-paper-bright border border-rule rounded-md px-2.5 py-1">&ldquo;My BP cuff read 158/94&rdquo;</span>
@@ -854,7 +703,7 @@ export function HanaRemote() {
 
             <QBlock
               q="Does it actually count for billing?"
-              a="HANA doesn't bill and doesn't generate clinical minutes. It writes the structured note the moment the call ends, so your clinician reviews and attests — CCM, APCM, BHI, RTM."
+              a="HANA doesn't bill, and its call time never counts as clinical time. It writes the structured note the moment the call ends, so your clinician reviews and attests. CCM, APCM, PCM and BHI."
             >
               <div className="flex flex-wrap items-center gap-2 text-[12.5px]">
                 <span className="text-ink-mute">Call ends</span>
@@ -868,7 +717,7 @@ export function HanaRemote() {
 
             <QBlock
               q="Do I ship a device or make them download an app?"
-              a="Not for the device-free programs — CCM, APCM and BHI. The conversation is the care contact. Where a program requires a device, its data flows in via API."
+              a="No. CCM, APCM, PCM and BHI need no device and no app: the care-management contact is the covered activity."
             >
               <div className="flex flex-wrap gap-2 text-[13px] font-semibold text-navy">
                 {["No device", "No app", "No behavior change"].map((t) => (
@@ -893,10 +742,11 @@ export function HanaRemote() {
             </h2>
             <p className="text-[17px] leading-[1.7] text-white/80 max-w-[56ch] mx-auto mt-4">
               Compass is where your care team lives: enrollment, escalations, and billing
-              documentation run on their own. What reaches your team is a flagged worklist — not a phone queue.
+              documentation run on their own. What reaches your team is a flagged worklist, not a phone queue.
             </p>
           </motion.div>
           <CompassDashboard />
+          <p className="text-[13px] text-white/60 text-center mt-5 mb-0">Illustrative data.</p>
         </div>
       </section>
 
@@ -906,9 +756,9 @@ export function HanaRemote() {
       {/* THE PROGRAMS — one platform, shown as the home-page workflow marquee */}
       <RecipesMarquee
         tags={PROGRAM_WORKFLOW_TAGS}
-        tag="The programs"
-        heading="One platform. Every monitoring program."
-        body="RPM, RTM, chronic and behavioral care, post-op — every reimbursable program runs as a built-in call workflow, documented to the chart for attestation. Tap any card to see the steps."
+        tag="The workflows"
+        heading="One loop. Every care program."
+        body="Chronic and behavioral care, wellness visits, post-op follow-up, screenings. Each one runs as a call workflow, documented to the chart for your clinician to attest. Tap any card to see the steps."
       />
 
       {/* PROOF — two clinician testimonials (reused approved quotes), enlarged */}
@@ -933,9 +783,9 @@ export function HanaRemote() {
                 avatar: "/avatars/fakhrudin.png",
               },
               {
-                quote: "Getting elderly patients ready for surgery over the phone is nearly impossible — they don't pick up, they miss voicemails, and if they show up unprepared the case gets cancelled. HANA reaches them, walks them through everything, and flags whoever still isn't ready so we can step in.",
-                name: "Dr. Oprandi",
-                role: "Primary care clinic",
+                quote: "Getting elderly patients ready for surgery over the phone is nearly impossible. HANA reaches them, walks them through everything, and flags whoever still isn't ready so we can step in.",
+                name: "Dr. G. Oprandi",
+                role: "Orthopedic surgeon",
                 avatar: "/avatars/oprandi.webp",
               },
             ].map((t, i) => (
@@ -961,57 +811,9 @@ export function HanaRemote() {
         </div>
       </section>
 
-      {/* CALCULATOR — sleep/CPAP recovery */}
-      <section className="py-20 md:py-24 px-6 md:px-16 bg-paper-bright">
-        <div className="max-w-[1200px] mx-auto">
-          <motion.div {...fadeUp} className="text-center mb-12 md:mb-16">
-            <p className={`${eyebrow} text-brand mt-0 mb-4`}>The adherence math</p>
-            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.1] mx-auto max-w-[24ch] text-navy">
-              What does non-adherence <em className="text-brand">cost your program?</em>
-            </h2>
-            <p className="text-[17px] leading-[1.7] text-ink-soft max-w-[52ch] mx-auto mt-4">
-              Run the numbers for a sleep / DME program — the sharpest case for the device-less model.
-            </p>
-          </motion.div>
-          <SleepCalculator />
-        </div>
-      </section>
-
-      {/* THE NUMBERS — stat band */}
-      <section className="py-16 md:py-[72px] px-6 md:px-16 bg-paper-2">
-        <div className="max-w-[1200px] mx-auto">
-          <motion.div {...fadeUp}>
-            <p className={`${eyebrow} text-brand mt-0 mb-3`}>By the numbers</p>
-            <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-[46px] leading-[1.05] mt-0 mb-10 md:mb-[52px] max-w-[22ch] text-navy">
-              Engagement you can bill against.
-            </h2>
-          </motion.div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <motion.div {...fadeUp}>
-              <RDeltaStat big="85" suffix="%" label="Patient engagement — vs. app-based monitoring" rows={[{ k: "Apps", pct: 20, v: "20%" }, { k: "HANA", pct: 85, v: "85%", hi: true }]} />
-            </motion.div>
-            <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.06 }}>
-              <RDeltaStat big="22" suffix="%" label="CPAP non-adherence, in production" rows={[{ k: "Before", pct: 50, v: "50%" }, { k: "HANA", pct: 22, v: "22%", hi: true }]} />
-            </motion.div>
-            <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.06 }}>
-              <RDeltaStat big="85" suffix="%" label="CPAP adherence after 12 months on program" rows={[{ k: "Month 1", pct: 38, v: "38%" }, { k: "Month 12", pct: 85, v: "85%", hi: true }]} />
-            </motion.div>
-            <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.12 }}>
-              <RDeltaStat big="2.3" suffix="×" label="More patients per care coordinator" rows={[{ k: "Baseline", pct: 43, v: "1×" }, { k: "With HANA", pct: 100, v: "2.3×", hi: true }]} />
-            </motion.div>
-          </div>
-          <motion.div {...fadeUp} className="flex flex-wrap gap-2.5 mt-10">
-            {["$1.4K recovered per patient", "150+ EHR integrations", "45+ clinical protocols", "4M+ patient interactions"].map((c) => (
-              <span key={c} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-paper-bright border border-rule text-[13px] font-medium text-navy">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand" aria-hidden="true" />
-                {c}
-              </span>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-
+      {/* The sleep/CPAP calculator and the "By the numbers" band were here.
+          Both came off on 7 Oct 2026: sleep economics belong on /sleep, and every
+          figure in the band was embargoed or unsourced. See the header. */}
 
       {/* AUDIT — the enforcement wave as a selling point (see AUDIT_PILLARS) */}
       <AuditSection />
@@ -1034,9 +836,9 @@ export function HanaRemote() {
         <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-brand-soft/[0.14] w-[520px] h-[520px] -bottom-[180px] pointer-events-none" />
         <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-brand-soft/[0.14] w-[340px] h-[340px] -bottom-[110px] pointer-events-none" />
         <motion.div {...fadeUp} className="relative">
-          <p className={`${eyebrow} text-brand-soft mt-0 mb-6`}>Ready to run a monitoring program that actually works?</p>
+          <p className={`${eyebrow} text-brand-soft mt-0 mb-6`}>Ready to run the programs your patients already qualify for?</p>
           <h2 className="font-serif font-normal text-[40px] sm:text-[52px] md:text-[60px] leading-[1.04] mx-auto mb-8 max-w-[16ch]">
-            Book a demo — <em>live in days.</em>
+            See it on <em>your own panel.</em>
           </h2>
           <a
             href={DEMO_URL}
@@ -1048,7 +850,7 @@ export function HanaRemote() {
           </a>
           {/* Transparent terms — true claims only; add real pricing terms when confirmed */}
           <div className="flex flex-wrap items-center justify-center gap-2.5 mt-8">
-            {["No devices to ship", "No app to download", "Audit-ready from day one", "Live in your EHR in days"].map((t) => (
+            {["No devices to ship", "No app to download", "Audit-ready from day one"].map((t) => (
               <span key={t} className="inline-flex items-center gap-1.5 text-[13px] font-medium text-white/90 bg-paper-bright/[0.06] border border-white/10 rounded-full px-3.5 py-1.5">
                 <Check className="w-3.5 h-3.5 text-brand-soft" strokeWidth={3} /> {t}
               </span>

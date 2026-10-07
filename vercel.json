@@ -10,13 +10,7 @@
     },
     {
       "source": "/hana-remote",
-      "missing": [
-        {
-          "type": "host",
-          "value": "ita.hana.health"
-        }
-      ],
-      "destination": "/",
+      "destination": "/care",
       "permanent": true
     },
     {
@@ -66,7 +60,7 @@
     },
     {
       "source": "/chronic-care",
-      "destination": "/",
+      "destination": "/care",
       "permanent": true
     },
     {
@@ -76,17 +70,17 @@
     },
     {
       "source": "/hana-companion",
-      "destination": "/",
+      "destination": "/care",
       "permanent": true
     },
     {
       "source": "/primary-care",
-      "destination": "/",
+      "destination": "/care",
       "permanent": true
     },
     {
       "source": "/transitional-care",
-      "destination": "/",
+      "destination": "/care",
       "permanent": true
     },
     {
@@ -106,37 +100,37 @@
     },
     {
       "source": "/behavioral-health",
-      "destination": "/",
+      "destination": "/care",
       "permanent": true
     },
     {
       "source": "/psychiatry-behavioral-health",
-      "destination": "/",
+      "destination": "/care",
       "permanent": true
     },
     {
       "source": "/remote-therapeutic-monitoring",
-      "destination": "/",
+      "destination": "/care",
       "permanent": true
     },
     {
       "source": "/population-outreach",
-      "destination": "/",
+      "destination": "/care",
       "permanent": true
     },
     {
       "source": "/value-based-care",
-      "destination": "/",
+      "destination": "/care",
       "permanent": true
     },
     {
       "source": "/hana-coach",
-      "destination": "/",
+      "destination": "/care",
       "permanent": true
     },
     {
       "source": "/hana-compass",
-      "destination": "/",
+      "destination": "/care",
       "permanent": true
     },
     {

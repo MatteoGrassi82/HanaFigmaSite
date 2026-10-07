@@ -27,59 +27,65 @@ export function Glyph({ d, className = "w-5 h-5" }: { d: string; className?: str
 }
 
 // ── Dashboard mock data (stylized, illustrative) ─────────────────────────────
+//
+// CLEANED 7 Oct 2026, when this mock went onto /care. It used to show RPM, RTM,
+// ACCESS and CPAP patients, "$142K billable this month", "85% engagement vs 20%
+// app baseline" and an adherence line climbing to 85%. Every one of those was
+// either a parked programme or an embargoed number, and the billing tab read
+// "met" as "what HANA has captured toward it", i.e. HANA's call time counting
+// toward the threshold, which the site may never say. Now: only the four
+// published programmes (CCM, PCM, BHI, APCM), "met" is the STAFF time your team
+// logged, and no figure is a dollar amount or an outcome rate. Keep it that way.
 
 // Priority queue — each row is a task to work, not a roster entry: why it
-// surfaced (reason) + the next best action, ranked by clinical + billing risk.
+// surfaced (reason) + the next best action, ranked by clinical risk.
 const TASK_ROWS = [
-  { initials: "MA", name: "M. Alvarez", program: "CPAP · Sleep", reason: "No check-in 3 days", level: "red", act: "Call now" },
-  { initials: "DT", name: "D. Tran", program: "CHF · RPM", reason: "Weight +3 lbs / 48h — threshold", level: "red", act: "Escalate" },
-  { initials: "RP", name: "R. Patel", program: "Post-op · RTM", reason: "Pain 8/10 on day-7 check-in", level: "red", act: "Review" },
+  { initials: "MA", name: "M. Alvarez", program: "COPD · CCM", reason: "No answer on 3 attempts", level: "red", act: "Call now" },
+  { initials: "DT", name: "D. Tran", program: "CHF · PCM", reason: "Reported weight up 3 lbs in 48h", level: "red", act: "Escalate" },
+  { initials: "RP", name: "R. Patel", program: "Post-op · follow-up", reason: "Pain 8/10 on day-7 check-in", level: "red", act: "Review" },
   { initials: "JC", name: "J. Chen", program: "Hypertension · CCM", reason: "Reported BP 158/94 on check-in", level: "amber", act: "Review" },
-  { initials: "SB", name: "S. Bianchi", program: "Behavioral · CoCM", reason: "PHQ-9 = 14 · needs eyes", level: "amber", act: "Review" },
-  { initials: "EW", name: "E. Whitmore", program: "Diabetes · RTM", reason: "Missed two scheduled check-ins", level: "amber", act: "Nudge" },
+  { initials: "SB", name: "S. Bianchi", program: "Behavioral · BHI", reason: "PHQ-9 = 14 · needs eyes", level: "amber", act: "Review" },
+  { initials: "EW", name: "E. Whitmore", program: "Diabetes · CCM", reason: "Missed two scheduled check-ins", level: "amber", act: "Nudge" },
   { initials: "LR", name: "L. Rossi", program: "CCM · Monthly", reason: "Care-plan review documented", level: "green", act: "Ready to attest" },
-  { initials: "KO", name: "K. Okafor", program: "Diabetes · RTM", reason: "Glucose log captured by voice", level: "green", act: "Done" },
+  { initials: "KO", name: "K. Okafor", program: "Diabetes · APCM", reason: "Glucose log captured by voice", level: "green", act: "Done" },
 ];
 
-// Billing readiness — the care-management + monitoring view. Each program bills
-// its own CPT/HCPCS family, so a row shows the codes that actually apply and the
-// requirement that gates them. "req" is the human-readable threshold; "met" is
-// what HANA has captured toward it this month.
-//   RPM  — 99453 setup · 99454 device (16 days) · 99457/58 mgmt time (20 min)
-//   RTM  — 98975 setup · 98977 device (16 days) · 98980/81 mgmt time (20 min)
-//   CCM  — 99490 + 99439 (staff, 20 min) · 99491/99437 (physician time)
-//   CoCM — 99492/99493/99494 (behavioral, monthly by minutes)
-//   APCM — G0556/G0557/G0558 (monthly by complexity — no time threshold)
-//   ACCESS — advanced primary care access, billed under APCM (G0556–G0558)
-type BillProgram = "RPM" | "RTM" | "CCM" | "CoCM" | "APCM" | "ACCESS";
+// Billing readiness. Each programme bills its own code family, so a row shows
+// the codes that apply and the requirement that gates them. "req" is the
+// threshold; "met" is the time YOUR STAFF logged against it this month (or, for
+// APCM, which counts no minutes, the level). Never HANA's call time.
+//   CCM  — 99490 + 99439 (clinical staff, 20 min)
+//   PCM  — 99426 (clinical staff, 30 min, one condition)
+//   BHI  — 99484 (clinical staff, 20 min)
+//   APCM — G0556/G0557/G0558 (monthly by complexity, no time threshold)
+type BillProgram = "CCM" | "PCM" | "BHI" | "APCM";
 const BILLING_ROWS: {
   initials: string; name: string; program: BillProgram;
   codes: string; req: string; met: string; pct: number; status: string;
 }[] = [
-  { initials: "KO", name: "K. Okafor", program: "RTM",    codes: "98977 · 98980", req: "16 device-days + 20 min", met: "19 days · 21 min", pct: 100, status: "billable" },
-  { initials: "LR", name: "L. Rossi",  program: "CCM",    codes: "99490 · 99439", req: "20 min care mgmt",        met: "24 min",          pct: 100, status: "billable" },
-  { initials: "NP", name: "N. Petrov", program: "RPM",    codes: "99454 · 99457", req: "16 device-days + 20 min", met: "16 days · 20 min", pct: 100, status: "billable" },
-  { initials: "GA", name: "G. Adeyemi",program: "APCM",   codes: "G0557",         req: "Monthly · Level 2",       met: "2 conditions",    pct: 100, status: "billable" },
-  { initials: "EW", name: "E. Whitmore",program: "RTM",   codes: "98977 · 98980", req: "16 device-days + 20 min", met: "14 days · 18 min", pct: 82,  status: "atrisk" },
-  { initials: "SB", name: "S. Bianchi", program: "CoCM",  codes: "99492 · 99493", req: "70 min first mo.",         met: "48 min",          pct: 68,  status: "needtime" },
-  { initials: "DM", name: "D. Mensah",  program: "ACCESS",codes: "G0556",         req: "Monthly · Level 1",       met: "enrolled",        pct: 100, status: "billable" },
-  { initials: "MA", name: "M. Alvarez", program: "RPM",   codes: "99454 · 99457", req: "16 device-days + 20 min", met: "9 days · 8 min",   pct: 45,  status: "atrisk" },
+  { initials: "LR", name: "L. Rossi",   program: "CCM",  codes: "99490 · 99439", req: "20 min staff time",  met: "24 min logged",  pct: 100, status: "billable" },
+  { initials: "GA", name: "G. Adeyemi", program: "APCM", codes: "G0557",         req: "Monthly · Level 2",  met: "2 conditions",   pct: 100, status: "billable" },
+  { initials: "DT", name: "D. Tran",    program: "PCM",  codes: "99426",         req: "30 min staff time",  met: "31 min logged",  pct: 100, status: "billable" },
+  { initials: "SB", name: "S. Bianchi", program: "BHI",  codes: "99484",         req: "20 min staff time",  met: "14 min logged",  pct: 70,  status: "needtime" },
+  { initials: "JC", name: "J. Chen",    program: "CCM",  codes: "99490",         req: "20 min staff time",  met: "21 min logged",  pct: 100, status: "billable" },
+  { initials: "EW", name: "E. Whitmore",program: "CCM",  codes: "99490",         req: "20 min staff time",  met: "16 min logged",  pct: 80,  status: "atrisk" },
+  { initials: "DM", name: "D. Mensah",  program: "APCM", codes: "G0556",         req: "Monthly · Level 1",  met: "consented",      pct: 100, status: "billable" },
+  { initials: "MA", name: "M. Alvarez", program: "CCM",  codes: "99490",         req: "20 min staff time",  met: "6 min logged",   pct: 30,  status: "atrisk" },
 ];
 
 const ANALYTICS_KPIS = [
-  { label: "Patient engagement", value: "85%", sub: "vs 20% app baseline", trend: "up" },
-  { label: "Avg days to adherent", value: "11", sub: "CPAP cohort", trend: "down" },
-  { label: "Billable this month", value: "$142K", sub: "218 patients ready", trend: "up" },
+  { label: "Check-ins completed", value: "1,284", sub: "this month", trend: "up" },
+  { label: "Flags reviewed", value: "38", sub: "by your clinicians today", trend: "flat" },
+  { label: "Notes ready to attest", value: "218", sub: "this month", trend: "up" },
   { label: "Escalation rate", value: "9%", sub: "of check-ins reach a clinician", trend: "flat" },
 ];
-// monthly adherence % trend (12 pts) — climbs as the program matures
-const ANALYTICS_TREND = [38, 44, 49, 55, 58, 63, 68, 71, 74, 78, 81, 85];
+// Monthly check-ins completed, as a share of the month's scheduled calls (12 pts).
+const ANALYTICS_TREND = [52, 55, 58, 60, 61, 63, 64, 66, 67, 68, 69, 70];
 const ANALYTICS_MIX = [
-  { label: "RPM", pct: 31, color: "var(--color-brand)" },
-  { label: "RTM", pct: 27, color: "#7c92e6" },
-  { label: "CCM", pct: 21, color: "var(--color-brand-soft)" },
-  { label: "APCM", pct: 13, color: "#c1cdf5" },
-  { label: "CoCM", pct: 8, color: "#d7defa" },
+  { label: "CCM", pct: 46, color: "var(--color-brand)" },
+  { label: "APCM", pct: 24, color: "#7c92e6" },
+  { label: "PCM", pct: 18, color: "var(--color-brand-soft)" },
+  { label: "BHI", pct: 12, color: "#c1cdf5" },
 ];
 
 const DASH_TABS = ["Task queue", "Billing", "Analytics"] as const;
@@ -178,12 +184,10 @@ const BILL_STATUS = {
 
 // Per-program accent for the code chip — keeps the six programs visually distinct.
 const PROGRAM_CHIP: Record<BillProgram, string> = {
-  RPM:    "bg-brand-tint text-brand",
-  RTM:    "bg-[#eaf3fb] text-[#3b82c4]",
-  CCM:    "bg-[#eafaf1] text-emerald-600",
-  CoCM:   "bg-[#f3eefb] text-[#8b5cf6]",
-  APCM:   "bg-[#fdf3ea] text-amber-600",
-  ACCESS: "bg-[#fdeef2] text-rose-500",
+  CCM:  "bg-[#eafaf1] text-emerald-600",
+  PCM:  "bg-brand-tint text-brand",
+  BHI:  "bg-[#f3eefb] text-[#8b5cf6]",
+  APCM: "bg-[#fdf3ea] text-amber-600",
 };
 
 function BillingPane() {
@@ -195,7 +199,7 @@ function BillingPane() {
         {[
           { v: "218", l: "Requirements met", c: "text-emerald-600" },
           { v: "34", l: "Short of threshold", c: "text-amber-600" },
-          { v: "$142K", l: "Across RPM · RTM · CCM · APCM", c: "text-navy" },
+          { v: "4", l: "Programs · CCM · PCM · BHI · APCM", c: "text-navy" },
         ].map((s, i) => (
           <div key={s.l} className={`px-4 py-3.5 ${i > 0 ? "border-l border-rule-soft" : ""}`}>
             <div className={`font-serif text-[24px] leading-none ${s.c}`}>{s.v}</div>
@@ -207,7 +211,7 @@ function BillingPane() {
       <div className="hidden md:grid grid-cols-[1.5fr_1.1fr_1.4fr_0.9fr] gap-3 px-4 py-2 text-[10px] font-bold uppercase tracking-[1px] text-ink-mute border-b border-rule-soft">
         <span>Patient</span>
         <span>Program · codes</span>
-        <span>Requirement met</span>
+        <span>Staff time logged</span>
         <span className="text-right">Status</span>
       </div>
       <div className="flex-1">
@@ -288,13 +292,13 @@ function AnalyticsPane() {
         ))}
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-4 flex-1 min-h-0">
-        {/* Adherence trend */}
+        {/* Check-ins completed trend */}
         <div className="rounded-xl border border-rule-soft bg-paper-bright p-4 flex flex-col">
           <div className="flex items-center justify-between mb-3 shrink-0">
-            <span className="text-[12px] font-semibold text-ink-soft">Adherence trend</span>
+            <span className="text-[12px] font-semibold text-ink-soft">Scheduled check-ins completed</span>
             <span className="text-[11px] text-ink-mute">12 months</span>
           </div>
-          <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="w-full flex-1 min-h-0" aria-label="Adherence climbing to 85% over 12 months">
+          <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="w-full flex-1 min-h-0" aria-label="Scheduled check-ins completed, by month, illustrative">
             <defs>
               <linearGradient id="analyticsFill" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="var(--color-brand)" stopOpacity="0.22" />
@@ -323,7 +327,7 @@ function AnalyticsPane() {
               transition={{ duration: reduce ? 0 : 0.6, ease: "easeOut", delay: 0.2 }}
             />
           </svg>
-          <div className="flex justify-between text-[10px] text-ink-mute mt-1 shrink-0"><span>38%</span><span className="text-brand font-semibold">85% now</span></div>
+          <div className="flex justify-between text-[10px] text-ink-mute mt-1 shrink-0"><span>{ANALYTICS_TREND[0]}%</span><span className="text-brand font-semibold">{ANALYTICS_TREND[ANALYTICS_TREND.length - 1]}% now</span></div>
         </div>
         {/* Program mix */}
         <div className="rounded-xl border border-rule-soft bg-paper-bright p-4 flex flex-col">
@@ -363,9 +367,9 @@ const DASH_NAV = [
 
 // KPI mini-stats shown in the sidebar rail — makes it read like a real product.
 const DASH_KPIS = [
-  { label: "Adherent", value: "78%", trend: "up" },
+  { label: "Reached this week", value: "312", trend: "up" },
   { label: "Flagged today", value: "38", trend: "flat" },
-  { label: "Billable this mo.", value: "$142K", trend: "up" },
+  { label: "Ready to attest", value: "218", trend: "up" },
 ];
 
 // A full-application desktop screen (laptop 16:10 proportions): browser chrome +
@@ -404,7 +408,7 @@ function SaaSWindow({ active, onNav, children }: { active: number; onNav?: (i: n
             </span>
             <div className="leading-tight">
               <div className="text-[13px] font-semibold text-ink">Compass</div>
-              <div className="text-[10px] text-ink-mute">by HANA Remote</div>
+              <div className="text-[10px] text-ink-mute">by HANA</div>
             </div>
           </div>
           <div className="px-3 py-4 flex flex-col flex-1">

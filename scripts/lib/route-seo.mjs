@@ -49,7 +49,7 @@ export const STATIC_ROUTES = [
   '/about',
   '/contact',
   '/hana-contact',
-  '/hana-remote',
+  '/care',
   '/sleep',
   '/sleep/analysis',
   '/sleep/cpap',
@@ -78,10 +78,10 @@ export const EN_ONLY_ROUTES = ['/programs/access-model', '/case-studies', '/stat
 // 301 in vercel.json (host-scoped) and a client <Navigate>, so the EN build must
 // not prerender them or list them in its sitemap.
 //
-// /hana-remote since the 2026-10-07 relaunch: the page it described became the
-// English homepage. The Italian site has no translation of that page, so it
-// keeps the old Home at "/" and this page beside it.
-export const IT_ONLY_ROUTES = ['/hana-remote'];
+// Empty since 7 Oct 2026. It briefly held /hana-remote, kept for the Italian
+// site while the English one redirected it; then the page came back in English
+// as /care and /hana-remote became a plain redirect. The Italian site is parked.
+export const IT_ONLY_ROUTES = [];
 
 // ita.hana.health is parked (Matteo, 7 Oct 2026): its domain redirects to
 // www.hana.health and its Vercel project is left undeployed. While this is true
@@ -193,6 +193,8 @@ export const REDIRECT_ROUTES = [
   '/hana-sleep', '/hana-sleep/analysis', '/hana-sleep/cpap', '/access',
   // Staged for review from 26 Sept, became the English homepage on 7 Oct 2026.
   '/remote-v2',
+  // The old HANA Remote URL; the page lives at /care since 7 Oct 2026.
+  '/hana-remote',
   // Parked programmes (7 Oct 2026): RPM and RTM are roadmap, and TCM's paid
   // contact must be made by clinical staff. They 301 to the hub.
   '/programs/remote-therapeutic-monitoring',
@@ -216,7 +218,7 @@ export const DEV_ONLY_ROUTES = ['/test-webhook'];
 // rest of the site from any page it lands on.
 export const NAV_LINKS = [
   ['/', 'Home'],
-  ['/hana-remote', 'HANA Remote — engagement layer for remote care'],
+  ['/care', 'Care coordination'],
   ['/hana-contact', 'HANA Contact — front desk'],
   ['/sleep', 'HANA Sleep'],
   ['/programs/access-model', 'CMS ACCESS program'],

@@ -17,7 +17,7 @@ const EN_ONLY_PATHS = ["/programs/access-model", "/case-studies", "/state-of-ai"
  * The reverse: paths only ita.hana.health renders (hana.health redirects them).
  * Mirror of IT_ONLY_ROUTES in scripts/lib/route-seo.mjs.
  */
-const IT_ONLY_PATHS = ["/hana-remote"];
+const IT_ONLY_PATHS = [] as string[];
 
 /**
  * ita.hana.health is parked (7 Oct 2026): the domain redirects to

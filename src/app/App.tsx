@@ -418,9 +418,11 @@ function AppContent() {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/hana-contact" element={<HanaContact />} />
-              {/* Replaced by the English homepage. A 301 in vercel.json on
-                  hana.health; this covers in-app navigation. */}
-              <Route path="/hana-remote" element={isItalian ? <HanaRemote /> : <Navigate to="/" replace />} />
+              {/* The care coordination page: the old HANA Remote page, cleaned
+                  (7 Oct 2026). /hana-remote is its old URL, a 301 in vercel.json;
+                  the Navigate covers in-app navigation. */}
+              <Route path="/care" element={<HanaRemote />} />
+              <Route path="/hana-remote" element={<Navigate to="/care" replace />} />
               <Route path="/sleep" element={<HanaSleep />} />
               <Route path="/sleep/analysis" element={<HanaSleepAnalysis />} />
               <Route path="/sleep/cpap" element={<HanaSleepCPAP />} />
