@@ -20,6 +20,13 @@ const EN_ONLY_PATHS = ["/programs/access-model", "/case-studies", "/state-of-ai"
 const IT_ONLY_PATHS = ["/hana-remote"];
 
 /**
+ * ita.hana.health is parked (7 Oct 2026): the domain redirects to
+ * www.hana.health, so no page advertises an Italian alternate. Mirror of
+ * IT_SITE_PARKED in scripts/lib/route-seo.mjs. Flip both to bring hreflang back.
+ */
+const IT_SITE_PARKED = true;
+
+/**
  * Published-but-unlisted paths. Mirror of UNLISTED_ROUTES in
  * scripts/lib/route-seo.mjs. These answer 200 for anyone holding the URL and are
  * noindex everywhere, so an hreflang pair on them advertises nothing to nobody.
@@ -136,7 +143,7 @@ export function SEO({
     //
     // Keep EN_ONLY_PATHS in step with EN_ONLY_ROUTES in scripts/lib/route-seo.mjs,
     // which applies the same rule to the prerendered layer-1 head.
-    if (path && !EN_ONLY_PATHS.includes(path) && !IT_ONLY_PATHS.includes(path) && !UNLISTED_PATHS.includes(path)) {
+    if (!IT_SITE_PARKED && path && !EN_ONLY_PATHS.includes(path) && !IT_ONLY_PATHS.includes(path) && !UNLISTED_PATHS.includes(path)) {
       const setHreflang = (hreflang: string, href: string) => {
         const sel = `link[rel="alternate"][hreflang="${hreflang}"]`;
         let el = document.querySelector(sel) as HTMLLinkElement | null;

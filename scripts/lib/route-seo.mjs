@@ -76,6 +76,12 @@ export const EN_ONLY_ROUTES = ['/programs/access-model', '/case-studies', '/stat
 // keeps the old Home at "/" and this page beside it.
 export const IT_ONLY_ROUTES = ['/hana-remote'];
 
+// ita.hana.health is parked (Matteo, 7 Oct 2026): its domain redirects to
+// www.hana.health and its Vercel project is left undeployed. While this is true
+// no English page carries an hreflang pair, because the Italian half of every
+// pair is now a redirect. Mirrored as IT_SITE_PARKED in SEO.tsx (checked below).
+export const IT_SITE_PARKED = true;
+
 /**
  * Real app routes that must answer 200 but must never be indexed.
  *
@@ -653,6 +659,7 @@ export function injectHead(shell, m) {
   // point at an ita.hana.health URL that 404s.
   html = html.replace(/\s*<link\s+rel="alternate"[^>]*>/gi, '');
   if (
+    !IT_SITE_PARKED &&
     !EN_ONLY_ROUTES.includes(m.path) &&
     !IT_ONLY_ROUTES.includes(m.path) &&
     !NOINDEX_ROUTES.includes(m.path) &&
@@ -853,6 +860,14 @@ export function checkRouteCoverage(appTsxPath, pagesDir, footerPath) {
     }
   }
 
+
+  const parkedLiteral = seoSrc.match(/const\s+IT_SITE_PARKED\s*=\s*(true|false)/);
+  if (!parkedLiteral || (parkedLiteral[1] === 'true') !== IT_SITE_PARKED) {
+    problems.push(
+      `IT_SITE_PARKED in SEO.tsx (${parkedLiteral?.[1] ?? 'missing'}) does not match ` +
+      `route-seo.mjs (${IT_SITE_PARKED}). Keep them identical.`
+    );
+  }
 
   /* ── THE PUBLISH-STEP INVARIANT ──────────────────────────────────────────
    * A route in STATIC_ROUTES is, by definition, one we intend Google to index
