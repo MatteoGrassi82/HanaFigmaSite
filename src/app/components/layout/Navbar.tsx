@@ -131,8 +131,9 @@ export const Navbar = (props: NavbarProps) => {
       {
         url: "#",
         title: isItalian ? "Piattaforma" : "Platform",
-        // English since the 7 Oct 2026 relaunch: Care and Sleep, nothing else
-        // (Matteo). Care coordination is /care, the old Remote page cleaned. VBC is parked
+        // English since the 7 Oct 2026 relaunch: Care and Sleep, nothing else,
+        // labelled exactly that (Matteo). Care is /care, the old Remote page
+        // cleaned. VBC is parked
         // until it has a page or a first contract; HANA Contact is off the menu
         // (a retired name), though /hana-contact still answers.
         // Italian keeps the old pair. That site is parked, so it never renders.
@@ -142,8 +143,8 @@ export const Navbar = (props: NavbarProps) => {
               { url: "/hana-remote", title: "HANA Remote" },
             ]
           : [
-              { url: "/care", title: "Care coordination" },
-              { url: "/sleep", title: "HANA Sleep" },
+              { url: "/care", title: "Care" },
+              { url: "/sleep", title: "Sleep" },
             ],
       },
       ...(isItalian ? [] : [{ url: "/case-studies", title: t.nav.caseStudies }]),
