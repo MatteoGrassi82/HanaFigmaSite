@@ -571,6 +571,25 @@ async function main() {
   /** The per-route work: navigate, wait, reveal, serialise, verify, write. */
   async function snapshot(page, route, run) {
   const t0 = Date.now();
+    // RENDER THE CALM VERSION OF EVERY PAGE (7 Oct 2026). The site honours
+    // prefers-reduced-motion everywhere: the WebGL hero becomes a still
+    // gradient, reveals show their content without the opacity-0 start, the
+    // players hold a frame. For a snapshot that is the right page anyway (a
+    // crawler sees no motion), and it is the difference between the homepage
+    // taking ~260s on Vercel, where WebGL is software-rendered and pinned the
+    // CPU, and a few seconds.
+    await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+    // And never download video. The <video> markup, src and muted attribute are
+    // serialised all the same; only the stream is skipped. A streaming film
+    // kept the network busy forever, so /go and the homepage each sat out the
+    // full 45s networkidle0 timeout on every build.
+    await page.setRequestInterception(true);
+    page.on('request', (req) => {
+      if (req.isInterceptResolutionHandled()) return;
+      if (req.resourceType() === 'media') req.abort().catch(() => {});
+      else req.continue().catch(() => {});
+    });
+
     // Inject the Sanity data cache BEFORE any app code runs, so the SPA reads
     // it instead of making a CORS-blocked browser fetch to api.sanity.io.
     await page.evaluateOnNewDocument((data) => {
