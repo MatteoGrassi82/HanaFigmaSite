@@ -131,10 +131,11 @@ export const Navbar = (props: NavbarProps) => {
       {
         url: "#",
         title: isItalian ? "Piattaforma" : "Platform",
-        // English since the 7 Oct 2026 relaunch: care coordination is the
-        // homepage itself and Sleep is back as the one other product, the nav
-        // planned on the 2026-08-19 call. /hana-remote redirects to "/" there.
-        // Italian keeps the old pair: its homepage and /hana-remote are unchanged.
+        // English since the 7 Oct 2026 relaunch: Care and Sleep, nothing else
+        // (Matteo). Care coordination is the homepage itself. VBC is parked
+        // until it has a page or a first contract; HANA Contact is off the menu
+        // (a retired name), though /hana-contact still answers.
+        // Italian keeps the old pair. That site is parked, so it never renders.
         subMenuLinks: isItalian
           ? [
               { url: "/hana-contact", title: "HANA Contact" },
@@ -143,7 +144,6 @@ export const Navbar = (props: NavbarProps) => {
           : [
               { url: "/", title: "Care coordination" },
               { url: "/sleep", title: "HANA Sleep" },
-              { url: "/hana-contact", title: "HANA Contact" },
             ],
       },
       ...(isItalian ? [] : [{ url: "/case-studies", title: t.nav.caseStudies }]),
