@@ -90,13 +90,13 @@ const DEFAULT_FACES: BuiltByFace[] = [
 const TONE = {
   light: {
     section: "bg-paper",
-    eyebrow: "text-ink-mute",
+    eyebrow: "text-brand",
     heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-ink",
     body: "text-ink-soft",
   },
   band: {
     section: "bg-band border-y border-rule",
-    eyebrow: "text-ink-mute",
+    eyebrow: "text-brand",
     heading: "text-navy [&_em]:italic [&_em]:font-normal [&_em]:text-ink",
     body: "text-ink-soft",
   },
@@ -152,7 +152,15 @@ export function BuiltByClinicians({
             skin.heading,
           )}
         >
-          <span className="flex items-center justify-center gap-[0.35em] whitespace-nowrap">
+          <span
+            className={cn(
+              "flex items-center justify-center whitespace-nowrap",
+              /* 0.35em flanks the face cluster. With no faces (how /remote-v2
+                 runs it since 2026-09-26) the two words need a normal word space,
+                 and line two below drops the nudge that only balanced the faces. */
+              faces.length > 0 ? "gap-[0.35em]" : "gap-[0.26em]",
+            )}
+          >
             <motion.span style={{ x: xLeft }} className="inline-block">
               {lead}
             </motion.span>
@@ -237,7 +245,7 @@ export function BuiltByClinicians({
 
           <motion.span
             style={{ y: yLine2 }}
-            className="block text-center md:-translate-x-[0.3em] mt-[0.02em]"
+            className={cn("block text-center mt-[0.02em]", faces.length > 0 && "md:-translate-x-[0.3em]")}
           >
             {tail}
           </motion.span>

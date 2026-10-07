@@ -207,6 +207,11 @@ const CSS = `
   transition: transform .38s cubic-bezier(.2,.7,.2,1), border-color .38s ease;
 }
 .ss-card.is-active { --lift: 64px; border-color: var(--ss-edge-active, #A9B4FF); } /* brand-soft */
+/* Labelled panes highlight in place. Each pane's label strip sits over the pane
+   behind it, so any lift brings that pane in front and its glass ghosts across
+   the labels of the panes it now covers. The edge colour and the brightness
+   filter still mark the active layer; only the movement goes. */
+.ss-stack.ss-labelled .ss-card.is-active { --lift: 0px; }
 .ss-glass { position:absolute; inset:0; border-radius:inherit; transition:filter .38s ease; }
 .ss-card.is-active .ss-glass { filter: var(--ss-active-filter, brightness(1.3) saturate(1.06)); }
 .ss-sheen {
@@ -233,7 +238,55 @@ const CYCLE_IDS = ["observability", "human", "protocols", "encryption"];
  *  The stack sat on a navy tile until 2026-08-25 (Matteo: remove the blue
  *  background), then on a cool pastel tile; since the 2026-09-05 repaint it sits
  *  on a warm paper-to-band value ramp, so light pages have no dark panel here. */
-export function SafetyStack({ light = false }: { light?: boolean } = {}) {
+/* Three warm washes over a two-step paper ramp; the depth that used to come
+   from three hues now comes from value. Paints the panel behind the stack by
+   default, or the whole section when stage="section". */
+const LIGHT_WASH = [
+  "radial-gradient(60% 55% at 18% 12%, rgba(228,234,243,0.55) 0%, rgba(228,234,243,0) 60%)",  /* band */
+  "radial-gradient(65% 60% at 88% 22%, rgba(180,192,220,0.50) 0%, rgba(180,192,220,0) 62%)",  /* rule */
+  "radial-gradient(70% 60% at 16% 92%, rgba(207,216,230,0.60) 0%, rgba(207,216,230,0) 62%)",  /* rule-soft */
+  "linear-gradient(150deg, #ffffff 0%, #f6f7fb 60%, #e4eaf3 100%)",  /* paper-bright → paper-2 → band */
+].join(", ");
+
+/** The four layer ids. The geometry, icons, order and auto-cycle key off these,
+ *  so a page overrides copy per id rather than supplying new layers. */
+type LayerId = "encryption" | "protocols" | "human" | "observability";
+
+export function SafetyStack({
+  light = false,
+  layerCopy,
+  intro,
+  paneLabels = false,
+  readable = false,
+  credentials,
+  stage = "panel",
+}: {
+  light?: boolean;
+  /** Light mode only. "panel" is the rounded tinted tile behind the stack, the
+   *  original. "none" floats the stack on plain paper: no tile, no glow, no dot
+   *  grid. "section" moves the tint onto the whole section, full bleed, with a
+   *  hairline top and bottom so the band's edges read as deliberate. */
+  stage?: "panel" | "none" | "section";
+  /** Replace a layer's name and line, by id. Everything visual stays. */
+  layerCopy?: Partial<Record<LayerId, { name: string; line: string }>>;
+  /** Replace the intro under the heading. */
+  intro?: string;
+  /** Print each layer's name on its pane, beside the icon, so the stack reads
+   *  on its own instead of being decoration for the list next to it. Top edge,
+   *  because the pane in front of each one covers its lower-left corner. */
+  paneLabels?: boolean;
+  /** 14px list copy that is never dimmed to 70%. The default 12px at 0.7 reads
+   *  as light gray, which is the recurring readability complaint. */
+  readable?: boolean;
+  /** A one-line credential strip under the stack, the last item emphasised.
+   *  This is what lets the separate ComplianceSection come off a page. Only list
+   *  what a customer's lawyers have already been told in writing. */
+  credentials?: string[];
+} = {}) {
+  const layers = LAYERS.map((l) => {
+    const o = layerCopy?.[l.id as LayerId];
+    return o ? { ...l, ...o } : l;
+  });
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.3 });
   const [hovered, setHovered] = useState<string | null>(null);
@@ -277,29 +330,37 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
   return (
     <section
       className="relative w-full overflow-hidden py-20 md:py-28"
-      style={{ backgroundColor: light ? PAPER : NAVY }}
+      style={
+        light && stage === "section"
+          ? { background: LIGHT_WASH, borderTop: `1px solid ${RULE}`, borderBottom: `1px solid ${RULE}` }
+          : { backgroundColor: light ? PAPER : NAVY }
+      }
     >
       <style>{CSS}</style>
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-[-200px] z-0 h-[800px] w-[800px] -translate-x-1/2"
-        style={{
-          background: light
-            ? "radial-gradient(circle, rgba(228,234,243,0.55) 0%, transparent 70%)"  /* band */
-            : "radial-gradient(circle, rgba(16,32,56,0.55) 0%, transparent 70%)",    /* navy-soft */
-        }}
-      />
+      {!light || stage === "panel" ? (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-[-200px] z-0 h-[800px] w-[800px] -translate-x-1/2"
+          style={{
+            background: light
+              ? "radial-gradient(circle, rgba(228,234,243,0.55) 0%, transparent 70%)"  /* band */
+              : "radial-gradient(circle, rgba(16,32,56,0.55) 0%, transparent 70%)",    /* navy-soft */
+          }}
+        />
+      ) : null}
       <div className="relative z-10 mx-auto px-4 md:px-8">
         <div ref={ref} className="relative mx-auto max-w-7xl">
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0"
-            style={{
-              backgroundImage: `radial-gradient(${light ? INK : DOT_GRID} 0.6px, transparent 0.6px)`,
-              backgroundSize: "22px 22px",
-              opacity: light ? 0.06 : 0.05,
-            }}
-          />
+          {!light || stage === "panel" ? (
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0"
+              style={{
+                backgroundImage: `radial-gradient(${light ? INK : DOT_GRID} 0.6px, transparent 0.6px)`,
+                backgroundSize: "22px 22px",
+                opacity: light ? 0.06 : 0.05,
+              }}
+            />
+          ) : null}
 
           {/* Heading */}
           <div className="relative z-10 mx-auto mb-14 max-w-2xl text-center md:mb-16">
@@ -328,7 +389,7 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
               className="mx-auto mt-5 max-w-xl text-base leading-relaxed"
               style={{ color: light ? INK_SOFT : DARK_SOFT }}
             >
-              {COPY.intro}
+              {intro ?? COPY.intro}
             </motion.p>
           </div>
 
@@ -339,26 +400,13 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
               animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0 }}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.25 }}
               className={`flex h-[520px] flex-1 items-center justify-center ${light ? "rounded-[28px]" : ""}`}
-              style={
-                light
-                  ? {
-                      /* three warm washes over a two-step paper ramp; the depth
-                         that used to come from three hues now comes from value */
-                      background: [
-                        "radial-gradient(60% 55% at 18% 12%, rgba(228,234,243,0.55) 0%, rgba(228,234,243,0) 60%)",  /* band */
-                        "radial-gradient(65% 60% at 88% 22%, rgba(180,192,220,0.50) 0%, rgba(180,192,220,0) 62%)",  /* rule */
-                        "radial-gradient(70% 60% at 16% 92%, rgba(207,216,230,0.60) 0%, rgba(207,216,230,0) 62%)",  /* rule-soft */
-                        "linear-gradient(150deg, #ffffff 0%, #f6f7fb 60%, #e4eaf3 100%)",  /* paper-bright → paper-2 → band */
-                      ].join(", "),
-                    }
-                  : undefined
-              }
+              style={light && stage === "panel" ? { background: LIGHT_WASH } : undefined}
               onMouseMove={onMove}
               onMouseLeave={onLeave}
             >
               <div ref={sceneRef} style={{ perspective: "2400px", perspectiveOrigin: "50% 50%" }}>
                 <div
-                  className="ss-stack"
+                  className={paneLabels ? "ss-stack ss-labelled" : "ss-stack"}
                   style={
                     (light
                       ? {
@@ -383,7 +431,7 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
                         }) as React.CSSProperties
                   }
                 >
-                  {LAYERS.map((layer) => {
+                  {layers.map((layer) => {
                     const Icon = layer.icon;
                     // hover wins; otherwise the calm auto-cycle lights each in turn
                     const active = hovered ? hovered === layer.id : cycled === layer.id;
@@ -404,6 +452,14 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
                             style={{ color: light ? INK : PAPER_BRIGHT }}
                           />
                         </div>
+                        {paneLabels ? (
+                          <div
+                            className="absolute left-[80px] right-4 top-5 flex h-[46px] items-center text-[16px] font-semibold leading-tight tracking-tight"
+                            style={{ color: light ? INK : PAPER_BRIGHT }}
+                          >
+                            {layer.name}
+                          </div>
+                        ) : null}
                       </div>
                     );
                   })}
@@ -414,7 +470,7 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
 
             <div className="flex w-[320px] shrink-0 flex-col gap-2.5">
               {LIST_ORDER.map((id, i) => {
-                const layer = LAYERS.find((l) => l.id === id)!;
+                const layer = layers.find((l) => l.id === id)!;
                 return (
                   <LayerRow
                     key={layer.id}
@@ -424,6 +480,7 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
                     hovered={hovered}
                     setHovered={setHovered}
                     light={light}
+                    readable={readable}
                   />
                 );
               })}
@@ -431,7 +488,30 @@ export function SafetyStack({ light = false }: { light?: boolean } = {}) {
           </div>
 
           {/* ── Mobile: flat card stack ────────────────────────────────────── */}
-          <MobileLayers inView={inView} hovered={hovered} setHovered={setHovered} light={light} />
+          <MobileLayers
+            layers={layers}
+            inView={inView}
+            hovered={hovered}
+            setHovered={setHovered}
+            light={light}
+            readable={readable}
+          />
+
+          {credentials && credentials.length > 0 ? (
+            <div
+              className="relative z-10 mt-14 flex flex-wrap items-center gap-x-3 gap-y-2 border-t pt-8 text-[14px] md:mt-16"
+              style={{ borderColor: RULE, color: INK_SOFT }}
+            >
+              {credentials.map((c, i) => (
+                <span key={c} className="inline-flex items-center gap-3">
+                  {i > 0 ? <span aria-hidden style={{ color: "#8b95a5" }}>·</span> /* rule-strong */ : null}
+                  <span className={i === credentials.length - 1 ? "font-medium" : ""} style={i === credentials.length - 1 ? { color: INK } : undefined}>
+                    {c}
+                  </span>
+                </span>
+              ))}
+            </div>
+          ) : null}
         </div>
       </div>
 
@@ -457,11 +537,13 @@ function LayerRow({
   hovered,
   setHovered,
   light = false,
+  readable = false,
 }: {
   layer: Layer;
   index: number;
   inView: boolean;
   light?: boolean;
+  readable?: boolean;
   hovered: string | null;
   setHovered: (id: string | null) => void;
 }) {
@@ -507,7 +589,11 @@ function LayerRow({
           {layer.name}
         </h3>
       </div>
-      <motion.p animate={{ opacity: active ? 1 : 0.7 }} className="mt-2 text-[12px] leading-relaxed" style={{ color: light ? INK_SOFT : DARK_SOFT }}>
+      <motion.p
+        animate={{ opacity: readable || active ? 1 : 0.7 }}
+        className={`mt-2 leading-relaxed ${readable ? "text-[14px]" : "text-[12px]"}`}
+        style={{ color: light ? INK_SOFT : DARK_SOFT }}
+      >
         {layer.line}
       </motion.p>
     </motion.div>
@@ -516,20 +602,24 @@ function LayerRow({
 
 /* ── Mobile: flat stacked cards (no 3D) ──────────────────────────────────────*/
 function MobileLayers({
+  layers,
   inView,
   hovered,
   setHovered,
   light = false,
+  readable = false,
 }: {
+  layers: Layer[];
   inView: boolean;
   hovered: string | null;
   setHovered: (id: string | null) => void;
   light?: boolean;
+  readable?: boolean;
 }) {
   return (
     <div className="relative z-10 mx-auto flex w-full max-w-md flex-col gap-3 md:hidden">
       {LIST_ORDER.map((id, i) => {
-        const layer = LAYERS.find((l) => l.id === id)!;
+        const layer = layers.find((l) => l.id === id)!;
         const Icon = layer.icon;
         const isActive = hovered === layer.id;
         const dimmed = hovered !== null && !isActive;
@@ -573,7 +663,7 @@ function MobileLayers({
                 {layer.name}
               </span>
             </div>
-            <p className="mt-2 text-[13px] leading-relaxed" style={{ color: light ? INK_SOFT : DARK_SOFT }}>
+            <p className={`mt-2 leading-relaxed ${readable ? "text-[14px]" : "text-[13px]"}`} style={{ color: light ? INK_SOFT : DARK_SOFT }}>
               {layer.line}
             </p>
           </motion.button>
