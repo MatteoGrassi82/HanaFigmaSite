@@ -93,12 +93,69 @@ export const PROGRAM_CARDS: Recipe[] = [
     systems: ["Device portal", "Epic"] },
 ];
 
-/* PCM and TCM were added here on 2026-09-02 and pulled the same day. The CRM has
-   PCM only as an ICP scoring keyword and no trace of TCM, and the build is CCM,
-   APCM, BHI, RTM. If a module ships, TCM is the strongest card of the set: an
-   interactive contact within 2 BUSINESS DAYS of discharge (a voicemail does not
-   count) plus a face-to-face inside 14 days, 7 for high complexity — a window
-   staffing misses and a machine does not. PCM is 99424-99427, one high-risk
-   condition rather than two or more, and it sits outside the CY2027 employment
-   test per our own rule analysis. RPM stays off entirely: HANA is never the
-   device, and the FAQ carries that answer. */
+/* ── The /care page's set (Matteo, 7 Oct 2026: "be more PCM, BHI, TCM, APCM,
+ * ACCESS, all that stuff") ──────────────────────────────────────────────────
+ *
+ * PCM and TCM were added here on 2026-09-02 and pulled the same day, when the
+ * build had no module for either. The 24 Sep 2026 capability list (CCM, TCM,
+ * APCM, PCM, BHI and CoCM supported today; RPM and RTM roadmap) is the later
+ * document, so they are back, for /care only. The homepage still reads
+ * PROGRAM_CARDS minus RTM and is unchanged.
+ *
+ * TCM GUARDRAIL. The two-business-day interactive contact must be made by
+ * CLINICAL STAFF (CMS TCM booklet). HANA's call is never that contact, and both
+ * TCM cards say so in the description. HANA books the face-to-face visit and
+ * gathers the medication list; the contact and the reconciliation are yours.
+ *
+ * ACCESS reverses the 2026-08-04 rule that kept it out of Remote copy, at
+ * Matteo's request. The cards say only what the live /programs/access-model
+ * page says: half of each payment is held back until outcome measures come in,
+ * and HANA keeps the check-ins on time. They do not claim HANA supplies the
+ * device reading the CKM tracks require.
+ */
+export const PCM_CARDS: Recipe[] = [
+  { tag: "PCM", flow: ["ehr", "voice", "ehr"], title: "Give the one-condition patient a monthly call",
+    desc: "Principal care management pays for thirty minutes of clinical staff time a month on one serious condition. HANA makes the monthly contact, keeps it on that condition, and writes it up for your clinician to review and attest.",
+    steps: ["Cohort: one complex chronic condition", "HANA calls at the protocol's cadence", "Asks the disease-specific questions your clinicians scoped", "Summary to the chart for review and attestation"],
+    systems: ["Epic", "eClinicalWorks"] },
+
+  { tag: "PCM", flow: ["voice", "alert", "ehr"], title: "Hear the decline before the admission",
+    desc: "For heart failure it is weight, breath and swelling; for COPD it is the inhaler and the stairs. HANA asks what your clinicians want asked about the one condition and flags any answer past their threshold the same day.",
+    steps: ["Condition-specific check-in", "Answer checked against your threshold", "Flag to the named clinician, same day", "Patient's own words kept in the note"],
+    systems: ["Epic", "Athena"] },
+];
+
+export const TCM_CARDS: Recipe[] = [
+  { tag: "TCM", flow: ["ehr", "voice", "cal"], title: "Get every discharge to the follow-up visit",
+    desc: "TCM needs a face-to-face visit inside 7 or 14 days of discharge. When a discharge lands, HANA calls to book it and checks how the patient is managing. The two-business-day interactive contact the code requires is made by your clinical staff, not by HANA.",
+    steps: ["Discharge arrives on the worklist", "Your clinical staff make the two-business-day contact", "HANA books the face-to-face visit", "Anything worrying flagged before the visit"],
+    systems: ["Epic", "Athena"] },
+
+  { tag: "TCM", flow: ["voice", "ehr"], title: "Have the medication list ready before the visit",
+    desc: "Medication reconciliation is due by the date of the visit. HANA asks the patient what they are actually taking since discharge and puts the list in the chart, so your clinician reconciles it instead of starting from scratch.",
+    steps: ["HANA asks what is actually being taken", "New, stopped and changed medicines noted", "List in the chart before the visit", "Your clinician does the reconciliation"],
+    systems: ["Epic", "Surescripts"] },
+];
+
+export const ACCESS_CARDS: Recipe[] = [
+  { tag: "ACCESS", flow: ["ehr", "voice", "ehr"], title: "Keep every ACCESS check-in on time",
+    desc: "In the CMS ACCESS model, half of each payment is held back until patients' outcome measures come in. HANA calls and texts enrolled patients when a check-in is due, so each one lands inside the window CMS counts.",
+    steps: ["Patients enrolled in an ACCESS track", "HANA calls or texts when a check-in is due", "Answers recorded in the patient's own words", "Missed windows flagged to your team"],
+    systems: ["Epic", "Athena", "eClinicalWorks"] },
+
+  { tag: "ACCESS", flow: ["voice", "alert"], title: "Flag the patient who is slipping",
+    desc: "Between measures, HANA asks how things are going, for pain and movement on the musculoskeletal track or mood on the behavioral health track, and flags anyone getting worse while there is still time to act.",
+    steps: ["Between-measure check-in", "Answer compared with the last one", "Worsening flagged to your team", "Next measure stays on schedule"],
+    systems: ["Epic", "Athena"] },
+];
+
+/** /care's marquee: every program HANA runs today, grouped by program. RTM is
+ *  out (roadmap), PCM, TCM and ACCESS are in. */
+export const CARE_PAGE_CARDS: Recipe[] = [
+  ...PROGRAM_CARDS.filter((c) => c.tag === "CCM"),
+  ...PCM_CARDS,
+  ...PROGRAM_CARDS.filter((c) => c.tag === "APCM"),
+  ...PROGRAM_CARDS.filter((c) => c.tag === "BHI"),
+  ...TCM_CARDS,
+  ...ACCESS_CARDS,
+];

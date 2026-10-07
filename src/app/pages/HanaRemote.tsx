@@ -5,6 +5,7 @@ import { SEO, breadcrumbSchema, faqSchema } from "../components/SEO";
 import { Footer } from "../components/layout/Footer";
 import { HanaBloomOrb } from "../components/media/HanaBloomOrb";
 import { RecipesMarquee } from "../components/sections/RecipesMarquee";
+import { CARE_PAGE_CARDS } from "../../content/programmes";
 import { InlineImageHeader } from "../components/sections/InlineImageHeader";
 import { FaqSection } from "../components/sections/FaqSection";
 import { CompassDashboard, Glyph, RI } from "../components/media/CompassDashboard";
@@ -754,11 +755,16 @@ export function HanaRemote() {
       <PatientAgentSection />
 
       {/* THE PROGRAMS — one platform, shown as the home-page workflow marquee */}
+      {/* The programs, by name (Matteo, 7 Oct 2026). Was the generic workflow
+          recipes (HEDIS gaps, bowel prep, Holter monitors); now the program
+          cards, with PCM, TCM and ACCESS added. `tags` stays so a parked-Italian
+          render still falls back to the Italian recipes. */}
       <RecipesMarquee
+        items={CARE_PAGE_CARDS}
         tags={PROGRAM_WORKFLOW_TAGS}
-        tag="The workflows"
+        tag="The programs"
         heading="One loop. Every care program."
-        body="Chronic and behavioral care, wellness visits, post-op follow-up, screenings. Each one runs as a call workflow, documented to the chart for your clinician to attest. Tap any card to see the steps."
+        body="CCM, PCM, APCM, BHI, TCM and the CMS ACCESS model. Different rules, the same monthly loop, documented to the chart for your clinician to attest. Tap any card to see the steps."
       />
 
       {/* PROOF — two clinician testimonials (reused approved quotes), enlarged */}
