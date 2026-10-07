@@ -357,6 +357,14 @@ async function launchBrowser() {
     // Render as the real production hostname so detectLocale() (which reads
     // window.location.hostname) picks the same locale this build is for.
     `--host-resolver-rules=MAP ${RENDER_HOST} 127.0.0.1`,
+    // Several pages render at once (PRERENDER_CONCURRENCY), and Chrome treats
+    // all but one tab as backgrounded: timers clamp to once a second and
+    // requestAnimationFrame stalls. The reveal animations and the scroll pass
+    // below both run on those, so a throttled tab would serialise sections at
+    // their initial opacity 0. These three switches keep every tab at full speed.
+    '--disable-background-timer-throttling',
+    '--disable-backgrounding-occluded-windows',
+    '--disable-renderer-backgrounding',
   ];
 
   for (const headless of [true, 'shell']) {
@@ -448,13 +456,27 @@ async function main() {
   // so rendering them announces nothing — it only makes the URL openable by
   // someone who was sent it.
   const reviewRoutes = LOCALE === 'it' ? [] : REVIEW_ROUTES;
-  const routes = [
+  let routes = [
     ...staticRoutes,
     ...UNLISTED_ROUTES,
     ...reviewRoutes,
     ...(includeNoindex ? NOINDEX_ROUTES : []),
     ...blogRoutes,
   ];
+
+  // PRERENDER_ONLY=/,/programs,... renders just those routes. For comparing
+  // runs locally (e.g. PRERENDER_CONCURRENCY=1 against the default) without a
+  // 20-minute wait. It also truncates sitemap.xml to the subset, which is why it
+  // refuses to run on Vercel: a deploy built with it would ship a broken sitemap.
+  if (process.env.PRERENDER_ONLY) {
+    if (process.env.VERCEL) {
+      console.error('✗ PRERENDER_ONLY is for local runs only; it truncates the sitemap.');
+      process.exit(1);
+    }
+    const only = process.env.PRERENDER_ONLY.split(',').map((r) => r.trim()).filter(Boolean);
+    routes = routes.filter((r) => only.includes(r));
+    console.log(`▸ PRERENDER_ONLY: ${routes.length} of ${only.length} requested route(s) found.`);
+  }
   if (hidden.length) {
     console.log(`▸ ${hidden.length} unpublished route(s) NOT rendered — they will 404: ${hidden.join(', ')}`);
   }
@@ -512,156 +534,220 @@ async function main() {
   const shellSrcs = new Set(
     [...shell.matchAll(/<script\b[^>]*\bsrc="([^"]+)"/gi)].map((m) => m[1])
   );
-  try {
-    for (const route of routes) {
-      const page = await browser.newPage();
-      try {
-        // Inject the Sanity data cache BEFORE any app code runs, so the SPA reads
-        // it instead of making a CORS-blocked browser fetch to api.sanity.io.
-        await page.evaluateOnNewDocument((data) => {
-          window.__PRERENDER__ = data;
-        }, cache);
+  /* PAGES RENDER IN PARALLEL, PRERENDER_CONCURRENCY at a time (default 6).
+   *
+   * Run one at a time, the browser pass was ~95% of a deploy: about 190 routes
+   * at 5 to 10 seconds each, nearly all of it waiting (network idle, the settle
+   * loop, the scroll pass, the reveal beat), not computing. Several tabs wait in
+   * parallel just as well as one. The per-route work below is unchanged; only
+   * the loop around it is. The Chrome switches in launchBrowser() are what keep
+   * a background tab's animations running, so do not raise this without them.
+   * PRERENDER_CONCURRENCY=1 reproduces the old sequential pass exactly. */
+  const concurrency = Math.max(1, Number(process.env.PRERENDER_CONCURRENCY) || 6);
+  console.log(`▸ Rendering with up to ${concurrency} browser(s) in parallel.`);
+  const started = Date.now();
 
-        // networkidle0 is the right default: it waits out the data fetches most
-        // routes do before they have anything to serialise. But it is a wait for
-        // SILENCE on the network, and a page that streams media never goes quiet.
-        // /go autoplays a 6.6MB film, so it never reaches idle and the navigation
-        // times out — which used to abandon the route at its layer-1 head-only
-        // file, losing the rendered body, the video markup and the muted attribute
-        // that markup exists to carry.
-        //
-        // A timeout here is not a failed render, it is an unanswered question. The
-        // waits below are the real test of whether the app mounted, so let them
-        // answer it. Any other navigation error is still a genuine failure.
-        await page.goto(`${base}${route}`, { waitUntil: 'networkidle0', timeout: 45000 })
-          .catch((err) => {
-            if (!/timeout/i.test(String(err?.message || err))) throw err;
-            console.log(`  ↳ ${route} never reached network idle (streaming media); continuing`);
-          });
+  async function renderRoute(browser, route) {
+    const page = await browser.newPage();
+    try {
+      // Inject the Sanity data cache BEFORE any app code runs, so the SPA reads
+      // it instead of making a CORS-blocked browser fetch to api.sanity.io.
+      await page.evaluateOnNewDocument((data) => {
+        window.__PRERENDER__ = data;
+      }, cache);
 
-        // Wait until the app has mounted real content and isn't on a loading
-        // skeleton. With the injected cache, blog data resolves synchronously-ish.
-        //
-        // The 200-character floor is a proxy for "this is a real page, not a
-        // spinner", and it is right for every page that argues something. It is
-        // wrong for a page whose whole point is that it says almost nothing: /go
-        // carries about 147 characters of visible text on purpose, and it timed
-        // out here rather than rendering. So a page may also declare itself ready
-        // by putting data-rendered="true" on an element — an attribute that only
-        // exists once React has actually rendered, which is the same guarantee
-        // the text length was standing in for. Use it sparingly; the heuristic is
-        // the default for a reason.
-        await page.waitForFunction(
-          () => {
-            const root = document.getElementById('root');
-            if (!root) return false;
-            if (root.querySelector('[data-rendered="true"]')) return true;
-            const text = (root.innerText || '').trim();
-            if (text.length < 200) return false;
-            if (text === 'Loading...') return false;
-            return true;
-          },
-          { timeout: 25000, polling: 150 }
+      // networkidle0 is the right default: it waits out the data fetches most
+      // routes do before they have anything to serialise. But it is a wait for
+      // SILENCE on the network, and a page that streams media never goes quiet.
+      // /go autoplays a 6.6MB film, so it never reaches idle and the navigation
+      // times out — which used to abandon the route at its layer-1 head-only
+      // file, losing the rendered body, the video markup and the muted attribute
+      // that markup exists to carry.
+      //
+      // A timeout here is not a failed render, it is an unanswered question. The
+      // waits below are the real test of whether the app mounted, so let them
+      // answer it. Any other navigation error is still a genuine failure.
+      await page.goto(`${base}${route}`, { waitUntil: 'networkidle0', timeout: 45000 })
+        .catch((err) => {
+          if (!/timeout/i.test(String(err?.message || err))) throw err;
+          console.log(`  ↳ ${route} never reached network idle (streaming media); continuing`);
+        });
+
+      // Wait until the app has mounted real content and isn't on a loading
+      // skeleton. With the injected cache, blog data resolves synchronously-ish.
+      //
+      // The 200-character floor is a proxy for "this is a real page, not a
+      // spinner", and it is right for every page that argues something. It is
+      // wrong for a page whose whole point is that it says almost nothing: /go
+      // carries about 147 characters of visible text on purpose, and it timed
+      // out here rather than rendering. So a page may also declare itself ready
+      // by putting data-rendered="true" on an element — an attribute that only
+      // exists once React has actually rendered, which is the same guarantee
+      // the text length was standing in for. Use it sparingly; the heuristic is
+      // the default for a reason.
+      await page.waitForFunction(
+        () => {
+          const root = document.getElementById('root');
+          if (!root) return false;
+          if (root.querySelector('[data-rendered="true"]')) return true;
+          const text = (root.innerText || '').trim();
+          if (text.length < 200) return false;
+          if (text === 'Loading...') return false;
+          return true;
+        },
+        { timeout: 25000, polling: 150 }
+      );
+
+      // Wait for the <SEO> head injection to settle: a non-placeholder <title>
+      // and at least one JSON-LD block present in the head.
+      await page.waitForFunction(
+        () => {
+          const t = document.title || '';
+          const hasTitle = t.length > 0 && t !== 'Hana Eng SIte';
+          const hasLd = !!document.querySelector('script[type="application/ld+json"]');
+          return hasTitle && hasLd;
+        },
+        { timeout: 15000, polling: 200 }
+      );
+
+      // Settle: wait until #root size is stable across two reads (async content
+      // + SEO effects fully flushed), then a final beat.
+      let prev = -1;
+      for (let i = 0; i < 20; i++) {
+        const size = await page.evaluate(
+          () => document.getElementById('root')?.innerHTML.length || 0
         );
+        if (size === prev && size > 0) break;
+        prev = size;
+        await new Promise((r) => setTimeout(r, 250));
+      }
+      await new Promise((r) => setTimeout(r, 300));
 
-        // Wait for the <SEO> head injection to settle: a non-placeholder <title>
-        // and at least one JSON-LD block present in the head.
-        await page.waitForFunction(
-          () => {
-            const t = document.title || '';
-            const hasTitle = t.length > 0 && t !== 'Hana Eng SIte';
-            const hasLd = !!document.querySelector('script[type="application/ld+json"]');
-            return hasTitle && hasLd;
-          },
-          { timeout: 15000, polling: 200 }
-        );
-
-        // Settle: wait until #root size is stable across two reads (async content
-        // + SEO effects fully flushed), then a final beat.
-        let prev = -1;
-        for (let i = 0; i < 20; i++) {
-          const size = await page.evaluate(
-            () => document.getElementById('root')?.innerHTML.length || 0
-          );
-          if (size === prev && size > 0) break;
-          prev = size;
-          await new Promise((r) => setTimeout(r, 250));
+      // Fire every scroll-triggered reveal before capturing.
+      //
+      // 28 component files animate their sections in with motion's
+      // `whileInView`, which is an IntersectionObserver. Puppeteer's default
+      // viewport is 800x600 and nothing here ever scrolled, so every section
+      // below the first 600px never intersected, and motion left its initial
+      // `opacity: 0` inline in the serialized HTML. Measured before this fix:
+      // 52% of the homepage's text, 62% of /hana-remote and 79% of /remote-v2
+      // were captured inside an opacity-0 node — invisible in exactly the
+      // static files this whole pipeline exists to produce. The text is in the
+      // DOM, so seo-check's byte-count assertion passed the whole time.
+      //
+      // Scrolling the document in viewport-sized steps triggers the observers
+      // in order, the same way a reader would. Cheap, and it fixes all 28
+      // files at once without touching a single component.
+      await page.evaluate(async () => {
+        const step = window.innerHeight;
+        const height = () => document.documentElement.scrollHeight;
+        for (let y = 0; y < height(); y += step) {
+          window.scrollTo(0, y);
+          await new Promise((r) => setTimeout(r, 90));
         }
-        await new Promise((r) => setTimeout(r, 300));
+        window.scrollTo(0, height());
+        await new Promise((r) => setTimeout(r, 250));
+        window.scrollTo(0, 0);
+        await new Promise((r) => setTimeout(r, 120));
+      });
+      // Let the reveal transitions land on their final values.
+      await new Promise((r) => setTimeout(r, 500));
 
-        // Fire every scroll-triggered reveal before capturing.
-        //
-        // 28 component files animate their sections in with motion's
-        // `whileInView`, which is an IntersectionObserver. Puppeteer's default
-        // viewport is 800x600 and nothing here ever scrolled, so every section
-        // below the first 600px never intersected, and motion left its initial
-        // `opacity: 0` inline in the serialized HTML. Measured before this fix:
-        // 52% of the homepage's text, 62% of /hana-remote and 79% of /remote-v2
-        // were captured inside an opacity-0 node — invisible in exactly the
-        // static files this whole pipeline exists to produce. The text is in the
-        // DOM, so seo-check's byte-count assertion passed the whole time.
-        //
-        // Scrolling the document in viewport-sized steps triggers the observers
-        // in order, the same way a reader would. Cheap, and it fixes all 28
-        // files at once without touching a single component.
+      // Then check the pass actually worked. With several browsers sharing the CPU
+      // (PRERENDER_CONCURRENCY), a reveal can miss a 90 ms scroll step and stay at
+      // opacity 0: measured at up to 2,500 characters a page, varying run to run. So
+      // count the text still inside an invisible element, and while a slower pass
+      // keeps uncovering some, run another. Text hidden on purpose (a closed tab,
+      // the next carousel slide) does not change between passes, which ends the loop.
+      const hiddenText = () =>
+        page.evaluate(() => {
+          let n = 0;
+          for (const el of document.querySelectorAll('[style*="opacity"]')) {
+            if (getComputedStyle(el).opacity === '0') n += (el.innerText || '').trim().length;
+          }
+          return n;
+        });
+      let hidden = await hiddenText();
+      for (let pass = 0; pass < 3 && hidden > 0; pass++) {
         await page.evaluate(async () => {
-          const step = window.innerHeight;
+          const step = Math.round(window.innerHeight / 2);
           const height = () => document.documentElement.scrollHeight;
           for (let y = 0; y < height(); y += step) {
             window.scrollTo(0, y);
-            await new Promise((r) => setTimeout(r, 90));
+            await new Promise((r) => setTimeout(r, 200));
           }
-          window.scrollTo(0, height());
-          await new Promise((r) => setTimeout(r, 250));
           window.scrollTo(0, 0);
-          await new Promise((r) => setTimeout(r, 120));
         });
-        // Let the reveal transitions land on their final values.
-        await new Promise((r) => setTimeout(r, 500));
-
-        let html = await page.content();
-        // Strip the dev/preview origin if it leaked into any absolute URLs.
-        html = html.replaceAll(base, DOMAIN);
-        // The rendered body supersedes the layer-1 skeleton (and preview's SPA
-        // fallback means the skeleton in hand is the homepage's, not this route's).
-        html = stripFallbackNoscript(html);
-
-        // /go and friends: keep the snapshot down to what the page asked for.
-        if (UNLISTED_ROUTES.includes(route)) {
-          html = stripRuntimeInjectedScripts(html, shellSrcs);
-          html = stripUnusedModulePreloads(html);
-        }
-
-        // Never trust the snapshot's <head>. A page that renders no <SEO> block
-        // leaves the homepage's canonical and robots in place, because vite
-        // preview answers unknown paths with dist/index.html.
-        const { html: checked, fixed } = verifyAndFixHead(html, {
-          ...routeMeta[route],
-          homeTitle: routeMeta['/']?.title,
-        });
-        if (fixed.length) {
-          headFixes.push(`${route}: ${fixed.join('; ')}`);
-          html = checked;
-        }
-
-        const file = routeToFile(route);
-        await mkdir(dirname(file), { recursive: true });
-        await writeFile(file, html, 'utf8');
-        ok++;
-        console.log(`  ✓ ${route}`);
-      } catch (err) {
-        failed++;
-        console.warn(`  ✗ ${route} — ${err.message}`);
-      } finally {
-        await page.close();
+        await new Promise((r) => setTimeout(r, 800));
+        const after = await hiddenText();
+        if (after >= hidden) break;
+        hidden = after;
       }
+
+      let html = await page.content();
+      // Strip the dev/preview origin if it leaked into any absolute URLs.
+      html = html.replaceAll(base, DOMAIN);
+      // The rendered body supersedes the layer-1 skeleton (and preview's SPA
+      // fallback means the skeleton in hand is the homepage's, not this route's).
+      html = stripFallbackNoscript(html);
+
+      // /go and friends: keep the snapshot down to what the page asked for.
+      if (UNLISTED_ROUTES.includes(route)) {
+        html = stripRuntimeInjectedScripts(html, shellSrcs);
+        html = stripUnusedModulePreloads(html);
+      }
+
+      // Never trust the snapshot's <head>. A page that renders no <SEO> block
+      // leaves the homepage's canonical and robots in place, because vite
+      // preview answers unknown paths with dist/index.html.
+      const { html: checked, fixed } = verifyAndFixHead(html, {
+        ...routeMeta[route],
+        homeTitle: routeMeta['/']?.title,
+      });
+      if (fixed.length) {
+        headFixes.push(`${route}: ${fixed.join('; ')}`);
+        html = checked;
+      }
+
+      const file = routeToFile(route);
+      await mkdir(dirname(file), { recursive: true });
+      await writeFile(file, html, 'utf8');
+      ok++;
+      console.log(`  ✓ ${route}`);
+    } catch (err) {
+      failed++;
+      console.warn(`  ✗ ${route} — ${err.message}`);
+    } finally {
+      await page.close();
     }
+  }
+
+  /* ONE BROWSER PER WORKER, each holding a single tab at a time. Six tabs in
+   * one browser was tried first and measured badly: Chrome only treats the
+   * front tab as visible, the scroll-triggered reveals never fired in the
+   * others, and 25 to 80 percent of a page's text was serialised inside
+   * opacity-0 nodes (sequential: 0 to 5 percent). A lone tab is always the
+   * front tab. Workers that fail to launch a browser just do not take routes. */
+  const browsers = [browser];
+  try {
+    for (let i = 1; i < Math.min(concurrency, routes.length); i++) {
+      const b = await launchBrowser();
+      if (b) browsers.push(b);
+    }
+    const queue = [...routes];
+    const worker = async (b) => {
+      while (queue.length) await renderRoute(b, queue.shift());
+    };
+    await Promise.all(browsers.map(worker));
   } finally {
-    await browser.close();
+    await Promise.all(browsers.map((b) => b.close().catch(() => {})));
     await server.httpServer.close();
   }
 
-  console.log(`▸ Prerender complete: ${ok} rendered, ${failed} left at head-only.`);
+  console.log(
+    `▸ Prerender complete: ${ok} rendered, ${failed} left at head-only, ` +
+    `in ${Math.round((Date.now() - started) / 1000)}s.`
+  );
   if (headFixes.length) {
     console.warn(
       `  ⚠ repaired the <head> of ${headFixes.length} snapshot(s) that came back with the\n` +
