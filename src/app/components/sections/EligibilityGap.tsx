@@ -178,9 +178,11 @@ export function EligibilityGap() {
               Both numbers now come off MARKET, so a revision in rates.ts lands
               here and this cannot drift again. */}
           <h2 className="font-serif font-normal text-[32px] sm:text-[40px] md:text-h2 leading-[1.08] text-navy max-w-[26ch] mx-auto mt-4 mb-0">
-            {Math.round(MARKET.eligiblePct)}% of Medicare fee-for-service patients qualify.{" "}
+            {/* The year travels with the pair (copy guardrails): both figures are
+                ASPE/NORC's 2019 claims, a floor, never a current rate. */}
+            In 2019, {Math.round(MARKET.eligiblePct)}% of Medicare fee-for-service patients qualified.{" "}
             <em className="text-brand">
-              {MARKET.receivingPctOfEligible}% of them get it.
+              {MARKET.receivingPctOfEligible}% of them got it.
             </em>
           </h2>
           <p className="text-[17px] leading-[1.7] text-ink-soft max-w-[58ch] mx-auto mt-5 mb-0">
@@ -226,7 +228,7 @@ export function EligibilityGap() {
                 <Term
                   op="−"
                   value={formatInt(receiving)}
-                  label="getting it, at the national rate"
+                  label="getting it, at the 2019 national rate"
                 />
               </div>
 

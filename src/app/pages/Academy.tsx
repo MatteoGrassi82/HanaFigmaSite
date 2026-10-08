@@ -40,7 +40,7 @@ const PATHS = [
     href: "/programs",
     kicker: "Start here",
     title: "Which programme is my patient?",
-    body: "Three questions, one answer. The single most confusing thing about this category is which of the seven a given patient belongs in, and the chooser settles it.",
+    body: "The single most confusing thing about this category is which of the four a given patient belongs in. Describe the patient and the filter narrows it.",
   },
   {
     href: "/compare/vs-doing-nothing",
@@ -70,7 +70,6 @@ export function Academy() {
         description={COPY.description}
         path="/academy"
         useExactTitle
-        robots="noindex, nofollow"
         keywords="care management guides, chronic care management how it works, CCM billing guide, care coordination learning"
         jsonLd={[breadcrumbSchema([{ name: "Academy", url: "https://www.hana.health/academy" }])]}
       />
@@ -82,7 +81,7 @@ export function Academy() {
         body="Who qualifies, what the month has to show, what the codes pay, and where the rules are still open. Written for the person who has to run it."
         primaryCta={{ label: "Start with the programmes", href: "/programs" }}
         secondaryCta={{ label: "Read the blog", href: "/blog" }}
-        trustLine="Medicare rules as they stand in September 2026. Figures are CY2026."
+        trustLine="Medicare rules as they stand in October 2026. Figures are CY2026."
       />
 
       <section id="start" className="scroll-mt-24 bg-paper py-20 md:py-24 px-6 md:px-16">
@@ -115,11 +114,11 @@ export function Academy() {
         <div className="max-w-[1120px] mx-auto">
           <p className="text-eyebrow font-bold uppercase text-ink-mute m-0 mb-4">One page each</p>
           <h2 className="font-serif text-h2 text-ink m-0 mb-3 max-w-[24ch]">
-            The seven programmes, in full.
+            The four programmes, in full.
           </h2>
           <p className="text-[16.5px] leading-[1.7] text-ink-soft m-0 mb-8 max-w-[62ch]">
             Each page sets out who is eligible, what the month has to show, what your team still
-            does, what the code pays, and the questions we will not guess at.
+            does, what the code pays, and the source behind each rule.
           </p>
           <ul className="m-0 p-0 list-none grid gap-3 sm:grid-cols-2">
             {PUBLISHED_PROGRAMMES.map((p) => (

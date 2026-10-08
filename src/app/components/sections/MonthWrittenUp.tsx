@@ -139,7 +139,10 @@ export function MonthWrittenUp({
               className="w-full lg:justify-self-end lg:max-w-[470px] rounded-[22px] bg-paper-bright/[0.13] backdrop-blur-xl border border-white/20 p-6 md:p-7 shadow-[0_30px_70px_-24px_rgba(0,0,0,0.55)]"
             >
               <div className="flex items-center justify-between gap-4">
-                <p className="text-[11.5px] font-bold uppercase tracking-[1.3px] text-white/60 m-0">Time log · an example month</p>
+                {/* Was "Time log", which, with a CPT code chip and HANA's call lengths
+                    summing past 20 minutes, read as HANA's minutes meeting the
+                    code. They never do (CMS CCM FAQ p.1). Changed 8 Oct 2026. */}
+                <p className="text-[11.5px] font-bold uppercase tracking-[1.3px] text-white/60 m-0">HANA's contacts · an example month</p>
                 <span className="rounded-full bg-paper-bright/15 border border-white/15 text-[11px] font-semibold text-white/85 px-2.5 py-1">{chip}</span>
               </div>
               <div className="mt-5 space-y-3">
@@ -156,12 +159,15 @@ export function MonthWrittenUp({
                   </motion.div>
                 ))}
               </div>
+              <p className="text-[12px] leading-[1.5] text-white/60 mt-4 mb-0">
+                HANA's call time is never counted as clinical time. The billable minutes are your staff's, logged as they work.
+              </p>
               {/* the clinician's clock, the only one that counts */}
               <div className="mt-6 pt-5 border-t border-white/15">
                 <div className="flex items-center justify-between gap-4">
                   <div>
                     <p className="text-[11.5px] font-bold uppercase tracking-[1.3px] text-white/60 m-0">Your clinician's time</p>
-                    <p className="text-[12.5px] text-white/50 mt-1 mb-0">Review and attest</p>
+                    <p className="text-[12.5px] text-white/50 mt-1 mb-0">Reviewing what HANA wrote up</p>
                   </div>
                   <p className="font-serif text-[34px] leading-none text-white tabular-nums m-0">{mmss(secs)}</p>
                 </div>

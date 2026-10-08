@@ -68,6 +68,14 @@ export const STATIC_ROUTES = [
   '/programs/advanced-primary-care-management',
   '/programs/behavioral-health-integration',
   '/programs/principal-care-management',
+  // The audience pages, the comparisons and the academy (8 Oct 2026), published
+  // after a claims pass against the copy guardrails.
+  '/for-practices',
+  '/for-health-systems',
+  '/compare/vs-care-management-software',
+  '/compare/vs-outsourced-care-management',
+  '/compare/vs-doing-nothing',
+  '/academy',
 ];
 
 // Routes App.tsx renders only when !isItalian — on ita.hana.health these fall
@@ -167,15 +175,9 @@ export const UNLISTED_ROUTES = ['/go'];
  * /remote-lab (212s) stays in NOINDEX_ROUTES deliberately.
  */
 export const REVIEW_ROUTES = [
-  // Audience and comparison pages. They close by sending the reader to a
-  // /programs/* page, so they are reviewable only while those pages answer 200.
-  '/for-practices',
-  '/for-health-systems',
-  '/compare/vs-care-management-software',
-  '/compare/vs-outsourced-care-management',
-  '/compare/vs-doing-nothing',
-  // Links into the programme pages above, so it reviews with them.
-  '/academy',
+  // Empty since 8 Oct 2026, when the last six (the two audience pages, the
+  // three comparisons and /academy) were published after a claims pass. Put a
+  // route here to share it unindexed before it is ready.
 ];
 
 /**

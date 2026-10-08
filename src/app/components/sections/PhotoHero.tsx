@@ -55,7 +55,7 @@ export interface PhotoHeroProps {
 export const LOOP_ROWS: HeroCardRow[] = [
   { label: "Monthly check-in · M. Alvarez", chip: "Reached", tone: "positive" },
   { label: "Reports two missed doses", chip: "Flagged to Dr Reyes", tone: "flag" },
-  { label: "Note in chart · 20 min attributed", chip: "Ready to sign", tone: "accent" },
+  { label: "Note in chart · ready for review", chip: "Ready to sign", tone: "accent" },
 ];
 
 export const KITCHEN_PHOTO = {

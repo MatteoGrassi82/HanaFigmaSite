@@ -3,7 +3,6 @@ import { Footer } from "../components/layout/Footer";
 import { PhotoHero, CARE_TEAM_PHOTO } from "../components/sections/PhotoHero";
 import { MonthWrittenUp } from "../components/sections/MonthWrittenUp";
 import { InlineImageHeader } from "../components/sections/InlineImageHeader";
-import { IntegrationsSection } from "../components/sections/IntegrationsSection";
 import { SonicDemoSection } from "../components/sections/SonicDemoSection";
 import type { WebCallProps } from "../components/templates/ProgrammePage";
 import { EligibilityGap } from "../components/sections/EligibilityGap";
@@ -49,10 +48,10 @@ const COPY = {
 /* The example month shown in the written-up section. ILLUSTRATIVE: not a real
  * patient, not real readings, and the card header says "an example month". */
 const MONTH = [
-  { day: "Aug 3", title: "Monthly check-in", body: "Taking both blood pressure meds. Home reading 138/86.", src: "HANA call · summarised", len: "6 min" },
-  { day: "Aug 11", title: "Refill and diet", body: "Metformin refill due Friday. Two skipped breakfasts this week.", src: "HANA call · summarised", len: "5 min" },
-  { day: "Aug 18", title: "Threshold crossed", body: "158/94 on two home readings. Escalated to the treating clinician with the full call.", src: "HANA call · flagged to the threshold you set", len: "7 min" },
-  { day: "Aug 26", title: "Care plan review", body: "Dose adjusted 20 Aug. Back to 134/84. Goals reconfirmed with the patient.", src: "HANA call · summarised", len: "4 min" },
+  { day: "Aug 3", title: "Monthly check-in", body: "Taking both blood pressure meds. Home reading 138/86.", src: "HANA call · summarised", },
+  { day: "Aug 11", title: "Refill and diet", body: "Metformin refill due Friday. Two skipped breakfasts this week.", src: "HANA call · summarised", },
+  { day: "Aug 18", title: "Threshold crossed", body: "158/94 on two home readings. Escalated to the treating clinician with the full call.", src: "HANA call · flagged to the threshold you set", },
+  { day: "Aug 26", title: "Care plan review", body: "Dose adjusted 20 Aug. Back to 134/84. Goals reconfirmed with the patient.", src: "HANA call · summarised", },
 ];
 
 const ROLLOUT = [
@@ -80,7 +79,7 @@ const FAQS = [
   },
   {
     q: "Who owns the claim when a group has many tax IDs?",
-    a: "The billing entity that owns the patient. HANA supplies the monthly contact and the documentation; the claim goes out from the site under its own NPI, exactly as it does today. HANA never bills on your behalf.",
+    a: "The billing entity that owns the patient. HANA makes the calls and writes them up; the claim goes out from the site under its own NPI, exactly as it does today. HANA never bills on your behalf.",
   },
   {
     q: "Do your figures apply to a provider-based clinic?",
@@ -88,11 +87,11 @@ const FAQS = [
   },
   {
     q: "How does it fit our EHR?",
-    a: "The note lands in the chart your clinicians already work in, with the time attributed, ready to review. What that takes depends on which system and which integration path, and it is a conversation rather than a claim we can make on a page.",
+    a: "The note lands in the chart your clinicians already work in, ready for your staff to review. What that takes depends on which system and which integration path, and it is a conversation rather than a claim we can make on a page.",
   },
   {
     q: "Does each site need its own staff for this?",
-    a: "No new hires. Each site needs people who review and attest, which is work your clinicians already do for everything else that bills. HANA makes the calls and writes them up, and nothing bills until a person on your team approves it.",
+    a: "No new hires. The billable time stays with each site's clinical staff, the people already doing this work for everything else that bills. HANA takes the dialling and the typing off them, and nothing bills until a person on your team approves it.",
   },
   {
     q: "Can we start with one clinic?",
@@ -108,7 +107,6 @@ export function ForHealthSystems(webCall: WebCallProps) {
         description={COPY.description}
         path="/for-health-systems"
         useExactTitle
-        robots="noindex, nofollow"
         keywords="multi-site care management, health system chronic care management, care coordination at scale, group practice CCM"
         jsonLd={[
           breadcrumbSchema([
@@ -125,7 +123,7 @@ export function ForHealthSystems(webCall: WebCallProps) {
       <PhotoHero
         eyebrow="For health systems"
         headline={<>Same programmes. <em>A much bigger gap.</em></>}
-        body="Your clinics already bill these codes. At group scale the number of eligible patients nobody has called is not a rounding error, it is most of the panel."
+        body="Your clinics already bill these codes. At group scale the number of eligible patients nobody has called is not a rounding error, it is most of your eligible patients."
         image={CARE_TEAM_PHOTO}
         secondaryCta={{ label: "See the gap at scale", href: "#gap" }}
       />
@@ -176,7 +174,7 @@ export function ForHealthSystems(webCall: WebCallProps) {
         entries={MONTH}
         badge="CCM"
         pill="Chronic Care Management"
-        chip="CCM 99490"
+        chip="CCM"
         body="Every contact HANA makes is recorded and summarised straight into the patient's record. Whichever clinic the patient belongs to, when your clinician opens them the month is already there. The clock they start runs on reading and attesting, not typing."
         stats={[
           { value: "0:00", label: "Time any of your sites spends writing the month up" },
@@ -187,12 +185,11 @@ export function ForHealthSystems(webCall: WebCallProps) {
 
       <HowItWorksLoop id="how-it-works" />
 
-      {/* DOES IT FIT MY EHR -- a top-three practice question that neither
-          audience page answered visually. Taken from Home, where the catalogue
-          showed it stranded on one page. Placed BEFORE three phases so the
-          order matches how the objections arrive: does it fit what we run,
-          then how long until we are live. */}
-      <IntegrationsSection />
+      {/* DOES IT FIT MY EHR. IntegrationsSection sat here and came off at
+          publish (8 Oct 2026): its shared copy claims "500+ healthcare
+          practices" and "95+ EHRs", both under the numbers embargo, and a
+          wearables line that is still roadmap. Bring it back only with
+          page-specific copy that names no count. */}
 
       {/* THREE PHASES — the section Matteo singled out as working ("I think
           it's good in the three phases"). It is InlineImageHeader, and it is

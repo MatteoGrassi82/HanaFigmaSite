@@ -201,7 +201,7 @@ export function ProgrammePage({
         entries={log}
         badge={data.code}
         pill={data.name}
-        chip={`${data.code} ${data.payment.code}`}
+        chip={data.code}
         /* Was "with the minutes attributed against the code", which reads as
            HANA's call time counting toward the billing threshold. It never does:
            CMS counts only clinical staff time (CCM FAQ p.1). The record is

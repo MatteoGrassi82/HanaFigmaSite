@@ -62,7 +62,7 @@ const COLUMNS = [
     variant: "feature" as const,
     points: [
       "Every eligible patient gets the monthly contact, in 30+ languages",
-      "The note lands in your chart with the time attributed",
+      "The note lands in your chart, ready for your staff to review",
       "Your team reviews and attests, and nothing bills until they do",
       "Reaching the rest of the panel is not a hiring decision",
     ],
@@ -84,7 +84,7 @@ const FAQS = [
   },
   {
     q: "What is the risk of starting?",
-    a: "The honest answer is that these are billing rules and they have to be got right. That is why nothing bills until a person on your team has read the note and approved it, and why the programme pages list the questions we will not guess at rather than answering them plausibly.",
+    a: "The honest answer is that these are billing rules and they have to be got right. That is why nothing bills until a person on your team has read the note and approved it, and why each programme page answers the billing rules from CMS's own documents, with the source beside each one.",
   },
   {
     q: "Could we just hire someone?",
@@ -100,7 +100,6 @@ export function VsDoingNothing(webCall: WebCallProps) {
         description={COPY.description}
         path="/compare/vs-doing-nothing"
         useExactTitle
-        robots="noindex, nofollow"
         keywords="cost of not billing chronic care management, unenrolled Medicare patients, CCM revenue opportunity"
         jsonLd={[
           breadcrumbSchema([

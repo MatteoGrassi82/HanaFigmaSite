@@ -81,7 +81,7 @@ const ENROLL_STEPS = [
   {
     value: NATIONAL_ENROLLMENT_PCT,
     label: `${NATIONAL_ENROLLMENT_PCT}%`,
-    note: "the national pace today",
+    note: "the 2019 national rate",
   },
   { value: 25, label: "25%", note: "a quarter of the panel" },
   { value: 50, label: "50%", note: "half the panel" },

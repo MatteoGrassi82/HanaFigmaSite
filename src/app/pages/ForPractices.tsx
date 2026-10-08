@@ -3,7 +3,6 @@ import { Footer } from "../components/layout/Footer";
 import { PhotoHero, CLINICIAN_PHOTO } from "../components/sections/PhotoHero";
 import { MonthWrittenUp } from "../components/sections/MonthWrittenUp";
 import { InlineImageHeader } from "../components/sections/InlineImageHeader";
-import { IntegrationsSection } from "../components/sections/IntegrationsSection";
 import { SonicDemoSection } from "../components/sections/SonicDemoSection";
 import type { WebCallProps } from "../components/templates/ProgrammePage";
 import { EligibilityGap } from "../components/sections/EligibilityGap";
@@ -51,24 +50,24 @@ const COPY = {
  * across the month on a two-or-more-conditions patient, because this page's
  * programme cards land on CCM more often than anything else. */
 const MONTH = [
-  { day: "Aug 3", title: "Monthly check-in", body: "Taking both blood pressure meds. Home reading 138/86.", src: "HANA call · summarised", len: "6 min" },
-  { day: "Aug 11", title: "Refill and diet", body: "Metformin refill due Friday. Two skipped breakfasts this week.", src: "HANA call · summarised", len: "5 min" },
-  { day: "Aug 18", title: "Threshold crossed", body: "158/94 on two home readings. Escalated to Dr Reyes with the full call.", src: "HANA call · flagged to the threshold you set", len: "7 min" },
-  { day: "Aug 26", title: "Care plan review", body: "Dose adjusted 20 Aug. Back to 134/84. Goals reconfirmed with the patient.", src: "HANA call · summarised", len: "4 min" },
+  { day: "Aug 3", title: "Monthly check-in", body: "Taking both blood pressure meds. Home reading 138/86.", src: "HANA call · summarised", },
+  { day: "Aug 11", title: "Refill and diet", body: "Metformin refill due Friday. Two skipped breakfasts this week.", src: "HANA call · summarised", },
+  { day: "Aug 18", title: "Threshold crossed", body: "158/94 on two home readings. Escalated to Dr Reyes with the full call.", src: "HANA call · flagged to the threshold you set", },
+  { day: "Aug 26", title: "Care plan review", body: "Dose adjusted 20 Aug. Back to 134/84. Goals reconfirmed with the patient.", src: "HANA call · summarised", },
 ];
 
 const FAQS = [
   {
     q: "Do we have to change anything about how we bill?",
-    a: "No. They are your patients and it is your claim, billed under your NPI the way you bill everything else. HANA supplies the monthly contact and the documentation behind it. What changes is that the month has something in it to bill.",
+    a: "No. They are your patients and it is your claim, billed under your NPI the way you bill everything else. HANA makes the calls and writes them up. Your clinical staff do the billable work, under your NPI.",
   },
   {
     q: "How much of our team's time does this take?",
-    a: "Review and attestation. HANA makes the call, asks what your clinicians scoped, and writes the note with the time attributed. A person on your team reads it and approves it, and nothing bills until they do.",
+    a: "The billable time is still your clinical staff's: twenty minutes a month for chronic care management. HANA takes the dialling and the typing off them. It makes the call, asks what your clinicians scoped, and puts the note in your chart, ready for your staff to review. Nothing bills until a person on your team approves it.",
   },
   {
     q: "Are you hiring people to call our patients?",
-    a: "No. HANA is software making the call. That is the whole point of the price: you are not paying for somebody's hours, so the number of patients you can reach is not capped by who anybody managed to hire.",
+    a: "No. HANA makes the calls itself. That is the whole point of the price: you are not paying for somebody's hours, so the number of patients you can reach is not capped by who anybody managed to hire.",
   },
   {
     q: "What if a patient says something that needs a clinician?",
@@ -80,7 +79,7 @@ const FAQS = [
   },
   {
     q: "Which programme should we start with?",
-    a: "Whichever fits the patients you already have. Chronic care management has the widest eligibility, so most practices land there, but that is a fact about panels rather than a recommendation. The chooser on the programmes page asks three questions and lands on one.",
+    a: "Whichever fits the patients you already have. Chronic care management has the widest eligibility, so most practices land there, but that is a fact about panels rather than a recommendation. The filter on the programmes page shows which ones fit your patients.",
   },
 ];
 
@@ -92,7 +91,6 @@ export function ForPractices(webCall: WebCallProps) {
         description={COPY.description}
         path="/for-practices"
         useExactTitle
-        robots="noindex, nofollow"
         keywords="care management for independent practices, chronic care management, small practice Medicare billing, care coordination"
         jsonLd={[
           breadcrumbSchema([{ name: "For practices", url: "https://www.hana.health/for-practices" }]),
@@ -126,7 +124,7 @@ export function ForPractices(webCall: WebCallProps) {
         entries={MONTH}
         badge="CCM"
         pill="Chronic Care Management"
-        chip="CCM 99490"
+        chip="CCM"
         body="Every contact HANA makes is recorded and summarised straight into the patient's record. When your clinician opens the patient, the month is already there. The clock they start runs on reading and attesting, not typing."
         stats={[
           { value: "0:00", label: "Time your team spends writing the month up" },
@@ -142,11 +140,11 @@ export function ForPractices(webCall: WebCallProps) {
         <div className="max-w-[1120px] mx-auto">
           <p className="text-eyebrow font-bold uppercase text-ink-mute m-0 mb-4">What you can bill</p>
           <h2 className="font-serif text-h2 text-ink m-0 mb-3 max-w-[22ch]">
-            Seven programmes. One loop.
+            Four programmes. One loop.
           </h2>
           <p className="text-[16.5px] leading-[1.7] text-ink-soft m-0 mb-10 max-w-[62ch]">
             The difference between them is who counts and what the month has to show. The work is
-            the same shape in all seven.
+            the same shape in all four.
           </p>
           <ul className="m-0 p-0 list-none grid gap-4 md:grid-cols-2">
             {PUBLISHED_PROGRAMMES.map((p) => (
@@ -189,12 +187,11 @@ export function ForPractices(webCall: WebCallProps) {
           and it closes on a founders' card, which is an odd note to strike
           mid-funnel. It stays on Home. */}
 
-      {/* DOES IT FIT MY EHR -- a top-three practice question that neither
-          audience page answered visually. Taken from Home, where the catalogue
-          showed it stranded on one page. Placed BEFORE three phases so the
-          order matches how the objections arrive: does it fit what we run,
-          then how long until we are live. */}
-      <IntegrationsSection />
+      {/* DOES IT FIT MY EHR. IntegrationsSection sat here and came off at
+          publish (8 Oct 2026): its shared copy claims "500+ healthcare
+          practices" and "95+ EHRs", both under the numbers embargo, and a
+          wearables line that is still roadmap. Bring it back only with
+          page-specific copy that names no count. */}
 
       {/* THREE PHASES — the section Matteo singled out as working ("I think
           it's good in the three phases"). It is InlineImageHeader, and it is

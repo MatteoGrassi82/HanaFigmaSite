@@ -67,8 +67,8 @@ const COLUMNS = [
     variant: "feature" as const,
     points: [
       "The call is made under your practice's name, to your protocol",
-      "Capacity is not a hiring problem, so the whole panel is reachable",
-      "The note lands in your chart with the time attributed, ready to review",
+      "Capacity is not a hiring problem, so the whole panel can be called",
+      "The note lands in your chart, ready for your staff to review",
       "Your team reviews and attests, and nothing bills until they do",
     ],
   },
@@ -81,7 +81,7 @@ const OWNERSHIP = [
   },
   {
     title: "The record stays yours",
-    body: "The note is written into the chart your clinicians already work in, with the time attributed, rather than arriving as a document somebody else produced and you have to reconcile.",
+    body: "The note is written into the chart your clinicians already work in, rather than arriving as a document somebody else produced and you have to reconcile.",
   },
   {
     title: "The claim stays yours",
@@ -92,16 +92,16 @@ const OWNERSHIP = [
 /* The example month. ILLUSTRATIVE: not a real patient, not real readings, and
  * the card header says "an example month" on screen. */
 const MONTH = [
-  { day: "Aug 3", title: "Monthly check-in", body: "Taking both blood pressure meds. Home reading 138/86.", src: "HANA call · summarised", len: "6 min" },
-  { day: "Aug 11", title: "Refill and diet", body: "Metformin refill due Friday. Two skipped breakfasts this week.", src: "HANA call · summarised", len: "5 min" },
-  { day: "Aug 18", title: "Threshold crossed", body: "158/94 on two home readings. Escalated to the treating clinician with the full call.", src: "HANA call · flagged to the threshold you set", len: "7 min" },
-  { day: "Aug 26", title: "Care plan review", body: "Dose adjusted 20 Aug. Back to 134/84. Goals reconfirmed with the patient.", src: "HANA call · summarised", len: "4 min" },
+  { day: "Aug 3", title: "Monthly check-in", body: "Taking both blood pressure meds. Home reading 138/86.", src: "HANA call · summarised", },
+  { day: "Aug 11", title: "Refill and diet", body: "Metformin refill due Friday. Two skipped breakfasts this week.", src: "HANA call · summarised", },
+  { day: "Aug 18", title: "Threshold crossed", body: "158/94 on two home readings. Escalated to the treating clinician with the full call.", src: "HANA call · flagged to the threshold you set", },
+  { day: "Aug 26", title: "Care plan review", body: "Dose adjusted 20 Aug. Back to 134/84. Goals reconfirmed with the patient.", src: "HANA call · summarised", },
 ];
 
 const FAQS = [
   {
     q: "Is HANA a care management service?",
-    a: "No. HANA is software your practice runs. It is not a staffing arrangement and there is no team of people somewhere making the calls. That distinction is the reason capacity is not priced by the hour.",
+    a: "No. HANA makes the calls itself, under your practice's name. It is not a staffing arrangement and there is no team of people somewhere making the calls. That distinction is the reason capacity is not priced by the hour.",
   },
   {
     q: "Who is talking to our patients?",
@@ -109,15 +109,15 @@ const FAQS = [
   },
   {
     q: "What happens to our notes?",
-    a: "They are written into your chart with the time attributed, ready for review. Nothing lives only in our system waiting to be exported, and nothing has to be reconciled at month end.",
+    a: "They are written into your chart, ready for your staff to review. Nothing lives only in our system waiting to be exported, and nothing has to be reconciled at month end.",
   },
   {
     q: "Is this cheaper than contracting the work out?",
-    a: "It is priced differently, which matters more than cheaper. Contracted calling is priced against hours, so reaching twice as many patients costs about twice as much. Software is not, so the economics of reaching the rest of your panel are not the same question.",
+    a: "It is priced differently, which matters more than cheaper. Contracted calling is priced against hours, so reaching twice as many patients costs about twice as much. HANA is not, so the economics of reaching the rest of your panel are not the same question.",
   },
   {
     q: "Could we do both?",
-    a: "Practices do. A common pattern is HANA for the monthly contact across the whole panel and people for the small number of patients who need a longer, harder conversation. The point is that the routine month should not be the thing consuming your capacity.",
+    a: "You can. One way to split it: HANA for the monthly contact across the whole panel and people for the small number of patients who need a longer, harder conversation. The point is that the routine month should not be the thing consuming your capacity.",
   },
   {
     q: "What if we already have a contract in place?",
@@ -133,7 +133,6 @@ export function VsOutsourcedCareManagement(webCall: WebCallProps) {
         description={COPY.description}
         path="/compare/vs-outsourced-care-management"
         useExactTitle
-        robots="noindex, nofollow"
         keywords="outsourced care management alternative, in-house care coordination, chronic care management staffing"
         jsonLd={[
           breadcrumbSchema([
@@ -197,7 +196,7 @@ export function VsOutsourcedCareManagement(webCall: WebCallProps) {
         entries={MONTH}
         badge="CCM"
         pill="Chronic Care Management"
-        chip="CCM 99490"
+        chip="CCM"
         body="Nothing here was handed back to you at month end. Each contact was written straight into your chart as it happened, under your practice's name. The record is yours before anyone reviews it."
         stats={[
           { value: "0:00", label: "Time spent reconciling somebody else's notes" },

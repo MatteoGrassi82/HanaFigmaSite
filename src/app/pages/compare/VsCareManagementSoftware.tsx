@@ -64,8 +64,8 @@ const COLUMNS = [
     variant: "feature" as const,
     points: [
       "It dials, it listens, it writes the note",
-      "Every patient, every month, in 30+ languages",
-      "The note lands in your chart with the time attributed",
+      "Calls every enrolled patient every month, in 30+ languages",
+      "The note lands in your chart, ready for your staff to review",
       "Your team reviews and attests, and nothing bills until they do",
     ],
   },
@@ -74,10 +74,10 @@ const COLUMNS = [
 /* The example month. ILLUSTRATIVE: not a real patient, not real readings, and
  * the card header says "an example month" on screen. */
 const MONTH = [
-  { day: "Aug 3", title: "Monthly check-in", body: "Taking both blood pressure meds. Home reading 138/86.", src: "HANA call · summarised", len: "6 min" },
-  { day: "Aug 11", title: "Refill and diet", body: "Metformin refill due Friday. Two skipped breakfasts this week.", src: "HANA call · summarised", len: "5 min" },
-  { day: "Aug 18", title: "Threshold crossed", body: "158/94 on two home readings. Escalated to the treating clinician with the full call.", src: "HANA call · flagged to the threshold you set", len: "7 min" },
-  { day: "Aug 26", title: "Care plan review", body: "Dose adjusted 20 Aug. Back to 134/84. Goals reconfirmed with the patient.", src: "HANA call · summarised", len: "4 min" },
+  { day: "Aug 3", title: "Monthly check-in", body: "Taking both blood pressure meds. Home reading 138/86.", src: "HANA call · summarised", },
+  { day: "Aug 11", title: "Refill and diet", body: "Metformin refill due Friday. Two skipped breakfasts this week.", src: "HANA call · summarised", },
+  { day: "Aug 18", title: "Threshold crossed", body: "158/94 on two home readings. Escalated to the treating clinician with the full call.", src: "HANA call · flagged to the threshold you set", },
+  { day: "Aug 26", title: "Care plan review", body: "Dose adjusted 20 Aug. Back to 134/84. Goals reconfirmed with the patient.", src: "HANA call · summarised", },
 ];
 
 const FAQS = [
@@ -91,7 +91,7 @@ const FAQS = [
   },
   {
     q: "Is a time tracker not enough to bill?",
-    a: "It is enough to bill the months you actually worked. The problem it does not solve is the months nobody got to. A tool that records twenty minutes cannot create twenty minutes.",
+    a: "It is enough to bill the months you actually worked. The problem it does not solve is the months nobody got to. A tool that records the work cannot do the work.",
   },
   {
     q: "Can we keep our own care plan templates?",
@@ -111,7 +111,6 @@ export function VsCareManagementSoftware(webCall: WebCallProps) {
         description={COPY.description}
         path="/compare/vs-care-management-software"
         useExactTitle
-        robots="noindex, nofollow"
         keywords="care management software alternative, chronic care management software, care coordination platform comparison"
         jsonLd={[
           breadcrumbSchema([
@@ -124,7 +123,7 @@ export function VsCareManagementSoftware(webCall: WebCallProps) {
       <Hero
         tone="orbs"
         eyebrow="Compared with care management software"
-        headline={<>Tracking the minutes <em>does not create them.</em></>}
+        headline={<>Tracking the work <em>does not do it.</em></>}
         body="Care management software is a system of record for work a person still has to do. It holds the care plan, counts the time and builds the claim, and none of it starts until somebody dials."
         primaryCta={{ label: "Book a demo", href: DEMO_HREF }}
         secondaryCta={{ label: "See the difference", href: "#compare" }}
@@ -151,7 +150,7 @@ export function VsCareManagementSoftware(webCall: WebCallProps) {
         entries={MONTH}
         badge="CCM"
         pill="Chronic Care Management"
-        chip="CCM 99490"
+        chip="CCM"
         body="This is the part a system of record cannot do for you. Every contact is made, recorded and summarised straight into the patient's record. Nobody typed it up. The clock your clinician starts runs on reading and attesting."
         stats={[
           { value: "0:00", label: "Time your team spends writing the month up" },
