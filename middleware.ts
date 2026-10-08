@@ -9,8 +9,9 @@ import { next } from "@vercel/edge";
  * Until then, a first-time visitor from an Italian IP was 302'd to
  * ita.hana.health. That site is parked: ita.hana.health now redirects to
  * www.hana.health at the domain level, so keeping the geo rule would bounce an
- * Italian visitor between the two hosts. The old rule is in git history at
- * b4b8ed0 if the Italian site ever comes back.
+ * Italian visitor between the two hosts. The old rule is in git history, in
+ * the parent of the commit "feat(i18n): park the Italian site", if the
+ * Italian site ever comes back.
  */
 
 export const config = {
