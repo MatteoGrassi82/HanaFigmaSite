@@ -55,7 +55,7 @@ export function IntegrationsSection() {
                 </p>
                 
                 <div className="flex flex-wrap gap-[10px]">
-                   {["Athena Health", "Epic", "eClinicalWorks", "Redox", "95+ EHRs"].map(item => (
+                   {["Athena Health", "Epic", "eClinicalWorks", "95+ EHRs"].map(item => (
                      <span key={item} className="inline-flex items-center gap-[7px] px-[14px] py-[7px] rounded-lg bg-paper-2 border border-rule text-[13px] font-medium text-navy-soft transition-colors hover:bg-paper-2 hover:border-rule tracking-[0.01em]">
                        <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-blue-500"></span>
                        {item}

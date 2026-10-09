@@ -854,8 +854,8 @@ const INTEGRATION_PILLARS = [
     icon: ICONS.database,
     title: "EHR integrations",
     tagline: "Reads the chart. Writes structured notes back.",
-    body: "Direct integrations with major EHRs, or through Redox and health-data networks to reach 150+ systems. HANA pulls patient context before it speaks — and documents the outcome when it hangs up.",
-    chips: ["Athena Health", "Charm", "Practice Q", "Redox", "eClinicalWorks", "150+ EHRs"],
+    body: "Direct integrations with major EHRs, or through health-data networks to reach 150+ systems. HANA pulls patient context before it speaks — and documents the outcome when it hangs up.",
+    chips: ["Athena Health", "Charm", "Practice Q", "eClinicalWorks", "150+ EHRs"],
     foot: "The chart is current the moment the call ends.",
   },
 ];
