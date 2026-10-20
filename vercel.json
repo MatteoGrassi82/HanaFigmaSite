@@ -4,6 +4,11 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/blog/why-clinic-patient-app-15-percent-engagement-voice-ai",
+      "destination": "/blog/why-patients-drop-out-of-ccm",
+      "permanent": true
+    },
+    {
       "source": "/remote-v2",
       "destination": "/",
       "permanent": true
