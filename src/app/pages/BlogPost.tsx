@@ -14,6 +14,46 @@ function formatDate(dateStr?: string) {
   return new Date(dateStr).toLocaleDateString(dateLocale, { year: "numeric", month: "long", day: "numeric" });
 }
 
+function blockText(block: any): string {
+  return (block?.children || []).map((c: any) => c?.text || "").join("").trim();
+}
+
+// FAQPage markup from the post's own "Frequently asked questions" section: each h3 is a
+// question, the paragraphs under it are the answer. Only posts written to the explainer
+// template (first line "Updated <Month YYYY>. Written by ...") get it. The older posts'
+// FAQ answers repeat traction numbers we no longer publish, and structured data would
+// hand those straight to answer engines.
+function buildFaqSchema(body?: any[]) {
+  if (!body?.length) return null;
+  if (!/^Updated \w+ \d{4}\. Written by /.test(blockText(body[0]))) return null;
+  const start = body.findIndex(
+    (b) => b?._type === "block" && b.style === "h2" && /^(frequently asked questions|faqs?)$/i.test(blockText(b))
+  );
+  if (start < 0) return null;
+  const items: { question: string; answer: string[] }[] = [];
+  for (const b of body.slice(start + 1)) {
+    if (b?._type !== "block") continue;
+    if (b.style === "h2") break;
+    if (b.style === "h3") {
+      items.push({ question: blockText(b), answer: [] });
+      continue;
+    }
+    const text = blockText(b);
+    if (text && items.length) items[items.length - 1].answer.push(text);
+  }
+  const qa = items.filter((i) => i.question && i.answer.length);
+  if (!qa.length) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": qa.map((i) => ({
+      "@type": "Question",
+      "name": i.question,
+      "acceptedAnswer": { "@type": "Answer", "text": i.answer.join(" ") },
+    })),
+  };
+}
+
 const portableTextComponents = {
   types: {
     image: ({ value }: any) => {
@@ -115,6 +155,7 @@ export function BlogPost() {
     "mainEntityOfPage": { "@type": "WebPage", "@id": `https://www.hana.health/blog/${slug}` },
     ...(post.categories?.length ? { "keywords": post.categories.map(c => c.title).join(", ") } : {}),
   };
+  const faqSchema = buildFaqSchema(post.body);
 
   return (
     <>
@@ -124,7 +165,7 @@ export function BlogPost() {
         description={seoDescription}
         path={`/blog/${slug}`}
         type="article"
-        jsonLd={articleSchema}
+        jsonLd={faqSchema ? [articleSchema, faqSchema] : articleSchema}
         {...(seoImage ? { image: seoImage } : {})}
         {...(seoRobots ? { robots: seoRobots } : {})}
       />

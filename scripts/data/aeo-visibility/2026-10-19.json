@@ -1,0 +1,3038 @@
+{
+  "date": "2026-10-19",
+  "engines": [
+    "google",
+    "perplexity",
+    "chatgpt"
+  ],
+  "queries": {
+    "hana health": "brand",
+    "hana health voice ai": "brand",
+    "hana health reviews": "brand",
+    "hana health alternatives": "brand",
+    "what is Hana Health voice AI": "brand",
+    "hana health vs thoroughcare": "comparison",
+    "thoroughcare alternatives": "comparison",
+    "alternatives to ThoroughCare for CCM and APCM": "comparison",
+    "healtharc vs hana health": "comparison",
+    "chartspan alternatives in-house CCM": "comparison",
+    "best voice AI for chronic care management patient outreach": "category",
+    "best chronic care management software 2026": "category",
+    "AI patient engagement platform for chronic care management": "category",
+    "AI agent that calls patients between visits for CCM programs": "category",
+    "HIPAA compliant voice AI that calls patients and writes back to the EHR": "category",
+    "voice AI for post-discharge follow-up calls to reduce readmissions": "category",
+    "AI voice agent for ADHD intake behavioral health": "category",
+    "CPAP adherence voice AI for sleep medicine": "category",
+    "can a third party company do chronic care management calls for my practice": "care",
+    "does AI call time count toward CCM minutes": "care",
+    "best APCM software for primary care practices": "care",
+    "how to bill APCM G0556 G0557 G0558": "care",
+    "APCM vs CCM which should my practice bill": "care",
+    "how to start a chronic care management program in a small practice": "care",
+    "chronic care management for FQHCs G0511": "care",
+    "how to get patients to consent to chronic care management": "care",
+    "outsourced chronic care management companies": "care",
+    "behavioral health integration 99484 requirements": "care",
+    "transitional care management 2 business day contact requirements": "care",
+    "how much revenue can chronic care management generate per patient": "care",
+    "how to improve CPAP compliance for Medicare patients": "sleep",
+    "Medicare CPAP compliance requirements first 90 days": "sleep",
+    "CPAP resupply outreach software for DME suppliers": "sleep",
+    "how much revenue does a DME lose when a CPAP patient is non compliant": "sleep",
+    "best CPAP compliance tracking software for DME": "sleep",
+    "will GLP-1 drugs replace CPAP for sleep apnea": "sleep",
+    "why do patients stop using CPAP in the first month": "sleep",
+    "CPAP face to face reevaluation requirements Medicare": "sleep",
+    "how can a primary care practice improve ACO quality measures": "vbc",
+    "how practices can improve medication adherence Star Ratings": "vbc",
+    "what replaces ACO REACH in 2027": "vbc",
+    "annual wellness visit outreach for Medicare patients": "vbc",
+    "care gap closure outreach for value-based care": "vbc",
+    "AI phone calls to close care gaps for Medicare Advantage": "vbc"
+  },
+  "records": [
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "care",
+      "query": "outsourced chronic care management companies",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "TimeDoc",
+        "ChartSpan",
+        "CCN Health",
+        "Signallamp",
+        "Wellbox"
+      ],
+      "topDomains": [
+        "zipdo.co",
+        "worldmetrics.org",
+        "gitnux.org",
+        "wifitalents.com",
+        "ccihealth.care",
+        "kaicare.ai",
+        "practicemanagementconsultancy.com",
+        "linkedin.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "sleep",
+      "query": "CPAP resupply outreach software for DME suppliers",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "Brightree"
+      ],
+      "topDomains": [
+        "wellsky.com",
+        "synergyiq.net",
+        "webrun.ai",
+        "otsnews.co.uk",
+        "info.wellsky.com",
+        "curasev.com",
+        "myequipiq.com",
+        "armorydme.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "sleep",
+      "query": "Medicare CPAP compliance requirements first 90 days",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "med.noridianmedicare.com",
+        "understoodcare.com",
+        "somnicharts.com",
+        "upstate.edu",
+        "thedaybreak.com",
+        "rotech.com",
+        "philips.ie",
+        "sleepapnea.org"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "sleep",
+      "query": "why do patients stop using CPAP in the first month",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "pmc.ncbi.nlm.nih.gov",
+        "sleepfoundation.org",
+        "mayoclinic.org",
+        "dumas.ccsd.cnrs.fr",
+        "resmed.co.uk",
+        "boa.unimib.it",
+        "d-nb.info"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "sleep",
+      "query": "will GLP-1 drugs replace CPAP for sleep apnea",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "pmc.ncbi.nlm.nih.gov",
+        "sleepfoundation.org",
+        "resmed.com",
+        "ajmc.com",
+        "academic.oup.com",
+        "thehill.com",
+        "cpap.com",
+        "newsweek.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "sleep",
+      "query": "how to improve CPAP compliance for Medicare patients",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "cms.gov",
+        "upstate.edu",
+        "aarc.org",
+        "scholar.valpo.edu",
+        "link.springer.com",
+        "acponline.org",
+        "usa.philips.com",
+        "ccjm.org"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "sleep",
+      "query": "how much revenue does a DME lose when a CPAP patient is non compliant",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "synergyiq.net",
+        "airpinpoint.com",
+        "linkedin.com",
+        "callsphere.ai",
+        "kitrum.com",
+        "circadiance.com",
+        "ctacquisitions.com",
+        "fusioncx.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "vbc",
+      "query": "annual wellness visit outreach for Medicare patients",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "cms.gov",
+        "medicare.gov",
+        "mvphealthcare.com",
+        "comagine.org",
+        "marshallhealth.org",
+        "bmjopenquality.bmj.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "sleep",
+      "query": "best CPAP compliance tracking software for DME",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "ResMed",
+        "Philips",
+        "Brightree",
+        "AirView",
+        "Care Orchestrator"
+      ],
+      "topDomains": [
+        "omnimd.com",
+        "somnicharts.com",
+        "worldmetrics.org",
+        "airpinpoint.com",
+        "cpapclarity.com",
+        "unlimitedsystems.com",
+        "wellsky.com",
+        "otsnews.co.uk"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "brand",
+      "query": "hana health",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/",
+        "https://hana.health/primary-care",
+        "https://www.hana.health/privacy"
+      ],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "hanahealth.org",
+        "hana.health",
+        "governor.hawaii.gov",
+        "connector.hrsa.gov",
+        "linkedin.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "vbc",
+      "query": "AI phone calls to close care gaps for Medicare Advantage",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "voxyhealth.ai",
+        "elythea.org",
+        "coveragevoice.com",
+        "keruu.ai",
+        "ameridial.com",
+        "zynix.ai",
+        "assorthealth.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "brand",
+      "query": "hana health reviews",
+      "mentioned": true,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "zocdoc.com",
+        "thelowdown.com",
+        "yelp.com",
+        "doctor.webmd.com",
+        "tripadvisor.com",
+        "healthgrades.com",
+        "mapquest.com",
+        "medino.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "vbc",
+      "query": "how can a primary care practice improve ACO quality measures",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "cms.gov",
+        "aafp.org",
+        "fmch.bmj.com",
+        "journals.sagepub.com",
+        "mass.gov"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "brand",
+      "query": "hana health voice ai",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/labs",
+        "https://hana.health/voice-chat",
+        "https://docs.hana.health/enterprise/enterprise-guide",
+        "https://www.usehana.com/about",
+        "https://www.hana.health/blog/voice-ai-healthcare-evidence-vendor-claims",
+        "https://www.usehana.com/",
+        "https://www.hana.health/blog/voice-ai-healthcare-evidence-problem",
+        "https://docs.hana.health/reasoning-models/self-hosted-architecture"
+      ],
+      "position": null,
+      "competitors": [
+        "athenahealth"
+      ],
+      "topDomains": [
+        "hana.health",
+        "docs.hana.health",
+        "usehana.com",
+        "play.google.com",
+        "linkedin.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "care",
+      "query": "transitional care management 2 business day contact requirements",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "aafp.org",
+        "cms.gov",
+        "bcbsri.com",
+        "hccinstitute.org",
+        "aapc.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "brand",
+      "query": "hana health alternatives",
+      "mentioned": true,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "nccih.nih.gov",
+        "g2.com",
+        "producthunt.com",
+        "psychologytoday.com",
+        "hanahealth.org",
+        "my.clevelandclinic.org",
+        "amazon.co.uk",
+        "pmc.ncbi.nlm.nih.gov"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "care",
+      "query": "how to get patients to consent to chronic care management",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "cms.gov",
+        "aafp.org",
+        "ama-assn.org",
+        "ohsu.edu",
+        "cchpca.org"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "comparison",
+      "query": "thoroughcare alternatives",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "ChronicCareIQ",
+        "TimeDoc",
+        "CCN Health",
+        "HealthSnap"
+      ],
+      "topDomains": [
+        "slashdot.org",
+        "ebool.com",
+        "ccnhealth.com",
+        "circle.healthcare",
+        "healtharc.io",
+        "getlatka.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "comparison",
+      "query": "chartspan alternatives in-house CCM",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "Prevounce",
+        "ChronicCareIQ",
+        "ChartSpan",
+        "CCN Health",
+        "HealthSnap"
+      ],
+      "topDomains": [
+        "ccnhealth.com",
+        "circle.healthcare",
+        "healtharc.io",
+        "omnimd.com",
+        "chartspan.com",
+        "1bioshealth.com",
+        "worldmetrics.org",
+        "mindbowser.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "vbc",
+      "query": "how practices can improve medication adherence Star Ratings",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "ajmc.com",
+        "pmc.ncbi.nlm.nih.gov",
+        "binasss.sa.cr",
+        "pbahealth.com",
+        "jmcp.org",
+        "medicaleconomics.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "care",
+      "query": "how much revenue can chronic care management generate per patient",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "ccnhealth.com",
+        "mindbowser.com",
+        "thoroughcare.net",
+        "chroniccarestaffing.com",
+        "1bioshealth.com",
+        "tha.org",
+        "healtharc.io"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "category",
+      "query": "best chronic care management software 2026",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "Prevounce",
+        "ChronicCareIQ",
+        "TimeDoc",
+        "ChartSpan",
+        "CCN Health",
+        "HealthSnap",
+        "Optimize Health",
+        "Tebra"
+      ],
+      "topDomains": [
+        "themedicalpractice.com",
+        "softwarefinder.com",
+        "ccnhealth.com",
+        "healtharc.io",
+        "softwareadvice.com",
+        "f6s.com",
+        "sourceforge.net",
+        "wifitalents.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "category",
+      "query": "voice AI for post-discharge follow-up calls to reduce readmissions",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "plivo.com",
+        "consig.ai",
+        "fonada.ai",
+        "justcall.io",
+        "cabotsolutions.com",
+        "bland.ai",
+        "mindbowser.com",
+        "callsphere.ai"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "care",
+      "query": "can a third party company do chronic care management calls for my practice",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "cms.gov",
+        "caesarhealth.com",
+        "mgma.com",
+        "ruralhealthinfo.org",
+        "kffhealthnews.org",
+        "medicaleconomics.com",
+        "aama-ntl.org"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "vbc",
+      "query": "what replaces ACO REACH in 2027",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "beneschlaw.com",
+        "nrchealth.com",
+        "askphc.com",
+        "dynamichealthit.com",
+        "healthcaredive.com",
+        "pearlhealth.com",
+        "pyapc.com",
+        "capc.org"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "category",
+      "query": "AI voice agent for ADHD intake behavioral health",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "link.springer.com",
+        "physicianaitools.com",
+        "scienzahealth.com",
+        "callsphere.ai",
+        "lippy.ai",
+        "insidea.com",
+        "getperspective.ai",
+        "dial3d.ai"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "category",
+      "query": "best voice AI for chronic care management patient outreach",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "Hippocratic",
+        "Assort",
+        "Hyro",
+        "Assort Health",
+        "athenahealth",
+        "eClinicalWorks"
+      ],
+      "topDomains": [
+        "emitrr.com",
+        "telnyx.com",
+        "themedicalpractice.com",
+        "ringlyn.com",
+        "thelevel.ai",
+        "assorthealth.com",
+        "brilo.ai",
+        "bland.ai"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "vbc",
+      "query": "care gap closure outreach for value-based care",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "docs.oracle.com",
+        "linear.health",
+        "jeffersonhealthplans.com",
+        "stlukeshealthpartners.org",
+        "quaility.com",
+        "medinform.jmir.org",
+        "cipherhealth.com",
+        "ashp.org"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "care",
+      "query": "how to bill APCM G0556 G0557 G0558",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "cms.gov",
+        "aafp.org",
+        "chartspan.com",
+        "mindbowser.com",
+        "nachc.org",
+        "natlawreview.com",
+        "med.noridianmedicare.com",
+        "med.uth.edu"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "category",
+      "query": "AI patient engagement platform for chronic care management",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "Clinii",
+        "Commure"
+      ],
+      "topDomains": [
+        "friska.ai",
+        "play.google.com",
+        "businesswire.com",
+        "clinii.com",
+        "commure.com",
+        "tothenew.com",
+        "botmd.com",
+        "cipra.ai"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "care",
+      "query": "does AI call time count toward CCM minutes",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "positivecheck.com",
+        "tilehealthcare.com",
+        "caesarhealth.com",
+        "vigil-health.org",
+        "medicalcoding.online",
+        "justcall.io"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "category",
+      "query": "CPAP adherence voice AI for sleep medicine",
+      "mentioned": false,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/sleep"
+      ],
+      "position": null,
+      "competitors": [
+        "ResMed",
+        "AirView",
+        "myAir"
+      ],
+      "topDomains": [
+        "pmc.ncbi.nlm.nih.gov",
+        "link.springer.com",
+        "hana.health",
+        "academic.oup.com",
+        "callsphere.ai",
+        "resmed.com",
+        "deepdormir.ai"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "sleep",
+      "query": "CPAP face to face reevaluation requirements Medicare",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "document.resmed.com",
+        "summacare.com",
+        "oig.hhs.gov",
+        "usa.philips.com",
+        "aasm.org",
+        "meritushealth.com",
+        "resmed.com",
+        "philips.es"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "comparison",
+      "query": "alternatives to ThoroughCare for CCM and APCM",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "Prevounce",
+        "ChronicCareIQ",
+        "TimeDoc",
+        "ChartSpan",
+        "CareHarmony",
+        "Clinii",
+        "CCN Health",
+        "HealthSnap",
+        "Wellbox"
+      ],
+      "topDomains": [
+        "healtharc.io",
+        "ccnhealth.com",
+        "caesarhealth.com",
+        "mindbowser.com",
+        "omnimd.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "category",
+      "query": "HIPAA compliant voice AI that calls patients and writes back to the EHR",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "Hippocratic",
+        "Assort",
+        "Hyro",
+        "Retell",
+        "Commure",
+        "Phreesia",
+        "Assort Health",
+        "athenahealth",
+        "eClinicalWorks"
+      ],
+      "topDomains": [
+        "telnyx.com",
+        "retellai.com",
+        "commure.com",
+        "parloa.com",
+        "keragon.com",
+        "thoughtly.com",
+        "observe.ai",
+        "plivo.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "comparison",
+      "query": "healtharc vs hana health",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/"
+      ],
+      "position": null,
+      "competitors": [
+        "HealthArc"
+      ],
+      "topDomains": [
+        "hart.com",
+        "itechguides.com",
+        "capterra.com",
+        "play.google.com",
+        "linkedin.com",
+        "healthaidb.com",
+        "hana.health",
+        "elion.health"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "brand",
+      "query": "what is Hana Health voice AI",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://hana.health/voice-chat",
+        "https://www.hana.health/labs",
+        "https://docs.hana.health/reasoning-models/vocal-intelligence",
+        "https://docs.hana.health/enterprise/enterprise-guide",
+        "https://www.usehana.com/",
+        "https://www.hana.health/blog/why-clinic-patient-app-15-percent-engagement-voice-ai",
+        "https://docs.hana.health/getting-started/overview.md",
+        "https://docs.hana.health/implementation/personalization",
+        "https://docs.hana.health/research/active-research"
+      ],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "docs.hana.health",
+        "hana.health",
+        "usehana.com",
+        "linkedin.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "care",
+      "query": "behavioral health integration 99484 requirements",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "cms.gov",
+        "medschool.cuanschutz.edu",
+        "behavehealth.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "care",
+      "query": "APCM vs CCM which should my practice bill",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "mindbowser.com",
+        "cms.gov",
+        "aafp.org",
+        "kangaroohealth.com",
+        "tenovi.com",
+        "itas.health",
+        "chartspan.com",
+        "eclinicalworks.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "care",
+      "query": "chronic care management for FQHCs G0511",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "med.noridianmedicare.com",
+        "cms.gov",
+        "nachc.org",
+        "care-harmony.com",
+        "aapc.com",
+        "codingintel.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "care",
+      "query": "best APCM software for primary care practices",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "HealthArc",
+        "Prevounce",
+        "ChronicCareIQ",
+        "eClinicalWorks"
+      ],
+      "topDomains": [
+        "chroniccareiq.com",
+        "prevounce.com",
+        "healtharc.io",
+        "eclinicalworks.com",
+        "mdsynergy.com",
+        "capterra.ca",
+        "coachcare.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "comparison",
+      "query": "hana health vs thoroughcare",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://hana.health/primary-care",
+        "https://www.hana.health/",
+        "https://www.hana.health/care"
+      ],
+      "position": null,
+      "competitors": [
+        "ThoroughCare"
+      ],
+      "topDomains": [
+        "hanahealth.org",
+        "hana.health",
+        "connector.hrsa.gov",
+        "doctor.webmd.com",
+        "hanahealthcare.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "care",
+      "query": "how to start a chronic care management program in a small practice",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "aafp.org",
+        "1bioshealth.com",
+        "cms.gov",
+        "timedochealth.com",
+        "thoroughcare.net",
+        "gptrac.org",
+        "acponline.org",
+        "hqin.org"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "perplexity",
+      "group": "category",
+      "query": "AI agent that calls patients between visits for CCM programs",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "Carenox",
+        "Cadence"
+      ],
+      "topDomains": [
+        "managecare.ai",
+        "creamdigital.ai",
+        "coligomed.com",
+        "carenox.ai",
+        "cipra.ai",
+        "actiumhealth.com",
+        "healthviewx.com",
+        "prweb.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "sleep",
+      "query": "Medicare CPAP compliance requirements first 90 days",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "upstate.edu",
+        "thedaybreak.com",
+        "rotech.com",
+        "sleepapnea.org",
+        "medicare.gov",
+        "pmc.ncbi.nlm.nih.gov",
+        "hmenews.com",
+        "apriadirect.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "care",
+      "query": "transitional care management 2 business day contact requirements",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "cms.gov",
+        "aafp.org",
+        "med.noridianmedicare.com",
+        "nachc.org",
+        "aapc.com",
+        "providers.patriushealth.com",
+        "aledade.com",
+        "ashp.org"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "sleep",
+      "query": "best CPAP compliance tracking software for DME",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "ResMed",
+        "Philips",
+        "AirView",
+        "Care Orchestrator"
+      ],
+      "topDomains": [
+        "getapp.com",
+        "sourceforge.net",
+        "cpaptalk.com",
+        "secure.hmepowerweb.com",
+        "reddit.com",
+        "slashdot.org",
+        "trustlist.uk",
+        "resmed.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "vbc",
+      "query": "how practices can improve medication adherence Star Ratings",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "jmcp.org",
+        "anewhealthrx.com",
+        "adherehealth.com",
+        "pmc.ncbi.nlm.nih.gov",
+        "ajmc.com",
+        "tenovi.com",
+        "navitus.com",
+        "sciencedirect.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "sleep",
+      "query": "CPAP face to face reevaluation requirements Medicare",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "cms.gov",
+        "med.noridianmedicare.com",
+        "document.resmed.com",
+        "medicare.gov",
+        "pmc.ncbi.nlm.nih.gov",
+        "sleepapnea.org",
+        "aasm.org",
+        "cgsmedicare.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "care",
+      "query": "behavioral health integration 99484 requirements",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "cms.gov",
+        "behavehealth.com",
+        "aafp.org",
+        "blog.nsightcare.com",
+        "blog.proemhealth.com",
+        "payerprice.com",
+        "aapc.com",
+        "thoroughcare.net"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "sleep",
+      "query": "will GLP-1 drugs replace CPAP for sleep apnea",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "pmc.ncbi.nlm.nih.gov",
+        "sleepfoundation.org",
+        "resmed.com",
+        "sleepdoc.com",
+        "healthline.com",
+        "ceceliahealth.com",
+        "facebook.com",
+        "hhme.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "vbc",
+      "query": "how can a primary care practice improve ACO quality measures",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "Aledade"
+      ],
+      "topDomains": [
+        "cms.gov",
+        "pmc.ncbi.nlm.nih.gov",
+        "aledade.com",
+        "hfma.org",
+        "ajmc.com",
+        "chcs.org",
+        "blog.medisolv.com",
+        "ncoa.org"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "care",
+      "query": "how to get patients to consent to chronic care management",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "ama-assn.org",
+        "palmettogba.com",
+        "cms.gov",
+        "acpjournals.org",
+        "edhub.ama-assn.org",
+        "smartlinkhealth.com",
+        "chartspan.com",
+        "tghealthsystem.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "care",
+      "query": "outsourced chronic care management companies",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "thoroughcare.net",
+        "care-harmony.com",
+        "kangaroohealth.com",
+        "chroniccarestaffing.com",
+        "summitwestcare.com",
+        "1bioshealth.com",
+        "tellihealth.com",
+        "nsightcare.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "brand",
+      "query": "hana health",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/blog"
+      ],
+      "position": 9,
+      "aiOverview": {
+        "present": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "hanahealthcare.com",
+        "linkedin.com",
+        "hanahealth.in",
+        "bij.gyo.mybluehost.me",
+        "hanacaretexas.com",
+        "yelp.com",
+        "hana.health"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "sleep",
+      "query": "CPAP resupply outreach software for DME suppliers",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": false
+      },
+      "competitors": [
+        "Brightree",
+        "Apria"
+      ],
+      "topDomains": [
+        "wellsky.com",
+        "nikohealth.com",
+        "apria.com",
+        "hmehomemedical.com",
+        "brightree.com",
+        "dmeflow.ai",
+        "acuservecorp.com",
+        "resmed.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "care",
+      "query": "how much revenue can chronic care management generate per patient",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "thoroughcare.net",
+        "pubmed.ncbi.nlm.nih.gov",
+        "advantabiometrics.com",
+        "chroniccarestaffing.com",
+        "tha.org",
+        "blog.prevounce.com",
+        "youtube.com",
+        "mgma.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "sleep",
+      "query": "how to improve CPAP compliance for Medicare patients",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "pmc.ncbi.nlm.nih.gov",
+        "aastweb.org",
+        "upstate.edu",
+        "cms.gov",
+        "sleepfoundation.org",
+        "respiratory-therapy.com",
+        "medicare.gov",
+        "sleepapnea.org"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "sleep",
+      "query": "how much revenue does a DME lose when a CPAP patient is non compliant",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "cms.gov",
+        "pmc.ncbi.nlm.nih.gov",
+        "lincare.com",
+        "linkedin.com",
+        "medicare.gov",
+        "staffingly.com",
+        "med.noridianmedicare.com",
+        "achc.org"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "brand",
+      "query": "hana health reviews",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/"
+      ],
+      "position": 4,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "hanahealth.org",
+        "doctor.webmd.com",
+        "m.yelp.com",
+        "yelp.com",
+        "healthy.kaiserpermanente.org",
+        "hana.health",
+        "facebook.com",
+        "healthgrades.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "comparison",
+      "query": "hana health vs thoroughcare",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/"
+      ],
+      "position": 7,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": true,
+        "citesUs": false
+      },
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "CCN Health"
+      ],
+      "topDomains": [
+        "thoroughcare.net",
+        "ccnhealth.com",
+        "healtharc.io",
+        "youtube.com",
+        "hanahealth.org",
+        "hana.health",
+        "mobihealthnews.com",
+        "intuitionlabs.ai"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "comparison",
+      "query": "chartspan alternatives in-house CCM",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "ChartSpan",
+        "CareHarmony",
+        "CCN Health"
+      ],
+      "topDomains": [
+        "chartspan.com",
+        "ccnhealth.com",
+        "facebook.com",
+        "linkedin.com",
+        "omnimd.com",
+        "healtharc.io",
+        "1bioshealth.com",
+        "elion.health"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "vbc",
+      "query": "care gap closure outreach for value-based care",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "linear.health",
+        "athenahealth.com",
+        "nachc.org",
+        "getsolum.com",
+        "inovalon.com",
+        "tpadocs.com",
+        "bluebrix.health",
+        "horizonblue.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "comparison",
+      "query": "thoroughcare alternatives",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "CCN Health"
+      ],
+      "topDomains": [
+        "healtharc.io",
+        "ccnhealth.com",
+        "thoroughcare.net",
+        "linkedin.com",
+        "g2.com",
+        "marketplace.aviahealth.com",
+        "youtube.com",
+        "getlatka.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "category",
+      "query": "AI patient engagement platform for chronic care management",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": false
+      },
+      "competitors": [
+        "ThoroughCare",
+        "Clinii"
+      ],
+      "topDomains": [
+        "chartspan.com",
+        "1bioshealth.com",
+        "prevounce.com",
+        "ecaremd.com",
+        "commure.com",
+        "clinii.com",
+        "thoroughcare.net",
+        "johnsnowlabs.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "comparison",
+      "query": "alternatives to ThoroughCare for CCM and APCM",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "Prevounce",
+        "TimeDoc",
+        "ChartSpan",
+        "CCN Health",
+        "Optimize Health"
+      ],
+      "topDomains": [
+        "thoroughcare.net",
+        "ccnhealth.com",
+        "blog.prevounce.com",
+        "eclinicalworks.com",
+        "youtube.com",
+        "healtharc.io",
+        "chroniccareiq.com",
+        "chartspan.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "category",
+      "query": "best chronic care management software 2026",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "TimeDoc",
+        "ChartSpan",
+        "CCN Health",
+        "HealthSnap",
+        "athenahealth",
+        "Canvas"
+      ],
+      "topDomains": [
+        "arcadia.io",
+        "humhealth.com",
+        "omnimd.com",
+        "mayamd.ai",
+        "1bioshealth.com",
+        "healtharc.io",
+        "ccnhealth.com",
+        "digitalhealth.folio3.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "brand",
+      "query": "hana health alternatives",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/"
+      ],
+      "position": 3,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": true,
+        "citesUs": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "hanahealth.org",
+        "healthy.kaiserpermanente.org",
+        "hana.health",
+        "facebook.com",
+        "connector.hrsa.gov",
+        "mauinuistrong.info",
+        "rsfsocialfinance.org",
+        "yelp.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "category",
+      "query": "AI agent that calls patients between visits for CCM programs",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "Retell",
+        "Artera",
+        "athenahealth",
+        "eClinicalWorks"
+      ],
+      "topDomains": [
+        "quadrant.health",
+        "innovaccer.com",
+        "chartspan.com",
+        "parakeethealth.com",
+        "infinitus.ai",
+        "retellai.com",
+        "linear.health",
+        "observe.ai"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "category",
+      "query": "voice AI for post-discharge follow-up calls to reduce readmissions",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "Hippocratic",
+        "Hyro"
+      ],
+      "topDomains": [
+        "cipherhealth.com",
+        "mindbowser.com",
+        "parloa.com",
+        "thelevel.ai",
+        "dograh.com",
+        "pmc.ncbi.nlm.nih.gov",
+        "consig.ai",
+        "edesy.in"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "care",
+      "query": "can a third party company do chronic care management calls for my practice",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "cms.gov",
+        "ama-assn.org",
+        "thoroughcare.net",
+        "healthsnap.io",
+        "blog.prevounce.com",
+        "pmc.ncbi.nlm.nih.gov",
+        "ncoa.org",
+        "youtube.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "category",
+      "query": "HIPAA compliant voice AI that calls patients and writes back to the EHR",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "Retell",
+        "Commure",
+        "Bland",
+        "athenahealth",
+        "eClinicalWorks"
+      ],
+      "topDomains": [
+        "getprosper.ai",
+        "linear.health",
+        "retellai.com",
+        "bland.ai",
+        "flexbone.ai",
+        "picovoice.ai",
+        "thelevel.ai",
+        "reddit.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "vbc",
+      "query": "annual wellness visit outreach for Medicare patients",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "cms.gov",
+        "medicare.gov",
+        "aledade.com",
+        "edhub.ama-assn.org",
+        "asterahealth.org",
+        "wpsgha.com",
+        "uhc.com",
+        "mainlinehealth.org"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "category",
+      "query": "best voice AI for chronic care management patient outreach",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "ChronicCareIQ",
+        "ChartSpan",
+        "CareHarmony",
+        "Clinii",
+        "HealthSnap",
+        "Innovaccer",
+        "athenahealth"
+      ],
+      "topDomains": [
+        "innovaccer.com",
+        "circle.healthcare",
+        "prevounce.com",
+        "clinii.com",
+        "kaicare.ai",
+        "bland.ai",
+        "getprosper.ai",
+        "rasa.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "vbc",
+      "query": "what replaces ACO REACH in 2027",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "cms.gov",
+        "capc.org",
+        "hmpgloballearningnetwork.com",
+        "atiadvisory.com",
+        "linkedin.com",
+        "bluebrix.health",
+        "pearlhealth.com",
+        "beneschlaw.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "care",
+      "query": "chronic care management for FQHCs G0511",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "blog.prevounce.com",
+        "cms.gov",
+        "care-harmony.com",
+        "chartspan.com",
+        "ruralhealthinfo.org",
+        "healtharc.io",
+        "thoroughcare.net"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "brand",
+      "query": "what is Hana Health voice AI",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/",
+        "https://www.hana.health/state-of-ai"
+      ],
+      "position": 1,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": true,
+        "citesUs": true
+      },
+      "competitors": [],
+      "topDomains": [
+        "hana.health",
+        "linkedin.com",
+        "suki.ai",
+        "linear.health",
+        "hanamedical.net",
+        "harmony.ai",
+        "pmc.ncbi.nlm.nih.gov",
+        "smartbrief.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "brand",
+      "query": "hana health voice ai",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/"
+      ],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": true,
+        "citesUs": true
+      },
+      "competitors": [],
+      "topDomains": [
+        "neonhealth.com",
+        "gnani.ai",
+        "morphic.com",
+        "kclpure.kcl.ac.uk",
+        "open.spotify.com",
+        "getprosper.ai",
+        "fluents.ai",
+        "ciphernutz.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "care",
+      "query": "how to start a chronic care management program in a small practice",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "ThoroughCare",
+        "ChartSpan"
+      ],
+      "topDomains": [
+        "1bioshealth.com",
+        "prevounce.com",
+        "chartspan.com",
+        "cms.gov",
+        "blog.nsightcare.com",
+        "pmc.ncbi.nlm.nih.gov",
+        "lara.health",
+        "timedochealth.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "comparison",
+      "query": "healtharc vs hana health",
+      "mentioned": true,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "HealthArc"
+      ],
+      "topDomains": [
+        "healtharc.io",
+        "apps.apple.com",
+        "linkedin.com",
+        "1bioshealth.com",
+        "circle.healthcare",
+        "hanahealth.org",
+        "play.google.com",
+        "tracxn.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "sleep",
+      "query": "why do patients stop using CPAP in the first month",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "pmc.ncbi.nlm.nih.gov",
+        "kffhealthnews.org",
+        "firouziansleep.com",
+        "sleeplay.com",
+        "resmed.com",
+        "verywellhealth.com",
+        "rochesteradvanceddentistry.com",
+        "dreamsleep.ca"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "care",
+      "query": "does AI call time count toward CCM minutes",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "techtarget.com",
+        "thinkitive.com",
+        "usefini.com",
+        "infinitecare.ai",
+        "instagram.com",
+        "fiercehealthcare.com",
+        "linkedin.com",
+        "droidal.ai"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "category",
+      "query": "CPAP adherence voice AI for sleep medicine",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "mdedge.com",
+        "f.hubspotusercontent10.net",
+        "facebook.com",
+        "research.regionh.dk",
+        "vumedi.com",
+        "sleepworldmagazine.com",
+        "linkedin.com",
+        "mantasleep.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "care",
+      "query": "how to bill APCM G0556 G0557 G0558",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "HealthSnap"
+      ],
+      "topDomains": [
+        "heraldnews.com",
+        "rubinbrown.com",
+        "healthsnap.io",
+        "tenovi.com",
+        "med.uth.edu",
+        "greenbaypressgazette.com",
+        "thoroughcare.net",
+        "reddit.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "care",
+      "query": "APCM vs CCM which should my practice bill",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "thoroughcare.net",
+        "blog.prevounce.com",
+        "aafp.org",
+        "chartspan.com",
+        "eclinicalworks.com",
+        "cms.gov",
+        "linkedin.com",
+        "phamily.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "vbc",
+      "query": "AI phone calls to close care gaps for Medicare Advantage",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [],
+      "topDomains": [
+        "callsphere.ai",
+        "elythea.org",
+        "linkedin.com",
+        "beckerspayer.com",
+        "pmc.ncbi.nlm.nih.gov",
+        "youtube.com",
+        "healthmine.com",
+        "getperspective.ai"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "care",
+      "query": "best APCM software for primary care practices",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "Prevounce",
+        "Tebra",
+        "athenahealth",
+        "eClinicalWorks"
+      ],
+      "topDomains": [
+        "emrsystems.net",
+        "medicalclinicsolutions.com",
+        "tilehealthcare.com",
+        "rpmlogix.com",
+        "mimultipayerinitiatives.org",
+        "orcm.us",
+        "getapp.ca",
+        "hccinstitute.org"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "google",
+      "group": "category",
+      "query": "AI voice agent for ADHD intake behavioral health",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "aiOverview": {
+        "present": true,
+        "mentionsUs": false,
+        "citesUs": false
+      },
+      "competitors": [
+        "athenahealth"
+      ],
+      "topDomains": [
+        "assorthealth.com",
+        "dograh.com",
+        "fiercehealthcare.com",
+        "getprosper.ai",
+        "linkedin.com",
+        "nextlevel.ai",
+        "youtube.com",
+        "cabotsolutions.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "sleep",
+      "query": "how to improve CPAP compliance for Medicare patients",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "cms.gov",
+        "pmc.ncbi.nlm.nih.gov"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "care",
+      "query": "how to get patients to consent to chronic care management",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "cms.gov",
+        "medicare.gov"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "care",
+      "query": "how much revenue can chronic care management generate per patient",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": []
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "care",
+      "query": "behavioral health integration 99484 requirements",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "cms.gov"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "sleep",
+      "query": "CPAP resupply outreach software for DME suppliers",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "ResMed",
+        "Brightree"
+      ],
+      "topDomains": [
+        "brightree.com",
+        "resmed.com",
+        "wellsky.com",
+        "synergyiq.net"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "care",
+      "query": "transitional care management 2 business day contact requirements",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "cms.gov",
+        "med.noridianmedicare.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "sleep",
+      "query": "how much revenue does a DME lose when a CPAP patient is non compliant",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": []
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "vbc",
+      "query": "annual wellness visit outreach for Medicare patients",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": []
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "care",
+      "query": "outsourced chronic care management companies",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "TimeDoc",
+        "ChartSpan",
+        "CareHarmony",
+        "HealthSnap",
+        "Signallamp",
+        "Wellbox"
+      ],
+      "topDomains": [
+        "chartspan.com",
+        "tellihealth.com",
+        "wellbox.care",
+        "care-harmony.com",
+        "timedochealth.com",
+        "healthsnap.io",
+        "phamily.com",
+        "ccihealth.care"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "brand",
+      "query": "hana health voice ai",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.usehana.com/"
+      ],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "usehana.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "sleep",
+      "query": "Medicare CPAP compliance requirements first 90 days",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "medicare.gov"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "vbc",
+      "query": "care gap closure outreach for value-based care",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "linear.health"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "vbc",
+      "query": "what replaces ACO REACH in 2027",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "cms.gov"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "vbc",
+      "query": "AI phone calls to close care gaps for Medicare Advantage",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "security.cms.gov"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "sleep",
+      "query": "best CPAP compliance tracking software for DME",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "ResMed",
+        "Philips",
+        "Brightree",
+        "AirView",
+        "Care Orchestrator"
+      ],
+      "topDomains": [
+        "resmed.com",
+        "resmed-amr.my.salesforce-sites.com",
+        "usa.philips.com",
+        "fpinfosmart.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "brand",
+      "query": "hana health alternatives",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/"
+      ],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "g2.com",
+        "hana.health",
+        "optum.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "sleep",
+      "query": "CPAP face to face reevaluation requirements Medicare",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "cms.gov"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "brand",
+      "query": "what is Hana Health voice AI",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/",
+        "https://www.usehana.com/"
+      ],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "hana.health",
+        "usehana.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "vbc",
+      "query": "how can a primary care practice improve ACO quality measures",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "athenahealth",
+        "eClinicalWorks"
+      ],
+      "topDomains": [
+        "ahrq.gov",
+        "cms.gov",
+        "data.cms.gov"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "comparison",
+      "query": "hana health vs thoroughcare",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/"
+      ],
+      "position": null,
+      "competitors": [
+        "ThoroughCare"
+      ],
+      "topDomains": [
+        "hana.health",
+        "thoroughcare.net"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "sleep",
+      "query": "why do patients stop using CPAP in the first month",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "ResMed"
+      ],
+      "topDomains": []
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "comparison",
+      "query": "thoroughcare alternatives",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "Prevounce",
+        "ChronicCareIQ",
+        "TimeDoc",
+        "CCN Health",
+        "HealthSnap"
+      ],
+      "topDomains": [
+        "healtharc.io",
+        "prevounce.com",
+        "timedochealth.com",
+        "chroniccareiq.com",
+        "ccnhealth.com",
+        "healthsnap.io"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "comparison",
+      "query": "healtharc vs hana health",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/"
+      ],
+      "position": null,
+      "competitors": [
+        "HealthArc"
+      ],
+      "topDomains": [
+        "healtharc.io",
+        "hana.health"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "category",
+      "query": "voice AI for post-discharge follow-up calls to reduce readmissions",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "Hippocratic"
+      ],
+      "topDomains": [
+        "psnet.ahrq.gov",
+        "hippocraticai.com",
+        "cipherhealth.com",
+        "consig.ai"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "category",
+      "query": "AI patient engagement platform for chronic care management",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "Prevounce"
+      ],
+      "topDomains": [
+        "proclehealthworks.com",
+        "prevounce.com",
+        "cipra.ai",
+        "carematix.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "category",
+      "query": "AI agent that calls patients between visits for CCM programs",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/care"
+      ],
+      "position": null,
+      "competitors": [
+        "ThoroughCare",
+        "Positive Check",
+        "Chronii",
+        "athenahealth",
+        "eClinicalWorks"
+      ],
+      "topDomains": [
+        "hana.health",
+        "brilo.ai",
+        "positivecheck.com",
+        "theohealth.org",
+        "chronii.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "brand",
+      "query": "hana health reviews",
+      "mentioned": true,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "hanahealth.org",
+        "zocdoc.com",
+        "reviews.birdeye.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "care",
+      "query": "does AI call time count toward CCM minutes",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": []
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "category",
+      "query": "HIPAA compliant voice AI that calls patients and writes back to the EHR",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.usehana.com/"
+      ],
+      "position": null,
+      "competitors": [
+        "Assort",
+        "Retell",
+        "Assort Health",
+        "athenahealth",
+        "eClinicalWorks"
+      ],
+      "topDomains": [
+        "usehana.com",
+        "linear.health",
+        "voxyhealth.ai",
+        "assorthealth.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "category",
+      "query": "best voice AI for chronic care management patient outreach",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "ChartSpan",
+        "Hippocratic",
+        "athenahealth",
+        "eClinicalWorks"
+      ],
+      "topDomains": [
+        "hippocraticai.com",
+        "theohealth.org",
+        "circle.healthcare",
+        "chartspan.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "category",
+      "query": "AI voice agent for ADHD intake behavioral health",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": []
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "brand",
+      "query": "hana health",
+      "mentioned": true,
+      "cited": true,
+      "ourUrls": [
+        "https://www.hana.health/"
+      ],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "hanahealth.org",
+        "hana.health"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "care",
+      "query": "best APCM software for primary care practices",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "ChronicCareIQ",
+        "ChartSpan",
+        "athenahealth"
+      ],
+      "topDomains": [
+        "healtharc.io",
+        "thoroughcare.net",
+        "chartspan.com",
+        "chroniccareiq.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "category",
+      "query": "best chronic care management software 2026",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "ThoroughCare",
+        "ChronicCareIQ",
+        "TimeDoc",
+        "CCN Health",
+        "HealthSnap",
+        "Optimize Health",
+        "athenahealth",
+        "eClinicalWorks"
+      ],
+      "topDomains": [
+        "thoroughcare.net",
+        "timedochealth.com",
+        "chroniccareiq.com",
+        "healthsnap.io",
+        "optimize.health",
+        "ccnhealth.com",
+        "cms.gov"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "care",
+      "query": "how to start a chronic care management program in a small practice",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "cms.gov",
+        "medicare.gov"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "comparison",
+      "query": "alternatives to ThoroughCare for CCM and APCM",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "ThoroughCare",
+        "HealthArc",
+        "Prevounce",
+        "ChartSpan",
+        "Accelerate",
+        "athenahealth",
+        "eClinicalWorks"
+      ],
+      "topDomains": [
+        "accelerate.systems",
+        "healtharc.io",
+        "prevounce.com",
+        "chartspan.com",
+        "careatlas.com",
+        "eclinicalworks.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "care",
+      "query": "can a third party company do chronic care management calls for my practice",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "cms.gov"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "comparison",
+      "query": "chartspan alternatives in-house CCM",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [
+        "ThoroughCare",
+        "ChronicCareIQ",
+        "TimeDoc",
+        "ChartSpan",
+        "CCN Health",
+        "athenahealth",
+        "eClinicalWorks"
+      ],
+      "topDomains": [
+        "ccnhealth.com",
+        "thoroughcare.net",
+        "timedochealth.com",
+        "chroniccareiq.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "care",
+      "query": "APCM vs CCM which should my practice bill",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": []
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "care",
+      "query": "chronic care management for FQHCs G0511",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "cms.gov"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "sleep",
+      "query": "will GLP-1 drugs replace CPAP for sleep apnea",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": []
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "vbc",
+      "query": "how practices can improve medication adherence Star Ratings",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": []
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "category",
+      "query": "CPAP adherence voice AI for sleep medicine",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "callmydoc.com"
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "engine": "chatgpt",
+      "group": "care",
+      "query": "how to bill APCM G0556 G0557 G0558",
+      "mentioned": false,
+      "cited": false,
+      "ourUrls": [],
+      "position": null,
+      "competitors": [],
+      "topDomains": [
+        "cms.gov"
+      ]
+    }
+  ],
+  "deadCitations": []
+}
