@@ -724,6 +724,13 @@ async function main() {
       hidden = after;
     }
 
+    // An Authority forecast block keeps its scripts inert in the markup and runs copies of
+    // them after mount. Drop the copies: the static file should carry each script once,
+    // inert, or the chart script runs at parse time and again when React mounts.
+    await page.evaluate(() => {
+      for (const s of document.querySelectorAll('script[data-authority-run]')) s.remove();
+    });
+
     let html = await page.content();
     // Strip the dev/preview origin if it leaked into any absolute URLs.
     html = html.replaceAll(base, DOMAIN);

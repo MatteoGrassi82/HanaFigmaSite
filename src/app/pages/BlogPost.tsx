@@ -7,6 +7,16 @@ import { Footer } from "../components/layout/Footer";
 import { SEO } from "../components/SEO";
 import { ArrowLeft } from "lucide-react";
 import { getLocale } from "../../lib/i18n";
+import AuthorityForecast, {
+  hasAuthorityBlock,
+  splitPortableText,
+  type ForecastPlacement,
+} from "../components/media/AuthorityForecast";
+
+// Where an Authority forecast sits in a post, by path. A post missing from this map gets
+// the default, after the introduction (before the first h2/h3). Posts without a forecast
+// render nothing extra: the component finds the forecast by the page URL.
+const PLACEMENTS: Record<string, ForecastPlacement> = {};
 
 function formatDate(dateStr?: string) {
   if (!dateStr) return "";
@@ -156,6 +166,7 @@ export function BlogPost() {
     ...(post.categories?.length ? { "keywords": post.categories.map(c => c.title).join(", ") } : {}),
   };
   const faqSchema = buildFaqSchema(post.body);
+  const pagePath = `/blog/${slug}`;
 
   return (
     <>
@@ -203,7 +214,20 @@ export function BlogPost() {
 
           {post.body && (
             <div>
-              <PortableText value={post.body} components={portableTextComponents} />
+              {hasAuthorityBlock(post.body) ? (
+                <PortableText value={post.body} components={portableTextComponents} />
+              ) : (
+                (() => {
+                  const [before, after] = splitPortableText(post.body, PLACEMENTS[pagePath]);
+                  return (
+                    <>
+                      <PortableText value={before} components={portableTextComponents} />
+                      <AuthorityForecast path={pagePath} />
+                      {after.length > 0 && <PortableText value={after} components={portableTextComponents} />}
+                    </>
+                  );
+                })()
+              )}
             </div>
           )}
         </div>
