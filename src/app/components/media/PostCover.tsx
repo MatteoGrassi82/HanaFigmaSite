@@ -9,18 +9,39 @@ import { urlFor, type Post } from "../../../lib/sanity";
  * (e.g. `aspect-[16/9]` for cards, `aspect-[2/1]` for the article hero).
  */
 
-type TopicKey = "voice" | "readmissions" | "infrastructure" | "engagement" | "insights";
+type TopicKey = "care" | "vbc" | "sleep" | "voice" | "readmissions" | "infrastructure" | "engagement" | "insights";
 
-/** accent = eyebrow/text color · a & b = gradient-mesh blob colors */
-const TOPICS: { key: TopicKey; test: RegExp; label: string; accent: string; a: string; b: string }[] = [
+/**
+ * accent = eyebrow/text color · a & b = gradient-mesh blob colors.
+ * a and b MUST be hex: the mesh appends an alpha byte (`${a}cc`), and a CSS variable with a
+ * suffix (`var(--color-brand)cc`) is invalid, which drops the whole background and leaves a
+ * blank white card. That is what the brand-token sweep did to the Infrastructure and Insights
+ * covers. #2536e6 and #a9b4ff are --color-brand and --color-brand-soft.
+ */
+type Topic = { key: TopicKey; label: string; accent: string; a: string; b: string };
+const TOPICS: (Topic & { test: RegExp })[] = [
   { key: "voice", test: /voice|outbound|\bagent|\bcall\b|inbound|receptionist/i, label: "Voice AI", accent: "#c4b5fd", a: "#7c6cf0", b: "#4338ca" },
   { key: "readmissions", test: /readmission|discharge|follow-?up|reminder|behav|communication/i, label: "Readmissions", accent: "#5eead4", a: "#22d3ee", b: "#0e7490" },
-  { key: "infrastructure", test: /architect|infrastructure|production|pilot|never reach|scale|89%|70%|11%|3\.7/i, label: "AI Infrastructure", accent: "var(--color-brand-soft)", a: "var(--color-brand)", b: "#3b3f8f" },
+  { key: "infrastructure", test: /architect|infrastructure|production|pilot|never reach|scale|89%|70%|11%|3\.7/i, label: "AI Infrastructure", accent: "#a9b4ff", a: "#2536e6", b: "#3b3f8f" },
   { key: "engagement", test: /engage|patient|outreach/i, label: "Patient Engagement", accent: "#7dd3fc", a: "#38bdf8", b: "#1d4ed8" },
 ];
-const DEFAULT_TOPIC = { key: "insights" as TopicKey, label: "Insights", accent: "var(--color-brand-soft)", a: "var(--color-brand)", b: "#3b3f8f" };
+const DEFAULT_TOPIC: Topic = { key: "insights", label: "Insights", accent: "#a9b4ff", a: "#2536e6", b: "#3b3f8f" };
 
-function topicFor(post: Post) {
+/** The post's Sanity category decides first; the title match is for older posts without one. */
+const BY_CATEGORY: Record<string, Topic> = {
+  "Care Management": { key: "care", label: "Care Management", accent: "#a9b4ff", a: "#2536e6", b: "#1e2a8a" },
+  "Value Based Care": { key: "vbc", label: "Value-Based Care", accent: "#7dd3fc", a: "#0ea5e9", b: "#1d4ed8" },
+  "Sleep and PAP Therapy": { key: "sleep", label: "Sleep", accent: "#c4b5fd", a: "#8b5cf6", b: "#3b0f8f" },
+  "Patient Engagement": TOPICS[3],
+  "Voice AI": TOPICS[0],
+  "Healthcare AI": TOPICS[2],
+};
+
+function topicFor(post: Post): Topic {
+  for (const c of post.categories || []) {
+    const t = BY_CATEGORY[c.title];
+    if (t) return t;
+  }
   const haystack = `${post.title} ${post.slug?.current ?? ""}`;
   return TOPICS.find((t) => t.test.test(haystack)) ?? DEFAULT_TOPIC;
 }

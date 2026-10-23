@@ -110,7 +110,7 @@ const sanity = createClient({
 // the page as window.__PRERENDER__ — the SPA reads that instead of fetching
 // Sanity from the headless browser (which is CORS-blocked from localhost).
 const POST_LIST_Q = `
-  *[_type == "post"] | order(publishedAt desc) {
+  *[_type == "post"] | order(coalesce(publishedAt, _createdAt) desc) {
     _id, title, slug, excerpt, mainImage, publishedAt, _updatedAt,
     categories[]->{ title },
     author->{ name, image }

@@ -48,7 +48,7 @@ export async function getPosts(): Promise<Post[]> {
   const cached = prerenderCache()?.posts;
   if (cached) return cached;
   return client.fetch(`
-    *[_type == "post"] | order(publishedAt desc) {
+    *[_type == "post"] | order(coalesce(publishedAt, _createdAt) desc) {
       _id, title, slug, excerpt, mainImage, publishedAt, _updatedAt,
       categories[]->{ title },
       author->{ name, image }
