@@ -255,3 +255,56 @@ export default function AuthorityForecast({ id, path, embed, className }: Foreca
     />
   );
 }
+
+// --- The forecasts index (/forecasts) ---------------------------------------------------
+// Every live forecast Authority publishes for this site, from /e/site. The list is rendered
+// into the page as JSON (<AuthoritySiteData />) so the prerendered snapshot carries it and
+// the browser reuses it instead of fetching again; a page that was not prerendered with it
+// fetches after mount. A forecast Authority adds later appears at the next build by itself.
+
+export interface SiteForecast {
+  forecast_id: string;
+  /** Path of the HANA post the forecast belongs to, e.g. '/blog/aco-reach-ends-lead-model-2027'. */
+  path: string;
+  version: number;
+}
+
+const SITE_DATA_ID = 'authority-site-data';
+
+function siteDataOnPage(): SiteForecast[] | null {
+  if (typeof document === 'undefined') return null;
+  const el = document.getElementById(SITE_DATA_ID);
+  if (!el) return null;
+  try {
+    return JSON.parse(el.textContent || '[]');
+  } catch {
+    return null;
+  }
+}
+
+/** The site's live forecasts; null while loading, [] when there are none or Authority is unreachable. */
+export function useAuthoritySiteForecasts(): SiteForecast[] | null {
+  const [list, setList] = useState<SiteForecast[] | null>(() => siteDataOnPage());
+  useEffect(() => {
+    if (list) return;
+    let on = true;
+    fetch(EMBED_BASE + 'site?url=' + encodeURIComponent(SITE_ORIGIN + '/'), { signal: AbortSignal.timeout(8000) })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((site: { forecasts?: SiteForecast[] } | null) => {
+        if (!on) return;
+        const rows = (site?.forecasts || []).filter((f) => f.forecast_id && f.path);
+        setList(rows.map((f) => ({ forecast_id: f.forecast_id, path: normPath(f.path), version: f.version })));
+      })
+      .catch(() => on && setList([]));
+    return () => {
+      on = false;
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  return list;
+}
+
+/** Renders the list as inert JSON so a prerendered page carries it (see useAuthoritySiteForecasts). */
+export function AuthoritySiteData({ forecasts }: { forecasts: SiteForecast[] }) {
+  const json = JSON.stringify(forecasts).replace(/</g, '\\u003c');
+  return <script type="application/json" id={SITE_DATA_ID} dangerouslySetInnerHTML={{ __html: json }} />;
+}

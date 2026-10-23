@@ -111,6 +111,7 @@ const VsDoingNothing = lazy(() =>
 );
 const Security = lazy(() => import("./pages/Security").then((m) => ({ default: m.Security })));
 const Academy = lazy(() => import("./pages/Academy").then((m) => ({ default: m.Academy })));
+const Forecasts = lazy(() => import("./pages/Forecasts").then((m) => ({ default: m.Forecasts })));
 const Faq = lazy(() => import("./pages/Faq").then((m) => ({ default: m.Faq })));
 const PrincipalCareManagement = lazy(() =>
   import("./pages/PrincipalCareManagement").then((m) => ({ default: m.PrincipalCareManagement }))
@@ -534,6 +535,7 @@ function AppContent() {
                 />
               } />
               <Route path="/academy" element={<Academy />} />
+              <Route path="/forecasts" element={<Forecasts />} />
               <Route path="/faq" element={<Faq />} />
               <Route path="/remote-v2" element={<Navigate to="/" replace />} />
               {!isItalian && (

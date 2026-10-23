@@ -155,6 +155,7 @@ export const Navbar = (props: NavbarProps) => {
           { url: "https://docs.hana.health/getting-started/overview", title: t.nav.docs },
           { url: "/whitepapers", title: t.nav.whitepapers },
           { url: "/blog", title: t.nav.blog },
+          ...(isItalian ? [] : [{ url: "/forecasts", title: "Forecasts" }]),
           { url: "/labs", title: t.nav.labs },
           { url: "/pricing", title: t.nav.savingsCalculator },
         ],

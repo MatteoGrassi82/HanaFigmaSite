@@ -34,6 +34,7 @@ HANA is infrastructure, not an app. Clinic partners build on it rather than buy 
 - HANA Sleep (sleep medicine suite — analysis + CPAP adherence): https://www.hana.health/sleep
 - CMS ACCESS Model program: https://www.hana.health/programs/access-model
 - Case Studies: https://www.hana.health/case-studies
+- Medicare policy forecasts (live probabilities on CMS decisions for care management, value-based care and sleep, by Authority): https://www.hana.health/forecasts
 - Whitepapers: https://www.hana.health/whitepapers
 - ADHD Intake Whitepaper: https://www.hana.health/whitepapers/adhd-intake
 - Pricing / Savings Calculator: https://www.hana.health/pricing

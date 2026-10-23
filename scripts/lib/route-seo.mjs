@@ -76,6 +76,7 @@ export const STATIC_ROUTES = [
   '/compare/vs-outsourced-care-management',
   '/compare/vs-doing-nothing',
   '/academy',
+  '/forecasts',
 ];
 
 // Routes App.tsx renders only when !isItalian — on ita.hana.health these fall
