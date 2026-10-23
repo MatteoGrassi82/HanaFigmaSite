@@ -257,10 +257,10 @@ export default function AuthorityForecast({ id, path, embed, className }: Foreca
 }
 
 // --- The forecasts index (/forecasts) ---------------------------------------------------
-// Every live forecast Authority publishes for this site, from /e/site. The list is rendered
-// into the page as JSON (<AuthoritySiteData />) so the prerendered snapshot carries it and
-// the browser reuses it instead of fetching again; a page that was not prerendered with it
-// fetches after mount. A forecast Authority adds later appears at the next build by itself.
+// Every live forecast Authority publishes for this site comes from /e/site. The index page
+// summarises each one (question, probability, trend, deadline) from the same block the full
+// chart renders, so each forecast is fetched once. The page embeds what it computed as JSON
+// (PageJson) so the prerendered snapshot carries it and the browser does not fetch again.
 
 export interface SiteForecast {
   forecast_id: string;
@@ -269,42 +269,96 @@ export interface SiteForecast {
   version: number;
 }
 
-const SITE_DATA_ID = 'authority-site-data';
-
-function siteDataOnPage(): SiteForecast[] | null {
-  if (typeof document === 'undefined') return null;
-  const el = document.getElementById(SITE_DATA_ID);
-  if (!el) return null;
+/** The site's live forecasts from /e/site; [] when there are none or Authority is unreachable. */
+export async function loadAuthoritySiteForecasts(): Promise<SiteForecast[]> {
   try {
-    return JSON.parse(el.textContent || '[]');
+    const res = await fetch(EMBED_BASE + 'site?url=' + encodeURIComponent(SITE_ORIGIN + '/'), { signal: AbortSignal.timeout(8000) });
+    if (!res.ok) return [];
+    const site: { forecasts?: SiteForecast[] } = await res.json();
+    return (site.forecasts || [])
+      .filter((f) => f.forecast_id && f.path)
+      .map((f) => ({ forecast_id: f.forecast_id, path: normPath(f.path), version: f.version }));
+  } catch {
+    return [];
+  }
+}
+
+export interface ForecastPoint {
+  date: string; // YYYY-MM-DD
+  p: number; // 0..1
+}
+export interface ForecastSummary {
+  question: string;
+  /** Probability today, 0..1, and the date it is as of. */
+  p: number | null;
+  asOf: string | null;
+  /** start, every sourced event, today: the trend line. */
+  series: ForecastPoint[];
+  /** "Resolves 31 March 2027", as Authority words it. */
+  resolves: string | null;
+  /** "YYYY-MM", for sorting by deadline. */
+  deadline: string | null;
+  lastMove: { date: string; deltaPts: number; title: string } | null;
+}
+
+/**
+ * Reads what the index needs out of a forecast block. Browser only (DOMParser): it runs in the
+ * prerender's Chrome and, for a page that was not prerendered, in the visitor's. It leans on
+ * the block's markup (h2.now, p.res, the jrf-data JSON), so every field degrades to empty
+ * rather than throwing if Authority changes it; the card then shows the question alone.
+ */
+export function summarizeForecastHtml(html: string): ForecastSummary | null {
+  if (!html || typeof DOMParser === 'undefined') return null;
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const question = (doc.querySelector('h2.now') || doc.querySelector('h2'))?.textContent?.replace(/\s+/g, ' ').trim() || '';
+  if (!question) return null;
+  const resolves = doc.querySelector('p.res b')?.textContent?.trim() || null;
+  let data: {
+    start?: { date: string; p: string };
+    today?: { date: string; p: string };
+    deadline?: string;
+    events?: { date: string; title: string; delta: string; after: string }[];
+  } = {};
+  try {
+    data = JSON.parse(doc.querySelector('script[type="application/json"][id^="jrf-data"]')?.textContent || '{}');
+  } catch {
+    // keep the empty object: the card shows the question without numbers
+  }
+  const num = (v: unknown) => (v == null || v === '' || isNaN(Number(v)) ? null : Number(v));
+  const events = (data.events || []).filter((e) => e.date && num(e.after) != null).sort((a, b) => a.date.localeCompare(b.date));
+  const series: ForecastPoint[] = [];
+  if (data.start && num(data.start.p) != null) series.push({ date: data.start.date, p: num(data.start.p)! });
+  for (const e of events) series.push({ date: e.date, p: num(e.after)! });
+  if (data.today && num(data.today.p) != null) series.push({ date: data.today.date, p: num(data.today.p)! });
+  // the latest event that actually moved the number (some events are logged with no change)
+  const last = [...events].reverse().find((e) => Math.abs(num(e.delta) || 0) >= 0.001);
+  return {
+    question,
+    p: num(data.today?.p),
+    asOf: data.today?.date || null,
+    series,
+    resolves,
+    deadline: data.deadline || null,
+    lastMove: last && num(last.delta) != null ? { date: last.date, deltaPts: Math.round(num(last.delta)! * 1000) / 10, title: last.title } : null,
+  };
+}
+
+/** Reads JSON a prerendered page embedded with <PageJson id=... />, or null. */
+export function readPageJson<T>(id: string): T | null {
+  if (typeof document === 'undefined') return null;
+  // main.tsx copies it out of the snapshot before React replaces it (lib/prerendered.ts)
+  const captured = (globalThis as typeof globalThis & { __pageJson?: Map<string, string> }).__pageJson?.get(id);
+  const text = captured ?? document.getElementById(id)?.textContent;
+  if (!text) return null;
+  try {
+    return JSON.parse(text);
   } catch {
     return null;
   }
 }
 
-/** The site's live forecasts; null while loading, [] when there are none or Authority is unreachable. */
-export function useAuthoritySiteForecasts(): SiteForecast[] | null {
-  const [list, setList] = useState<SiteForecast[] | null>(() => siteDataOnPage());
-  useEffect(() => {
-    if (list) return;
-    let on = true;
-    fetch(EMBED_BASE + 'site?url=' + encodeURIComponent(SITE_ORIGIN + '/'), { signal: AbortSignal.timeout(8000) })
-      .then((res) => (res.ok ? res.json() : null))
-      .then((site: { forecasts?: SiteForecast[] } | null) => {
-        if (!on) return;
-        const rows = (site?.forecasts || []).filter((f) => f.forecast_id && f.path);
-        setList(rows.map((f) => ({ forecast_id: f.forecast_id, path: normPath(f.path), version: f.version })));
-      })
-      .catch(() => on && setList([]));
-    return () => {
-      on = false;
-    };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  return list;
-}
-
-/** Renders the list as inert JSON so a prerendered page carries it (see useAuthoritySiteForecasts). */
-export function AuthoritySiteData({ forecasts }: { forecasts: SiteForecast[] }) {
-  const json = JSON.stringify(forecasts).replace(/</g, '\\u003c');
-  return <script type="application/json" id={SITE_DATA_ID} dangerouslySetInnerHTML={{ __html: json }} />;
+/** Embeds data as inert JSON so the prerendered snapshot carries it (see readPageJson). */
+export function PageJson({ id, data }: { id: string; data: unknown }) {
+  const json = JSON.stringify(data).replace(/</g, '\\u003c');
+  return <script type="application/json" id={id} dangerouslySetInnerHTML={{ __html: json }} />;
 }

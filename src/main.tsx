@@ -2,6 +2,7 @@
   import { createRoot } from "react-dom/client";
   import { Component, ReactNode } from "react";
   import App from "./app/App.tsx";
+  import { capturePrerenderedData } from "./lib/prerendered";
   import "./styles/index.css";
 
   /**
@@ -76,6 +77,9 @@
       return this.props.children;
     }
   }
+
+  // Before React replaces the prerendered snapshot: keep the data it carries (see lib/prerendered).
+  capturePrerenderedData();
 
   createRoot(document.getElementById("root")!).render(
     <ErrorBoundary>

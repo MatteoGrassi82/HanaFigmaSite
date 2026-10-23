@@ -35,7 +35,7 @@ function blockText(block: any): string {
 // hand those straight to answer engines.
 function buildFaqSchema(body?: any[]) {
   if (!body?.length) return null;
-  if (!/^Updated \w+ \d{4}\. Written by /.test(blockText(body[0]))) return null;
+  if (!/^Updated (\d{1,2} )?[A-Z][a-z]+ \d{4}\. Written by /.test(blockText(body[0]))) return null;
   const start = body.findIndex(
     (b) => b?._type === "block" && b.style === "h2" && /^(frequently asked questions|faqs?)$/i.test(blockText(b))
   );
