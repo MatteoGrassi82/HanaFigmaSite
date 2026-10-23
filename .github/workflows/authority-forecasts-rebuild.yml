@@ -1,0 +1,17 @@
+# Rebuilds the site daily so new Authority forecast versions go live. The forecast blocks
+# are prerendered at build time and the browser reuses them, so without a rebuild a page
+# keeps the version from its last deploy. Needs one repository secret, DEPLOY_HOOK_URL
+# (the Vercel deploy hook "authority-forecasts-daily" on main). It never ships to the site.
+name: Authority forecasts rebuild
+on:
+  schedule:
+    - cron: '17 5 * * *'
+  workflow_dispatch:
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger the deploy hook
+        run: curl -fsS -X POST "$DEPLOY_HOOK_URL"
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.DEPLOY_HOOK_URL }}
